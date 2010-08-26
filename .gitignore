@@ -5,3 +5,5 @@ rails/geniverse/db/*.sqlite3
 rails/geniverse/db/*.db
 rails/geniverse/.rvmrc
 .rvmrc
+*.DS_Store*
+rails/geniverse/.project

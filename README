@@ -3,7 +3,6 @@ Project:   Geniverse
 Copyright: ©2010 The Concord Consortium
 =============================================================================
 
-
 For experimenting with Garcon:
 
 Install node.js
@@ -32,22 +31,33 @@ A longer-term option might be to modify garcon -- looks easy and this what was s
 
 
 
-You'll need either the gem or a master version of sproutcore installed:
+You'll need either the sproutcore gem or the master branch from http://github.com/sproutit/sproutcore-abbot.git installed in your PATH. 
 
+To install the sproutcore gem:
   sudo gem install sproutcore
 
-Setup development environment.
+To install the master branch from http://github.com/sproutit/sproutcore-abbot.git :
+	git clone git://github.com/sproutit/sproutcore-abbot.git abbot
+	cd abbot
+	rake init
+	cd ..
+	git clone git://github.com/sproutit/sproutcore-samples.git samples
+	cd samples
+	mkdir -p frameworks
+	cd frameworks
+	git clone git://github.com/sproutit/sproutcore.git sproutcore
+	cd ../..
+Then put sproutcore-abbot/bin in your PATH
 
-  git clone git://github.com/psndcsrv/Geniverse-SproutCore.git\
-  cd Geniverse-SproutCore
-  git submodule init
-  git submodule update
+Then setup your Geniverse-SproutCore development environment:
+	git clone git@github.com:concord-consortium/Geniverse-SproutCore.git
+	cd Geniverse-SproutCore
+	git submodule init
+	git submodule update
 
-Now run the development server:
-
-  sc-server
+Now run the development Geniverse-SproutCore server:
+	sc-server -v
   
-And open http://localhost:4020
-
+And then open http://localhost:4020
 Select 'geniverse' and click 'load application'.
 
