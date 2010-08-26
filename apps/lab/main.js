@@ -24,6 +24,8 @@ Lab.main = function main() {
 
   // TODO: Set the content property on your primary controller
   // ex: Lab.contactsController.set('content',Lab.contacts);
+  
+  SC.routes.add(':level/:module/:activity', Lab, 'routeHandler');
 
 } ;
 
