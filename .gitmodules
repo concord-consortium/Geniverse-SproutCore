@@ -1,3 +1,9 @@
 [submodule "frameworks/cc"]
 	path = frameworks/cc
 	url = git://github.com/sfentress/CC-SproutCore.git
+[submodule "garcon"]
+	path = garcon
+	url = http://github.com/martoche/garcon.git
+[submodule "frameworks/sproutcore"]
+	path = frameworks/sproutcore
+	url = http://github.com/sproutit/sproutcore.git
