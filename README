@@ -39,6 +39,7 @@ Select 'geniverse' and click 'load application'.
 If the above solution is slow, try using the node.js based proxying instead of having sc-server proxy for you:
 
 * Install node.js from http://github.com/ry/node
+  (Note: you'll need python 2.x for python in the path, not 3.x, for the configure script to work)
 * Install node package manager 
   curl http://npmjs.org/install.sh | sudo sh
   or
