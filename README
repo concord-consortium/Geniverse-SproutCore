@@ -5,7 +5,17 @@ Copyright: ©2010 The Concord Consortium
 
 For experimenting with Garcon:
 
-Install node.js
+* Install node.js from http://github.com/ry/node
+* Install node package manager 
+  curl http://npmjs.org/install.sh | sudo sh
+  or
+  download from http://github.com/isaacs/npm and 'sudo make install'
+
+(If you've installed node to somewhere like /usr/local/lib/node (the default) you will need to modify the 
+permissions on /usr/local/lib/node/.npm in order for 'npm help' to work)
+
+* Install node-http-proxy: 
+    sudo npm install http-proxy
 
 Then:
 
@@ -13,21 +23,16 @@ git submodule update --init
 (should install/update cc, sproutcore, and garcon)
 
 node geniverse_server.js
-open http://localhost:8000/geniverse
+open http://localhost:9000/geniverse
 
-Note: we still need to put a proxy server in front of garcon in order to proxy as follows:
+Note that you open localhost:9000, not 8000 even though you'll see the message 'Server started on http://localhost:8000'. (We're using node-http-proxy to proxy requests from 9000 to 8000)
 
-proxy '/geniverse/', :to => 'geniverse.dev.concord.org'
-proxy '/chat/', :to => 'geniverse.dev.concord.org'
-proxy "/rails", :to => "localhost:3000"
+Take a look at the last lines of geniverse-server.js to see how to update the proxy settings
 
 
-One option is 
+---
 
-  http://github.com/nodejitsu/node-http-proxy
-  (a reverse proxy written in node)
-
-A longer-term option might be to modify garcon -- looks easy and this what was suggested on the SC IRC channel anyway.
+instructions for the master branch of Geniverse-Sproutcore follow:
 
 
 
