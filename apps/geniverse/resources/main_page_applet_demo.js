@@ -5,12 +5,12 @@
 /*globals Geniverse, CC, java */
 Geniverse.marginSize = 15;
 
-require('views/article');
-require('views/breed_dragon');
-require('views/dragon_bin');
-require('views/dragon_chat_compose');
-require('views/organism');
-require('views/published_articles');
+sc_require('views/article');
+sc_require('views/breed_dragon');
+sc_require('views/dragon_bin');
+sc_require('views/dragon_chat_compose');
+sc_require('views/organism');
+sc_require('views/published_articles');
 
 Geniverse.appletDemoMainPage = SC.Page.design({
 

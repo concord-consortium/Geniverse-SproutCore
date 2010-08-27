@@ -6,7 +6,7 @@
 
 module("SHA-256");
 
-require('resources/sha256');
+sc_require('resources/sha256');
 
 // above 'require' doesn't seem to work. We have to copy entire function into this test...
 

@@ -12,8 +12,9 @@
 // See comments for some pointers on what to do next.
 //
 
-require('resources/main_page_applet_demo');
-require('resources/main_page_geniverse_chat');
+sc_require('resources/main_page_applet_demo');
+sc_require('resources/main_page_geniverse_chat');
+sc_require('models/dragon');
 
 Geniverse.EGGS_QUERY = SC.Query.local('Geniverse.Dragon',
     { conditions: 'bred = true AND isEgg = true', orderBy: 'storeKey'});
@@ -82,7 +83,6 @@ Geniverse.main = function main() {
   } else {
     activities.addObserver('status', setActivity);
   }
-  
   
   // Geniverse.makeFirstResponder(Geniverse.DEFAULTACTIONS);
 } ;
