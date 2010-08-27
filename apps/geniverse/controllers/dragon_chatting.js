@@ -17,7 +17,7 @@ Geniverse.dragonChattingController = SC.Controller.create(
     if (Geniverse.activityController.get('sendBredDragons')){
       var latestChild = Geniverse.breedDragonController.get('child');
       var message = {dragon: latestChild.get('gOrganism')};
-      SC.Logger.log("sending "+message.dragon);
+      // SC.Logger.log("sending "+message.dragon);
       var orgChannel = CcChat.chatRoomController.get('channel')+'/org';
       CcChat.chatController.post(orgChannel, message);
     }
@@ -26,7 +26,7 @@ Geniverse.dragonChattingController = SC.Controller.create(
   sendDragon: function(dragon){
     var message = {dragon: dragon};
     var orgChannel = CcChat.chatRoomController.get('channel')+'/org';
-    SC.Logger.log("sending dragon on "+orgChannel+": "+dragon);
+    // SC.Logger.log("sending dragon on "+orgChannel+": "+dragon);
     CcChat.chatController.post(orgChannel, message);
   },
   
