@@ -64,19 +64,26 @@ Geniverse.breedDragonController = SC.Controller.create(
   
   breed: function() {
     var self = this;
+    var count = 0;
+    // SC.Logger.group("Breed 20 dragons");
+    // SC.Logger.log("Breeding 20 dragons...");
     this.set('breedButtonTitle', 'Generating...');
     Geniverse.eggsController.removeAllEggs(); //clear the breeding pen
     var handleChild = function(child) {
+      count += 1;
       SC.RunLoop.begin();
+      // SC.Logger.info("Bred " + count + " child: " + child.get('sex'));
       child.set('isEgg', true);
       self.set('child', child);
-      if (self.get('breedButtonTitle') !== 'Breed') {
-        self.set('breedButtonTitle', 'Breed');
+
+      if (count == 20) {
+        if (self.get('breedButtonTitle') !== 'Breed') {
+          self.set('breedButtonTitle', 'Breed');
+        }
+        //SC.Logger.groupEnd();
       }
       SC.RunLoop.end();
     };
-    for (var i = 0; i < 20; ++i) {
-      Geniverse.gwtController.breedOrganism(this.get('mother'), this.get('father'), handleChild);
-    }
+    Geniverse.gwtController.breedOrganisms(20, this.get('mother'), this.get('father'), handleChild);
   }
 });

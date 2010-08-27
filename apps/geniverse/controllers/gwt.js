@@ -62,6 +62,29 @@ Geniverse.gwtController = SC.Controller.create(
     }
   },
   
+  breedOrganisms: function(number, mother, father, handleChildFunction) {
+    var self = this;
+    SC.Logger.info("Breeding " + number + " dragons");
+    if (mother !== null && mother.get('gOrganism') !== null && father !== null && father.get('gOrganism') !== null) {
+      var onSuccess = function(organisms) {
+        window.DragonSet = organisms;
+        var organism = null;
+        var orgs = organisms.array;
+        for (var i = 0; i < number; i++) {
+          organism = orgs[i];
+          var child = Geniverse.store.createRecord(Geniverse.Dragon, {
+  					bred: YES, mother: mother.get("id"), father: father.get("id")
+  				});
+  				child.set('user', Geniverse.userController.get('content'));
+          child.set('gOrganism', organism);
+      
+          handleChildFunction(child);
+        }
+      };
+      GenGWT.breedDragons(number, mother.get('gOrganism'), father.get('gOrganism'), onSuccess);
+    }
+  },
+  
   generateRandomDragon: function(callback) {
     // alert('generating dragon');
     var self = this;

@@ -20,6 +20,11 @@ GenGWT = {
     breedDragon: function(mother, father, callback) {
         breedDragon(mother, father, callback, this.failure);
     },
+    
+    breedDragons: function(number, mother, father, callback) {
+      SC.Logger.info("Breeding " + number + " dragons");
+        breedDragons(number, mother, father, callback, this.failure);
+    },
 
     isAlive: function(dragon) {
         return this.hasCharacteristic(dragon, "Alive");
