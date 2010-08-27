@@ -1,1 +1,6 @@
 script/generate rspec
+script/generate cucumber
+script/generate rspec_scaffold Activity title:string initial_alleles:string base_channel_name:string max_users_in_room:integer send_bred_dragons:boolean sc_type:string
+rake
+script/generate feature Activity title:string initial_alleles:string base_channel_name:string max_users_in_room:integer send_bred_dragons:boolean sc_type:string
+rake
