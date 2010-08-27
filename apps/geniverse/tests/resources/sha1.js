@@ -6,7 +6,7 @@
 
 module("SHA-1");
 
-require('resources/sha1');
+sc_require('resources/sha1');
 
 // above 'require' doesn't seem to work. We have to copy entire function into this test...
 

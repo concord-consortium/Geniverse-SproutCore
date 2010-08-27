@@ -10,7 +10,7 @@
 
   @extends SC.View
 */
-require('views/dragon_bin');
+sc_require('views/dragon_bin');
 Geniverse.ArticleView = SC.View.extend(SC.StaticLayout,
 /** @scope Geniverse.ArticleView.prototype */ {
   
