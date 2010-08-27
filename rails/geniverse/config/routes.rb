@@ -3,7 +3,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect "users/:username", :format => 'json', :controller => 'users', :action => 'show',
     :requirements => { :username => /[A-Za-z].*/ }
-  
+
   map.resources :users
 
   map.resources :activities
@@ -26,7 +26,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sample resource route with sub-resources:
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
+
   # Sample resource route with more complex sub-resources
   #   map.resources :products do |products|
   #     products.resources :comments
