@@ -17,7 +17,9 @@ Lab.main = function main() {
   // The default code here will make the mainPane for your application visible
   // on screen.  If you app gets any level of complexity, you will probably 
   // create multiple pages and panes.  
-  Lab.getPath('mainPage.mainPane').append() ;
+  // The DEFAULT state will handle this
+  // Lab.getPath('mainPage.mainPane').append() ;
+  Lab.makeFirstResponder(Lab.DEFAULT);
 
   // Step 2. Set the content property on your primary controller.
   // This will make your app come alive!

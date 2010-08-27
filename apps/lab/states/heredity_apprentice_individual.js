@@ -21,12 +21,12 @@ Lab.HEREDITY_APPRENTICE_INDIVIDUAL = SC.Responder.create(
   
   didBecomeFirstResponder: function() {
     // Called when this state becomes first responder
-    Lab.getPath('mainPage.mainPane').remove();
     Lab.getPath('heredityApprenticeIndividualPage.mainPane').append();
   },
   
   willLoseFirstResponder: function() {
     // Called when this state loses first responder
+    Lab.getPath('heredityApprenticeIndividualPage.mainPane').remove();
   },
   
   // ..........................................................

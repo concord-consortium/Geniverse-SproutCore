@@ -22,12 +22,12 @@ Lab.HEREDITY_INTRO = SC.Responder.create(
   didBecomeFirstResponder: function() {
     // Called when this state becomes first responder
     SC.Logger.info("Now showing heredity intro page");
-    Lab.getPath('mainPage.mainPane').remove();
     Lab.getPath('heredityIntroPage.mainPane').append();
   },
   
   willLoseFirstResponder: function() {
     // Called when this state loses first responder
+    Lab.getPath('heredityIntroPage.mainPane').remove();
   }
   
   // ..........................................................
