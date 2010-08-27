@@ -6,6 +6,7 @@ Copyright: ©2010 The Concord Consortium
 For experimenting with Garcon:
 
 * Install node.js from http://github.com/ry/node
+  (Note: you'll need python 2.x for python in the path, not 3.x)
 * Install node package manager 
   curl http://npmjs.org/install.sh | sudo sh
   or
