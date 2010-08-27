@@ -2,7 +2,7 @@ var g = require('./garcon/lib/garçon'),
     server, myApp;
     
 // create a server which will listen on port 8000 by default
-server = new g.Server({proxyHost: 'localhost', proxyPort: 3000});
+server = new g.Server();
 // adding an application named 'myapp' tells the server to respond to
 // the /myapp url and to create a myapp.html file when saving
 myApp = server.addApp({
@@ -26,7 +26,7 @@ myApp.addFrameworks(
   // { path:'frameworks/sproutcore/themes/empty_theme', combineScripts: true },
   // { path:'frameworks/sproutcore/themes/ace', combineScripts: true },
   
-  // finally, the sources for myApp must be added as well
+  // // finally, the sources for myApp must be added as well
   { path: 'apps/' + myApp.name }
 );
 
@@ -40,13 +40,17 @@ myApp.htmlBody = [
   '<script src="/chat/comet.js" type="text/javascript"></script>'
 ].join('\n');
 
-// build the app
 myApp.build(function() {
-  
   // run the server
   server.run();
-  
 });
+
+// use node-http-proxy to proxy as follows:
+
+//   proxy '/geniverse/', :to => 'geniverse.dev.concord.org'
+//   proxy '/chat/', :to => 'geniverse.dev.concord.org'
+//   proxy "/rails", :to => "localhost:3000"
+
 
 var http = require('http'),
     httpProxy = require('http-proxy'),
