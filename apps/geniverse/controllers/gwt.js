@@ -10,7 +10,7 @@
 
   @extends SC.Object
 */
-require('controllers/bred_organisms');
+sc_require('controllers/bred_organisms');
 Geniverse.gwtController = SC.Controller.create(
 /** @scope Geniverse.gwtController.prototype */
 {

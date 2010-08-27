@@ -5,8 +5,8 @@
 /*globals Geniverse */
 Geniverse.marginSize = 15;
 
-require('views/breed_dragon');
-require('views/chromosome');
+sc_require('views/breed_dragon');
+sc_require('views/chromosome');
 
 Geniverse.biologicaViewsMainPage = SC.Page.design({
 

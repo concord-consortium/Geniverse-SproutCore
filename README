@@ -33,3 +33,27 @@ Now run the development Geniverse-SproutCore server:
 And then open http://localhost:4020
 Select 'geniverse' and click 'load application'.
 
+
+---
+
+If the above solution is slow, try using the node.js based proxying instead of having sc-server proxy for you:
+
+* Install node.js from http://github.com/ry/node
+  (Note: you'll need python 2.x for python in the path, not 3.x, for the configure script to work)
+* Install node package manager 
+  curl http://npmjs.org/install.sh | sudo sh
+  or
+  download from http://github.com/isaacs/npm and 'sudo make install'
+
+(If you've installed node to somewhere like /usr/local/lib/node (the default) you may need to add user-write permissions to /usr/local/lib/node/.npm in order for 'npm help' to work:)
+  sudo chmod ugo+w /usr/local/lib/node/.npm
+
+* Install node-http-proxy: 
+    sudo npm install http-proxy
+
+* start up the proxy server and sc-server:
+  node proxy.js &
+  sc-server -v
+  
+  (in a separate window):
+  open http://localhost:9000/geniverse
