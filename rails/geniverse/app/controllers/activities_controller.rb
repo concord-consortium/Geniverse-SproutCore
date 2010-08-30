@@ -19,7 +19,7 @@ class ActivitiesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @activity }
-      format.json { render :json => custom_item_hash(@activity) }
+      format.json #{ render :json => custom_item_hash(@activity) }
     end
   end
 
