@@ -23,7 +23,7 @@ test("basic gwt test", function () {
 });
 
 function runTest() {
-  sGeniverse.gwtController.generateRandomDragon(function (org){
+  Geniverse.gwtController.generateRandomDragon(function (org) {
     start();
     ok(true, "We got called back");
   });
