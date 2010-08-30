@@ -12,7 +12,6 @@ function checkGWTReadiness() {
   if (Geniverse.gwtController.get('isReady')) {
     Geniverse.gwtController.removeObserver('isReady', window, checkGWTReadiness);
     Geniverse.set('isLoaded', YES);
-    start();
     runTest();
   }
 }
@@ -24,8 +23,7 @@ test("basic gwt test", function () {
 });
 
 function runTest() {
-  stop(5000);
-  Geniverse.gwtController.generateRandomDragon(function (org){
+  sGeniverse.gwtController.generateRandomDragon(function (org){
     start();
     ok(true, "We got called back");
   });
