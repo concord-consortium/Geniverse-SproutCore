@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  sex: 1
+  alleles: MyString
+  imageURL: MyString
+  mother_id: 1
+  father_id: 1
+  bred: false
+  user_id: 1
+
+two:
+  name: MyString
+  sex: 1
+  alleles: MyString
+  imageURL: MyString
+  mother_id: 1
+  father_id: 1
+  bred: false
+  user_id: 1

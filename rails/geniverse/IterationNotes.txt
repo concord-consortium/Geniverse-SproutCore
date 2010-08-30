@@ -4,3 +4,7 @@ script/generate rspec_scaffold Activity title:string initial_alleles:string base
 rake
 script/generate feature Activity title:string initial_alleles:string base_channel_name:string max_users_in_room:integer send_bred_dragons:boolean sc_type:string
 rake
+script/generate rspec_scaffold Dragon name:string sex:integer alleles:string imageURL:string mother_id:integer father_id:integer bred:boolean user_id:integer
+rake
+script/generate feature Dragon name:string sex:integer alleles:string imageURL:string mother_id:integer father_id:integer bred:boolean user_id:integer
+rake
