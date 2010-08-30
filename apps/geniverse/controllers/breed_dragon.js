@@ -13,16 +13,28 @@
 Geniverse.breedDragonController = SC.Controller.create(
 /** @scope Geniverse.breedDragonController.prototype */ {
 
-  breedButtonTitle: 'Breed',
   initParentsImmediately: YES,
   gwtReadyBinding: 'Geniverse.gwtController.isReady',
-  
+  isBreeding: NO,
+
   mother: null,
   father: null,
   child: null,
   
+  breedButtonTitle: function () {
+    return (this.get('isBreeding') ? 'Breed' : 'Breeding...');
+  }.property('isBreeding').cacheable(),
+  
+  parentsAreSet: function () {
+    return !!(this.get('mother') && this.get('father'));
+  }.property('mother', 'father').cacheable(),
+  
   initParents: function () {
     var self = this;
+    
+    // set mother, father to null in we are re-initing initParents() (we don't want stale parents to confuse us)
+    this.set('mother', null);
+    this.set('father', null);
     
     function setMother(dragon) {
       SC.RunLoop.begin();
@@ -56,23 +68,31 @@ Geniverse.breedDragonController = SC.Controller.create(
       }
     }
   }.observes('gwtReady'),
- 
-  
+
   breed: function () {
     var self = this;
     var nEggs = 0;
-    this.set('breedButtonTitle', 'Breeding...');
+    this.set('isBreeding', YES);
     Geniverse.eggsController.removeAllEggs(); // clear the breeding pen
     
     function didCreateChild(child) {
       SC.RunLoop.begin();
       child.set('isEgg', true);
       self.set('child', child);
-      if (++nEggs >= 20) self.set('breedButtonTitle', 'Breed');
+      nEggs++;
+      if (nEggs == 20) {
+        self.set('isBreeding', NO);
+      }
+      else if (nEggs > 20) {
+        throw "Oops; GWT called back one too many times!";
+      }
       SC.RunLoop.end();
     }
     
+    // FIXME: what if you hit 'Breed' twice? How do you cancel the old callbacks?
+    console.log('calling breedOrganisms()');
     Geniverse.gwtController.breedOrganisms(20, this.get('mother'), this.get('father'), didCreateChild);
+    console.log('breedOrganisms() called.');
   }
   
 });
