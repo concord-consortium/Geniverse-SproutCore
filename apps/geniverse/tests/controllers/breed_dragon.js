@@ -2,34 +2,69 @@
 // Project:   Geniverse.breedDragonController Unit Test
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Geniverse module test ok equals same stop start */
+/*globals Geniverse module test ok equals same stop start eggs eggsObserver runTest parentsObserver controller testBreeding*/
 
-module("Geniverse.breedDragonController");
+module("Geniverse.breedDragonController", {    
+  teardown: function () {
+    eggs.removeObserver('length', eggsObserver);
+  }
+});
+
+function checkGWTReadiness() {
+  if (Geniverse.gwtController.get('isReady')) {
+    Geniverse.gwtController.removeObserver('isReady', checkGWTReadiness);
+    Geniverse.set('isLoaded', YES);
+    Geniverse.invokeOnce(runTest);
+  }
+}
 
 test("Tests for breeding", function () {
-  /*
   stop();
-  SC.RunLoop.begin();
-  var controller = Geniverse.breedDragonController;
-  controller.initParentsWhenGWTLoads();
-  var momo = function () {
-    alert('momo');
-    controller.breed();
+  Geniverse.gwtController.addObserver('isReady', checkGWTReadiness);
+});
+
+function runTest() {
+  controller = Geniverse.breedDragonController;
+  controller.initParents();
+  console.log('adding parentsObserver');
+  controller.addObserver('parentsAreSet', parentsObserver);
+}
+
+function parentsObserver() {
+  if (controller.get('parentsAreSet')) {
+    controller.removeObserver('parentsAreSet', parentsObserver);
+    controller.invokeOnce(testBreeding);
+  }
+}
+
+function testBreeding() {
+  console.log('calling breed()');
+  Geniverse.breedDragonController.breed();
+  console.log('breed() called');
+  
+  eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
+  console.log('adding eggsObserver');
+  eggs.addObserver('length', eggsObserver);
+}
+
+function checkLength() {
+  var length = eggs.get('length');
+  
+  if (length === 20) {
+    ok(true, 'eggs.length == 20');
     start();
   }
-  controller.invokeLater(momo, 2000);
-  SC.RunLoop.end();
+  else if (length > 20) {
+    // should never be called; 
+    // note start() will have been called at this point so the 'ok' assertion will be an error
+    ok(false, "eggs.length > 20");
+  }
+  console.log(length);
+}
   
-  SC.RunLoop.begin();
-  
-  SC.Logger.log('2222');
-  controller.invokeLast(function() {
-    SC.Logger.log('3333');    
-  var eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
-  equals(eggs.get('length'), 20, "breed() breeds 20 dragons at a time");
-  });
-  SC.RunLoop.end();
-  SC.Logger.log('4444');
-  */
-});
+function eggsObserver() {
+  eggs.invokeOnce(checkLength);
+}
+
+
 

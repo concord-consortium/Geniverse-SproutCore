@@ -19,7 +19,7 @@ describe "activities/show.json.erb" do
     )
   end
 
-  it "renders JSON of @activity as Smartgraphs expects it" do
+  it "renders showing JSON of an activity as SproutCore client expects it" do
 
     render
     # p "response.body:"

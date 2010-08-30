@@ -87,8 +87,16 @@ Geniverse.main = function main() {
   // Geniverse.makeFirstResponder(Geniverse.DEFAULTACTIONS);
 } ;
 
-function main() { 
-  Geniverse.main(); 
-  
-  Geniverse.isLoaded = YES;
+
+Geniverse.checkGWTReadiness = function () {
+  if (Geniverse.gwtController.get('isReady')) {
+    Geniverse.gwtController.removeObserver('isReady', Geniverse, Geniverse.checkGWTReadiness);
+    Geniverse.main();
+    Geniverse.set('isLoaded', YES);
+  }
+};
+
+function main() {
+  Geniverse.gwtController.addObserver('isReady', Geniverse, Geniverse.checkGWTReadiness);
+  Geniverse.checkGWTReadiness();
 }
