@@ -51,7 +51,8 @@ Geniverse.ArticleView = SC.View.extend(SC.StaticLayout,
       
       dragonBinView: Geniverse.DragonBinView.design({
         layout: { top: 145, height: 40, left: 20, width: 240 },
-        isDropTarget: NO
+        isDropTarget: NO,
+        dragonsBinding: 'Geniverse.dragonBinController'        
       }),
       
       newButtonView: SC.ButtonView.design({
