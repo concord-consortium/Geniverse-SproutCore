@@ -6,11 +6,11 @@ require "selenium/client"
 require "selenium/rspec/spec_helper"
 require "selenium/rake/tasks"
 
-dir = File.dirname(__FILE__) 
+dir = File.expand_path(File.dirname(__FILE__))
 
-Rake.application.rake_require(File.join(dir,'selenium-rc'))
+Rake.application.rake_require('selenium-rc',[dir])
 
-TEST_PORT =  ENV['TEST_PORT'] || 4022;
+SC_SERVER_PORT =  ENV['SC_SERVER_PORT'] || 4022;
 RAILS_PORT = ENV['RAILS_PORT'] || 3100;
 SELENIUM_PORT = ENV['SELENIUM_PORT'] || 4244;
 
@@ -18,14 +18,14 @@ TEST_SETTINGS = {
   :host => "localhost",
   :port => SELENIUM_PORT,
   :browser => "*firefox",
-  :url => "http://localhost:#{TEST_PORT}/rails",
+  :url => "http://localhost:#{SC_SERVER_PORT}/rails",
   :timeout_in_seconds => 60
 }
 
 
 $commands = {
   :sproutcore => {
-    :path => "sc-server --mode=test --port #{TEST_PORT}",
+    :path => "sc-server --mode=test --port #{SC_SERVER_PORT}",
     :name => "sproutcore server",
     :pid => nil
   },
@@ -87,7 +87,7 @@ def start_testing_servers
     Rake.application.invoke_task("selenium:rc:start")
   rescue => e
     stop_testing_servers
-    raise "Couldn't start all servers!\n#{e}"
+    raise "Couldn't start all servers!\n#{e.message}\n#{e.backtrace.join("\n")}"
   end
 end
 
