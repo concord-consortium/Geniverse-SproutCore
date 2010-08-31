@@ -85,52 +85,6 @@ statusQueue = function(statusArray){
 };
 
 
-
-/** some globals needed by testAfterPropertyChange() */
-
-var nStops = 0;
-
-function pushStop(t) {  
-  if (nStops === 0) stop(t);
-  nStops++;
-}
-
-function popStart() {
-  if (nStops < 1) throw 'popped too many starts';
-  nStops--;
-  if (nStops === 0) start();
-}
-  
-function testAfterPropertyChange(target, property, testFn) {
-  if (target && target.addObserver) { 
-    // give a healthy 10s timeout to discourage anyone from depending on a timeout to signal failure
-    pushStop(10000);   
-  }
-  else {
-    ok(false, 'testAfterPropertyChange: target is empty or does not have addObserver property.');
-    throw 'testAfterPropertyChange: target is empty or does not have addObserver property';
-  }
-  
-  function observer() {
-    target.removeObserver(property, observer);
-    try {
-      testFn();
-    }
-    catch (e) {
-      CoreTest.plan.error('Error during testAfterPropertyChange! See console log for details.', e);
-      SC.Logger.error(e);
-      popStart();
-      // it is better not to throw the exception here
-      // exceptions thrown in observers cause hard to find problems, the observed object won't send out
-      // future notifications because its notification code will be left in a bad state. 
-      // (see the 'level' variable used in observable)
-      return;
-    }
-    popStart();
-  }
-  target.addObserver(property, observer);
-}
-
 function getSync(url){
   return SC.Request.getUrl(url)
   .header({
