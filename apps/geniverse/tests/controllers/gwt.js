@@ -6,6 +6,8 @@
 
 /*globals Geniverse module test ok equals same stop start checkGWTReadiness runTest */
 
+sc_require ('debug/test_helper');
+
 module("Geniverse.gwt");
 
 function checkGWTReadiness() {
@@ -19,7 +21,6 @@ function checkGWTReadiness() {
 test("basic gwt test", function () {
   stop(5000);
   Geniverse.gwtController.addObserver('isReady', window, checkGWTReadiness);
-  checkGWTReadiness();
 });
 
 function runTest() {

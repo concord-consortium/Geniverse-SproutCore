@@ -21,7 +21,7 @@ Geniverse.OrganismView = SC.View.extend(
   parent: '',       // 'mother' or 'father'. Needed for drag and drop
   sex: 0,        // 0 or 1. Needed for drag and drop
   
-  isDropTarget: YES,
+  isDropTarget: NO,
 	
 	imageView: SC.ImageView.design({
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
