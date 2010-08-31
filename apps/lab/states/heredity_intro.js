@@ -27,6 +27,7 @@ Lab.HEREDITY_INTRO = SC.Responder.create(
   
   willLoseFirstResponder: function() {
     // Called when this state loses first responder
+    SC.Logger.info("Now removing heredity intro page");
     Lab.getPath('heredityIntroPage.mainPane').remove();
   }
   
