@@ -30,11 +30,11 @@ describe "/activities/index.json.erb" do
     # p response.body
     # p ""
     response.body.should match("\"content\":")
-    response.body.should match("value for title")
-    response.body.should match("value for initial_alleles")
-    response.body.should match("value for base_channel_name")
+    response.body.should match("\"title\":\"value for title\"")
+    response.body.should match("\"initialAlleles\":\"value for initial_alleles\"")
+    response.body.should match("\"baseChannelName\":\"value for base_channel_name\"")
     response.body.should match("\"maxUsersInRoom\":" + 1.to_s)
     response.body.should match("\"sendBredDragons\":" + false.to_s)
-    response.body.should match("value for sc_type")
+    response.body.should match("\"scType\":\"value for sc_type\"")
   end
 end
