@@ -7,7 +7,7 @@ describe "SC/Rails Integration Test" do
     alias :page :selenium_driver
     
     before(:all) do
-      `cd #{dir}/../rails/geniverse && RAILS_ENV=test rake db:migrate && RAILS_ENV=test rake app:setup`
+      puts `cd #{dir}/../rails/geniverse; RAILS_ENV=test rake db:migrate; RAILS_ENV=test rake app:setup`
       start_testing_servers
       @selenium_driver = new_test
       page.start_new_browser_session
