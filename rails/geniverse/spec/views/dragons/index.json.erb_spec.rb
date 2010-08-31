@@ -30,9 +30,9 @@ describe "/dragons/index.json.erb" do
 
   it "renders a list of dragons" do
     render
-    p "response.body:"
-    p response.body
-    p ""
+    # p "response.body:"
+    # p response.body
+    # p ""
     # response.should have_tag("tr>td", "value for name".to_s, 2)
     # response.should have_tag("tr>td", 1.to_s, 2)
     # response.should have_tag("tr>td", "value for alleles".to_s, 2)
