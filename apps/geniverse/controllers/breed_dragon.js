@@ -25,7 +25,7 @@ Geniverse.breedDragonController = SC.Controller.create(
     return (this.get('isBreeding') ? 'Breed' : 'Breeding...');
   }.property('isBreeding').cacheable(),
   
-  parentsAreSet: function () {
+  hasParents: function () {
     return !!(this.get('mother') && this.get('father'));
   }.property('mother', 'father').cacheable(),
   
@@ -48,7 +48,7 @@ Geniverse.breedDragonController = SC.Controller.create(
       SC.RunLoop.end();
     }
     
-    if (this.get('gwtReady') == YES && this.get('initParentsImmediately') == YES) {
+    if (this.get('gwtReady') && this.get('initParentsImmediately')) {
       SC.Logger.log('gwt ready. initializing parents');
       
       var alleles = Geniverse.activityController.getInitialAlleles('f');
@@ -79,20 +79,20 @@ Geniverse.breedDragonController = SC.Controller.create(
       SC.RunLoop.begin();
       child.set('isEgg', true);
       self.set('child', child);
+      SC.RunLoop.end();
+      
       nEggs++;
       if (nEggs == 20) {
+        SC.RunLoop.begin();
         self.set('isBreeding', NO);
+        SC.RunLoop.end();
       }
       else if (nEggs > 20) {
         throw "Oops; GWT called back one too many times!";
       }
-      SC.RunLoop.end();
     }
-    
     // FIXME: what if you hit 'Breed' twice? How do you cancel the old callbacks?
-    console.log('calling breedOrganisms()');
     Geniverse.gwtController.breedOrganisms(20, this.get('mother'), this.get('father'), didCreateChild);
-    console.log('breedOrganisms() called.');
   }
   
 });
