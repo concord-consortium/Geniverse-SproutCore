@@ -21,10 +21,6 @@ Geniverse.breedDragonController = SC.Controller.create(
   father: null,
   child: null,
   
-  breedButtonTitle: function () {
-    return this.get('isBreeding') ? 'Breeding...' : 'Breed';
-  }.property('isBreeding').cacheable(),
-  
   hasParents: function () {
     return !!(this.get('mother') && this.get('father'));
   }.property('mother', 'father').cacheable(),
