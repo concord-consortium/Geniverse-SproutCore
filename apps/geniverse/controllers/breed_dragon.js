@@ -22,7 +22,7 @@ Geniverse.breedDragonController = SC.Controller.create(
   child: null,
   
   breedButtonTitle: function () {
-    return (this.get('isBreeding') ? 'Breed' : 'Breeding...');
+    return this.get('isBreeding') ? 'Breeding...' : 'Breed';
   }.property('isBreeding').cacheable(),
   
   hasParents: function () {
@@ -32,7 +32,8 @@ Geniverse.breedDragonController = SC.Controller.create(
   initParents: function () {
     var self = this;
     
-    // set mother, father to null in we are re-initing initParents() (we don't want stale parents to confuse us)
+    // set mother, father to null in case we are re-running initParents() 
+    // (we wouldn't want hasParents to be YES because of stale parents)
     this.set('mother', null);
     this.set('father', null);
     
