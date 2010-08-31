@@ -4,7 +4,9 @@ actionpack -v2.3.8
 activerecord -v2.3.8
 activeresource -v2.3.8
 activesupport -v2.3.8
+annotate -v2.4.0
 builder -v2.1.2
+ci_reporter -v1.6.0
 cucumber -v0.8.5
 cucumber-rails -v0.3.2
 database_cleaner -v0.5.2
@@ -19,6 +21,7 @@ rake -v0.8.7
 rspec -v1.3.0
 rspec-rails -v1.3.2
 selenium-client -v1.2.18
+selenium-webdriver -v0.0.27
 sqlite3-ruby -v1.3.1
 term-ansicolor -v1.0.5
 trollop -v1.16.2
