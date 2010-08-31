@@ -13,42 +13,17 @@
 Geniverse.DragonBinView = SC.View.extend( SC.Border,
 /** @scope Geniverse.PublishedArticles.prototype */ {
   
-  dragonsBinding: 'Geniverse.dragonBinController.dragons',
-  
   dragonViews: [],
-  
-  init: function() {
-    SC.Timer.schedule({
-			target: this,
-			action: 'stupidUpdate',
-			interval: 200,
-			repeats: YES
-		});
-		
-    sc_super();
-  },
-  
-  // FIXME: updateDragonViews() does not seem to correctly get updated on dragons change
-  // unless we explicitly call propertyDidChange...
-  stupidUpdate: function() {
-    this.propertyDidChange('dragons');
-  },
-
-  borderStyle: function(){
-    if (this.get('isDropTarget')){
-      return SC.BORDER_BLACK;
-    } else {
-      return null;
-    }
-  }.property().cacheable(),
-  
+  dragonBinIsEmptyBinding: 'Geniverse.dragonBinController.isEmpty',
   isDropTarget: YES,
   
-  childViews: 'addDragonsLabel'.w(),
+  borderStyle: function () {
+    return this.get('isDropTarget') ? SC.BORDER_BLACK : null;
+  }.property('isDropTarget').cacheable(),
   
   showAddDragonsLabel: function() {
-    return (this.get('isDropTarget') && Geniverse.dragonBinController.get('isEmpty'));
-  }.property('Geniverse.dragonBinController.isEmpty'),
+    return (this.get('isDropTarget') && this.get('dragonBinIsEmpty'));
+  }.property('dragonBinIsEmpty'),
   
   addDragonsLabel: SC.LabelView.design({
     layout: {left: 5, top: 0, right: 5, bottom: 0},
@@ -56,33 +31,27 @@ Geniverse.DragonBinView = SC.View.extend( SC.Border,
     isVisibleBinding: '*parentView.showAddDragonsLabel'
   }),
   
-  updateDragonViews: function() {
-    function contains(a, obj) {
-      var i = a.length;
-      while (i--) {
-        if (a[i] === obj) {
-          return true;
-        }
-      }
-      return false;
-    }
+  childViews: 'addDragonsLabel'.w(),
+    
+  updateDragonViews: function () {
+    console.log('observer fired.');
     
     // clear dragons
     var dragonViews = this.get('dragonViews');
-    for (var j = 0; j < dragonViews.length; j++){
-      this.removeChild(dragonViews[j]);
+    for (var i = 0, ii = dragonViews.get('length'); i < ii; i++) {
+      this.removeChild(dragonViews[i]);
     }
     this.set('dragonViews', []);
     
     // add dragon views
     var dragons = this.get('dragons');
-    for (var i = 0; i < dragons.length; i++){
-        this.addDragonView(dragons[i], i);
+    for (i = 0, ii = dragons.get('length'); i < ii; i++) {
+      this.addDragonView(dragons.objectAt(i), i);
     }
-    
-  }.observes('dragons'),
+  }.observes('*dragons.[]'),
   
-  addDragonView: function(dragon, i) {
+  addDragonView: function (dragon, i) {
+    console.log('adding dragon view');
     var height = this.get('layout').height;
     var dragonView = Geniverse.OrganismView.create({
       layout: {top: 0, bottom: 0, left: (i * height), width: height},
@@ -92,18 +61,13 @@ Geniverse.DragonBinView = SC.View.extend( SC.Border,
     this.appendChild(dragonView);
     dragonView.set('organism', dragon);
     
-    this.get('dragonViews')[i] = dragonView;
+    this.get('dragonViews').insertAt(i, dragonView);
   },
   
   // drag methods.
 	acceptDragOperation: function(drag, op) {
 	  var dragon = this._getSourceDragon(drag);
-	  var dragons = Geniverse.dragonBinController.get('dragons');
-	  dragons.push(dragon);
-	  
-    Geniverse.dragonBinController.set('dragons', dragons);
-    this.propertyDidChange('showAddDragonsLabel');    // FIXME: why doesn't showAddDragonsLabel update automatically?
-	  
+	  Geniverse.dragonBinController.pushObject(dragon);
     return op ;
   },
 

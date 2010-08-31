@@ -11,22 +11,17 @@
   @extends SC.Object
 */
 Geniverse.dragonBinController = SC.ArrayController.create(
-/** @scope Geniverse.dragonBinController.prototype */ {
-
-  // TODO: Add your own code here.
+/** @scope Geniverse.dragonBinController.prototype */ {  
+  content: [],
   
-  dragons: [],
+  isEmpty: function () {
+    return this.get('length') === 0;
+  }.property('[]').cacheable(),
   
-  contentBinding: 'Geniverse.dragonBinController.dragons',
-  
-  isEmpty: function() {
-    return this.get('dragons').length === 0;
-  }.property('dragons').cacheable(),
-  
-  clearDragons: function() {
-    this.set('dragons', []);
-    this.propertyDidChange('dragons');      // FIXME: This doesn't update isEmpty
-    this.propertyDidChange('isEmpty');
+  clearDragons: function () {
+    this.set('content', []);
+    // this.propertyDidChange('dragons');      // FIXME: This doesn't update isEmpty
+    // this.propertyDidChange('isEmpty');
   }
 
 }) ;

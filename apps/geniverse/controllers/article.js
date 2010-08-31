@@ -83,7 +83,7 @@ Geniverse.articleController = SC.ObjectController.create(
     SC.Logger.log("editing, comb = "+article);
     this.set('combinedArticle', article);
     this.set('currentArticle', article);
-    this.set('currentDragons', Geniverse.dragonBinController.get('dragons').slice(0));  // clone array
+    this.set('currentDragons', Geniverse.dragonBinController.get('content').slice(0));  // clone array
     
     this.setClaimAndEvidence(article);
       
@@ -107,13 +107,13 @@ Geniverse.articleController = SC.ObjectController.create(
   previewDraftAction: function() {
     var editedArticle = this.get('combinedArticle');
     var textChanged = editedArticle !== this.get('currentArticle');
-    var dragonsChanged = !Geniverse.dragonBinController.get('dragons').compareArrays(this.get('currentDragons'));
+    var dragonsChanged = !Geniverse.dragonBinController.get('content').compareArrays(this.get('currentDragons'));
     if (textChanged || dragonsChanged){
        this.set('isDraftDirty', YES);
     }
     
     var htmlizedArticle = this._htmlize(editedArticle);
-    var publishedDragonsChanged = !Geniverse.dragonBinController.get('dragons').compareArrays(this.get('publishedDragons'));
+    var publishedDragonsChanged = !Geniverse.dragonBinController.get('content').compareArrays(this.get('publishedDragons'));
     this.set('isDraftChanged', (htmlizedArticle !== this.get('publishedArticle') || publishedDragonsChanged));
     
     this.set('combinedArticle', htmlizedArticle);
@@ -127,7 +127,7 @@ Geniverse.articleController = SC.ObjectController.create(
     var articleDraftChannel = this.get('articleDraftChannel');
     if (articleDraftChannel !== null){
       var username = CcChat.chatController.get('username');
-      var dragons = this._getGOrganismArray(Geniverse.dragonBinController.get('dragons'));
+      var dragons = this._getGOrganismArray(Geniverse.dragonBinController.get('content'));
       var message = {article: article, dragons: dragons, author: username};
       CcChat.chatController.post(articleDraftChannel, message);
       
@@ -147,12 +147,12 @@ Geniverse.articleController = SC.ObjectController.create(
     var articleDraftChannel = this.get('articlePublishingChannel');
     if (articleDraftChannel !== null){
       var groupName = "Group "+ (parseInt(CcChat.chatRoomController.get('channelIndex'), 10) + 1);
-      var dragons = this._getGOrganismArray(Geniverse.dragonBinController.get('dragons'));
+      var dragons = this._getGOrganismArray(Geniverse.dragonBinController.get('content'));
       var message = {article: article, dragons: dragons, author: groupName};
       CcChat.chatController.post(articleDraftChannel, message);
       
       this.set('publishedArticle', article);
-      this.set('publishedDragons', Geniverse.dragonBinController.get('dragons'));
+      this.set('publishedDragons', Geniverse.dragonBinController.get('content'));
     }
   },
   
@@ -204,7 +204,7 @@ Geniverse.articleController = SC.ObjectController.create(
   receiveDragons: function(gOrganismArray) {
     var dragonArray = this.createDragonArray(gOrganismArray);
     SC.RunLoop.begin();
-    Geniverse.dragonBinController.set('dragons', dragonArray);
+    Geniverse.dragonBinController.set('content', dragonArray);
     Geniverse.dragonBinController.propertyDidChange('isEmpty');
     Geniverse.dragonBinController.propertyDidChange('dragons');
     SC.RunLoop.end();
