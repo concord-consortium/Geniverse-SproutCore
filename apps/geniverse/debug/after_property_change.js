@@ -1,4 +1,4 @@
-/** some globals needed by testAfterPropertyChange() */
+/** some globals needed by afterPropertyChange() */
 
 var nStops = 0;
 
@@ -13,21 +13,21 @@ function popStart() {
   if (nStops === 0) start();
 }
 
-function testAfterPropertyChange(target, property, value, testFn) {
+function afterPropertyChange(target, property, value, testFn) {
   if (target && target.addObserver) { 
     // give a healthy 10s timeout to discourage anyone from depending on a timeout to signal failure
     pushStop(10000);  
   }
   else {
-    ok(false, 'testAfterPropertyChange: target is empty or does not have addObserver property.');
-    throw 'testAfterPropertyChange: target is empty or does not have addObserver property';
+    ok(false, 'afterPropertyChange: target is empty or does not have addObserver property.');
+    throw 'afterPropertyChange: target is empty or does not have addObserver property';
   }
   
   if (testFn === undefined) {
     testFn = value;
     value = undefined;
   }
-  if (!testFn) ok(false, 'testAfterPropertyChange: testFn is undefined.');
+  if (!testFn) ok(false, 'afterPropertyChange: testFn is undefined.');
   
   function observer() {
     // if the property does not have the specified value yet, nothing to do
@@ -38,7 +38,7 @@ function testAfterPropertyChange(target, property, value, testFn) {
       testFn();
     }
     catch (e) {
-      CoreTest.plan.error('Error during testAfterPropertyChange! See console log for details.', e);
+      CoreTest.plan.error('Error during afterPropertyChange! See console log for details.', e);
       console.error(e);
       popStart();
       // it is better not to throw the exception here
