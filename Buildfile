@@ -18,3 +18,7 @@ config :geniverse,
 # proxy '/chat/', :to => 'geniverse.dev.concord.org'
 # proxy '/chat/', :to => 'localhost:9292'
 # proxy "/rails", :to => "localhost:3000"
+
+mode :test do
+  proxy '/rails', :to => "localhost:#{ENV['RAILS_PORT'] || '3100'}"
+end
