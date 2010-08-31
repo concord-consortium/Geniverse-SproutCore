@@ -2,39 +2,60 @@
 // Project:   Geniverse.breedDragonController Unit Test
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Geniverse module test ok equals same stop start */
+/*globals Geniverse module test ok equals same stop start eggs gwtObserver waitForParents parentsObserver controller testBreeding isBreedingObserver */
 
-module("Geniverse.breedDragonController");
+module("Geniverse.breedDragonController", {
+  setup: function () {
+    controller = Geniverse.breedDragonController;
+    eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
+  },
+  
+  teardown: function () {
+    Geniverse.gwtController.removeObserver('isReady', gwtObserver);
+    controller.removeObserver('hasParents', parentsObserver);
+    controller.removeObserver('isBreeding', isBreedingObserver);
+  }
+});
 
-function checkGWTReadiness() {
+function gwtObserver() {
   if (Geniverse.gwtController.get('isReady')) {
-    Geniverse.gwtController.removeObserver('isReady', window, checkGWTReadiness);
     Geniverse.set('isLoaded', YES);
-    runTest();
+    Geniverse.invokeOnce(waitForParents);
   }
 }
 
-function runTest() {
-  SC.RunLoop.begin();
-  var controller = Geniverse.breedDragonController;
+function waitForParents() {
   controller.initParents();
-  controller.invokeLast(run2);
-  SC.RunLoop.end();
+  controller.addObserver('hasParents', parentsObserver);
 }
 
-function run2() {
-  start();
-  Geniverse.breedDragonController.breed();
-  SC.Logger.log('2222');
-  SC.Logger.log('3333');
-  var eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
-  SC.Logger.log('#eggs = ' + eggs.get('length'));
-  equals(eggs.get('length'), 20, "breed() breeds 20 dragons at a time");
-  SC.Logger.log('4444');
+function parentsObserver() {
+  if (controller.get('hasParents')) {
+    controller.removeObserver('hasParents', parentsObserver);
+    controller.invokeOnce(testBreeding);
+  }
 }
 
-test("Tests for breeding", function () {
+function testBreeding() {  
+  ok(!controller.get('isBreeding'), 'isBreeding should be NO before breed() is called');
+  controller.breed();
+  ok(controller.get('isBreeding'), 'isBreeding should be YES immediately after breed()');
+  equals(eggs.get('length'), 0, 'EGGS_QUERY result set should have 0 eggs immediately after breed()');
+  
+  controller.addObserver('isBreeding', isBreedingObserver);
+}
+
+function isBreedingObserver() {
+  if (!controller.get('isBreeding')) {
+    console.log('isBreeding = NO');
+    controller.removeObserver('isBreeding', isBreedingObserver);
+    equals(eggs.get('length'), 20, 'EGGS_QUERY result set should have 20 eggs after isBreeding is set to NO');
+    start();
+  }
+}
+
+test("Test that breed() breeds 20 eggs", function () {
   stop(10000);
-  Geniverse.gwtController.addObserver('isReady', window, checkGWTReadiness);
+  Geniverse.gwtController.addObserver('isReady', gwtObserver);
 });
 

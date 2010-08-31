@@ -13,16 +13,25 @@
 Geniverse.breedDragonController = SC.Controller.create(
 /** @scope Geniverse.breedDragonController.prototype */ {
 
-  breedButtonTitle: 'Breed',
   initParentsImmediately: YES,
   gwtReadyBinding: 'Geniverse.gwtController.isReady',
-  
+  isBreeding: NO,
+
   mother: null,
   father: null,
   child: null,
   
+  hasParents: function () {
+    return !!(this.get('mother') && this.get('father'));
+  }.property('mother', 'father').cacheable(),
+  
   initParents: function () {
     var self = this;
+    
+    // set mother, father to null in case we are re-running initParents() 
+    // (we wouldn't want hasParents to be YES because of stale parents)
+    this.set('mother', null);
+    this.set('father', null);
     
     function setMother(dragon) {
       SC.RunLoop.begin();
@@ -36,7 +45,7 @@ Geniverse.breedDragonController = SC.Controller.create(
       SC.RunLoop.end();
     }
     
-    if (this.get('gwtReady') == YES && this.get('initParentsImmediately') == YES) {
+    if (this.get('gwtReady') && this.get('initParentsImmediately')) {
       SC.Logger.log('gwt ready. initializing parents');
       
       var alleles = Geniverse.activityController.getInitialAlleles('f');
@@ -56,22 +65,30 @@ Geniverse.breedDragonController = SC.Controller.create(
       }
     }
   }.observes('gwtReady'),
- 
-  
+
   breed: function () {
     var self = this;
     var nEggs = 0;
-    this.set('breedButtonTitle', 'Breeding...');
+    this.set('isBreeding', YES);
     Geniverse.eggsController.removeAllEggs(); // clear the breeding pen
     
     function didCreateChild(child) {
       SC.RunLoop.begin();
       child.set('isEgg', true);
       self.set('child', child);
-      if (++nEggs >= 20) self.set('breedButtonTitle', 'Breed');
       SC.RunLoop.end();
+      
+      nEggs++;
+      if (nEggs == 20) {
+        SC.RunLoop.begin();
+        self.set('isBreeding', NO);
+        SC.RunLoop.end();
+      }
+      else if (nEggs > 20) {
+        throw "Oops; GWT called back one too many times!";
+      }
     }
-    
+    // FIXME: what if you hit 'Breed' twice? How do you cancel the old callbacks?
     Geniverse.gwtController.breedOrganisms(20, this.get('mother'), this.get('father'), didCreateChild);
   }
   

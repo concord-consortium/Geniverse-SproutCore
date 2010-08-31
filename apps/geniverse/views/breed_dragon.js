@@ -76,7 +76,10 @@ Geniverse.BreedDragonView = SC.View.extend(
 		layout: { centerX: 0, bottom: 0, width: 100, height: 24 },
 		target: 'Geniverse.breedDragonController',
 		action: "breed",
-		titleBinding: 'Geniverse.breedDragonController.breedButtonTitle'
+		isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
+		title: function () {
+		  return this.get('isBreeding') ? 'Breeding...' :  'Breed';
+		}.property('isBreeding').cacheable()
 	}),
 	
 	viewDidResize: function() {
