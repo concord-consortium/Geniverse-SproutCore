@@ -75,11 +75,12 @@ Geniverse.breedDragonController = SC.Controller.create(
     if (this._callback_version === undefined) this._callback_version = 0;
     this._callback_version++;
 
-    // wrap callback passed to GWT with a version number; this way we can reject callbacks from earlier calls to breed()
+    // wrap callback passed to GWT with a version number; this way we can reject callbacks from outdated calls to breed()
     var didCreateChild = function (version) {
       return function (child) {
         if (version !== self._callback_version) {
-          console.log('rejecting version %d callback', version);
+          console.log('breedDragonController: rejecting callback from earlier breed() ' +
+            '(callback version = %d, current version = %d)', version, self._callback_version);
           return;
         }
         SC.RunLoop.begin();
@@ -99,7 +100,6 @@ Geniverse.breedDragonController = SC.Controller.create(
       };
     }(this._callback_version);
 
-    // FIXME: what if you hit 'Breed' twice? How do you cancel the old callbacks?
     Geniverse.gwtController.breedOrganisms(20, this.get('mother'), this.get('father'), didCreateChild);
   }
   
