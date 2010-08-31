@@ -8,3 +8,4 @@ script/generate rspec_scaffold Dragon name:string sex:integer alleles:string ima
 rake
 script/generate feature Dragon name:string sex:integer alleles:string imageURL:string mother_id:integer father_id:integer bred:boolean user_id:integer
 rake
+annotate
