@@ -21,18 +21,15 @@ Geniverse.breedDragonController = SC.Controller.create(
   father: null,
   child: null,
   
-  breedButtonTitle: function () {
-    return (this.get('isBreeding') ? 'Breed' : 'Breeding...');
-  }.property('isBreeding').cacheable(),
-  
-  parentsAreSet: function () {
+  hasParents: function () {
     return !!(this.get('mother') && this.get('father'));
   }.property('mother', 'father').cacheable(),
   
   initParents: function () {
     var self = this;
     
-    // set mother, father to null in we are re-initing initParents() (we don't want stale parents to confuse us)
+    // set mother, father to null in case we are re-running initParents() 
+    // (we wouldn't want hasParents to be YES because of stale parents)
     this.set('mother', null);
     this.set('father', null);
     
@@ -48,7 +45,7 @@ Geniverse.breedDragonController = SC.Controller.create(
       SC.RunLoop.end();
     }
     
-    if (this.get('gwtReady') == YES && this.get('initParentsImmediately') == YES) {
+    if (this.get('gwtReady') && this.get('initParentsImmediately')) {
       SC.Logger.log('gwt ready. initializing parents');
       
       var alleles = Geniverse.activityController.getInitialAlleles('f');
@@ -79,20 +76,20 @@ Geniverse.breedDragonController = SC.Controller.create(
       SC.RunLoop.begin();
       child.set('isEgg', true);
       self.set('child', child);
+      SC.RunLoop.end();
+      
       nEggs++;
       if (nEggs == 20) {
+        SC.RunLoop.begin();
         self.set('isBreeding', NO);
+        SC.RunLoop.end();
       }
       else if (nEggs > 20) {
         throw "Oops; GWT called back one too many times!";
       }
-      SC.RunLoop.end();
     }
-    
     // FIXME: what if you hit 'Breed' twice? How do you cancel the old callbacks?
-    console.log('calling breedOrganisms()');
     Geniverse.gwtController.breedOrganisms(20, this.get('mother'), this.get('father'), didCreateChild);
-    console.log('breedOrganisms() called.');
   }
   
 });
