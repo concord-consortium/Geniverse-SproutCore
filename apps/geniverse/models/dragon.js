@@ -23,6 +23,7 @@ Geniverse.Dragon = SC.Record.extend(
   father: SC.Record.toOne("Geniverse.Dragon"),
   bred: SC.Record.attr(Boolean),
   user: SC.Record.toOne("Geniverse.User"),
+  stableOrder: SC.Record.attr(Number),
   
   // attributes that don't want to be persisted
   gOrganism: null,

@@ -37,7 +37,7 @@ Geniverse.main = function main() {
   fetchDragons = function() {
     if (Geniverse.loginController.get('loggedIn')) {
       var user = Geniverse.userController.get('content');
-      var query = SC.Query.local(Geniverse.Dragon,{conditions: 'bred = true AND isEgg = false AND user = {user}', user: user, orderBy: 'storeKey'});
+      var query = SC.Query.local(Geniverse.Dragon,{conditions: 'bred = true AND isEgg = false AND user = {user}', user: user, orderBy: 'stableOrder', /*orderBy: 'storeKey'*/});
       var bred_organisms = Geniverse.store.find(query);
       Geniverse.bredOrganismsController.set('content', bred_organisms);
       Geniverse.loginController.removeObserver('loggedIn', fetchDragons);

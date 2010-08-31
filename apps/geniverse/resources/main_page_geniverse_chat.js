@@ -182,10 +182,13 @@ Geniverse.mainChatExamplePage = SC.Page.design({
     }),
     autoScrollTriggerBinding: 'Geniverse.bredOrganismsController.length',
     isDropTarget: YES,
+    dragonNum: 0,
     acceptDragOperation: function(drag, op) {
       SC.Logger.log('ENTER bredDragonsScrollView.acceptDragOperation');
       var dragon = this._getSourceDragon(drag);
       dragon.set('isEgg', false);
+      dragon.set('stableOrder', this.get('dragonNum'));
+      ++this.dragonNum;
 
       this.invokeLast(function () {
         SC.RunLoop.begin();
