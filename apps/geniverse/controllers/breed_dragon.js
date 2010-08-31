@@ -72,22 +72,33 @@ Geniverse.breedDragonController = SC.Controller.create(
     this.set('isBreeding', YES);
     Geniverse.eggsController.removeAllEggs(); // clear the breeding pen
     
-    function didCreateChild(child) {
-      SC.RunLoop.begin();
-      child.set('isEgg', true);
-      self.set('child', child);
-      SC.RunLoop.end();
-      
-      nEggs++;
-      if (nEggs == 20) {
+    if (this._callback_version === undefined) this._callback_version = 0;
+    this._callback_version++;
+
+    // wrap callback passed to GWT with a version number; this way we can reject callbacks from earlier calls to breed()
+    var didCreateChild = function (version) {
+      return function (child) {
+        if (version !== self._callback_version) {
+          console.log('rejecting version %d callback', version);
+          return;
+        }
         SC.RunLoop.begin();
-        self.set('isBreeding', NO);
+        child.set('isEgg', true);
+        self.set('child', child);
         SC.RunLoop.end();
-      }
-      else if (nEggs > 20) {
-        throw "Oops; GWT called back one too many times!";
-      }
-    }
+
+        nEggs++;
+        if (nEggs == 20) {
+          SC.RunLoop.begin();
+          self.set('isBreeding', NO);
+          SC.RunLoop.end();
+        }
+        else if (nEggs > 20) {
+          throw "Oops; GWT called back one too many times!";
+        }
+      };
+    }(this._callback_version);
+
     // FIXME: what if you hit 'Breed' twice? How do you cancel the old callbacks?
     Geniverse.gwtController.breedOrganisms(20, this.get('mother'), this.get('father'), didCreateChild);
   }
