@@ -34,8 +34,6 @@ Geniverse.DragonBinView = SC.View.extend( SC.Border,
   childViews: 'addDragonsLabel'.w(),
     
   updateDragonViews: function () {
-    console.log('observer fired.');
-    
     // clear dragons
     var dragonViews = this.get('dragonViews');
     for (var i = 0, ii = dragonViews.get('length'); i < ii; i++) {
@@ -51,7 +49,6 @@ Geniverse.DragonBinView = SC.View.extend( SC.Border,
   }.observes('*dragons.[]'),
   
   addDragonView: function (dragon, i) {
-    console.log('adding dragon view');
     var height = this.get('layout').height;
     var dragonView = Geniverse.OrganismView.create({
       layout: {top: 0, bottom: 0, left: (i * height), width: height},

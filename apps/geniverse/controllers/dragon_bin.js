@@ -20,8 +20,5 @@ Geniverse.dragonBinController = SC.ArrayController.create(
   
   clearDragons: function () {
     this.set('content', []);
-    // this.propertyDidChange('dragons');      // FIXME: This doesn't update isEmpty
-    // this.propertyDidChange('isEmpty');
   }
-
 }) ;
