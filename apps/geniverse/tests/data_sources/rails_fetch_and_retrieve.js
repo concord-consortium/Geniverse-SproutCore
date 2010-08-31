@@ -4,7 +4,7 @@
 // http://localhost:4020/Geniverse/en/current/tests/models/activity.html
 //
 // ==========================================================================
-/*globals Geniverse module test ok equals same stop start statusEquals statusNotify statusQueue testAfterPropertyChange */
+/*globals Geniverse module test ok equals same stop start statusEquals statusNotify statusQueue afterPropertyChange */
 
 // { setup: store: SC.Store.create().from('Geniverse.RailsDataSource') }
 
@@ -110,7 +110,7 @@ test("do we get activities back from rails", function() {
 //   var activities = Geniverse.store.find(Geniverse.ACTIVITIES_QUERY);
 //   var firstQuestion;
 //   
-//   testAfterPropertyChange(activities, 'status', function () {        
+//   afterPropertyChange(activities, 'status', function () {        
 //     statusEquals(activities, SC.Record.READY_CLEAN, "activities's status is READY_CLEAN");
 // 
 //     var firstActivity = activities.objectAt(0);
@@ -122,7 +122,7 @@ test("do we get activities back from rails", function() {
 //     firstQuestion = questions.objectAt(0);
 //     ok(firstQuestion, "We have a firstQuestion");
 //     
-//     testAfterPropertyChange(firstQuestion, 'status', function () {
+//     afterPropertyChange(firstQuestion, 'status', function () {
 //       statusEquals(firstQuestion, SC.Record.READY_CLEAN, "question's status is READY_CLEAN");
 //       ok(firstQuestion.get('prompt'), "first question has a valid prompt");
 //     });
