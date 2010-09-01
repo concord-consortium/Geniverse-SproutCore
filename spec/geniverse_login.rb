@@ -45,8 +45,8 @@ App.start do |app|
 end
 
 
-App.window.move_to 1, 1 # Have a slight offset for Firefox so that the window will actually be moved
-App.window.resize_to 1024, 768 
+App.move_to 1, 1 
+App.resize_to 1024, 768
 
 
 App.define_path 'appContainer', 'mainChatExamplePage.mainPane.appContainer', View
@@ -78,6 +78,7 @@ describe "App Controller Test" do
     @login_field.type "Test"
     @password_field.type "Test"
     @login_button.click
+    
     @welcome_label.should have_value /^Welcome Test.*/
     @welcome_label.should be_visible_in_window
   end
