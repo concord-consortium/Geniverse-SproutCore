@@ -9,3 +9,8 @@ rake
 script/generate feature Dragon name:string sex:integer alleles:string imageURL:string mother_id:integer father_id:integer bred:boolean user_id:integer
 rake
 annotate
+script/generate rspec_scaffold User username:string password_hash:string
+rake
+script/generate feature User username:string password_hash:string
+rake
+annotate
