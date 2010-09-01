@@ -81,8 +81,8 @@ describe "App Controller Test" do
   end
   
   it "login" do
-    @login_field.type_append "Test"
-    @password_field.type_append "Test"
+    @login_field.type "Test"
+    @password_field.type "Test"
     @login_button.click
   end
   
