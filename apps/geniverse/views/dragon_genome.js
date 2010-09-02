@@ -14,25 +14,78 @@ sc_require('views/dragon_chromosome');
 Geniverse.DragonGenomeView = SC.View.extend(
 /** @scope Geniverse.DragonGenomeView.prototype */ {
   controller: null,
+  
+  dragonBinding: 'Geniverse.dragonGenomeController.content',
 
-  childViews: 'dragonView motherLabel fatherLabel chromosomeA1View chromosomeA2View chromosomeX1View chromosomeB1View chromosomeB2View chromosomeXYView'.w(),
+  childViews: 'dragonView motherLabel fatherLabel chromosomeA1View chromosomeA2View chromosomeAXView \
+              chromosomeB1View chromosomeB2View chromosomeBXView generateNewDragonButton'.w(),
   
   // FIXME These should observe the controller's
-  a1Alleles: ['h','s'],
-  b1Alleles: ['h','s'],
-  a2Alleles: ['w','l','t'],
-  b2Alleles: ['w','l','t'],
-  x1Alleles: ['p','f','a','b'],
+  // a1Alleles: ['h','s'],
+  a1Alleles: function() {
+    var alleles = Geniverse.dragonGenomeController.get('alleles');
+    if (!alleles || !alleles[1]){
+      return [];
+    }
+    return alleles[1]['A'];
+  }.property('dragon').cacheable(),
+  
+  b1Alleles: function() {
+    var alleles = Geniverse.dragonGenomeController.get('alleles');
+    if (!alleles || !alleles[1]){
+      return [];
+    }
+    return alleles[1]['B'];
+  }.property('dragon').cacheable(),
+  
+  a2Alleles: function() {
+    var alleles = Geniverse.dragonGenomeController.get('alleles');
+    if (!alleles || !alleles[2]){
+      return [];
+    }
+    return alleles[2]['A'];
+  }.property('dragon').cacheable(),
+  
+  b2Alleles: function() {
+    var alleles = Geniverse.dragonGenomeController.get('alleles');
+    if (!alleles || !alleles[2]){
+      return [];
+    }
+    return alleles[2]['B'];
+  }.property('dragon').cacheable(),
+  
+  aXAlleles: function() {
+    var alleles = Geniverse.dragonGenomeController.get('alleles');
+    if (!alleles || !alleles['X']){
+      return [];
+    }
+    return alleles['X']['A'];
+  }.property('dragon').cacheable(),
+  
+  bXAlleles: function() {
+    var alleles = Geniverse.dragonGenomeController.get('alleles');
+    if (!alleles || !alleles['X'] || !alleles['X']['B']){
+      return [];
+    }
+    return alleles['X']['B'];
+  }.property('dragon').cacheable(),
   // xyAlleles: ['p','f','a','b'],
-  xyAlleles: [],
+  // xyAlleles: [],
   
   hiddenGenes: ['s','p'],
   
   dragonView: Geniverse.OrganismView.design({
-		layout: {top: 18, right: 0, width: 180, height: 150},
+		layout: {top: 18, left: 260, width: 180, height: 150},
 	  organismBinding: "*parentView.dragon",
-	  allowDrop: YES,
-	  isVisibleBinding: "*parentView.showDragon"
+	  allowDrop: YES
+//	  isVisibleBinding: "*parentView.showDragon"
+	}),
+	
+	generateNewDragonButton: SC.ButtonView.extend({
+		layout: {top: 280, left: 250, width: 200, height: 25},
+	  title: "Create a new dragon",
+	  action: 'Geniverse.dragonGenomeController.initRandomDragon'
+	//  isVisibleBinding: "*parentView.showGenerateNewDragon"
 	}),
 	
 	motherLabel: SC.LabelView.design({
@@ -77,17 +130,17 @@ Geniverse.DragonGenomeView = SC.View.extend(
     side: 'B'
 	}),
 	
-	chromosomeX1View: Geniverse.DragonChromosomeView.design({
+	chromosomeAXView: Geniverse.DragonChromosomeView.design({
 	  layout: {top: 275, left: 0},
-	  allelesBinding: '*parentView.x1Alleles',
+	  allelesBinding: '*parentView.aXAlleles',
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
 	  chromosome: 'X',
     side: 'A'
 	}),
 	
-	chromosomeXYView: Geniverse.DragonChromosomeView.design({
+	chromosomeBXView: Geniverse.DragonChromosomeView.design({
 	  layout: {top: 275, left: 120},
-	  allelesBinding: '*parentView.xyAlleles',
+	  allelesBinding: '*parentView.bXAlleles',
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
 	  chromosome: function() {
 	    if (this.get('alleles').length < 1) {

@@ -21,6 +21,10 @@ Geniverse.DragonChromosomeView = SC.View.extend(
   
   childViews: 'chromoImage linesImage pullDowns'.w(),
   
+  isVisible: function() {
+    return this.get('alleles').length > 0;
+  }.property('alleles'),
+  
   chromoImage: SC.ImageView.design({
     layout: {top: 0, left: 0, width: 22 },
     chromosomeBinding: '*parentView.chromosome',
@@ -52,7 +56,12 @@ Geniverse.DragonChromosomeView = SC.View.extend(
   
   pullDowns: SC.View.design({
     layout: {top:0, left: 45 },
-    allelesBinding: '*parentView.alleles',
+    
+    // allelesBinding: '*parentView.alleles',     // this frequently doesn't update until the next runloop...
+    alleles: function() {                         // this works fine, but seems wrong...
+        return this.get('parentView').get('alleles');
+    }.property('*parentView.alleles'),
+    
     alleleToPulldown: [],
     hiddenGenesBinding: '*parentView.hiddenGenes',
     
@@ -67,15 +76,36 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     
     allelesDidChange: function() {
       this.set('ignoreChanges', YES);
-      var alls = this.get('alleles');
+      var alleles = this.get('alleles');
       var pulldowns = this.get('alleleToPulldown');
-      for (var i = 0; i < alls.length; i++) {
-        var pd = pulldowns[alls[i].toLowerCase()];
-        if (pd.get('fieldValue') != alls[i]) {
-          pd.set('fieldValue', alls[i]);
+      
+      if (!pulldowns[this]){
+        this._setupPulldowns();
+        if (!pulldowns[this]){
+          return;
         }
       }
-    }.observes('alleles.[]'),
+      
+      for (var i = 0; i < alleles.length; i++) {
+        var pd = pulldowns[this][alleles[i].toLowerCase()];
+        if (!!pd && pd.get('fieldValue') != alleles[i]) {
+          pd.set('fieldValue', alleles[i]);
+        } else {
+          // this._setupPulldowns();
+        }
+      }
+      
+      // go through pulldowns and hide those which don't have alleles
+      for (var j in pulldowns[this]) {
+        if (!!pulldowns[this][j].tagName && pulldowns[this][j].tagName === 'select') {
+          if (alleles.indexOf(j) === -1 && alleles.indexOf(j.toUpperCase()) === -1){
+            pulldowns[this][j].set('isVisible', NO);
+          } else {
+            pulldowns[this][j].set('isVisible', YES);
+          }
+        }
+      }
+    }.observes('*parentView.alleles.[]'),
     
     updateDragon: function() {
       if (this.get('ignoreChanges') == NO) {
@@ -110,7 +140,10 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       });
 
       dropDownMenuView.addObserver('fieldValue', this.updateDragon);
-      map[val.toLowerCase()] = dropDownMenuView;
+      if (!map[this]) {
+        map[this] = [];
+      }
+      map[this][val.toLowerCase()] = dropDownMenuView;
       this.appendChild(dropDownMenuView);
     }
   })
