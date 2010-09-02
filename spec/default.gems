@@ -10,6 +10,7 @@ erubis -v2.6.6
 eventmachine -v0.12.10
 extlib -v0.9.15
 json_pure -v1.4.6
+lebowski -v0.2.0
 rack -v1.1.0
 rails -v2.3.8
 rspec -v1.3.0
