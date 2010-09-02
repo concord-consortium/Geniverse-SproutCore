@@ -7,6 +7,7 @@ Geniverse.marginSize = 15;
 
 sc_require('views/breed_dragon');
 sc_require('views/chromosome');
+sc_require('views/dragon_genome');
 
 Geniverse.biologicaViewsMainPage = SC.Page.design({
 
@@ -21,7 +22,7 @@ Geniverse.biologicaViewsMainPage = SC.Page.design({
       ], 
       itemTitleKey: 'title', 
       itemValueKey: 'value', 
-      nowShowing: 'breedPanel'
+      nowShowing: 'chromosomePanel'
     })
     
   }),
@@ -55,11 +56,8 @@ Geniverse.biologicaViewsMainPage = SC.Page.design({
       value: "Chromosome view"
     }),
     
-    chromosomeView: Geniverse.ChromosomeView.design({
-      layout: {top: 80, left: 40, height: 600, width: 400 },
-      initRandomDragon: YES,
-      showDragon: YES,
-      showGenerateNewDragon: YES
+    chromosomeView: Geniverse.DragonGenomeView.design({
+      layout: {top: 80, left: 40, height: 600, width: 500 }
     })
     
   })
