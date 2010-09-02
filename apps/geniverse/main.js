@@ -25,7 +25,7 @@ Geniverse.main = function main() {
   // The default code here will make the mainPane for your application visible
   // on screen.  If you app gets any level of complexity, you will probably 
   // create multiple pages and panes.  
-  Geniverse.getPath('mainChatExamplePage.mainPane').append() ;
+  Geniverse.getPath('biologicaViewsMainPage.mainPane').append() ;
 
   // Step 2. Set the content property on your primary controller.
   // This will make your app come alive!
