@@ -68,8 +68,14 @@ describe "App Controller Test" do
     
     @article_text = App['yourArticle.staticView.textView.contentView', 'SC.LabelView']
     @new_paper_button = App['yourArticle.staticView.newButtonView', 'SC.ButtonView']
+    @edit_paper_button = App['yourArticle.staticView.editButtonView', 'SC.ButtonView']
     @claim_text_field = App['yourArticle.editingView.inputClaimView', 'SC.TextFieldView']
     @dragon_bin = App['yourArticle.editingView.dragonBinView', 'Geniverse.DragonBinView']
+    @add_dragons_label = App['yourArticle.editingView.dragonBinView.addDragonsLabel', 'SC.LabelView']
+    @static_dragon_bin = App['yourArticle.staticView.dragonBinView', 'Geniverse.DragonBinView']
+    @preview_paper = App['yourArticle.editingView.previewButtonView', 'SC.ButtonView']
+    @clear_dragons = App['yourArticle.editingView.clearDragonsButton', 'SC.ButtonView']
+    @edit_paper = App['yourArticle.editingView.clearDragonsButton', 'SC.ButtonView']
     
     @breed_button = App['breedView.breedButtonView', 'SC.ButtonView']
     @breeding_pen_view = App['mainAppView.breedingPenView', 'CC.AutoScrollView']
@@ -93,31 +99,61 @@ describe "App Controller Test" do
   end
   
   it "should see editing view when New Paper is clicked" do
+    @new_paper_button.should be_visible_in_window
+    @new_paper_button.should be_enabled
+    @edit_paper_button.should_not be_enabled
+    
     @new_paper_button.click
+    
     @article_text.should_not be_visible_in_window
     App['yourArticle.editingView'].should be_visible_in_window
     @claim_text_field.should have_value "<i>Write your thoughts here.</i>"
   end
   
-  # This test, when it works, should go in a dedicated breeding/stable spec test
- #  it "should be able to breed dragons and drag them to the stable" do
- #    @breed_button.click
- #    @dragon1 = @breeding_pen_view.child_views[0].child_views[0].child_views[0]
- # #   @dragon1.drag_to @stable_view
- #    @dragon1.drag 0, -100
- #    @stable_view.child_views[0].child_views[0].should be @dragon1
- #  end
-  
-  # this test doesn't work yet
   it "should be able to breed dragons and drag them to dragon bin" do
     @breed_button.click
     @dragon1 = @breeding_pen_view.child_views[0].child_views[0].child_views[0]
-    @dragon1.drag_to @dragon_bin
-    @dragon_bin.child_views[1].should be @dragon1
+    
+    @dragon_bin.child_views.count.should be 1
+    @add_dragons_label.should be_visible_in_window
+    
+    @dragon1.drag_to @dragon_bin, 20, 20
+    
+    @dragon_bin.child_views.count.should be 2
+    @add_dragons_label.should_not be_visible_in_window
+    
+    @dragon2 = @breeding_pen_view.child_views[0].child_views[0].child_views[2]
+    @dragon2.drag_to @dragon_bin, 20, 20
+    
+    @dragon_bin.child_views.count.should be 3
   end
   
+  it "should see new dragons in static dragon bin when previewing" do
+    @static_dragon_bin.should_not be_visible_in_window
+    @preview_paper.click
+    
+    @static_dragon_bin.should be_visible_in_window
+    @static_dragon_bin.child_views.count.should be 3
+  end
   
+  it "should be able to edit paper again" do
+    @edit_paper_button.should be_visible_in_window
+    @edit_paper_button.should be_enabled
+    @new_paper_button.should_not be_enabled
+    
+    @edit_paper_button.click
+    
+    @article_text.should_not be_visible_in_window
+    App['yourArticle.editingView'].should be_visible_in_window
+    @dragon_bin.child_views.count.should be 3
+  end
   
+  it "should be able to clear dragons from dragon bin" do
+    @clear_dragons.click
+    @dragon_bin.child_views.count.should be 1
+    @add_dragons_label.should be_visible_in_window
+  end
+ 
   it "will show the login field after logout" do
     @logout_button.click
   end
