@@ -7,7 +7,7 @@ require 'open-uri'
 ERROR_THRESHOLD = 3
 
 # SERVER_IP = '63.138.119.217' # otto
-SERVER_IP = '127.0.0.1'
+SERVER_IP = 'localhost'
 
 if ! File.exists?("text.txt")
   puts "Getting something interesting to talk about..."

@@ -29,7 +29,7 @@ client = Selenium::Client::Driver.new \
         :host => 'localhost',
         :port => 4444, 
         :browser => :firefox,
-        :url => "http://0.0.0.0:4020", 
+        :url => "http://sc.local", 
         :timeout_in_seconds => 90
         
         
@@ -79,7 +79,19 @@ describe "App Controller Test" do
     @password_field.type "Test"
     @login_button.click
     
-    @welcome_label.should have_value /^Welcome Test.*/
+    if (@welcome_label.value == "")
+      waittime = 10 #seconds
+      p "Waiting up to " + waittime.to_s + " seconds for @welcome_label.value to be set."
+      start = Time.now
+      until @welcome_label.value != "" do
+        p " @welcome_label.value: " + @welcome_label.value.to_s
+        elapsed = start -Time.now
+        p " " + elapsed.to_s + " seconds have passed."
+        break if (elapsed >= waittime)
+      end
+    end
+    p "@welcome_label.value is now: " + @welcome_label.value.to_s
+    @welcome_label.should have_value /^Welcome Test*/
     @welcome_label.should be_visible_in_window
   end
   
