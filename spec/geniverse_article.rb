@@ -56,7 +56,7 @@ App.define_path 'yourArticle', 'mainChatExamplePage.yourArticleView', 'Geniverse
 App.define_path 'breedView', 'mainChatExamplePage.mainPane.appContainer.mainAppView.breedView', 'Geniverse.BreedDragonView'
 
 
-describe "App Controller Test" do
+describe "Geniverse Article Test" do
   
 
   before(:all) do    
@@ -112,18 +112,18 @@ describe "App Controller Test" do
   
   it "should be able to breed dragons and drag them to dragon bin" do
     @breed_button.click
-    @dragon1 = @breeding_pen_view.child_views[0].child_views[0].child_views[0]
+    dragon1 = @breeding_pen_view.child_views[0].child_views[0].child_views[0]
     
     @dragon_bin.child_views.count.should be 1
     @add_dragons_label.should be_visible_in_window
     
-    @dragon1.drag_to @dragon_bin, 20, 20
+    dragon1.drag_to @dragon_bin, 20, 20
     
     @dragon_bin.child_views.count.should be 2
     @add_dragons_label.should_not be_visible_in_window
     
-    @dragon2 = @breeding_pen_view.child_views[0].child_views[0].child_views[2]
-    @dragon2.drag_to @dragon_bin, 20, 20
+    dragon2 = @breeding_pen_view.child_views[0].child_views[0].child_views[2]
+    dragon2.drag_to @dragon_bin, 20, 20
     
     @dragon_bin.child_views.count.should be 3
   end
