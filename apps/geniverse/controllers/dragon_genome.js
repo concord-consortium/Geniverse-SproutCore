@@ -2,7 +2,7 @@
 // Project:   Geniverse.dragonGenomeController
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Geniverse */
+/*globals Geniverse generateDragonWithCallback*/
 
 /** @class
 
@@ -23,20 +23,29 @@ Geniverse.dragonGenomeController = SC.ObjectController.create(
     if (this.get('ignoreUpdate') == NO) {
       var map = this.get('allelesMap');
       var dragon = this.get('content');
-      var alleleString = dragon.alleles;
+      
+      var alleleString = dragon.get('alleles');
+      
       var alleleSet = alleleString.split(/,/);
-      var alleles = this.get('alleles');
+      
+      var alleles = [];
       for (var i = 0; i < alleleSet.length; i++) {
         var alleleInfo = alleleSet[i].split(/:/);
         var chromo = map[alleleInfo[1].toLowerCase()];
         var side = alleleInfo[0].toUpperCase();
-        var values = alleles[chromo][side];
-        if (typeof(values) == 'undefined') {
-          values = [];
+        
+        if (!alleles[chromo] || !alleles[chromo][side]) {
+          var values = [alleleInfo[1]];
+          if (!alleles[chromo]) {
+            alleles[chromo] = [];
+          }
           alleles[chromo][side] = values;
+        } else {
+          alleles[chromo][side].pushObject(alleleInfo[1]);
         }
-        values.pushObject(alleleInfo[1]);
       }
+      
+      this.set('alleles', alleles);
     }
   }.observes('content'),
   
@@ -66,6 +75,18 @@ Geniverse.dragonGenomeController = SC.ObjectController.create(
 		    self.set('ignoreUpdate', NO);
 	    });
 	  });
+  },
+  
+  initRandomDragon: function () {
+    var self = this;
+    
+		if (typeof(generateDragonWithCallback) != "undefined") {
+		  Geniverse.gwtController.generateRandomDragon(function(dragon) {
+		    SC.run(function() {
+  		    self.set('content', dragon);
+		    });
+		  });
+		}
   }
 
 }) ;
