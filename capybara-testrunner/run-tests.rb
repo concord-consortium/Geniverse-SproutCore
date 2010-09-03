@@ -18,7 +18,7 @@ require 'yaml'
   # look for an environment variable so the port can be changed depending on
   # the ci node that is running it
   opt :sc_server_port, "SC Server Port", :short => 'p', :type => :int, :default => (ENV['SC_SERVER_PORT'].to_i || 4020)
-  opt :sc_server_host, "SC Server Host", :short => 's', :type => :string, :default => "localhost"
+  opt :sc_server_host, "SC Server Host", :short => 's', :type => :string, :default => "sc.local" # was localhost but Apache proxying to sc.local is faster
 
   opt :root_dir, "Root directory", :short => 'r', :type => :string, :default => ".."
   opt :tests_dir, "Tests directory", :short => 't', :type => :string, :default => "{apps,frameworks}"
@@ -65,7 +65,7 @@ testURLs = testFolders.collect{|folder|
       path3 = path3[0, p3len - 3]
     end
   end
-  puts "will visit url:/#{url_base}/en/current/tests/#{path3}.html"
+  puts "will visit static URL:/#{url_base}/en/current/tests/#{path3}.html"
   {:url => "/#{url_base}/en/current/tests/#{path3}.html",
    :results_file => File.join(@options[:results_dir], "#{url_base}-#{path3}-junit.xml".gsub('/',"-")),
    :results_html_file => File.join(@options[:results_dir], "#{url_base}-#{path3}-page.html".gsub('/',"-")),
@@ -100,6 +100,7 @@ testURLs.each{|url|
   print "visiting #{url[:url]}..." unless @options[:quiet]
   visit(url[:url])
   print "visited\n" unless @options[:quiet]
+  sleep 15 # give the page time to complete all tests and rendering before saving results
   save_results_xml(url) if @options[:junit]
   save_page_png(url[:results_png_file]) if @options[:image]
   save_page_html(url[:results_html_file]) if @options[:html]
