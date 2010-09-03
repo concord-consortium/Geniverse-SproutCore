@@ -34,12 +34,8 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       this._setChromoImage();
     }.observes('chromosome','side'),
     
-    // sideDidChange: function() {
-    //   this._setChromoImage();
-    // }.observes('side'),
-    
     _setChromoImage: function() {
-      SC.Logger.info("Setting chromo image: " + 'http://www.concord.org/~aunger/gen/' + this.get('side') + this.get('chromosome') + "-chromosome.png");
+      // FIXME: sc_static doesn't work with anything but a pure string...
       // this.set('value', sc_static(this.get('side') + this.get('chromosome') + "-chromosome"));
       this.set('value', 'http://www.concord.org/~aunger/gen/' + this.get('side') + this.get('chromosome') + "-chromosome.png");
     }
@@ -89,9 +85,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       for (var i = 0; i < alleles.length; i++) {
         var pd = pulldowns[this][alleles[i].toLowerCase()];
         if (!!pd && pd.get('fieldValue') != alleles[i]) {
-          pd.set('fieldValue', alleles[i]);
-        } else {
-          // this._setupPulldowns();
+          pd.set('value', alleles[i]);
         }
       }
       
@@ -106,12 +100,6 @@ Geniverse.DragonChromosomeView = SC.View.extend(
         }
       }
     }.observes('*parentView.alleles.[]'),
-    
-    updateDragon: function() {
-      if (this.get('ignoreChanges') == NO) {
-        // FIXME update the alleles array
-      }
-    },
 
     _setupPulldowns: function() {
       var alls = this.get('alleles');
@@ -119,8 +107,6 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       for (var i = 0; i < alls.length; i++) {
         if (hidden.indexOf(alls[i].toLowerCase()) == -1) {
           this._createPulldown(alls[i], i*30);
-        } else {
-          SC.Logger.info("Not making pulldown for allele: " + alls[i] + " because indexOf returned: " + hidden.indexOf(alls[i].toLowerCase()));
         }
       }
     },
@@ -134,12 +120,25 @@ Geniverse.DragonChromosomeView = SC.View.extend(
           objects: [ SC.Object.create({ title: val.toUpperCase() }),
             SC.Object.create({ title: val.toLowerCase() })],
 
-          fieldValue: val,
+          value: val,
           nameKey: 'title',
-          valueKey: 'title'
+          valueKey: 'title',
+          
+          updater: function(){
+            var value = this.get('value');
+            var alleles = this.get('parentView').get('parentView').get('alleles');
+            for (var i = 0; i < alleles.length; i++){
+              if (alleles[i].toLowerCase() === value.toLowerCase()){
+                alleles[i] = value;
+              }
+            }
+            this.get('parentView').get('parentView').set('alleles', alleles);
+            
+            // FIXME: without this, binding on view instance in DragonGenomeView doesn't fire. Why?
+            this.get('parentView').get('parentView').propertyDidChange('alleles');  
+          }.observes('value')
       });
 
-      dropDownMenuView.addObserver('fieldValue', this.updateDragon);
       if (!map[this]) {
         map[this] = [];
       }
