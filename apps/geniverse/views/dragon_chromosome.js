@@ -15,6 +15,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
 
   alleles: [],
   hiddenGenes: [],
+  isEditableBinding: '*parentView.isEditable',
   
   chromosome: '1',
   side: 'A',
@@ -60,6 +61,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     
     alleleToPulldown: [],
     hiddenGenesBinding: '*parentView.hiddenGenes',
+    isEditableBinding: '*parentView.isEditable',
     
     ignoreChanges: NO,
     
@@ -100,13 +102,25 @@ Geniverse.DragonChromosomeView = SC.View.extend(
         }
       }
     }.observes('*parentView.alleles.[]'),
+    
+    isEditableDidChange: function() {
+      this.removeAllChildren();
+      this._setupPulldowns();
+      this.allelesDidChange();
+    }.observes('isEditable'),
 
     _setupPulldowns: function() {
       var alls = this.get('alleles');
       var hidden = this.get('hiddenGenes');
+      var editable = this.get('isEditable');
       for (var i = 0; i < alls.length; i++) {
         if (hidden.indexOf(alls[i].toLowerCase()) == -1) {
-          this._createPulldown(alls[i], i*30);
+          SC.Logger.log("editable? "+editable);
+          if (editable){
+            this._createPulldown(alls[i], i*30);
+          } else {
+            this._createStaticAllele(alls[i], i*30);
+          }
         }
       }
     },
@@ -144,6 +158,22 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       }
       map[this][val.toLowerCase()] = dropDownMenuView;
       this.appendChild(dropDownMenuView);
+    },
+    
+    _createStaticAllele: function(val, top){
+      var map = this.get('alleleToPulldown');
+      var alleleView = SC.LabelView.create({
+          layout: { top: top, left: 0, height: 20, width: 30 },
+          classNames: ['static-allele'],
+          textAlign: SC.ALIGN_CENTER,
+          value: val
+      });
+
+      if (!map[this]) {
+        map[this] = [];
+      }
+      map[this][val.toLowerCase()] = alleleView;
+      this.appendChild(alleleView);
     }
   })
 

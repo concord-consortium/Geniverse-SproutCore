@@ -18,11 +18,15 @@ Geniverse.DragonGenomeView = SC.View.extend(
   dragonBinding: 'Geniverse.dragonGenomeController.content',
 
   childViews: 'dragonView motherLabel fatherLabel chromosomeA1View chromosomeA2View chromosomeAXView \
-              chromosomeB1View chromosomeB2View chromosomeBXView generateNewDragonButton'.w(),
+              chromosomeB1View chromosomeB2View chromosomeBXView generateNewDragonButton isEditableCheck'.w(),
               
   showDragon: YES,
   
   showGenerateNewDragon: YES,
+  
+  isEditable: YES,
+  
+  showIsEditableCheck: NO,
   
   a1AllelesBinding: SC.Binding.from("Geniverse.dragonGenomeController.alleles").transform(function(value, isForward) {
     return Geniverse.dragonGenomeController.getAllelesFor(1,'A');
@@ -150,5 +154,12 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	    return 'X';
 	  }.property('alleles'),
     side: 'B'
-	})
+	}),
+	
+	isEditableCheck: SC.CheckboxView.design({
+    layout: { top: 310, left: 250, width: 250, height: 18 },
+    title: "Editable",
+    isVisibleBinding: '*parentView.showIsEditableCheck',
+    valueBinding: '*parentView.isEditable'
+  })
 });

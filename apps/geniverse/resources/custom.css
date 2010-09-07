@@ -8,3 +8,9 @@
 .sc-list-item-view.has-icon label, .sc-list-item-view.has-checkbox label {
 	left: 45px;
 }
+
+.sc-theme .static-allele {
+	background-color: #76AB9E;
+	border: 1px solid black;
+	text-align:center;
+}

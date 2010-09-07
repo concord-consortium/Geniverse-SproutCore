@@ -57,7 +57,8 @@ Geniverse.biologicaViewsMainPage = SC.Page.design({
     }),
     
     chromosomeView: Geniverse.DragonGenomeView.design({
-      layout: {top: 80, left: 40, height: 600, width: 500 }
+      layout: {top: 80, left: 40, height: 600, width: 500 },
+      showIsEditableCheck: YES
     })
     
   })
