@@ -97,11 +97,10 @@ def save_page_html(file_path)
 end
 
 testURLs.each{|url|
-  print "visiting #{url[:url]} in 60 seconds..." unless @options[:quiet]
-  sleep 60 # provide plenty of time to setup a stable connection with the browser
+  print "visiting #{url[:url]} ... " unless @options[:quiet]
   visit(url[:url])
-  print "visited\n" unless @options[:quiet]
-  sleep 60 # give the page time to complete all tests and rendering before saving results
+  print "visited\n saving in 15 seconds...\n" unless @options[:quiet]
+  sleep 15 # give the page time to complete all tests and rendering before saving results
   save_results_xml(url) if @options[:junit]
   save_page_png(url[:results_png_file]) if @options[:image]
   save_page_html(url[:results_html_file]) if @options[:html]
