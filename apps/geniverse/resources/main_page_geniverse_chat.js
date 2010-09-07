@@ -180,14 +180,33 @@ Geniverse.mainChatExamplePage = SC.Page.design({
 			isSelectable: YES,
 			dragDataTypes: ['dragon']
     }),
+    
     autoScrollTriggerBinding: 'Geniverse.bredOrganismsController.length',
+    
     isDropTarget: YES,
+    
     dragonNum: 0,
     acceptDragOperation: function(drag, op) {
-      SC.Logger.log('ENTER bredDragonsScrollView.acceptDragOperation');
       var dragon = this._getSourceDragon(drag);
+      
+      var dragonNum = this.get('dragonNum');
+      if (dragonNum === 0){
+        // check if there are existing dragons
+        var allStableDragons = Geniverse.bredOrganismsController.get('arrangedObjects');
+        var count = Geniverse.bredOrganismsController.get('length');
+        if (count > 0){
+          var lastDragon = allStableDragons.objectAt(length-1);
+          var lastStableOrder = lastDragon.get('stableOrder');
+          if (!!lastStableOrder && lastStableOrder > count){
+            dragonNum = lastStableOrder + 1;
+          } else {
+            dragonNum = count + 1;
+          }
+          this.set('dragonNum', dragonNum);
+        }
+      }
       dragon.set('isEgg', false);
-      dragon.set('stableOrder', this.get('dragonNum'));
+      dragon.set('stableOrder', dragonNum);
       ++this.dragonNum;
 
       this.invokeLast(function () {
@@ -199,15 +218,12 @@ Geniverse.mainChatExamplePage = SC.Page.design({
       return op ;
     },
     computeDragOperations: function(drag, evt) {
-      SC.Logger.log('ENTER bredDragonsScrollView.computeDragOperations');
       return SC.DRAG_ANY ;
     },
     dragEntered: function(drag, evt) {
-      SC.Logger.log('ENTER bredDragonsScrollView.dragEntered');
       this.$().addClass('drop-target') ;
     },
     dragExited: function(drag, evt) {
-      SC.Logger.log('ENTER bredDragonsScrollView.dragExited');
       this.$().removeClass('drop-target') ;
     },
     _getSourceDragon: function(dragEvt) {
