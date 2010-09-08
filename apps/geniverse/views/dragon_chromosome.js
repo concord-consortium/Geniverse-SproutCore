@@ -115,7 +115,6 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       var editable = this.get('isEditable');
       for (var i = 0; i < alls.length; i++) {
         if (hidden.indexOf(alls[i].toLowerCase()) == -1) {
-          SC.Logger.log("editable? "+editable);
           if (editable){
             this._createPulldown(alls[i], i*30);
           } else {
@@ -147,9 +146,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
               }
             }
             this.get('parentView').get('parentView').set('alleles', alleles);
-            
-            // FIXME: without this, binding on view instance in DragonGenomeView doesn't fire. Why?
-            this.get('parentView').get('parentView').propertyDidChange('alleles');  
+            this.get('parentView').get('parentView').propertyDidChange('alleles');
           }.observes('value')
       });
 
