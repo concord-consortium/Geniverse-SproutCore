@@ -3,4 +3,4 @@
 	url = git://github.com/sfentress/CC-SproutCore.git
 [submodule "capybara-testrunner"]
 	path = capybara-testrunner
-	url = git@github.com:concord-consortium/capybara-testrunner.git
+	url = git://github.com/concord-consortium/capybara-testrunner.git
