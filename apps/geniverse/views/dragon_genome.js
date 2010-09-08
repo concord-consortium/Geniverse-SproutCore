@@ -53,26 +53,6 @@ Geniverse.DragonGenomeView = SC.View.extend(
   bXAlleles: function() {
     return this.getAllelesFor('X','B');
   }.property('alleles'),
-    // 
-    // b1AllelesBinding: SC.Binding.from("Geniverse.dragonGenomeController.alleles").transform(function(value, isForward) {
-    //   return Geniverse.dragonGenomeController.getAllelesFor(1,'B');
-    // }),
-    // 
-    // a2AllelesBinding: SC.Binding.from("Geniverse.dragonGenomeController.alleles").transform(function(value, isForward) {
-    //   return Geniverse.dragonGenomeController.getAllelesFor(2,'A');
-    // }),
-    // 
-    // b2AllelesBinding: SC.Binding.from("Geniverse.dragonGenomeController.alleles").transform(function(value, isForward) {
-    //   return Geniverse.dragonGenomeController.getAllelesFor(2, 'B');
-    // }),
-    // 
-    // aXAllelesBinding: SC.Binding.from("Geniverse.dragonGenomeController.alleles").transform(function(value, isForward) {
-    //   return Geniverse.dragonGenomeController.getAllelesFor('X','A');
-    // }),
-    // 
-    // bXAllelesBinding: SC.Binding.from("Geniverse.dragonGenomeController.alleles").transform(function(value, isForward) {
-    //   return Geniverse.dragonGenomeController.getAllelesFor('X','B');
-    // }),
   
   hiddenGenes: ['s','p'],
   
@@ -103,10 +83,18 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	
 	chromosomeA1View: Geniverse.DragonChromosomeView.design({
 	  layout: {top: 25, left: 0},
-	  allelesBinding: SC.Binding.oneWay('*parentView.a1Alleles'),
-	  update: function(){
-	    this.get('parentView').updateDragon();
-	  }.observes('alleles'),
+	  
+	  // allelesBinding doesn't work when we have more than one instance of
+	  // dragonGenomeView. Don't know how to get it to work correctly, so
+	  // added the non-sproutcorish "updateAlleles" instead...
+	  
+    // allelesBinding: SC.Binding.oneWay('*parentView.a1Alleles'),
+	  updateDragon: function(){
+     this.get('parentView').updateDragon();
+    }.observes('alleles'),
+    updateAlleles: function(){
+      this.set('alleles', this.get('parentView').get('a1Alleles'));
+    }.observes('*parentView.a1Alleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
 	  chromosome: '1',
     side: 'A'
@@ -114,10 +102,12 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	
 	chromosomeB1View: Geniverse.DragonChromosomeView.design({
 	  layout: {top: 25, left: 120},
-	  allelesBinding: SC.Binding.oneWay('*parentView.b1Alleles'),
-	  update: function(){
+	  updateDragon: function(){
 	    this.get('parentView').updateDragon();
 	  }.observes('alleles'),
+	  updateAlleles: function(){
+      this.set('alleles', this.get('parentView').get('b1Alleles'));
+    }.observes('*parentView.b1Alleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
 	  chromosome: '1',
     side: 'B'
@@ -125,10 +115,12 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	
 	chromosomeA2View: Geniverse.DragonChromosomeView.design({
 	  layout: {top: 170, left: 0},
-	  allelesBinding: SC.Binding.oneWay('*parentView.a2Alleles'),
-	  update: function(){
+	  updateDragon: function(){
 	    this.get('parentView').updateDragon();
 	  }.observes('alleles'),
+	  updateAlleles: function(){
+      this.set('alleles', this.get('parentView').get('a2Alleles'));
+    }.observes('*parentView.a2Alleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
 	  chromosome: '2',
     side: 'A'
@@ -136,10 +128,12 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	
 	chromosomeB2View: Geniverse.DragonChromosomeView.design({
 	  layout: {top: 170, left: 120},
-	  allelesBinding: SC.Binding.oneWay('*parentView.b2Alleles'),
-	  update: function(){
+	  updateDragon: function(){
 	    this.get('parentView').updateDragon();
 	  }.observes('alleles'),
+	  updateAlleles: function(){
+      this.set('alleles', this.get('parentView').get('b2Alleles'));
+    }.observes('*parentView.b2Alleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
 	  chromosome: '2',
     side: 'B'
@@ -147,10 +141,12 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	
 	chromosomeAXView: Geniverse.DragonChromosomeView.design({
 	  layout: {top: 275, left: 0},
-	  allelesBinding: SC.Binding.oneWay('*parentView.aXAlleles'),
-	  update: function(){
+	  updateDragon: function(){
 	    this.get('parentView').updateDragon();
 	  }.observes('alleles'),
+	  updateAlleles: function(){
+      this.set('alleles', this.get('parentView').get('aXAlleles'));
+    }.observes('*parentView.aXAlleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
 	  chromosome: 'X',
     side: 'A'
@@ -158,11 +154,13 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	
 	chromosomeBXView: Geniverse.DragonChromosomeView.design({
 	  layout: {top: 275, left: 120},
-	  allelesBinding: SC.Binding.oneWay('*parentView.bXAlleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
-	  update: function(){
+	  updateDragon: function(){
 	    this.get('parentView').updateDragon();
 	  }.observes('alleles'),
+	  updateAlleles: function(){
+      this.set('alleles', this.get('parentView').get('bXAlleles'));
+    }.observes('*parentView.bXAlleles'),
 	  chromosome: function() {
 	    if (this.get('alleles').length < 1) {
 	      // we must be male
