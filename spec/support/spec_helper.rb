@@ -18,7 +18,7 @@ TEST_SETTINGS = {
   :host => "localhost",
   :port => SELENIUM_PORT,
   :browser => "*firefox",
-  :url => "http://sc.local:#{SC_SERVER_PORT}/rails",
+  :url => "http://localhost:#{SC_SERVER_PORT}/rails",
   :timeout_in_seconds => 60
 }
 
