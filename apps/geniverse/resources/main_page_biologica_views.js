@@ -22,7 +22,7 @@ Geniverse.biologicaViewsMainPage = SC.Page.design({
       ], 
       itemTitleKey: 'title', 
       itemValueKey: 'value', 
-      nowShowing: 'chromosomePanel'
+      nowShowing: 'breedPanel'
     })
     
   }),

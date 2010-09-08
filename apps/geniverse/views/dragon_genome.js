@@ -20,15 +20,27 @@ Geniverse.DragonGenomeView = SC.View.extend(
               
   showDragon: YES,
   
+  generateDragonAtStart: NO,
+  
   showGenerateNewDragon: YES,
   
   isEditable: YES,
   
   showIsEditableCheck: NO,
   
+  sex: null,        // used when generating new dragons
+  
   alleles: [],
   allelesMap: {h: '1',s: '1',w: '2',l: '2',t: '2',p: 'X',f: 'X',a: 'X',b: 'X'},
   ignoreUpdate: YES,
+  
+  gwtReadyBinding: 'Geniverse.gwtController.isReady',
+  
+  generateDragonWhenGWTReady: function() {
+    if (this.get('generateDragonAtStart')){
+      this.initRandomDragon();
+    }
+  }.observes('gwtReady'),
   
   a1Alleles: function() {
     return this.getAllelesFor(1,'A');
@@ -57,7 +69,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
   hiddenGenes: ['s','p'],
   
   dragonView: Geniverse.OrganismView.design({
-		layout: {top: 18, left: 260, width: 180, height: 150},
+		layout: {top: 18, left: 260, width: 200, height: 170},
 	  organismBinding: "*parentView.dragon",
 	  allowDrop: YES,
     isVisibleBinding: "*parentView.showDragon"
@@ -246,19 +258,25 @@ Geniverse.DragonGenomeView = SC.View.extend(
   		    self.set('dragon', dragon);
   	    });
   	  });
-  },//.observes('alleles'),
+  },
   
   initRandomDragon: function () {
     var self = this;
+    function updateDragon(dragon) {
+	    SC.run(function() {
+	      self.set('ignoreUpdate', NO);
+		    self.set('dragon', dragon);
+  	    self.set('ignoreUpdate', YES);
+	    });
+	  }
     
 		if (typeof(generateDragonWithCallback) != "undefined") {
-		  Geniverse.gwtController.generateRandomDragon(function(dragon) {
-		    SC.run(function() {
-  	      self.set('ignoreUpdate', NO);
-  		    self.set('dragon', dragon);
-    	    self.set('ignoreUpdate', YES);
-		    });
-		  });
+		  var sex = this.get('sex');
+		  if (sex !== undefined && sex !== null){
+		    Geniverse.gwtController.generateDragon(sex, "", updateDragon);
+		  } else {
+		    Geniverse.gwtController.generateRandomDragon(updateDragon);
+		  }
 		}
   }
 });
