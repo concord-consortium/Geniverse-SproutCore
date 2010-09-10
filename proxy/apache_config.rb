@@ -27,7 +27,7 @@ class ApacheConfig
 
   # use undefined methods to print out apache directive for exmaple listen 1234 becomes 'Listen 1234'
   def method_missing(m, arg)
-    @config_string << "#{m[0].upcase}#{m[1..-1]} #{arg}\n"
+    @config_string << "#{m.to_s[0..0].upcase}#{m.to_s[1..-1]} #{arg}\n"
     @config[m] = arg
   end
 
@@ -56,7 +56,7 @@ class ApacheConfig
   def controller
     DaemonController.new(
        :identifier    => 'Apache web server',
-       :start_command => "apachectl -f #{config_file_path} -k start",
+       :start_command => "/usr/sbin/apachectl -f #{config_file_path} -k start",
        :ping_command  => lambda { TCPSocket.new('localhost', @config[:listen]) },
        :pid_file      => @config[:pidFile],
        :log_file      => @config[:errorLog],

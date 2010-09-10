@@ -47,7 +47,7 @@ require 'apache_config'
 apache_port = ENV['APACHE_PROXY_PORT'] ? ENV['APACHE_PROXY_PORT'].to_i : 1234
 
 apache = ApacheConfig.new {
-  x_instance_home File.absolute_path(File.dirname(__FILE__))
+  x_instance_home File.expand_path(File.dirname(__FILE__))
   listen apache_port
   x_proxy "/geniverse/geniverse http://geniverse.dev.concord.org/geniverse/geniverse"
   x_proxy "/chat/      http://geniverse.dev.concord.org/chat/"
