@@ -20,7 +20,7 @@ class ApacheConfig
   end
 
   def write_config
-    File.open(@config_file, 'w') do |f|
+    File.open(config_file_path, 'w') do |f|
       f.write(@config_string)
     end
   end
@@ -49,10 +49,14 @@ class ApacheConfig
     @instance_home = home
   end
   
+  def config_file_path
+    File.join(@instance_home, @config_file)
+  end
+  
   def controller
     DaemonController.new(
        :identifier    => 'Apache web server',
-       :start_command => "apachectl -f #{@instance_home}/#{@config_file} -k start",
+       :start_command => "apachectl -f #{config_file_path} -k start",
        :ping_command  => lambda { TCPSocket.new('localhost', @config[:listen]) },
        :pid_file      => @config[:pidFile],
        :log_file      => @config[:errorLog],
