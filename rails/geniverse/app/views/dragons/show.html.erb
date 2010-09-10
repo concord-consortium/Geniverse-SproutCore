@@ -24,8 +24,8 @@
 </p>
 
 <p>
-  <b>ImageURL:</b>
-  <%=h @dragon.imageURL %>
+  <b>Image URL:</b>
+  <%=h @dragon.image_url %>
 </p>
 
 <p>
@@ -43,6 +43,20 @@
   <%=h @dragon.bred %>
 </p>
 
+<p>
+  <b>Stable order:</b>
+  <%=h @dragon.stableOrder %>
+</p>
+
+<p>
+  <b>Is egg:</b>
+  <%=h @dragon.isEgg %>
+</p>
+
+<p>
+  <b>Is in marketplace:</b>
+  <%=h @dragon.isInMarketplace %>
+</p>
 
 <%= link_to 'Edit', edit_dragon_path(@dragon) %> |
 <%= link_to 'Back', dragons_path %>

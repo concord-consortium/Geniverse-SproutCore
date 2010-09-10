@@ -23,8 +23,8 @@
     <%= f.text_field :alleles %>
   </p>
   <p>
-    <%= f.label :imageURL %><br />
-    <%= f.text_field :imageURL %>
+    <%= f.label :image_url %><br />
+    <%= f.text_field :image_url %>
   </p>
   <p>
     <%= f.label :mother_id %><br />
@@ -37,6 +37,18 @@
   <p>
     <%= f.label :bred %><br />
     <%= f.check_box :bred %>
+  </p>
+	<p>
+    <%= f.label :stableOrder %><br />
+    <%= f.text_field :stableOrder %>
+  </p>
+	<p>
+    <%= f.label :isEgg %><br />
+    <%= f.check_box :isEgg %>
+  </p>
+	<p>
+    <%= f.label :isInMarketplace %><br />
+    <%= f.check_box :isInMarketplace %>
   </p>
   <p>
     <%= f.submit 'Submit' %>

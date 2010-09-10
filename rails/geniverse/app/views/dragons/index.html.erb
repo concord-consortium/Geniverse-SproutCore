@@ -11,6 +11,9 @@
     <th>Mother</th>
     <th>Father</th>
     <th>Bred</th>
+    <th>Stable Order</th>
+    <th>Is Egg</th>
+    <th>Is In Marketplace</th>
   </tr>
 
 <% @dragons.each do |dragon| %>
@@ -20,10 +23,13 @@
     <td><%=h dragon.name %></td>
     <td><%=h dragon.sex %></td>
     <td><%=h dragon.alleles %></td>
-    <td><%=h dragon.imageURL %></td>
+    <td><%=h dragon.image_url %></td>
     <td><%=h dragon.mother_id %></td>
     <td><%=h dragon.father_id %></td>
     <td><%=h dragon.bred %></td>
+    <td><%=h dragon.stableOrder %></td>
+    <td><%=h dragon.isEgg %></td>
+    <td><%=h dragon.isInMarketplace %></td>
     <td><%= link_to 'Show', dragon %></td>
     <td><%= link_to 'Edit', edit_dragon_path(dragon) %></td>
     <td><%= link_to 'Destroy', dragon, :confirm => 'Are you sure?', :method => :delete %></td>
