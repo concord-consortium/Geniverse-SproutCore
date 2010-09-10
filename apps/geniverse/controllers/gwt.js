@@ -51,7 +51,7 @@ Geniverse.gwtController = SC.Controller.create(
     if (mother !== null && mother.get('gOrganism') !== null && father !== null && father.get('gOrganism') !== null) {
       var onSuccess = function(organism) {
         var child = Geniverse.store.createRecord(Geniverse.Dragon, {
-					bred: YES, mother: mother.get("id"), father: father.get("id")
+					bred: YES, mother: mother.get("id"), father: father.get("id"), isEgg: YES, user: Geniverse.userController.get('content').get('id')
 				});
 				child.set('user', Geniverse.userController.get('content'));
         child.set('gOrganism', organism);
@@ -73,9 +73,8 @@ Geniverse.gwtController = SC.Controller.create(
         for (var i = 0; i < number; i++) {
           organism = orgs[i];
           var child = Geniverse.store.createRecord(Geniverse.Dragon, {
-  					bred: YES, mother: mother.get("id"), father: father.get("id")
+  					bred: YES, mother: mother.get("id"), father: father.get("id"), isEgg: YES, user: Geniverse.userController.get('content').get('id')
   				});
-  				child.set('user', Geniverse.userController.get('content'));
           child.set('gOrganism', organism);
       
           handleChildFunction(child);

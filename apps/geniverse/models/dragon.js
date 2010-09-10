@@ -24,12 +24,12 @@ Geniverse.Dragon = SC.Record.extend(
   bred: SC.Record.attr(Boolean),
   user: SC.Record.toOne("Geniverse.User"),
   stableOrder: SC.Record.attr(Number),
+  isEgg: SC.Record.attr(Boolean),
   
   // attributes that don't want to be persisted
   gOrganism: null,
   characteristics: null,
   metaInfo: null,
-  isEgg: null,
   
   gOrganismDefined: function() {
     var gOrg = this.get('gOrganism');

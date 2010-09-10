@@ -84,7 +84,6 @@ Geniverse.breedDragonController = SC.Controller.create(
           return;
         }
         SC.RunLoop.begin();
-        child.set('isEgg', true);
         self.set('child', child);
         SC.RunLoop.end();
 
