@@ -50,8 +50,8 @@ Geniverse.appletDemoMainPage = SC.Page.design({
       layout: { left: Geniverse.marginSize, top: 200, height: 200, width: 300 },
       backgroundColor: 'white',
       contentView: SC.ListView.design({
-				contentBinding: 'Geniverse.bredOrganismsController.arrangedObjects',
-				selectionBinding: 'Geniverse.bredOrganismsController.selection',
+				contentBinding: 'Geniverse.stableOrganismsController.arrangedObjects',
+				selectionBinding: 'Geniverse.stableOrganismsController.selection',
 				rowHeight: 30,
 				canEditContent: NO,
 				contentIconKey: 'imageURL',
@@ -75,7 +75,7 @@ Geniverse.appletDemoMainPage = SC.Page.design({
 				return out;
 			}.property('jarBase', 'jars').cacheable(),
 			code: "org/concord/biologica/applet/ChromosomeApplet.class",
-			selectionBinding: SC.Binding.from('Geniverse.bredOrganismsController.selection').oneWay().single(),
+			selectionBinding: SC.Binding.from('Geniverse.stableOrganismsController.selection').oneWay().single(),
 			selectionDidChange: function() {
 				var selection = this.get('selection');
 				if (selection !== null) {
@@ -186,8 +186,8 @@ Geniverse.appletDemoMainPage = SC.Page.design({
 		// 	layout: { centerX: -130, centerY: 0, width: 310, height: 480 },
 		//       backgroundColor: 'white',
 		//       contentView: SC.GridView.design({
-		// 		contentBinding: 'Geniverse.bredOrganismsController.arrangedObjects',
-		// 		selectionBinding: 'Geniverse.bredOrganismsController.selection',
+		// 		contentBinding: 'Geniverse.stableOrganismsController.arrangedObjects',
+		// 		selectionBinding: 'Geniverse.stableOrganismsController.selection',
 		// 		rowHeight: 60,
 		// 		columnWidth: 60,
 		// 		canEditContent: NO,

@@ -1,5 +1,5 @@
 // ==========================================================================
-// Project:   Geniverse.bredOrganismsController
+// Project:   Geniverse.stableOrganismsController
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
 /*globals Geniverse */
@@ -10,9 +10,9 @@
 
   @extends SC.Object
 */
-Geniverse.bredOrganismsController = SC.ArrayController.create(
+Geniverse.stableOrganismsController = SC.ArrayController.create(
 	SC.CollectionViewDelegate,
-/** @scope Geniverse.bredOrganismsController.prototype */ {
+/** @scope Geniverse.stableOrganismsController.prototype */ {
 		collectionViewDeleteContent: function(view, content, indexes) {
 	    // destroy the records
 	    var records = indexes.map(function(idx) {

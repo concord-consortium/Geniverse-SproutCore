@@ -98,13 +98,13 @@ Geniverse.mainChatExamplePage = SC.Page.design({
           woo: function() {
             // SC.Logger.log("woo");
             this.propertyDidChange('value');
-          }.observes("Geniverse.bredOrganismsController.arrangedObjects.[]"),
+          }.observes("Geniverse.stableOrganismsController.arrangedObjects.[]"),
           value:  function() {
-            var numDragons = Geniverse.bredOrganismsController.get('length');
+            var numDragons = Geniverse.stableOrganismsController.get('length');
             var spaces = 50 - numDragons;
             // SC.Logger.log("recalculating");
             return "Your Stable      -   " + spaces + " spaces remaining";
-          }.property('Geniverse.bredOrganismsController.arrangedObjects.[]')
+          }.property('Geniverse.stableOrganismsController.arrangedObjects.[]')
         }),
 
         stableView: CC.AutoScrollView.design({
@@ -112,8 +112,8 @@ Geniverse.mainChatExamplePage = SC.Page.design({
       		layout: { left: Geniverse.marginSize, bottom: 10, height: 220, width: 450 },
           backgroundColor: 'white',
           contentView: SC.GridView.design({
-      			contentBinding: 'Geniverse.bredOrganismsController.arrangedObjects',
-      			selectionBinding: 'Geniverse.bredOrganismsController.selection',
+      			contentBinding: 'Geniverse.stableOrganismsController.arrangedObjects',
+      			selectionBinding: 'Geniverse.stableOrganismsController.selection',
       			rowHeight: 60,
       			columnWidth: 60,
       			canEditContent: NO,
@@ -122,7 +122,7 @@ Geniverse.mainChatExamplePage = SC.Page.design({
       			dragDataTypes: ['dragon']
           }),
 
-          autoScrollTriggerBinding: 'Geniverse.bredOrganismsController.length',
+          autoScrollTriggerBinding: 'Geniverse.stableOrganismsController.length',
 
           isDropTarget: YES,
 
@@ -133,8 +133,8 @@ Geniverse.mainChatExamplePage = SC.Page.design({
             var dragonNum = this.get('dragonNum');
 
             // check if there are existing dragons
-            var allStableDragons = Geniverse.bredOrganismsController.get('arrangedObjects');
-            var count = Geniverse.bredOrganismsController.get('length');
+            var allStableDragons = Geniverse.stableOrganismsController.get('arrangedObjects');
+            var count = Geniverse.stableOrganismsController.get('length');
             if (count >= 50){
               alert("Your stable is full");
               return;
@@ -157,7 +157,7 @@ Geniverse.mainChatExamplePage = SC.Page.design({
             this.invokeLast(function () {
               SC.RunLoop.begin();
               Geniverse.eggsController.get('content').reload();
-              Geniverse.bredOrganismsController.get('content').reload();
+              Geniverse.stableOrganismsController.get('content').reload();
               SC.RunLoop.end();
             });
             return op ;

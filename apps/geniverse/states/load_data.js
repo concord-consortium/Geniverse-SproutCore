@@ -29,7 +29,7 @@ Geniverse.LOAD_DATA = SC.Responder.create(
         orderBy: 'storeKey'*/
     });
     var stableOrganisms = Geniverse.store.find(stableQuery);
-    Geniverse.bredOrganismsController.set('content', stableOrganisms);
+    Geniverse.stableOrganismsController.set('content', stableOrganisms);
     
     Geniverse.EGGS_QUERY = SC.Query.local('Geniverse.Dragon', {
         conditions: 'bred = true AND isEgg = true AND user = {user}',
