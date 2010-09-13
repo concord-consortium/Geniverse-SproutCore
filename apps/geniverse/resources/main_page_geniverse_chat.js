@@ -66,7 +66,7 @@ Geniverse.mainChatExamplePage = SC.Page.design({
     	
       mainAppView: SC.View.create({
         
-        childViews: 'breedView breedingPenView stableView chatView allArticlesView'.w(),
+        childViews: 'breedView breedingPenView stableTitle stableView chatView allArticlesView'.w(),
         
         breedView: Geniverse.BreedDragonView.design({
           layout: { top: Geniverse.marginSize, left: Geniverse.marginSize, height: 230, width: 450 },
@@ -89,6 +89,21 @@ Geniverse.mainChatExamplePage = SC.Page.design({
             dragDataTypes: ['dragon']
           }),
           autoScrollTriggerBinding: 'Geniverse.eggsController.length'
+        }),
+        
+        stableTitle: SC.LabelView.design({
+          layout: { left: Geniverse.marginSize+100, bottom: 245, height: 25, width: 450 },
+          fontWeight: SC.BOLD_WEIGHT,
+          woo: function() {
+            // SC.Logger.log("woo");
+            this.propertyDidChange('value');
+          }.observes("Geniverse.bredOrganismsController.arrangedObjects.[]"),
+          value:  function() {
+            var numDragons = Geniverse.bredOrganismsController.get('length');
+            var spaces = 50 - numDragons;
+            // SC.Logger.log("recalculating");
+            return "Your Stable      -   " + spaces + " spaces remaining";
+          }.property('Geniverse.bredOrganismsController.arrangedObjects.[]')
         }),
 
         stableView: CC.AutoScrollView.design({
@@ -119,7 +134,7 @@ Geniverse.mainChatExamplePage = SC.Page.design({
             // check if there are existing dragons
             var allStableDragons = Geniverse.bredOrganismsController.get('arrangedObjects');
             var count = Geniverse.bredOrganismsController.get('length');
-            if (count >= 10){
+            if (count >= 50){
               alert("Your stable is full");
               return;
             }
