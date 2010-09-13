@@ -71,6 +71,7 @@ Geniverse.appController = SC.ObjectController.create(
   		CcChat.chatRoomController.getFirstChannelWithSpace(activityChannel, maxUsers, initChat);
     }
     
+    SC.Logger.log("setting userLoggedIn");
 		this.set('userLoggedIn', YES);
 		
 		var containerView = Geniverse.mainChatExamplePage.get('mainPane').get('appContainer');
