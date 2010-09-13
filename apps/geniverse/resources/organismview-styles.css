@@ -9,3 +9,11 @@
 .sc-theme .organism-view .male {
 	background-color: #E1E6FA;
 }
+
+.sc-theme .organism-view .female-selected {
+	background-color: #FCD4E2;
+}
+
+.sc-theme .organism-view .male-selected {
+	background-color: #C5D0FC;
+}

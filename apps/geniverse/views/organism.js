@@ -29,7 +29,6 @@ Geniverse.OrganismView = SC.View.extend(
 		contentValueKey: 'imageURL',
 		canLoadInBackground: NO,
 		useImageCache: NO
-    // classNames: 'isSelected'.w()
 	}),
 	
 	contentDidChange: function() {
@@ -37,40 +36,42 @@ Geniverse.OrganismView = SC.View.extend(
 	}.observes('*content'),
 	
 	isSelectedDidChange: function() {
-		this.set('layerNeedsUpdate', YES);
+    this._setClassNames();
 	}.observes('isSelected'),
 
   // TODO: This could probably be done cleaner with child views...
   render: function(context, firstTime) {
-			this._selected_style(context);
+			this._setClassNames();
 	    sc_super();
   },
-
-  _selected_style: function(context) {
-    // this.get('imageView').set('classNames', ['isSelected']);
-
-    if (this.get('organism') !== null){
-      var classNames = [];
-      if (this.get('parentView') !== null && ""+this.get('parentView').constructor === 'SC.GridView'){
+  
+  _setClassNames: function(){
+    var classNames = [];
+    if (this.get('parentView') !== null && ""+this.get('parentView').constructor === 'SC.GridView'){
+      if (this.get('isSelected')){
+        classNames.push((this.getPath('organism.sex') === 0) ? 'male-selected' : 'female-selected');
+      } else {
         classNames.push((this.getPath('organism.sex') === 0) ? 'male' : 'female');
       }
-      this.get('imageView').set('classNames', classNames);
     }
-	},
+    this.get('imageView').set('classNames', classNames);
+    
+    this.get('imageView').displayDidChange();
+  },
 	
-	// drag methods:
-	
-  mouseDown: function(evt) {
-      SC.Drag.start({ 
-       event: evt, 
-       source: this, 
-       dragView: this, 
-       ghost: NO, 
-       slideBack: YES, 
-       dataSource: this 
-     }) ;
-      return YES;
-   },
+  // // drag methods:
+  
+    // mouseDown: function(evt) {
+    //     SC.Drag.start({ 
+    //      event: evt, 
+    //      source: this, 
+    //      dragView: this, 
+    //      ghost: NO, 
+    //      slideBack: YES, 
+    //      dataSource: this 
+    //    }) ;
+    //     return YES;
+    //  },
    
 	// drop methods: NB: none of these will be called if isDropTarget = NO
   acceptDragOperation: function(drag, op) {
