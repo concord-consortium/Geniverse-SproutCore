@@ -17,11 +17,11 @@ Geniverse.OrganismView = SC.View.extend(
 	classNames: ['organism-view'],
 	contentBinding: '*organism',
 	childViews: 'imageView'.w(),
-  allowDrop: NO,
-  parent: '',       // 'mother' or 'father'. Needed for drag and drop
-  sex: 0,        // 0 or 1. Needed for drag and drop
+	
+  isDropTarget: NO, // change this to YES in view if you want replaceable by drag-and-drop
+  parent: '',       // If set, drag-and-drop will replace parentView's [parent] field
+  sex: null,        // If set to 0 or 1, drag-and-drop will only work wil males and females, respectively
   
-  isDropTarget: NO,
 	
 	imageView: SC.ImageView.design({
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
@@ -71,31 +71,68 @@ Geniverse.OrganismView = SC.View.extend(
      }) ;
       return YES;
    },
-	// drop methods:
+   
+	// drop methods: NB: none of these will be called if isDropTarget = NO
   acceptDragOperation: function(drag, op) {
+    SC.Logger.log("here??");
     var dragon = this._getSourceDragon(drag);
-      var sex = dragon.get('sex');
-      if (this.get('allowDrop') && sex === this.get('sex')){
-        this.get('parentView').set(this.get('parent'), dragon);
-        this.get('parentView').set('child', null);
-      }
-      // this.appendChild(drag.get('source')) ;
-      return op ;
-    },
+    if (!this._canDrop(dragon)){
+      return;
+    }
+    
+    SC.Logger.log("here");
+    
+    
+    // next, if we are a prent view, check that dragged dragon
+    // is not an egg
+    var parentType = this.get('parent');
+    if (!!parentType){
+      this.get('parentView').set(this.get('parent'), dragon);
+      this.get('parentView').set('child', null);
+    } else {
+      SC.Logger.log("woo?");
+      this.set('organism', dragon);
+    }
+    SC.Logger.log("now here");
+    
+    return op ;
+  },
 
   computeDragOperations: function(drag, evt) {
     return SC.DRAG_ANY ;
   },
   
   dragEntered: function(drag, evt) {
-    var sex = this._getSourceDragon(drag).get('sex');
-    if (this.get('allowDrop') && sex === this.get('sex')){
+    if (this._canDrop(this._getSourceDragon(drag))){
       this.$().addClass('drop-target') ;
     }
   },
 
   dragExited: function(drag, evt) {
     this.$().removeClass('drop-target') ;
+  },
+  
+  _canDrop: function(dragon) {
+    
+    // if we require a sex, check that the dragged dragon
+    // is of the right sex
+    var requiredSex = this.get('sex');
+    if (requiredSex !== null){
+      var sex = dragon.get('sex');
+      if (sex !== requiredSex){
+        return NO;
+      }
+    }
+    
+    var parentType = this.get('parent');
+    if (!!parentType){
+      SC.Logger.log("dragon.get('isEgg') = "+dragon.get('isEgg'));
+      if (dragon.get('isEgg')){
+        return NO;
+      }
+    }
+    
+    return YES;
   },
   
   _getSourceDragon: function(dragEvt) {

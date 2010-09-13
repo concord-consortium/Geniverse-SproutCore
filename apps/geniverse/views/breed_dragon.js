@@ -11,7 +11,6 @@
   @extends SC.View
 */
 sc_require('views/organism');
-sc_require('views/replaceable_organism');
 
 Geniverse.BreedDragonView = SC.View.extend(
 /** @scope Geniverse.BreedDragonView.prototype */ {
@@ -31,30 +30,29 @@ Geniverse.BreedDragonView = SC.View.extend(
 	initParentsImmediately: YES,
 	initParentsImmediatelyBinding: 'Geniverse.breedDragonController.initParentsImmediately',
 	
-	fatherView: Geniverse.ReplaceableOrganismView.design({
+	fatherView: Geniverse.OrganismView.design({
 		layout: {top: 18, right: 0, width: 180, height: 150},
 	  classNames: "fatherView",
 	  organismBinding: "*parentView.father",
 	  parent: "father",
 	  sex: 0,
-	  allowDrop: YES
+		isDropTarget: YES
 	}),
 	
 	fatherLabel: SC.LabelView.design({
 		layout: {top: 0, right: 70, width: 40, height: 18},
 		classNames: "fatherLabel",
-		allowDrop: YES,
 		value: "Father",
 		sex: 1
 	}),
 	
-	motherView: Geniverse.ReplaceableOrganismView.design({
+	motherView: Geniverse.OrganismView.design({
 		layout: {top: 18, left: 0, width: 180, height: 150},
 	  classNames: "motherView",
 	  organismBinding: "*parentView.mother",
 	  parent: "mother",
 	  sex: 1,
-	  allowDrop: YES
+		isDropTarget: YES
 	}),
 	
 	motherLabel: SC.LabelView.design({
