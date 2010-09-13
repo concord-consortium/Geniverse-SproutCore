@@ -6,7 +6,7 @@
 
 /** @class
 
-  The login state. 
+  The load data state. 
 
   @extends SC.Responder
   @version 0.1
@@ -21,15 +21,15 @@ Geniverse.LOAD_DATA = SC.Responder.create(
     SC.Logger.log("LOAD");
     var user = Geniverse.userController.get('content');
     
-    // var stableQuery = SC.Query.local(Geniverse.Dragon, {
-    //         conditions: 'bred = true AND isEgg = false AND user = {user}',
-    //         user: user,
-    //         orderBy: 'stableOrder'
-    //         /*,
-    //         orderBy: 'storeKey'*/
-    //     });
-    //     var stableOrganisms = Geniverse.store.find(stableQuery);
-    //     Geniverse.bredOrganismsController.set('content', stableOrganisms);
+    var stableQuery = SC.Query.local(Geniverse.Dragon, {
+        conditions: 'bred = true AND isEgg = false AND user = {user}',
+        user: user,
+        orderBy: 'stableOrder'
+        /*,
+        orderBy: 'storeKey'*/
+    });
+    var stableOrganisms = Geniverse.store.find(stableQuery);
+    Geniverse.bredOrganismsController.set('content', stableOrganisms);
     
     Geniverse.EGGS_QUERY = SC.Query.local('Geniverse.Dragon', {
         conditions: 'bred = true AND isEgg = true AND user = {user}',

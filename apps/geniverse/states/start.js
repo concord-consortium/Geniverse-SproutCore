@@ -6,7 +6,7 @@
 
 /** @class
 
-  The login state. 
+  The start state. 
 
   @extends SC.Responder
   @version 0.1
