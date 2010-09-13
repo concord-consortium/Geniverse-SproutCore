@@ -14,6 +14,7 @@ class ApacheConfig
     x_load_module 'proxy_http'
     self.instance_eval(&blk)
     abort("You need to call x_instance_home in your block") unless @instance_home
+    listen "#{@host}:#{@port}"
     pidFile  "#{@instance_home}/apache.pid"
     errorLog "#{@instance_home}/apache-error.log"
     lockFile "#{@instance_home}/accept.lock"
@@ -40,6 +41,14 @@ class ApacheConfig
     end
   end 
 
+  def x_port(port)
+    @port = port
+  end
+
+  def x_host(host)
+    @host = host
+  end
+
   def x_proxy(mapping)
     proxyPass "       #{mapping}"
     proxyPassReverse "#{mapping}"
@@ -57,7 +66,7 @@ class ApacheConfig
     DaemonController.new(
        :identifier    => 'Apache web server',
        :start_command => "/usr/sbin/apachectl -f #{config_file_path} -k start",
-       :ping_command  => lambda { TCPSocket.new('localhost', @config[:listen]) },
+       :ping_command  => lambda { TCPSocket.new(@host, @port) },
        :pid_file      => @config[:pidFile],
        :log_file      => @config[:errorLog],
        :before_start  => method(:write_config ),
