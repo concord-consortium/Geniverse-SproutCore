@@ -26,6 +26,8 @@ Geniverse.BreedDragonView = SC.View.extend(
 
 	childViews: 'fatherView motherView childView fatherLabel motherLabel childLabel breedButtonView'.w(),
 	
+  showChildView: YES,
+	
 	initParentsImmediately: YES,
 	initParentsImmediatelyBinding: 'Geniverse.breedDragonController.initParentsImmediately',
 	
@@ -35,7 +37,7 @@ Geniverse.BreedDragonView = SC.View.extend(
 	  organismBinding: "*parentView.father",
 	  parent: "father",
 	  sex: 0,
-	  allowDrop: YES,
+	  allowDrop: YES
 	}),
 	
 	fatherLabel: SC.LabelView.design({
@@ -52,7 +54,7 @@ Geniverse.BreedDragonView = SC.View.extend(
 	  organismBinding: "*parentView.mother",
 	  parent: "mother",
 	  sex: 1,
-	  allowDrop: YES,
+	  allowDrop: YES
 	}),
 	
 	motherLabel: SC.LabelView.design({
@@ -64,14 +66,20 @@ Geniverse.BreedDragonView = SC.View.extend(
 	childView: Geniverse.OrganismView.design({
 		layout: {bottom: 20, centerX: 0, width: 180, height: 150},
 	  classNames: "childView",
-	  organismBinding: "*parentView.child"
+	  organismBinding: "*parentView.child",
+	  isVisibleBinding: "*parentView.showChildView"
 	}),
 	
 	childLabel: SC.LabelView.design({
 		layout: {centerX: 0, bottom: 170, width: 40, height: 18},
 		classNames: "childLabel",
 		value: "Child",
-		isVisibleBinding: "*parentView.child"
+		woo: function() {
+		  this.propertyDidChange('isVisible');
+    }.observes("*parentView.child"),
+		isVisible: function() {
+     return !!this.get('parentView').get('child') && this.get('parentView').get('showChildView');
+    }.property("*parentView.child")
 	}),
 	
 	breedButtonView: SC.ButtonView.design({

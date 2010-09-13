@@ -69,14 +69,15 @@ Geniverse.mainChatExamplePage = SC.Page.design({
         childViews: 'breedView breedingPenView stableTitle stableView chatView allArticlesView'.w(),
         
         breedView: Geniverse.BreedDragonView.design({
-          layout: { top: Geniverse.marginSize, left: Geniverse.marginSize, height: 230, width: 450 },
-          initParentsImmediately: NO
+          layout: { top: Geniverse.marginSize, left: Geniverse.marginSize, height: 140, width: 450 },
+          initParentsImmediately: NO,
+          showChildView: NO
         }),
         
         // Breeding pen with eggs
         breedingPenView: CC.AutoScrollView.design({
           hasHorizontalScroller: NO,
-          layout: { left: Geniverse.marginSize + 75, top: 260, width: 300, height: 240 },
+          layout: { left: Geniverse.marginSize + 75, top: 160, width: 300, height: 240 },
           backgroundColor: 'white',
           contentView: SC.GridView.design({
             contentBinding: 'Geniverse.eggsController.arrangedObjects',
@@ -92,7 +93,7 @@ Geniverse.mainChatExamplePage = SC.Page.design({
         }),
         
         stableTitle: SC.LabelView.design({
-          layout: { left: Geniverse.marginSize+100, bottom: 245, height: 25, width: 450 },
+          layout: { left: Geniverse.marginSize+100, bottom: 235, height: 25, width: 450 },
           fontWeight: SC.BOLD_WEIGHT,
           woo: function() {
             // SC.Logger.log("woo");
