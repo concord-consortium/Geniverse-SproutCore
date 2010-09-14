@@ -85,6 +85,11 @@ Geniverse.breedDragonController = SC.Controller.create(
         }
         SC.RunLoop.begin();
         self.set('child', child);
+        // if isEgg and isInMarketplace aren't yet properties on backend, we have to reset them here
+        if (child.get('isEgg') === null){
+          child.set('isEgg', true);
+          child.set('isInMarketplace', true);
+        }
         SC.RunLoop.end();
 
         nEggs++;

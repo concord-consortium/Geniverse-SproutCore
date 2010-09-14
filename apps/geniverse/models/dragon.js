@@ -25,6 +25,7 @@ Geniverse.Dragon = SC.Record.extend(
   user: SC.Record.toOne("Geniverse.User"),
   stableOrder: SC.Record.attr(Number),
   isEgg: SC.Record.attr(Boolean),
+  isInMarketplace: SC.Record.attr(Boolean),
   
   // attributes that don't want to be persisted
   gOrganism: null,
@@ -111,7 +112,7 @@ Geniverse.Dragon = SC.Record.extend(
   }.property('sexAsString','characteristicsAsString').cacheable()
 }) ;
 
-Geniverse.Dragon.modelName = "dragon";
-Geniverse.Dragon.modelsName = "dragons";
-
-Geniverse.railsBackedTypes.push(Geniverse.Dragon.modelName);
+// Geniverse.Dragon.modelName = "dragon";
+// Geniverse.Dragon.modelsName = "dragons";
+// 
+// Geniverse.railsBackedTypes.push(Geniverse.Dragon.modelName);
