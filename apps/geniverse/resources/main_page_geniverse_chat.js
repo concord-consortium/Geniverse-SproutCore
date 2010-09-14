@@ -128,34 +128,49 @@ Geniverse.mainChatExamplePage = SC.Page.design({
 
           dragonNum: 0,
           acceptDragOperation: function(drag, op) {
-            var dragon = this._getSourceDragon(drag);
+            var self = this;
+            function acceptDragon(dragon){
+              
+              var dragonNum = self.get('dragonNum');
 
-            var dragonNum = this.get('dragonNum');
-
-            // check if there are existing dragons
-            var allStableDragons = Geniverse.stableOrganismsController.get('arrangedObjects');
-            var count = Geniverse.stableOrganismsController.get('length');
-            if (count >= 50){
-              alert("Your stable is full");
-              return;
-            }
-            if (count > 0){
-              var lastDragon = allStableDragons.objectAt(length-1);
-              var lastStableOrder = lastDragon.get('stableOrder');
-              if (!!lastStableOrder && lastStableOrder > count){
-                dragonNum = lastStableOrder + 1;
-              } else {
-                dragonNum = count + 1;
+              // check if there are existing dragons
+              var allStableDragons = Geniverse.stableOrganismsController.get('arrangedObjects');
+              var count = Geniverse.stableOrganismsController.get('length');
+              if (count >= 50){
+                alert("Your stable is full");
+                return;
               }
-              this.set('dragonNum', dragonNum);
-            }
+              if (count > 0){
+                var lastDragon = allStableDragons.objectAt(length-1);
+                var lastStableOrder = lastDragon.get('stableOrder');
+                if (!!lastStableOrder && lastStableOrder > count){
+                  dragonNum = lastStableOrder + 1;
+                } else {
+                  dragonNum = count + 1;
+                }
+                self.set('dragonNum', dragonNum);
+              }
 
-            dragon.set('isEgg', false);
-            dragon.set('stableOrder', dragonNum);
-            ++this.dragonNum;
+              dragon.set('isEgg', false);
+              dragon.set('stableOrder', dragonNum);
+              ++self.dragonNum;
+            }
+            
+            
+            if ((""+drag.get('source').constructor === 'Geniverse.OrganismView')){
+              var dragon = drag.get('source').get('organism');
+              acceptDragon(dragon);
+            } else {
+              var selection = drag.get('source').get('selection');
+              selection.forEach(function (dragon){
+                acceptDragon(dragon);
+              });
+            }
 
             this.invokeLast(function () {
+              // this is quite specific to the eggsController. We should really be checking the source
               SC.RunLoop.begin();
+              Geniverse.eggsController.set('selection', null);
               Geniverse.eggsController.get('content').reload();
               Geniverse.stableOrganismsController.get('content').reload();
               SC.RunLoop.end();
@@ -170,15 +185,6 @@ Geniverse.mainChatExamplePage = SC.Page.design({
           },
           dragExited: function(drag, evt) {
             this.$().removeClass('drop-target') ;
-          },
-          _getSourceDragon: function(dragEvt) {
-            var sourceDragon;
-            if ((""+dragEvt.get('source').constructor === 'Geniverse.OrganismView')){
-              sourceDragon = dragEvt.get('source').get('organism');
-            } else {
-              sourceDragon = dragEvt.get('source').get('selection').get('firstObject');
-            }
-            return sourceDragon;
           }
         }),
         
