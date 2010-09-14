@@ -128,8 +128,9 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
            .notify(this, this.didCreateRecord, store, storeKey)
            .send(modelHash);
       // SC.Logger.groupEnd();
+      return YES;
     }
-    return YES;
+    return NO;
   },
   
   didCreateRecord: function(response, store, storeKey) {
