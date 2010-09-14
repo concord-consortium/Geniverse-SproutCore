@@ -66,7 +66,7 @@ Geniverse.mainChatExamplePage = SC.Page.design({
     	
       mainAppView: SC.View.create({
         
-        childViews: 'breedView breedingPenView stableTitle stableView chatView allArticlesView'.w(),
+        childViews: 'breedView breedingPenView stableTitle stableView marketplaceView chatView allArticlesView'.w(),
         
         breedView: Geniverse.BreedDragonView.design({
           layout: { top: Geniverse.marginSize, left: Geniverse.marginSize, height: 140, width: 450 },
@@ -150,9 +150,12 @@ Geniverse.mainChatExamplePage = SC.Page.design({
                 }
                 self.set('dragonNum', dragonNum);
               }
-
-              dragon.set('isEgg', false);
-              dragon.set('stableOrder', dragonNum);
+              
+              SC.RunLoop.begin();
+                dragon.set('isEgg', false);
+                dragon.set('stableOrder', dragonNum);
+              SC.RunLoop.end();
+              
               ++self.dragonNum;
             }
             
@@ -171,8 +174,6 @@ Geniverse.mainChatExamplePage = SC.Page.design({
               // this is quite specific to the eggsController. We should really be checking the source
               SC.RunLoop.begin();
               Geniverse.eggsController.set('selection', null);
-              Geniverse.eggsController.get('content').reload();
-              Geniverse.stableOrganismsController.get('content').reload();
               SC.RunLoop.end();
             });
             return op ;
@@ -187,6 +188,48 @@ Geniverse.mainChatExamplePage = SC.Page.design({
             this.$().removeClass('drop-target') ;
           }
         }),
+        
+        marketplaceView: SC.ImageView.design({
+      		layout: { left: 500, bottom: 140, height: 90, width: 90 },
+      		value: sc_static('sell-to-market.jpg'),
+      		canLoadInBackground: NO,
+      		useImageCache: NO,
+      		isDropTarget: YES,
+      		acceptDragOperation: function(drag, op) {
+            function sellDragon(dragon){
+              SC.RunLoop.begin();
+              dragon.set('isInMarketplace', YES);
+              SC.RunLoop.end();
+            }
+            
+            if ((""+drag.get('source').constructor === 'Geniverse.OrganismView')){
+              var dragon = drag.get('source').get('organism');
+              sellDragon(dragon);
+            } else {
+              var selection = drag.get('source').get('selection');
+              selection.forEach(function (dragon){
+                sellDragon(dragon);
+              });
+            }
+
+            this.invokeLast(function () {
+              SC.RunLoop.begin();
+              Geniverse.eggsController.set('selection', null);
+              Geniverse.stableOrganismsController.set('selection', null);
+              SC.RunLoop.end();
+            });
+            return op ;
+          },
+          computeDragOperations: function(drag, evt) {
+            return SC.DRAG_ANY ;
+          },
+          dragEntered: function(drag, evt) {
+            this.$().addClass('drop-target') ;
+          },
+          dragExited: function(drag, evt) {
+            this.$().removeClass('drop-target') ;
+          }
+      	}),
         
         allArticlesView: SC.TabView.design({ 
           layout: { top: 5, right: Geniverse.marginSize, height: 250, width: 510},

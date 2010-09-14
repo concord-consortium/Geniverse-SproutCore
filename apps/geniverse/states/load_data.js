@@ -22,7 +22,7 @@ Geniverse.LOAD_DATA = SC.Responder.create(
     var user = Geniverse.userController.get('content');
     
     var stableQuery = SC.Query.local(Geniverse.Dragon, {
-        conditions: 'bred = true AND isEgg = false AND user = {user}',
+        conditions: 'bred = true AND isEgg = false AND user = {user} AND isInMarketplace = false',
         user: user,
         orderBy: 'stableOrder'
         /*,
@@ -32,7 +32,7 @@ Geniverse.LOAD_DATA = SC.Responder.create(
     Geniverse.stableOrganismsController.set('content', stableOrganisms);
     
     Geniverse.EGGS_QUERY = SC.Query.local('Geniverse.Dragon', {
-        conditions: 'bred = true AND isEgg = true AND user = {user}',
+        conditions: 'bred = true AND isEgg = true AND user = {user} AND isInMarketplace = false',
         user: user,
         orderBy: 'storeKey'
     });
