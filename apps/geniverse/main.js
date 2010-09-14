@@ -19,7 +19,7 @@ Geniverse.main = function main() {
   
     Geniverse.getPath('mainChatExamplePage.mainPane').append();
 
-    Geniverse.store.commitRecordsAutomatically = YES;
+    Geniverse.store.commitRecordsAutomatically = NO;
     
     function checkGWTReadiness() {
         SC.Logger.log("checkGWTReadiness");

@@ -30,6 +30,7 @@ Geniverse.userController = SC.ObjectController.create(
         passwordHash: passwordHash
       });
     this.set('content', user);
+    Geniverse.store.commitRecords();
     return user;
   },
   
