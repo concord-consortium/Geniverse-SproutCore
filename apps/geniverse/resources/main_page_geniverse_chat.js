@@ -130,7 +130,9 @@ Geniverse.mainChatExamplePage = SC.Page.design({
           acceptDragOperation: function(drag, op) {
             var self = this;
             function acceptDragon(dragon){
-              
+              if (!dragon){
+                return;
+              }
               var dragonNum = self.get('dragonNum');
 
               // check if there are existing dragons
@@ -164,10 +166,17 @@ Geniverse.mainChatExamplePage = SC.Page.design({
               var dragon = drag.get('source').get('organism');
               acceptDragon(dragon);
             } else {
-              var selection = drag.get('source').get('selection');
-              selection.forEach(function (dragon){
-                acceptDragon(dragon);
-              });
+              var selection = drag.get('source').get('selection').clone();
+              // NB: This works, while the forEach method below only removes half of them.
+              // This is because each time acceptDragon is called, the dragon gets removed from
+              // the list, and the other dragons shift indices.
+              for (var i = 0; i < selection.get('length'); i++){
+                acceptDragon(selection.firstObject());
+              }
+              // selection.forEach(function (dragon){
+              //  SC.Logger.log("selection.length = "+selection.get('length'));
+              //  acceptDragon(dragon);
+              //  });
             }
 
             this.invokeLast(function () {
@@ -190,7 +199,7 @@ Geniverse.mainChatExamplePage = SC.Page.design({
         }),
         
         marketplaceView: SC.ImageView.design({
-      		layout: { left: 500, bottom: 140, height: 90, width: 90 },
+      		layout: { left: 500, bottom: 135, height: 90, width: 90 },
       		value: sc_static('sell-to-market.jpg'),
       		canLoadInBackground: NO,
       		useImageCache: NO,
@@ -198,7 +207,9 @@ Geniverse.mainChatExamplePage = SC.Page.design({
       		acceptDragOperation: function(drag, op) {
             function sellDragon(dragon){
               SC.RunLoop.begin();
-              dragon.set('isInMarketplace', YES);
+              if (!!dragon){
+                dragon.set('isInMarketplace', YES);
+              }
               SC.RunLoop.end();
             }
             
@@ -207,9 +218,9 @@ Geniverse.mainChatExamplePage = SC.Page.design({
               sellDragon(dragon);
             } else {
               var selection = drag.get('source').get('selection');
-              selection.forEach(function (dragon){
-                sellDragon(dragon);
-              });
+              for (var i = 0; i < selection.get('length'); i++){
+                sellDragon(selection.firstObject());
+              }
             }
 
             this.invokeLast(function () {

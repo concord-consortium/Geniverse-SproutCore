@@ -12,11 +12,13 @@
 */
 Geniverse.eggsController = SC.ArrayController.create(
   SC.CollectionViewDelegate,
-/** @scope Geniverse.bredOrganismsController.prototype */ {
+/** @scope Geniverse.eggsController.prototype */ {
     
     removeAllEggs: function () {
       var eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
-      Geniverse.store.destroyRecords(Geniverse.Dragon, eggs.getEach('id'));
+      eggs.forEach(function (egg){
+        egg.set('isInMarketplace', true);
+      });
     },
     
     collectionViewDeleteContent: function(view, content, indexes) {
