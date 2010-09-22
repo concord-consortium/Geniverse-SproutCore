@@ -33,6 +33,9 @@ ActiveRecord::Schema.define(:version => 20100826183320) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "stableOrder"
+    t.boolean  "isEgg",           :default => false
+    t.boolean  "isInMarketplace", :default => true
   end
 
   create_table "users", :force => true do |t|
