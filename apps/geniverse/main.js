@@ -17,6 +17,11 @@ sc_require('models/dragon');
 
 Geniverse.main = function main() {
   
+    SC.ExceptionHandler.handleException = function (exception) {
+      // Will do nothing because uncaught exception will show in console
+      // for developers
+    };
+  
     Geniverse.getPath('mainChatExamplePage.mainPane').append();
 
     Geniverse.store.commitRecordsAutomatically = NO;
