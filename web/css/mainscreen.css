@@ -1,0 +1,19 @@
+#content {
+  background: url(../images/mainscreen-bg.png);
+  background-repeat: no-repeat;
+}
+
+a#caselog {
+  left:467px;
+  top:438px;
+  width: 372px;
+  height: 158px;
+  background:transparent;
+  position: absolute;
+  border: none;
+}
+
+a#caselog:hover {
+  background-image: url(../images/mainscreen-caselog-highlighted.png);
+  background-repeat: none;
+}

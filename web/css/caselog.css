@@ -1,0 +1,48 @@
+body {
+  background-color: #371D1D;
+}
+
+#content {
+  background: url(../images/caselog-bg.png);
+  background-repeat: no-repeat;
+}
+
+#content.intro-completed {
+  background: url(../images/caselog-bg-intro-completed.png);
+  background-repeat: no-repeat;
+}
+
+a#intro {
+  left:83px;
+  top:299px;
+  width: 325px;
+  height: 63px;
+  background:transparent;
+  position: absolute;
+  border: none;
+}
+
+a#intro:hover {
+  background-image: url(../images/caselog-intro-highlighted.png);
+  background-repeat: none;
+}
+
+a#intro.completed:hover {
+  background-image: url(../images/caselog-intro-completed-highlighted.png);
+  background-repeat: none;
+}
+
+a#individual {
+  left:82px;
+  top:400px;
+  width: 326px;
+  height: 62px;
+  background:transparent;
+  position: absolute;
+  border: none;
+}
+
+a#individual:hover {
+  background-image: url(../images/caselog-individual-highlighted.png);
+  background-repeat: none;
+}
