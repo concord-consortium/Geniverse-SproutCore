@@ -1,3 +1,7 @@
+body {
+  background-color: #BC8F72;
+}
+
 #content {
   background: url(../images/mainscreen-bg.png);
   background-repeat: no-repeat;
