@@ -33,3 +33,5 @@ Geniverse = SC.Application.create(
   isLoaded: NO
 
 }) ;
+
+Geniverse.NO_DRAGON = {imageURL: sc_static("question-mark.png") };

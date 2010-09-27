@@ -15,14 +15,14 @@ Geniverse.OrganismView = SC.View.extend(
 	organismBinding: '*content',
 	label: 'Organism',
 	classNames: ['organism-view'],
+	content: Geniverse.NO_DRAGON,
 	contentBinding: '*organism',
 	childViews: 'imageView'.w(),
 	
   isDropTarget: NO, // change this to YES in view if you want replaceable by drag-and-drop
   parent: '',       // If set, drag-and-drop will replace parentView's [parent] field
   sex: null,        // If set to 0 or 1, drag-and-drop will only work wil males and females, respectively
-  
-	
+
 	imageView: SC.ImageView.design({
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
 		contentBinding: '*parentView.content',
@@ -31,7 +31,17 @@ Geniverse.OrganismView = SC.View.extend(
 		useImageCache: NO
 	}),
 	
+	init: function() {
+	  SC.Logger.info("Init Organism View.");
+	  this.invokeLast(function() {
+	    this._checkForNullDragon();
+	  });
+	  sc_super();
+	},
+	
 	contentDidChange: function() {
+	  SC.Logger.info("Content changed!");
+	  this._checkForNullDragon();
 		this.setPath('imageView.layerNeedsUpdate', YES);
 	}.observes('*content'),
 	
@@ -43,6 +53,16 @@ Geniverse.OrganismView = SC.View.extend(
   render: function(context, firstTime) {
 			this._setClassNames();
 	    sc_super();
+  },
+  
+  _checkForNullDragon: function() {
+    var dragon = this.get('content');
+  	if (dragon === null || typeof(dragon) == "undefined") {
+      SC.Logger.info("Dragon was null!");
+      this.set('content', this.get('defaultContent'));
+      return YES;
+    }
+    return NO;
   },
   
   _setClassNames: function(){
