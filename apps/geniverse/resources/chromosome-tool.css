@@ -1,0 +1,11 @@
+.sc-theme .sc-button-view.chromosome-tool.sc-regular-size.square .sc-button-label {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.sc-theme .sc-button-view.chromosome-tool.icon img.icon {
+  height: 24px;
+  width: 24px;
+  top: -1px;
+  left: 1px;
+}
