@@ -11,6 +11,8 @@
   @extends SC.View   // no more Geniverse.dragonGenomeController!
 */
 sc_require('views/dragon_chromosome');
+sc_require('views/organism');
+
 Geniverse.DragonGenomeView = SC.View.extend(
 /** @scope Geniverse.DragonGenomeView.prototype */ {
   
@@ -202,6 +204,11 @@ Geniverse.DragonGenomeView = SC.View.extend(
     if (this.get('ignoreUpdate') == NO) {
       var map = this.get('allelesMap');
       var dragon = this.get('dragon');
+      
+      if (dragon === null || typeof(dragon) == "undefined") {
+        this.set('alleles', []);
+        return;
+      }
       
       var alleleString = dragon.get('alleles');
       
