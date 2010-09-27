@@ -9,7 +9,7 @@ describe "SC/Rails Integration Test" do
     before(:all) do
       puts `cd #{dir}/../rails/geniverse; RAILS_ENV=test rake db:migrate; RAILS_ENV=test rake app:setup`
       start_testing_servers
-      @selenium_driver = new_test
+      @selenium_driver = new_selenium_test
       page.start_new_browser_session
     end
   
