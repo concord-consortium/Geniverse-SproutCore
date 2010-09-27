@@ -90,6 +90,31 @@ Geniverse.BreedDragonView = SC.View.extend(
 		}.property('isBreeding').cacheable()
 	}),
 	
+	_isDragon: function(obj) {
+	  if (obj === null || typeof(obj) == 'undefined' || obj === Geniverse.NO_DRAGON) {
+	    return NO;
+    }
+    return YES;
+	},
+	
+	_fatherDidChange: function() {
+	  if (this._isDragon(this.get('mother')) == YES && this._isDragon(this.get('father')) == YES) {
+	    this.setPath('breedButtonView.isEnabled', YES);
+	  } else {
+	    this.setPath('breedButtonView.isEnabled', NO);
+	  }
+	}.observes('father'),
+	
+	_motherDidChange: function() {
+	  if (this._isDragon(this.get('mother')) == YES && this._isDragon(this.get('father')) == YES) {
+	    this.setPath('breedButtonView.isEnabled', YES);
+	  } else {
+	    this.setPath('breedButtonView.isEnabled', NO);
+	  }
+	}.observes('mother'),
+	
+
+	
 	viewDidResize: function() {
 		this._resize_children();
 	},
