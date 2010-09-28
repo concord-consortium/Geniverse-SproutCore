@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100909144444) do
+ActiveRecord::Schema.define(:version => 20100928145506) do
 
   create_table "activities", :force => true do |t|
     t.string   "initial_alleles"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20100909144444) do
     t.integer  "stableOrder"
     t.boolean  "isEgg",           :default => false
     t.boolean  "isInMarketplace", :default => true
+    t.integer  "activity_id"
   end
 
   create_table "users", :force => true do |t|
