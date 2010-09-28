@@ -1,12 +1,7 @@
 <% form_for(user) do |f| %>
   <%= f.error_messages %>
   
-  <% user.attributes.each do |att,val| %>
-  <p>
-    <%= f.label att.to_sym %><br />
-    <%= f.text_field att.to_sym %>
-  </p>
-  <% end %>
+  <%= render :partial => 'shared/form', :locals => {:object => user, :f => f } %>
 
   <p>
     <%= f.submit 'Submit' %>

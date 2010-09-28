@@ -1,30 +1,10 @@
 <h1>Listing activities</h1>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>SC Type</th>
-    <th>Initial alleles</th>
-    <th>Base channel name</th>
-    <th>Max users in room</th>
-    <th>Send bred dragons</th>
-  </tr>
-
-<% @activities.each do |activity| %>
-  <tr>
-  	<td><%=h activity.title %></td>
-  	<td><%=h activity.sc_type %></td>
-    <td><%=h activity.initial_alleles %></td>
-    <td><%=h activity.base_channel_name %></td>
-    <td><%=h activity.max_users_in_room %></td>
-    <td><%=h activity.send_bred_dragons %></td>
-    <td><%= link_to 'Run', "/lab##{activity.sc_type}" %></td>
-    <td><%= link_to 'Show', activity %></td>
-    <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
-    <td><%= link_to 'Destroy', activity, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+<%= render :partial => 'shared/index', :locals => { :objects => @activities, 
+  :extra_links => [
+    lambda {|activity| return link_to 'Run', "/lab##{activity.sc_type}" }
+  ]
+} %>
 
 <br />
 

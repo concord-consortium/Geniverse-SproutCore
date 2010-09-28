@@ -1,0 +1,11 @@
+<p>
+  <b>ID:</b>
+  <%=h object.id %>
+</p>
+
+<% object.attributes.each do |att,val| %>
+  <p>
+    <%= f.label att.to_sym %><br />
+    <%= f.text_field att.to_sym %>
+  </p>
+<% end %>

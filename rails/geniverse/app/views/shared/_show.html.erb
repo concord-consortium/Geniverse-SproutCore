@@ -1,0 +1,11 @@
+<p>
+  <b>ID:</b>
+  <%=h object.id %>
+</p>
+
+<% object.attributes.each do |att,val| %>
+  <p>
+    <b><%= att %>:</b>
+    <%=h val %>
+  </p>
+<% end %>

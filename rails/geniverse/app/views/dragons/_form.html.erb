@@ -1,55 +1,8 @@
 <% form_for(dragon) do |f| %>
   <%= f.error_messages %>
-  <p>
-    <b>ID:</b>
-    <%=h @dragon.id %>
-  </p>
   
-  <p>
-    <%= f.label :user_id %><br />
-    <%= f.text_field :user_id %>
-  </p>
+  <%= render :partial => 'shared/form', :locals => {:object => dragon, :f => f } %>
   
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :sex %><br />
-    <%= f.text_field :sex %>
-  </p>
-  <p>
-    <%= f.label :alleles %><br />
-    <%= f.text_field :alleles %>
-  </p>
-  <p>
-    <%= f.label :imageURL %><br />
-    <%= f.text_field :imageURL %>
-  </p>
-  <p>
-    <%= f.label :mother_id %><br />
-    <%= f.text_field :mother_id %>
-  </p>
-  <p>
-    <%= f.label :father_id %><br />
-    <%= f.text_field :father_id %>
-  </p>
-  <p>
-    <%= f.label :bred %><br />
-    <%= f.check_box :bred %>
-  </p>
-	<p>
-    <%= f.label :stableOrder %><br />
-    <%= f.text_field :stableOrder %>
-  </p>
-	<p>
-    <%= f.label :isEgg %><br />
-    <%= f.check_box :isEgg %>
-  </p>
-	<p>
-    <%= f.label :isInMarketplace %><br />
-    <%= f.check_box :isInMarketplace %>
-  </p>
   <p>
     <%= f.submit 'Submit' %>
   </p>

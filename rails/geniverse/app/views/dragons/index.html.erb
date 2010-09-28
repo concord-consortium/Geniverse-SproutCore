@@ -1,41 +1,16 @@
 <h1>Listing dragons</h1>
 
-<table>
-  <tr>
-    <th>Id</th>
-    <th>User</th>
-    <th>Name</th>
-    <th>Sex</th>
-    <th>Alleles</th>
-    <th>ImageURL</th>
-    <th>Mother</th>
-    <th>Father</th>
-    <th>Bred</th>
-    <th>Stable Order</th>
-    <th>Is Egg</th>
-    <th>Is In Marketplace</th>
-  </tr>
-
-<% @dragons.each do |dragon| %>
-  <tr>
-    <td><%=h dragon.id %></td>
-    <td><%=h dragon.user_id %></td>
-    <td><%=h dragon.name %></td>
-    <td><%=h dragon.sex %></td>
-    <td><%=h dragon.alleles %></td>
-    <td><img src="<%= dragon.imageURL %>" style="width: 50; height: 50;"/></td>
-    <td><%=h dragon.mother_id %></td>
-    <td><%=h dragon.father_id %></td>
-    <td><%=h dragon.bred %></td>
-    <td><%=h dragon.stableOrder %></td>
-    <td><%=h dragon.isEgg %></td>
-    <td><%=h dragon.isInMarketplace %></td>
-    <td><%= link_to 'Show', dragon %></td>
-    <td><%= link_to 'Edit', edit_dragon_path(dragon) %></td>
-    <td><%= link_to 'Destroy', dragon, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+<%= render :partial => 'shared/index', :locals => { :objects => @dragons, 
+  :specials => {
+    'imageURL' => {
+      :header => "Image", 
+      :content => lambda {|dragon| return "<img src='#{dragon.imageURL}' style='width: 50; height: 50;'/>" }
+    },
+    'isEgg' => {:header => "Is Egg?" },
+    'isInMarketplace' => {:header => "Is In Marketplace?" },
+    'stableOrder' => {:header => "Stable Order" }
+  }
+} %>
 
 <br />
 
