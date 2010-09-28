@@ -4,6 +4,8 @@ class Dragon < ActiveRecord::Base
   belongs_to :father, :class_name => "Dragon"
   belongs_to :mother, :class_name => "Dragon"
   
+  belongs_to :activity
+  
   belongs_to :user
 end
 

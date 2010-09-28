@@ -1,4 +1,5 @@
 class Activity < ActiveRecord::Base
+  has_many :dragons
 end
 
 # == Schema Information
