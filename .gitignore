@@ -7,7 +7,9 @@ rails/geniverse/db/*.db
 rails/geniverse/.project
 .rvmrc
 proxy/*.conf
-proxy/*.log
-proxy/*.pid
-proxy/*.lock*
+*.log
+*.pid
+*.lock
 spec/support/apache*
+hudson/*
+results/*
