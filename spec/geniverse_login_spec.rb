@@ -26,10 +26,10 @@ describe "App Controller Test" do
   end
   
   it "will show the welcome message after login" do
-    @welcome_label.should have_value ""
+    @welcome_label.value.should eql ""
     
     ## FIXME: These don't work on the deployed geniverse application...
-    # @welcome_label.should_not be_visible_in_window
+    @welcome_label.isVisibleInWindow.should_not be_true
     # @welcome_label.should have_text_align 'right' # check that we can test for arbitrary SC properties
     
     @login_field.type "Test"
@@ -48,19 +48,21 @@ describe "App Controller Test" do
       end
     end
     p "@welcome_label.value is now: " + @welcome_label.value.to_s
-    @welcome_label.should have_value /^Welcome Test*/
-    @welcome_label.should be_visible_in_window
+    @welcome_label.value.should match /^Welcome Test*/
+    @welcome_label.isVisibleInWindow.should be_true
   end
   
   it "will show the login field after logout" do
-    @login_field.should_not be_visible_in_window
-    @logout_button.should be_visible_in_window
+    @login_field.isVisibleInWindow.should_not be_true
+    @logout_button.isVisibleInWindow.should be_true
     @logout_button.click
     
     ## FIXME: The SproutCore app reloads after logout, so we lose the SC object and can't continue
     ## Apparently there will soon be updates to Lebowski that will allow us to deal with this
-    # @login_field.should be_visible_in_window
-    # @logout_button.should_not be_visible_in_window
+    pending 'waiting for lebowski framework updates' do
+      @login_field.isVisibleInWindow.should be_true
+      @logout_button.isVisibleInWindow.should_not be_true
+    end
   end
   
 end

@@ -36,7 +36,11 @@ describe "Geniverse Article Test" do
     
     @breed_button = @app['breedView.breedButtonView', 'SC.ButtonView']
     @breeding_pen_view = @app['mainAppView.breedingPenView', 'CC.AutoScrollView']
-    @stable_view = @app['mainChatExamplePage.bredDragonsScrollView', 'CC.AutoScrollView']
+    @stable_view = @app['mainAppView.stableView', 'CC.AutoScrollView']
+    
+    @challenge_pool_view = @app['mainAppView.challengePoolView', 'CC.AutoScrollView']
+    @mother_view = @app['mainAppView.breedView.motherView', 'Geniverse.OrganismView']
+    @father_view = @app['mainAppView.breedView.fatherView', 'Geniverse.OrganismView']
   end
   
   after(:all) do
@@ -50,34 +54,46 @@ describe "Geniverse Article Test" do
   end
   
   it "should see initial article text immediately" do
-    @article_text.should be_visible_in_window
-    @article_text.should have_value "<div id='article'><div class='claim'><i>Write your thoughts here.</i></div></div>"
-    @app['yourArticle.editingView'].should_not be_visible_in_window
+    @article_text.isVisibleInWindow.should be_true
+    @article_text.value.should eql "<div id='article'><div class='claim'><i>Write your thoughts here.</i></div></div>"
+    @app['yourArticle.editingView'].isVisibleInWindow.should_not be_true
   end
   
   it "should see editing view when New Paper is clicked" do
-    @new_paper_button.should be_visible_in_window
-    @new_paper_button.should be_enabled
-    @edit_paper_button.should_not be_enabled
+    @new_paper_button.isVisibleInWindow.should be_true
+    @new_paper_button.isEnabled.should be_true
+    @edit_paper_button.isEnabled.should_not be_true
     
     @new_paper_button.click
     
-    @article_text.should_not be_visible_in_window
-    @app['yourArticle.editingView'].should be_visible_in_window
-    @claim_text_field.should have_value "<i>Write your thoughts here.</i>"
+    @article_text.isVisibleInWindow.should_not be_true
+    @app['yourArticle.editingView'].isVisibleInWindow.should be_true
+    @claim_text_field.fieldValue.should eql "<i>Write your thoughts here.</i>"
   end
   
   it "should be able to breed dragons and drag them to dragon bin" do
+    dragon1view = @challenge_pool_view.child_views[0].child_views[0].child_views[0]
+    dragon2view = @challenge_pool_view.child_views[0].child_views[0].child_views[1]
+    d1sex = dragon1view.organism['sex']
+    if (d1sex == 0)
+      dragon1view.drag_to @father_view, 20, 20
+      dragon2view.drag_to @mother_view, 20, 20
+    else
+      dragon2view.drag_to @father_view, 20, 20
+      dragon1view.drag_to @mother_view, 20, 20
+    end
+    
     @breed_button.click
+    sleep 5
     dragon1 = @breeding_pen_view.child_views[0].child_views[0].child_views[0]
     
     @dragon_bin.child_views.count.should be 1
-    @add_dragons_label.should be_visible_in_window
+    @add_dragons_label.isVisibleInWindow.should be_true
     
     dragon1.drag_to @dragon_bin, 20, 20
     
     @dragon_bin.child_views.count.should be 2
-    @add_dragons_label.should_not be_visible_in_window
+    @add_dragons_label.isVisibleInWindow.should_not be_true
     
     dragon2 = @breeding_pen_view.child_views[0].child_views[0].child_views[2]
     dragon2.drag_to @dragon_bin, 20, 20
@@ -86,29 +102,29 @@ describe "Geniverse Article Test" do
   end
   
   it "should see new dragons in static dragon bin when previewing" do
-    @static_dragon_bin.should_not be_visible_in_window
+    @static_dragon_bin.isVisibleInWindow.should_not be_true
     @preview_paper.click
     
-    @static_dragon_bin.should be_visible_in_window
+    @static_dragon_bin.isVisibleInWindow.should be_true
     @static_dragon_bin.child_views.count.should be 3
   end
   
   it "should be able to edit paper again" do
-    @edit_paper_button.should be_visible_in_window
-    @edit_paper_button.should be_enabled
-    @new_paper_button.should_not be_enabled
+    @edit_paper_button.isVisibleInWindow.should be_true
+    @edit_paper_button.isEnabled.should be_true
+    @new_paper_button.isEnabled.should_not be_true
     
     @edit_paper_button.click
     
-    @article_text.should_not be_visible_in_window
-    @app['yourArticle.editingView'].should be_visible_in_window
+    @article_text.isVisibleInWindow.should_not be_true
+    @app['yourArticle.editingView'].isVisibleInWindow.should be_true
     @dragon_bin.child_views.count.should be 3
   end
   
   it "should be able to clear dragons from dragon bin" do
     @clear_dragons.click
     @dragon_bin.child_views.count.should be 1
-    @add_dragons_label.should be_visible_in_window
+    @add_dragons_label.isVisibleInWindow.should be_true
   end
  
   it "will show the login field after logout" do

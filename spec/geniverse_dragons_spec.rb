@@ -53,12 +53,7 @@ describe "Geniverse Dragons Test" do
     @challenge_pool_view.child_views[0].child_views[0].child_views.count.should be 2
   end
   
-  it "should be able to drag mother and father from challenge pool to breed view" do
-    
-    puts "challenge pool: #{@challenge_pool_view}"
-    puts "child 1: #{@challenge_pool_view.child_views[0]}"
-    puts "child 2: #{@challenge_pool_view.child_views[0].child_views[0]}"
-    
+  it "should be able to drag mother and father from challenge pool to breed view" do 
     dragon1view = @challenge_pool_view.child_views[0].child_views[0].child_views[0]
     dragon2view = @challenge_pool_view.child_views[0].child_views[0].child_views[1]
     d1sex = dragon1view.organism['sex']
