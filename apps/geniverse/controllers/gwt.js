@@ -50,13 +50,14 @@ Geniverse.gwtController = SC.Controller.create(
     if (mother !== null && mother.get('gOrganism') !== null && father !== null && father.get('gOrganism') !== null) {
       var onSuccess = function(organism) {
         var child = Geniverse.store.createRecord(Geniverse.Dragon, {
-					bred: YES, mother: mother.get("id"), father: father.get("id"), isEgg: YES, 
-					user: Geniverse.userController.get('content').get('id'), isInMarketplace: NO
+					bred: YES, mother: mother.get("id"), father: father.get("id"), activity: Geniverse.activityController.getPath('content.id'), 
+					user: Geniverse.userController.get('content').get('id'), isInMarketplace: NO, isEgg: YES
 				});
 				child.set('user', Geniverse.userController.get('content'));
         child.set('gOrganism', organism);
       
         handleChildFunction(child);
+        Geniverse.store.commitRecords();
       };
       GenGWT.breedDragon(mother.get('gOrganism'), father.get('gOrganism'), onSuccess);
     }
@@ -73,13 +74,14 @@ Geniverse.gwtController = SC.Controller.create(
         for (var i = 0; i < number; i++) {
           organism = orgs[i];
           var child = Geniverse.store.createRecord(Geniverse.Dragon, {
-  					bred: YES, mother: mother.get("id"), father: father.get("id"), isEgg: YES, 
-  					user: Geniverse.userController.get('content').get('id'), isInMarketplace: NO
+  					bred: YES, mother: mother.get("id"), father: father.get("id"), activity: Geniverse.activityController.getPath('content.id'), 
+  					user: Geniverse.userController.get('content').get('id'), isInMarketplace: NO, isEgg: YES
   				});
           child.set('gOrganism', organism);
       
           handleChildFunction(child);
         }
+        Geniverse.store.commitRecords();
       };
       GenGWT.breedDragons(number, mother.get('gOrganism'), father.get('gOrganism'), onSuccess);
     }
@@ -90,9 +92,11 @@ Geniverse.gwtController = SC.Controller.create(
     var self = this;
     var handleGOrg = function(gOrg) {
       var org = Geniverse.store.createRecord(Geniverse.Dragon, {bred: NO});
+      org.set('activity', Geniverse.activityController.get('content'));
       org.set('user', Geniverse.userController.get('content'));
       org.set('gOrganism', gOrg);
       callback(org);
+      Geniverse.store.commitRecords();
     };
     GenGWT.generateDragon(handleGOrg);
   },
@@ -102,10 +106,12 @@ Geniverse.gwtController = SC.Controller.create(
     var self = this;
     var handleGOrg = function(gOrg) {
       var org = Geniverse.store.createRecord(Geniverse.Dragon, {bred: NO});
+      org.set('activity', Geniverse.activityController.get('content'));
       org.set('user', Geniverse.userController.get('content'));
       org.set('name', name);
       org.set('gOrganism', gOrg);
       callback(org);
+      Geniverse.store.commitRecords();
     };
     GenGWT.generateDragonWithSex(sex, handleGOrg);
   },
@@ -116,10 +122,12 @@ Geniverse.gwtController = SC.Controller.create(
     var self = this;
     var handleGOrg = function(gOrg) {
       var org = Geniverse.store.createRecord(Geniverse.Dragon, {bred: NO});
+      org.set('activity', Geniverse.activityController.get('content'));
       org.set('user', Geniverse.userController.get('content'));
       org.set('name', name);
       org.set('gOrganism', gOrg);
       callback(org);
+      Geniverse.store.commitRecords();
     };
     GenGWT.generateDragonWithAlleleStringAndSex(alleles, sex, handleGOrg);
   },
