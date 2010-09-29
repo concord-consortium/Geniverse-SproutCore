@@ -110,7 +110,7 @@ def stop_command(name)
 end
 
 def start_apache
-  apache = ApacheConfig.new {
+  @apache = ApacheConfig.new {
     x_instance_home File.expand_path(File.dirname(__FILE__))
     x_port APACHE_PORT
     x_host '127.0.0.1'
@@ -119,11 +119,11 @@ def start_apache
     x_proxy "/          http://127.0.0.1:#{SC_SERVER_PORT}/"
   }
 
-  apache.controller.start
+  @apache.controller.start
 end
 
 def stop_apache
-  apache.controller.stop
+  @apache.controller.stop
 end
 
 def start_testing_servers
