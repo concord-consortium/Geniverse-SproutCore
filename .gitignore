@@ -6,3 +6,4 @@ rails/geniverse/db/*.db
 *.DS_Store*
 rails/geniverse/.project
 .rvmrc
+spec/support/apache*
