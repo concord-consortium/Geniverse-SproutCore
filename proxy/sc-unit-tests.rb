@@ -1,3 +1,4 @@
+$:.unshift File.dirname(__FILE__)
 # add the lib folder to the search path ($:)
 # $:.unshift File.join(File.dirname(__FILE__), '../capybara-testrunner')
 
@@ -16,42 +17,12 @@ require 'trollop'  # For processing command-line options
 end
 
 require 'daemon_controller'
-require 'socket'
-require 'fileutils'
-
-def find_free_port(initial_port)
-  port = initial_port
-
-  until free_port?(port)
-    port += 1
-  end
-
-  port
-end
-
-def free_port?(port)
-  s = TCPServer.new('127.0.0.1', port)
-  s.close
-  # sproutcore binds to 0.0.0.0 by default so make sure that port isn't taken either
-  s = TCPServer.new('0.0.0.0', port)
-  s.close
-  true
-rescue SocketError, Errno::EADDRINUSE
-  false
-end
-
-def get_port(env_variable, default_port)
-  if ENV[env_variable]
-    sc_server_port = ENV[env_variable].to_i
-  else
-    sc_server_port = find_free_port(default_port);
-  end
-end
+require 'port_tools'
 
 # remove old test results rm reports/*.xml
 system("git clean -f #{@options[:results_dir]}")
 
-sc_server_port = get_port('SC_SERVER_PORT', 4020)
+sc_server_port = PortTools.get_port('SC_SERVER_PORT', 4020)
 puts "sc-server port: #{sc_server_port}"
 
 sc_server_cmd = ['sc-server',
@@ -73,17 +44,17 @@ sc_server = DaemonController.new(
 
 sc_server.start
 
-$:.unshift File.dirname(__FILE__)
+
 
 require 'apache_config'
 
-apache_port = get_port('APACHE_PROXY_PORT', 1234);
+apache_port = PortTools.get_port('APACHE_PROXY_PORT', 1234);
 
 apache = ApacheConfig.new {
   x_instance_home File.expand_path(File.dirname(__FILE__))
   x_port apache_port
   x_host '127.0.0.1'
-  x_proxy "/geniverse/geniverse http://geniverse.dev.concord.org/geniverse/geniverse"
+  x_proxy "/biologica/ http://geniverse.dev.concord.org/biologica/"
   x_proxy "/chat/      http://geniverse.dev.concord.org/chat/"
   x_proxy "/          http://127.0.0.1:#{sc_server_port}/"
 }

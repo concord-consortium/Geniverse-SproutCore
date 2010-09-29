@@ -10,3 +10,4 @@ proxy/*.conf
 proxy/*.log
 proxy/*.pid
 proxy/*.lock*
+spec/support/apache*

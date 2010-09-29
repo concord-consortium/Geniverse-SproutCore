@@ -8,7 +8,7 @@ apache = ApacheConfig.new {
   x_host '0.0.0.0'
   x_proxy "/rails/    http://127.0.0.1:#{ENV['RAILS_PORT'] || 3000}/rails/" 
   x_proxy "/chat/      http://geniverse.dev.concord.org/chat/"
-  x_proxy "/geniverse/ http://geniverse.dev.concord.org/geniverse/"
+  x_proxy "/biologica/ http://geniverse.dev.concord.org/biologica/"
   x_proxy "/          http://127.0.0.1:#{ENV['SC_SERVER_PORT'] || 4020}/"
 }
 
