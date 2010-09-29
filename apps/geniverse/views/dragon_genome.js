@@ -236,6 +236,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
   }.observes('dragon'),
   
   updateDragon: function (){
+    if (this.get('ignoreUpdate')) {
       var outStr = "";
       var alleles = this.get('alleles');
       if (!alleles || !alleles[1]){
@@ -265,6 +266,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
   		    self.set('dragon', dragon);
   	    });
   	  });
+	  }
   },
   
   initRandomDragon: function () {
