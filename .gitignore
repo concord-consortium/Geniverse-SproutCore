@@ -6,3 +6,7 @@ rails/geniverse/db/*.db
 *.DS_Store*
 rails/geniverse/.project
 .rvmrc
+proxy/*.conf
+proxy/*.log
+proxy/*.pid
+proxy/*.lock*

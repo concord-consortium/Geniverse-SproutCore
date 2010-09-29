@@ -19,4 +19,8 @@ when 'stop'
   apache.controller.stop
 when 'config'  
   apache.write_config  
+else
+  puts "usage #{__FILE__} [start|stop|config]"
 end
+
+
