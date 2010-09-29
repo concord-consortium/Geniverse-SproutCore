@@ -26,22 +26,7 @@ Geniverse.main = function main() {
 
     Geniverse.store.commitRecordsAutomatically = NO;
     
-    function checkGWTReadiness() {
-        SC.Logger.log("checkGWTReadiness");
-        if (Geniverse.gwtController.get('isReady')) {
-            Geniverse.gwtController.removeObserver('isReady', checkGWTReadiness);
-            
-            Geniverse.set('isLoaded', YES);
-            
-            // kick off application
-            Geniverse.makeFirstResponder(Geniverse.START);
-        }
-    }
-    
-    
-    Geniverse.gwtController.addObserver('isReady', checkGWTReadiness);
-    checkGWTReadiness();
-
+    Geniverse.makeFirstResponder(Geniverse.START);
 };
 
 function main() { Geniverse.main(); }
