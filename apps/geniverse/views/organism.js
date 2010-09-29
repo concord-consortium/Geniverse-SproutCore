@@ -55,9 +55,16 @@ Geniverse.OrganismView = SC.View.extend(
 	    sc_super();
   },
   
+  _isNull: function(object) {
+    if (object === null || typeof(object) == "undefined") {
+      return YES;
+    }
+    return NO;
+  },
+  
   _checkForNullDragon: function() {
     var dragon = this.get('content');
-  	if (dragon === null || typeof(dragon) == "undefined") {
+  	if (this._isNull(dragon)) {
       SC.Logger.info("Dragon was null!");
       this.set('content', this.get('defaultContent'));
       return YES;
@@ -95,26 +102,26 @@ Geniverse.OrganismView = SC.View.extend(
    
 	// drop methods: NB: none of these will be called if isDropTarget = NO
   acceptDragOperation: function(drag, op) {
-    SC.Logger.log("here??");
+    // SC.Logger.log("here??");
     var dragon = this._getSourceDragon(drag);
     if (!this._canDrop(dragon)){
       return;
     }
     
-    SC.Logger.log("here");
-    
-    
+    // SC.Logger.log("here");
+
     // next, if we are a prent view, check that dragged dragon
     // is not an egg
     var parentType = this.get('parent');
     if (!!parentType){
+      // SC.Logger.log("woo!");
       this.get('parentView').set(this.get('parent'), dragon);
-      this.get('parentView').set('child', null);
+      this.get('parentView').set('child', Geniverse.NO_DRAGON);
     } else {
-      SC.Logger.log("woo?");
+      // SC.Logger.log("woo?");
       this.set('organism', dragon);
     }
-    SC.Logger.log("now here");
+    // SC.Logger.log("now here");
     
     return op ;
   },
@@ -134,7 +141,9 @@ Geniverse.OrganismView = SC.View.extend(
   },
   
   _canDrop: function(dragon) {
-    
+    if (this._isNull(dragon)) {
+      return NO;
+    }
     // if we require a sex, check that the dragged dragon
     // is of the right sex
     var requiredSex = this.get('sex');
