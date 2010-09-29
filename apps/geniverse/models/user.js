@@ -18,7 +18,7 @@ Geniverse.User = SC.Record.extend(
   
   passwordHash: SC.Record.attr(String)
 
-}) ;
+});
 
 Geniverse.User.modelName = "user";
 Geniverse.User.modelsName = "users";

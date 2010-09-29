@@ -27,7 +27,7 @@ Geniverse.Activity = SC.Record.extend(
   initialAlleles: SC.Record.attr(String),   // a string in the form of "[{m: 'a:H,b:H',f: 'a:h,b:h'},{m: 'a:h,b:H',f: 'a:H,b:h'}]"
   
   sendBredDragons: SC.Record.attr(Boolean, { defaultValue: NO })
-}) ;
+});
 
 Geniverse.Activity.modelName = "activity";
 Geniverse.Activity.modelsName = "activities";

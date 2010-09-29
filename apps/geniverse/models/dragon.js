@@ -26,6 +26,7 @@ Geniverse.Dragon = SC.Record.extend(
   stableOrder: SC.Record.attr(Number),
   isEgg: SC.Record.attr(Boolean),
   isInMarketplace: SC.Record.attr(Boolean),
+  activity: SC.Record.toOne('Geniverse.Activity'),
   
   // attributes that don't want to be persisted
   gOrganism: null,
@@ -110,9 +111,9 @@ Geniverse.Dragon = SC.Record.extend(
   info: function() {
     return this.get('sexAsString') + ' -- ' + this.get('characteristicsAsString');
   }.property('sexAsString','characteristicsAsString').cacheable()
-}) ;
+});
 
-// Geniverse.Dragon.modelName = "dragon";
-// Geniverse.Dragon.modelsName = "dragons";
-// 
-// Geniverse.railsBackedTypes.push(Geniverse.Dragon.modelName);
+Geniverse.Dragon.modelName = "dragon";
+Geniverse.Dragon.modelsName = "dragons";
+
+Geniverse.railsBackedTypes.push(Geniverse.Dragon.modelName);
