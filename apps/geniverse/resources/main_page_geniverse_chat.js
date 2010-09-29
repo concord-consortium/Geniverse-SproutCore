@@ -21,11 +21,16 @@ Geniverse.mainChatExamplePage = SC.Page.design({
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    
-    childViews: 'topBar appContainer'.w(),
-    
+    classNames: ['brown'],
+    childViews: 'backgroundView topBar appContainer'.w(),
+      backgroundView: SC.ImageView.design({
+        value: static_url('lab_background.png'),
+        classNames: ['transparent','scalingimage']
+      }),
+
     topBar: SC.ToolbarView.design({
       layout: { top: 0, left: 0, right: 0, height: 36 },
+      classNames: ['brown'],
       childViews: 'geniverseLabelView welcomeLabelView logoutButton'.w(),
       anchorLocation: SC.ANCHOR_TOP,
       
@@ -57,18 +62,16 @@ Geniverse.mainChatExamplePage = SC.Page.design({
     appContainer: SC.ContainerView.design({
       isContainerView: YES,
       layout: { top: 45, bottom: 0, left: 10, right: 0 },
-      
       contentView: null,
     	
-    	loginView: Geniverse.LoginView.create({
-    		layout: {centerX: 0, top: Geniverse.marginSize, width: 500, height: 400},
-    		layerId: "chatLogin"
-    	}),
-    	
+      loginView: Geniverse.LoginView.create({
+        layout: {centerX: 0, top: Geniverse.marginSize, width: 500, height: 70},
+        layerId: "chatLogin",
+        classNames: 'brown'.w()
+      }),
       mainAppView: SC.View.create({
-        
         childViews: 'breedView challengePoolView breedingPenView breedingChromosomeToolView stableTitle stableView marketplaceView chatView allArticlesView'.w(),
-        
+       
         breedView: Geniverse.BreedDragonView.design({
           layout: { top: Geniverse.marginSize, left: Geniverse.marginSize, height: 140, width: 450 },
           showChildView: NO
