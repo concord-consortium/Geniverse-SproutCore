@@ -26,7 +26,7 @@ TEST_SETTINGS = {
   :app_name => "Geniverse",
   :app_server_port => APACHE_PORT,
   :selenium_server_port => SELENIUM_PORT,
-  :browser => :chrome
+  :browser => :firefox
 }
 
 SELENIUM_TEST_SETTINGS = {
