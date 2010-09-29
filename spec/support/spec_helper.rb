@@ -6,28 +6,34 @@ require "selenium/client"
 require "selenium/rspec/spec_helper"
 require "selenium/rake/tasks"
 
+$:.unshift File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'proxy'))
+
+require 'apache_config'
+require 'port_tools'
+
 dir = File.expand_path(File.dirname(__FILE__))
 
 include Lebowski::Foundation
 include Lebowski::SCUI::Views
 
-SC_SERVER_PORT =  ENV['SC_SERVER_PORT'] || 4022;
-RAILS_PORT = ENV['RAILS_PORT'] || 3100;
-SELENIUM_PORT = ENV['SELENIUM_PORT'] || 4244;
+SC_SERVER_PORT =  PortTools.get_port('SC_SERVER_PORT', 4022);
+RAILS_PORT = PortTools.get_port('RAILS_PORT', 3100);
+SELENIUM_PORT = PortTools.get_port('SELENIUM_PORT', 4244);
+APACHE_PORT = PortTools.get_port('APACHE_PROXY_PORT', 1234);
 
 TEST_SETTINGS = {
   :app_root_path => "/geniverse",
   :app_name => "Geniverse",
-  :app_server_port => SC_SERVER_PORT,
+  :app_server_port => APACHE_PORT,
   :selenium_server_port => SELENIUM_PORT,
-  :browser => :firefox
+  :browser => :chrome
 }
 
 SELENIUM_TEST_SETTINGS = {
   :host => "localhost",
   :port => SELENIUM_PORT,
   :browser => "*firefox",
-  :url => "http://localhost:#{SC_SERVER_PORT}/rails",
+  :url => "http://localhost:#{APACHE_PORT}/rails",
   :timeout_in_seconds => 60
 }
 
@@ -103,6 +109,23 @@ def stop_command(name)
   end
 end
 
+def start_apache
+  apache = ApacheConfig.new {
+    x_instance_home File.expand_path(File.dirname(__FILE__))
+    x_port APACHE_PORT
+    x_host '127.0.0.1'
+    x_proxy "/biologica/ http://geniverse.dev.concord.org/biologica/"
+    x_proxy "/chat/      http://geniverse.dev.concord.org/chat/"
+    x_proxy "/          http://127.0.0.1:#{SC_SERVER_PORT}/"
+  }
+
+  apache.controller.start
+end
+
+def stop_apache
+  apache.controller.stop
+end
+
 def start_testing_servers
   begin
     $commands.keys.each do |command|
@@ -112,12 +135,16 @@ def start_testing_servers
     stop_testing_servers
     raise "Couldn't start all servers!\n#{e.message}\n#{e.backtrace.join("\n")}"
   end
+  
+  start_apache
 end
 
 def stop_testing_servers
   $commands.keys.each do |command|
     stop_command(command)
   end
+  
+  stop_apache
 end
 
 def with_servers (&block)
