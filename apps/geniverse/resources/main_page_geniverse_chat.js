@@ -67,12 +67,29 @@ Geniverse.mainChatExamplePage = SC.Page.design({
     	
       mainAppView: SC.View.create({
         
-        childViews: 'breedView breedingPenView breedingChromosomeToolView stableTitle stableView marketplaceView chatView allArticlesView'.w(),
+        childViews: 'breedView challengePoolView breedingPenView breedingChromosomeToolView stableTitle stableView marketplaceView chatView allArticlesView'.w(),
         
         breedView: Geniverse.BreedDragonView.design({
           layout: { top: Geniverse.marginSize, left: Geniverse.marginSize, height: 140, width: 450 },
-          initParentsImmediately: NO,
           showChildView: NO
+        }),
+        
+        // challenge pool to hold initial, system-created dragons
+        challengePoolView: CC.AutoScrollView.design({
+          hasHorizontalScroller: NO,
+          layout: { left: Geniverse.marginSize - 15, top: 160, width: 80, height: 240 },
+          backgroundColor: 'white',
+          contentView: SC.GridView.design({
+            contentBinding: 'Geniverse.challengePoolController.arrangedObjects',
+            selectionBinding: 'Geniverse.challengePoolController.selection',
+            rowHeight: 60,
+            columnWidth: 60,
+            canEditContent: NO,
+            exampleView: Geniverse.OrganismView,
+            isSelectable: YES,
+            dragDataTypes: ['dragon']
+          }),
+          autoScrollTriggerBinding: 'Geniverse.challengePoolController.length'
         }),
         
         // Breeding pen with eggs

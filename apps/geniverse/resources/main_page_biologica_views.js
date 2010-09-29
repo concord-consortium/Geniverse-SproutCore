@@ -39,8 +39,7 @@ Geniverse.biologicaViewsMainPage = SC.Page.design({
     }),
     
     breedView: Geniverse.BreedDragonView.design({
-      layout: {top: 80, left: 20, height: 230, width: 450 },
-      initParentsImmediately: YES
+      layout: {top: 80, left: 20, height: 230, width: 450 }
     })
     
   }),

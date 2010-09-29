@@ -20,10 +20,14 @@ Geniverse.LOAD_DATA = SC.Responder.create(
   didBecomeFirstResponder: function() {
     SC.Logger.log("LOAD");
     var user = Geniverse.userController.get('content');
+    var activity = Geniverse.activityController.get('content');
     
+    /////////////////// Stable
+    SC.Logger.log("LOAD: stable");
     var stableQuery = SC.Query.local(Geniverse.Dragon, {
-        conditions: 'bred = true AND isEgg = false AND user = {user} AND isInMarketplace = false',
+        conditions: 'bred = true AND isEgg = false AND user = {user} AND isInMarketplace = false AND activity = {activity}',
         user: user,
+        activity: activity,
         orderBy: 'stableOrder'
         /*,
         orderBy: 'storeKey'*/
@@ -31,26 +35,91 @@ Geniverse.LOAD_DATA = SC.Responder.create(
     var stableOrganisms = Geniverse.store.find(stableQuery);
     Geniverse.stableOrganismsController.set('content', stableOrganisms);
     
+    /////////////////// Eggs
+    SC.Logger.log("LOAD: eggs");
     Geniverse.EGGS_QUERY = SC.Query.local('Geniverse.Dragon', {
-        conditions: 'bred = true AND isEgg = true AND user = {user} AND isInMarketplace = false',
+        conditions: 'bred = true AND isEgg = true AND user = {user} AND isInMarketplace = false AND activity = {activity}',
         user: user,
+        activity: activity,
         orderBy: 'storeKey'
     });
     
     var eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
     Geniverse.eggsController.set('content', eggs);
     
+    /////////////////// Chats
+    SC.Logger.log("LOAD: chats");
     var chatQuery = SC.Query.local(CcChat.ChatMessage, {
         orderBy: 'time'
     });
     var chats = CcChat.store.find(chatQuery);
     CcChat.chatListController.set('content', chats);
 
+    /////////////////// Articles
+    SC.Logger.log("LOAD: articles");
     var articlesQuery = SC.Query.local(Geniverse.Article, {
         orderBy: 'time'
     });
     var articles = Geniverse.store.find(articlesQuery);
     Geniverse.publishedArticlesController.set('content', articles);
+    
+    /////////////////// Challenge dragons
+    SC.Logger.log("LOAD: challenge dragons");
+    var challengePoolQuery = SC.Query.local('Geniverse.Dragon', {
+      conditions: 'bred = false AND user = {user} AND activity = {activity} AND mother = {mother} AND father = {father}',
+      user: user,
+      activity: activity,
+      mother: null,
+      father: null,
+      orderBy: 'storeKey'
+    });
+    
+    var challengeDragons = Geniverse.store.find(challengePoolQuery);
+    var self = this;
+    
+    function challengeDragonsReady() {
+      SC.Logger.info("challenge dragons observer called");
+      if (challengeDragons.get('status') & SC.Record.READY === SC.Record.READY) {
+        SC.Logger.info("Results ready.");
+        challengeDragons.removeObserver('status', challengeDragonsReady);
+        Geniverse.challengePoolController.set('content', challengeDragons);
+        if (Geniverse.challengePoolController.get('content').length() < 1) {
+          SC.Logger.info("No challenge dragons");
+          self.initChallengeDragons();
+        } else {
+          SC.Logger.info("Found challenge dragons");
+        }
+      } else { SC.Logger.info("Results not ready."); }
+    }
+    
+    if (challengeDragons.get('status') & SC.Record.READY === SC.Record.READY) {
+      SC.Logger.log('already ready to go!');
+      challengeDragonsReady();
+    } else {
+      SC.Logger.log('adding challenge dragons observer');
+      challengeDragons.addObserver('status', challengeDragonsReady);
+    }
+  },
+
+  initChallengeDragons: function() {
+    function handleDragon(dragon) { SC.RunLoop.begin(); SC.Logger.info("created dragon"); SC.Logger.dir(dragon); SC.RunLoop.end(); }
+    SC.Logger.info("Creating default mother");
+    var alleles = Geniverse.activityController.getInitialAlleles('f');
+    if (typeof(alleles) === 'string') {
+      Geniverse.gwtController.generateDragonWithAlleles(alleles, 1, 'Mother', handleDragon);
+    } 
+    else {
+      Geniverse.gwtController.generateDragon(1, 'Mother', handleDragon);
+    }
+
+    SC.Logger.info("Creating default father");
+    alleles = Geniverse.activityController.getInitialAlleles('m');
+    if (typeof(alleles) === 'string') {
+      Geniverse.gwtController.generateDragonWithAlleles(alleles, 0, 'Father', handleDragon);
+    } 
+    else {
+      Geniverse.gwtController.generateDragon(0, 'Father', handleDragon);
+    }
   }
   
 }) ;

@@ -13,58 +13,18 @@
 Geniverse.breedDragonController = SC.Controller.create(
 /** @scope Geniverse.breedDragonController.prototype */ {
 
-  initParentsImmediately: YES,
   gwtReadyBinding: 'Geniverse.gwtController.isReady',
   isBreeding: NO,
 
-  mother: null,
-  father: null,
-  child: null,
+  mother: Geniverse.NO_DRAGON,
+  father: Geniverse.NO_DRAGON,
+  child: Geniverse.NO_DRAGON,
   
   hasParents: function () {
-    return !!(this.get('mother') && this.get('father'));
+    var mother = this.get('mother');
+    var father = this.get('father');
+    return !!(mother && mother != Geniverse.NO_DRAGON && father && father != Geniverse.NO_DRAGON);
   }.property('mother', 'father').cacheable(),
-  
-  initParents: function () {
-    var self = this;
-    
-    // set mother, father to null in case we are re-running initParents() 
-    // (we wouldn't want hasParents to be YES because of stale parents)
-    this.set('mother', null);
-    this.set('father', null);
-    
-    function setMother(dragon) {
-      SC.RunLoop.begin();
-      self.set('mother', dragon);
-      SC.RunLoop.end();
-    }
-    
-    function setFather(dragon) {
-      SC.RunLoop.begin();
-      self.set('father', dragon);
-      SC.RunLoop.end();
-    }
-    
-    if (this.get('gwtReady') && this.get('initParentsImmediately')) {
-      SC.Logger.log('gwt ready. initializing parents');
-      
-      var alleles = Geniverse.activityController.getInitialAlleles('f');
-      if (typeof(alleles) === 'string') {
-        Geniverse.gwtController.generateDragonWithAlleles(alleles, 1, 'Mother', setMother);
-      } 
-      else {
-        Geniverse.gwtController.generateDragon(1, 'Mother', setMother);
-      }
-      
-      alleles = Geniverse.activityController.getInitialAlleles('m');
-      if (typeof(alleles) === 'string') {
-        Geniverse.gwtController.generateDragonWithAlleles(alleles, 0, 'Father', setFather);
-      } 
-      else {
-        Geniverse.gwtController.generateDragon(0, 'Father', setFather);
-      }
-    }
-  }.observes('gwtReady'),
 
   breed: function () {
     var self = this;
@@ -103,7 +63,9 @@ Geniverse.breedDragonController = SC.Controller.create(
         }
       };
     }(this._callback_version);
-
+    SC.Logger.info("mother and father:");
+    SC.Logger.dir(this.get('mother'));
+    SC.Logger.dir(this.get('father'));
     Geniverse.gwtController.breedOrganisms(20, this.get('mother'), this.get('father'), didCreateChild);
   }
   
