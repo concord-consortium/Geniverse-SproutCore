@@ -1,6 +1,6 @@
 // use node-http-proxy to proxy as follows:
 
-//   proxy '/geniverse/', :to => 'geniverse.dev.concord.org'
+//   proxy '/biologica/', :to => 'geniverse.dev.concord.org'
 //   proxy '/chat/', :to => 'geniverse.dev.concord.org'
 //   proxy "/rails", :to => "localhost:3000"
 

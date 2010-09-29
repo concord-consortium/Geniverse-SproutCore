@@ -83,7 +83,7 @@ apache = ApacheConfig.new {
   x_instance_home File.expand_path(File.dirname(__FILE__))
   x_port apache_port
   x_host '127.0.0.1'
-  x_proxy "/geniverse/geniverse http://geniverse.dev.concord.org/geniverse/geniverse"
+  x_proxy "/biologica/ http://geniverse.dev.concord.org/biologica/"
   x_proxy "/chat/      http://geniverse.dev.concord.org/chat/"
   x_proxy "/          http://127.0.0.1:#{sc_server_port}/"
 }
