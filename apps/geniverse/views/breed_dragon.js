@@ -25,10 +25,9 @@ Geniverse.BreedDragonView = SC.View.extend(
 
 	childViews: 'fatherView motherView childView fatherLabel motherLabel childLabel breedButtonView'.w(),
 	
-  showChildView: YES,
+	hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
 	
-	initParentsImmediately: YES,
-	initParentsImmediatelyBinding: 'Geniverse.breedDragonController.initParentsImmediately',
+  showChildView: YES,
 	
 	fatherView: Geniverse.OrganismView.design({
 		layout: {top: 18, right: 0, width: 180, height: 150},
@@ -85,35 +84,15 @@ Geniverse.BreedDragonView = SC.View.extend(
 		target: 'Geniverse.breedDragonController',
 		action: "breed",
 		isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
+		hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
+		isEnabled: function() {
+		  return this.get('hasParents');
+		}.property('hasParents').cacheable(),
+		
 		title: function () {
 		  return this.get('isBreeding') ? 'Breeding...' :  'Breed';
 		}.property('isBreeding').cacheable()
 	}),
-	
-	_isDragon: function(obj) {
-	  if (obj === null || typeof(obj) == 'undefined' || obj === Geniverse.NO_DRAGON) {
-	    return NO;
-    }
-    return YES;
-	},
-	
-	_fatherDidChange: function() {
-	  if (this._isDragon(this.get('mother')) == YES && this._isDragon(this.get('father')) == YES) {
-	    this.setPath('breedButtonView.isEnabled', YES);
-	  } else {
-	    this.setPath('breedButtonView.isEnabled', NO);
-	  }
-	}.observes('father'),
-	
-	_motherDidChange: function() {
-	  if (this._isDragon(this.get('mother')) == YES && this._isDragon(this.get('father')) == YES) {
-	    this.setPath('breedButtonView.isEnabled', YES);
-	  } else {
-	    this.setPath('breedButtonView.isEnabled', NO);
-	  }
-	}.observes('mother'),
-	
-
 	
 	viewDidResize: function() {
 		this._resize_children();
