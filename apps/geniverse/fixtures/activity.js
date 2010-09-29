@@ -12,8 +12,8 @@ Geniverse.Activity.FIXTURES = [
     title: 'Geniverse Activity',
     baseChannelName: 'geniverse-chat-trial-b',
     maxUsersInRoom: 2,
-    initialAlleles: "[{m: 'a:H,b:h,a:W,b:w,a:L,b:L,a:T,b:t,a:f,b:f', f: 'a:h,b:h,a:W,b:w,a:l,b:l,a:T,b:t,a:f,b:f'}," +
-                    "{m: 'a:h,b:h,a:W,b:w,a:l,b:l,a:T,b:T,a:f,b:f', f: 'a:h,b:h,a:W,b:w,a:l,b:l,a:T,b:T,a:f,b:f'}]",
+    initialAlleles: "[{m: 'a:H,b:h,a:W,b:w,a:L,b:L,a:T,b:t,a:f,b:f,a:B', f: 'a:h,b:h,a:W,b:w,a:l,b:l,a:T,b:t,a:f,b:f,a:B'}," +
+                    "{m: 'a:h,b:h,a:W,b:w,a:l,b:l,a:T,b:T,a:f,b:f,a:B', f: 'a:h,b:h,a:W,b:w,a:l,b:l,a:T,b:T,a:f,b:f,a:B'}]",
     // initialAlleles: [
     //                               {m: 'a:H,b:h,a:W,b:w,a:L,b:L,a:T,b:t,a:f,b:f', f: 'a:h,b:h,a:W,b:w,a:l,b:l,a:T,b:t,a:f,b:f'}
     //                             ],
