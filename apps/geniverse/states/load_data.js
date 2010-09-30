@@ -103,21 +103,18 @@ Geniverse.LOAD_DATA = SC.Responder.create(
 
   initChallengeDragons: function() {
     function handleDragon(dragon) { SC.RunLoop.begin(); SC.Logger.info("created dragon"); SC.Logger.dir(dragon); SC.RunLoop.end(); }
-    SC.Logger.info("Creating default mother");
-    var alleles = Geniverse.activityController.getInitialAlleles('f');
-    if (typeof(alleles) === 'string') {
-      Geniverse.gwtController.generateDragonWithAlleles(alleles, 1, 'Mother', handleDragon);
-    } 
-    else {
-      Geniverse.gwtController.generateDragon(1, 'Mother', handleDragon);
+    SC.Logger.info("Creating defaults");
+    var organismConfigurations = Geniverse.activityController.getConfigurationForRoom(CcChat.chatRoomController.get('channelIndex'));
+    SC.Logger.info("Found " + organismConfigurations.length + " defaults");
+    for (var i = 0; i < organismConfigurations.length; i++) {
+      var conf = organismConfigurations[i];
+      var name = (typeof conf.name != "undefined") ? conf.name : ('Starter'+i);
+      SC.Logger.info("Creating " + conf.sex + ": " + name + " ( " + conf.alleles + ")" + " defaults");
+      Geniverse.gwtController.generateDragonWithAlleles(conf.alleles, conf.sex, name, handleDragon);
     }
-
-    SC.Logger.info("Creating default father");
-    alleles = Geniverse.activityController.getInitialAlleles('m');
-    if (typeof(alleles) === 'string') {
-      Geniverse.gwtController.generateDragonWithAlleles(alleles, 0, 'Father', handleDragon);
-    } 
-    else {
+    if (organismConfigurations.length === 0) {
+      SC.Logger.info("No configurations. Creating defaults.");
+      Geniverse.gwtController.generateDragon(1, 'Mother', handleDragon);
       Geniverse.gwtController.generateDragon(0, 'Father', handleDragon);
     }
   }

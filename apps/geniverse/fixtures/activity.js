@@ -12,8 +12,11 @@ Geniverse.Activity.FIXTURES = [
     title: 'Geniverse Activity',
     baseChannelName: 'geniverse-chat-trial-b',
     maxUsersInRoom: 2,
-    initialAlleles: "[{m: 'a:H,b:h,a:W,b:w,a:L,b:L,a:T,b:t,a:f,b:f,a:B', f: 'a:h,b:h,a:W,b:w,a:l,b:l,a:T,b:t,a:f,b:f,a:B'}," +
-                    "{m: 'a:h,b:h,a:W,b:w,a:l,b:l,a:T,b:T,a:f,b:f,a:B', f: 'a:h,b:h,a:W,b:w,a:l,b:l,a:T,b:T,a:f,b:f,a:B'}]",
+    initialAlleles: "[" + 
+      "[{alleles: 'a:H,b:h,a:W,b:w,a:L,b:L,a:T,b:t,a:f,b:f,a:B', sex: 1, name: 'Starting Mother'}," +
+       "{alleles: 'a:h,b:h,a:W,b:w,a:l,b:l,a:T,b:t,a:f,b:f,a:B', sex: 0, name: 'Starting Father'}," +
+       "{alleles: 'a:h,b:h,a:W,b:w,a:l,b:l,a:T,b:t,a:f,b:f,a:b', sex: 0, name: 'Starting Father2'}]," +
+      "[{alleles: 'a:h,b:h,a:W,b:w,a:l,b:l,a:T,b:T,a:f,b:f,a:B', sex: 1, name: 'Starting Mother'}, {alleles: 'a:h,b:h,a:W,b:w,a:l,b:l,a:T,b:T,a:f,b:f,a:B', sex: 0, name: 'Starting Father'}] ]",
     // initialAlleles: [
     //                               {m: 'a:H,b:h,a:W,b:w,a:L,b:L,a:T,b:t,a:f,b:f', f: 'a:h,b:h,a:W,b:w,a:l,b:l,a:T,b:t,a:f,b:f'}
     //                             ],

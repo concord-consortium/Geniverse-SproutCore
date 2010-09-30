@@ -12,6 +12,7 @@
 */
 Geniverse.activityController = SC.ObjectController.create(
 /** @scope Geniverse.activityController.prototype */ {
+  activity: null,
 
   startActivity: function() {
     var chatroom = CcChat.chatRoomController.get('channel');
@@ -23,7 +24,8 @@ Geniverse.activityController = SC.ObjectController.create(
   
   // converts a string in the form "[{m: 'a:h,b:h', f: 'a:H,b:H'}, {...}]" into
   // an array of initial alleles for rooms
-  initialAllelesAsArray: function(){
+  configurationAsArray: function(){
+    // TODO rename this property in the model to configuration
     var initialAlleles = this.get('initialAlleles');
     
     // FIXME: JSON.parse(initialAlleles) doesn't work here. Don't know why.
@@ -32,21 +34,17 @@ Geniverse.activityController = SC.ObjectController.create(
     return initialAllelesAsArray;
   }.property("initialAlleles").cacheable(),
   
-  getInitialAlleles: function (sex){
-    return this.getInitialAllelesForRoom(CcChat.chatRoomController.get('channelIndex'), sex);
-  },
-  
-  getInitialAllelesForRoom: function (room, sex){
-    var initialAllelesArray = this.get('initialAllelesAsArray');
-    if (!initialAllelesArray){
-      return "";
+  getConfigurationForRoom: function (room){
+    var configurationArray = this.get('configurationAsArray');
+    if (!configurationArray){
+      return [];
     }
     
-    var alleles = initialAllelesArray[room];
-    if (alleles === undefined || alleles === null){
+    var roomConfig = configurationArray[room];
+    if (roomConfig === undefined || roomConfig === null){
       SC.Logger.log("No alleles for room "+room);
       return "";
     }
-    return alleles[sex];
+    return roomConfig;
   }
 }) ;
