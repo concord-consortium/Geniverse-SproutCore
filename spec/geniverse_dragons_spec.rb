@@ -47,10 +47,10 @@ describe "Geniverse Dragons Test" do
     @login_button.click
   end
   
-  it "should have challenge pool with 2 dragons" do
+  it "should have challenge pool with 3 dragons" do
     sleep 3
 
-    @challenge_pool_view.child_views[0].child_views[0].child_views.count.should be 2
+    @challenge_pool_view.child_views[0].child_views[0].child_views.count.should be 3
   end
   
   it "should be able to drag mother and father from challenge pool to breed view" do 

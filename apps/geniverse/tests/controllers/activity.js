@@ -20,7 +20,7 @@ test("test conversion of initial alleles to array", function() {
   equals(array.length, 2, "there should be two items in the initial alleles array");
   
   var allelesForRoomOne = Geniverse.activityController.getConfigurationForRoom(0);
-  var allelesForRoomTwo = Geniverse.activityController.getInitialAllelesForRoom(1);
+  var allelesForRoomTwo = Geniverse.activityController.getConfigurationForRoom(1);
   
   var allelesForRoomOneMale;
   var allelesForRoomTwoFemale;
