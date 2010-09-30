@@ -27,7 +27,7 @@ Geniverse.INIT_ACTIVITY = SC.Responder.create(
     function setActivity() {
       if (activities.get('status') === SC.Record.READY_CLEAN) {
 		    // using objectAt because "lastObject" seems missing from SC.Enumerable mixin
-        Geniverse.activityController.set('content', activities.objectAt(activities.get('length') - 1)); 
+        Geniverse.activityController.set('content', activities.lastObject() ); 
         // log in automatically if UserDefaults found, or wait for user to log in
         activities.removeObserver('status', setActivity);
         Geniverse.makeFirstResponder(Geniverse.LOGIN);
