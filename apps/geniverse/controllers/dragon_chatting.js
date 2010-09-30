@@ -46,7 +46,7 @@ Geniverse.dragonChattingController = SC.Controller.create(
   },
   
   receiveDragon: function(message) {
-    Geniverse.activityController.createNewDragonFromChat(message.dragon);
+    this.createNewDragonFromChat(message.dragon);
   },
   
   receiveDragonFromChat: function() {
