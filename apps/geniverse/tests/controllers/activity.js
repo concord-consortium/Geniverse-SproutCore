@@ -27,10 +27,10 @@ test("test conversion of initial alleles to array", function() {
   
   for (var i = 0; i < allelesForRoomOne.length; i++) {
     if (allelesForRoomOne[i].sex === 0) {
-      allelesForRoomOneMale = allelesForRoomOne[i];
+      allelesForRoomOneMale = allelesForRoomOne[i].alleles;
     }
     if (allelesForRoomTwo[i].sex === 1) {
-      allelesForRoomTwoFemale = allelesForRoomTwo[i];
+      allelesForRoomTwoFemale = allelesForRoomTwo[i].alleles;
     }
   }
   
