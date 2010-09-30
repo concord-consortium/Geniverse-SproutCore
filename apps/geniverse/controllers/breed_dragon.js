@@ -63,9 +63,6 @@ Geniverse.breedDragonController = SC.Controller.create(
         }
       };
     }(this._callback_version);
-    SC.Logger.info("mother and father:");
-    SC.Logger.dir(this.get('mother'));
-    SC.Logger.dir(this.get('father'));
     Geniverse.gwtController.breedOrganisms(20, this.get('mother'), this.get('father'), didCreateChild);
   }
   
