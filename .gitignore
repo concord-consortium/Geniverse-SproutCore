@@ -6,10 +6,10 @@ rails/geniverse/db/*.db
 *.DS_Store*
 rails/geniverse/.project
 .rvmrc
+proxy/*.conf
+*.log
+*.pid
+*.lock
 spec/support/apache*
 hudson/*
-proxy/apache.conf
-proxy/apache-error*
-proxy/apache.pid*
-server.log
-server.pid*
+results/*

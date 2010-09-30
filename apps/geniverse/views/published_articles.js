@@ -43,12 +43,12 @@ Geniverse.PublishedArticlesView = SC.View.extend(
       checkIfHeightChanged: function() {
         if (Geniverse.articleController.get('isStaticVisible')){
           var timer = SC.Timer.schedule({
-    			  target: this,
-    			  action: 'changeHeight',
-    			  interval: 200,
-    			  repeats: NO
-    		  });
-  		  }
+            target: this,
+            action: 'changeHeight',
+            interval: 200,
+            repeats: NO
+          });
+        }
       }.observes('value'),
       
       changeHeight: function() {
