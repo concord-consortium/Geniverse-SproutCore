@@ -11,7 +11,6 @@
   @extends SC.View
 */
 sc_require('views/organism');
-sc_require('views/stats');
 Geniverse.BreedDragonView = SC.View.extend(
 /** @scope Geniverse.BreedDragonView.prototype */ {
 	
@@ -23,7 +22,7 @@ Geniverse.BreedDragonView = SC.View.extend(
   
   childBinding: 'Geniverse.breedDragonController.child',
 
-	childViews: 'fatherView motherView childView fatherLabel motherLabel childLabel breedButtonView statsLabel'.w(),
+	childViews: 'fatherView motherView childView fatherLabel motherLabel childLabel breedButtonView'.w(),
 	
 	hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
 	
@@ -94,9 +93,6 @@ Geniverse.BreedDragonView = SC.View.extend(
 		}.property('isBreeding').cacheable()
 	}),
 	
-  statsLabel: Geniverse.StatsView.design({
-		layout: {centerX: 0, top: 30, width: 140, height: 68}
-	}),
 	
 	viewDidResize: function() {
 		this._resize_children();

@@ -1,12 +1,20 @@
+.statsLabel {
+  /*border: 1px solid black;*/
+}
+.stats {
+  font-size: 14px;
+  font-weight: bold;
+  background-color: none;
+}
 .red {
-  background-color: #FF0000;
+  color: #FF0000;
 }
 .green{
-  background-color: #00FF00;
+  color: #00FF00;
 }
 .yellow{
-  background-color: #FFFF00;
+  color: #FFFF00;
 }
 .purple{
-  background-color: #FF00FF;
+  color: #FF00FF;
 }

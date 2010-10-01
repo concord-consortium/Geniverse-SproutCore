@@ -13,6 +13,7 @@ sc_require('views/organism');
 sc_require('views/published_articles');
 sc_require('views/login');
 sc_require('views/chromosome_tool');
+sc_require('views/stats');
 
 Geniverse.mainChatExamplePage = SC.Page.design({
   
@@ -70,7 +71,7 @@ Geniverse.mainChatExamplePage = SC.Page.design({
         classNames: 'brown'.w()
       }),
       mainAppView: SC.View.create({
-        childViews: 'breedView challengePoolView breedingPenView breedingChromosomeToolView stableTitle stableView marketplaceView chatView allArticlesView'.w(),
+        childViews: 'breedView statsView challengePoolView breedingPenView breedingChromosomeToolView stableTitle stableView marketplaceView chatView allArticlesView'.w(),
        
         breedView: Geniverse.BreedDragonView.design({
           layout: { top: Geniverse.marginSize, left: Geniverse.marginSize, height: 140, width: 450 },
@@ -113,9 +114,14 @@ Geniverse.mainChatExamplePage = SC.Page.design({
           autoScrollTriggerBinding: 'Geniverse.eggsController.length'
         }),
         
+        
         breedingChromosomeToolView: Geniverse.ChromosomeToolView.design({
           layout: { left: Geniverse.marginSize + 75 + 300 + 10, top: 160, width: 35, height: 40 },
           selectionBinding: 'Geniverse.eggsController.selection'
+        }),
+        
+        statsView: Geniverse.StatsView.design({
+          layout: { left: Geniverse.marginSize + 75 + 300 + 10, top: 210, width: 100, height: 70 }
         }),
         
         stableTitle: SC.LabelView.design({
