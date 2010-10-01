@@ -11,7 +11,7 @@
   @extends SC.View
 */
 sc_require('views/organism');
-
+sc_require('views/stats');
 Geniverse.BreedDragonView = SC.View.extend(
 /** @scope Geniverse.BreedDragonView.prototype */ {
 	
@@ -94,31 +94,8 @@ Geniverse.BreedDragonView = SC.View.extend(
 		}.property('isBreeding').cacheable()
 	}),
 	
-  statsLabel: SC.View.design({
-		layout: {centerX: 0, top: 30, width: 140, height: 68},
-		classNames: "statsLabel".w(),
-    childViews: "red green yellow purple".w(),
-
-    red: SC.LabelView.design({
-      layout: {centerX: 0, top: 0, width: 140, height: 18},
-      classNames: "red".w(),
-	    valueBinding: 'Geniverse.breedDragonController.parentStats.colors.red'
-    }),
-    green: SC.LabelView.design({
-      layout: {centerX: 0, top: 18, width: 140, height: 18},
-      classNames: "green".w(),
-	    valueBinding: 'Geniverse.breedDragonController.parentStats.colors.green'
-    }),
-    yellow: SC.LabelView.design({
-      layout: {centerX: 0, top: 36, width: 140, height: 18},
-      classNames: "yellow".w(),
-	    valueBinding: 'Geniverse.breedDragonController.parentStats.colors.yellow'
-    }),
-    purple: SC.LabelView.design({
-      layout: {centerX: 0, top: 54, width: 140, height: 18},
-      classNames: "purple".w(),
-	    valueBinding: 'Geniverse.breedDragonController.parentStats.colors.purple'
-    }),
+  statsLabel: Geniverse.StatsView.design({
+		layout: {centerX: 0, top: 30, width: 140, height: 68}
 	}),
 	
 	viewDidResize: function() {

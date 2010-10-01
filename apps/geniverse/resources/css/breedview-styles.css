@@ -1,5 +1,3 @@
-
-
 .sc-theme .organism-view img {
 	width: 100%;
 	height: 100%;
@@ -11,17 +9,4 @@
 
 .statsLabel {
   border: 1px solid black;
-}
-
-.red {
-  background-color: #FF0000;
-}
-.green{
-  background-color: #00FF00;
-}
-.yellow{
-  background-color: #FFFF00;
-}
-.purple{
-  background-color: #FF00FF;
 }
