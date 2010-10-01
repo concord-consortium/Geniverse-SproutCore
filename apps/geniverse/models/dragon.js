@@ -40,7 +40,12 @@ Geniverse.Dragon = SC.Record.extend(
     // SC.Logger.dir(this);
     return defined;
   }.property('gOrganism').cacheable(),
-  
+ 
+  color: function() {
+    SC.Logger.info('access to dragon color -- function run: %s',this.get('alleles'));
+    return (this.characteristicValue('color').toLowerCase());
+  }.property('alleles').cacheable(),
+
   init: function() {
     var self = this;
     this.invokeLast(function() {
@@ -110,10 +115,30 @@ Geniverse.Dragon = SC.Record.extend(
   
   info: function() {
     return this.get('sexAsString') + ' -- ' + this.get('characteristicsAsString');
-  }.property('sexAsString','characteristicsAsString').cacheable()
+  }.property('sexAsString','characteristicsAsString').cacheable(),
+
+  characteristicValue: function(name) {
+    return (this.get('characteristics')[this.characteristicIndex(name)]);
+  },
+
+  characteristicName: function(index) {
+    return Geniverse.Dragon.CHARACTERISTICS[index]; 
+  },
+
+  characteristicIndex: function(name) {
+    var i     = 0;
+    for (i = 0; i  < Geniverse.Dragon.CHARACTERISTICS.length; i++) {
+      if (name.toLowerCase() == (this.characteristicName(i).toLowerCase())) {
+        return i;
+      }
+    }
+    return -1; // boo
+  }
+
 });
 
 Geniverse.Dragon.modelName = "dragon";
 Geniverse.Dragon.modelsName = "dragons";
-
+Geniverse.Dragon.CHARACTERISTICS = "horns wings legs tail fire color alive scales plates".w();
 Geniverse.railsBackedTypes.push(Geniverse.Dragon.modelName);
+
