@@ -19,7 +19,16 @@ Geniverse.breedDragonController = SC.Controller.create(
   mother: Geniverse.NO_DRAGON,
   father: Geniverse.NO_DRAGON,
   child: Geniverse.NO_DRAGON,
-  
+
+  parentStats: SC.Object.create({
+    colors: SC.Object.create({
+      red: 0,
+      green: 0,
+      yellow: 0,
+      purple: 0
+    })
+  }),
+
   hasParents: function () {
     var mother = this.get('mother');
     var father = this.get('father');
@@ -52,6 +61,7 @@ Geniverse.breedDragonController = SC.Controller.create(
           child.set('isEgg', true);
           child.set('isInMarketplace', true);
         }
+        self.updateStats(child);
         SC.RunLoop.end();
 
         nEggs++;
@@ -66,6 +76,13 @@ Geniverse.breedDragonController = SC.Controller.create(
       };
     }(this._callback_version);
     Geniverse.gwtController.breedOrganisms(20, this.get('mother'), this.get('father'), didCreateChild);
+  },
+
+  updateStats: function(new_dragon)  {
+    var color = new_dragon.get('color');
+    var value = this.getPath('parentStats.colors.' + color) + 1;
+    SC.Logger.info("update stats called: C: %s, V: %d", color, value);
+    this.setPath('parentStats.colors.' + color, value);
   }
   
 });
