@@ -32,7 +32,9 @@ Geniverse.breedDragonController = SC.Controller.create(
     this.set('isBreeding', YES);
     Geniverse.eggsController.removeAllEggs(); // clear the breeding pen
     
-    if (this._callback_version === undefined) this._callback_version = 0;
+    if (this._callback_version === undefined) {
+      this._callback_version = 0;
+    }
     this._callback_version++;
 
     // wrap callback passed to GWT with a version number; this way we can reject callbacks from outdated calls to breed()
