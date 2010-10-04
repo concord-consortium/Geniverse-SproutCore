@@ -154,7 +154,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 	
 	chromosomeAXView: Geniverse.DragonChromosomeView.design({
-	  layout: {top: 275, left: 0},
+	  layout: {top: 315, left: 0},
 	  updateDragon: function(){
 	    this.get('parentView').updateDragon();
 	  }.observes('alleles'),
@@ -167,7 +167,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 	
 	chromosomeBXView: Geniverse.DragonChromosomeView.design({
-	  layout: {top: 275, left: 120},
+	  layout: {top: 315, left: 120},
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
 	  updateDragon: function(){
 	    this.get('parentView').updateDragon();
