@@ -52,11 +52,11 @@ Geniverse.DragonBinView = SC.View.extend( SC.Border,
     var height = this.get('layout').height;
     var dragonView = Geniverse.OrganismView.create({
       layout: {top: 0, bottom: 0, left: (i * height), width: height},
-      organism: dragon,
+      content: dragon,
       backgroundColor: 'white'
     });
     this.appendChild(dragonView);
-    dragonView.set('organism', dragon);
+    // dragonView.set('organism', dragon);
     
     this.get('dragonViews').insertAt(i, dragonView);
   },
