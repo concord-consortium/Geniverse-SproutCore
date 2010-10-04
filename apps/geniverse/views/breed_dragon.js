@@ -22,7 +22,7 @@ Geniverse.BreedDragonView = SC.View.extend(
   
   childBinding: 'Geniverse.breedDragonController.child',
 
-	childViews: 'fatherView motherView childView fatherLabel motherLabel childLabel breedButtonView'.w(),
+	childViews: 'fatherView motherView childView fatherLabel motherLabel childLabel breedButtonView resetButtonView'.w(),
 	
 	hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
 	
@@ -92,6 +92,20 @@ Geniverse.BreedDragonView = SC.View.extend(
 		  return this.get('isBreeding') ? 'Breeding...' :  'Breed';
 		}.property('isBreeding').cacheable()
 	}),
+
+  resetButtonView: SC.ButtonView.design({
+		layout: { centerX: 0, bottom: 30, width: 100, height: 24 },
+		target: 'Geniverse.breedDragonController',
+		action: "reset",
+    isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
+    hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
+    isEnabled: function() {
+      return (this.get('hasParents') && (! this.get('isBeeding')));
+    }.property('hasParents','isBreeding').cacheable(),
+		
+		title: 'reset'	
+  }),
+	
 	
 	
 	viewDidResize: function() {
