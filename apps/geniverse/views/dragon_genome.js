@@ -68,7 +68,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
     return this.getAllelesFor('X','B');
   }.property('alleles'),
   
-  hiddenGenes: ['s','p'],
+  hiddenGenes: ['s','p','b'],
   
   dragonView: Geniverse.OrganismView.design({
 		layout: {top: 18, left: 260, width: 200, height: 170},
