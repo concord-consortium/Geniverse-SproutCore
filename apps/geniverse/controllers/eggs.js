@@ -35,5 +35,11 @@ Geniverse.eggsController = SC.ArrayController.create(
       var selIndex = indexes.get('min')-1;
       if (selIndex<0) selIndex = 0;
       this.selectObject(this.objectAt(selIndex));
-    }
+    },
+
+    // http://www.pivotaltracker.com/story/show/5298197
+    // rest parents and breeding pool.
+    reset: function() {
+      this.removeAllEggs();
+    }.observes('Geniverse.breedDragonController.resetCount')
 }) ;
