@@ -21,11 +21,11 @@ Geniverse.DragonChromosomeView = SC.View.extend(
   side: 'A',
   showLines: NO,
   
-  childViews: 'chromoImage linesImage pullDowns'.w(),
-  
-  isVisible: function() {
+  showPulldowns: function() {
     return this.get('alleles').length > 0;
   }.property('alleles'),
+  
+  childViews: 'chromoImage linesImage pullDowns'.w(),
   
   chromoImage: SC.ImageView.design({
     layout: {top: 0, left: 0, width: 22 },
@@ -55,7 +55,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
   
   pullDowns: SC.View.design({
     layout: {top:0, left: 45 },
-    
+    isVisibleBinding: '*parentView.showPulldowns',
     // allelesBinding: '*parentView.alleles',     // this frequently doesn't update until the next runloop...
     alleles: function() {                         // this works fine, but seems wrong...
         return this.get('parentView').get('alleles');
