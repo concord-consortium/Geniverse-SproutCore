@@ -17,18 +17,31 @@ Geniverse.statsController = SC.Controller.create(
       red: 0,
       green: 0,
       yellow: 0,
-      purple: 0
+      purple: 0,
+      brown: 0
     })
   }),
-
+  
+  // http://www.pivotaltracker.com/story/show/5298197
+  // rest parents and breeding pool.
+  reset: function() {
+    this.setPath('parentStats.colors.red',0);
+    this.setPath('parentStats.colors.green',0);
+    this.setPath('parentStats.colors.yellow',0);
+    this.setPath('parentStats.colors.purple',0);
+    this.setPath('parentStats.colors.brown',0);
+  }.observes('Geniverse.breedDragonController.resetCount'),
+  
   newChildObserver: function()  {
     this.updateStats(Geniverse.breedDragonController.get('newChild'));
   }.observes('Geniverse.breedDragonController.newChild'),
 
   updateStats: function(new_dragon) {
-    var color = new_dragon.get('color').toLowerCase();
-    var value = this.getPath('parentStats.colors.' + color) + 1;
-    this.setPath('parentStats.colors.' + color,value);
+    if (new_dragon) {
+      var color = new_dragon.get('color').toLowerCase();
+      var value = this.getPath('parentStats.colors.' + color) + 1;
+      this.setPath('parentStats.colors.' + color,value);
+    }
   }
   
 });
