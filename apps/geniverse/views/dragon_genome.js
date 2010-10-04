@@ -33,7 +33,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
   sex: null,        // used when generating new dragons
   
   alleles: [],
-  allelesMap: {h: '1',s: '1',w: '2',l: '2',t: '2',p: 'X',f: 'X',a: 'X',b: 'X'},
+  allelesMap: {h: '1',s: '1',w: '2',l: '2',t: '2',a: '2',b: '2',p: 'X',f: 'X'},
   ignoreUpdate: YES,
   
   gwtReadyBinding: 'Geniverse.gwtController.isReady',
