@@ -21,6 +21,31 @@ Geniverse.DragonChromosomeView = SC.View.extend(
   side: 'A',
   showLines: NO,
   
+  chromoImageUrls: {
+    1: {
+      A: sc_static("A1-chromosome.png"),
+      B: sc_static("B1-chromosome.png")
+    },
+    2: {
+      A: sc_static("A2-chromosome.png"),
+      B: sc_static("B2-chromosome.png")
+    },
+    X: {
+      A: sc_static("AX-chromosome.png"),
+      B: sc_static("BX-chromosome.png")
+    },
+    Y: {
+      B: sc_static("BY-chromosome.png")
+    }
+  },
+  
+  lineImageUrls: {
+    1: sc_static("1-lines.png"),
+    2: sc_static("2-lines.png"),
+    X: sc_static("X-lines.png"),
+    Y: sc_static("Y-lines.png")
+  },
+  
   showPulldowns: function() {
     return this.get('alleles').length > 0;
   }.property('alleles'),
@@ -31,15 +56,19 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     layout: {top: 0, left: 0, width: 22 },
     chromosomeBinding: '*parentView.chromosome',
     sideBinding: '*parentView.side',
+    chromoImageUrlsBinding: '*parentView.chromoImageUrls',
     
     chromosomeDidChange: function() {
       this._setChromoImage();
     }.observes('chromosome','side'),
     
     _setChromoImage: function() {
-      // FIXME: sc_static doesn't work with anything but a pure string...
-      // this.set('value', sc_static(this.get('side') + this.get('chromosome') + "-chromosome"));
-      this.set('value', 'http://www.concord.org/~aunger/gen/' + this.get('side') + this.get('chromosome') + "-chromosome.png");
+      var urls = this.get('chromoImageUrls');
+      var chromoUrls = urls[this.get('chromosome')];
+      if (chromoUrls !== undefined && chromoUrls !== null) {
+        var url = chromoUrls[this.get('side')];
+        this.set('value', url);
+      }
     }
   }),
   
@@ -47,9 +76,10 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     layout: {top: 0, left: 22, width: 22 },
     isVisibleBinding: '*parentView.showLines',
     chromosomeBinding: '*parentView.chromosome',
+    lineImageUrlsBinding: '*parentView.lineImageUrls',
     chromosomeDidChange: function() {
-      // this.set('value', sc_static('./' + this.get('chromosome') + "-chromosome"));
-      this.set('value', 'http://www.concord.org/~aunger/gen/' + this.get('chromosome') + "-lines.png");
+      var lineImages = this.get('lineImageUrls');
+      this.set('value', lineImages[this.get('chromosome')]);
     }.observes('chromosome')
   }),
   
