@@ -23,6 +23,7 @@ Geniverse.main = function main() {
     };
   
     Geniverse.getPath('mainChatExamplePage.mainPane').append();
+    // Geniverse.getPath('trainingPage.mainPane').append();
 
     Geniverse.store.commitRecordsAutomatically = NO;
     
