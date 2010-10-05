@@ -21,9 +21,12 @@ Geniverse.trainingPage = SC.Page.design({
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    
-    childViews: 'topBar mainAppView'.w(),
-    
+    classNames: ['brown'], 
+    childViews: 'backgroundView topBar mainAppView'.w(),
+    backgroundView: SC.ImageView.design({
+      value: static_url('lab_background.png'),
+      classNames: ['transparent','scalingimage']
+    }),
     topBar: SC.ToolbarView.design({
       layout: { top: 0, left: 0, right: 0, height: 36 },
       childViews: 'geniverseLabelView welcomeLabelView logoutButton'.w(),

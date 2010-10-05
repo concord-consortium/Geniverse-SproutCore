@@ -16,6 +16,7 @@
 }
 
 .sc-theme .genome-view-intro {
-  background-color: #86ACB8;
+  background-color: #70594e;
+  opacity: 0.75;
 	border: 1px solid black;
 }
