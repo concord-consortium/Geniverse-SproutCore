@@ -31,6 +31,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
   showIsEditableCheck: NO,
   
   sex: null,        // used when generating new dragons
+  fixedAlleles: null,    // used when generating new dragons
   
   alleles: [],
   allelesMap: {h: '1',s: '1',w: '2',l: '2',t: '2',a: '2',b: '2',p: 'X',f: 'X'},
@@ -281,8 +282,14 @@ Geniverse.DragonGenomeView = SC.View.extend(
     
 		if (typeof(generateDragonWithCallback) != "undefined") {
 		  var sex = this.get('sex');
-		  if (sex !== undefined && sex !== null){
+		  var fixedAlleles = this.get('fixedAlleles');
+		  var args = [updateDragon];
+		  if (sex !== undefined && sex !== null && fixedAlleles !== undefined && fixedAlleles !== null){
+		    Geniverse.gwtController.generateDragonWithAlleles(fixedAlleles, sex, "", updateDragon);
+		  } else if (sex !== undefined && sex !== null) {
 		    Geniverse.gwtController.generateDragon(sex, "", updateDragon);
+		  } else if (fixedAlleles !== undefined && fixedAlleles !== null) {
+		    Geniverse.gwtController.generateDragonWithAlleles(fixedAlleles, -1, "", updateDragon);
 		  } else {
 		    Geniverse.gwtController.generateRandomDragon(updateDragon);
 		  }
