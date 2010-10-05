@@ -68,14 +68,22 @@ class DragonsController < ApplicationController
   # PUT /dragons/1.xml
   def update
     @dragon = Dragon.find(params[:id])
-
+    dragon = params[:dragon]
+    Dragon.reflect_on_all_associations(:belongs_to).each do |assoc|
+      name = assoc.name
+      attr_key = assoc.options[:foreign_key] || (name.to_s + "_id")
+      dragon[attr_key.to_sym] = dragon[name.to_sym].sub(/.*\//,'') if dragon[name.to_sym]
+      dragon.delete(name.to_sym)
+    end
     respond_to do |format|
-      if @dragon.update_attributes(params[:dragon])
+      if @dragon.update_attributes(dragon)
         format.html { redirect_to(@dragon, :notice => 'Dragon was successfully updated.') }
         format.xml  { head :ok }
+        format.json { render :json => custom_item_hash(@dragon), :status => :ok, :location => @dragon }
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @dragon.errors, :status => :unprocessable_entity }
+        format.json { render :json => @dragon.errors, :status => :unprocessable_entity }
       end
     end
   end

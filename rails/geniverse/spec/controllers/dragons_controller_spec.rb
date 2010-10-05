@@ -111,7 +111,34 @@ describe DragonsController do
         response.should render_template('edit')
       end
     end
+    
+    describe "with json requests" do
+      describe "with valid params" do
+        it "updates the requested dragon" do
+          Dragon.should_receive(:find).with("37").and_return(mock_dragon)
+          mock_dragon.should_receive(:update_attributes).with({'these' => 'params'})
+          put :update, :format => :json, :id => "37", :dragon => {:these => 'params'}
+        end
 
+        it "assigns the requested dragon as @dragon" do
+          Dragon.stub(:find).and_return(mock_dragon(:update_attributes => true))
+          put :update, :format => :json, :id => "1"
+          assigns[:dragon].should equal(mock_dragon)
+        end
+
+        it "redirects to the dragon" do
+          Dragon.stub(:find).and_return(mock_dragon({:id => 1}))
+          mock_dragon.should_receive(:update_attributes).with({'these' => 'params'}).and_return(true)
+          mock_dragon.should_receive(:attributes).and_return({'these' => 'params'})
+          mock_dragon.should_receive(:father)
+          mock_dragon.should_receive(:mother)
+          mock_dragon.should_receive(:user)
+          mock_dragon.should_receive(:activity)
+          put :update, :format => 'json', :id => "1", :dragon => {:these => 'params'}
+          response.should be_success
+        end
+      end
+    end
   end
 
   describe "DELETE destroy" do

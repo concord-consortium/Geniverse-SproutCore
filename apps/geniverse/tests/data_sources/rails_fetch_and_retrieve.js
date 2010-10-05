@@ -44,7 +44,21 @@ test("do we get activities back from rails", function() {
     }
   ]);
 });
-// 
+
+test("do we get dragons back from rails", function() {
+  var dragons = Geniverse.store.find(Geniverse.DRAGONS_QUERY);
+  statusEquals(dragons, SC.Record.BUSY_LOADING, 'Activities should be loading');
+  
+  statusQueue([
+    { target: dragons,
+      callback: function(){
+        statusEquals(dragons, SC.Record.READY_CLEAN, "Next state was clean");
+        ok(dragons.get('length') > 0, 'we should have at least one dragon after the dragons become "clean"');
+      }      
+    }
+  ]);
+});
+
 // test("does the first activity returned have questions", function() {
 //   var activities = Geniverse.store.find(Geniverse.ACTIVITIES_QUERY);
 //   

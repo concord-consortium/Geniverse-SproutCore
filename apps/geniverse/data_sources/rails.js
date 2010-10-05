@@ -15,6 +15,11 @@ Geniverse.ACTIVITIES_QUERY = SC.Query.local(Geniverse.Activity, {
   orderBy: 'title'
 });
 
+// TODO: improve this query
+sc_require('models/dragon');
+Geniverse.DRAGONS_QUERY = SC.Query.local(Geniverse.Dragon, {
+  orderBy: 'name'
+});
 
 Geniverse.RailsDataSource = SC.DataSource.extend(
 /** @scope Geniverse.RailsDataSource.prototype */ {
@@ -142,17 +147,43 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
       var url = parser.exec(response.header('Location'))[8];
       store.dataSourceDidComplete(storeKey, null, url); // update url
 
-    } else store.dataSourceDidError(storeKey, response);
+    } else { store.dataSourceDidError(storeKey, response); }
   },
   
   updateRecord: function(store, storeKey) {
     
     // TODO: Add handlers to submit modified record to the data source
     // call store.dataSourceDidComplete(storeKey) when done.
+    // return NO ; // return YES if you handled the storeKey
+    //
+    var recordType = store.recordTypeFor(storeKey);
+    if (Geniverse.railsBackedTypes.indexOf(recordType.modelName) != -1) {
+      var modelName = recordType.modelName;
+      var modelHash = {};
+      modelHash[modelName] = store.readDataHash(storeKey);
+      // SC.Logger.dir(modelHash);
+      var url = modelHash[modelName].guid;
+      delete modelHash[modelName].guid;    // remove guid property before sending to rails
 
-    return NO ; // return YES if you handled the storeKey
+      // SC.Logger.group('Geniverse.RailsDataSource.createRecord()');
+      SC.Request.putUrl(url + '.json').header({
+                     'Accept': 'application/json'
+                 }).json()
+           .notify(this, this.didUpdateRecord, store, storeKey)
+           .send(modelHash);
+      // SC.Logger.groupEnd();
+      return YES;
+    }
+    return NO;
   },
   
+  // 
+  didUpdateRecord: function(response, store, storeKey) {
+    if (SC.ok(response)) {
+      store.dataSourceDidComplete(storeKey, null, url); // update url
+    } else { store.dataSourceDidError(storeKey, response); }
+  },
+
   destroyRecord: function(store, storeKey) {
     
     // TODO: Add handlers to destroy records on the data source.
