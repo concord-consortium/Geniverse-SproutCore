@@ -13,14 +13,14 @@ Geniverse.Activity.FIXTURES = [
     baseChannelName: 'geniverse-chat-trial-b',
     maxUsersInRoom: 4,
     initialAlleles: "[" + 
-      "[{alleles: 'a:H,b:H,a:B', sex: 1, name: 'Starting Mother'}," +
-       "{alleles: 'a:w,b:w,a:B', sex: 0, name: 'Starting Father'}," +
-       "{alleles: 'a:T,b:T,a:B', sex: 1, name: 'Starting Mother2'}," +
-       "{alleles: 'a:l,b:l,a:B', sex: 0, name: 'Starting Father2'}]," +
-      "[{alleles: 'a:h,b:h,a:B', sex: 1, name: 'Starting Mother'}," +
-       "{alleles: 'a:W,b:W,a:B', sex: 0, name: 'Starting Father'}," +
-       "{alleles: 'a:t,b:t,a:B', sex: 1, name: 'Starting Mother2'}," +
-       "{alleles: 'a:L,b:L,a:B', sex: 0, name: 'Starting Father2'}]" +
+      "[{alleles: 'a:H,b:H,a:B,b:B', sex: 1, name: 'Starting Mother'}," +
+       "{alleles: 'a:w,b:w,a:B,b:B', sex: 0, name: 'Starting Father'}," +
+       "{alleles: 'a:T,b:T,a:B,b:B', sex: 1, name: 'Starting Mother2'}," +
+       "{alleles: 'a:l,b:l,a:B,b:B', sex: 0, name: 'Starting Father2'}]," +
+      "[{alleles: 'a:h,b:h,a:B,b:B', sex: 1, name: 'Starting Mother'}," +
+       "{alleles: 'a:W,b:W,a:B,b:B', sex: 0, name: 'Starting Father'}," +
+       "{alleles: 'a:t,b:t,a:B,b:B', sex: 1, name: 'Starting Mother2'}," +
+       "{alleles: 'a:L,b:L,a:B,b:B', sex: 0, name: 'Starting Father2'}]" +
      "]",
     sendBredDragons: NO
   }
