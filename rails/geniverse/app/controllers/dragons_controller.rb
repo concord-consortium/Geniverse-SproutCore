@@ -43,6 +43,7 @@ class DragonsController < ApplicationController
   # POST /dragons.xml
   def create
     dragon = params[:dragon]
+    dragon.delete(:guid)
     # mother and father attributes get sent from sproutcore in the form /rails/dragons/NN
     Dragon.reflect_on_all_associations(:belongs_to).each do |assoc|
       name = assoc.name
@@ -69,6 +70,7 @@ class DragonsController < ApplicationController
   def update
     @dragon = Dragon.find(params[:id])
     dragon = params[:dragon]
+    dragon.delete(:guid)
     Dragon.reflect_on_all_associations(:belongs_to).each do |assoc|
       name = assoc.name
       attr_key = assoc.options[:foreign_key] || (name.to_s + "_id")

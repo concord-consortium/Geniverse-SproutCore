@@ -124,7 +124,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
       var modelHash = {};
       modelHash[modelName] = store.readDataHash(storeKey);
       // SC.Logger.dir(modelHash);
-      delete modelHash[modelName]['guid'];    // remove guid property before sending to rails
+      //delete modelHash[modelName]['guid'];    // remove guid property before sending to rails
 
       // SC.Logger.group('Geniverse.RailsDataSource.createRecord()');
       SC.Request.postUrl('/rails/' + recordType.modelsName).header({
@@ -163,7 +163,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
       modelHash[modelName] = store.readDataHash(storeKey);
       // SC.Logger.dir(modelHash);
       var url = modelHash[modelName].guid;
-      delete modelHash[modelName].guid;    // remove guid property before sending to rails
+      //delete modelHash[modelName].guid;    // remove guid property before sending to rails
 
       // SC.Logger.group('Geniverse.RailsDataSource.createRecord()');
       SC.Request.putUrl(url + '.json').header({
@@ -172,7 +172,6 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
            .notify(this, this.didUpdateRecord, store, storeKey)
            .send(modelHash);
       // SC.Logger.groupEnd();
-      modelHash[modelName].guid = url; // put the GUID back!
       return YES;
     }
     return NO;
