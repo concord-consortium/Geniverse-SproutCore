@@ -8,6 +8,16 @@
 
 // { setup: store: SC.Store.create().from('Geniverse.RailsDataSource') }
 
+var rndChars = function(size) {
+  var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+	var randomstring = '';
+	for (var i=0; i<size; i++) {
+		var rnum = Math.floor(Math.random() * chars.length);
+		randomstring += chars.substring(rnum,rnum+1);
+	}
+  return randomstring; 
+};
+
 module("Geniverse.RailsDataSource_fetch_and_retrieve", { 
   setup: function() {
     SC.Logger.log("setting store");
@@ -58,6 +68,25 @@ test("do we get dragons back from rails", function() {
     }
   ]);
 });
+
+test("dragon updates successfully with rails store", function() {
+  var dragons = Geniverse.store.find(Geniverse.DRAGONS_QUERY);
+  statusEquals(dragons, SC.Record.BUSY_LOADING, 'Dragons should be loading');
+  var newName = rndChars(20);
+  var dragon = null;
+
+  afterPropertyChange(dragons, 'status', SC.Record.READY_CLEAN, function () {
+      dragon = dragons.objectAt(0);
+      ok(dragon !== null, "Dragon is found");
+      dragon.set('name', newName);
+      Geniverse.store.commitRecords();
+      statusEquals(dragon, SC.Record.BUSY_COMMITTING,"Dragon is updating on server");
+      afterPropertyChange(dragon, 'status', SC.Record.READY_CLEAN, function () {
+        ok(dragon.get('name') === newName, 'Dragons new name is set to: ' + newName);
+      });
+  });
+});
+
 
 // test("does the first activity returned have questions", function() {
 //   var activities = Geniverse.store.find(Geniverse.ACTIVITIES_QUERY);
