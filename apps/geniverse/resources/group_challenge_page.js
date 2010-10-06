@@ -15,7 +15,7 @@ sc_require('views/login');
 sc_require('views/chromosome_tool');
 sc_require('views/stats');
 
-Geniverse.mainChatExamplePage = SC.Page.design({
+Geniverse.groupChallengePage = SC.Page.design({
   
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page 
@@ -39,7 +39,8 @@ Geniverse.mainChatExamplePage = SC.Page.design({
         layout: { centerY: 0, height: 24, left: 8, width: 200 },
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
-        valueBinding:   'Geniverse.activityController.title'
+        //valueBinding:   'Geniverse.activityController.title'
+        value: "Group Challenge"
       }),
       
       welcomeLabelView: SC.LabelView.design({
@@ -140,18 +141,18 @@ Geniverse.mainChatExamplePage = SC.Page.design({
         }),
 
         stableView: CC.AutoScrollView.design({
-      	  hasHorizontalScroller: NO,
-      		layout: { left: Geniverse.marginSize, bottom: 10, height: 220, width: 450 },
+          hasHorizontalScroller: NO,
+          layout: { left: Geniverse.marginSize, bottom: 10, height: 220, width: 450 },
           backgroundColor: 'white',
           contentView: SC.GridView.design({
-      			contentBinding: 'Geniverse.stableOrganismsController.arrangedObjects',
-      			selectionBinding: 'Geniverse.stableOrganismsController.selection',
-      			rowHeight: 60,
-      			columnWidth: 60,
-      			canEditContent: NO,
-      			exampleView: Geniverse.OrganismView,
-      			isSelectable: YES,
-      			dragDataTypes: ['dragon']
+            contentBinding: 'Geniverse.stableOrganismsController.arrangedObjects',
+            selectionBinding: 'Geniverse.stableOrganismsController.selection',
+            rowHeight: 60,
+            columnWidth: 60,
+            canEditContent: NO,
+            exampleView: Geniverse.OrganismView,
+            isSelectable: YES,
+            dragDataTypes: ['dragon']
           }),
 
           autoScrollTriggerBinding: 'Geniverse.stableOrganismsController.length',
@@ -231,12 +232,12 @@ Geniverse.mainChatExamplePage = SC.Page.design({
         }),
         
         marketplaceView: SC.ImageView.design({
-      		layout: { left: 500, bottom: 135, height: 90, width: 90 },
-      		value: sc_static('sell-to-market.jpg'),
-      		canLoadInBackground: NO,
-      		useImageCache: NO,
-      		isDropTarget: YES,
-      		acceptDragOperation: function(drag, op) {
+          layout: { left: 500, bottom: 135, height: 90, width: 90 },
+          value: sc_static('sell-to-market.jpg'),
+          canLoadInBackground: NO,
+          useImageCache: NO,
+          isDropTarget: YES,
+          acceptDragOperation: function(drag, op) {
             function sellDragon(dragon){
               SC.RunLoop.begin();
               if (!!dragon){
@@ -277,64 +278,54 @@ Geniverse.mainChatExamplePage = SC.Page.design({
         allArticlesView: SC.TabView.design({ 
           layout: { top: 5, right: Geniverse.marginSize, height: 250, width: 510},
           items: [ 
-            {title: "Your paper", value: "Geniverse.mainChatExamplePage.yourArticleView" },
-            {title: "Published papers", value: "Geniverse.mainChatExamplePage.publishedArticlesView" }
+            {title: "Your paper", value: "Geniverse.yourArticleView" },
+            {title: "Published papers", value: "Geniverse.publishedArticlesView" }
           ], 
           itemTitleKey: 'title', 
           itemValueKey: 'value',
           nowShowingBinding: 'Geniverse.articleController.nowShowing' // hack for defining the startup tab 
-          
         }),
         
         chatView: SC.StackedView.design({
           layout: { right: Geniverse.marginSize, bottom: 0, width: 500, height: 330 },
 
-      		childViews: 'chatListView chatComposeView userListView userListLabel'.w(),
+          childViews: 'chatListView chatComposeView userListView userListLabel'.w(),
 
-        	chatListView: CC.AutoScrollView.design({
-        	  layerId: 'chatList',
-      		  hasHorizontalScroller: NO,
+          chatListView: CC.AutoScrollView.design({
+            layerId: 'chatList',
+            hasHorizontalScroller: NO,
             layout: { left: 0, top: 65, height: 180, width: 300 },
             backgroundColor: 'white',
             contentView: SC.StackedView.design({
               layerId: 'chatListContent',
-      				contentBinding: 'CcChat.chatListController.arrangedObjects',
-      				selectionBinding: 'CcChat.chatListController.selection',
-      				rowHeight: 30,
-      				canEditContent: NO,
-      				hasContentIcon: YES,
-      				contentValueKey: 'message',
-      				isSelectable: YES,
-      				showAlternatingRows: YES,
-      				exampleView: CcChat.ChatMessageView
+              contentBinding: 'CcChat.chatListController.arrangedObjects',
+              selectionBinding: 'CcChat.chatListController.selection',
+              rowHeight: 30,
+              canEditContent: NO,
+              hasContentIcon: YES,
+              contentValueKey: 'message',
+              isSelectable: YES,
+              showAlternatingRows: YES,
+              exampleView: CcChat.ChatMessageView
             }),
             autoScrollTriggerBinding:  'CcChat.chatListController.length'
           }),
       		
-      		chatComposeView: Geniverse.DragonChatComposeView.design({
+          chatComposeView: Geniverse.DragonChatComposeView.design({
             layout: { left: 0, top: 260, height: 200, width: 300 },
             layerId: "chatCompose"
-      		}),
-      		
-      		userListLabel: SC.LabelView.design({
-      		  layout: {top: 65, right: 20, width: 100},
-      		  value: "Users in room"
-      		}),
-      		
-      		userListView: CcChat.UserListView.design({
+          }),
+          
+          userListLabel: SC.LabelView.design({
+            layout: {top: 65, right: 20, width: 100},
+            value: "Users in room"
+          }),
+          
+          userListView: CcChat.UserListView.design({
             layout: {top: 85, right: 0, width: 150, height: 200}
           })
         })
-    	})
+      })
     })
   }),
-  
-  yourArticleView: Geniverse.ArticleView.design({
-    layout: { left: 5, top: 10, height: 220}
-  }),
-  
-  publishedArticlesView: Geniverse.PublishedArticlesView.design({
-    layout: { left: 5, top: 10, height: 220}
-  })
-  
 });

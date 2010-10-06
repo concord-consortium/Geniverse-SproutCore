@@ -15,12 +15,13 @@ Geniverse.appController = SC.ObjectController.create(
 
   userLoggedIn: NO,
   
-  mainAppView: null,
-  
   loginView: null,
-  
+  mainPane:  null,
+  containerView: null,
+  mainAppView: null,
+
   checkLoginState: function() {
-    var containerView = Geniverse.mainChatExamplePage.get('mainPane').get('appContainer');
+    var containerView = this.get('mainPane').get('appContainer');
     if (containerView === undefined || containerView === null){
       return;
     }
@@ -74,7 +75,7 @@ Geniverse.appController = SC.ObjectController.create(
     SC.Logger.log("setting userLoggedIn");
 		this.set('userLoggedIn', YES);
 		
-		var containerView = Geniverse.mainChatExamplePage.get('mainPane').get('appContainer');
+		var containerView = this.get('mainPane').get('appContainer');
     
     SC.RunLoop.begin();
 		containerView.set('nowShowing', this.mainAppView);
@@ -91,7 +92,7 @@ Geniverse.appController = SC.ObjectController.create(
 		Geniverse.userDefaults.writeDefault('username', '');
 		Geniverse.userDefaults.writeDefault('chatroom', '');
 		
-    var containerView = Geniverse.mainChatExamplePage.get('mainPane').get('appContainer');
+    var containerView = this.get('mainPane').get('appContainer');
 		
     SC.RunLoop.begin();
 		containerView.set('nowShowing', this.loginView);

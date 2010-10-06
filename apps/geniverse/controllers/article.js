@@ -56,7 +56,7 @@ Geniverse.articleController = SC.ObjectController.create(
   
   publishedDragons: [],
   
-  nowShowing: 'Geniverse.mainChatExamplePage.yourArticleView',      // hack for defining start-up tab
+  nowShowing: 'Geniverse.yourArticleView',      // hack for defining start-up tab
   
   init: function(){
     this.set('loadTimer', SC.Timer.schedule({
