@@ -12,7 +12,7 @@
 */
 sc_require('models/activity');
 Geniverse.ACTIVITIES_QUERY = SC.Query.local(Geniverse.Activity, {
-  orderBy: 'title'
+  orderBy: 'id'
 });
 
 // TODO: improve this query
@@ -172,6 +172,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
            .notify(this, this.didUpdateRecord, store, storeKey)
            .send(modelHash);
       // SC.Logger.groupEnd();
+      modelHash[modelName].guid = url; // put the GUID back!
       return YES;
     }
     return NO;

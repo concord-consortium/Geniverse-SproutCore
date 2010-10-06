@@ -83,6 +83,9 @@ test("dragon updates successfully with rails store", function() {
       statusEquals(dragon, SC.Record.BUSY_COMMITTING,"Dragon is updating on server");
       afterPropertyChange(dragon, 'status', SC.Record.READY_CLEAN, function () {
         ok(dragon.get('name') === newName, 'Dragons new name is set to: ' + newName);
+        ok(dragon.get('guid') !== undefined, "Dragon does not have an undefined GUID");
+        ok(dragon.get('guid') !== null, "Dragon does not have an null GUID");
+        ok(dragon.get('guid').indexOf('rails/dragons') > -1, "Dragons GUID looks reasonable");
       });
   });
 });
