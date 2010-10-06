@@ -14,7 +14,7 @@ sc_require('views/organism');
 sc_require('views/published_articles');
 sc_require('views/login');
 
-Geniverse.trainingPage = SC.Page.design({
+Geniverse.experimentPage = SC.Page.design({
   
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page 
