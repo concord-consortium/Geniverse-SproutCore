@@ -13,7 +13,7 @@
 Geniverse.activityController = SC.ObjectController.create(
 /** @scope Geniverse.activityController.prototype */ {
   activity: null,
-
+  activityTitle: null, // HACK: use the activity who's title matches this...o
   startActivity: function() {
     var chatroom = CcChat.chatRoomController.get('channel');
 		
