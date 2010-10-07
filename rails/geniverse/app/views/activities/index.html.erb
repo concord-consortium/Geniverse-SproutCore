@@ -2,7 +2,12 @@
 
 <%= render :partial => 'shared/index', :locals => { :objects => @activities, 
   :extra_links => [
-    lambda {|activity| return link_to 'Run', "/lab##{activity.sc_type}" }
+    lambda {
+      |activity| return link_to 'Run', "/lab##{activity.sc_type}" 
+    },
+    lambda {
+      |activity| return link_to ('delete dragons', url_for(:action => :destroy_dragons, :id => activity.id))
+    }
   ]
 } %>
 
