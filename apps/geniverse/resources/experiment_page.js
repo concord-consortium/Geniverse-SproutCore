@@ -141,18 +141,18 @@ Geniverse.experimentPage = SC.Page.design({
         }),
 
         stableView: CC.AutoScrollView.design({
-      	  hasHorizontalScroller: NO,
-      		layout: { left: Geniverse.marginSize, bottom: 10, height: 220, width: 450 },
+          hasHorizontalScroller: NO,
+          layout: { left: Geniverse.marginSize, bottom: 10, height: 220, width: 450 },
           backgroundColor: 'white',
           contentView: SC.GridView.design({
-      			contentBinding: 'Geniverse.stableOrganismsController.arrangedObjects',
-      			selectionBinding: 'Geniverse.stableOrganismsController.selection',
-      			rowHeight: 60,
-      			columnWidth: 60,
-      			canEditContent: NO,
-      			exampleView: Geniverse.OrganismView,
-      			isSelectable: YES,
-      			dragDataTypes: ['dragon']
+            contentBinding: 'Geniverse.stableOrganismsController.arrangedObjects',
+            selectionBinding: 'Geniverse.stableOrganismsController.selection',
+            rowHeight: 60,
+            columnWidth: 60,
+            canEditContent: NO,
+            exampleView: Geniverse.OrganismView,
+            isSelectable: YES,
+            dragDataTypes: ['dragon']
           }),
 
           autoScrollTriggerBinding: 'Geniverse.stableOrganismsController.length',
