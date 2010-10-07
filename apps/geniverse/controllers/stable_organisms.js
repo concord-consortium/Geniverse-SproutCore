@@ -26,5 +26,12 @@ Geniverse.stableOrganismsController = SC.ArrayController.create(
 	  },
 	  
 	  // this is a hack: currently there is a SC bug pre-defining nowShowing in a late-loaded component
-	  nowShowing: 'Geniverse.mainChatExamplePage.bredDragonsScrollView'
+	  nowShowing: 'Geniverse.mainChatExamplePage.bredDragonsScrollView',
+
+    saveData: function() {
+      Geniverse.store.commitRecords();
+      SC.Logger.info("saved records");
+    }.observes('[]')
+
+
 }) ;

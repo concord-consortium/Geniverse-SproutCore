@@ -15,16 +15,14 @@ Geniverse.eggsController = SC.ArrayController.create(
 /** @scope Geniverse.eggsController.prototype */ {
     
     removeAllEggs: function () {
-      if (Geniverse.EGGS_QUERY === null || typeof Geniverse.EGGS_QUERY == "undefined") {
-        SC.Logger.warn("null eggs query!");
-      } else {
-        var eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
-        eggs.forEach(function (egg){
-          egg.set('isInMarketplace', true);
-        });
-      }
+      this.set('content',[]);
     },
-    
+   
+    saveData: function() {
+      Geniverse.store.commitRecords();
+      SC.Logger.info("saved records");
+    }.observes('[]'),
+
     collectionViewDeleteContent: function(view, content, indexes) {
       // destroy the records
       var records = indexes.map(function(idx) {

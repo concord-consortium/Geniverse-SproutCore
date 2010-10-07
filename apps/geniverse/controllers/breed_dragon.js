@@ -71,6 +71,7 @@ Geniverse.breedDragonController = SC.Controller.create(
           child.set('isEgg', true);
           child.set('isInMarketplace', true);
         }
+        Geniverse.eggsController.addObject(child);
         SC.RunLoop.end();
 
         nEggs++;

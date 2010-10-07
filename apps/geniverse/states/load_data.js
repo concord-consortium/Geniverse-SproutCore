@@ -43,9 +43,8 @@ Geniverse.LOAD_DATA = SC.Responder.create(
         activity: activity,
         orderBy: 'storeKey'
     });
-    
     var eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
-    Geniverse.eggsController.set('content', eggs);
+    Geniverse.eggsController.set('content',[]);
     
     /////////////////// Chats
     SC.Logger.log("LOAD: chats");
