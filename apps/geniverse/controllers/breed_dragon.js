@@ -28,6 +28,12 @@ Geniverse.breedDragonController = SC.Controller.create(
     return !!(mother && mother != Geniverse.NO_DRAGON && father && father != Geniverse.NO_DRAGON);
   }.property('mother', 'father').cacheable(),
 
+  parentsChanged: function() {
+    this.set('child', Geniverse.NO_DRAGON);
+    this.set('newChild', null);
+    this.set('resetCount',this.get('resetCount') + 1); // poor mans event propogation
+  }.observes('mother','father'),
+
   // http://www.pivotaltracker.com/story/show/5298197
   // rest parents and breeding pool.
   reset: function() {
