@@ -32,11 +32,16 @@ Geniverse.INIT_ACTIVITY = SC.Responder.create(
         //Try to find the activity matching our title
         var last  = activities.lastObject();
         var found = activities.find(function(act) {
-          if (act.title == Geniverse.activityController.get('activityTitle')) {
+          var title = act.get('title');
+          if (title == Geniverse.activityController.get('activityTitle')) {
+            SC.Logger.info("Using activity named: %s", title);
             return YES;
+          } else {
+            SC.Logger.info("found non-matching activitiy named:_%s_", title);
           }
         });
         if (found === null || found === undefined) {
+          SC.Logger.info("Could not find activity matching: %s", Geniverse.activityController.get('activityTitle'));
           found = last;
         }
         Geniverse.activityController.set('content', found);
