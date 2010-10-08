@@ -89,6 +89,28 @@ Geniverse.chromosomeController = SC.ObjectController.create(
       }
     }
     return true;
-  }
+  },
+
+  alleleLabelMap : {
+      'H': 'horns',
+      'h': 'hornless',
+      'w': 'wings',
+      'W': 'wingless',
+      'L': 'legs',
+      'l': 'legless',
+      'T': 'fany tail',
+      't': 'plain tail',
+      'f': 'fire',
+      'F': 'fireless'
+  },
+
+  titleForAllele: function(val) {
+    var mappedVal = this.alleleLabelMap[val];
+    if (mappedVal !== undefined) {
+      return mappedVal;
+    }
+    SC.Logger.warn("couldn't find maped: %s", val);
+    return val;
+  },
   
 }) ;

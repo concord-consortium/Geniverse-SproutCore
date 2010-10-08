@@ -10,6 +10,7 @@
 
   @extends SC.View
 */
+sc_require('controllers/chromosome');
 Geniverse.DragonChromosomeView = SC.View.extend(
 /** @scope Geniverse.DragonChromosomeView.prototype */ {
 
@@ -40,7 +41,8 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       B: sc_static("BY-chromosome.png")
     }
   },
-  
+
+
   lineImageUrls: {
     1: sc_static("1-lines.png"),
     2: sc_static("2-lines.png"),
@@ -86,7 +88,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
   }),
   
   pullDowns: SC.View.design({
-    layout: {top:0, left: 45 },
+    layout: {top:0, left: 30 },
     isVisibleBinding: '*parentView.showPulldowns',
     // allelesBinding: '*parentView.alleles',     // this frequently doesn't update until the next runloop...
     alleles: function() {                         // this works fine, but seems wrong...
@@ -121,7 +123,13 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       for (var i = 0; i < alleles.length; i++) {
         var pd = pulldowns[this][alleles[i].toLowerCase()];
         if (!!pd && pd.get('fieldValue') != alleles[i]) {
-          pd.set('value', alleles[i]);
+          if (pd.get('title')) {
+            pd.set('title', Geniverse.chromosomeController.titleForAllele(alleles[i]));
+            pd.set('value',alleles[i]);
+          }
+          else {
+            pd.set('value', Geniverse.chromosomeController.titleForAllele(alleles[i]));
+          }
         }
       }
       
@@ -160,16 +168,22 @@ Geniverse.DragonChromosomeView = SC.View.extend(
 
     _createPulldown: function(val, top) {
       var map = this.get('alleleToPulldown');
+      var bigVal = val.toUpperCase();
+      var smallVal = val.toLowerCase();
+      var bigTitle = Geniverse.chromosomeController.titleForAllele(bigVal);
+      var smallTitle = Geniverse.chromosomeController.titleForAllele(smallVal);
       var dropDownMenuView = SC.SelectFieldView.create({
-          layout: { top: top, left: 0, height: 25, width: 50 },
-
+          layout: { top: top, left: 0, height: 25, width: 75 },
+          
           // not sure whether these need to be SC.Objects or not. It seems to have no effect.
-          objects: [ SC.Object.create({ title: val.toUpperCase() }),
-            SC.Object.create({ title: val.toLowerCase() })],
+          objects: [ 
+            SC.Object.create({ value: bigVal, title: bigTitle}),
+            SC.Object.create({ value: smallVal, title: smallTitle})
+            ],
 
           value: val,
           nameKey: 'title',
-          valueKey: 'title',
+          valueKey: 'value',
           
           updater: function(){
             var value = this.get('value');
@@ -193,11 +207,12 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     
     _createStaticAllele: function(val, top){
       var map = this.get('alleleToPulldown');
+
       var alleleView = SC.LabelView.create({
-          layout: { top: top, left: 0, height: 20, width: 30 },
+          layout: { top: top, left: 0, height: 20, width: 80 },
           classNames: ['static-allele'],
           textAlign: SC.ALIGN_CENTER,
-          value: val
+          value: val // will change
       });
 
       if (!map[this]) {
