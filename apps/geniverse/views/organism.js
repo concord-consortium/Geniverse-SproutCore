@@ -14,11 +14,11 @@ Geniverse.OrganismView = SC.View.extend(
 /** @scope Geniverse.OrganismView.prototype */ {
 	organismBinding: '*content',
 	label: 'Organism',
+  showLabel: false,
 	classNames: ['organism-view'],
 	content: Geniverse.NO_DRAGON,
 	contentBinding: '*organism',
-	childViews: 'imageView'.w(),
-	
+	childViews: 'imageView labelView'.w(),
   isDropTarget: NO, // change this to YES in view if you want replaceable by drag-and-drop
   parent: '',       // If set, drag-and-drop will replace parentView's [parent] field
   sex: null,        // If set to 0 or 1, drag-and-drop will only work wil males and females, respectively
@@ -30,8 +30,16 @@ Geniverse.OrganismView = SC.View.extend(
 		canLoadInBackground: NO,
 		useImageCache: NO
 	}),
+
+  labelView: SC.LabelView.design({
+    isVisibleBinding: '*parentView.showLabel',
+    layout: {bottom: 0, left: 0},
+    valueBinding: '*parentView.label',
+    fontWeight: SC.BOLD_WEIGHT,
+    textAlign: SC.ALIGN_CENTER
+  }),
 	
-	init: function() {
+  init: function() {
 	  SC.Logger.info("Init Organism View.");
 	  this.invokeLast(function() {
 	    this._checkForNullDragon();
@@ -102,26 +110,20 @@ Geniverse.OrganismView = SC.View.extend(
    
 	// drop methods: NB: none of these will be called if isDropTarget = NO
   acceptDragOperation: function(drag, op) {
-    // SC.Logger.log("here??");
     var dragon = this._getSourceDragon(drag);
     if (!this._canDrop(dragon)){
       return;
     }
-    
-    // SC.Logger.log("here");
 
     // next, if we are a prent view, check that dragged dragon
     // is not an egg
     var parentType = this.get('parent');
     if (!!parentType){
-      // SC.Logger.log("woo!");
       this.get('parentView').set(this.get('parent'), dragon);
       this.get('parentView').set('child', Geniverse.NO_DRAGON);
     } else {
-      // SC.Logger.log("woo?");
       this.set('organism', dragon);
     }
-    // SC.Logger.log("now here");
     
     return op ;
   },
@@ -158,7 +160,11 @@ Geniverse.OrganismView = SC.View.extend(
     if (!!parentType){
       SC.Logger.log("dragon.get('isEgg') = "+dragon.get('isEgg'));
       if (dragon.get('isEgg')){
-        return NO;
+        //HACK: We used to prevent eggs from becomming parents
+        //HACK: now we turn the eggs into parents without complaint.
+        //return NO;
+        dragon.set('isEgg',NO);
+        Geniverse.store.commitRecords();
       }
     }
     
