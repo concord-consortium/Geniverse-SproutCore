@@ -1,5 +1,6 @@
 .statsLabel {
   /*border: 1px solid black;*/
+  background-color: white;
 }
 .stats {
   font-size: 14px;
@@ -12,8 +13,11 @@
 .green{
   color: #00FF00;
 }
+.orange{
+  color: #FF8800;
+}
 .yellow{
-  color: #FFFF00;
+  color: #DDDD00;
 }
 .purple{
   color: #FF00FF;

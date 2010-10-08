@@ -21,3 +21,16 @@
   opacity: 0.75;
 	border: 1px solid black;
 }
+
+.transparent {
+  opacity: 0.8;
+}
+
+.bity {
+  font-size: 10px;
+  font-weight: bold;
+}
+.container_label {
+  background-color: #46271E;
+  padding: 4px;
+}

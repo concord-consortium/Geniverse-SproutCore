@@ -72,172 +72,90 @@ Geniverse.experimentPage = SC.Page.design({
         classNames: 'brown'.w()
       }),
       mainAppView: SC.View.create({
-        childViews: 'breedView statsView challengePoolView breedingPenView breedingChromosomeToolView stableTitle stableView marketplaceView '.w(),
+        childViews: 'breedView statsView challengePoolView breedingPenView breedingChromosomeToolView stableView marketplaceView '.w(),
        
-        breedView: Geniverse.BreedDragonView.design({
-          layout: { top: Geniverse.marginSize, left: Geniverse.marginSize, height: 140, width: 450 },
-          showChildView: NO
-        }),
         
         // challenge pool to hold initial, system-created dragons
-        challengePoolView: CC.AutoScrollView.design({
-          hasHorizontalScroller: NO,
-          layout: { left: Geniverse.marginSize - 15, top: 160, width: 80, height: 240 },
-          backgroundColor: 'white',
-          contentView: SC.GridView.design({
-            contentBinding: 'Geniverse.challengePoolController.arrangedObjects',
-            selectionBinding: 'Geniverse.challengePoolController.selection',
-            rowHeight: 60,
-            columnWidth: 60,
-            canEditContent: NO,
-            exampleView: Geniverse.OrganismView,
-            isSelectable: YES,
-            dragDataTypes: ['dragon']
+        challengePoolView: SC.View.design({
+          className: 'transparent'.w(),
+          childViews: "titleView dragonsView".w(),
+          layout: { left: 20, top: 150, width:70, height: 280 },
+          titleView: SC.LabelView.design({
+            layout: { centerY: 0, height: 20, left: 0, top:0, width: 70 },
+            value: "Parent Pool",
+            controlSize: "bity",
+            fontWeight: SC.BOLD_WEIGHT,
+            textAlign: SC.ALIGN_CENTER,
+            classNames: "container_label".w()
           }),
-          autoScrollTriggerBinding: 'Geniverse.challengePoolController.length'
+          dragonsView: CC.AutoScrollView.design({
+            hasHorizontalScroller: NO,
+            layout: { left: 0, top: 20, width: 70, height: 280},
+            backgroundColor: 'white',
+            contentView: SC.GridView.design({
+              contentBinding: 'Geniverse.challengePoolController.arrangedObjects',
+              selectionBinding: 'Geniverse.challengePoolController.selection',
+              rowHeight: 60,
+              columnWidth: 70,
+              canEditContent: NO,
+              exampleView: Geniverse.OrganismView,
+              isSelectable: YES,
+              dragDataTypes: ['dragon']
+            }),
+            autoScrollTriggerBinding: 'Geniverse.challengePoolController.length'
+          })
+        }),
+        
+        breedView: Geniverse.BreedDragonView.design({
+          layout: { top: 150 , left: 100, height: 300, width: 150 },
+          showChildView: NO // child as in baby dragon
         }),
         
         // Breeding pen with eggs
-        breedingPenView: CC.AutoScrollView.design({
-          hasHorizontalScroller: NO,
-          layout: { left: Geniverse.marginSize + 75, top: 160, width: 300, height: 240 },
-          backgroundColor: 'white',
-          contentView: SC.GridView.design({
-            contentBinding: 'Geniverse.eggsController.arrangedObjects',
-            selectionBinding: 'Geniverse.eggsController.selection',
-            rowHeight: 60,
-            columnWidth: 60,
-            canEditContent: NO,
-            exampleView: Geniverse.OrganismView,
-            isSelectable: YES,
-            dragDataTypes: ['dragon']
+        breedingPenView: SC.View.design ({
+          childViews: "titleView penView".w(),
+          layout: { left: 265, top: 150, width: 300, height: 320 },
+          classNames: ('transparent').w(),
+          titleView: SC.LabelView.design({
+            layout: { centerY: 0, height: 20, left: 0, top:0, width: 300 },
+            value: "Breeding Pen",
+            controlSize: "bity",
+            textAlign: SC.ALIGN_CENTER,
+            fontWeight: SC.BOLD_WEIGHT,
+            classNames: "container_label".w()
           }),
-          autoScrollTriggerBinding: 'Geniverse.eggsController.length'
+
+          penView: CC.AutoScrollView.design({
+            hasHorizontalScroller: NO,
+            layout: { left: 0, top: 20, width: 300, height: 300 },
+            backgroundColor: 'white',
+            contentView: SC.GridView.design({
+              contentBinding: 'Geniverse.eggsController.arrangedObjects',
+              selectionBinding: 'Geniverse.eggsController.selection',
+              rowHeight: 60,
+              columnWidth: 60,
+              canEditContent: NO,
+              exampleView: Geniverse.OrganismView,
+              isSelectable: YES,
+              dragDataTypes: ['dragon']
+            }),
+            autoScrollTriggerBinding: 'Geniverse.eggsController.length'
+          })
         }),
         
         
         breedingChromosomeToolView: Geniverse.ChromosomeToolView.design({
-          layout: { left: Geniverse.marginSize + 75 + 300 + 10, top: 160, width: 35, height: 40 },
+          layout: { left: 570, top: 150, width: 35, height: 40 },
           selectionBinding: 'Geniverse.eggsController.selection'
         }),
         
-        statsView: Geniverse.StatsView.design({
-          layout: { left: Geniverse.marginSize + 75 + 300 + 10, top: 210, width: 100, height: 70 }
-        }),
-        
-        stableTitle: SC.LabelView.design({
-          layout: { left: Geniverse.marginSize+100, bottom: 235, height: 25, width: 450 },
-          fontWeight: SC.BOLD_WEIGHT,
-          woo: function() {
-            // SC.Logger.log("woo");
-            this.propertyDidChange('value');
-          }.observes("Geniverse.stableOrganismsController.arrangedObjects.[]"),
-          value:  function() {
-            var numDragons = Geniverse.stableOrganismsController.get('length');
-            var spaces = 50 - numDragons;
-            // SC.Logger.log("recalculating");
-            return "Your Stable      -   " + spaces + " spaces remaining";
-          }.property('Geniverse.stableOrganismsController.arrangedObjects.[]')
-        }),
-
-        stableView: CC.AutoScrollView.design({
-          hasHorizontalScroller: NO,
-          layout: { left: Geniverse.marginSize, bottom: 10, height: 220, width: 450 },
-          backgroundColor: 'white',
-          contentView: SC.GridView.design({
-            contentBinding: 'Geniverse.stableOrganismsController.arrangedObjects',
-            selectionBinding: 'Geniverse.stableOrganismsController.selection',
-            rowHeight: 60,
-            columnWidth: 60,
-            canEditContent: NO,
-            exampleView: Geniverse.OrganismView,
-            isSelectable: YES,
-            dragDataTypes: ['dragon']
-          }),
-
-          autoScrollTriggerBinding: 'Geniverse.stableOrganismsController.length',
-
-          isDropTarget: YES,
-
-          dragonNum: 0,
-          acceptDragOperation: function(drag, op) {
-            var self = this;
-            function acceptDragon(dragon){
-              if (!dragon){
-                return;
-              }
-              var dragonNum = self.get('dragonNum');
-
-              // check if there are existing dragons
-              var allStableDragons = Geniverse.stableOrganismsController.get('arrangedObjects');
-              var count = Geniverse.stableOrganismsController.get('length');
-              if (count >= 50){
-                alert("Your stable is full");
-                return;
-              }
-              if (count > 0){
-                var lastDragon = allStableDragons.objectAt(length-1);
-                var lastStableOrder = lastDragon.get('stableOrder');
-                if (!!lastStableOrder && lastStableOrder > count){
-                  dragonNum = lastStableOrder + 1;
-                } else {
-                  dragonNum = count + 1;
-                }
-                self.set('dragonNum', dragonNum);
-              }
-              
-              SC.RunLoop.begin();
-                dragon.set('isEgg', false);
-                dragon.set('stableOrder', dragonNum);
-              SC.RunLoop.end();
-              
-              ++self.dragonNum;
-            }
-            
-            
-            if ((""+drag.get('source').constructor === 'Geniverse.OrganismView')){
-              var dragon = drag.get('source').get('organism');
-              acceptDragon(dragon);
-            } else {
-              var selection = drag.get('source').get('selection').clone();
-              // NB: This works, while the forEach method below only removes half of them.
-              // This is because each time acceptDragon is called, the dragon gets removed from
-              // the list, and the other dragons shift indices.
-              for (var i = 0; i < selection.get('length'); i++){
-                acceptDragon(selection.firstObject());
-              }
-              // selection.forEach(function (dragon){
-              //  SC.Logger.log("selection.length = "+selection.get('length'));
-              //  acceptDragon(dragon);
-              //  });
-            }
-
-            this.invokeLast(function () {
-              // this is quite specific to the eggsController. We should really be checking the source
-              SC.RunLoop.begin();
-              Geniverse.eggsController.set('selection', null);
-              SC.RunLoop.end();
-            });
-            return op ;
-          },
-          computeDragOperations: function(drag, evt) {
-            return SC.DRAG_ANY ;
-          },
-          dragEntered: function(drag, evt) {
-            this.$().addClass('drop-target') ;
-          },
-          dragExited: function(drag, evt) {
-            this.$().removeClass('drop-target') ;
-          }
-        }),
-        
         marketplaceView: SC.ImageView.design({
-      		layout: { left: 500, bottom: 135, height: 90, width: 90 },
-      		value: sc_static('sell-to-market.jpg'),
-      		canLoadInBackground: NO,
-      		useImageCache: NO,
-      		isDropTarget: YES,
-      		acceptDragOperation: function(drag, op) {
+          layout: { left: 570, top: 200, height: 90, width: 90 },
+          value: sc_static('sell-to-market.jpg'),
+          canLoadInBackground: NO,
+          useImageCache: NO,
+          isDropTarget: YES,
+          acceptDragOperation: function(drag, op) {
             function sellDragon(dragon){
               SC.RunLoop.begin();
               if (!!dragon){
@@ -275,6 +193,124 @@ Geniverse.experimentPage = SC.Page.design({
           }
       	}),
         
+        statsView: Geniverse.StatsView.design({
+          layout: { left: 565, top: 150 + (320 - 120), width: 60, height: 120 }
+        }),
+        
+
+        stableView: SC.View.design({
+          layout: { left: 680, top: 150, height: 320, width: 240 },
+          childViews: 'title stable'.w(),
+          title: SC.LabelView.design({
+            classNames: 'container_label'.w(),
+            layout: { centerX: 0, top:0, height: 20, width: 240 },
+            controlSize: "bity",
+            textAlign: SC.ALIGN_CENTER,
+            fontWeight: SC.BOLD_WEIGHT,
+            woo: function() {
+              // SC.Logger.log("woo");
+              this.propertyDidChange('value');
+            }.observes("Geniverse.stableOrganismsController.arrangedObjects.[]"),
+            value:  function() {
+              var numDragons = Geniverse.stableOrganismsController.get('length');
+              var spaces = 50 - numDragons;
+              // SC.Logger.log("recalculating");
+              return "Your Stable      -   " + spaces + " spaces remaining";
+            }.property('Geniverse.stableOrganismsController.arrangedObjects.[]')
+          }),
+
+          stable: CC.AutoScrollView.design({
+            hasHorizontalScroller: NO,
+            layout: { left: 0, bottom: 0, height: 300, width: 240 },
+            backgroundColor: 'white',
+            classNames: 'transparent'.w(),
+            contentView: SC.GridView.design({
+              contentBinding: 'Geniverse.stableOrganismsController.arrangedObjects',
+              selectionBinding: 'Geniverse.stableOrganismsController.selection',
+              rowHeight: 60,
+              columnWidth: 60,
+              canEditContent: NO,
+              exampleView: Geniverse.OrganismView,
+              isSelectable: YES,
+              dragDataTypes: ['dragon']
+            }),
+
+            autoScrollTriggerBinding: 'Geniverse.stableOrganismsController.length',
+
+            isDropTarget: YES,
+
+            dragonNum: 0,
+            acceptDragOperation: function(drag, op) {
+              var self = this;
+              function acceptDragon(dragon){
+                if (!dragon){
+                  return;
+                }
+                var dragonNum = self.get('dragonNum');
+
+                // check if there are existing dragons
+                var allStableDragons = Geniverse.stableOrganismsController.get('arrangedObjects');
+                var count = Geniverse.stableOrganismsController.get('length');
+                if (count >= 50){
+                  alert("Your stable is full");
+                  return;
+                }
+                if (count > 0){
+                  var lastDragon = allStableDragons.objectAt(length-1);
+                  var lastStableOrder = lastDragon.get('stableOrder');
+                  if (!!lastStableOrder && lastStableOrder > count){
+                    dragonNum = lastStableOrder + 1;
+                  } else {
+                    dragonNum = count + 1;
+                  }
+                  self.set('dragonNum', dragonNum);
+                }
+                
+                SC.RunLoop.begin();
+                  dragon.set('isEgg', false);
+                  dragon.set('stableOrder', dragonNum);
+                SC.RunLoop.end();
+                
+                ++self.dragonNum;
+              }
+              
+              
+              if ((""+drag.get('source').constructor === 'Geniverse.OrganismView')){
+                var dragon = drag.get('source').get('organism');
+                acceptDragon(dragon);
+              } else {
+                var selection = drag.get('source').get('selection').clone();
+                // NB: This works, while the forEach method below only removes half of them.
+                // This is because each time acceptDragon is called, the dragon gets removed from
+                // the list, and the other dragons shift indices.
+                for (var i = 0; i < selection.get('length'); i++){
+                  acceptDragon(selection.firstObject());
+                }
+                // selection.forEach(function (dragon){
+                //  SC.Logger.log("selection.length = "+selection.get('length'));
+                //  acceptDragon(dragon);
+                //  });
+              }
+
+              this.invokeLast(function () {
+                // this is quite specific to the eggsController. We should really be checking the source
+                SC.RunLoop.begin();
+                Geniverse.eggsController.set('selection', null);
+                SC.RunLoop.end();
+              });
+              return op ;
+            },
+            computeDragOperations: function(drag, evt) {
+              return SC.DRAG_ANY ;
+            },
+            dragEntered: function(drag, evt) {
+              this.$().addClass('drop-target') ;
+            },
+            dragExited: function(drag, evt) {
+              this.$().removeClass('drop-target') ;
+            }
+          }),
+        }),
       })
     })
   }),

@@ -122,7 +122,7 @@ Geniverse.individualPage = SC.Page.design({
         }),
         
         statsView: Geniverse.StatsView.design({
-          layout: { left: Geniverse.marginSize + 75 + 300 + 10, top: 210, width: 100, height: 70 }
+          layout: { left: Geniverse.marginSize + 75 + 300 + 10, top: 210, width: 60, height: 90 }
         }),
         
         stableTitle: SC.LabelView.design({
