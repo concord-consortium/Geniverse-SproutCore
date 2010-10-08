@@ -79,7 +79,7 @@ Geniverse.experimentPage = SC.Page.design({
         challengePoolView: SC.View.design({
           className: 'transparent'.w(),
           childViews: "titleView dragonsView".w(),
-          layout: { left: 20, top: 150, width:70, height: 280 },
+          layout: { left: 20, top: 150, width:70, height: 300 },
           titleView: SC.LabelView.design({
             layout: { centerY: 0, height: 20, left: 0, top:0, width: 70 },
             value: "Parent Pool",
@@ -95,7 +95,7 @@ Geniverse.experimentPage = SC.Page.design({
             contentView: SC.GridView.design({
               contentBinding: 'Geniverse.challengePoolController.arrangedObjects',
               selectionBinding: 'Geniverse.challengePoolController.selection',
-              rowHeight: 60,
+              rowHeight: 70,
               columnWidth: 70,
               canEditContent: NO,
               exampleView: Geniverse.OrganismView,
@@ -118,7 +118,7 @@ Geniverse.experimentPage = SC.Page.design({
         // Breeding pen with eggs
         breedingPenView: SC.View.design ({
           childViews: "titleView penView".w(),
-          layout: { left: 265, top: 150, width: 300, height: 320 },
+          layout: { left: 265, top: 150, width: 300, height: 300 },
           classNames: ('transparent').w(),
           titleView: SC.LabelView.design({
             layout: { centerY: 0, height: 20, left: 0, top:0, width: 300 },
@@ -131,7 +131,7 @@ Geniverse.experimentPage = SC.Page.design({
 
           penView: CC.AutoScrollView.design({
             hasHorizontalScroller: NO,
-            layout: { left: 0, top: 20, width: 300, height: 300 },
+            layout: { left: 0, top: 20, width: 300, height: 280 },
             backgroundColor: 'white',
             contentView: SC.GridView.design({
               contentBinding: 'Geniverse.eggsController.arrangedObjects',
@@ -198,12 +198,12 @@ Geniverse.experimentPage = SC.Page.design({
       	}),
         
         statsView: Geniverse.StatsView.design({
-          layout: { left: 565, top: 150 + (320 - 120), width: 60, height: 120 }
+          layout: { left: 565, top: 150 + (300 - 120), width: 60, height: 120 }
         }),
         
 
         stableView: SC.View.design({
-          layout: { left: 680, top: 150, height: 320, width: 240 },
+          layout: { left: 680, top: 150, height: 300, width: 240 },
           childViews: 'title stable'.w(),
           title: SC.LabelView.design({
             classNames: 'container_label'.w(),
@@ -225,7 +225,7 @@ Geniverse.experimentPage = SC.Page.design({
 
           stable: CC.AutoScrollView.design({
             hasHorizontalScroller: NO,
-            layout: { left: 0, bottom: 0, height: 300, width: 240 },
+            layout: { left: 0, bottom: 0, height: 280, width: 240 },
             backgroundColor: 'white',
             classNames: 'transparent'.w(),
             contentView: SC.GridView.design({

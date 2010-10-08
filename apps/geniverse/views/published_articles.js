@@ -17,7 +17,7 @@ Geniverse.PublishedArticlesView = SC.View.extend(
   
   list: CC.AutoScrollView.design({
 	  hasHorizontalScroller: NO,
-    layout: { left: 0, top: 0, height: 190, width: 100 },
+    layout: { left: 0, top: 0, height: 180, width: 100 },
     backgroundColor: 'white',
     contentView: SC.ListView.design({
 			contentBinding: 'Geniverse.publishedArticlesController.arrangedObjects',
@@ -34,7 +34,7 @@ Geniverse.PublishedArticlesView = SC.View.extend(
   
   textView: SC.ScrollView.design({
     hasHorizontalScroller: NO,
-    layout: { left: 110, top: 0, height: 190, width: 390 },
+    layout: { left: 110, top: 0, height: 180, width: 390 },
     contentView: SC.LabelView.design(SC.StaticLayout, {
 		  isEditable: NO,
       escapeHTML: NO,
