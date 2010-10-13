@@ -52,7 +52,7 @@ Geniverse.LOAD_DATA = SC.Responder.create(
         orderBy: 'time'
     });
     var chats = CcChat.store.find(chatQuery);
-    CcChat.chatListController.set('content', chats);
+    Geniverse.chatListController.set('content', chats);
 
     /////////////////// Articles
     SC.Logger.log("LOAD: articles");
@@ -103,7 +103,10 @@ Geniverse.LOAD_DATA = SC.Responder.create(
   initChallengeDragons: function() {
     function handleDragon(dragon) { SC.RunLoop.begin(); SC.Logger.info("created dragon"); SC.Logger.dir(dragon); SC.RunLoop.end(); }
     SC.Logger.info("Creating defaults");
-    var organismConfigurations = Geniverse.activityController.getConfigurationForRoom(CcChat.chatRoomController.get('channelIndex'));
+    //var organismConfigurations = Geniverse.activityController.getConfigurationForRoom(CcChat.chatRoomController.get('channelIndex'));
+    var group = Geniverse.loginController.get('groupNumber')  - 1; // the numbers 1 - 3, but need to 0 based
+    var member = Geniverse.loginController.get('memberNumber')- 1;
+    var organismConfigurations = Geniverse.activityController.getConfigurationForRoomMember(group,member);
     SC.Logger.info("Found " + organismConfigurations.length + " defaults");
     for (var i = 0; i < organismConfigurations.length; i++) {
       var conf = organismConfigurations[i];

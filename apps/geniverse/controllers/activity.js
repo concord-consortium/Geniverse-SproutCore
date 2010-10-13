@@ -39,12 +39,35 @@ Geniverse.activityController = SC.ObjectController.create(
     if (!configurationArray){
       return [];
     }
-    
-    var roomConfig = configurationArray[room];
+    var length = configurationArray.length;
+    if (length === undefined || length < 1) {
+      SC.Logger.log("No alleles for room "+room);
+      return [];
+    }
+    var room_index = room % length;
+    var roomConfig = configurationArray[room_index];
     if (roomConfig === undefined || roomConfig === null){
       SC.Logger.log("No alleles for room "+room);
-      return "";
+      return [];
     }
     return roomConfig;
+  },
+
+  //  [ rooms [users [alleles ] ] ]
+  getConfigurationForRoomMember: function(room, member) {
+    var roomConfig = Geniverse.activityController.getConfigurationForRoom(room);
+    var members = roomConfig;
+    SC.Logger.info("members %@", members);
+    SC.Logger.dir(members);
+    // if the first item is an Allelle, return the full set, but warn
+    if (typeof members[0].alleles !== 'undefined') {
+      SC.Logger.warn("Room Configuration only has one set of starter Alleles in it..");
+      return roomConfig;  // EG everyone in the room shares a config set
+    }
+    var member_index = member % members.length;
+    SC.Logger.info("member_index %@",member_index);
+    SC.Logger.info("item to return %@", members[member_index]);
+    return members[member_index];
   }
-}) ;
+  
+});
