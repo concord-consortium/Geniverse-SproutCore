@@ -72,7 +72,7 @@ Geniverse.individualPage = SC.Page.design({
         classNames: 'brown'.w()
       }),
       mainAppView: SC.View.create({
-        childViews: 'breedView statsView challengePoolView breedingPenView breedingChromosomeToolView  stableView marketplaceView chatView allArticlesView'.w(),
+        childViews: 'breedView statsView challengePoolView breedingPenView breedingChromosomeToolView challengeChromosomeToolView  stableView marketplaceView chatView allArticlesView'.w(),
        
         challengePoolView: SC.View.design({
           className: 'transparent'.w(),
@@ -104,7 +104,7 @@ Geniverse.individualPage = SC.Page.design({
           })
         }),
         challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { left:45, top: 50, width: 35, height: 20 },
+        layout: { left:45, top: 40, width: 35, height: 30 },
           selectionBinding: 'Geniverse.challengePoolController.selection'
         }),
         
@@ -193,10 +193,10 @@ Geniverse.individualPage = SC.Page.design({
           dragExited: function(drag, evt) {
             this.$().removeClass('drop-target') ;
           }
-      	}),
+        }),
         
         statsView: Geniverse.StatsView.design({
-          layout: { left: 565, top: 70 + (300 - 120), width: 60, height: 120 }
+          layout: { left: 565, top: 70 + (300 - 80), width: 60, height: 80 }
         }),
         
 
