@@ -16,7 +16,8 @@ Geniverse.StatsView = SC.View.extend(
   /** @scope Geniverse.StatsView.prototype */ {
 	
 		classNames: "statsLabel".w(),
-    childViews: "resetButtonView red green yellow purple brown".w(),
+    childViews: "resetButtonView red purple ".w(),
+    //childViews: "resetButtonView red green yellow purple brown".w(),
 
     resetButtonView: SC.ButtonView.design({
       layout: { centerX: 0, top: 0, width: 100, height: 24 },
@@ -38,27 +39,27 @@ Geniverse.StatsView = SC.View.extend(
 	    valueBinding: 'Geniverse.statsController.redLabel'
     }),
 
-    green: SC.LabelView.design({
-      layout: {left: 3, top: 48, width: 70, height: 18},
-      classNames: "green stats".w(),
-	    valueBinding: 'Geniverse.statsController.greenLabel'
-    }),
-
-    yellow: SC.LabelView.design({
-      layout: {left: 3, top: 66, width: 70, height: 18},
-      classNames: "yellow stats".w(),
-	    valueBinding: 'Geniverse.statsController.yellowLabel'
-    }),
-
     purple: SC.LabelView.design({
-      layout: {left: 3, top: 84, width: 70, height: 18},
+      layout: {left: 3, top: 50, width: 70, height: 18},
       classNames: "purple stats".w(),
 	    valueBinding: 'Geniverse.statsController.purpleLabel'
-    }),
-    
-    brown: SC.LabelView.design({
-      layout: {left: 3, top: 102, width: 70, height: 18},
-      classNames: "orange stats".w(),
-	    valueBinding: 'Geniverse.statsController.brownLabel'
     })
+    //green: SC.LabelView.design({
+      //layout: {left: 3, top: 48, width: 70, height: 18},
+      //classNames: "green stats".w(),
+			//valueBinding: 'Geniverse.statsController.greenLabel'
+    //}),
+
+    //yellow: SC.LabelView.design({
+      //layout: {left: 3, top: 66, width: 70, height: 18},
+      //classNames: "yellow stats".w(),
+			//valueBinding: 'Geniverse.statsController.yellowLabel'
+    //}),
+
+    
+    //brown: SC.LabelView.design({
+      //layout: {left: 3, top: 102, width: 70, height: 18},
+      //classNames: "orange stats".w(),
+			//valueBinding: 'Geniverse.statsController.brownLabel'
+    //})
 });

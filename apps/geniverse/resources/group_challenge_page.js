@@ -72,7 +72,7 @@ Geniverse.groupChallengePage = SC.Page.design({
         classNames: 'brown'.w()
       }),
       mainAppView: SC.View.create({
-        childViews: 'breedView statsView challengePoolView breedingPenView breedingChromosomeToolView  stableView marketplaceView chatView allArticlesView'.w(),
+        childViews: 'breedView statsView challengePoolView breedingPenView challengeChromosomeToolView breedingChromosomeToolView  stableView marketplaceView chatView allArticlesView'.w(),
        
         challengePoolView: SC.View.design({
           className: 'transparent'.w(),
@@ -104,7 +104,7 @@ Geniverse.groupChallengePage = SC.Page.design({
           })
         }),
         challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { left:45, top: 50, width: 35, height: 20 },
+        layout: { left:45, top: 40, width: 35, height: 30 },
           selectionBinding: 'Geniverse.challengePoolController.selection'
         }),
         
@@ -196,7 +196,7 @@ Geniverse.groupChallengePage = SC.Page.design({
       	}),
         
         statsView: Geniverse.StatsView.design({
-          layout: { left: 565, top: 70 + (300 - 120), width: 60, height: 120 }
+          layout: { left: 565, top: 70 + (300 - 80), width: 60, height: 80 }
         }),
         
 
@@ -350,8 +350,8 @@ Geniverse.groupChallengePage = SC.Page.design({
             backgroundColor: 'white',
             contentView: SC.StackedView.design({
               layerId: 'chatListContent',
-              contentBinding: 'CcChat.chatListController.arrangedObjects',
-              selectionBinding: 'CcChat.chatListController.selection',
+              contentBinding: 'Geniverse.chatListController.arrangedObjects',
+              selectionBinding: 'Geniverse.chatListController.selection',
               rowHeight: 30,
               canEditContent: NO,
               hasContentIcon: YES,
