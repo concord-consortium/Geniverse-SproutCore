@@ -35,33 +35,25 @@ Geniverse.loginController = SC.ObjectController.create(
   
   test: 35,
   
-  welcomeMessage: function(){
-    var username = this.get('username');
-    if (username !== undefined && username !== null && username.length > 0){
-      return "Welcome " + username;
-    } else {
-      return "";
-    }
-  }.property('username'),
-  
+  groupNumber: 2,
+  memberNumber: 2,
+
   login: function (){
     SC.Logger.log("login");
-    var username = this.get('textAreaValue');
     var password = this.get('passwordValue');
     var passwordHash = SHA256(password);
     var self = this;
-    
+    var uname = this.username;
     var userFound = function(user) {
       if (typeof user == 'undefined') {
 		    // no user exists for that username. create one
 		    SC.Logger.info("No User exists for that login. Creating account.");
-		    user = Geniverse.userController.createUser(username, password);
+		    user = Geniverse.userController.createUser(uname, password);
 		  }
       self.checkUserPassword(user, passwordHash);
     };
     
-    Geniverse.userController.findUser(username, userFound);
-    
+    Geniverse.userController.findUser(this.username, userFound);
     this.set('textAreaValue', '');
   },
   
@@ -97,6 +89,17 @@ Geniverse.loginController = SC.ObjectController.create(
   finishLogin: function(user) {
     Geniverse.userController.set('content', user);
     Geniverse.loginController.set('loggedIn', YES);
-  }
+  },
+
+  welcomeMessage: function(){
+    var welcomeMessage = "[Not set]";
+    var user = this.get('username');
+    var group = this.get('groupNumber');
+    var member = this.get('memberNumber');
+    welcomeMessage = "Welcome %@, you are user #%@ in group %@".fmt(user, member, group);
+    //SC.Logger.log("returning %@", welcomeMessage);
+    return welcomeMessage;
+  }.property('groupNumber', 'memberNumber', 'username').cacheable()
+ 
 
 }) ;

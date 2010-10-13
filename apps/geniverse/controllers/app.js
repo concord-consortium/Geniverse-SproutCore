@@ -46,9 +46,9 @@ Geniverse.appController = SC.ObjectController.create(
     if (username === ""){
       return;
     }
-    
+    var group = Geniverse.loginController.get('groupNumber');
     Geniverse.userDefaults.writeDefault('username', username);
-    
+    Geniverse.userDefaults.writeDefault('groupNumber',group); 
     function initChat(chatroom){
       CcChat.chatController.set('username', username);
       
@@ -61,16 +61,19 @@ Geniverse.appController = SC.ObjectController.create(
     }
     
     var activityChannel = Geniverse.activityController.get('baseChannelName');
-    var savedChatroom = Geniverse.userDefaults.readDefault('chatroom');
-    if (savedChatroom !== undefined && savedChatroom !== null && 
-      savedChatroom.length > 0 && savedChatroom.indexOf(activityChannel) >= 0){
-      SC.Logger.log("auto-logging into "+savedChatroom);
-      initChat(savedChatroom);
-      Geniverse.activityController.startActivity();
-    } else {
-      var maxUsers = Geniverse.activityController.get('maxUsersInRoom');
-      CcChat.chatRoomController.getFirstChannelWithSpace(activityChannel, maxUsers, initChat);
-    }
+    var groupChannel = activityChannel+"-"+group;
+    SC.Logger.log("Logging into group chan: '%s'",groupChannel);
+    initChat(groupChannel);
+    //var savedChatroom = Geniverse.userDefaults.readDefault('chatroom');
+    //if (savedChatroom !== undefined && savedChatroom !== null && 
+      //savedChatroom.length > 0 && savedChatroom.indexOf(activityChannel) >= 0){
+      //SC.Logger.log("auto-logging into "+savedChatroom);
+      //initChat(savedChatroom);
+      //Geniverse.activityController.startActivity();
+    //} else {
+      //var maxUsers = Geniverse.activityController.get('maxUsersInRoom');
+      //CcChat.chatRoomController.getFirstChannelWithSpace(activityChannel, maxUsers, initChat);
+    //}
     
     SC.Logger.log("setting userLoggedIn");
     this.set('userLoggedIn', YES);
@@ -99,21 +102,8 @@ Geniverse.appController = SC.ObjectController.create(
     SC.RunLoop.end();
     
     window.location.reload();
-  },
+  }
+ 
   
-  welcomeMessage: function(){
-    var welcomeMessage = "[Not set]";
-    if (CcChat.chatController.get('chatHasInitialized')){
-      var userName = CcChat.chatController.get('username');
-      var chatRoom = CcChat.chatRoomController.get('channelIndex');
-      var group = parseInt(chatRoom, 10) + 1;
-      welcomeMessage = "Welcome "+userName+", you are in group "+group;
-    }
-    // SC.Logger.log("returning "+welcomeMessage);
-    this.set('welcomeMessageDuplicate', welcomeMessage);  // FIXME: why is this necessary?
-    return welcomeMessage;
-  }.property().observes('CcChat.chatController.chatHasInitialized'), // why is this necessary?
-  
-  welcomeMessageDuplicate: ""
 
 }) ;

@@ -44,7 +44,7 @@ Geniverse.trainingPage = SC.Page.design({
         layout: { centerY: 0, height: 24, right: 130, width: 500},
         fontWeight: SC.BOLD_WEIGHT,
         textAlign: SC.ALIGN_RIGHT,
-        valueBinding: 'Geniverse.appController.welcomeMessageDuplicate',
+        valueBinding: 'Geniverse.loginController.welcomeMessage',
         isVisibleBinding: 'Geniverse.appController.userLoggedIn'
       }),
 

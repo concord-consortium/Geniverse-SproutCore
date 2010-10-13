@@ -16,7 +16,7 @@ Geniverse.LoginView = SC.View.extend(
   showPasswordField: YES,
 
   // TODO: Add your own code here.
-  childViews: 'nameLabel nameField passwordLabel passwordField retypePasswordLabel retypePasswordField loginButtonView registerButtonView welcomeView'.w(),
+  childViews: 'nameLabel nameField passwordLabel passwordField retypePasswordLabel retypePasswordField loginButtonView registerButtonView welcomeView memberSelectView groupSelectView'.w(),
   
   nameLabel: SC.LabelView.design({
     layout: {left: 40, top: 5, width: 80, height: 24 },
@@ -27,7 +27,7 @@ Geniverse.LoginView = SC.View.extend(
   nameField: SC.TextFieldView.design({
     layout: {left: 130, top: 5, width: 200, height: 24 },
     isTextArea: NO,
-    valueBinding: 'Geniverse.loginController.textAreaValue',
+    valueBinding: 'Geniverse.loginController.username',
     keyUp: function (evt){
       if (evt.keyCode === 13){
         Geniverse.loginController.login();
@@ -109,8 +109,34 @@ Geniverse.LoginView = SC.View.extend(
   }),
   
   welcomeView: SC.LabelView.design({
-      layout: { top: 5, height: 24, left: 370, width: 200 },
-      value: "",
-      valueBinding: SC.Binding.from('Geniverse.loginController.welcomeMessage').oneWay()
+    layout: { top: 5, height: 24, left: 370, width: 200 },
+    value: "",
+    valueBinding: SC.Binding.from('Geniverse.loginController.welcomeMessage').oneWay()
+  }),
+  
+  groupSelectView: SC.SelectFieldView.design({
+    layout: { top: 65, left: 130, height: 25, width: 90 },
+    
+    objects: [ 
+      SC.Object.create({ value: 1, title: 'group 1'}),
+      SC.Object.create({ value: 2, title: 'group 2'}),
+      SC.Object.create({ value: 3, title: 'group 3'})
+    ],
+
+    valueBinding: 'Geniverse.loginController.groupNumber',
+    nameKey: 'title',
+    valueKey: 'value'
+  }),
+  memberSelectView: SC.SelectFieldView.design({
+    layout: { top: 65, left: 230, height: 25, width: 90 },
+    objects: [ 
+      SC.Object.create({ value: 1, title: 'member 1'}),
+      SC.Object.create({ value: 2, title: 'member 2'}),
+      SC.Object.create({ value: 3, title: 'member 3'})
+    ],
+
+    valueBinding: 'Geniverse.loginController.memberNumber',
+    nameKey: 'title',
+    valueKey: 'value'
   })
 });

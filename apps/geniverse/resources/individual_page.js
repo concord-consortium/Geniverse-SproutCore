@@ -67,7 +67,7 @@ Geniverse.individualPage = SC.Page.design({
       contentView: null,
     	
       loginView: Geniverse.LoginView.create({
-        layout: {centerX: 0, top: Geniverse.marginSize, width: 500, height: 70},
+        layout: {centerX: 0, top: Geniverse.marginSize, width: 500, height: 100},
         layerId: "chatLogin",
         classNames: 'brown'.w()
       }),
@@ -351,8 +351,8 @@ Geniverse.individualPage = SC.Page.design({
             backgroundColor: 'white',
             contentView: SC.StackedView.design({
               layerId: 'chatListContent',
-              contentBinding: 'CcChat.chatListController.arrangedObjects',
-              selectionBinding: 'CcChat.chatListController.selection',
+              contentBinding: 'Geniverse.chatListController.arrangedObjects',
+              selectionBinding: 'Geniverse.chatListController.selection',
               rowHeight: 30,
               canEditContent: NO,
               hasContentIcon: YES,
@@ -361,7 +361,7 @@ Geniverse.individualPage = SC.Page.design({
               showAlternatingRows: YES,
               exampleView: CcChat.ChatMessageView
             }),
-            autoScrollTriggerBinding:  'CcChat.chatListController.length'
+            autoScrollTriggerBinding:  'Geniverse.chatListController.length'
           }),
       		
           chatComposeView: Geniverse.DragonChatComposeView.design({
