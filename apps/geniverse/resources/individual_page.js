@@ -47,7 +47,7 @@ Geniverse.individualPage = SC.Page.design({
         layout: { centerY: 0, height: 24, right: 130, width: 500},
         fontWeight: SC.BOLD_WEIGHT,
         textAlign: SC.ALIGN_RIGHT,
-        valueBinding: 'Geniverse.appController.welcomeMessageDuplicate',
+        valueBinding: 'Geniverse.loginController.welcomeMessage',
         isVisibleBinding: 'Geniverse.appController.userLoggedIn'
       }),
 
@@ -68,9 +68,9 @@ Geniverse.individualPage = SC.Page.design({
     	
       loginView: Geniverse.LoginView.create({
         layout: {centerX: 0, top: Geniverse.marginSize, width: 500, height: 100},
-        layerId: "chatLogin",
         classNames: 'brown'.w()
       }),
+
       mainAppView: SC.View.create({
         childViews: 'breedView statsView challengePoolView breedingPenView breedingChromosomeToolView challengeChromosomeToolView  stableView marketplaceView chatView allArticlesView'.w(),
        
