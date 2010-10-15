@@ -27,7 +27,7 @@ Geniverse.DragonBinView = SC.View.extend( SC.Border,
   
   addDragonsLabel: SC.LabelView.design({
     layout: {left: 5, top: 0, right: 5, bottom: 0},
-    value: "Drag dragons here to attach them as evidence",
+    value: "Drag  drakes here to attach them as evidence",
     isVisibleBinding: '*parentView.showAddDragonsLabel'
   }),
   

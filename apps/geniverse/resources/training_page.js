@@ -71,7 +71,7 @@ Geniverse.trainingPage = SC.Page.design({
           layout: {top: 20, height: 25, left: 20, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
-          value: "Female Dragon"
+          value: "Female Drake"
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({
@@ -95,7 +95,7 @@ Geniverse.trainingPage = SC.Page.design({
           layout: {top: 20, height: 25, left: 20, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
-          value: "Male Dragon"
+          value: "Male Drake"
         }),
 
         maleGenomeView: Geniverse.DragonGenomeView.design({
