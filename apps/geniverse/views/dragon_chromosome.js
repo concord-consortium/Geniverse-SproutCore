@@ -173,7 +173,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       var bigTitle = Geniverse.chromosomeController.titleForAllele(bigVal);
       var smallTitle = Geniverse.chromosomeController.titleForAllele(smallVal);
       var dropDownMenuView = SC.SelectFieldView.create({
-          layout: { top: top, left: 0, height: 25, width: 75 },
+          layout: { top: top, left: 0, height: 25, width: 90 },
           
           // not sure whether these need to be SC.Objects or not. It seems to have no effect.
           objects: [ 
