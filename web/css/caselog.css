@@ -1,48 +1,203 @@
+/* STYLE RESET
+----------------------------------------------------*/
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, font, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td {margin: 0;padding: 0;border: 0;outline: 0;font-size: 100%;vertical-align: baseline;background: transparent;}
+body {line-height: 1;}
+ol, ul {list-style: none;}
+blockquote, q {quotes: none;}
+blockquote:before, blockquote:after,
+q:before, q:after {content: '';content: none;}
+:focus {outline: 0;}
+ins {text-decoration: none;}
+del {text-decoration: line-through;}
+table {border-collapse: collapse;border-spacing: 0;}
+
+/* BASIC STYLES
+----------------------------------------------------*/
+a:link {
+	background: transparent;
+	color: #681818;
+	}
+a:visited{
+	background: transparent;
+	color: #681818;
+	}
+a:hover {
+	background: transparent;
+	color: #ac1818;
+	}
+a:active {
+	background: transparent;
+	color: #681818;
+	}
 body {
-  background-color: #371D1D;
-}
-
+	background: #a36a4a url(../images/bg2.png) repeat-x left top;
+	color: #340404;
+	font: 90% georgia, times, 'times new roman', serif;
+	}
 #content {
-  background: url(../images/caselog-bg.png);
-  background-repeat: no-repeat;
-}
+	background: url(../images/caselog-bg.jpg) no-repeat;
+	height: 600px;
+	margin: 0 auto;
+	position: relative;
+	width: 960px;
+	}
 
+/* CASE LOG LINKS
+----------------------------------------------------*/
 #content.intro-completed {
-  background: url(../images/caselog-bg-intro-completed.png);
-  background-repeat: no-repeat;
-}
-
-a#intro {
-  left:83px;
-  top:299px;
-  width: 325px;
-  height: 63px;
-  background:transparent;
-  position: absolute;
-  border: none;
-}
-
-a#intro:hover {
-  background-image: url(../images/caselog-intro-highlighted.png);
-  background-repeat: none;
-}
-
-a#intro.completed:hover {
-  background-image: url(../images/caselog-intro-completed-highlighted.png);
-  background-repeat: none;
-}
-
+	background: url(../images/caselog-bg-intro-completed.png) no-repeat;
+	}
+a#training {
+	background: transparent;
+	border: none;
+	height: 70px;
+	left: 91px;
+	position: absolute;
+	top: 304px;
+	width: 341px;
+	}
+a#training:hover {
+	background: url(../images/caselog-training-highlighted.png) no-repeat;
+	}
+a#training.completed:hover {
+	background: url(../images/caselog-training-completed-highlighted.png) no-repeat;
+	}
+a#experiment {
+	background: transparent;
+	border: none;
+	height: 70px;
+	left: 91px;
+	position: absolute;
+	top: 399px;
+	width: 341px;
+	}
+a#experiment:hover {
+	background: url(../images/caselog-experiment-highlighted.png) no-repeat;
+	}
+a#experiment.completed:hover {
+	background: url(../images/caselog-experiment-completed-highlighted.png) no-repeat;
+	}
 a#individual {
-  left:82px;
-  top:400px;
-  width: 326px;
-  height: 62px;
-  background:transparent;
-  position: absolute;
-  border: none;
-}
-
+	background: transparent;
+	border: none;
+	height: 70px;
+	left: 522px;
+	position: absolute;
+	top: 100px;
+	width: 341px;
+	}
 a#individual:hover {
-  background-image: url(../images/caselog-individual-highlighted.png);
-  background-repeat: none;
-}
+	background: url(../images/caselog-individual-highlighted.png) no-repeat;
+	}
+a#individual.completed:hover {
+	background: url(../images/caselog-individual-completed-highlighted.png) no-repeat;
+	}
+a#group {
+	background: transparent;
+	border: none;
+	height: 70px;
+	left: 522px;
+	position: absolute;
+	top: 195px;
+	width: 341px;
+	}
+a#group:hover {
+	background: url(../images/caselog-group-highlighted.png) no-repeat;
+	}
+a#group.completed:hover {
+	background: url(../images/caselog-group-copmpleted-highlighted.png) no-repeat;
+	}
+
+/* DESCRIPTION PAGE STYLES
+----------------------------------------------------*/
+body.training1 #content {
+	background: url(../images/training-bg1.jpg) no-repeat;
+	}
+body.experiment1 #content {
+	background: url(../images/experiment-bg1.jpg) no-repeat;
+	}
+body.individual1 #content {
+	background: url(../images/individual-bg1.jpg) no-repeat;
+	}
+body.group1 #content {
+	background: url(../images/group-bg1.jpg) no-repeat;
+	}
+body.training2 #content {
+	background: url(../images/training-bg2.jpg) no-repeat;
+	}
+body.experiment2 #content {
+	background: url(../images/experiment-bg2.jpg) no-repeat;
+	}
+body.individual2 #content {
+	background: url(../images/individual-bg2.jpg) no-repeat;
+	}
+#content h1 {
+	font-size: 1.5em;
+	margin-bottom: 20px;
+	text-align: center;
+	}
+#content p {
+	line-height: 130%;
+	margin-bottom: 2em;
+	}
+#col1 {
+	left: 95px;
+	padding: 20px;
+	position: absolute;
+	top: 100px;
+	width: 292px;
+	}
+#col2 {
+	left: 525px;
+	padding: 20px;
+	position: absolute;
+	top: 100px;
+	width: 292px;
+	}
+#content p#links {
+	margin: 3em auto 0;
+	text-align: center;
+	width: 75%;
+	}
+/* a.forward {
+	background: url(../images/forward.png) right center no-repeat;
+	clear: both;
+	display: block;
+	height: 25px;
+	margin-bottom: 1.1em;
+	padding-right: 55px;
+	text-align: right;
+	text-decoration: none;
+	}
+a.backward {
+	background: url(../images/backward.png) left center no-repeat;
+	clear: both;
+	display: block;
+	height: 25px;
+	padding-left: 55px;
+	text-align: left;
+	text-decoration: none;
+	} */
+a.forward {
+	bottom: 115px;
+	clear: both;
+	display: block;
+	height: 35px;
+	position: absolute;
+	right: 95px;
+	text-align: right;
+	text-decoration: none;
+	width: 130px;
+	}
+a.backward {
+	background: transparent;
+	bottom: 115px;
+	clear: both;
+	display: block;
+	height: 35px;
+	left: 85px;
+	position: absolute;
+	text-align: right;
+	text-decoration: none;
+	width: 130px;
+	}
