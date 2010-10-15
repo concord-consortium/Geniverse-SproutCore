@@ -93,9 +93,5 @@ class ActivitiesController < ApplicationController
     redirect_to(activities_url)
   end
 
-  def destroy_all_dragons
-    Dragon.destroy_all
-    redirect_to(dragons_url)
-  end
 
 end
