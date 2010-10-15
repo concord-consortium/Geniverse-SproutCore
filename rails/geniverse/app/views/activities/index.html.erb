@@ -1,5 +1,6 @@
 <h1>Listing activities</h1>
 
+<%= link_to "Destroy ALL dragons", 'destroy_all_dragons' %>
 <%= render :partial => 'shared/index', :locals => { :objects => @activities, 
   :extra_links => [
     lambda {
