@@ -1,10 +1,14 @@
 body {
-  background-color: #BC8F72;
-}
+	background: #a36a4a url(../images/bg2.png) repeat-x left top;
+	}
 
 #content {
   background: url(../images/mainscreen-bg.png);
   background-repeat: no-repeat;
+  height: 600px;
+  margin: 0 auto;
+  position: relative;
+  width: 960px;
 }
 
 a#caselog {
