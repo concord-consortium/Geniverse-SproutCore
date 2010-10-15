@@ -14,7 +14,7 @@ sc_require('views/published_articles');
 sc_require('views/login');
 sc_require('views/chromosome_tool');
 sc_require('views/stats');
-
+sc_require('views/chat_message');
 Geniverse.groupChallengePage = SC.Page.design({
   
   // The main pane is made visible on screen as soon as your app is loaded.
@@ -244,6 +244,8 @@ Geniverse.groupChallengePage = SC.Page.design({
             dragonNum: 0,
             acceptDragOperation: function(drag, op) {
               var self = this;
+              //
+              // can we accept this dragon?
               function acceptDragon(dragon){
                 if (!dragon){
                   return;
@@ -272,12 +274,20 @@ Geniverse.groupChallengePage = SC.Page.design({
                   dragon.set('isEgg', false);
                   dragon.set('stableOrder', dragonNum);
                 SC.RunLoop.end();
-                
-                ++self.dragonNum;
+                Geniverse.store.commitRecords();
+                self.dragonNum = self.dragonNum + 1;
+                SC.Logger.info("Stable has %d dragons", self.dragonNum);
               }
               
-              
-              if ((""+drag.get('source').constructor === 'Geniverse.OrganismView')){
+              if (drag.hasDataType('dragonChat')) {
+                SC.Logger.info("we found a dragon from chat");
+                var jsonData = drag.get('data');
+                Geniverse.dragonChattingController.createNewDragonFromChat(jsonData,
+                  function(dragon) {
+                    acceptDragon(dragon);
+                });
+              }
+              else if ((""+drag.get('source').constructor === 'Geniverse.OrganismView')){
                 var dragon = drag.get('source').get('organism');
                 acceptDragon(dragon);
               } else {
@@ -325,7 +335,7 @@ Geniverse.groupChallengePage = SC.Page.design({
           nowShowingBinding: 'Geniverse.articleController.nowShowing' // hack for defining the startup tab 
         }),
         
-        chatView: SC.StackedView.design ({
+        chatView: SC.View.design ({
           layout: { bottom: 10, left: 20, width: 385, height: 215 },
           classNames: "transparent".w(),
           childViews: 'userListLabel userListView chatListView chatComposeView '.w(),
@@ -358,7 +368,7 @@ Geniverse.groupChallengePage = SC.Page.design({
               contentValueKey: 'message',
               isSelectable: YES,
               showAlternatingRows: YES,
-              exampleView: CcChat.ChatMessageView
+              exampleView: Geniverse.ChatMessageView
             }),
             autoScrollTriggerBinding:  'Geniverse.chatListController.length'
           }),
