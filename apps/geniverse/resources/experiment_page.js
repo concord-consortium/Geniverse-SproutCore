@@ -72,7 +72,7 @@ Geniverse.experimentPage = SC.Page.design({
         classNames: 'brown'.w()
       }),
       mainAppView: SC.View.create({
-        childViews: 'breedView statsView challengePoolView breedingPenView stableView marketplaceView '.w(),
+        childViews: 'breedView statsView challengePoolView challengeChromosomeToolView breedingPenView breedingChromosomeToolView stableView stableChromosomeToolView marketplaceView '.w(),
        
         
         // challenge pool to hold initial, system-created dragons
@@ -104,6 +104,10 @@ Geniverse.experimentPage = SC.Page.design({
             }),
             autoScrollTriggerBinding: 'Geniverse.challengePoolController.length'
           })
+        }),
+        challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
+        layout: { left:55, top: 120, width: 35, height: 30 },
+          selectionBinding: 'Geniverse.challengePoolController.selection'
         }),
         
         breedView: Geniverse.BreedDragonView.design({
@@ -143,9 +147,8 @@ Geniverse.experimentPage = SC.Page.design({
           })
         }),
         
-        
         breedingChromosomeToolView: Geniverse.ChromosomeToolView.design({
-          layout: { left: 570, top: 150, width: 35, height: 40 },
+          layout: { left: 265 + 300 - 35, top: 120, width: 35, height: 40 },
           selectionBinding: 'Geniverse.eggsController.selection'
         }),
         
@@ -197,6 +200,10 @@ Geniverse.experimentPage = SC.Page.design({
           layout: { left: 565, top: 150 + (300 - 80), width: 60, height: 80 }
         }),
         
+        stableChromosomeToolView: Geniverse.ChromosomeToolView.design({
+        layout: { left:680 + 240 - 35, top: 120, width: 35, height: 30 },
+          selectionBinding: 'Geniverse.stableOrganismsController.selection'
+        }),
 
         stableView: SC.View.design({
           layout: { left: 680, top: 150, height: 300, width: 240 },

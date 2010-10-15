@@ -72,7 +72,7 @@ Geniverse.groupChallengePage = SC.Page.design({
         classNames: 'brown'.w()
       }),
       mainAppView: SC.View.create({
-        childViews: 'breedView statsView challengePoolView breedingPenView challengeChromosomeToolView breedingChromosomeToolView  stableView marketplaceView chatView allArticlesView'.w(),
+        childViews: 'breedView statsView challengePoolView breedingPenView challengeChromosomeToolView breedingChromosomeToolView  stableView stableChromosomeToolView marketplaceView chatView allArticlesView'.w(),
        
         challengePoolView: SC.View.design({
           className: 'transparent'.w(),
@@ -104,7 +104,7 @@ Geniverse.groupChallengePage = SC.Page.design({
           })
         }),
         challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { left:45, top: 40, width: 35, height: 30 },
+        layout: { left: 20 + 70 - 35, top: 40, width: 35, height: 30 },
           selectionBinding: 'Geniverse.challengePoolController.selection'
         }),
         
@@ -147,7 +147,7 @@ Geniverse.groupChallengePage = SC.Page.design({
         
         
         breedingChromosomeToolView: Geniverse.ChromosomeToolView.design({
-          layout: { left: 570, top: 70, width: 35, height: 40 },
+          layout: { left: 265 + 300 - 35, top: 40, width: 35, height: 40 },
           selectionBinding: 'Geniverse.eggsController.selection'
         }),
         
@@ -199,6 +199,10 @@ Geniverse.groupChallengePage = SC.Page.design({
           layout: { left: 565, top: 70 + (300 - 80), width: 60, height: 80 }
         }),
         
+        stableChromosomeToolView: Geniverse.ChromosomeToolView.design({
+          layout: { left: 680 + 240 -35, top: 40, width: 35, height: 40 },
+          selectionBinding: 'Geniverse.stableOrganismsController.selection'
+        }),
 
         stableView: SC.View.design({
           layout: { left: 680, top: 70, height: 300, width: 240 },
