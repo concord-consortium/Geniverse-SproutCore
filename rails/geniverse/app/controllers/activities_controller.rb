@@ -90,6 +90,8 @@ class ActivitiesController < ApplicationController
     @activity = params[:id]
     @dragons = Dragon.find(:all, :conditions => {:activity_id => @activity})
     @dragons.each {|d| d.destroy }
-    redirect_to (:controller => 'dragons', :action => 'index')
+    redirect_to(activities_url)
   end
+
+
 end

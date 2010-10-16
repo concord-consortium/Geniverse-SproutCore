@@ -92,7 +92,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 
   fatherLabel: SC.LabelView.design({
-		layout: {top: 0, left: 120, width: 100, height: 25},
+		layout: {top: 0, left: 140, width: 100, height: 25},
 		value: "From father"
 	}),
 	
@@ -116,7 +116,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 	
 	chromosomeB1View: Geniverse.DragonChromosomeView.design({
-	  layout: {top: 25, left: 120},
+	  layout: {top: 25, left: 140},
 	  updateDragon: function(){
 	    this.get('parentView').updateDragon();
 	  }.observes('alleles'),
@@ -142,7 +142,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 	
 	chromosomeB2View: Geniverse.DragonChromosomeView.design({
-	  layout: {top: 170, left: 120},
+	  layout: {top: 170, left: 140},
 	  updateDragon: function(){
 	    this.get('parentView').updateDragon();
 	  }.observes('alleles'),
@@ -168,7 +168,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 	
 	chromosomeBXView: Geniverse.DragonChromosomeView.design({
-	  layout: {top: 315, left: 120},
+	  layout: {top: 315, left: 140},
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
 	  updateDragon: function(){
 	    this.get('parentView').updateDragon();

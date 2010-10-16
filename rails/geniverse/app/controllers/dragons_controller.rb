@@ -101,4 +101,10 @@ class DragonsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def destroy_all
+    Dragon.destroy_all
+    redirect_to(dragons_url)
+  end
+
 end

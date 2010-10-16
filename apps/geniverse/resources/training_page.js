@@ -71,7 +71,7 @@ Geniverse.trainingPage = SC.Page.design({
           layout: {top: 20, height: 25, left: 20, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
-          value: "Female Dragon"
+          value: "Female Drake"
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({
@@ -79,7 +79,7 @@ Geniverse.trainingPage = SC.Page.design({
           generateDragonAtStart: YES,
           sex: 1,
           fixedAlleles: "a:A,a:A,a:B,b:B",
-          hiddenGenes: ['s','p','a','b'],
+          hiddenGenes: ['s','p','a','b','f'],
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO
         })
@@ -95,7 +95,7 @@ Geniverse.trainingPage = SC.Page.design({
           layout: {top: 20, height: 25, left: 20, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
-          value: "Male Dragon"
+          value: "Male Drake"
         }),
 
         maleGenomeView: Geniverse.DragonGenomeView.design({
@@ -103,7 +103,7 @@ Geniverse.trainingPage = SC.Page.design({
           generateDragonAtStart: YES,
           sex: 0,
           fixedAlleles: "a:A,b:A,a:B,b:B",
-          hiddenGenes: ['s','p','a','b'],
+          hiddenGenes: ['s','p','a','b','f'],
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO
         })

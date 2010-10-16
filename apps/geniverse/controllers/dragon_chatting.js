@@ -60,12 +60,14 @@ Geniverse.dragonChattingController = SC.Controller.create(
   createNewDragonFromChat: function(jsonData,callback) {
     var guid = jsonData.guid;
     var user = Geniverse.userController.get('content');
+    var jsonDragon = jsonData.dragon;
     var dragon = Geniverse.store.find(Geniverse.Dragon,guid);
     var dragonReady = function() {
       if (dragon.get('status') & SC.Record.READY === SC.Record.READY) {
         SC.Logger.info("dragon ready.");
         dragon.removeObserver('status', dragonReady);
         dragon.set('user',user);
+        dragon.set('gOrganism',GenGWT.createDragon(jsonDragon));
         callback(dragon);
       } else { SC.Logger.info("dragon not ready."); }
     };
