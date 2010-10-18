@@ -311,7 +311,7 @@ Geniverse.individualPage = SC.Page.design({
         }), 
 
         allArticlesView: SC.TabView.design({ 
-          layout: { bottom: 40, right: 30, width: 450, height: 215},
+          layout: { bottom: 10, right: 30, width: 450, height: 235},
           items: [ 
             {title: "Your paper", value: "Geniverse.yourArticleView" },
             {title: "Published papers", value: "Geniverse.publishedArticlesView" }

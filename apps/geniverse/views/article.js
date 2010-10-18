@@ -22,7 +22,7 @@ Geniverse.ArticleView = SC.View.extend(SC.StaticLayout,
       
       textView: SC.ScrollView.design({
         hasHorizontalScroller: NO,
-        layout: { left: 0, top: 0, right: 0, height: 140 },
+        layout: { left: 5, top: 0, right: 5, height: 130 },
         contentView: SC.LabelView.design({
           layout: { left: 0, top: 0, right: 0, bottom: 0 },
     		  isEditable: NO,
@@ -50,13 +50,13 @@ Geniverse.ArticleView = SC.View.extend(SC.StaticLayout,
       }),
       
       dragonBinView: Geniverse.DragonBinView.design({
-        layout: { top: 145, height: 40, left: 20, width: 240 },
+        layout: { top: 140, height: 40, left: 20, width: 240 },
         isDropTarget: NO,
         dragonsBinding: 'Geniverse.dragonBinController'        
       }),
       
       newButtonView: SC.ButtonView.design({
-        layout: { top: 160, height: 24, left: 0, width: 95 },
+        layout: { bottom: 15, height: 24, left: 0, width: 95 },
         title:  "New paper",
         target: 'Geniverse.articleController',
         action: 'newPaperAction',
@@ -64,7 +64,7 @@ Geniverse.ArticleView = SC.View.extend(SC.StaticLayout,
       }),
 
       editButtonView: SC.ButtonView.design({
-        layout: { top: 160, height: 24, left: 100, width: 80 },
+        layout: { bottom: 15, height: 24, left: 100, width: 80 },
         title:  "Edit",
         target: 'Geniverse.articleController',
         action: 'editAction',
@@ -72,7 +72,7 @@ Geniverse.ArticleView = SC.View.extend(SC.StaticLayout,
       }),
       
       sendDraftButtonView: SC.ButtonView.design({
-        layout: { top: 160, height: 24, left: 190, width: 90 },
+        layout: { bottom: 15, height: 24, left: 190, width: 90 },
         title:  "Send draft",
         target: 'Geniverse.articleController',
         action: 'sendDraftAction',
@@ -80,7 +80,7 @@ Geniverse.ArticleView = SC.View.extend(SC.StaticLayout,
       }),
       
       publishButtonView: SC.ButtonView.design({
-        layout: { top: 160, height: 24, left: 290, width: 90 },
+        layout: { bottom: 15, height: 24, left: 290, width: 90 },
         title:  "Publish",
         target: 'Geniverse.articleController',
         action: 'publishAction',
@@ -117,19 +117,19 @@ Geniverse.ArticleView = SC.View.extend(SC.StaticLayout,
     	}),
       
       dragonBinView: Geniverse.DragonBinView.design({
-        layout: { top: 145, height: 40, left: 5, width: 240 },
+        layout: { top: 140, height: 40, left: 5, width: 240 },
         dragonsBinding: 'Geniverse.dragonBinController'
       }),
       
       clearDragonsButton: SC.ButtonView.design({
-        layout: { top: 160, height: 24, left: 260, width: 80 },
+        layout: { bottom: 15, height: 24, left: 260, width: 80 },
         title:  "Clear",
         target: 'Geniverse.dragonBinController',
         action: 'clearDragons'
       }),
 
       previewButtonView: SC.ButtonView.design({
-        layout: { top: 160, height: 24, right: 15, width: 80 },
+        layout: { bottom: 15, height: 24, right: 15, width: 80 },
         title:  "Preview",
         target: 'Geniverse.articleController',
         action: 'previewDraftAction'

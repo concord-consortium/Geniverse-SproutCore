@@ -34,7 +34,7 @@ Geniverse.PublishedArticlesView = SC.View.extend(
   
   textView: SC.ScrollView.design({
     hasHorizontalScroller: NO,
-    layout: { left: 110, top: 0, height: 180, width: 390 },
+    layout: { left: 110, top: 0, height: 150, width: 320 },
     contentView: SC.LabelView.design(SC.StaticLayout, {
 		  isEditable: NO,
       escapeHTML: NO,
@@ -62,7 +62,7 @@ Geniverse.PublishedArticlesView = SC.View.extend(
   }),
   
   dragonBinView: Geniverse.DragonBinView.design({
-    layout: { top: 170, height: 40, left: 110, width: 240 },
+    layout: { top: 160, height: 40, left: 110, width: 240 },
     isDropTarget: NO,
     dragonsBinding: 'Geniverse.publishedArticlesController.dragons'
   })
