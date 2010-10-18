@@ -18,12 +18,12 @@ Geniverse.statsController = SC.Controller.create(
   purple: 0,
   brown: 0,
 
-  redLabel: function()   { return this.label('red');  }.property('red').cacheable(),
-  greenLabel: function() { return this.label('green'); }.property('green').cacheable(),
-  yellowLabel: function() { return this.label('yellow'); }.property('yellow').cacheable(),
-  purpleLabel: function() { return this.label('purple'); }.property('purple').cacheable(),
-  brownLabel: function() { return this.label('brown'); }.property('brown').cacheable(),
-
+  redLabel: '--',
+  greenLabel: '--',
+  yellowLabel: '--',
+  purpleLabel: '--',
+  brownLabel: '--',
+  labelNames: 'red green yellow purple brown'.w(),
   total: 0,
   
   label: function(name) {
@@ -39,6 +39,7 @@ Geniverse.statsController = SC.Controller.create(
     this.set('purple',0);
     this.set('brown',0);
     this.set('total',0);
+    this.updateLabels();
   }.observes('Geniverse.breedDragonController.resetCount'),
   
   newChildObserver: function()  {
@@ -51,8 +52,21 @@ Geniverse.statsController = SC.Controller.create(
       var value = this.get(color) + 1;
       var total = this.total + 1;
       this.set('total',total);
-      this.set(color,value);
+      this.set(color,value);    
+      this.updateLabels();
     }
+  },
+
+  updateLabels: function() {    
+    var labelNames = this.get('labelNames');
+    var i = 0;
+    for (i = 0; i < labelNames.length; i++) {
+      colorName = labelNames[i];
+      var propertyName = colorName + 'Label';
+      SC.Logger.info("setting %s", propertyName);
+      this.set(propertyName, this.label(colorName));
+    }
+     
   },
 
   percent: function(number) {
