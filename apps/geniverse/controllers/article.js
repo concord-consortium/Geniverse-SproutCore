@@ -31,19 +31,19 @@ Geniverse.articleController = SC.ObjectController.create(
   
   evidenceValue: '',
   
-  combinedArticle: function() {
+  combinedArticle: function () {
     var claim = this._htmlize(this.get('claimValue'));
     var evidence = this._htmlize(this.get('evidenceValue'));
     
-    if (claim !== null && claim.length > 0){
-      claim = "<div class='claim'>"+claim+"</div>";
+    if (claim !== null && claim.length > 0) {
+      claim = "<div class='claim'>" + claim + "</div>";
     }
     
-    if (evidence !== null && evidence.length > 0){
-      evidence = "<div class='evidence'>"+evidence+"</div>";
+    if (evidence !== null && evidence.length > 0) {
+      evidence = "<div class='evidence'>" + evidence + "</div>";
     }
     
-    var article = "<div id='article'>"+claim + evidence+"</div>";
+    var article = "<div id='article'>" + claim + evidence + "</div>";
     return article;
     
   }.property('claimValue', 'evidenceValue').cacheable(),
@@ -58,13 +58,13 @@ Geniverse.articleController = SC.ObjectController.create(
   
   nowShowing: 'Geniverse.yourArticleView',      // hack for defining start-up tab
   
-  init: function(){
+  init: function () {
     this.set('loadTimer', SC.Timer.schedule({
-			target: this,
-			action: '_subscribeToArticleChannels',
-			interval: 500,
-			repeats: YES
-		}));
+      target: this,
+      action: '_subscribeToArticleChannels',
+      interval: 500,
+      repeats: YES
+    }));
 		
     this.set('publishedArticle', this.get('combinedArticle'));
     
@@ -146,7 +146,7 @@ Geniverse.articleController = SC.ObjectController.create(
     
     var articleDraftChannel = this.get('articlePublishingChannel');
     if (articleDraftChannel !== null){
-      var groupName = "Group "+ (parseInt(CcChat.chatRoomController.get('channelIndex'), 10) + 1);
+      var groupName = "Group "+ Geniverse.loginController.get('groupNumber');
       var dragons = this._getGOrganismArray(Geniverse.dragonBinController.get('content'));
       var message = {article: article, dragons: dragons, author: groupName};
       CcChat.chatController.post(articleDraftChannel, message);
@@ -247,13 +247,17 @@ Geniverse.articleController = SC.ObjectController.create(
 }) ;
 
 Array.prototype.compareArrays = function(arr) {
-    if (this.length != arr.length) return false;
+    if (this.length != arr.length) { return false ; }
     for (var i = 0; i < arr.length; i++) {
         if (this[i].compareArrays) { //likely nested array
-            if (!this[i].compareArrays(arr[i])) return false;
-            else continue;
+            if (!this[i].compareArrays(arr[i]))  {
+              return false;
+            }
+            else { 
+              continue;
+            }
         }
-        if (this[i] != arr[i]) return false;
+        if (this[i] != arr[i]) { return false; }
     }
     return true;
 }
