@@ -48,9 +48,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
     if (Geniverse.railsBackedTypes.indexOf(recordType.modelName) != -1) {
       var paramString = query.restParams ? query.restParams : "";
       var endpoint = '/rails/%@.json%@'.fmt(recordType.modelsName, paramString);
-      SC.Logger.info(endpoint);
       this._jsonGet(endpoint, 'didFetchRecords', store, query);
-      SC.Logger.groupEnd();
       return YES;
     }
     
@@ -80,7 +78,9 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
       store.loadRecords(recordType, content);
 
       store.dataSourceDidFetchQuery(query);
-    } else store.dataSourceDidErrorQuery(query, response);
+    } else {
+      store.dataSourceDidErrorQuery(query, response);
+    }
 
     // SC.Logger.groupEnd();
   },
