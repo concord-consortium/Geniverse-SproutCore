@@ -14,26 +14,32 @@
 sc_require('models/dragon');
 Geniverse.main = function main() {
     var settings = [
-    //0. Training screen - chromosomes with pulldown, currently at sproutcore/intro
+    //0. Training screen - chromosomes with pulldown, currently at sproutcore/intro deploy label "intro"
       { 
         title:          "Training",
         page:           "trainingPage.mainPane"
       },
-    //1. Experiment screen
+    //1. Experiment screen, deploy label "experiment"
       { 
         title:          "Experiment",
         page:           "experimentPage.mainPane"
       },
-    //2. Individual challenge screen
+    //2. Individual challenge screen, deploy label "individual"
       { 
         title:          "Individual Challenge",
         page:           "individualPage.mainPane"
       },
-    //3. Group challenge screen
+    //3. Group challenge screen, deploy label "group_challenge"
       { 
         title:          "Group Challenge",
         page:           "groupChallengePage.mainPane"
+      },
+    //4. Activity Tester, deploy label "tester". For Frieda to experiment.
+      {
+        title:          "Activity Tester",
+        page:           "groupChallengePage.mainPane"
       }
+
 
     ];
     SC.ExceptionHandler.handleException = function (exception) {
@@ -52,7 +58,7 @@ Geniverse.main = function main() {
       Geniverse.activityController.set('activityTitle',config.title);
     };
     Geniverse.store.commitRecordsAutomatically = NO;
-    setActivity(1);
+    setActivity(2);
     Geniverse.makeFirstResponder(Geniverse.START);
 };
 
