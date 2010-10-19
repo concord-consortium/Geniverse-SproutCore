@@ -20,8 +20,10 @@ Geniverse.stableOrganismsController = SC.ArrayController.create(
 	    }, this);
 	    records.invoke('destroy');
 
-	    var selIndex = indexes.get('min')-1;
-	    if (selIndex<0) selIndex = 0;
+	    var selIndex = indexes.get('min') - 1;
+	    if (selIndex < 0) {
+        selIndex = 0;
+      }
 	    this.selectObject(this.objectAt(selIndex));
 	  },
 	  
@@ -30,7 +32,6 @@ Geniverse.stableOrganismsController = SC.ArrayController.create(
 
     saveData: function() {
       Geniverse.store.commitRecords();
-      SC.Logger.info("saved records");
     }.observes('[]')
 
 

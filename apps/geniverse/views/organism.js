@@ -40,7 +40,6 @@ Geniverse.OrganismView = SC.View.extend(
   }),
 	
   init: function() {
-	  SC.Logger.info("Init Organism View.");
 	  this.invokeLast(function() {
 	    this._checkForNullDragon();
 	  });

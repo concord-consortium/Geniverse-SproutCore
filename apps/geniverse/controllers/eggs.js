@@ -20,7 +20,6 @@ Geniverse.eggsController = SC.ArrayController.create(
    
     saveData: function() {
       Geniverse.store.commitRecords();
-      SC.Logger.info("saved records");
     }.observes('[]'),
 
     collectionViewDeleteContent: function(view, content, indexes) {

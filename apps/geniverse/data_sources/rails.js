@@ -146,9 +146,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
       // MIT License
       var parser = /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/;
       var url = parser.exec(response.header('Location'))[8];
-      SC.Logger.info("did CreateRecord called with: %s", url); 
       store.dataSourceDidComplete(storeKey, null, url); // update url
-
     } else { store.dataSourceDidError(storeKey, response); }
   },
   

@@ -30,7 +30,7 @@ Geniverse.appController = SC.ObjectController.create(
    
     var username = Geniverse.userDefaults.readDefault('username');
     if (username !== undefined && username !== null && username.length > 0){
-      SC.Logger.log("automatically logging in as "+username);
+      SC.Logger.info("automatically logging in as %s", username);
       Geniverse.loginController.autoLogin(username);      // this will kick-off login
     } else {
       SC.RunLoop.begin();
@@ -55,19 +55,19 @@ Geniverse.appController = SC.ObjectController.create(
       CcChat.chatController.initChat(chatroom);
       
       Geniverse.userDefaults.writeDefault('chatroom', chatroom);
-      SC.Logger.log("logged into "+chatroom);
+      SC.Logger.info("logged into %s",chatroom);
       
       Geniverse.activityController.startActivity();
     }
     
     var activityChannel = Geniverse.activityController.get('baseChannelName');
     var groupChannel = activityChannel+"-"+group;
-    SC.Logger.log("Logging into group chan: '%s'",groupChannel);
+    SC.Logger.info("Logging into group chan: '%s'",groupChannel);
     initChat(groupChannel);
     //var savedChatroom = Geniverse.userDefaults.readDefault('chatroom');
     //if (savedChatroom !== undefined && savedChatroom !== null && 
       //savedChatroom.length > 0 && savedChatroom.indexOf(activityChannel) >= 0){
-      //SC.Logger.log("auto-logging into "+savedChatroom);
+      //SC.Logger.info("auto-logging into "+savedChatroom);
       //initChat(savedChatroom);
       //Geniverse.activityController.startActivity();
     //} else {
@@ -75,7 +75,7 @@ Geniverse.appController = SC.ObjectController.create(
       //CcChat.chatRoomController.getFirstChannelWithSpace(activityChannel, maxUsers, initChat);
     //}
     
-    SC.Logger.log("setting userLoggedIn");
+    SC.Logger.info("setting userLoggedIn");
     this.set('userLoggedIn', YES);
     
     var containerView = this.get('mainPane').get('appContainer');
@@ -87,7 +87,7 @@ Geniverse.appController = SC.ObjectController.create(
   }.observes('Geniverse.userController.username'),
   
   logout: function() {
-    SC.Logger.log("logging out "+CcChat.chatController.get('username'));
+    SC.Logger.info("logging out %s", CcChat.chatController.get('username'));
     
     CcChat.chatController.set('username', '');
     this.set('userLoggedIn', NO);
