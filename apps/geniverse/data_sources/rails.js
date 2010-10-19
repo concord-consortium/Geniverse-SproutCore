@@ -30,7 +30,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
     params = SC.A(arguments).slice(1);
     params.unshift(this);
     
-    var request = SC.Request.getUrl(url + '.json').header({
+    var request = SC.Request.getUrl(url).header({
       'Accept': 'application/json'
     }).json();
     request.notify.apply(request, params);
@@ -39,17 +39,18 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
     // SC.Logger.log('request: ', request);
     request.send();
   },
-  
+
   // ..........................................................
   // QUERY SUPPORT
   //
   fetch: function(store, query) {
-    // SC.Logger.group('Geniverse.RailsDataSource.fetch()');
     var recordType = query.recordType;
     if (Geniverse.railsBackedTypes.indexOf(recordType.modelName) != -1) {
-      // SC.Logger.log('rails backed query', query);
-      this._jsonGet('/rails/' + recordType.modelsName, 'didFetchRecords', store, query);
-      // SC.Logger.groupEnd();
+      var paramString = query.restParams ? query.restParams : "";
+      var endpoint = '/rails/%@.json%@'.fmt(recordType.modelsName, paramString);
+      SC.Logger.info(endpoint);
+      this._jsonGet(endpoint, 'didFetchRecords', store, query);
+      SC.Logger.groupEnd();
       return YES;
     }
     
@@ -92,7 +93,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
     // guid will be rails url e.g. /rails/questions/1
     var guid = store.idFor(storeKey);
     
-    this._jsonGet(guid, 'didRetrieveRecord', store, storeKey);
+    this._jsonGet('%@.json'.fmt(guid), 'didRetrieveRecord', store, storeKey);
     
     return YES; // return YES if you handled the storeKey
   },

@@ -11,6 +11,31 @@
   @extends SC.Responder
   @version 0.1
 */
+Geniverse.makeRestParams = function(elems) {
+  var paramString = "";
+  var params = [];
+  var key;
+  for (key in elems) {
+    if (typeof key === 'string') {
+      var item = elems[key];
+      var keyst = key;
+      // assume SC.Record TODO: big assumption
+      if (typeof item === 'object') {
+        item = item.get('id');
+        // strip out the actual ID from the url
+        // TODO: This assumes a lot about our backend.
+        var parts = item.split("/");
+        var last = parts[parts.length -1];
+        item = last;
+        keyst = "%@_id".fmt(key);
+      }
+      params.push("%@=%@".fmt(keyst,item));
+    }
+  }
+  paramString = "?%@".fmt(params.join("&"));
+  return paramString;
+};
+
 Geniverse.LOAD_DATA = SC.Responder.create(
 /** @scope Geniverse.LOGIN.prototype */ {
 
@@ -28,9 +53,14 @@ Geniverse.LOAD_DATA = SC.Responder.create(
         conditions: 'bred = true AND isEgg = false AND user = {user} AND isInMarketplace = false AND activity = {activity}',
         user: user,
         activity: activity,
-        orderBy: 'stableOrder'
-        /*,
-        orderBy: 'storeKey'*/
+        orderBy: 'stableOrder',
+        restParams: Geniverse.makeRestParams({
+          bred: 'true',
+          isEgg: 'false',
+          isInMarketplace: 'false',
+          user: user,
+          activity: activity
+        })
     });
     var stableOrganisms = Geniverse.store.find(stableQuery);
     Geniverse.stableOrganismsController.set('content', stableOrganisms);
@@ -41,9 +71,16 @@ Geniverse.LOAD_DATA = SC.Responder.create(
         conditions: 'bred = true AND isEgg = true AND user = {user} AND isInMarketplace = false AND activity = {activity}',
         user: user,
         activity: activity,
-        orderBy: 'storeKey'
+        orderBy: 'storeKey',
+        restParams: Geniverse.makeRestParams({
+          bred: 'true',
+          isEgg: 'true',
+          isInMarketplace: 'false',
+          user: user,
+          activity: activity
+        })
     });
-    var eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
+    // var eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
     Geniverse.eggsController.set('content',[]);
     
     /////////////////// Chats
@@ -70,7 +107,14 @@ Geniverse.LOAD_DATA = SC.Responder.create(
       activity: activity,
       mother: null,
       father: null,
-      orderBy: 'storeKey'
+      orderBy: 'storeKey',
+      restParams: Geniverse.makeRestParams({
+        mother_id: 'null',
+        father_id: 'null',
+        bred: 'false',
+        user: user,
+        activity: activity
+      })
     });
     
     var challengeDragons = Geniverse.store.find(challengePoolQuery);
@@ -101,7 +145,12 @@ Geniverse.LOAD_DATA = SC.Responder.create(
   },
 
   initChallengeDragons: function() {
-    function handleDragon(dragon) { SC.RunLoop.begin(); SC.Logger.info("created dragon"); SC.Logger.dir(dragon); SC.RunLoop.end(); }
+    function handleDragon(dragon) { 
+      SC.RunLoop.begin();
+      SC.Logger.info("created dragon");
+      SC.Logger.dir(dragon.attributes());
+      SC.RunLoop.end();
+    }
     SC.Logger.info("Creating defaults");
     //var organismConfigurations = Geniverse.activityController.getConfigurationForRoom(CcChat.chatRoomController.get('channelIndex'));
     var group = Geniverse.loginController.get('groupNumber')  - 1; // the numbers 1 - 3, but need to 0 based
