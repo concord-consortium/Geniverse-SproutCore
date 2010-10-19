@@ -61,9 +61,8 @@ Geniverse.statsController = SC.Controller.create(
     var labelNames = this.get('labelNames');
     var i = 0;
     for (i = 0; i < labelNames.length; i++) {
-      colorName = labelNames[i];
+      var colorName = labelNames[i];
       var propertyName = colorName + 'Label';
-      SC.Logger.info("setting %s", propertyName);
       this.set(propertyName, this.label(colorName));
     }
      
@@ -74,7 +73,6 @@ Geniverse.statsController = SC.Controller.create(
     if (total === 0) {
       return 0;
     }
-    SC.Logger.log('percent called');
     return (((number / total) * 100) + ' ').substring(0,3);
   }
   
