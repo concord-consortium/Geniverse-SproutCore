@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100928145506) do
+ActiveRecord::Schema.define(:version => 20101019183734) do
 
   create_table "activities", :force => true do |t|
     t.string   "initial_alleles"
@@ -38,6 +38,10 @@ ActiveRecord::Schema.define(:version => 20100928145506) do
     t.boolean  "isInMarketplace", :default => true
     t.integer  "activity_id"
   end
+
+  add_index "dragons", ["activity_id"], :name => "index_dragons_on_activity_id"
+  add_index "dragons", ["id"], :name => "index_dragons_on_id"
+  add_index "dragons", ["user_id"], :name => "index_dragons_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "username"
