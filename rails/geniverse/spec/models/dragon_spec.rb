@@ -17,6 +17,29 @@ describe Dragon do
   it "should create a new instance given valid attributes" do
     Dragon.create!(@valid_attributes)
   end
+
+  it "should be searchable with known params" do
+    Dragon.create!(@valid_attributes.merge({:isInMarketplace => false}))
+    second_attributes = @valid_attributes.merge(:user_id => 2, :isInMarketplace => true)
+    Dragon.create!(second_attributes)
+    third_attributes = @valid_attributes.merge(:user_id => 3, :isInMarketplace => true, :activity_id => 2)
+    Dragon.create!(third_attributes)
+
+    params = {:user_id => 1}
+    Dragon.search(params).size.should be 1
+    params = {:user_id => 2}
+    Dragon.search(params).size.should be 1
+    params = {:isInMarketplace => true}
+    Dragon.search(params).size.should be 2
+    params = {:isInMarketplace => true, :user_id => 1}
+    Dragon.search(params).size.should be 0
+    params = {:activity_id => 2}
+    Dragon.search(params).size.should be 1
+    params = {:activity_id => 4}
+    Dragon.search(params).size.should be 0
+
+  end
+
 end
 
 # == Schema Information

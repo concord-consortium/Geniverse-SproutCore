@@ -2,8 +2,7 @@ class DragonsController < ApplicationController
   # GET /dragons
   # GET /dragons.xml
   def index
-    @dragons = Dragon.all
-
+    @dragons = Dragon.search(params)    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @dragons }
