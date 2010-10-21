@@ -21,13 +21,20 @@ Geniverse.makeRestParams = function(elems) {
       var keyst = key;
       // assume SC.Record TODO: big assumption
       if (typeof item === 'object') {
-        item = item.get('id');
-        // strip out the actual ID from the url
-        // TODO: This assumes a lot about our backend.
-        var parts = item.split("/");
-        var last = parts[parts.length -1];
-        item = last;
-        keyst = "%@_id".fmt(key);
+        try{
+          item = item.get('id');
+          // strip out the actual ID from the url
+          // TODO: This assumes a lot about our backend.
+          var parts = item.split("/");
+          var last = parts[parts.length -1];
+          item = last;
+          keyst = "%@_id".fmt(key);
+        }
+        catch(error) {
+          SC.Logger.error("Error: %s", error);
+          SC.Logger.error("Oops, %s didn't have an detectable id", item);
+          continue;
+        }
       }
       params.push("%@=%@".fmt(keyst,item));
     }
