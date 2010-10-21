@@ -1,5 +1,5 @@
 // ==========================================================================
-// Project:   Geniverse.BreedDragonView
+// Project:   Geniverse.StatsView
 // Copyright: ©2010 Concord Consortium, Inc.
 // ==========================================================================
 /*globals Geniverse, generateDragonWithSex */
