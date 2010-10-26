@@ -2,7 +2,7 @@
 // Project:   Geniverse - mainPage
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Geniverse, CC, CcChat, java */
+/*globals Geniverse, CC, CcChat, java static_url sc_static */
 Geniverse.marginSize = 15;
 
 sc_require('views/article');
@@ -78,8 +78,8 @@ Geniverse.trainingPage = SC.Page.design({
           layout: {top: 80, left: 40, height: 500, width: 500 },
           generateDragonAtStart: YES,
           sex: 1,
-          fixedAlleles: "a:A,a:A,a:B,b:B",
-          hiddenGenes: ['s','p','a','b','f'],
+//        fixedAlleles: "a:A,a:A,a:B,b:B",
+          hiddenGenes: ['s','p'],
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO
         })
@@ -102,8 +102,8 @@ Geniverse.trainingPage = SC.Page.design({
           layout: {top: 80, left: 40, height: 500, width: 500 },
           generateDragonAtStart: YES,
           sex: 0,
-          fixedAlleles: "a:A,b:A,a:B,b:B",
-          hiddenGenes: ['s','p','a','b','f'],
+//        fixedAlleles: "a:A,a:A,a:B,b:B",
+          hiddenGenes: ['s','p'],
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO
         })

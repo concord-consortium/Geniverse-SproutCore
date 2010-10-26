@@ -102,8 +102,10 @@ Geniverse.chromosomeController = SC.ObjectController.create(
       't': 'plain tail',
       'f': 'fire',
       'F': 'fireless',
+      'a': 'purple',
       'A': 'red',
-      'a': 'purple'
+      'b': 'color2',
+      'B': 'color3'
   },
 
   titleForAllele: function(val) {
