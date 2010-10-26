@@ -79,7 +79,7 @@ Geniverse.trainingPage = SC.Page.design({
           generateDragonAtStart: YES,
           sex: 1,
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
-          hiddenGenes: ['s','p'],
+          hiddenGenes: ['s','p','b'],
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO
         })
@@ -103,7 +103,7 @@ Geniverse.trainingPage = SC.Page.design({
           generateDragonAtStart: YES,
           sex: 0,
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
-          hiddenGenes: ['s','p'],
+          hiddenGenes: ['s','p','b'],
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO
         })
