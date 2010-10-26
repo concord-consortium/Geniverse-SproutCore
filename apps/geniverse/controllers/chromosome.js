@@ -115,6 +115,6 @@ Geniverse.chromosomeController = SC.ObjectController.create(
     }
     SC.Logger.warn("couldn't find maped: %s", val);
     return val;
-  },
+  }
   
 }) ;
