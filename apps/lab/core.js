@@ -24,26 +24,5 @@ Lab = SC.Application.create(
     store: SC.Store.create().from(SC.Record.fixtures),
 
     // TODO: Add global constants or singleton objects needed by your app here.
-    routeHandler: function(route) {
-        // SC.Logger.dir(route);
-        window.route = route;
-        if (route.level == "Apprentice") {
-            if (route.module == "Heredity") {
-                if (route.activity == "Intro") {
-                    SC.Logger.log("Matched heredity intro route:", route);
-                    Lab.makeFirstResponder(Lab.HEREDITY_INTRO);
-                } else if (route.activity == "Individual") {
-                    SC.Logger.log("Matched heredity apprentice individual: ", route);
-                    Lab.makeFirstResponder(Lab.HEREDITY_APPRENTICE_INDIVIDUAL);
-                } else {
-                    SC.Logger.warn("Didn't know activity of route:", route);
-                }
-            } else {
-                SC.Logger.warn("Didn't know module of route:", route);
-            }
-        } else {
-            SC.Logger.warn("Didn't know level of route:", route);
-        }
-    }
 
 });

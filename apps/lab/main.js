@@ -27,7 +27,10 @@ Lab.main = function main() {
   // TODO: Set the content property on your primary controller
   // ex: Lab.contactsController.set('content',Lab.contacts);
   
-  SC.routes.add(':level/:module/:activity', Lab, 'routeHandler');
+  // add routes to catch urls of the form /lab, /lab#chromosomeTrainingPage, and /lab#chromosomeTrainingPage/mainPane
+  SC.routes.add(':pageName/:paneName', Lab.routes, 'gotoRoute');
+  SC.routes.add(':pageName', Lab.routes, 'gotoRoute');
+  SC.routes.add(':', Lab.routes, 'gotoRoute');
 
 } ;
 

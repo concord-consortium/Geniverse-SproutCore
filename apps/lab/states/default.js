@@ -21,14 +21,14 @@ Lab.DEFAULT = SC.Responder.create(
   
   didBecomeFirstResponder: function() {
     // Called when this state becomes first responder
-    SC.Logger.info("Now showing default page");
-    Lab.getPath('trainingPage.mainPane').append() ;
+    // SC.Logger.info("Now showing default page");
+    // Geniverse.getPath('trainingPage.mainPane').append() ;
   },
   
   willLoseFirstResponder: function() {
     // Called when this state loses first responder
-    SC.Logger.info("Now removing default page");
-    Lab.getPath('mainPage.mainPane').remove() ;
+    // SC.Logger.info("Now removing default page");
+    // Lab.getPath('trainingPage.mainPane').remove() ;
   }
   
   // ..........................................................
