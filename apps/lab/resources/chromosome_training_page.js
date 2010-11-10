@@ -14,7 +14,7 @@ sc_require('views/organism');
 sc_require('views/published_articles');
 sc_require('views/login');
 
-Lab.trainingPage = SC.Page.design({
+Lab.chromosomeTrainingPage = SC.Page.design({
   
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page 
