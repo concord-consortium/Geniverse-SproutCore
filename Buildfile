@@ -4,10 +4,14 @@
 # ===========================================================================
 
 config :all, 
-  :required => [:geniverse_core, :sproutcore, :cc], 
+  :required => [:geniverse, :sproutcore, :cc], 
   :load_fixtures => true
 
 config :geniverse,
+  :layout => 'lib/index.rhtml',
+  :test_layout => 'lib/index.rhtml'
+  
+config :lab,
   :layout => 'lib/index.rhtml',
   :test_layout => 'lib/index.rhtml'
 
