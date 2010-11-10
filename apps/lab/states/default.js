@@ -22,7 +22,7 @@ Lab.DEFAULT = SC.Responder.create(
   didBecomeFirstResponder: function() {
     // Called when this state becomes first responder
     SC.Logger.info("Now showing default page");
-    Lab.getPath('mainPage.mainPane').append() ;
+    Lab.getPath('trainingPage.mainPane').append() ;
   },
   
   willLoseFirstResponder: function() {
