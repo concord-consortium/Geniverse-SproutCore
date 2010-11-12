@@ -2,7 +2,7 @@
 // Project:   Lab
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Lab */
+/*globals Lab SC */
 
 /** @namespace
 
@@ -10,6 +10,28 @@
   
   @extends SC.Object
 */
+// an extension of the SC.Page object to allow us to index all created pages
+SC.Page = SC.Page.extend({
+  init: function() {
+    sc_super();
+    
+    console.log("made a page");
+    
+    var pages = SC.Page.instances;
+    if (!pages) {
+      pages = SC.Page.instances = [];
+    }
+    pages.push(this);
+  },
+  
+  setPath: function(path, value) {
+    sc_super();
+    
+    console.log("woo, path was set to "+path);
+  }
+});
+
+
 Lab = SC.Application.create(
 /** @scope Lab.prototype */
 {
@@ -21,7 +43,7 @@ Lab = SC.Application.create(
     // of your model data.  You can also set a data source on this store to
     // connect to a backend server.  The default setup below connects the store
     // to any fixtures you define.
-    store: SC.Store.create().from(SC.Record.fixtures),
+    store: SC.Store.create().from(SC.Record.fixtures)
 
     // TODO: Add global constants or singleton objects needed by your app here.
 

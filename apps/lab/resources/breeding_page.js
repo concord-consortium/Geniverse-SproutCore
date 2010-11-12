@@ -17,6 +17,10 @@ sc_require('views/stats');
 
 Lab.breedingPage = SC.Page.design({
   
+  // used for the index page
+  pagePath: 'Lab.breedingPage',
+  title: 'Breeding Page',
+  
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page 
   // load.

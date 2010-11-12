@@ -23,8 +23,6 @@ Lab.main = function main() {
 
   // Step 2. Set the content property on your primary controller.
   // This will make your app come alive!
-
-
   
   // ** setup routes **
   // add routes to catch urls of the form /lab, /lab#chromosomeTrainingPage, and /lab#chromosomeTrainingPage/mainPane
