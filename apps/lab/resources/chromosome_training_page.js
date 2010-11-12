@@ -3,7 +3,7 @@
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
 /*globals Geniverse, CC, CcChat, java static_url sc_static */
-Geniverse.marginSize = 15;
+Lab.marginSize = 15;
 
 sc_require('views/article');
 sc_require('views/breed_dragon');

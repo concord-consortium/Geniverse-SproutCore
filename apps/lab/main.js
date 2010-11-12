@@ -37,6 +37,11 @@ Lab.main = function main() {
   // catch-all
   SC.routes.add(':', Lab.routes, 'gotoLabRoute');
 
+  // ** setup exception handler **
+  SC.ExceptionHandler.handleException = function (exception) {
+    // Will do nothing because uncaught exception will show in console
+    // for developers
+  };
 } ;
 
 function main() { Lab.main(); }
