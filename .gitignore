@@ -13,3 +13,4 @@ proxy/*.conf
 spec/support/apache*
 hudson/*
 results/*
+.idea/
