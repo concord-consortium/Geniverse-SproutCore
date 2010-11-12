@@ -24,13 +24,18 @@ Lab.main = function main() {
   // Step 2. Set the content property on your primary controller.
   // This will make your app come alive!
 
-  // TODO: Set the content property on your primary controller
-  // ex: Lab.contactsController.set('content',Lab.contacts);
+
   
+  // ** setup routes **
   // add routes to catch urls of the form /lab, /lab#chromosomeTrainingPage, and /lab#chromosomeTrainingPage/mainPane
-  SC.routes.add(':pageName/:paneName', Lab.routes, 'gotoRoute');
-  SC.routes.add(':pageName', Lab.routes, 'gotoRoute');
-  SC.routes.add(':', Lab.routes, 'gotoRoute');
+  SC.routes.add(':pageName/:paneName', Lab.routes, 'gotoLabRoute');
+  SC.routes.add(':pageName', Lab.routes, 'gotoLabRoute');
+  
+  // urls of the form /lab#geniverse/pageName will find the page in the Genivertse framework
+  SC.routes.add('geniverse/:pageName', Lab.routes, 'gotoGeniverseRoute');
+  
+  // catch-all
+  SC.routes.add(':', Lab.routes, 'gotoLabRoute');
 
 } ;
 

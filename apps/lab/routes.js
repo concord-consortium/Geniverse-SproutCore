@@ -2,7 +2,7 @@
 // Project:   Lab
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Lab */
+/*globals Lab Geniverse */
 
 /** @namespace
 
@@ -17,6 +17,14 @@ Lab.routes = SC.Object.create({
     Property to store the main pane of the page that is currently shown to the user
     */
   currentPagePane: null,
+  
+  gotoLabRoute: function(routeParams) {
+    this.gotoRoute(Lab, routeParams);
+  },
+  
+  gotoGeniverseRoute: function(routeParams) {
+    this.gotoRoute(Geniverse, routeParams);
+  },
 
   /**
     Navigate to the specified route
@@ -25,7 +33,7 @@ Lab.routes = SC.Object.create({
       object. The parameters are specified when registering the route using 
       SC.routes.add() in main.js.
     */
-  gotoRoute: function(routeParams) {
+  gotoRoute: function(clazz, routeParams) {
     
     // Default to mainPage
     var pageName = routeParams.pageName;
@@ -46,7 +54,7 @@ Lab.routes = SC.Object.create({
         
     // Show the specified pane
     var pagePanePath = pageName + '.' + paneName;
-    var pagePane = Lab.getPath(pagePanePath);
+    var pagePane = clazz.getPath(pagePanePath);
     pagePane.append();
     
     // Save the current pane so we can remove it when process the next route
