@@ -5,6 +5,7 @@
 /*globals Geniverse, CC, CcChat, java static_url sc_static */
 Lab.marginSize = 15;
 
+sc_require('mixins/simple_button');
 Lab.caselog = SC.Page.design({
   
   pagePath: 'Lab.caselog',
@@ -54,12 +55,80 @@ Lab.caselog = SC.Page.design({
     
     mainAppView: SC.View.design({
       layout: { top: 37, left: 0, right: 0 },
+      layerId: 'caselogcontent',
 
-      childViews: 'introFrame'.w(),
+      childViews: 'background training experiment individual group'.w(),
 
-      introFrame: SC.WebView.design({
-        value: static_url('caselog'),
-        shouldAutoResize: YES
+      background: SC.ImageView.design({
+        layout: { top: 0, left: 0, right: 0 },
+        value: static_url('caselog-bg')
+      }),
+
+      training: SC.View.design(Lab.SimpleButton, {
+        hasHover: YES,
+        tagName: 'a',
+        layerId: 'training',
+        href: static_url('training1.html'),
+        title: 'Drake Traits',
+        layoutStyle: {
+          background: 'transparent',
+          border: 'none',
+          height: '70px',
+          left: '91px',
+          position: 'absolute',
+          top: '304px',
+          width: '341px'
+        }
+      }),
+
+      experiment: SC.View.design(Lab.SimpleButton, {
+        hasHover: YES,
+        tagName: 'a',
+        layerId: 'experiment',
+        href: static_url('experiment1.html'),
+        title: 'In the Clutches of Drakes',
+        layoutStyle: {
+          background: 'transparent',
+          border: 'none',
+          height: '70px',
+          left: '91px',
+          position: 'absolute',
+          top: '399px',
+          width: '341px'
+        }
+      }),
+
+      individual: SC.View.design(Lab.SimpleButton, {
+        hasHover: YES,
+        tagName: 'a',
+        layerId: 'individual',
+        href: static_url('individual1.html'),
+        title: 'Drake Forecast',
+        layoutStyle: {
+          background: 'transparent',
+          border: 'none',
+          height: '70px',
+          left: '522px',
+          position: 'absolute',
+          top: '100px',
+          width: '341px'
+        }
+      }),
+
+      group: SC.View.design(Lab.SimpleButton, {
+        hasHover: YES,
+        tagName: 'a',
+        layerId: 'group',
+        title: 'A Perfect Look-alike',
+        layoutStyle: {
+          background: 'transparent',
+          border: 'none',
+          height: '70px',
+          left: '522px',
+          position: 'absolute',
+          top: '195px',
+          width: '341px'
+        }
       })
 
   	})

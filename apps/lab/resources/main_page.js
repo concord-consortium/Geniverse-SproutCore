@@ -3,6 +3,7 @@
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
 /*globals Lab */
+sc_require('views/image_button');
 
 // This page describes the main user interface for your application.
 Lab.mainPage = SC.Page.design({
