@@ -3,7 +3,7 @@
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
 /*globals Lab */
-sc_require('views/image_button');
+sc_require('mixins/simple_button');
 
 // This page describes the main user interface for your application.
 Lab.mainPage = SC.Page.design({
@@ -19,7 +19,7 @@ Lab.mainPage = SC.Page.design({
     classNames: ['brown'],
     childViews: 'backgroundView topBar mainAppView'.w(),
     backgroundView: SC.ImageView.design({
-      value: static_url('bg2'),
+      value: static_url('bg2.png'),
       classNames: ['transparent','scalingimage']
     }),
     topBar: SC.ToolbarView.design({
@@ -61,13 +61,13 @@ Lab.mainPage = SC.Page.design({
         value: static_url('mainscreen-bg')
       }),
 
-      caselogButtonView: Lab.ImageButton.design({
-        layout: { top: 480, left: 470},
+      caselogButtonView: SC.View.design(Lab.SimpleButton, {
+        hasHover: YES,
+        layout: { top: 480, left: 470, width: 372, height: 158 },
         //title: 'Go to the Case Log',
         target: 'Lab.mainPage',
         action: 'goCaseLog',
-        value: static_url('mainscreen-caselog-highlighted'),
-        supportFocusRing: YES
+        value: static_url('mainscreen-caselog-highlighted')
       }),
 
       focusMainFrom: function(pane) {
@@ -77,7 +77,7 @@ Lab.mainPage = SC.Page.design({
   }),
 
   goCaseLog: function() {
-    console.log("Lab.mainPage.goCaseLog called");
+//    console.log("Lab.mainPage.goCaseLog called");
     SC.routes.set('location', 'caselog');
   }
 

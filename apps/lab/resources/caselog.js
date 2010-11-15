@@ -3,9 +3,10 @@
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
 /*globals Geniverse, CC, CcChat, java static_url sc_static */
+sc_require('mixins/simple_button');
+
 Lab.marginSize = 15;
 
-sc_require('mixins/simple_button');
 Lab.caselog = SC.Page.design({
   
   pagePath: 'Lab.caselog',

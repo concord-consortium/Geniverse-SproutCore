@@ -10,3 +10,17 @@
   right: 0px;
   bottom: 0px;
 }
+
+.hover, .active {
+	cursor: pointer;
+	cursor: hand;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FF0000;
+	border-right-color: #FF0000;
+	border-bottom-color: #FF0000;
+	border-left-color: #FF0000;
+	text-decoration: underline;
+}

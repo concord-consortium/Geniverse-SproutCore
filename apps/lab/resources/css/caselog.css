@@ -35,7 +35,7 @@ body {
 	font: 90% georgia, times, 'times new roman', serif;
 	}
 #caselogcontent {
-	background: url(../images/caselog-bg.jpg) no-repeat;
+	background: static_url('caselog-bg.jpg') no-repeat;
 	height: 600px;
 	margin: 0 auto;
 	position: relative;
@@ -201,33 +201,3 @@ a.backward {
 	text-decoration: none;
 	width: 130px;
 	}
-.hover {
-	color: #0000AA;
-    cursor: pointer;
-	cursor: hand;
-	background-color: #FFFF00;
-	text-decoration: blink;
-	border-top-style: dotted;
-	border-right-style: dotted;
-	border-bottom-style: dotted;
-	border-left-style: dotted;
-	border-top-color: #FF0000;
-	border-right-color: #FF0000;
-	border-bottom-color: #FF0000;
-	border-left-color: #FF0000;
-}
-.active {
-	color: #0000AA;
-	cursor: pointer;
-	cursor: hand;
-	background-color: #FFFF00;
-	text-decoration: blink;
-	border-top-style: dotted;
-	border-right-style: dotted;
-	border-bottom-style: dotted;
-	border-left-style: dotted;
-	border-top-color: #FF0000;
-	border-right-color: #FF0000;
-	border-bottom-color: #FF0000;
-	border-left-color: #FF0000;
-}
