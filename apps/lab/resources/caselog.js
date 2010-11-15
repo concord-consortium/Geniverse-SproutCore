@@ -1,21 +1,21 @@
 // ==========================================================================
-// Project:   Lab - mainPage
-// Copyright: ©2010 My Company, Inc.
+// Project:   Geniverse - mainPage
+// Copyright: Â©2010 My Company, Inc.
 // ==========================================================================
-/*globals Lab */
+/*globals Geniverse, CC, CcChat, java static_url sc_static */
+Lab.marginSize = 15;
 
-// This page describes the main user interface for your application.
-Lab.mainPage = SC.Page.design({
-
-  pagePath: 'Lab.mainPage',
-  title: 'Lab Main Page',
-
+Lab.caselog = SC.Page.design({
+  
+  pagePath: 'Lab.caselog',
+  title: 'Case Log',
+  
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page
+  // Add childViews to this pane for views to display immediately on page 
   // load.
   mainPane: SC.MainPane.design({
-    title: "Welcome to the Geniverse Labs",
-    classNames: ['brown'],
+    // defaultResponder: Geniverse,
+    classNames: ['brown'], 
     childViews: 'backgroundView topBar mainAppView'.w(),
     backgroundView: SC.ImageView.design({
       value: static_url('bg2'),
@@ -25,15 +25,15 @@ Lab.mainPage = SC.Page.design({
       layout: { top: 0, left: 0, right: 0, height: 36 },
       childViews: 'geniverseLabelView welcomeLabelView logoutButton'.w(),
       anchorLocation: SC.ANCHOR_TOP,
-
+      
       geniverseLabelView: SC.LabelView.design({
         layout: { centerY: 0, height: 24, left: 8, width: 200 },
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         //valueBinding:   'Geniverse.activityController.title'
-        value: "Geniverse Labs"
+        value: "Case Log"
       }),
-
+      
       welcomeLabelView: SC.LabelView.design({
         layout: { centerY: 0, height: 24, right: 130, width: 500},
         fontWeight: SC.BOLD_WEIGHT,
@@ -51,32 +51,17 @@ Lab.mainPage = SC.Page.design({
         isVisibleBinding: 'Geniverse.appController.userLoggedIn'
       })
     }),
-
+    
     mainAppView: SC.View.design({
-      childViews: 'mainscreenView caselogButtonView'.w(),
+      layout: { top: 37, left: 0, right: 0 },
 
-      mainscreenView: SC.ImageView.design({
-        layout: { top: 42, left: 5},
-        value: static_url('mainscreen-bg')
-      }),
+      childViews: 'introFrame'.w(),
 
-      caselogButtonView: Lab.ImageButton.design({
-        layout: { top: 480, left: 470},
-        //title: 'Go to the Case Log',
-        target: 'Lab.mainPage',
-        action: 'goCaseLog',
-        value: static_url('mainscreen-caselog-highlighted')
-      }),
+      introFrame: SC.WebView.design({
+        value: static_url('caselog'),
+        shouldAutoResize: YES
+      })
 
-      focusMainFrom: function(pane) {
-        SC.$('title').text(this.get('title'));
-      }
-    })
-  }),
-
-  goCaseLog: function() {
-    console.log("Lab.mainPage.goCaseLog called");
-    SC.routes.set('location', 'caselog');
-  }
-
+  	})
+	})
 });
