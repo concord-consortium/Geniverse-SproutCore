@@ -65,7 +65,8 @@ Lab.mainPage = SC.Page.design({
         //title: 'Go to the Case Log',
         target: 'Lab.mainPage',
         action: 'goCaseLog',
-        value: static_url('mainscreen-caselog-highlighted')
+        value: static_url('mainscreen-caselog-highlighted'),
+        supportFocusRing: YES
       }),
 
       focusMainFrom: function(pane) {

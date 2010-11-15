@@ -5,14 +5,12 @@
 
 /** @class
 
-  Implements an image button.  Cribbed from SC.ButtonView but with SC.ImageView mixed-in.
+  Implements an image button.  Cribbed from SC.ButtonView but extends SC.ImageView.
   
  @extends SC.ImageView
- @extends SC.Button
- @extends SC.StaticLayout
  @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
 */
-Lab.ImageButton = SC.View.extend(SC.ImageView, SC.Button, SC.StaticLayout,
+Lab.ImageButton = SC.View.extend(SC.ImageView,
 /** @scope Lab.ImageButton.prototype */ {
   /**
    * Does not render a title
@@ -24,7 +22,7 @@ Lab.ImageButton = SC.View.extend(SC.ImageView, SC.Button, SC.StaticLayout,
     
     @property {String}
   */
-  tagName: 'div',
+  tagName: 'img',
 
   /**
     Class names that will be applied to this view
@@ -221,30 +219,6 @@ Lab.ImageButton = SC.View.extend(SC.ImageView, SC.Button, SC.StaticLayout,
   // a separate observer (see below)
 //  displayProperties: ['href', 'icon', 'title', 'value', 'toolTip'],
   displayProperties: ['href', 'value', 'toolTip'],
-
-  
-  render: function(context, firstTime) {
-    // the image source is the value if the status is LOADED or blank
-    var status = this.get('status'), value = this.get('value') ;
-
-    if (status === SC.IMAGE_STATE_NONE && value) this._image_valueDidChange() ; // setup initial state
-
-    // query the status again, as calling this._image_valueDidChange() may
-    // update status to SC.IMAGE_STATE_LOADED or SC.IMAGE_STATE_SPRITE
-    status = this.get('status');
-
-    var src = (status === SC.IMAGE_STATE_LOADED) ? value : SC.BLANK_IMAGE_URL ;
-    if (status === SC.IMAGE_STATE_SPRITE) context.addClass(value) ;
-    context.attr('src', src) ;
-
-    // If there is a toolTip set, grab it and localize if necessary.
-    var toolTip = this.get('toolTip') ;
-    if (SC.typeOf(toolTip) === SC.T_STRING) {
-      if (this.get('localize')) toolTip = toolTip.loc() ;
-      context.attr('title', toolTip) ;
-      context.attr('alt', toolTip) ;
-    }
-  },
 
   /**
     This property is used to call the right render style for the button.
