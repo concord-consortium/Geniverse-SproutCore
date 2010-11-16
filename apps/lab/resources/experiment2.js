@@ -115,6 +115,6 @@ Lab.experiment2 = SC.Page.design({
   },
 
   goExperimentPage: function() {
-    SC.routes.set('location', 'heredity/apprentice/experiment');
+    SC.routes.set('location', 'heredity/apprentice/intro');
   }
 });
