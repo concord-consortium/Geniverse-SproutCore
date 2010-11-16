@@ -1,5 +1,5 @@
 // ==========================================================================
-// Project:   Geniverse - group1 page
+// Project:   Geniverse - individual2 page
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
 /**
@@ -10,10 +10,10 @@ sc_require('mixins/simple_button');
 
 Lab.marginSize = 15;
 
-Lab.group1 = SC.Page.design({
+Lab.individual2 = SC.Page.design({
 
-  pagePath: 'Lab.group1',
-  title: 'A Perfect Look-alike | Geniverse',
+  pagePath: 'Lab.individual2',
+  title: 'Drake Forecast | Geniverse',
 
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page
@@ -36,7 +36,7 @@ Lab.group1 = SC.Page.design({
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         //valueBinding:   'Geniverse.activityController.title'
-        value: "A Perfect Look-alike"
+        value: "Drake Forecast"
       }),
 
       welcomeLabelView: SC.LabelView.design({
@@ -65,15 +65,15 @@ Lab.group1 = SC.Page.design({
 
       background: SC.ImageView.design({
         layout: { top: 0, left: 0, right: 0 },
-        value: static_url('group-bg1.jpg')
+        value: static_url('individual-bg2.jpg')
       }),
 
       returnButton: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
         layerId: 'returnButton',
-        target: 'Lab.group1',
-        action: 'goCaseLog',
+        target: 'Lab.individual2',
+        action: 'goIndividual1',
         layoutStyle: {
           background: 'transparent',
           bottom: '115px',
@@ -92,8 +92,8 @@ Lab.group1 = SC.Page.design({
         hasHover: YES,
         tagName: 'a',
         layerId: 'continueButton',
-        target: 'Lab.group1',
-        action: 'goGroupPage',
+        target: 'Lab.individual2',
+        action: 'goIndividualPage',
         layoutStyle: {
           //background: 'transparent',
           bottom: '115px',
@@ -110,11 +110,11 @@ Lab.group1 = SC.Page.design({
   	})
 	}),
 
-  goCaseLog: function() {
-    SC.routes.set('location', 'caselog');
+  goIndividual1: function() {
+    SC.routes.set('location', 'individual1');
   },
 
-  goGroupPage: function() {
-    SC.routes.set('location', 'Geniverse.groupChallengePage');
+  goIndividualPage: function() {
+    SC.routes.set('location', 'Geniverse.individualPage');
   }
 });
