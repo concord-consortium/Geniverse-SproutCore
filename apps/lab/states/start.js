@@ -45,6 +45,7 @@ Lab.START = SC.Responder.create(
     SC.Logger.log("START gotoHomePage");
     var isLoggedIn = Lab.LOGIN.checkLoginState();
     if (isLoggedIn){
+      Lab.LOGIN.removeObserver('userLoggedIn', this, 'gotoHomePage');
       Lab.makeFirstResponder(Lab.ACTIVITY);
       Lab.routes.gotoLabRoute({pageName: 'mainPage'});
     } else {

@@ -58,9 +58,9 @@ Lab.breedingPagePaper = SC.Page.design({
         layout: { centerY: 0, height: 24, right: 12, width: 100 },
         layerId: 'logOutButton',
         title:  "Log out",
-        target: 'Geniverse.appController',
+        target: "Lab.ACTIVITY",
         action: 'logout',
-        isVisibleBinding: 'Geniverse.appController.userLoggedIn'
+        isVisibleBinding: 'Lab.LOGIN.userLoggedIn'
       })
     }),
     

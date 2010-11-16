@@ -18,6 +18,7 @@ Lab.main = function main() {
   // activity routes (require login)
   SC.routes.add(':strand/:level/:activityType/:activityIndex', Lab.START, 'gotoActivity');
   SC.routes.add(':strand/:level/:activityType', Lab.START, 'gotoActivity');
+  SC.routes.add(':strand/:level', Lab.START, 'gotoActivity');
   
   // routes that do not require login
   // add routes to catch urls of the form #lab/chromosomeTrainingPage, and #lab/chromosomeTrainingPage/mainPane
