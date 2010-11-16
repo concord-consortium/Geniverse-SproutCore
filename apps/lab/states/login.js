@@ -35,7 +35,17 @@ Lab.LOGIN = SC.Responder.create(
   //
   
   checkLoginState: function() {
-    // possibly check for cookies here
+    // check cookies
+    var username = Lab.userDefaults.readDefault('username');
+    if (username !== undefined && username !== null && username.length > 0){
+      SC.Logger.info("automatically logging in as %s", username);
+      this.autoLogin(username);      // this will kick-off login
+    } else {
+      // if no username cookie, make sure chatroom is also cleared
+      Lab.userDefaults.writeDefault('chatroom', '');
+    }
+    
+    // check portal here?
     
     return this.userLoggedIn;
   },
@@ -89,6 +99,7 @@ Lab.LOGIN = SC.Responder.create(
   },
   
   finishLogin: function(user) {
+    Lab.userDefaults.writeDefault('username', user.get('username'));
     Geniverse.userController.set('content', user);
     Lab.loginController.set('loggedIn', YES);
     this.set('userLoggedIn', YES);
