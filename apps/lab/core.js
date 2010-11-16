@@ -15,19 +15,11 @@ SC.Page = SC.Page.extend({
   init: function() {
     sc_super();
     
-    console.log("made a page");
-    
     var pages = SC.Page.instances;
     if (!pages) {
       pages = SC.Page.instances = [];
     }
     pages.push(this);
-  },
-  
-  setPath: function(path, value) {
-    sc_super();
-    
-    console.log("woo, path was set to "+path);
   }
 });
 

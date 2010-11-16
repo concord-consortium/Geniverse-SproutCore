@@ -20,9 +20,7 @@ Lab.DEFAULT = SC.Responder.create(
   nextResponder: null,
   
   didBecomeFirstResponder: function() {
-    // Called when this state becomes first responder
-    // SC.Logger.info("Now showing default page");
-    // Geniverse.getPath('trainingPage.mainPane').append() ;
+    SC.Logger.log("DEFAULT");
   },
   
   willLoseFirstResponder: function() {
