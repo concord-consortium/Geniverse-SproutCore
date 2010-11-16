@@ -2,7 +2,7 @@
 // Project:   Lab.ACTIVITY
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Lab */
+/*globals Lab window*/
 
 /** @class
 
@@ -41,11 +41,34 @@ Lab.ACTIVITY = SC.Responder.create(
   gotoActivity: function() {
     Lab.makeFirstResponder(this);
     
-    SC.Logger.log("ACTIVITY gotoActivity");
-    if (this.get('level') === 'training'){
-      Lab.routes.gotoLabRoute({pageName: 'chromosomeTrainingPage'});
-    } else {
-      Lab.routes.gotoLabRoute({pageName: 'breedingPage'});
+    var strand = this.get('strand');
+    var level = this.get('level');
+    var activityType = this.get('activityType');
+    var activityIndex = this.get('activityIndex');
+    
+    SC.Logger.log("ACTIVITY gotoActivity: "+strand+"/"+level+"/"+activityType+"/"+activityIndex);
+    
+    switch(strand) {
+      case 'heredity':
+        switch (level) {
+          case 'training':
+            Lab.routes.gotoLabRoute({pageName: 'chromosomeTrainingPage'});
+            break;
+          case 'apprentice':
+            switch (activityType) {
+              case 'intro':
+                Lab.routes.gotoLabRoute({pageName: 'breedingPage'});
+                break;
+              case 'individual':
+                Lab.routes.gotoLabRoute({pageName: 'breedingPagePaper'});
+                break;
+              case 'group':
+                Lab.routes.gotoLabRoute({pageName: 'breedingPageGroup'});
+                break;
+            }
+            break;
+        }
+        break;
     }
   },
   
