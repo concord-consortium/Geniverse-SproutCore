@@ -52,16 +52,16 @@ Lab.breedingPage = SC.Page.design({
         fontWeight: SC.BOLD_WEIGHT,
         textAlign: SC.ALIGN_RIGHT,
         valueBinding: 'Geniverse.loginController.welcomeMessage',
-        isVisibleBinding: 'Geniverse.appController.userLoggedIn'
+        isVisibleBinding: 'Lab.LOGIN.userLoggedIn'
       }),
 
       logoutButton: SC.ButtonView.design({
         layout: { centerY: 0, height: 24, right: 12, width: 100 },
         layerId: 'logOutButton',
         title:  "Log out",
-        target: 'Geniverse.appController',
+        target: "Lab.ACTIVITY",
         action: 'logout',
-        isVisibleBinding: 'Geniverse.appController.userLoggedIn'
+        isVisibleBinding: 'Lab.LOGIN.userLoggedIn'
       })
     }),
     

@@ -2,7 +2,7 @@
 // Project:   Geniverse - mainPage
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Geniverse, CC, CcChat, java static_url sc_static */
+/*globals Lab Geniverse CC, CcChat, java static_url sc_static sc_require */
 Lab.marginSize = 15;
 
 sc_require('views/article');
@@ -25,7 +25,7 @@ Lab.chromosomeTrainingPage = SC.Page.design({
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'], 
-    childViews: 'backgroundView topBar mainAppView'.w(),
+    childViews: 'backgroundView mainAppView topBar'.w(),
     backgroundView: SC.ImageView.design({
       value: static_url('lab_background.png'),
       classNames: ['transparent','scalingimage']
@@ -48,16 +48,16 @@ Lab.chromosomeTrainingPage = SC.Page.design({
         fontWeight: SC.BOLD_WEIGHT,
         textAlign: SC.ALIGN_RIGHT,
         valueBinding: 'Geniverse.loginController.welcomeMessage',
-        isVisibleBinding: 'Geniverse.appController.userLoggedIn'
+        isVisibleBinding: 'Lab.LOGIN.userLoggedIn'
       }),
 
       logoutButton: SC.ButtonView.design({
         layout: { centerY: 0, height: 24, right: 12, width: 100 },
         layerId: 'logOutButton',
         title:  "Log out",
-        target: 'Geniverse.appController',
+        target: "Lab.ACTIVITY",       // FIXME: I'm in this state, why is this necessary?
         action: 'logout',
-        isVisibleBinding: 'Geniverse.appController.userLoggedIn'
+        isVisibleBinding: 'Lab.LOGIN.userLoggedIn'
       })
     }),
     
