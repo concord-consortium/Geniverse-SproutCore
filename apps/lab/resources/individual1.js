@@ -111,10 +111,10 @@ Lab.individual1 = SC.Page.design({
 	}),
 
   goCaseLog: function() {
-    SC.routes.set('location', 'caselog');
+    SC.routes.set('location', 'lab/caselog');
   },
 
   goIndividual2: function() {
-    SC.routes.set('location', 'individual2');
+    SC.routes.set('location', 'lab/individual2');
   }
 });

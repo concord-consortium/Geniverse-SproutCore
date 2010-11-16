@@ -111,10 +111,10 @@ Lab.training2 = SC.Page.design({
 	}),
 
   goTraining1: function() {
-    SC.routes.set('location', 'training1');
+    SC.routes.set('location', 'lab/training1');
   },
 
   goTrainingPage: function() {
-    SC.routes.set('location', 'Geniverse.trainingPage');
+    SC.routes.set('location', 'heredity/training/intro');
   }
 });

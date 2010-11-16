@@ -77,7 +77,7 @@ Lab.mainPage = SC.Page.design({
   }),
 
   goCaseLog: function() {
-    SC.routes.set('location', 'caselog');
+    SC.routes.set('location', 'lab/caselog');
   }
 
 });

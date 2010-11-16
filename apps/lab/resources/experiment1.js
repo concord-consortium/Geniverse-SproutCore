@@ -111,10 +111,10 @@ Lab.experiment1 = SC.Page.design({
 	}),
 
   goCaseLog: function() {
-    SC.routes.set('location', 'caselog');
+    SC.routes.set('location', 'lab/caselog');
   },
 
   goExperiment2: function() {
-    SC.routes.set('location', 'experiment2');
+    SC.routes.set('location', 'lab/experiment2');
   }
 });

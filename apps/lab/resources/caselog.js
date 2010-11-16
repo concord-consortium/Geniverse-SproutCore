@@ -143,15 +143,15 @@ Lab.caselog = SC.Page.design({
   	})
 	}),
   goTraining1: function() {
-    SC.routes.set('location', 'training1');
+    SC.routes.set('location', 'lab/training1');
   },
   goExperiment1: function() {
-    SC.routes.set('location', 'experiment1');
+    SC.routes.set('location', 'lab/experiment1');
   },
   goIndividual1: function() {
-    SC.routes.set('location', 'individual1');
+    SC.routes.set('location', 'lab/individual1');
   },
   goGroup1: function() {
-    SC.routes.set('location', 'group1');
+    SC.routes.set('location', 'lab/group1');
   }
 });

@@ -111,10 +111,10 @@ Lab.training1 = SC.Page.design({
 	}),
 
   goCaseLog: function() {
-    SC.routes.set('location', 'caselog');
+    SC.routes.set('location', 'lab/caselog');
   },
 
   goTraining2: function() {
-    SC.routes.set('location', 'training2');
+    SC.routes.set('location', 'lab/training2');
   }
 });

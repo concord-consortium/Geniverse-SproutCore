@@ -111,10 +111,10 @@ Lab.experiment2 = SC.Page.design({
 	}),
 
   goExperiment1: function() {
-    SC.routes.set('location', 'experiment1');
+    SC.routes.set('location', 'lab/experiment1');
   },
 
   goExperimentPage: function() {
-    SC.routes.set('location', 'Geniverse.experimentPage');
+    SC.routes.set('location', 'heredity/apprentice/experiment');
   }
 });

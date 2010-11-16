@@ -111,10 +111,10 @@ Lab.individual2 = SC.Page.design({
 	}),
 
   goIndividual1: function() {
-    SC.routes.set('location', 'individual1');
+    SC.routes.set('location', 'lab/individual1');
   },
 
   goIndividualPage: function() {
-    SC.routes.set('location', 'Geniverse.individualPage');
+    SC.routes.set('location', 'heredity/apprentice/individual');
   }
 });

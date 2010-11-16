@@ -111,10 +111,10 @@ Lab.group1 = SC.Page.design({
 	}),
 
   goCaseLog: function() {
-    SC.routes.set('location', 'caselog');
+    SC.routes.set('location', 'lab/caselog');
   },
 
   goGroupPage: function() {
-    SC.routes.set('location', 'Geniverse.groupChallengePage');
+    SC.routes.set('location', 'heredity/apprentice/group');
   }
 });
