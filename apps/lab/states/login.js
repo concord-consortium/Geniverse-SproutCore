@@ -40,6 +40,7 @@ Lab.LOGIN = SC.Responder.create(
     if (username !== undefined && username !== null && username.length > 0){
       SC.Logger.info("automatically logging in as %s", username);
       this.autoLogin(username);      // this will kick-off login
+      return true;
     } else {
       // if no username cookie, make sure chatroom is also cleared
       Lab.userDefaults.writeDefault('chatroom', '');
