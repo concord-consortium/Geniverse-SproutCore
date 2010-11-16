@@ -34,7 +34,10 @@ Lab.routes = SC.Object.create({
       SC.routes.add() in main.js.
     */
   gotoRoute: function(clazz, routeParams) {
-    SC.Logger.log("Lab.routes gotoRoute");
+    SC.Logger.log("Lab.routes.gotoRoute: function(clazz, routeParams) called.");
+    console.log("clazz:",clazz);
+    console.log("routeParams:",routeParams);
+
     // Default to mainPage
     var pageName = routeParams.pageName;
     if (!pageName) {
@@ -54,7 +57,9 @@ Lab.routes = SC.Object.create({
         
     // Show the specified pane
     var pagePanePath = pageName + '.' + paneName;
+    console.log("pagePanePath:",pagePanePath);
     var pagePane = clazz.getPath(pagePanePath);
+    console.log("pagePane:",pagePane);    
     pagePane.append();
     
     // Save the current pane so we can remove it when process the next route
