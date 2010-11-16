@@ -34,7 +34,7 @@ Lab.routes = SC.Object.create({
       SC.routes.add() in main.js.
     */
   gotoRoute: function(clazz, routeParams) {
-    
+    SC.Logger.log("Lab.routes gotoRoute");
     // Default to mainPage
     var pageName = routeParams.pageName;
     if (!pageName) {
