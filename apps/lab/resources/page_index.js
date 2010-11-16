@@ -36,7 +36,7 @@ Lab.pageIndex = SC.Page.design({
         if (item.pagePath && item.title){
           var path = item.pagePath.split('.');
           if (path[0] === "Lab"){
-            path = path[1];
+            path = "lab/"+path[1];
           } else if (path[0] === "Geniverse"){
             path = "geniverse/"+path[1];
           } else {
