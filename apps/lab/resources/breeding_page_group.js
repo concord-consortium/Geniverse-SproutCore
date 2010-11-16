@@ -43,8 +43,7 @@ Lab.breedingPageGroup = SC.Page.design({
         layout: { centerY: 0, height: 24, left: 8, width: 200 },
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
-        //valueBinding:   'Geniverse.activityController.title'
-        value: "Group Challenge"
+        valueBinding:   'Geniverse.activityController.title'
       }),
       
       welcomeLabelView: SC.LabelView.design({
