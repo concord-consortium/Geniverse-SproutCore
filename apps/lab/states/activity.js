@@ -59,25 +59,44 @@ Lab.ACTIVITY = SC.Responder.create(
     SC.Logger.log("ACTIVITY initActivity");
     var activityQuery = Geniverse.ACTIVITIES_QUERY;
     var activities = Geniverse.store.find(activityQuery);
+    
+    var strand = this.get('strand');
+    var level = this.get('level');
+    var activityType = this.get('activityType');
+    var activityIndex = this.get('activityIndex');
 
     function setActivity() {
       if (activities.get('status') === SC.Record.READY_CLEAN) {
-		    // using objectAt because "lastObject" seems missing from SC.Enumerable mixin
-        //Geniverse.activityController.set('content', activities.lastObject() ); 
-        //
-        //Try to find the activity matching our title
+        
+        //Try to find the activity matching our scType
         var last  = activities.lastObject();
         var found = activities.find(function(act) {
+          // we get the scType and check if each of its parts matches our requested scType.
+          // we only look at what is defined in the DB. So an activity with "heredity/training" will
+          // be returned for a requested scType of "heredity/training/someLevel/someIndex"
+          var matches = true;
+          
+          var scType = act.get('scType');
+          if (!scType){
+            matches = false;
+          } else {
+            scTypeAr = scType.split("/");
+            matches = (scTypeAr[0] === strand);
+            matches = (matches && !(scTypeAr.length > 1 && scTypeAr[1] !== level));
+            matches = (matches && !(scTypeAr.length > 2 && scTypeAr[2] !== activityType));
+            matches = (matches && !(scTypeAr.length > 3 && scTypeAr[3] !== activityIndex));
+          }
+          
           var title = act.get('title');
-          if (title == Geniverse.activityController.get('activityTitle')) {
-            SC.Logger.info("Using activity named: %s", title);
+          if (matches) {
+            SC.Logger.info("Using activity named: %s, with scType: %s", title, scType);
             return YES;
           } else {
-            SC.Logger.info("found non-matching activitiy named:_%s_", title);
+            SC.Logger.info("found non-matching activitiy named: %s, with scType: %s ", title, scType);
           }
         });
-        if (found === null || found === undefined) {
-          SC.Logger.info("Could not find activity matching: %s", Geniverse.activityController.get('activityTitle'));
+        if (!found) {
+          SC.Logger.info("Could not find activity with scType: "+strand+"/"+level+"/"+activityType+"/"+activityIndex);
           found = last;
         }
         Geniverse.activityController.set('content', found);
@@ -186,7 +205,7 @@ Lab.ACTIVITY = SC.Responder.create(
           SC.Logger.info("No challenge dragons");
           self.initChallengeDragons();
         } else {
-          SC.Logger.info("Found challenge dragons");
+          SC.Logger.info("Found "+Geniverse.challengePoolController.get('content').length()+" challenge dragons");
         }
       } else { SC.Logger.info("Results not ready."); }
     }
