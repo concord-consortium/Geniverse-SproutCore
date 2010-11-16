@@ -55,8 +55,8 @@ Lab.ACTIVITY = SC.Responder.create(
     CcChat.chatController.set('username', '');
     Lab.LOGIN.set('userLoggedIn', NO);
     
-    Geniverse.userDefaults.writeDefault('username', '');
-    Geniverse.userDefaults.writeDefault('chatroom', '');
+    Lab.userDefaults.writeDefault('username', '');
+    Lab.userDefaults.writeDefault('chatroom', '');
     
     Lab.makeFirstResponder(Lab.START);
     

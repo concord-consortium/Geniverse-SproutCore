@@ -92,3 +92,19 @@ popd
 kill -s 2 %1
 
 exit $EXIT_STATUS
+
+
+==== STATE CHARTS ====
+
+Old state chart:
+
+  START: Wait until GWT is loaded, then go to
+  INIT_ACTIVITY: Download activities, load the one we want, then go to
+  LOGIN: checkLoginState, when user logged in go to
+  LOAD_DATA: Get dragons, eggs, articles etc.
+
+New state chart:
+
+  START: If user logged in, go to ACTIVITY, else go to LOG_IN
+  LOG_IN: Show log in view, when user logged in go to ACTIVITY
+  ACTIVITY: Load activity, load student data, go to route
