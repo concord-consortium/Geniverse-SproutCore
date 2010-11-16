@@ -102,8 +102,8 @@ Lab.ACTIVITY = SC.Responder.create(
         Geniverse.activityController.set('content', found);
         activities.removeObserver('status', setActivity);
         
-        this.loadData();
-        this.gotoActivityRoute();
+        Lab.ACTIVITY.loadData();
+        Lab.ACTIVITY.gotoActivityRoute();
       }
     }
 
@@ -269,6 +269,7 @@ Lab.ACTIVITY = SC.Responder.create(
                 Lab.routes.gotoLabRoute({pageName: 'breedingPagePaper'});
                 break;
               case 'group':
+                SC.Logger.log("going to group page");
                 Lab.routes.gotoLabRoute({pageName: 'breedingPageGroup'});
                 break;
             }
