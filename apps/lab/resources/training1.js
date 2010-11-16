@@ -1,25 +1,29 @@
 // ==========================================================================
-// Project:   Lab - mainPage
+// Project:   Geniverse - traning1 page
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Lab */
+/**
+ * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
+ */
+/*globals Geniverse, CC, CcChat, java static_url sc_static */
 sc_require('mixins/simple_button');
 
-// This page describes the main user interface for your application.
-Lab.mainPage = SC.Page.design({
+Lab.marginSize = 15;
 
-  pagePath: 'Lab.mainPage',
-  title: 'Lab Main Page',
+Lab.training1 = SC.Page.design({
+
+  pagePath: 'Lab.training1',
+  title: 'Drake Traits | Geniverse',
 
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
-    title: "Welcome to the Geniverse Labs",
+    // defaultResponder: Geniverse,
     classNames: ['brown'],
     childViews: 'backgroundView topBar mainAppView'.w(),
     backgroundView: SC.ImageView.design({
-      value: static_url('bg2.png'),
+      value: static_url('bg2'),
       classNames: ['transparent','scalingimage']
     }),
     topBar: SC.ToolbarView.design({
@@ -32,7 +36,7 @@ Lab.mainPage = SC.Page.design({
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         //valueBinding:   'Geniverse.activityController.title'
-        value: "Geniverse Labs"
+        value: "Drake Traits"
       }),
 
       welcomeLabelView: SC.LabelView.design({
@@ -54,30 +58,63 @@ Lab.mainPage = SC.Page.design({
     }),
 
     mainAppView: SC.View.design({
-      childViews: 'mainscreenView caselogButtonView'.w(),
+      layout: { top: 37, left: 0, right: 0 },
+      layerId: 'content',
 
-      mainscreenView: SC.ImageView.design({
-        layout: { top: 42, left: 5},
-        value: static_url('mainscreen-bg')
+      childViews: 'background returnButton continueButton'.w(),
+
+      background: SC.ImageView.design({
+        layout: { top: 0, left: 0, right: 0 },
+        value: static_url('training-bg1.jpg')
       }),
 
-      caselogButtonView: SC.View.design(Lab.SimpleButton, {
+      returnButton: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
-        layout: { top: 480, left: 470, width: 372, height: 158 },
-        //title: 'Go to the Case Log',
-        target: 'Lab.mainPage',
+        tagName: 'a',
+        layerId: 'returnButton',
+        target: 'Lab.training1',
         action: 'goCaseLog',
-        value: static_url('mainscreen-caselog-highlighted')
+        layoutStyle: {
+          background: 'transparent',
+          bottom: '115px',
+          clear: 'both',
+          display: 'block',
+          height: '35px',
+          left: '85px',
+          position: 'absolute',
+          'text-align': 'right',
+          'text-decoration': 'none',
+          width: '130px'
+        }
       }),
 
-      focusMainFrom: function(pane) {
-        SC.$('title').text(this.get('title'));
-      }
-    })
-  }),
+      continueButton: SC.View.design(Lab.SimpleButton, {
+        hasHover: YES,
+        tagName: 'a',
+        layerId: 'continueButton',
+        target: 'Lab.training1',
+        action: 'goTraining2',
+        layoutStyle: {
+          //background: 'transparent',
+          bottom: '115px',
+          clear: 'both',
+          display: 'block',
+          height: '35px',
+          right: '95px',
+          position: 'absolute',
+          'text-align': 'right',
+          'text-decoration': 'none',
+          width: '130px'
+        }
+      })
+  	})
+	}),
 
   goCaseLog: function() {
     SC.routes.set('location', 'caselog');
-  }
+  },
 
+  goTraining2: function() {
+    SC.routes.set('location', 'training2');
+  }
 });

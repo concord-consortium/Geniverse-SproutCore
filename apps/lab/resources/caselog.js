@@ -1,7 +1,10 @@
 // ==========================================================================
-// Project:   Geniverse - mainPage
+// Project:   Geniverse - caselog page
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
+/**
+ * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
+ */
 /*globals Geniverse, CC, CcChat, java static_url sc_static */
 sc_require('mixins/simple_button');
 
@@ -69,7 +72,8 @@ Lab.caselog = SC.Page.design({
         hasHover: YES,
         tagName: 'a',
         layerId: 'training',
-        href: static_url('training1.html'),
+        target: 'Lab.caselog',
+        action: 'goTraining1',
         title: 'Drake Traits',
         layoutStyle: {
           background: 'transparent',
@@ -86,7 +90,6 @@ Lab.caselog = SC.Page.design({
         hasHover: YES,
         tagName: 'a',
         layerId: 'experiment',
-        href: static_url('experiment1.html'),
         title: 'In the Clutches of Drakes',
         layoutStyle: {
           background: 'transparent',
@@ -103,7 +106,6 @@ Lab.caselog = SC.Page.design({
         hasHover: YES,
         tagName: 'a',
         layerId: 'individual',
-        href: static_url('individual1.html'),
         title: 'Drake Forecast',
         layoutStyle: {
           background: 'transparent',
@@ -133,5 +135,9 @@ Lab.caselog = SC.Page.design({
       })
 
   	})
-	})
+	}),
+
+  goTraining1: function() {
+    SC.routes.set('location', 'training1');
+  }
 });
