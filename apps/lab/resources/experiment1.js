@@ -1,5 +1,5 @@
 // ==========================================================================
-// Project:   Geniverse - training1 page
+// Project:   Geniverse - experiment1 page
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
 /**
@@ -10,10 +10,10 @@ sc_require('mixins/simple_button');
 
 Lab.marginSize = 15;
 
-Lab.training1 = SC.Page.design({
+Lab.experiment1 = SC.Page.design({
 
-  pagePath: 'Lab.training1',
-  title: 'Drake Traits | Geniverse',
+  pagePath: 'Lab.experiment1',
+  title: 'In the Clutches of Drakes | Geniverse',
 
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page
@@ -36,7 +36,7 @@ Lab.training1 = SC.Page.design({
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         //valueBinding:   'Geniverse.activityController.title'
-        value: "Drake Traits"
+        value: "In the Clutches of Drakes"
       }),
 
       welcomeLabelView: SC.LabelView.design({
@@ -65,14 +65,14 @@ Lab.training1 = SC.Page.design({
 
       background: SC.ImageView.design({
         layout: { top: 0, left: 0, right: 0 },
-        value: static_url('training-bg1.jpg')
+        value: static_url('experiment-bg1.jpg')
       }),
 
       returnButton: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
         layerId: 'returnButton',
-        target: 'Lab.training1',
+        target: 'Lab.experiment1',
         action: 'goCaseLog',
         layoutStyle: {
           background: 'transparent',
@@ -92,8 +92,8 @@ Lab.training1 = SC.Page.design({
         hasHover: YES,
         tagName: 'a',
         layerId: 'continueButton',
-        target: 'Lab.training1',
-        action: 'goTraining2',
+        target: 'Lab.experiment1',
+        action: 'goExperiment2',
         layoutStyle: {
           //background: 'transparent',
           bottom: '115px',
@@ -114,7 +114,7 @@ Lab.training1 = SC.Page.design({
     SC.routes.set('location', 'caselog');
   },
 
-  goTraining2: function() {
-    SC.routes.set('location', 'training2');
+  goExperiment2: function() {
+    SC.routes.set('location', 'experiment2');
   }
 });

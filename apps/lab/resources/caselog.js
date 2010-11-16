@@ -90,6 +90,8 @@ Lab.caselog = SC.Page.design({
         hasHover: YES,
         tagName: 'a',
         layerId: 'experiment',
+        target: 'Lab.caselog',
+        action: 'goExperiment1',
         title: 'In the Clutches of Drakes',
         layoutStyle: {
           background: 'transparent',
@@ -106,6 +108,8 @@ Lab.caselog = SC.Page.design({
         hasHover: YES,
         tagName: 'a',
         layerId: 'individual',
+        target: 'Lab.caselog',
+        action: 'goIndividual1',
         title: 'Drake Forecast',
         layoutStyle: {
           background: 'transparent',
@@ -122,6 +126,8 @@ Lab.caselog = SC.Page.design({
         hasHover: YES,
         tagName: 'a',
         layerId: 'group',
+        target: 'Lab.caselog',
+        action: 'goGroup1',
         title: 'A Perfect Look-alike',
         layoutStyle: {
           background: 'transparent',
@@ -136,8 +142,16 @@ Lab.caselog = SC.Page.design({
 
   	})
 	}),
-
   goTraining1: function() {
     SC.routes.set('location', 'training1');
+  },
+  goExperiment1: function() {
+    SC.routes.set('location', 'experiment1');
+  },
+  goIndividual1: function() {
+    SC.routes.set('location', 'individual1');
+  },
+  goGroup1: function() {
+    SC.routes.set('location', 'group1');
   }
 });
