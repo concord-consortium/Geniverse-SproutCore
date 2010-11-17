@@ -37,7 +37,7 @@ Geniverse.trainingPage = SC.Page.design({
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         //valueBinding:   'Geniverse.activityController.title'
-        value: "Training"
+        value: "Drake Chromosomes"
       }),
       
       welcomeLabelView: SC.LabelView.design({
@@ -81,7 +81,8 @@ Geniverse.trainingPage = SC.Page.design({
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
           hiddenGenes: ['s','p','b'],
           showGenerateNewDragon: NO,
-          showIsEditableCheck: NO
+          showIsEditableCheck: YES,
+          showAllelesOutput: YES
         })
 
       }),
@@ -105,7 +106,8 @@ Geniverse.trainingPage = SC.Page.design({
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
           hiddenGenes: ['s','p','b'],
           showGenerateNewDragon: NO,
-          showIsEditableCheck: NO
+          showIsEditableCheck: YES,
+          showAllelesOutput: YES
         })
 
       })
