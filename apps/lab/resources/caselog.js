@@ -1,12 +1,13 @@
 // ==========================================================================
 // Project:   Geniverse - caselog page
-// Copyright: ©2010 My Company, Inc.
+// Copyright: ©2010 Concord Consortium
 // ==========================================================================
 /**
  * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
 /*globals Geniverse, CC, CcChat, java static_url sc_static */
 sc_require('mixins/simple_button');
+sc_require('resources/master_view');
 
 Lab.marginSize = 15;
 
@@ -21,7 +22,7 @@ Lab.caselog = SC.Page.design({
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'], 
-    childViews: 'backgroundView topBar mainAppView'.w(),
+    childViews: 'backgroundView topBar mainAppView aRealMasterView'.w(),
     backgroundView: SC.ImageView.design({
       value: static_url('bg2'),
       classNames: ['transparent','scalingimage']

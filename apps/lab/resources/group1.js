@@ -1,6 +1,6 @@
 // ==========================================================================
 // Project:   Geniverse - group1 page
-// Copyright: ©2010 My Company, Inc.
+// Copyright: ©2010 Concord Consortium
 // ==========================================================================
 /**
  * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>

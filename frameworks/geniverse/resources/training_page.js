@@ -1,6 +1,6 @@
 // ==========================================================================
 // Project:   Geniverse - mainPage
-// Copyright: ©2010 My Company, Inc.
+// Copyright: ©2010 Concord Consortium
 // ==========================================================================
 /*globals Geniverse, CC, CcChat, java static_url sc_static */
 Geniverse.marginSize = 15;

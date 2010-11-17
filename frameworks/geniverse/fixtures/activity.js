@@ -1,6 +1,6 @@
 // ==========================================================================
 // Project:   Geniverse.Activity Fixtures
-// Copyright: ©2010 My Company, Inc.
+// Copyright: ©2010 Concord Consortium
 // ==========================================================================
 /*globals Geniverse */
 
