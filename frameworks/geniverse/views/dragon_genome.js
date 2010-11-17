@@ -18,7 +18,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
   
   dragon: null,
 
-  childViews: 'dragonView motherLabel fatherLabel chromosomeA1View chromosomeA2View chromosomeAXView chromosomeB1View chromosomeB2View chromosomeBXView generateNewDragonButton isEditableCheck'.w(),
+  childViews: 'dragonView motherLabel fatherLabel chromosomeA1View chromosomeA2View chromosomeAXView chromosomeB1View chromosomeB2View chromosomeBXView generateNewDragonButton isEditableCheck allelesOutputTitle allelesOutput'.w(),
               
   showDragon: YES,
   
@@ -29,6 +29,10 @@ Geniverse.DragonGenomeView = SC.View.extend(
   isEditable: YES,
   
   showIsEditableCheck: NO,
+  
+  showAllelesOutput: NO,
+  
+  authoredAlleleString: null,
   
   sex: null,        // used when generating new dragons
   fixedAlleles: null,    // used when generating new dragons
@@ -111,6 +115,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
       this.set('alleles', this.get('parentView').get('a1Alleles'));
     }.observes('*parentView.a1Alleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
+	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
 	  chromosome: '1',
     side: 'A'
 	}),
@@ -124,6 +129,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
       this.set('alleles', this.get('parentView').get('b1Alleles'));
     }.observes('*parentView.b1Alleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
+	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
 	  chromosome: '1',
     side: 'B'
 	}),
@@ -137,6 +143,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
       this.set('alleles', this.get('parentView').get('a2Alleles'));
     }.observes('*parentView.a2Alleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
+	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
 	  chromosome: '2',
     side: 'A'
 	}),
@@ -150,6 +157,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
       this.set('alleles', this.get('parentView').get('b2Alleles'));
     }.observes('*parentView.b2Alleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
+	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
 	  chromosome: '2',
     side: 'B'
 	}),
@@ -163,6 +171,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
       this.set('alleles', this.get('parentView').get('aXAlleles'));
     }.observes('*parentView.aXAlleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
+	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
 	  chromosome: 'X',
     side: 'A'
 	}),
@@ -170,6 +179,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	chromosomeBXView: Geniverse.DragonChromosomeView.design({
 	  layout: {top: 315, left: 140},
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
+	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
 	  updateDragon: function(){
 	    this.get('parentView').updateDragon();
 	  }.observes('alleles'),
@@ -187,10 +197,33 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 	
 	isEditableCheck: SC.CheckboxView.design({
-    layout: { top: 310, left: 250, width: 250, height: 18 },
+    layout: { top: 370, left: 290, width: 250, height: 18 },
     title: "Editable",
     isVisibleBinding: '*parentView.showIsEditableCheck',
     valueBinding: '*parentView.isEditable'
+  }),
+  
+  allelesOutputTitle: SC.LabelView.design({
+    layout: { top: 410, left: 0, width: 250, height: 18 },
+    value: "Alleles:",
+    isTextSelectable: NO,
+    isVisibleBinding: '*parentView.showAllelesOutput'
+  }),
+  
+  allelesOutput: SC.LabelView.design({
+    layout: { top: 430, left: 0, width: 410, height: 18 },
+    value: null,          // can't get this to work with computed properties
+    valueSetter: function() {
+      var authoredAlleleString = this.get('parentView').get('authoredAlleleString');
+      if (!!authoredAlleleString){
+        this.set('value', authoredAlleleString);
+      } else {
+        this.set('value', this.get('parentView').getPath('dragon.alleles'));
+      }
+    }.observes('*parentView.dragon.alleles'),
+    isTextSelectable: YES,
+    isVisibleBinding: '*parentView.showAllelesOutput',
+    classNames: ['allele-string']
   }),
   
   getAllelesFor: function(chromosome, side){
@@ -260,6 +293,12 @@ Geniverse.DragonGenomeView = SC.View.extend(
     
       // rm last comma
       outStr = outStr.substring(0,outStr.length-1);
+      
+      var outStrIgnoredGenesRemoved = outStr.replace(/.: ,/,"");      // rm genes set to blank by author
+      var hiddenGenes = this.get('hiddenGenes').join();
+      var rmHidden = new RegExp(".:["+hiddenGenes+"],","ig");         // rm hidden genes
+      outStrIgnoredGenesRemoved = outStrIgnoredGenesRemoved.replace(rmHidden,"");
+      this.set("authoredAlleleString", outStrIgnoredGenesRemoved);
       
       var self = this;
       Geniverse.gwtController.generateDragonWithAlleles(outStr, this.getPath('dragon.sex'), this.getPath('dragon.name'), function(dragon) {

@@ -17,6 +17,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
   alleles: [],
   hiddenGenes: [],
   isEditableBinding: '*parentView.isEditable',
+  showEmptyOptionInPulldowns: NO,
   
   chromosome: '1',
   side: 'A',
@@ -158,7 +159,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       for (var i = 0; i < alls.length; i++) {
         if (hidden.indexOf(alls[i].toLowerCase()) == -1) {
           if (editable){
-            this._createPulldown(alls[i], i*30);
+            this._createPulldown(alls[i], i*30, i);
           } else {
             this._createStaticAllele(alls[i], i*30);
           }
@@ -166,7 +167,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       }
     },
 
-    _createPulldown: function(val, top) {
+    _createPulldown: function(val, top, index) {
       var map = this.get('alleleToPulldown');
       var bigVal = val.toUpperCase();
       var smallVal = val.toLowerCase();
@@ -177,8 +178,8 @@ Geniverse.DragonChromosomeView = SC.View.extend(
           
           // not sure whether these need to be SC.Objects or not. It seems to have no effect.
           objects: [ 
-            SC.Object.create({ value: bigVal, title: bigTitle}),
-            SC.Object.create({ value: smallVal, title: smallTitle})
+            SC.Object.create({ value: bigVal, title: bigTitle, index: index}),
+            SC.Object.create({ value: smallVal, title: smallTitle, index: index})
             ],
 
           value: val,
@@ -186,17 +187,18 @@ Geniverse.DragonChromosomeView = SC.View.extend(
           valueKey: 'value',
           
           updater: function(){
-            var value = this.get('value');
+            var index = this.get('objects')[0].get('index');
             var alleles = this.get('parentView').get('parentView').get('alleles');
-            for (var i = 0; i < alleles.length; i++){
-              if (alleles[i].toLowerCase() === value.toLowerCase()){
-                alleles[i] = value;
-              }
-            }
+            alleles[index] = this.get('value');
             this.get('parentView').get('parentView').set('alleles', alleles);
             this.get('parentView').get('parentView').propertyDidChange('alleles');
           }.observes('value')
       });
+      
+      //showEmptyOptionInPulldowns
+      if (this.get('parentView').get('showEmptyOptionInPulldowns')){
+        dropDownMenuView.objects.unshift(SC.Object.create({ value: ' ', title: ' ', index: index}));
+      }
 
       if (!map[this]) {
         map[this] = [];

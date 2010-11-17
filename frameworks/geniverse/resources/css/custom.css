@@ -16,6 +16,15 @@
   text-size: 9px;
 }
 
+.sc-theme .allele-string {
+	background-color: #B6EBDE;
+	border: 1px solid black;
+	text-align:center;
+  text-size: 9px;
+  color: black;
+  padding: 2px;
+}
+
 .sc-theme .genome-view-intro {
   background-color: #70594e;
   opacity: 0.75;

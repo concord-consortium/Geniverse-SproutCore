@@ -13,13 +13,19 @@ Lab.loginPage = SC.Page.design({
   mainPane: SC.MainPane.design({
     defaultResponder: Lab.LOGIN,
     
+    classNames: ['brown'],
+    
     title: "Welcome to the Geniverse Labs",
-    childViews: 'loginView'.w(),
+    childViews: 'backgroundView loginView'.w(),
+    
+    backgroundView: SC.ImageView.design({
+      value: static_url('bg2.png'),
+      classNames: ['transparent','scalingimage']
+    }),
     
     loginView: Lab.LoginView.design({
-      layout: {centerX: 0, top: Lab.marginSize, width: 500, height: 100},
-      layerId: "chatLogin",
-      classNames: 'brown'.w()
+      layout: {centerX: 0, top: Lab.marginSize, width: 700, height: 100},
+      layerId: "chatLogin"
     })
   })
 
