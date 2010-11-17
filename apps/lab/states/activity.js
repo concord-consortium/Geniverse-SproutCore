@@ -266,7 +266,8 @@ Lab.ACTIVITY = SC.Responder.create(
                 Lab.routes.gotoLabRoute({pageName: 'breedingPage'});
                 break;
               case 'individual':
-                Lab.routes.gotoLabRoute({pageName: 'breedingPagePaper'});
+                // Lab.routes.gotoLabRoute({pageName: 'breedingPagePaper'});
+                Lab.routes.gotoLabRoute({pageName: 'breedingPage'});
                 break;
               case 'group':
                 SC.Logger.log("going to group page");
