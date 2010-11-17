@@ -56,7 +56,7 @@ Lab.LOGIN = SC.Responder.create(
     var password = Lab.loginController.get('passwordValue');
     var passwordHash = SHA256(password);
     var self = this;
-    var uname = Lab.loginController.username;
+    var uname = Lab.loginController.get('username');
     var userFound = function(user) {
       if (typeof user == 'undefined') {
 		    // no user exists for that username. create one
@@ -66,7 +66,7 @@ Lab.LOGIN = SC.Responder.create(
       self.checkUserPassword(user, passwordHash);
     };
     
-    Geniverse.userController.findUser(this.username, userFound);
+    Geniverse.userController.findUser(uname, userFound);
     Lab.loginController.set('textAreaValue', '');
   },
   

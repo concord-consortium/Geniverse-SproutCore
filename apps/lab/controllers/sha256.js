@@ -104,9 +104,9 @@ function SHA256(s){
 	}
  
 	function Utf8Encode(string) {
-	  SC.Logger.log("replacing "+string)
+    // SC.Logger.log("replacing "+string)
 		string = string.replace(/\r\n/g,"\n");
-		SC.Logger.log("now it's "+string);
+    // SC.Logger.log("now it's "+string);
 		var utftext = "";
  
 		for (var n = 0; n < string.length; n++) {

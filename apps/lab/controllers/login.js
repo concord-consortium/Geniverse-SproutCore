@@ -19,7 +19,7 @@ Lab.loginController = SC.ObjectController.create(
   
   username: null,
   
-  passwordValue: "woo",
+  passwordValue: null,
   
   retypePasswordValue: null,
   
@@ -31,8 +31,8 @@ Lab.loginController = SC.ObjectController.create(
   
   test: 35,
   
-  groupNumber: 2,
-  memberNumber: 2,
+  groupNumber: 1,
+  memberNumber: 1,
 
   welcomeMessage: function(){
     var welcomeMessage = "[Not set]";
