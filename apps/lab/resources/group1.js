@@ -28,11 +28,7 @@ Lab.group1 = SC.Page.design({
       classNames: ['transparent','scalingimage']
     }),
     topBar: Lab.TopBarView.design({
-      titlePath: 'Lab.group1.title',
-      welcomePath: 'Lab.loginController.welcomeMessage',
-      welcomeIsVisiblePath: 'Lab.LOGIN.userLoggedIn',
-      logoutButtonTargetPath: 'Lab.ACTIVITY',
-      logoutButtonIsVisiblePath: 'Lab.LOGIN.userLoggedIn'
+      titlePath: 'Lab.group1.title'
     }),
 
     mainAppView: SC.View.design({
