@@ -22,13 +22,36 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
   /**
    * Necessary configuration xPath elements to set up binding inside the composite view instances
+   * These xPaths must NOT be set to a binding in views like this (set them to ''):
+   * Rule #3: View Bindings must only be set up in the ‘.lproj’ layer
+   * Fight the urge to set up bindings for the view layer anywhere but in the ‘.lproj’ layer.
+   * You should never be directly setting bindings in a view class even if you know what something is supposed to be.
+   * This is a maintenance nightmare and will cause lots of problems if you ever have to change something.
+   * It also violates some of the basic OO design structure. If you need a bind set up further down,
+   * use the ‘-Path’ naming convention.
+   * http://www.itsgotwhatplantscrave.com/2009/06/20/bindings-unleashed/
    */
   //contentPath: '', // Binding Path for the content of the xSubView
-  titlePath: '', // Binding Path for the value of the geniverseLabelView
-  welcomePath: 'Lab.loginController.welcomeMessage', // Binding Path for the value of the welcomeLabelView
-  welcomeIsVisiblePath: 'Lab.LOGIN.userLoggedIn', // Binding Path for the isVisible property of the welcomeLabelView
-  logoutButtonTargetPath: 'Lab.ACTIVITY', // Binding Path for the target property of the logoutButton
-  logoutButtonIsVisiblePath: 'Lab.LOGIN.userLoggedIn', // Binding Path for the isVisible property of the logoutButton
+  /**
+   * Binding Path for the value of the geniverseLabelView
+   */
+  titlePath: '',
+  /**
+   * Binding Path for the value of the welcomeLabelView
+   */
+  welcomePath: '',
+  /**
+   * Binding Path for the isVisible property of the welcomeLabelView
+   */
+  welcomeIsVisiblePath: '',
+  /**
+   * Binding Path for the target property of the logoutButton
+   */
+  logoutButtonTargetPath: '',
+  /**
+   * Binding Path for the isVisible property of the logoutButton
+   */
+  logoutButtonIsVisiblePath: '',
 
   /**
    * Overwritten createChildView where you set up all
