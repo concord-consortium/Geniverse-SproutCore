@@ -177,7 +177,23 @@ Lab.ACTIVITY = SC.Responder.create(
         })
     });
     // var eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
-    Geniverse.eggsController.set('content',[]);
+    var eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
+    
+    // sell any existing eggs ion startup
+    function eggsReady() {
+      eggs.forEach(function(egg){
+        egg.set('isEgg', false);
+        egg.set('isInMarketplace', true);
+      });
+      // eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
+      Geniverse.eggsController.set('content',eggs);
+    }
+    
+    if (eggs.get('status') & SC.Record.READY === SC.Record.READY) {
+      eggsReady();
+    } else {
+      eggs.addObserver('status', eggsReady);
+    }
     
     /////////////////// Chats
     SC.Logger.log("LOAD: chats");

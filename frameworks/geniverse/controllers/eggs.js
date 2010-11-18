@@ -15,7 +15,10 @@ Geniverse.eggsController = SC.ArrayController.create(
 /** @scope Geniverse.eggsController.prototype */ {
     
     removeAllEggs: function () {
-      this.set('content',[]);
+      this.get('content').forEach(function(egg){
+        egg.set('isEgg', false);
+        egg.set('isInMarketplace', true);
+      });
     },
    
     saveData: function() {
