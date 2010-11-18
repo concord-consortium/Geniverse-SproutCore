@@ -1,6 +1,6 @@
 // ==========================================================================
 // Project:   Geniverse.breedDragonController Unit Test
-// Copyright: ©2010 My Company, Inc.
+// Copyright: ©2010 Concord Consortium
 // ==========================================================================
 /*globals Geniverse GenGWT module test ok equals same stop start afterPropertyChange controller eggs breedDragons oldBreedOrganisms */
 var controller, oldBreedOrganisms, eggs, user;

@@ -1,6 +1,6 @@
 // ==========================================================================
 // Project:   Geniverse.userController
-// Copyright: ©2010 My Company, Inc.
+// Copyright: ©2010 Concord Consortium
 // ==========================================================================
 /*globals Geniverse SHA_1_sha1Hash SHA256 */
 

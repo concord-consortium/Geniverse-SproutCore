@@ -1,6 +1,6 @@
 // ==========================================================================
 // Project:   Geniverse.DragonGenomeView Unit Test
-// Copyright: ©2010 My Company, Inc.
+// Copyright: ©2010 Concord Consortium
 // ==========================================================================
 /*globals Geniverse module test ok equals same stop start */
 

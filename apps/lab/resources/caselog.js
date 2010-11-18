@@ -1,12 +1,13 @@
 // ==========================================================================
 // Project:   Geniverse - caselog page
-// Copyright: ©2010 My Company, Inc.
+// Copyright: ©2010 Concord Consortium
 // ==========================================================================
 /**
  * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
 /*globals Geniverse, CC, CcChat, java static_url sc_static */
 sc_require('mixins/simple_button');
+sc_require('resources/top_bar_view');
 
 Lab.marginSize = 15;
 
@@ -26,37 +27,10 @@ Lab.caselog = SC.Page.design({
       value: static_url('bg2'),
       classNames: ['transparent','scalingimage']
     }),
-    topBar: SC.ToolbarView.design({
-      layout: { top: 0, left: 0, right: 0, height: 36 },
-      childViews: 'geniverseLabelView welcomeLabelView logoutButton'.w(),
-      anchorLocation: SC.ANCHOR_TOP,
-      
-      geniverseLabelView: SC.LabelView.design({
-        layout: { centerY: 0, height: 24, left: 8, width: 200 },
-        controlSize: SC.LARGE_CONTROL_SIZE,
-        fontWeight: SC.BOLD_WEIGHT,
-        //valueBinding:   'Geniverse.activityController.title'
-        value: "Case Log"
-      }),
-      
-      welcomeLabelView: SC.LabelView.design({
-        layout: { centerY: 0, height: 24, right: 130, width: 500},
-        fontWeight: SC.BOLD_WEIGHT,
-        textAlign: SC.ALIGN_RIGHT,
-        valueBinding: 'Geniverse.loginController.welcomeMessage',
-        isVisibleBinding: 'Geniverse.appController.userLoggedIn'
-      }),
-
-      logoutButton: SC.ButtonView.design({
-        layout: { centerY: 0, height: 24, right: 12, width: 100 },
-        layerId: 'logOutButton',
-        title:  "Log out",
-        target: 'Geniverse.appController',
-        action: 'logout',
-        isVisibleBinding: 'Geniverse.appController.userLoggedIn'
-      })
+    topBar: Lab.TopBarView.design({
+      titlePath: 'Lab.caselog.title'
     }),
-    
+
     mainAppView: SC.View.design({
       layout: { top: 37, left: 0, right: 0 },
       layerId: 'caselogcontent',
