@@ -37,11 +37,7 @@ Lab.breedingPageGroup = SC.Page.design({
     topBar: Lab.TopBarView.design({
       classNames: ['brown'],
 
-      titlePath: 'Lab.breedingPageGroup.title',
-      welcomePath: 'Lab.loginController.welcomeMessage',
-      welcomeIsVisiblePath: 'Lab.LOGIN.userLoggedIn',
-      logoutButtonTargetPath: 'Lab.ACTIVITY',
-      logoutButtonIsVisiblePath: 'Lab.LOGIN.userLoggedIn'
+      titlePath: 'Lab.breedingPageGroup.title'
     }),
 
     mainAppView: SC.View.design({

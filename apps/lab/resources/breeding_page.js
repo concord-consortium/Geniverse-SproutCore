@@ -37,11 +37,7 @@ Lab.breedingPage = SC.Page.design({
     topBar: Lab.TopBarView.design({
       classNames: ['brown'],
 
-      titlePath: 'Lab.breedingPage.title',
-      welcomePath: 'Lab.loginController.welcomeMessage',
-      welcomeIsVisiblePath: 'Lab.LOGIN.userLoggedIn',
-      logoutButtonTargetPath: 'Lab.ACTIVITY',
-      logoutButtonIsVisiblePath: 'Lab.LOGIN.userLoggedIn'
+      titlePath: 'Lab.breedingPage.title'
     }),
     
     mainAppView: SC.View.design({
