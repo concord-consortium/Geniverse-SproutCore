@@ -54,7 +54,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
         this.set('hiddenGenes', []);
       }
     } else {
-      this.set('hiddenGenes', ['h','s','p','b']);
+      this.set('hiddenGenes', ['s','p','b']);
     }
   }.observes('Geniverse.activityController.content').cacheable(),
   
