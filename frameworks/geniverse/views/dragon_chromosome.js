@@ -15,7 +15,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
 /** @scope Geniverse.DragonChromosomeView.prototype */ {
 
   alleles: [],
-  hiddenGenes: [],
+  hiddenGenesBinding: '*parentView.hiddenGenes',
   isEditableBinding: '*parentView.isEditable',
   showEmptyOptionInPulldowns: NO,
   
@@ -151,6 +151,12 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       this._setupPulldowns();
       this.allelesDidChange();
     }.observes('isEditable'),
+    
+    hiddenGenesDidChange: function() {
+      this.removeAllChildren();
+      this._setupPulldowns();
+      this.allelesDidChange();
+    }.observes('hiddenGenes'),
 
     _setupPulldowns: function() {
       var alls = this.get('alleles');

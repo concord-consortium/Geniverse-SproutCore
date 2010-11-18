@@ -28,7 +28,9 @@ Geniverse.Activity = SC.Record.extend(
   
   sendBredDragons: SC.Record.attr(Boolean, { defaultValue: NO }),
   
-  scType: SC.Record.attr(String)            //  e.g. heretity/training, heredity/apprentice/intro
+  scType: SC.Record.attr(String),           //  e.g. heretity/training, heredity/apprentice/intro
+  
+  hiddenGenes: SC.Record.attr(String)      // case-insensitive comma-separated alleles, e.g. h,w,s
 });
 
 Geniverse.Activity.modelName = "activity";
