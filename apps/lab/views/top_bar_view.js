@@ -24,11 +24,10 @@ Lab.TopBarView = SC.ToolbarView.extend(
    * Necessary configuration xPath elements to set up binding inside the composite view instances
    */
   //contentPath: '', // Binding Path for the content of the xSubView
-  titlePath: '', // Binding Path for the value of the geniverseLabelView
-  welcomePath: 'Geniverse.loginController.welcomeMessage', // Binding Path for the value of the welcomeLabelView
-  welcomeIsVisiblePath: 'Geniverse.appController.userLoggedIn', // Binding Path for the isVisible property of the welcomeLabelView
-  logoutButtonTargetPath: 'Geniverse.appController', // Binding Path for the target property of the logoutButton
-  logoutButtonIsVisiblePath: 'Geniverse.appController.userLoggedIn', // Binding Path for the isVisible property of the logoutButton
+  titlePath: 'Geniverse.activityController.title', // Binding Path for the value of the geniverseLabelView
+  welcomePath: 'Lab.loginController.welcomeMessage', // Binding Path for the value of the welcomeLabelView
+  welcomeIsVisiblePath: 'Lab.LOGIN.userLoggedIn', // Binding Path for the isVisible property of the welcomeLabelView
+  logoutButtonIsVisiblePath: 'Lab.LOGIN.userLoggedIn', // Binding Path for the isVisible property of the logoutButton
 
   /**
    * Overwritten createChildView where you set up all
@@ -65,7 +64,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         layout: { centerY: 0, height: 24, right: 12, width: 100 },
         layerId: 'logOutButton',
         title:  "Log out",
-        target: this.get('logoutButtonTargetPath'),
+        target: Lab.ACTIVITY,
         action: 'logout',
         isVisibleBinding: this.get('logoutButtonIsVisiblePath')
       })

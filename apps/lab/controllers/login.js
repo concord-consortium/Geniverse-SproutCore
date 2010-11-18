@@ -23,7 +23,7 @@ Lab.loginController = SC.ObjectController.create(
   
   retypePasswordValue: null,
   
-  usernameBinding: 'CcChat.chatController.username',
+  usernameBinding: 'Geniverse.userController.username',
   
   showRetypeField: NO,
   
