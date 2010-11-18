@@ -41,6 +41,23 @@ Geniverse.DragonGenomeView = SC.View.extend(
   allelesMap: {h: '1',s: '1',w: '2',l: '2',t: '2',a: '2',b: '2',p: 'X',f: 'X'},
   ignoreUpdate: YES,
   
+  hiddenGenes: [],
+  
+  hiddenGenesUpdater: function() {
+    var activity = Geniverse.activityController.get('content');
+    if (!!activity) {
+      var hiddenGenes = activity.get('hiddenGenes');
+      if (!!hiddenGenes){
+        var hiddenGenes = hiddenGenes.split(/,[ ]*/);
+        this.set('hiddenGenes', hiddenGenes);
+      } else {
+        this.set('hiddenGenes', []);
+      }
+    } else {
+      this.set('hiddenGenes', ['h','s','p','b']);
+    }
+  }.observes('Geniverse.activityController.content').cacheable(),
+  
   gwtReadyBinding: 'Geniverse.gwtController.isReady',
   
   generateDragonWhenGWTReady: function() {
@@ -72,8 +89,6 @@ Geniverse.DragonGenomeView = SC.View.extend(
   bXAlleles: function() {
     return this.getAllelesFor('X','B');
   }.property('alleles'),
-  
-  hiddenGenes: ['s','p','b'],
   
   dragonView: Geniverse.OrganismView.design({
 		layout: {top: 18, left: 260, width: 200, height: 170},
@@ -114,7 +129,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
     updateAlleles: function(){
       this.set('alleles', this.get('parentView').get('a1Alleles'));
     }.observes('*parentView.a1Alleles'),
-	  hiddenGenesBinding: '*parentView.hiddenGenes',
+    hiddenGenesBinding: '*parentView.hiddenGenes',
 	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
 	  chromosome: '1',
     side: 'A'
