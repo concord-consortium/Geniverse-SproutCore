@@ -25,10 +25,10 @@ Lab.TopBarView = SC.ToolbarView.extend(
    */
   //contentPath: '', // Binding Path for the content of the xSubView
   titlePath: '', // Binding Path for the value of the geniverseLabelView
-  welcomePath: 'Geniverse.loginController.welcomeMessage', // Binding Path for the value of the welcomeLabelView
-  welcomeIsVisiblePath: 'Geniverse.appController.userLoggedIn', // Binding Path for the isVisible property of the welcomeLabelView
-  logoutButtonTargetPath: 'Geniverse.appController', // Binding Path for the target property of the logoutButton
-  logoutButtonIsVisiblePath: 'Geniverse.appController.userLoggedIn', // Binding Path for the isVisible property of the logoutButton
+  welcomePath: 'Lab.loginController.welcomeMessage', // Binding Path for the value of the welcomeLabelView
+  welcomeIsVisiblePath: 'Lab.LOGIN.userLoggedIn', // Binding Path for the isVisible property of the welcomeLabelView
+  logoutButtonTargetPath: 'Lab.ACTIVITY', // Binding Path for the target property of the logoutButton
+  logoutButtonIsVisiblePath: 'Lab.LOGIN.userLoggedIn', // Binding Path for the isVisible property of the logoutButton
 
   /**
    * Overwritten createChildView where you set up all

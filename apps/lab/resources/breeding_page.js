@@ -38,7 +38,7 @@ Lab.breedingPage = SC.Page.design({
       classNames: ['brown'],
 
       titlePath: 'Geniverse.activityController.title',
-      welcomePath: 'Geniverse.loginController.welcomeMessage',
+      welcomePath: 'Lab.loginController.welcomeMessage',
       welcomeIsVisiblePath: 'Lab.LOGIN.userLoggedIn',
       logoutButtonTargetPath: 'Lab.ACTIVITY',
       logoutButtonIsVisiblePath: 'Lab.LOGIN.userLoggedIn'

@@ -15,6 +15,7 @@ sc_require('views/login');
 sc_require('views/chromosome_tool');
 sc_require('views/stats');
 sc_require('views/chat_message');
+sc_require('resources/top_bar_view');
 
 Lab.breedingPageGroup = SC.Page.design({
   
@@ -33,37 +34,16 @@ Lab.breedingPageGroup = SC.Page.design({
         classNames: ['transparent','scalingimage']
       }),
 
-    topBar: SC.ToolbarView.design({
-      layout: { top: 0, left: 0, right: 0, height: 36 },
+    topBar: Lab.TopBarView.design({
       classNames: ['brown'],
-      childViews: 'geniverseLabelView welcomeLabelView logoutButton'.w(),
-      anchorLocation: SC.ANCHOR_TOP,
-      
-      geniverseLabelView: SC.LabelView.design({
-        layout: { centerY: 0, height: 24, left: 8, width: 200 },
-        controlSize: SC.LARGE_CONTROL_SIZE,
-        fontWeight: SC.BOLD_WEIGHT,
-        valueBinding:   'Geniverse.activityController.title'
-      }),
-      
-      welcomeLabelView: SC.LabelView.design({
-        layout: { centerY: 0, height: 24, right: 130, width: 500},
-        fontWeight: SC.BOLD_WEIGHT,
-        textAlign: SC.ALIGN_RIGHT,
-        valueBinding: 'Geniverse.loginController.welcomeMessage',
-        isVisibleBinding: 'Geniverse.appController.userLoggedIn'
-      }),
 
-      logoutButton: SC.ButtonView.design({
-        layout: { centerY: 0, height: 24, right: 12, width: 100 },
-        layerId: 'logOutButton',
-        title:  "Log out",
-        target: "Lab.ACTIVITY",
-        action: 'logout',
-        isVisibleBinding: 'Lab.LOGIN.userLoggedIn'
-      })
+      titlePath: 'Geniverse.activityController.title',
+      welcomePath: 'Lab.loginController.welcomeMessage',
+      welcomeIsVisiblePath: 'Lab.LOGIN.userLoggedIn',
+      logoutButtonTargetPath: 'Lab.ACTIVITY',
+      logoutButtonIsVisiblePath: 'Lab.LOGIN.userLoggedIn'
     }),
-    
+
     mainAppView: SC.View.design({
       
       layout: { top: 45, bottom: 0, left: 10, right: 0 },

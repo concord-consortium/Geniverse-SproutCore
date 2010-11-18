@@ -13,6 +13,7 @@ sc_require('views/dragon_chat_compose');
 sc_require('views/organism');
 sc_require('views/published_articles');
 sc_require('views/login');
+sc_require('resources/top_bar_view');
 
 Lab.chromosomeTrainingPage = SC.Page.design({
   
@@ -30,37 +31,16 @@ Lab.chromosomeTrainingPage = SC.Page.design({
       value: static_url('lab_background.png'),
       classNames: ['transparent','scalingimage']
     }),
-    topBar: SC.ToolbarView.design({
-      layout: { top: 0, left: 0, right: 0, height: 36 },
-      childViews: 'geniverseLabelView welcomeLabelView logoutButton'.w(),
-      anchorLocation: SC.ANCHOR_TOP,
-      
-      geniverseLabelView: SC.LabelView.design({
-        layout: { centerY: 0, height: 24, left: 8, width: 200 },
-        controlSize: SC.LARGE_CONTROL_SIZE,
-        fontWeight: SC.BOLD_WEIGHT,
-        //valueBinding:   'Geniverse.activityController.title'
-        value: "Training"
-      }),
-      
-      welcomeLabelView: SC.LabelView.design({
-        layout: { centerY: 0, height: 24, right: 130, width: 500},
-        fontWeight: SC.BOLD_WEIGHT,
-        textAlign: SC.ALIGN_RIGHT,
-        valueBinding: 'Geniverse.loginController.welcomeMessage',
-        isVisibleBinding: 'Lab.LOGIN.userLoggedIn'
-      }),
+    topBar: Lab.TopBarView.design({
+      classNames: ['brown'],
 
-      logoutButton: SC.ButtonView.design({
-        layout: { centerY: 0, height: 24, right: 12, width: 100 },
-        layerId: 'logOutButton',
-        title:  "Log out",
-        target: "Lab.ACTIVITY",       // FIXME: I'm in this state, why is this necessary?
-        action: 'logout',
-        isVisibleBinding: 'Lab.LOGIN.userLoggedIn'
-      })
+      titlePath: 'Lab.chromosomeTrainingPage.title',
+      welcomePath: 'Lab.loginController.welcomeMessage',
+      welcomeIsVisiblePath: 'Lab.LOGIN.userLoggedIn',
+      logoutButtonTargetPath: 'Lab.ACTIVITY',
+      logoutButtonIsVisiblePath: 'Lab.LOGIN.userLoggedIn'
     }),
-    
+
     mainAppView: SC.View.design({
       
       childViews: 'femaleGenomePanel maleGenomePanel'.w(),
