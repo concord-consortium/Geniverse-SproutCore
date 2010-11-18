@@ -80,7 +80,7 @@ Lab.ACTIVITY = SC.Responder.create(
           if (!scType){
             matches = false;
           } else {
-            scTypeAr = scType.split("/");
+            var scTypeAr = scType.split("/");
             matches = (scTypeAr[0] === strand);
             matches = (matches && !(scTypeAr.length > 1 && scTypeAr[1] !== level));
             matches = (matches && !(scTypeAr.length > 2 && scTypeAr[2] !== activityType));
@@ -102,6 +102,7 @@ Lab.ACTIVITY = SC.Responder.create(
         Geniverse.activityController.set('content', found);
         activities.removeObserver('status', setActivity);
         
+        Lab.ACTIVITY.initChatChannels();
         Lab.ACTIVITY.loadData();
         Lab.ACTIVITY.gotoActivityRoute();
       }
@@ -117,10 +118,30 @@ Lab.ACTIVITY = SC.Responder.create(
     }
   },
   
+  initChatChannels: function() {
+    
+    var user = Geniverse.userController.get('content');
+    var username = user.get('username');
+    var activity = Geniverse.activityController.get('content');
+    
+    var activityChannel = Geniverse.activityController.get('baseChannelName');
+    var groupChannel = activityChannel+"-"+Lab.loginController.get('groupNumber');
+    
+    CcChat.chatController.set('username', username);
+    CcChat.chatController.initChat(groupChannel);
+    
+    SC.Logger.info("logged into %s",groupChannel);
+  },
+  
   loadData: function() {
     SC.Logger.log("ACTIVITY loadData");
     var user = Geniverse.userController.get('content');
     var activity = Geniverse.activityController.get('content');
+    
+    // Clear all data jumping between activities
+    Geniverse.stableOrganismsController.set('content', null);
+    Geniverse.eggsController.set('content',null);
+    Geniverse.challengePoolController.set('content', null);
     
     /////////////////// Stable
     SC.Logger.log("LOAD: stable");

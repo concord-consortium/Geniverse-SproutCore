@@ -2,7 +2,7 @@
 // Project:   Lab.LOGIN
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Lab Geniverse SHA256 */
+/*globals Lab Geniverse CcChat SHA256 */
 
 /** @class
 
@@ -37,7 +37,9 @@ Lab.LOGIN = SC.Responder.create(
   checkLoginState: function() {
     // check cookies
     var username = Lab.userDefaults.readDefault('username');
-    if (username !== undefined && username !== null && username.length > 0){
+    var groupNumber = Lab.userDefaults.readDefault('groupNumber');
+    var memberNumber = Lab.userDefaults.readDefault('memberNumber');
+    if (!!username && !!groupNumber && !!memberNumber){
       SC.Logger.info("automatically logging in as %s", username);
       this.autoLogin(username);      // this will kick-off login
       return true;
@@ -77,8 +79,13 @@ Lab.LOGIN = SC.Responder.create(
       if (typeof user == 'undefined') {
 		    // no user exists for that username
 		    SC.Logger.info("No User exists for that login. Please log in again.");
-		    Geniverse.appController.logout();
+		    Lab.ACTIVITY.logout();
 		  } else {
+		    // these won't have been set, because login view wasn't shown
+		    Lab.loginController.set('username', username);
+		    Lab.loginController.set('groupNumber', Lab.userDefaults.readDefault('groupNumber'));
+		    Lab.loginController.set('memberNumber', Lab.userDefaults.readDefault('memberNumber'));
+		    
 		    self.finishLogin(user);
 		  }
     };
@@ -101,9 +108,13 @@ Lab.LOGIN = SC.Responder.create(
   
   finishLogin: function(user) {
     Lab.userDefaults.writeDefault('username', user.get('username'));
+    Lab.userDefaults.writeDefault('groupNumber',Lab.loginController.get('groupNumber')); 
+    Lab.userDefaults.writeDefault('memberNumber',Lab.loginController.get('memberNumber'));
+    
     Geniverse.userController.set('content', user);
     CcChat.chatController.set('username', user.get('username'));
     Lab.loginController.set('loggedIn', YES);
+    
     this.set('userLoggedIn', YES);
   }
   
