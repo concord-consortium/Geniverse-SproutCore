@@ -294,7 +294,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
       // rm last comma
       outStr = outStr.substring(0,outStr.length-1);
       
-      var outStrIgnoredGenesRemoved = outStr.replace(/.: ,/,"");      // rm genes set to blank by author
+      var outStrIgnoredGenesRemoved = outStr.replace(/.: ,/g,"");      // rm genes set to blank by author
       var hiddenGenes = this.get('hiddenGenes').join();
       var rmHidden = new RegExp(".:["+hiddenGenes+"],","ig");         // rm hidden genes
       outStrIgnoredGenesRemoved = outStrIgnoredGenesRemoved.replace(rmHidden,"");

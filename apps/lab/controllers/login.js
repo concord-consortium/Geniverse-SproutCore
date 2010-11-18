@@ -15,15 +15,13 @@ Lab.loginController = SC.ObjectController.create(
 
   // TODO: Add your own code here.
   
-  textAreaValue: null,
+  textAreaValue: '',
   
-  username: null,
+  username: '',
   
-  passwordValue: null,
+  passwordValue: '',
   
-  retypePasswordValue: null,
-  
-  usernameBinding: 'CcChat.chatController.username',
+  retypePasswordValue: '',
   
   showRetypeField: NO,
   
@@ -35,8 +33,11 @@ Lab.loginController = SC.ObjectController.create(
   memberNumber: 1,
 
   welcomeMessage: function(){
-    var welcomeMessage = "[Not set]";
+    var welcomeMessage = "";
     var user = this.get('username');
+    if (!user){
+      return welcomeMessage;
+    }
     var group = this.get('groupNumber');
     var member = this.get('memberNumber');
     welcomeMessage = "Welcome %@, you are user #%@ in group %@".fmt(user, member, group);

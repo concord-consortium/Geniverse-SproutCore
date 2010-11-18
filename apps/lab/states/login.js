@@ -102,6 +102,7 @@ Lab.LOGIN = SC.Responder.create(
   finishLogin: function(user) {
     Lab.userDefaults.writeDefault('username', user.get('username'));
     Geniverse.userController.set('content', user);
+    CcChat.chatController.set('username', user.get('username'));
     Lab.loginController.set('loggedIn', YES);
     this.set('userLoggedIn', YES);
   }
