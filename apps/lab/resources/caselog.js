@@ -7,7 +7,7 @@
  */
 /*globals Geniverse, CC, CcChat, java static_url sc_static */
 sc_require('mixins/simple_button');
-sc_require('resources/top_bar_view');
+sc_require('views/top_bar_view');
 
 Lab.marginSize = 15;
 
@@ -28,7 +28,6 @@ Lab.caselog = SC.Page.design({
       classNames: ['transparent','scalingimage']
     }),
     topBar: Lab.TopBarView.design({
-      titlePath: 'Lab.caselog.title'
     }),
 
     mainAppView: SC.View.design({

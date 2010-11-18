@@ -14,7 +14,7 @@ sc_require('views/published_articles');
 sc_require('views/login');
 sc_require('views/chromosome_tool');
 sc_require('views/stats');
-sc_require('resources/top_bar_view');
+sc_require('views/top_bar_view');
 
 Lab.breedingPage = SC.Page.design({
   
@@ -35,13 +35,6 @@ Lab.breedingPage = SC.Page.design({
       }),
 
     topBar: Lab.TopBarView.design({
-      classNames: ['brown'],
-
-      titlePath: 'Geniverse.activityController.title',
-      welcomePath: 'Geniverse.loginController.welcomeMessage',
-      welcomeIsVisiblePath: 'Lab.LOGIN.userLoggedIn',
-      logoutButtonTargetPath: 'Lab.ACTIVITY',
-      logoutButtonIsVisiblePath: 'Lab.LOGIN.userLoggedIn'
     }),
     
     mainAppView: SC.View.design({
