@@ -254,7 +254,7 @@ Lab.breedingPageGroup = SC.Page.design({
                 dragon.set('isEgg', false);
                 dragon.set('stableOrder', dragonNum);
               SC.RunLoop.end();
-              Geniverse.store.commitRecords();
+              
               self.dragonNum = self.dragonNum + 1;
               SC.Logger.info("Stable has %d dragons", self.dragonNum);
             }
