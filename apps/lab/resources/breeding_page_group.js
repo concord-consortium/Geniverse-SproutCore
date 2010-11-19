@@ -16,6 +16,7 @@ sc_require('views/chromosome_tool');
 sc_require('views/stats');
 sc_require('views/chat_message');
 sc_require('views/top_bar_view');
+sc_require('views/challenge_pool_view');
 
 Lab.breedingPageGroup = SC.Page.design({
   
@@ -45,36 +46,8 @@ Lab.breedingPageGroup = SC.Page.design({
       layout: { top: 45, bottom: 0, left: 10, right: 0 },
       
       childViews: 'breedView statsView challengePoolView breedingPenView challengeChromosomeToolView breedingChromosomeToolView  stableView stableChromosomeToolView marketplaceView chatView allArticlesView'.w(),
-     
-      challengePoolView: SC.View.design({
-        className: 'transparent'.w(),
-        childViews: "titleView dragonsView".w(),
-        layout: { left: 20, top: 70, width:70, height: 300 },
-        titleView: SC.LabelView.design({
-          layout: { centerY: 0, height: 20, left: 0, top:0, width: 70 },
-          value: "Parent Pool",
-          controlSize: "bity",
-          fontWeight: SC.BOLD_WEIGHT,
-          textAlign: SC.ALIGN_CENTER,
-          classNames: "container_label".w()
-        }),
-        dragonsView: CC.AutoScrollView.design({
-          hasHorizontalScroller: NO,
-          layout: { left: 0, top: 20, width: 70, height: 280},
-          backgroundColor: 'white',
-          contentView: SC.GridView.design({
-            contentBinding: 'Geniverse.challengePoolController.arrangedObjects',
-            selectionBinding: 'Geniverse.challengePoolController.selection',
-            rowHeight: 70,
-            columnWidth: 70,
-            canEditContent: NO,
-            exampleView: Geniverse.OrganismView,
-            isSelectable: YES,
-            dragDataTypes: ['dragon']
-          }),
-          autoScrollTriggerBinding: 'Geniverse.challengePoolController.length'
-        })
-      }),
+
+      challengePoolView: Lab.ChallengePoolView.design({}),
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
       layout: { left: 20 + 70 - 35, top: 40, width: 35, height: 30 },
         selectionBinding: 'Geniverse.challengePoolController.selection'
