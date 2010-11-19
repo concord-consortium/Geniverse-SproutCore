@@ -44,7 +44,7 @@ Lab.breedingPage = SC.Page.design({
       
       layout: { top: 45, bottom: 0, left: 10, right: 0 },
       
-      childViews: 'breedView statsView challengePoolView challengeChromosomeToolView breedingPenView breedingChromosomeToolView stableView stableChromosomeToolView marketplaceView '.w(),
+      childViews: 'breedView statsView challengePoolView challengeChromosomeToolView breedingPenView breedingChromosomeToolView stableView stableChromosomeToolView marketplaceView meiosisView'.w(),
      
       
       // challenge pool to hold initial, system-created dragons
@@ -175,6 +175,16 @@ Lab.breedingPage = SC.Page.design({
       stableChromosomeToolView: Geniverse.ChromosomeToolView.design({
       layout: { left:680 + 240 - 35, top: 120, width: 35, height: 30 },
         selectionBinding: 'Geniverse.stableOrganismsController.selection'
+      }),
+      
+      meiosisView: SC.View.design({
+        layout: { left: 880, top: 150, height: 300, width: 240 },
+        classNames: 'meiosis',
+        childViews: 'cell'.w(),
+        
+        cell: SC.View.design({
+          classNames: 'cell'
+        })
       }),
 
       stableView: SC.View.design({
