@@ -62,10 +62,16 @@
   allBs = alleles.scan(bPattern)
   
   allAs.each do |allele|
-    chromosomes['A'] << allele[0]
+    alleleVal = allele[0]
+    alleleVal = "little" + alleleVal if alleleVal.upcase != alleleVal
+    alleleVal = "big" + alleleVal if alleleVal.upcase == alleleVal
+    chromosomes['A'] << alleleVal
   end
   allBs.each do |allele|
-    chromosomes['B'] << allele[0]
+    alleleVal = allele[0]
+    alleleVal = "little" + alleleVal if alleleVal.upcase != alleleVal
+    alleleVal = "big" + alleleVal if alleleVal.upcase == alleleVal
+    chromosomes['B'] << alleleVal
   end
   
   # Extract traits into arrays
@@ -94,10 +100,16 @@
     allBs = alleles.scan(bPattern)
 
     allAs.each do |allele|
-      motherchromosomes['A'] << allele[0]
+      alleleVal = allele[0]
+      alleleVal = "little" + alleleVal if alleleVal.upcase != alleleVal
+      alleleVal = "big" + alleleVal if alleleVal.upcase == alleleVal
+      motherchromosomes['A'] << alleleVal
     end
     allBs.each do |allele|
-      motherchromosomes['B'] << allele[0]
+      alleleVal = allele[0]
+      alleleVal = "little" + alleleVal if alleleVal.upcase != alleleVal
+      alleleVal = "big" + alleleVal if alleleVal.upcase == alleleVal
+      motherchromosomes['B'] << alleleVal
     end
 
     # Extract traits into arrays
@@ -126,10 +138,16 @@
     allBs = alleles.scan(bPattern)
 
     allAs.each do |allele|
-      fatherchromosomes['A'] << allele[0]
+      alleleVal = allele[0]
+      alleleVal = "little" + alleleVal if alleleVal.upcase != alleleVal
+      alleleVal = "big" + alleleVal if alleleVal.upcase == alleleVal
+      fatherchromosomes['A'] << alleleVal
     end
     allBs.each do |allele|
-      fatherchromosomes['B'] << allele[0]
+      alleleVal = allele[0]
+      alleleVal = "little" + alleleVal if alleleVal.upcase != alleleVal
+      alleleVal = "big" + alleleVal if alleleVal.upcase == alleleVal
+      fatherchromosomes['B'] << alleleVal
     end
 
     # Extract traits into arrays
