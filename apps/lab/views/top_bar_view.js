@@ -1,6 +1,6 @@
 // ==========================================================================
 // Project:   Lab - TopBarView
-// Copyright: ©2010 Concord Consortium
+// Copyright: 2010 Concord Consortium
 // ==========================================================================
 /**
  * Top toolbar with labels and logout button.
