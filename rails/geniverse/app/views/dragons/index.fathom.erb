@@ -1,0 +1,202 @@
+<h1>Listing dragons</h1>
+
+<% specials ||= {}; extra_links ||= [] %>
+
+<table>
+  <tr>
+    <% if (@dragons.size > 0) %>
+      <th>
+          Dragon ID
+      </th>
+      <th>
+          Mother ID
+      </th>
+      <th>
+          Father ID
+      </th>
+      <% (0..8).each do |i| %>
+        <th>
+            <%=h 'A ' + (i+1).to_s %>
+        </th>
+        <th>
+            <%=h 'B ' + (i+1).to_s %>
+        </th>
+        <th>
+            <%=h 'Trait' + (i+1).to_s %>
+        </th>
+      <% end %>
+      <% (0..8).each do |i| %>
+        <th>
+            <%=h 'Mother A ' + (i+1).to_s %>
+        </th>
+        <th>
+            <%=h 'Mother B ' + (i+1).to_s %>
+        </th>
+        <th>
+            <%=h 'Mother Trait' + (i+1).to_s %>
+        </th>
+      <% end %>
+      <% (0..8).each do |i| %>
+        <th>
+            <%=h 'Father A ' + (i+1).to_s %>
+        </th>
+        <th>
+            <%=h 'Father B ' + (i+1).to_s %>
+        </th>
+        <th>
+            <%=h 'Father Trait' + (i+1).to_s %>
+        </th>
+      <% end %>
+    <% end %>
+  </tr>
+
+<% @dragons.each do |dragon| %>
+
+<% 
+  # Extract chromosomes into arrays
+  chromosomes = {"A" => [], "B" => []}
+  alleles = dragon.attributes['alleles']
+  aPattern = /a:(.)/
+  bPattern = /b:(.)/
+  allAs = alleles.scan(aPattern)
+  allBs = alleles.scan(bPattern)
+  
+  allAs.each do |allele|
+    chromosomes['A'] << allele[0]
+  end
+  allBs.each do |allele|
+    chromosomes['B'] << allele[0]
+  end
+  
+  # Extract traits into arrays
+  traits = []
+  imageTraits = dragon.attributes['imageURL'].split('.')[0].split('/')
+  # start at 4, to rm /biologica/cache/5/
+  (4..12).each do |i|
+    traits[i-4] = imageTraits[i].humanize 
+  end
+  # some silly reording, as the trait names aren't in the same order as the alleles
+  scales = traits.delete_at(7)
+  traits.insert(1, scales)
+  fire = traits.delete_at(5)
+  traits.insert(8, fire)
+  traits[6] = traits[5]  # two alleles for one color
+  
+  # duplicating stuff for quick deployment.... will DRY up
+  # mother
+  mother = dragon.mother
+  if (!mother.nil?)
+    motherchromosomes = {"A" => [], "B" => []}
+    alleles = mother.attributes['alleles']
+    aPattern = /a:(.)/
+    bPattern = /b:(.)/
+    allAs = alleles.scan(aPattern)
+    allBs = alleles.scan(bPattern)
+
+    allAs.each do |allele|
+      motherchromosomes['A'] << allele[0]
+    end
+    allBs.each do |allele|
+      motherchromosomes['B'] << allele[0]
+    end
+
+    # Extract traits into arrays
+    mothertraits = []
+    imageTraits = mother.attributes['imageURL'].split('.')[0].split('/')
+    # start at 4, to rm /biologica/cache/5/
+    (4..12).each do |i|
+      mothertraits[i-4] = imageTraits[i].humanize 
+    end
+    # some silly reording, as the trait names aren't in the same order as the alleles
+    scales = mothertraits.delete_at(7)
+    mothertraits.insert(1, scales)
+    fire = mothertraits.delete_at(5)
+    mothertraits.insert(8, fire)
+    mothertraits[6] = mothertraits[5]  # two alleles for one color
+  end
+
+  # father
+  father = dragon.father
+  if (!father.nil?)
+    fatherchromosomes = {"A" => [], "B" => []}
+    alleles = father.attributes['alleles']
+    aPattern = /a:(.)/
+    bPattern = /b:(.)/
+    allAs = alleles.scan(aPattern)
+    allBs = alleles.scan(bPattern)
+
+    allAs.each do |allele|
+      fatherchromosomes['A'] << allele[0]
+    end
+    allBs.each do |allele|
+      fatherchromosomes['B'] << allele[0]
+    end
+
+    # Extract traits into arrays
+    fathertraits = []
+    imageTraits = father.attributes['imageURL'].split('.')[0].split('/')
+    # start at 4, to rm /biologica/cache/5/
+    (4..12).each do |i|
+      fathertraits[i-4] = imageTraits[i].humanize 
+    end
+    # some silly reording, as the trait names aren't in the same order as the alleles
+    scales = fathertraits.delete_at(7)
+    fathertraits.insert(1, scales)
+    fire = fathertraits.delete_at(5)
+    fathertraits.insert(8, fire)
+    fathertraits[6] = fathertraits[5]  # two alleles for one color
+  end
+  
+%>
+
+  <tr>
+    <td>
+      <%=h dragon.id %>
+    </td>
+    <td>
+      <%=h dragon.attributes['mother_id'] %>
+    </td>
+    <td>
+      <%=h dragon.attributes['father_id'] %>
+    </td>
+    <% (0..8).each do |i| %>
+      <td>
+        <%=h chromosomes['A'][i] %>
+      </td>
+      <td>
+        <%=h chromosomes['B'][i] %>
+      </td>
+      <td>
+        <%=h traits[i] %>
+      </td>
+    <% end %>
+    <% (0..8).each do |i| %>
+      <td>
+        <%=h motherchromosomes['A'][i] if motherchromosomes %>
+      </td>
+      <td>
+        <%=h motherchromosomes['B'][i] if motherchromosomes %>
+      </td>
+      <td>
+        <%=h mothertraits[i] if motherchromosomes %>
+      </td>
+    <% end %>
+    <% (0..8).each do |i| %>
+      <td>
+        <%=h fatherchromosomes['A'][i] if motherchromosomes %>
+      </td>
+      <td>
+        <%=h fatherchromosomes['B'][i] if motherchromosomes %>
+      </td>
+      <td>
+        <%=h fathertraits[i] if motherchromosomes %>
+      </td>
+    <% end %>
+    
+    <td><%= link_to 'Show', dragon %></td>
+  </tr>
+<% end %>
+
+</table>
+
+<br />

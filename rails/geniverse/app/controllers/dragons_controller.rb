@@ -7,6 +7,7 @@ class DragonsController < ApplicationController
       format.html # index.html.erb
       format.xml  { render :xml => @dragons }
       format.json { render :json => custom_array_hash(@dragons) }
+      format.fathom  { render :fathom => @dragons }
     end
   end
 
