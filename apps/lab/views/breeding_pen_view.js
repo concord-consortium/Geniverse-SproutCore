@@ -1,10 +1,10 @@
 // ==========================================================================
-// Project:   Lab - ChallengePoolView
+// Project:   Lab - BreedingPenView
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
 /*globals Lab */
 /**
- * Challenge Pool View with titleView and dragonsView.
+ * BreedingPen View with titleView and penView for eggs.
  * This is a composite view component.
  * Some code cribbed from http://www.itsgotwhatplantscrave.com/2009/07/29/composite-views/
  * We've broken Rule #3 by setting defaults for DRYness sake. Be sure to set the xPaths to something
@@ -15,14 +15,14 @@
  * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
 
-Lab.ChallengePoolView = SC.View.extend(
-/** @scope Lab.ChallengePoolView.prototype */ {
-  classNames: 'transparent'.w(),
-  layout: { left: 20, top: 70, width:70, height: 300 },
+Lab.BreedingPenView = SC.View.extend(
+/** @scope Lab.BreedingPenView.prototype */ {
+  classNames: ('transparent').w(),
+  layout: { left: 265, top: 70, width: 300, height: 300 },
 
   // childViews
   titleView: null,
-  dragonsView: null,
+  penView: null,
 
   /**
    * Necessary configuration xPath elements to set up binding inside the composite view instances
@@ -33,17 +33,17 @@ Lab.ChallengePoolView = SC.View.extend(
    */
   //titlePath: '',
   /**
-   * Binding Path for the content property of the dragonsView
+   * Binding Path for the content property of the penView
    */
-  contentPath: 'Geniverse.challengePoolController.arrangedObjects',
+  contentPath: 'Geniverse.eggsController.arrangedObjects',
   /**
-   * Binding Path for the selection property of the dragonsView
+   * Binding Path for the selection property of the penView
    */
-  selectionPath: 'Geniverse.challengePoolController.selection',
+  selectionPath: 'Geniverse.eggsController.selection',
   /**
-   * Binding Path for the autoScrollTrigger property of the dragonsView
+   * Binding Path for the autoScrollTrigger property of the penView
    */
-  autoScrollTriggerPath: 'Geniverse.challengePoolController.length',
+  autoScrollTriggerPath: 'Geniverse.eggsController.length',
 
   /**
    * Overwritten createChildView where you set up all
@@ -55,27 +55,27 @@ Lab.ChallengePoolView = SC.View.extend(
 
     this.titleView = this.createChildView(
       SC.LabelView.design({
-        layout: { centerY: 0, height: 20, left: 0, top:0, width: 70 },
+        layout: { centerY: 0, height: 20, left: 0, top:0, width: 300 },
         //valueBinding: this.get('titlePath'),
-        value: 'Parent Pool',
+        value: "Breeding Pen",
         controlSize: "bity",
-        fontWeight: SC.BOLD_WEIGHT,
         textAlign: SC.ALIGN_CENTER,
+        fontWeight: SC.BOLD_WEIGHT,
         classNames: "container_label".w()
       })
     );
     childViews.push(this.titleView);
 
-    this.dragonsView = this.createChildView(
+    this.penView = this.createChildView(
       CC.AutoScrollView.design({
         hasHorizontalScroller: NO,
-        layout: { left: 0, top: 20, width: 70, height: 280},
+        layout: { left: 0, top: 20, width: 300, height: 280 },
         backgroundColor: 'white',
         contentView: SC.GridView.design({
           contentBinding: this.get('contentPath'),
           selectionBinding: this.get('selectionPath'),
-          rowHeight: 70,
-          columnWidth: 70,
+          rowHeight: 60,
+          columnWidth: 60,
           canEditContent: NO,
           exampleView: Geniverse.OrganismView,
           isSelectable: YES,
@@ -84,7 +84,7 @@ Lab.ChallengePoolView = SC.View.extend(
         autoScrollTriggerBinding: this.get('autoScrollTriggerPath')
       })
     );
-    childViews.push(this.dragonsView);
+    childViews.push(this.penView);
 
     this.set('childViews', childViews);
   }

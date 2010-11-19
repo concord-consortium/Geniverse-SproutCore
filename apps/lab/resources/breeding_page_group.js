@@ -17,6 +17,7 @@ sc_require('views/stats');
 sc_require('views/chat_message');
 sc_require('views/top_bar_view');
 sc_require('views/challenge_pool_view');
+sc_require('views/breeding_pen_view');
 
 Lab.breedingPageGroup = SC.Page.design({
   
@@ -59,36 +60,7 @@ Lab.breedingPageGroup = SC.Page.design({
       }),
       
       // Breeding pen with eggs
-      breedingPenView: SC.View.design ({
-        childViews: "titleView penView".w(),
-        layout: { left: 265, top: 70, width: 300, height: 300 },
-        classNames: ('transparent').w(),
-        titleView: SC.LabelView.design({
-          layout: { centerY: 0, height: 20, left: 0, top:0, width: 300 },
-          value: "Breeding Pen",
-          controlSize: "bity",
-          textAlign: SC.ALIGN_CENTER,
-          fontWeight: SC.BOLD_WEIGHT,
-          classNames: "container_label".w()
-        }),
-
-        penView: CC.AutoScrollView.design({
-          hasHorizontalScroller: NO,
-          layout: { left: 0, top: 20, width: 300, height: 280 },
-          backgroundColor: 'white',
-          contentView: SC.GridView.design({
-            contentBinding: 'Geniverse.eggsController.arrangedObjects',
-            selectionBinding: 'Geniverse.eggsController.selection',
-            rowHeight: 60,
-            columnWidth: 60,
-            canEditContent: NO,
-            exampleView: Geniverse.OrganismView,
-            isSelectable: YES,
-            dragDataTypes: ['dragon']
-          }),
-          autoScrollTriggerBinding: 'Geniverse.eggsController.length'
-        })
-      }),
+      breedingPenView: Lab.BreedingPenView.design({}),
       
       
       breedingChromosomeToolView: Geniverse.ChromosomeToolView.design({
