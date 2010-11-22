@@ -1,7 +1,7 @@
 dir = File.expand_path(File.dirname(__FILE__))
 require "#{dir}/support/spec_helper.rb"
 
-describe "App Controller Test" do
+describe "Login Test" do
   before(:all) do
     start_testing_servers
     @app = new_test {|app|
@@ -10,13 +10,14 @@ describe "App Controller Test" do
       app.move_to 1, 1 
       app.resize_to 1024, 768
 
-      app.define_path 'appContainer', 'mainChatExamplePage.mainPane.appContainer', View
-      app.define_path 'topBar', 'mainChatExamplePage.mainPane.topBar', View
+      app.define_path 'labPage', 'mainPage.mainPane.mainAppView', View
+      app.define_path 'loginPage', 'loginPage.mainPane', View
+      app.define_path 'topBar', 'mainPage.mainPane.topBar', View
     }
     
-    @login_field = @app['appContainer.loginView.nameField', 'SC.TextFieldView']
-    @password_field = @app['appContainer.loginView.passwordField', 'SC.TextFieldView']
-    @login_button = @app['appContainer.loginView.loginButtonView', 'SC.ButtonView']
+    @login_field = @app['loginPage.loginView.nameField', 'SC.TextFieldView']
+    @password_field = @app['loginPage.loginView.passwordField', 'SC.TextFieldView']
+    @login_button = @app['loginPage.loginView.loginButtonView', 'SC.ButtonView']
     @welcome_label = @app['topBar.welcomeLabelView', 'SC.LabelView']
     @logout_button = @app['topBar.logoutButton', 'SC.ButtonView']
   end
@@ -57,12 +58,11 @@ describe "App Controller Test" do
     @logout_button.isVisibleInWindow.should be_true
     @logout_button.click
     
-    ## FIXME: The SproutCore app reloads after logout, so we lose the SC object and can't continue
-    ## Apparently there will soon be updates to Lebowski that will allow us to deal with this
-    pending 'waiting for lebowski framework updates' do
-      @login_field.isVisibleInWindow.should be_true
-      @logout_button.isVisibleInWindow.should_not be_true
-    end
+    # This exists in gem version of Lebowski at least since 11/22/10
+    @app.reset_application_context 
+
+    @login_field.isVisibleInWindow.should be_true
+    @logout_button.isVisibleInWindow.should_not be_true
   end
   
 end

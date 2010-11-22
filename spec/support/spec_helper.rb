@@ -22,8 +22,8 @@ SELENIUM_PORT = PortTools.get_port('SELENIUM_PORT', 4244);
 APACHE_PORT = PortTools.get_port('APACHE_PROXY_PORT', 1234);
 
 TEST_SETTINGS = {
-  :app_root_path => "/geniverse",
-  :app_name => "Geniverse",
+  :app_root_path => "/lab",
+  :app_name => "Lab",
   :app_server_port => APACHE_PORT,
   :selenium_server_port => SELENIUM_PORT,
   :browser => :firefox
