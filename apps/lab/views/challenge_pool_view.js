@@ -18,7 +18,6 @@
 Lab.ChallengePoolView = SC.View.extend(
 /** @scope Lab.ChallengePoolView.prototype */ {
   classNames: 'transparent'.w(),
-  layout: { left: 20, top: 70, width:70, height: 300 },
 
   // childViews
   titleView: null,
