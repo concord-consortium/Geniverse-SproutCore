@@ -32,9 +32,7 @@ Lab.chromosomeTrainingPage = SC.Page.design({
       classNames: ['transparent','scalingimage']
     }),
     topBar: Lab.TopBarView.design({
-      classNames: ['brown'],
-
-      titlePath: 'Lab.chromosomeTrainingPage.title'
+      classNames: ['brown']
     }),
 
     mainAppView: SC.View.design({

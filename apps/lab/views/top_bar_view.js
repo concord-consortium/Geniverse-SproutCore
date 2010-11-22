@@ -32,7 +32,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
   /**
    * Binding Path for the value of the geniverseLabelView
    */
-  titlePath: '',
+  titlePath: 'Geniverse.activityController.title',
   /**
    * Binding Path for the value of the welcomeLabelView
    */

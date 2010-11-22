@@ -38,9 +38,7 @@ Lab.breedingPageGroup = SC.Page.design({
       }),
 
     topBar: Lab.TopBarView.design({
-      classNames: ['brown'],
-
-      titlePath: 'Lab.breedingPageGroup.title'
+      classNames: ['brown']
     }),
 
     mainAppView: SC.View.design({
