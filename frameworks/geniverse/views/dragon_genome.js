@@ -41,22 +41,23 @@ Geniverse.DragonGenomeView = SC.View.extend(
   allelesMap: {h: '1',s: '1',w: '2',l: '2',t: '2',a: '2',b: '2',p: 'X',f: 'X'},
   ignoreUpdate: YES,
   
-  hiddenGenes: [],
+  activityBinding: 'Geniverse.activityController.content',
   
-  hiddenGenesUpdater: function() {
+  hiddenGenes: function() {
     var activity = Geniverse.activityController.get('content');
     if (!!activity) {
       var hiddenGenes = activity.get('hiddenGenes');
       if (!!hiddenGenes){
         var hiddenGenes = hiddenGenes.split(/,[ ]*/);
-        this.set('hiddenGenes', hiddenGenes);
+        return hiddenGenes;
+        SC.RunLoop.end();
       } else {
-        this.set('hiddenGenes', []);
+        return [];
       }
     } else {
-      this.set('hiddenGenes', ['s','p','b']);
+      return ['s','p','b'];
     }
-  }.observes('Geniverse.activityController.content').cacheable(),
+  }.property('activity').cacheable(),
   
   gwtReadyBinding: 'Geniverse.gwtController.isReady',
   

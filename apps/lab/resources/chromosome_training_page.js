@@ -58,7 +58,6 @@ Lab.chromosomeTrainingPage = SC.Page.design({
           generateDragonAtStart: YES,
           sex: 1,
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
-          hiddenGenes: ['s','p','b'],
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO
         })
@@ -82,7 +81,6 @@ Lab.chromosomeTrainingPage = SC.Page.design({
           generateDragonAtStart: YES,
           sex: 0,
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
-          hiddenGenes: ['s','p','b'],
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO
         })
