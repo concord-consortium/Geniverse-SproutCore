@@ -1,7 +1,5 @@
 <h1>Listing dragons</h1>
 
-<% specials ||= {}; extra_links ||= [] %>
-
 <table>
   <tr>
     <% if (@dragons.size > 0) %>
@@ -53,117 +51,78 @@
 <% @dragons.each do |dragon| %>
 
 <% 
+  alleleNames = {
+    "H" => "horns", "h" => "hornless",
+    "S" => "scaleless", 's' => "scales",
+    "W" => "wingless", 'w' => "wings",
+    "L" => "legs", "l" => "legless",
+    "T" => "fancyTail", "t" => "plainTail",
+    "A" => "red", "a" => "purple",
+    "B" => "color2", "b" => "color2",
+    "P" => "plates", "p" => "plateless",
+    "F" => "fireless", "f" => "fire"
+  }
   # Extract chromosomes into arrays
-  chromosomes = {"A" => [], "B" => []}
-  alleles = dragon.attributes['alleles']
-  aPattern = /a:(.)/
-  bPattern = /b:(.)/
-  allAs = alleles.scan(aPattern)
-  allBs = alleles.scan(bPattern)
-  
-  allAs.each do |allele|
-    alleleVal = allele[0]
-    alleleVal = "little" + alleleVal if alleleVal.upcase != alleleVal
-    alleleVal = "big" + alleleVal if alleleVal.upcase == alleleVal
-    chromosomes['A'] << alleleVal
-  end
-  allBs.each do |allele|
-    alleleVal = allele[0]
-    alleleVal = "little" + alleleVal if alleleVal.upcase != alleleVal
-    alleleVal = "big" + alleleVal if alleleVal.upcase == alleleVal
-    chromosomes['B'] << alleleVal
-  end
-  
-  # Extract traits into arrays
-  traits = []
-  imageTraits = dragon.attributes['imageURL'].split('.')[0].split('/')
-  # start at 4, to rm /biologica/cache/5/
-  (4..12).each do |i|
-    traits[i-4] = imageTraits[i].humanize 
-  end
-  # some silly reording, as the trait names aren't in the same order as the alleles
-  scales = traits.delete_at(7)
-  traits.insert(1, scales)
-  fire = traits.delete_at(5)
-  traits.insert(8, fire)
-  traits[6] = traits[5]  # two alleles for one color
-  
-  # duplicating stuff for quick deployment.... will DRY up
-  # mother
-  mother = dragon.mother
-  if (!mother.nil?)
-    motherchromosomes = {"A" => [], "B" => []}
-    alleles = mother.attributes['alleles']
-    aPattern = /a:(.)/
-    bPattern = /b:(.)/
-    allAs = alleles.scan(aPattern)
-    allBs = alleles.scan(bPattern)
+  info = {"dragon" => {}, "mother" => {}, "father" => {}}
+  info.each do |key, value|
+    thisDragon = nil
+    if (key == "dragon")
+      thisDragon = dragon
+    else 
+      if (key == "mother")
+        thisDragon = dragon.mother
+      else
+        thisDragon = dragon.father
+      end
+    end
+    
+    if (!thisDragon.nil?)
+    
+      value["chromosomes"] = {"A" => [], "B" => []}
+    
+      alleles = thisDragon.attributes['alleles']
+      aPattern = /a:(.)/
+      bPattern = /b:(.)/
+      allAs = alleles.scan(aPattern)
+      allBs = alleles.scan(bPattern)
 
-    allAs.each do |allele|
-      alleleVal = allele[0]
-      alleleVal = "little" + alleleVal if alleleVal.upcase != alleleVal
-      alleleVal = "big" + alleleVal if alleleVal.upcase == alleleVal
-      motherchromosomes['A'] << alleleVal
-    end
-    allBs.each do |allele|
-      alleleVal = allele[0]
-      alleleVal = "little" + alleleVal if alleleVal.upcase != alleleVal
-      alleleVal = "big" + alleleVal if alleleVal.upcase == alleleVal
-      motherchromosomes['B'] << alleleVal
-    end
+      allAs.each do |allele|
+        alleleVal = allele[0]
+        if (alleleNames[alleleVal])
+          alleleVal = alleleNames[alleleVal]
+        else
+          alleleVal = "little" + alleleVal if alleleVal.upcase != alleleVal
+          alleleVal = "big" + alleleVal if alleleVal.upcase == alleleVal
+        end
+        value["chromosomes"]['A'] << alleleVal
+      end
+      allBs.each do |allele|
+        alleleVal = allele[0]
+        if (alleleNames[alleleVal])
+          alleleVal = alleleNames[alleleVal]
+        else
+          alleleVal = "little" + alleleVal if alleleVal.upcase != alleleVal
+          alleleVal = "big" + alleleVal if alleleVal.upcase == alleleVal
+        end
+        value["chromosomes"]['B'] << alleleVal
+      end
 
-    # Extract traits into arrays
-    mothertraits = []
-    imageTraits = mother.attributes['imageURL'].split('.')[0].split('/')
-    # start at 4, to rm /biologica/cache/5/
-    (4..12).each do |i|
-      mothertraits[i-4] = imageTraits[i].humanize 
+      # Extract traits into arrays
+      value["traits"] = []
+      imageTraits = thisDragon.attributes['imageURL'].split('.')[0].split('/')
+      # start at 4, to rm /biologica/cache/5/
+      (4..12).each do |i|
+        value["traits"][i-4] = imageTraits[i].humanize 
+      end
+      # some silly reording, as the trait names aren't in the same order as the alleles
+      scales = value["traits"].delete_at(7)
+      value["traits"].insert(1, scales)
+      fire = value["traits"].delete_at(5)
+      value["traits"].insert(8, fire)
+      value["traits"][6] = value["traits"][5]  # two alleles for one color
     end
-    # some silly reording, as the trait names aren't in the same order as the alleles
-    scales = mothertraits.delete_at(7)
-    mothertraits.insert(1, scales)
-    fire = mothertraits.delete_at(5)
-    mothertraits.insert(8, fire)
-    mothertraits[6] = mothertraits[5]  # two alleles for one color
   end
 
-  # father
-  father = dragon.father
-  if (!father.nil?)
-    fatherchromosomes = {"A" => [], "B" => []}
-    alleles = father.attributes['alleles']
-    aPattern = /a:(.)/
-    bPattern = /b:(.)/
-    allAs = alleles.scan(aPattern)
-    allBs = alleles.scan(bPattern)
-
-    allAs.each do |allele|
-      alleleVal = allele[0]
-      alleleVal = "little" + alleleVal if alleleVal.upcase != alleleVal
-      alleleVal = "big" + alleleVal if alleleVal.upcase == alleleVal
-      fatherchromosomes['A'] << alleleVal
-    end
-    allBs.each do |allele|
-      alleleVal = allele[0]
-      alleleVal = "little" + alleleVal if alleleVal.upcase != alleleVal
-      alleleVal = "big" + alleleVal if alleleVal.upcase == alleleVal
-      fatherchromosomes['B'] << alleleVal
-    end
-
-    # Extract traits into arrays
-    fathertraits = []
-    imageTraits = father.attributes['imageURL'].split('.')[0].split('/')
-    # start at 4, to rm /biologica/cache/5/
-    (4..12).each do |i|
-      fathertraits[i-4] = imageTraits[i].humanize 
-    end
-    # some silly reording, as the trait names aren't in the same order as the alleles
-    scales = fathertraits.delete_at(7)
-    fathertraits.insert(1, scales)
-    fire = fathertraits.delete_at(5)
-    fathertraits.insert(8, fire)
-    fathertraits[6] = fathertraits[5]  # two alleles for one color
-  end
   
 %>
 
@@ -179,35 +138,35 @@
     </td>
     <% (0..8).each do |i| %>
       <td>
-        <%=h chromosomes['A'][i] %>
+        <%=h info["dragon"]["chromosomes"]['A'][i] %>
       </td>
       <td>
-        <%=h chromosomes['B'][i] %>
+        <%=h info["dragon"]["chromosomes"]['B'][i] %>
       </td>
       <td>
-        <%=h traits[i] %>
-      </td>
-    <% end %>
-    <% (0..8).each do |i| %>
-      <td>
-        <%=h motherchromosomes['A'][i] if motherchromosomes %>
-      </td>
-      <td>
-        <%=h motherchromosomes['B'][i] if motherchromosomes %>
-      </td>
-      <td>
-        <%=h mothertraits[i] if motherchromosomes %>
+        <%=h info["dragon"]["traits"][i] %>
       </td>
     <% end %>
     <% (0..8).each do |i| %>
       <td>
-        <%=h fatherchromosomes['A'][i] if motherchromosomes %>
+        <%=h info["mother"]["chromosomes"]['A'][i] if info["mother"]["chromosomes"] %>
       </td>
       <td>
-        <%=h fatherchromosomes['B'][i] if motherchromosomes %>
+        <%=h info["mother"]["chromosomes"]['B'][i] if info["mother"]["chromosomes"] %>
       </td>
       <td>
-        <%=h fathertraits[i] if motherchromosomes %>
+        <%=h info["mother"]["traits"][i] if info["mother"]["chromosomes"] %>
+      </td>
+    <% end %>
+    <% (0..8).each do |i| %>
+      <td>
+        <%=h info["father"]["chromosomes"]['A'][i] if info["mother"]["chromosomes"] %>
+      </td>
+      <td>
+        <%=h info["father"]["chromosomes"]['B'][i] if info["mother"]["chromosomes"] %>
+      </td>
+      <td>
+        <%=h info["father"]["traits"][i] if info["mother"]["chromosomes"] %>
       </td>
     <% end %>
     
