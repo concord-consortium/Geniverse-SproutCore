@@ -7,7 +7,22 @@ class DragonsController < ApplicationController
       format.html # index.html.erb
       format.xml  { render :xml => @dragons }
       format.json { render :json => custom_array_hash(@dragons) }
-      format.fathom  { render :fathom => @dragons }
+    end
+  end
+  
+  # GET /dragons/fathom
+  def fathom
+    @user = User.find(params[:id]) unless !params[:id]
+    @activity = Activity.find(params[:id2]) unless !params[:id2]
+    
+    if (@activity)
+      @dragons = Dragon.find(:all, :conditions => ['user_id = ? AND activity_id = ?', @user, @activity])
+    else
+      @dragons = Dragon.find(:all, :conditions => ['user_id = ?', @user])
+    end
+    
+    respond_to do |format|
+      format.html { render :fathom => @dragons }
     end
   end
 
