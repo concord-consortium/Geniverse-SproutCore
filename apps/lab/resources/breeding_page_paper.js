@@ -47,7 +47,7 @@ Lab.breedingPagePaper = SC.Page.design({
       childViews: 'breedView statsView challengePoolView breedingPenView stableView marketplaceView chatView allArticlesView'.w(),
      
       challengePoolView: Lab.ChallengePoolView.design({
-        layout: { left: 20, top: 70, width:70, height: 300 },
+        layout: { left: 20, top: 70, width:70, height: 300 }
       }),
       
       breedView: Geniverse.BreedDragonView.design({

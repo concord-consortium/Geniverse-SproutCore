@@ -51,7 +51,7 @@ Lab.StableView = SC.View.extend(
         controlSize: "bity",
         textAlign: SC.ALIGN_CENTER,
         fontWeight: SC.BOLD_WEIGHT,
-        // TODO: set these stableOrganismsController-based properties dynamically
+        // TODO: set these stableOrganismsController-based properties
         woo: function() {
           // SC.Logger.log("woo");
           this.propertyDidChange('value');
@@ -99,7 +99,7 @@ Lab.StableView = SC.View.extend(
             var dragonNum = self.get('dragonNum');
 
             // check if there are existing dragons
-            // TODO: set these stableOrganismsController-based properties dynamically
+            // TODO: set these stableOrganismsController-based properties
             var allStableDragons = Geniverse.stableOrganismsController.get('arrangedObjects');
             var count = Geniverse.stableOrganismsController.get('length');
             if (count >= 50){

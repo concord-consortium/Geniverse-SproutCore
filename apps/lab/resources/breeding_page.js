@@ -51,7 +51,7 @@ Lab.breedingPage = SC.Page.design({
       
       // challenge pool to hold initial, system-created dragons
       challengePoolView: Lab.ChallengePoolView.design({
-        layout: { left: 20, top: 150, width:70, height: 300 },
+        layout: { left: 20, top: 150, width:70, height: 300 }
       }),
       
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({

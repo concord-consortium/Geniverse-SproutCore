@@ -33,17 +33,9 @@ Lab.BreedingPenView = SC.View.extend(
    */
   //titlePath: '',
   /**
-   * Binding Path for the content property of the penView
+   * Binding Path for the eggsController of the BreedingPenView
    */
-  contentPath: 'Geniverse.eggsController.arrangedObjects',
-  /**
-   * Binding Path for the selection property of the penView
-   */
-  selectionPath: 'Geniverse.eggsController.selection',
-  /**
-   * Binding Path for the autoScrollTrigger property of the penView
-   */
-  autoScrollTriggerPath: 'Geniverse.eggsController.length',
+  eggsControllerPath: 'Geniverse.eggsController',
 
   /**
    * Overwritten createChildView where you set up all
@@ -72,8 +64,8 @@ Lab.BreedingPenView = SC.View.extend(
         layout: { left: 0, top: 20, width: 300, height: 280 },
         backgroundColor: 'white',
         contentView: SC.GridView.design({
-          contentBinding: this.get('contentPath'),
-          selectionBinding: this.get('selectionPath'),
+          contentBinding: this.get('eggsControllerPath')+'.arrangedObjects',
+          selectionBinding: this.get('eggsControllerPath')+'.selection',
           rowHeight: 60,
           columnWidth: 60,
           canEditContent: NO,
@@ -81,7 +73,7 @@ Lab.BreedingPenView = SC.View.extend(
           isSelectable: YES,
           dragDataTypes: ['dragon']
         }),
-        autoScrollTriggerBinding: this.get('autoScrollTriggerPath')
+        autoScrollTriggerBinding: this.get('eggsControllerPath')+'.length'
       })
     );
     childViews.push(this.penView);

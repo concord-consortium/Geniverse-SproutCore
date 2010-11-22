@@ -32,17 +32,9 @@ Lab.ChallengePoolView = SC.View.extend(
    */
   //titlePath: '',
   /**
-   * Binding Path for the content property of the dragonsView
+   * Binding Path for the challengePoolController of the ChallengePoolView
    */
-  contentPath: 'Geniverse.challengePoolController.arrangedObjects',
-  /**
-   * Binding Path for the selection property of the dragonsView
-   */
-  selectionPath: 'Geniverse.challengePoolController.selection',
-  /**
-   * Binding Path for the autoScrollTrigger property of the dragonsView
-   */
-  autoScrollTriggerPath: 'Geniverse.challengePoolController.length',
+  challengePoolControllerPath: 'Geniverse.challengePoolController',
 
   /**
    * Overwritten createChildView where you set up all
@@ -71,8 +63,8 @@ Lab.ChallengePoolView = SC.View.extend(
         layout: { left: 0, top: 20, width: 70, height: 280},
         backgroundColor: 'white',
         contentView: SC.GridView.design({
-          contentBinding: this.get('contentPath'),
-          selectionBinding: this.get('selectionPath'),
+          contentBinding: this.get('challengePoolControllerPath')+'.arrangedObjects',
+          selectionBinding: this.get('challengePoolControllerPath')+'.selection',
           rowHeight: 70,
           columnWidth: 70,
           canEditContent: NO,
@@ -80,7 +72,7 @@ Lab.ChallengePoolView = SC.View.extend(
           isSelectable: YES,
           dragDataTypes: ['dragon']
         }),
-        autoScrollTriggerBinding: this.get('autoScrollTriggerPath')
+        autoScrollTriggerBinding: this.get('challengePoolControllerPath')+'.length'
       })
     );
     childViews.push(this.dragonsView);
