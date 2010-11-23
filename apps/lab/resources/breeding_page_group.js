@@ -45,7 +45,7 @@ Lab.breedingPageGroup = SC.Page.design({
       
       layout: { top: 45, bottom: 0, left: 10, right: 0 },
       
-      childViews: 'breedView statsView challengePoolView breedingPenView challengeChromosomeToolView breedingChromosomeToolView  stableView stableChromosomeToolView marketplaceView chatView allArticlesView'.w(),
+      childViews: 'breedView statsView challengePoolView breedingPenView challengeChromosomeToolView stableView marketplaceView chatView allArticlesView'.w(),
 
       challengePoolView: Lab.ChallengePoolView.design({
         layout: { left: 20, top: 70, width:70, height: 300 }
@@ -53,7 +53,9 @@ Lab.breedingPageGroup = SC.Page.design({
       
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
       layout: { left: 20 + 70 - 35, top: 40, width: 35, height: 30 },
-        selectionBinding: 'Geniverse.challengePoolController.selection'
+        selectionBinding: 'Geniverse.challengePoolController.selection',
+        selection1Binding: 'Geniverse.eggsController.selection',
+        selection2Binding: 'Geniverse.stableOrganismsController.selection'
       }),
       
       breedView: Geniverse.BreedDragonView.design({
@@ -63,12 +65,6 @@ Lab.breedingPageGroup = SC.Page.design({
       
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({}),
-      
-      
-      breedingChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { left: 265 + 300 - 35, top: 40, width: 35, height: 40 },
-        selectionBinding: 'Geniverse.eggsController.selection'
-      }),
       
       marketplaceView: SC.ImageView.design({
         layout: { left: 570, top: 150, height: 90, width: 90 },
@@ -116,11 +112,6 @@ Lab.breedingPageGroup = SC.Page.design({
       
       statsView: Geniverse.StatsView.design({
         layout: { left: 565, top: 70 + (300 - 80), width: 60, height: 80 }
-      }),
-      
-      stableChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { left: 680 + 240 -35, top: 40, width: 35, height: 40 },
-        selectionBinding: 'Geniverse.stableOrganismsController.selection'
       }),
 
       stableView: Lab.StableView.design({}), 

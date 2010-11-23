@@ -13,6 +13,7 @@ sc_require('views/organism');
 sc_require('views/published_articles');
 sc_require('views/login');
 sc_require('views/chromosome_tool');
+sc_require('views/chromosome_tool2');
 sc_require('views/stats');
 sc_require('views/top_bar_view');
 sc_require('views/challenge_pool_view');
@@ -44,9 +45,8 @@ Lab.breedingPage = SC.Page.design({
       
       layout: { top: 45, bottom: 0, left: 10, right: 0 },
       
-      childViews: 'breedView statsView challengePoolView challengeChromosomeToolView breedingPenView breedingChromosomeToolView stableView stableChromosomeToolView marketplaceView '.w(),
+      childViews: 'breedView statsView challengePoolView challengeChromosomeToolView breedingPenView stableView marketplaceView '.w(),
      
-      
       // challenge pool to hold initial, system-created dragons
       challengePoolView: Lab.ChallengePoolView.design({
         layout: { left: 20, top: 150, width:70, height: 300 }
@@ -54,7 +54,9 @@ Lab.breedingPage = SC.Page.design({
       
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
       layout: { left:55, top: 120, width: 35, height: 30 },
-        selectionBinding: 'Geniverse.challengePoolController.selection'
+        selectionBinding: 'Geniverse.challengePoolController.selection',
+        selection1Binding: 'Geniverse.eggsController.selection',
+        selection2Binding: 'Geniverse.stableOrganismsController.selection'
       }),
       
       breedView: Geniverse.BreedDragonView.design({
@@ -65,11 +67,6 @@ Lab.breedingPage = SC.Page.design({
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
         layout: { left: 265, top: 150, width: 300, height: 300 }
-      }),
-      
-      breedingChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { left: 265 + 300 - 35, top: 120, width: 35, height: 40 },
-        selectionBinding: 'Geniverse.eggsController.selection'
       }),
       
       marketplaceView: SC.ImageView.design({
@@ -119,15 +116,11 @@ Lab.breedingPage = SC.Page.design({
       statsView: Geniverse.StatsView.design({
         layout: { left: 565, top: 150 + (300 - 80), width: 60, height: 80 }
       }),
-      
-      stableChromosomeToolView: Geniverse.ChromosomeToolView.design({
-      layout: { left:680 + 240 - 35, top: 120, width: 35, height: 30 },
-        selectionBinding: 'Geniverse.stableOrganismsController.selection'
-      }),
 
       stableView: Lab.StableView.design({
         layout: { left: 680, top: 150, height: 300, width: 240 }
       })
+      
     })
   })
   
