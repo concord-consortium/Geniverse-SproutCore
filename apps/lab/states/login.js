@@ -82,7 +82,6 @@ Lab.LOGIN = SC.Responder.create(
     CcChat.chatController.set('username', user.get('username'));
     Lab.loginController.set('loggedIn', YES);
     
-    debugger;
     this.set('userLoggedIn', YES);
   }
 
