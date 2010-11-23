@@ -315,10 +315,7 @@ Lab.ACTIVITY = SC.Responder.create(
         }
         break;
     }
-    
-    
     // debugger
-    $(".meiosis").dna(static_url('chromosomes.json'));
   },
   
   logout: function() {

@@ -15,6 +15,7 @@ sc_require('views/login');
 sc_require('views/chromosome_tool');
 sc_require('views/stats');
 sc_require('views/top_bar_view');
+sc_require('views/animation_view');
 
 Lab.breedingPage = SC.Page.design({
   
@@ -177,14 +178,11 @@ Lab.breedingPage = SC.Page.design({
         selectionBinding: 'Geniverse.stableOrganismsController.selection'
       }),
       
-      meiosisView: SC.View.design({
+      meiosisView: Lab.AnimationView.design({
         layout: { left: 880, top: 150, height: 300, width: 240 },
+        className: 'meiosis',
         classNames: 'meiosis',
-        childViews: 'cell'.w(),
-        
-        cell: SC.View.design({
-          classNames: 'cell'
-        })
+        jsondataurl: static_url('chromosomes.json')
       }),
 
       stableView: SC.View.design({
