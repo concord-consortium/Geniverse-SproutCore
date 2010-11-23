@@ -1,6 +1,6 @@
 // ==========================================================================
 // Project:   Lab - BreedingPenView
-// Copyright: ©2010 Concord Consortium
+// Copyright: 2010 Concord Consortium
 // ==========================================================================
 /*globals Lab */
 /**
