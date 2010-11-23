@@ -16,16 +16,17 @@ Lab.loginPage = SC.Page.design({
     classNames: ['brown'],
     
     title: "Welcome to the Geniverse Labs",
-    childViews: 'backgroundView loginView'.w(),
+    childViews: 'background loginView'.w(),
     
-    backgroundView: SC.ImageView.design({
-      value: static_url('bg2.png'),
-      classNames: ['transparent','scalingimage']
+    background: SC.ImageView.design({
+      layout: { top: 0, left: 0, right: 0 },
+      value: static_url('mainscreen-bg.png'),
+      classNames: ['super-transparent']
     }),
-    
+
     loginView: Lab.LoginView.design({
       layout: {centerX: 0, top: Lab.marginSize, width: 700, height: 100},
-      layerId: "chatLogin"
+      layerId: "login"
     })
   })
 

@@ -17,46 +17,57 @@ Geniverse.userController = SC.ObjectController.create(
   usernameBinding: '*user.username',
   
   createUser: function (username, password){
-    if (!password){
-      password = "";
-    }
-    
+    if (!password) { password = ""; }
     var passwordHash = SHA256(password);
-    
-    var user = Geniverse.store.createRecord(Geniverse.User, 
-      {
+    var user = Geniverse.store.createRecord(Geniverse.User, {
         username: username,
-        
         passwordHash: passwordHash
-      });
+    });
     this.set('content', user);
     Geniverse.store.commitRecords();
     return user;
   },
   
   findUser: function (username, callback) {
+    var self = this;
     var query = SC.Query.local(Geniverse.User, {conditions: 'username = "' + username + '"'});
     var users = Geniverse.store.find(query);
-
-    var usersReady = null;
-    
-    usersReady = function() {
-      var status = users.get('status');
-      if (status & SC.Record.READY == SC.Record.READY) {
-  	    SC.Logger.info("User query ready. Checking password.");
-  		  var user = users.firstObject();
-  		  users.removeObserver('status', usersReady);
-  		  callback(user);
-  	  } else {
-  	    SC.Logger.info("User query still not ready. Status is: " + status);
-  	  }
+    var sendFoundUser = function() {
+        var user = users.firstObject();
+        callback(user);
     };
+    self.doWhenReady(self,users,sendFoundUser);
+  },
 
-    if (users.get('status') & SC.Record.READY == SC.Record.READY){
-      usersReady();
-    } else {
-      users.addObserver('status', usersReady);
+  doWhenReady: function(context, field, method) {
+    var self = context;
+    var status = field.get('status');
+    if (status & SC.Record.READY == SC.Record.READY) {
+      field.removeObserver('status',method);
+      method();
     }
-  }
+    else {
+      field.addObserver('status', method);
+    }
+  },
 
+  findOrCreateUser: function(username, callback) {      
+    var self = this;
+    var nextMethod = function(user) {
+      if (user) {
+        SC.Logger.log("found user %@", user);
+        callback(user);
+      }
+      else {
+        user = self.createUser(username);
+        SC.Logger.log("couldn't find user %@", username);
+        var method = function(user) {
+          SC.Logger.log("created username %@", username);
+          callback(user);
+        };
+        self.doWhenReady(self, user, method);
+      }
+    }
+    self.findUser(username,nextMethod);
+  }
 }) ;

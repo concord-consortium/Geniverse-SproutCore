@@ -19,31 +19,22 @@ Lab.loginController = SC.ObjectController.create(
   
   username: '',
   
-  passwordValue: '',
-  
-  retypePasswordValue: '',
-  
-  showRetypeField: NO,
-  
   loggedIn: NO,
-  
-  test: 35,
   
   groupNumber: 1,
   memberNumber: 1,
-
+ 
   welcomeMessage: function(){
     var welcomeMessage = "";
     var user = this.get('username');
-    if (!user){
-      return welcomeMessage;
+    if (this.get('loggedIn') == NO){
+      return "Please wait ...";
     }
     var group = this.get('groupNumber');
     var member = this.get('memberNumber');
-    welcomeMessage = "Welcome %@, you are user #%@ in group %@".fmt(user, member, group);
-    //SC.Logger.log("returning %@", welcomeMessage);
+    welcomeMessage = "Welcome %@, you are member #%@ in group %@".fmt(user, member, group);
     return welcomeMessage;
-  }.property('groupNumber', 'memberNumber', 'username').cacheable()
+  }.property('groupNumber', 'memberNumber', 'username', 'loggedIn').cacheable()
 
 
 }) ;
