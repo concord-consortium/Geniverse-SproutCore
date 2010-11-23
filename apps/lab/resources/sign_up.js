@@ -27,7 +27,8 @@ Lab.signUp = SC.Page.design({
     loginView: SC.LabelView.design({
       layout: {centerX: 0, top: Lab.marginSize, width: 200, height: 300},
       escapeHTML: NO,
-      value: 'first <a href="http://localhost:3001">login</a> to participate '
+      // TODO: Better redirect or something for this:
+      value: 'first <a href="http://geniverse-portal.dev.concord.org/login">login</a> to participate '
     })
   })
 
