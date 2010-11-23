@@ -7,6 +7,9 @@
           Dragon ID
       </th>
       <th>
+          Sex
+      </th>
+      <th>
           Mother ID
       </th>
       <th>
@@ -129,6 +132,15 @@
   <tr>
     <td>
       <%=h dragon.id %>
+    </td>
+    <td>
+      <%=h x = ""
+          if (dragon.sex == 0)
+            x = "male"
+          else
+            x = "female"
+          end
+      %>
     </td>
     <td>
       <%=h dragon.attributes['mother_id'] %>

@@ -3,6 +3,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect "users/:username", :format => 'json', :controller => 'users', :action => 'show',
     :requirements => { :username => /[A-Za-z].*/ }
+    
+  map.connect "fathom/:id/:id2", :format => 'html', :controller => 'dragons', :action => 'fathom', :id => '-1', :id2 => '-1'
 
   map.resources :users
 

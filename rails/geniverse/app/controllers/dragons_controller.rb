@@ -12,13 +12,15 @@ class DragonsController < ApplicationController
   
   # GET /dragons/fathom
   def fathom
-    @user = User.find(params[:id]) unless !params[:id]
-    @activity = Activity.find(params[:id2]) unless !params[:id2]
+    @user = User.find(params[:id]) unless (params[:id] == "-1")
+    @activity = Activity.find(params[:id2]) unless (params[:id2] == "-1")
     
-    if (@activity)
+    if (@activity && @user)
       @dragons = Dragon.find(:all, :conditions => ['user_id = ? AND activity_id = ?', @user, @activity])
-    else
+    elsif (@user)
       @dragons = Dragon.find(:all, :conditions => ['user_id = ?', @user])
+    else
+      @dragons = Dragon.find(:all)
     end
     
     respond_to do |format|
