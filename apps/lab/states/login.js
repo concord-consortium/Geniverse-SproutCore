@@ -20,17 +20,40 @@ Lab.LOGIN = SC.Responder.create(
   nextResponder: null,
   
   userLoggedIn: NO,
-  
+  loginPanel: null, 
   didBecomeFirstResponder: function() {
+    var lastGroup = Lab.userDefaults.readDefault('groupNumber');
+    var lastMember = Lab.userDefaults.readDefault('memberNumber');
+    if (lastGroup) {
+      Lab.loginController.set('groupNumber',lastGroup);
+    }
+    if (lastMember) {
+      Lab.loginController.set('memberNumber',lastMember);
+    }
     // this.checkLoginState();
+    this.showLoginPanel();
     this.checkCCAutToken();
     SC.Logger.log("LOGIN");
   },
-  
+
   willLoseFirstResponder: function() {
     // Called when this state loses first responder
   },
   
+  showLoginPanel: function() {
+    this.loginPanel = SC.PanelPane.create({
+      layout: { width: 400, height: 100, centerX: 0, top: 20 },
+      contentView: Lab.LoginView.extend({
+      })
+    }).append();
+  },
+
+  hideLoginPanel: function() {
+    if(this.loginPanel) {
+      this.loginPanel.remove();
+      this.loginPanel = null;
+    }
+  },
   // ..........................................................
   // EVENTS
   //
@@ -83,8 +106,6 @@ Lab.LOGIN = SC.Responder.create(
     Lab.loginController.set('loggedIn', YES);
     
     this.set('userLoggedIn', YES);
+    this.hideLoginPanel();
   }
-
-  
-
 }) ;
