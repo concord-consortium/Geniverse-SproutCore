@@ -92,7 +92,9 @@ Lab.SimpleButton = {
         this._triggerLegacyActionHandler(evt);
       } else {
         // newer action method + optional target syntax...
-        this.getPath('pane.rootResponder').sendAction(action, target, this, this.get('pane'));
+        var _rootResponder = this.getPath('pane.rootResponder');
+        // TODO: Fix bug where _rootResponder is null after going back and forth between pages
+        _rootResponder.sendAction(action, target, this, this.get('pane'));
       }
     }
     if (this.get('hasState')) {
