@@ -1,6 +1,6 @@
 // ==========================================================================
 // Project:   Geniverse - AnimationView
-// Copyright: ©2010 Concord Consortium
+// Copyright: 2010 Concord Consortium
 // ==========================================================================
 /**
  * A SproutCore view of Raphael-based jQuery plugin animation for Geniverse from Bocoup.

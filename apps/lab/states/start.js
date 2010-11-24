@@ -30,7 +30,7 @@ Lab.START = SC.Responder.create(
     Lab.ACTIVITY.set('activityType', routeParams.activityType);    // intro, individual, group
     Lab.ACTIVITY.set('activityIndex', routeParams.activityIndex);  // 0,1,2
     
-    var isLoggedIn = Lab.LOGIN.checkLoginState();
+    var isLoggedIn = Lab.loginController.get('loggedIn');
     if (isLoggedIn){
       Lab.makeFirstResponder(Lab.ACTIVITY);
       Lab.ACTIVITY.gotoActivity();
@@ -43,7 +43,7 @@ Lab.START = SC.Responder.create(
   
   gotoHomePage: function() {
     SC.Logger.log("START gotoHomePage");
-    var isLoggedIn = Lab.LOGIN.checkLoginState();
+    var isLoggedIn = Lab.loginController.get('loggedIn');
     if (isLoggedIn){
       Lab.LOGIN.removeObserver('userLoggedIn', this, 'gotoHomePage');
       Lab.makeFirstResponder(Lab.ACTIVITY);

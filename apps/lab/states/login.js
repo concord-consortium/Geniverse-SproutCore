@@ -23,6 +23,7 @@ Lab.LOGIN = SC.Responder.create(
   
   didBecomeFirstResponder: function() {
     // this.checkLoginState();
+    this.checkCCAutToken();
     SC.Logger.log("LOGIN");
   },
   
@@ -34,88 +35,56 @@ Lab.LOGIN = SC.Responder.create(
   // EVENTS
   //
   
-  checkLoginState: function() {
-    // check cookies
-    var username = Lab.userDefaults.readDefault('username');
-    var groupNumber = Lab.userDefaults.readDefault('groupNumber');
-    var memberNumber = Lab.userDefaults.readDefault('memberNumber');
-    if (!!username && !!groupNumber && !!memberNumber){
-      SC.Logger.info("automatically logging in as %s", username);
-      this.autoLogin(username);      // this will kick-off login
-      return true;
-    } else {
-      // if no username cookie, make sure chatroom is also cleared
-      Lab.userDefaults.writeDefault('chatroom', '');
-    }
-    
-    // check portal here?
-    
-    return this.userLoggedIn;
-  },
   
   login: function (){
-    SC.Logger.log("LOGIN login!");
-    var password = Lab.loginController.get('passwordValue');
-    var passwordHash = SHA256(password);
-    var self = this;
-    var uname = Lab.loginController.get('username');
-    var userFound = function(user) {
-      if (typeof user == 'undefined') {
-		    // no user exists for that username. create one
-		    SC.Logger.info("No User exists for that login. Creating account.");
-		    user = Geniverse.userController.createUser(uname, password);
-		  }
-      self.checkUserPassword(user, passwordHash);
-    };
-    
-    Geniverse.userController.findUser(uname, userFound);
-    Lab.loginController.set('textAreaValue', '');
+    SC.Logger.log("LOGIN: Authenticated.");
+    Lab.loginController.set('loggedIn', YES);
   },
   
-  autoLogin: function(username) {
-    var self = this;
-    
-    var userFound = function(user) {
-      if (typeof user == 'undefined') {
-		    // no user exists for that username
-		    SC.Logger.info("No User exists for that login. Please log in again.");
-		    Lab.ACTIVITY.logout();
-		  } else {
-		    // these won't have been set, because login view wasn't shown
-		    Lab.loginController.set('username', username);
-		    Lab.loginController.set('groupNumber', Lab.userDefaults.readDefault('groupNumber'));
-		    Lab.loginController.set('memberNumber', Lab.userDefaults.readDefault('memberNumber'));
-		    
-		    self.finishLogin(user);
-		  }
-    };
-    
-    Geniverse.userController.findUser(username, userFound);
+  // ask the portal if this user is logged in 
+  checkCCAutToken: function() {
+    SC.Request.getUrl('/portal/verify_cc_token').header({'Accept': 'application/json'}).json()
+        .notify(this, 'didCCAuth')
+        .send();
+      return YES;
   },
-  
-  checkUserPassword: function(user, passwordHash) {
-    var username = user.username;
-    var rails_password_hash = user.get('passwordHash');
-    SC.Logger.log("hash from rails = "+rails_password_hash);
-    SC.Logger.log("hash from user = "+passwordHash);
-    if (rails_password_hash === passwordHash){
-      SC.Logger.log("passwords match!");
-      this.finishLogin(user);
-    } else {
-      alert("Passwords do not match");
+
+  didCCAuth: function(response) {
+    SC.Logger.log(response);
+    var self = this;
+    if (SC.ok(response)) {
+      // valid user
+      SC.Logger.log(response.body());
+      login = response.get('body').login;
+      SC.Logger.log(login);
+      var userFound = function(user) {
+        Lab.loginController.set('username', login);
+        Geniverse.userController.set('content',user);
+      };
+      Geniverse.userController.findOrCreateUser(login, userFound);
+      self.login();
+    }
+    else {
+      Lab.loginController.set('username', "BAD AUTH_TOKEN");
+      Lab.loginController.set('showSignupScreen');
+      Lab.routes.gotoLabRoute({pageName: 'signUp'});
+      // send to back to login screen
     }
   },
   
-  finishLogin: function(user) {
+  start: function() {
+    var user = Geniverse.userController.get('content');
+    SC.Logger.log("starting up");
     Lab.userDefaults.writeDefault('username', user.get('username'));
     Lab.userDefaults.writeDefault('groupNumber',Lab.loginController.get('groupNumber')); 
     Lab.userDefaults.writeDefault('memberNumber',Lab.loginController.get('memberNumber'));
     
-    Geniverse.userController.set('content', user);
     CcChat.chatController.set('username', user.get('username'));
     Lab.loginController.set('loggedIn', YES);
     
     this.set('userLoggedIn', YES);
   }
+
   
+
 }) ;

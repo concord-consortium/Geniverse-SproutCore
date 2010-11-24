@@ -1,6 +1,6 @@
 // ==========================================================================
 // Project:   Lab - mainPage
-// Copyright: ©2010 Concord Consortium
+// Copyright: 2010 Concord Consortium
 // ==========================================================================
 /*globals Lab */
 sc_require('mixins/simple_button');

@@ -1,6 +1,6 @@
 // ==========================================================================
 // Project:   Geniverse - animationPage
-// Copyright: ©2010 Concord Consortium
+// Copyright: 2010 Concord Consortium
 // ==========================================================================
 /*globals Geniverse, CC, CcChat, java */
 Geniverse.marginSize = 15;

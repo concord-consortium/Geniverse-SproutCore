@@ -31,4 +31,5 @@ mode :remote do
   proxy '/geniverse/', :to => 'geniverse.dev.concord.org'
   proxy '/chat/', :to => 'geniverse.dev.concord.org'
   proxy "/rails", :to => "geniverse-rails.dev.concord.org"
+  proxy "/portal", :to=> "geniverse-portal.dev.concord.org"
 end
