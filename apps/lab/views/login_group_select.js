@@ -10,7 +10,7 @@
 
   @extends SC.View
 */
-Lab.LoginiGroupSelectView = SC.PanelPane.extend({
+Lab.LoginGroupView = SC.PanelPane.extend({
   layout: {centerX: 0, top: 10, width: 400, height: 100},
   contentView: SC.View.design({
      layout: {left: 0, top: 0, width: 400, height: 100},
