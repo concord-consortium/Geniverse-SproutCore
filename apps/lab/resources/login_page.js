@@ -21,7 +21,5 @@ Lab.loginPage = SC.Page.design({
       layout: { top: 0, centerX: 0, width: 960},
       value: static_url('mainscreen-bg.png')
     })
-
   })
-
 });
