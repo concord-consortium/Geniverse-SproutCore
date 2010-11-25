@@ -29,7 +29,7 @@ Lab.LoginLoginView = SC.PanelPane.extend({
 
      welcomeView: SC.LabelView.design({
        layout: { top: 5, height: 24, left: 10, width: 400 },
-       value: "please log in"
+       value: "(this doesn't work yet please log in through the portal)"
      }),
 
 
