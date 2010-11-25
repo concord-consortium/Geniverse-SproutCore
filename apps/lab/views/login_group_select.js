@@ -25,7 +25,7 @@ Lab.LoginGroupView = SC.PanelPane.extend({
      startButtonView: SC.ButtonView.design({
        layout: { bottom: 10, height: 24, right: 10, width: 100 },
        title:  "Start",
-       action: 'Lab.LOGIN.start',
+       action: 'Lab.loginController.finish',
        isEnabled: NO,
        isEnabledBinding: 'Lab.loginController.loggedIn'
      }),

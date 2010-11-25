@@ -37,6 +37,7 @@ Lab.loginController = SC.ObjectController.create(
 
   
   showCheckPanel: function() {
+    this.hidePanel();
     this.panel = Lab.LoginCheckView.create({
       layout: {top: 10, width: 400, height: 100, centerX: 0}
     });
@@ -46,6 +47,7 @@ Lab.loginController = SC.ObjectController.create(
   },
  
   showGroupPanel: function() {
+    this.hidePanel();
     this.panel = Lab.LoginGroupView.create({
       layout: {top: 10, width: 400, height: 100, centerX: 0}
     });
@@ -54,6 +56,7 @@ Lab.loginController = SC.ObjectController.create(
   },
   
   showLoginPanel: function() {
+    this.hidePanel();
     this.panel = Lab.LoginLoginView.create({
       layout: {top: 10, width: 400, height: 100, centerX: 0}
     });
@@ -107,11 +110,22 @@ Lab.loginController = SC.ObjectController.create(
       this.showLoginPanel();
     }
   },
-  
+
   login: function (){
     SC.Logger.log("LOGIN: Authenticated.");
     this.set('loggedIn', YES);
     this.showGroupPanel();
+  },
+  
+  finish: function() {
+    this.hidePanel();
+    var user = Geniverse.userController.get('content');
+    CcChat.chatController.set('username', user.get('username'));
+    Lab.userDefaults.writeDefault('username', user.get('username'));
+    Lab.userDefaults.writeDefault('groupNumber',Lab.loginController.get('groupNumber')); 
+    Lab.userDefaults.writeDefault('memberNumber',Lab.loginController.get('memberNumber'));
+    this.set('loggedIn', YES);
+    Lab.LOGIN.finish();
   }
 
 

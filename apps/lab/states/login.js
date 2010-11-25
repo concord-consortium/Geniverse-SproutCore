@@ -33,17 +33,7 @@ Lab.LOGIN = SC.Responder.create(
   // EVENTS
   //
   
-  start: function() {
-    var user = Geniverse.userController.get('content');
-    SC.Logger.log("starting up");
-    Lab.userDefaults.writeDefault('username', user.get('username'));
-    Lab.userDefaults.writeDefault('groupNumber',Lab.loginController.get('groupNumber')); 
-    Lab.userDefaults.writeDefault('memberNumber',Lab.loginController.get('memberNumber'));
-    
-    CcChat.chatController.set('username', user.get('username'));
-    Lab.loginController.set('loggedIn', YES);
-    
+  finish: function() {
     this.set('userLoggedIn', YES);
-    Lab.loginController.hidePanel();
   }
 }) ;
