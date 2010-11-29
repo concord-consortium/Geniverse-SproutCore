@@ -87,32 +87,10 @@ Lab.TopBarView = SC.ToolbarView.extend(
     );
     childViews.push(this.geniverseLabelView);
 
-    this.welcomeLabelView = this.createChildView(
-      SC.LabelView.design({
-        layout: { centerY: 0, height: 24, right: 250, width: 500},
-        fontWeight: SC.BOLD_WEIGHT,
-        textAlign: SC.ALIGN_RIGHT,
-        valueBinding: this.get('welcomePath'),
-        isVisibleBinding: this.get('welcomeIsVisiblePath')
-      })
-    );
-    childViews.push(this.welcomeLabelView);
-
-    this.notepadButton = this.createChildView(
-      SC.ButtonView.design({
-        layout: { centerY: 0, height: 24, right: 115, width: 100 },
-        layerId: 'notepadButton',
-        title:  "Note Pad",
-        target: this.get('notepadButtonTargetPath'),
-        action: 'showPane',
-        isVisibleBinding: this.get('notepadButtonIsVisiblePath')
-      })
-    );
-    childViews.push(this.notepadButton);
 
     this.logoutButton = this.createChildView(
       SC.ButtonView.design({
-        layout: { centerY: 0, height: 24, right: 10, width: 100 },
+        layout: { centerY: 0,  height: 24, right: 5, width: 100 },
         layerId: 'logOutButton',
         title:  "Log out",
         target: this.get('logoutButtonTargetPath'),
@@ -122,9 +100,21 @@ Lab.TopBarView = SC.ToolbarView.extend(
     );
     childViews.push(this.logoutButton);
 
+    this.notepadButton = this.createChildView(
+      SC.ButtonView.design({
+        layout: { centerY: 0,  height: 24, right: 110, width: 100 },
+        layerId: 'notepadButton',
+        title:  "Note Pad",
+        target: this.get('notepadButtonTargetPath'),
+        action: 'showPane',
+        isVisibleBinding: this.get('notepadButtonIsVisiblePath')
+      })
+    );
+    childViews.push(this.notepadButton);
+
     this.changeGroupButton = this.createChildView(
       SC.ButtonView.design({
-        layout: { centerY: 0, height: 24, right: 120, width: 120 },
+        layout: { centerY: 0,  height: 24, right: 215, width: 120 },
         layerId: 'changeGroup',
         title:  "Change Group",
         target: this.get('changeGroupButtonTargetPath'),
@@ -133,6 +123,17 @@ Lab.TopBarView = SC.ToolbarView.extend(
       })
     );
     childViews.push(this.changeGroupButton);
+    
+    this.welcomeLabelView = this.createChildView(
+      SC.LabelView.design({
+        layout: { top: 5,  height: 24, right: 340, width: 300},
+        fontWeight: SC.BOLD_WEIGHT,
+        textAlign: SC.ALIGN_RIGHT,
+        valueBinding: this.get('welcomePath'),
+        isVisibleBinding: this.get('welcomeIsVisiblePath')
+      })
+    );
+    childViews.push(this.welcomeLabelView);
 
     this.set('childViews', childViews);
   }
