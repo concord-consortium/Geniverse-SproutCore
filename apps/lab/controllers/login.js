@@ -38,7 +38,7 @@ Lab.loginController = SC.ObjectController.create(
     var member = this.get('memberNumber');
     welcomeMessage = "Welcome %@, you are member #%@ in group %@".fmt(userName, member, group);
     return welcomeMessage;
-  }.property('groupNumber', 'memberNumber', 'username', 'loggedIn').cacheable(),
+  }.property('groupNumber', 'memberNumber', 'username', 'firstName', 'loggedIn').cacheable(),
 
   
   showCheckPanel: function() {
@@ -141,8 +141,7 @@ Lab.loginController = SC.ObjectController.create(
       var userFound = function(user) {
         self.set('firstName',first);
         self.set('lastName',last);
-        Lab.loginController.set('username', login);
-        Geniverse.userController.set('content',user);
+        self.set('username', login);
         Geniverse.userController.set('content',user);
       };
       Geniverse.userController.findOrCreateUser(login, userFound);
@@ -169,7 +168,10 @@ Lab.loginController = SC.ObjectController.create(
     this.set('loggedIn', NO);
     Lab.LOGIN.set('userLoggedIn', NO); 
     Lab.userDefaults.writeDefault('username', '');
+    Lab.userDefaults.writeDefault('password', '');
     Lab.userDefaults.writeDefault('chatroom', '');
+    Lab.makeFirstResponder(Lab.LOGIN);
+    Lab.LOGIN.addObserver('userLoggedIn', Lab.ACTIVITY, 'gotoActivity');
   },
 
 

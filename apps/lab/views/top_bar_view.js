@@ -40,15 +40,15 @@ Lab.TopBarView = SC.ToolbarView.extend(
   /**
    * Binding Path for the isVisible property of the welcomeLabelView
    */
-  welcomeIsVisiblePath: 'Lab.LOGIN.userLoggedIn',
+  welcomeIsVisiblePath: 'Lab.loginController.loggedIn',
   /**
    * Binding Path for the target property of the logoutButton
    */
-  logoutButtonTargetPath: 'Lab.ACTIVITY',
+  logoutButtonTargetPath: 'Lab.loginController',
   /**
    * Binding Path for the isVisible property of the logoutButton
    */
-  logoutButtonIsVisiblePath: 'Lab.LOGIN.userLoggedIn',
+  logoutButtonIsVisiblePath: 'Lab.loginController.loggedIn',
 
   /**
    * Overwritten createChildView where you set up all
@@ -86,7 +86,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         layerId: 'logOutButton',
         title:  "Log out",
         target: this.get('logoutButtonTargetPath'),
-        action: 'logout',
+        action: 'logoutPortal',
         isVisibleBinding: this.get('logoutButtonIsVisiblePath')
       })
     );

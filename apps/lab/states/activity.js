@@ -315,13 +315,5 @@ Lab.ACTIVITY = SC.Responder.create(
         }
         break;
     }
-  },
-  
-  logout: function() {
-    Lab.loginController.logoutPortal();
-    Lab.makeFirstResponder(Lab.START);
-    SC.routes.set('location', '');
-    window.location.reload();
   }
-  
 }) ;
