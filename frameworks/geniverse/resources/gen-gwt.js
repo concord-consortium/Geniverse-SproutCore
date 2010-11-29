@@ -22,7 +22,6 @@ GenGWT = {
     },
     
     breedDragons: function(number, mother, father, callback) {
-      SC.Logger.info("Breeding " + number + " dragons");
         breedDragons(number, mother, father, callback, this.failure);
     },
 

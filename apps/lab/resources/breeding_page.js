@@ -80,6 +80,7 @@ Lab.breedingPage = SC.Page.design({
             SC.RunLoop.begin();
             if (!!dragon){
               dragon.set('isInMarketplace', YES);
+              Geniverse.eggsController.removeObject(dragon);
             }
             SC.RunLoop.end();
           }

@@ -163,7 +163,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
       modelHash[modelName] = store.readDataHash(storeKey);
       // SC.Logger.dir(modelHash);
       var url = store.idFor(storeKey);
-      SC.Logger.info("updateRecord called with: %s", url); 
+      // SC.Logger.info("updateRecord called with: %s", url); 
 
 
       // SC.Logger.group('Geniverse.RailsDataSource.createRecord()');
@@ -182,7 +182,6 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
   didUpdateRecord: function(response, store, storeKey) {
     if (SC.ok(response)) {
       var url = store.idFor(storeKey);
-      SC.Logger.info("didUpdateRecord called with: %s", url); 
       store.dataSourceDidComplete(storeKey, null, url); // update url
     } else { store.dataSourceDidError(storeKey, response); }
   },
