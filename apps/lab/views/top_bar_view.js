@@ -24,6 +24,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
   geniverseLabelView: null,
   welcomeLabelView: null,
   logoutButton: null,
+  notepadButton: null,
 
   /**
    * Necessary configuration xPath elements to set up binding inside the composite view instances
@@ -59,7 +60,14 @@ Lab.TopBarView = SC.ToolbarView.extend(
    */
   changeGroupButtonIsVisiblePath: 'Lab.loginController.loggedIn',
 
-
+  /**
+   * Binding Path for the target property of the notepadButton
+   */
+  notepadButtonTargetPath: 'Geniverse.notepadController',
+  /**
+   * Binding Path for the isVisible property of the notepadButton
+   */
+  notepadButtonIsVisiblePath: 'Lab.LOGIN.userLoggedIn',
   /**
    * Overwritten createChildView where you set up all
    * the internal child views and where we are
@@ -89,6 +97,18 @@ Lab.TopBarView = SC.ToolbarView.extend(
       })
     );
     childViews.push(this.welcomeLabelView);
+
+    this.notepadButton = this.createChildView(
+      SC.ButtonView.design({
+        layout: { centerY: 0, height: 24, right: 115, width: 100 },
+        layerId: 'notepadButton',
+        title:  "Note Pad",
+        target: this.get('notepadButtonTargetPath'),
+        action: 'showPane',
+        isVisibleBinding: this.get('notepadButtonIsVisiblePath')
+      })
+    );
+    childViews.push(this.notepadButton);
 
     this.logoutButton = this.createChildView(
       SC.ButtonView.design({
