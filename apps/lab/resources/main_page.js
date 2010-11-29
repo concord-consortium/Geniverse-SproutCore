@@ -17,22 +17,20 @@ Lab.mainPage = SC.Page.design({
   mainPane: SC.MainPane.design({
     title: "Welcome to the Geniverse Labs",
     classNames: ['brown'],
-    childViews: 'backgroundView topBar mainAppView'.w(),
-    backgroundView: SC.ImageView.design({
-      value: static_url('bg2.png'),
-      classNames: ['transparent','scalingimage']
-    }),
+    childViews: 'topBar mainAppView'.w(),
     topBar: Lab.TopBarView.design({
       titlePath: 'Lab.mainPage.mainPane.title'
     }),
 
     mainAppView: SC.View.design({
-      childViews: 'mainscreenView caselogButtonView'.w(),
+      layout: { top: 42, centerX: 0, width: 960},
+      childViews: 'backgroundView caselogButtonView'.w(),
 
-      mainscreenView: SC.ImageView.design({
-        layout: { top: 42, left: 5},
-        value: static_url('mainscreen-bg')
+      backgroundView: SC.ImageView.design({
+        layout: { top:0, centerX: 0, width: 960},
+        value: static_url('mainscreen-bg.png')
       }),
+
 
       caselogButtonView: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,

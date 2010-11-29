@@ -3,7 +3,6 @@ body {
 	}
 
 #content {
-  background: static_url('mainscreen-bg.png');
   background-repeat: no-repeat;
   height: 600px;
   margin: 0 auto;
