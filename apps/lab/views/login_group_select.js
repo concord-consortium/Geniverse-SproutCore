@@ -10,7 +10,7 @@
 
   @extends SC.View
 */
-Lab.LoginiGroupSelectView = SC.PanelPane.extend({
+Lab.LoginGroupView = SC.PanelPane.extend({
   layout: {centerX: 0, top: 10, width: 400, height: 100},
   contentView: SC.View.design({
      layout: {left: 0, top: 0, width: 400, height: 100},
@@ -25,7 +25,7 @@ Lab.LoginiGroupSelectView = SC.PanelPane.extend({
      startButtonView: SC.ButtonView.design({
        layout: { bottom: 10, height: 24, right: 10, width: 100 },
        title:  "Start",
-       action: 'Lab.LOGIN.start',
+       action: 'Lab.loginController.finish',
        isEnabled: NO,
        isEnabledBinding: 'Lab.loginController.loggedIn'
      }),

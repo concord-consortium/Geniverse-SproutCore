@@ -20,13 +20,11 @@ Lab.LOGIN = SC.Responder.create(
   nextResponder: null,
   
   userLoggedIn: NO,
-  
   didBecomeFirstResponder: function() {
-    // this.checkLoginState();
-    this.checkCCAutToken();
     SC.Logger.log("LOGIN");
+    Lab.loginController.showCheckPanel();
   },
-  
+
   willLoseFirstResponder: function() {
     // Called when this state loses first responder
   },
@@ -35,56 +33,7 @@ Lab.LOGIN = SC.Responder.create(
   // EVENTS
   //
   
-  
-  login: function (){
-    SC.Logger.log("LOGIN: Authenticated.");
-    Lab.loginController.set('loggedIn', YES);
-  },
-  
-  // ask the portal if this user is logged in 
-  checkCCAutToken: function() {
-    SC.Request.getUrl('/portal/verify_cc_token').header({'Accept': 'application/json'}).json()
-        .notify(this, 'didCCAuth')
-        .send();
-      return YES;
-  },
-
-  didCCAuth: function(response) {
-    SC.Logger.log(response);
-    var self = this;
-    if (SC.ok(response)) {
-      // valid user
-      SC.Logger.log(response.body());
-      login = response.get('body').login;
-      SC.Logger.log(login);
-      var userFound = function(user) {
-        Lab.loginController.set('username', login);
-        Geniverse.userController.set('content',user);
-      };
-      Geniverse.userController.findOrCreateUser(login, userFound);
-      self.login();
-    }
-    else {
-      Lab.loginController.set('username', "BAD AUTH_TOKEN");
-      Lab.loginController.set('showSignupScreen');
-      Lab.routes.gotoLabRoute({pageName: 'signUp'});
-      // send to back to login screen
-    }
-  },
-  
-  start: function() {
-    var user = Geniverse.userController.get('content');
-    SC.Logger.log("starting up");
-    Lab.userDefaults.writeDefault('username', user.get('username'));
-    Lab.userDefaults.writeDefault('groupNumber',Lab.loginController.get('groupNumber')); 
-    Lab.userDefaults.writeDefault('memberNumber',Lab.loginController.get('memberNumber'));
-    
-    CcChat.chatController.set('username', user.get('username'));
-    Lab.loginController.set('loggedIn', YES);
-    
+  finish: function() {
     this.set('userLoggedIn', YES);
   }
-
-  
-
 }) ;
