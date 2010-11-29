@@ -29,26 +29,26 @@ Lab.LoginLoginView = SC.PanelPane.extend({
 
      welcomeView: SC.LabelView.design({
        layout: { top: 5, height: 24, left: 10, width: 400 },
-       value: "(this doesn't work yet please log in through the portal)"
+       value: "Please log in:"
      }),
 
 
      usernameLabel: SC.LabelView.design({
-       layout: { top: 30, left: 10, height: 25, width: 90 },
+       layout: { bottom: 40, left: 10, height: 20, width: 65 },
        value: 'username'
      }),
      usernameView: SC.TextFieldView.design({
-       layout: { bottom: 10, left: 10, height: 25, width: 90 },
+       layout: { bottom: 40, left: 75, height: 20, width: 90 },
        valueBinding: 'Lab.loginController.username'
      }),
 
      passwordLabel: SC.LabelView.design({
-       layout: { top: 30, left: 110, height: 25, width: 90 },
+       layout: { bottom: 10, left: 10, height: 20, width: 65 },
        value: 'password'
      }),
 
      passwordView: SC.TextFieldView.design({
-       layout: { bottom: 10, left: 110, height: 25, width: 90 },       
+       layout: { bottom: 10, left: 75, height: 20, width: 90 },       
        isPassword: YES,
        valueBinding: 'Lab.loginController.password'
      })
