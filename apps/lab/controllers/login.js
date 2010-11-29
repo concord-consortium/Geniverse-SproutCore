@@ -124,7 +124,6 @@ Lab.loginController = SC.ObjectController.create(
     var cc_auth_token = SC.Cookie.find('cc_auth_token');
     if (cc_auth_token) {
       cc_auth_token.destroy();
-      debugger;
     }
     return YES;
   },
