@@ -57,7 +57,6 @@ Lab.loginController = SC.ObjectController.create(
       layout: {top: 10, width: 400, height: 100, centerX: 0}
     });
     this.panel.append();
-    this.restoreGroupinfo();
   },
   
   showLoginPanel: function() {
@@ -143,20 +142,26 @@ Lab.loginController = SC.ObjectController.create(
         self.set('lastName',last);
         self.set('username', login);
         Geniverse.userController.set('content',user);
+        self.didAuthenticate();
       };
       Geniverse.userController.findOrCreateUser(login, userFound);
-      self.login();
     }
     else {
-      SC.Logger.log("FAILURE!");
+      SC.Logger.log("Login failure..");
       this.showLoginPanel();
     }
   },
 
-  login: function (){
+  didAuthenticate: function (){
     SC.Logger.log("LOGIN: Authenticated.");
     this.set('loggedIn', YES);
-    this.showGroupPanel();
+    this.restoreGroupinfo();
+    if (Lab.userDefaults.readDefault('groupNumber')) {
+      this.finish();
+    }
+    else {
+      this.showGroupPanel();
+    }
   },
   
   logout: function() {
@@ -165,6 +170,7 @@ Lab.loginController = SC.ObjectController.create(
     this.set('username','');
     this.set('lastName','');
     this.set('firstName', '');
+    this.set('password', '');
     this.set('loggedIn', NO);
     Lab.LOGIN.set('userLoggedIn', NO); 
     Lab.userDefaults.writeDefault('username', '');
@@ -180,8 +186,8 @@ Lab.loginController = SC.ObjectController.create(
     var user = Geniverse.userController.get('content');
     CcChat.chatController.set('username', user.get('username'));
     Lab.userDefaults.writeDefault('username', user.get('username'));
-    Lab.userDefaults.writeDefault('groupNumber',Lab.loginController.get('groupNumber')); 
-    Lab.userDefaults.writeDefault('memberNumber',Lab.loginController.get('memberNumber'));
+    Lab.userDefaults.writeDefault('groupNumber',this.get('groupNumber')); 
+    Lab.userDefaults.writeDefault('memberNumber',this.get('memberNumber'));
     this.set('loggedIn', YES);
     Lab.LOGIN.finish();
   }
