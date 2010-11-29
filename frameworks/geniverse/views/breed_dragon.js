@@ -35,8 +35,8 @@ Geniverse.BreedDragonView = SC.View.extend(
 		isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
 		hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
 		isEnabled: function() {
-		  return this.get('hasParents');
-		}.property('hasParents').cacheable(),
+		  return (this.get('hasParents') && !this.get('isBreeding'));
+		}.property('hasParents', 'isBreeding').cacheable(),
 		
 		title: function () {
 		  return this.get('isBreeding') ? 'Breeding...' :  'Breed';

@@ -120,6 +120,7 @@ Lab.StableView = SC.View.extend(
             SC.RunLoop.begin();
               dragon.set('isEgg', false);
               dragon.set('stableOrder', dragonNum);
+              Geniverse.eggsController.removeObject(dragon);
             SC.RunLoop.end();
 
             self.dragonNum = self.dragonNum + 1;

@@ -163,37 +163,37 @@ Lab.ACTIVITY = SC.Responder.create(
     
     /////////////////// Eggs
     SC.Logger.log("LOAD: eggs");
-    Geniverse.EGGS_QUERY = SC.Query.local('Geniverse.Dragon', {
-        conditions: 'bred = true AND isEgg = true AND user = {user} AND isInMarketplace = false AND activity = {activity}',
-        user: user,
-        activity: activity,
-        orderBy: 'storeKey',
-        restParams: Geniverse.makeRestParams({
-          bred: 'true',
-          isEgg: 'true',
-          isInMarketplace: 'false',
-          user: user,
-          activity: activity
-        })
-    });
+    // Geniverse.EGGS_QUERY = SC.Query.local('Geniverse.Dragon', {
+    //     conditions: 'bred = true AND isEgg = true AND user = {user} AND isInMarketplace = false AND activity = {activity}',
+    //     user: user,
+    //     activity: activity,
+    //     orderBy: 'storeKey',
+    //     restParams: Geniverse.makeRestParams({
+    //       bred: 'true',
+    //       isEgg: 'true',
+    //       isInMarketplace: 'false',
+    //       user: user,
+    //       activity: activity
+    //     })
+    // });
     // var eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
-    var eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
+     Geniverse.eggsController.set('content',[]);
     
-    // sell any existing eggs ion startup
-    function eggsReady() {
-      eggs.forEach(function(egg){
-        egg.set('isEgg', false);
-        egg.set('isInMarketplace', true);
-      });
-      // eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
-      Geniverse.eggsController.set('content',eggs);
-    }
-    
-    if (eggs.get('status') & SC.Record.READY === SC.Record.READY) {
-      eggsReady();
-    } else {
-      eggs.addObserver('status', eggsReady);
-    }
+    // sell any existing eggs on startup
+    // function eggsReady() {
+    //   eggs.forEach(function(egg){
+    //     egg.set('isEgg', false);
+    //     egg.set('isInMarketplace', true);
+    //   });
+    //   // eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
+    //   Geniverse.eggsController.set('content',eggs);
+    // }
+    // 
+    // if (eggs.get('status') & SC.Record.READY === SC.Record.READY) {
+    //   eggsReady();
+    // } else {
+    //   eggs.addObserver('status', eggsReady);
+    // }
     
     /////////////////// Chats
     SC.Logger.log("LOAD: chats");
@@ -315,21 +315,5 @@ Lab.ACTIVITY = SC.Responder.create(
         }
         break;
     }
-  },
-  
-  logout: function() {
-    SC.Logger.info("logging out %s", CcChat.chatController.get('username'));
-    
-    CcChat.chatController.set('username', '');
-    Lab.LOGIN.set('userLoggedIn', NO);
-    
-    Lab.userDefaults.writeDefault('username', '');
-    Lab.userDefaults.writeDefault('chatroom', '');
-    
-    Lab.makeFirstResponder(Lab.START);
-    
-    SC.routes.set('location', '');
-    window.location.reload();
   }
-  
 }) ;
