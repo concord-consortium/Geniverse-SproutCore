@@ -318,16 +318,8 @@ Lab.ACTIVITY = SC.Responder.create(
   },
   
   logout: function() {
-    SC.Logger.info("logging out %s", CcChat.chatController.get('username'));
-    
-    CcChat.chatController.set('username', '');
-    Lab.LOGIN.set('userLoggedIn', NO);
-    
-    Lab.userDefaults.writeDefault('username', '');
-    Lab.userDefaults.writeDefault('chatroom', '');
-    
+    Lab.loginController.logoutPortal();
     Lab.makeFirstResponder(Lab.START);
-    
     SC.routes.set('location', '');
     window.location.reload();
   }

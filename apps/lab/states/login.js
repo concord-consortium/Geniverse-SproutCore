@@ -32,7 +32,8 @@ Lab.LOGIN = SC.Responder.create(
   // ..........................................................
   // EVENTS
   //
-  
+  // TODO: most functionality is in login controller now
+  // can we move this loggedIn field too?
   finish: function() {
     this.set('userLoggedIn', YES);
   }

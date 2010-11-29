@@ -24,7 +24,7 @@ Lab.LoginLoginView = SC.PanelPane.extend({
      loginButtonView: SC.ButtonView.design({
        layout: { bottom: 10, height: 24, right: 10, width: 100 },
        title:  "login",
-       action: 'Lab.loginController.login'
+       action: 'Lab.loginController.loginPortal'
      }),
 
      welcomeView: SC.LabelView.design({
