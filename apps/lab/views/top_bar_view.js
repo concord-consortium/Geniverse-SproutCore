@@ -49,6 +49,16 @@ Lab.TopBarView = SC.ToolbarView.extend(
    * Binding Path for the isVisible property of the logoutButton
    */
   logoutButtonIsVisiblePath: 'Lab.loginController.loggedIn',
+  
+  /**
+   * Binding Path for the target property of the changeGroupButton
+   */
+  changeGroupButtonTargetPath: 'Lab.loginController',
+  /**
+   * Binding Path for the isVisible property of the changeGroupButton
+   */
+  changeGroupButtonIsVisiblePath: 'Lab.loginController.loggedIn',
+
 
   /**
    * Overwritten createChildView where you set up all
@@ -71,7 +81,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.welcomeLabelView = this.createChildView(
       SC.LabelView.design({
-        layout: { centerY: 0, height: 24, right: 130, width: 500},
+        layout: { centerY: 0, height: 24, right: 250, width: 500},
         fontWeight: SC.BOLD_WEIGHT,
         textAlign: SC.ALIGN_RIGHT,
         valueBinding: this.get('welcomePath'),
@@ -82,7 +92,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.logoutButton = this.createChildView(
       SC.ButtonView.design({
-        layout: { centerY: 0, height: 24, right: 12, width: 100 },
+        layout: { centerY: 0, height: 24, right: 10, width: 100 },
         layerId: 'logOutButton',
         title:  "Log out",
         target: this.get('logoutButtonTargetPath'),
@@ -91,6 +101,18 @@ Lab.TopBarView = SC.ToolbarView.extend(
       })
     );
     childViews.push(this.logoutButton);
+
+    this.changeGroupButton = this.createChildView(
+      SC.ButtonView.design({
+        layout: { centerY: 0, height: 24, right: 120, width: 120 },
+        layerId: 'changeGroup',
+        title:  "Change Group",
+        target: this.get('changeGroupButtonTargetPath'),
+        action: 'showGroupPanel',
+        isVisibleBinding: this.get('changeGroupButtonIsVisiblePath')
+      })
+    );
+    childViews.push(this.changeGroupButton);
 
     this.set('childViews', childViews);
   }
