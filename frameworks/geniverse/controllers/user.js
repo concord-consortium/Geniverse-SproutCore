@@ -46,7 +46,7 @@ Geniverse.userController = SC.ObjectController.create(
     var status = field.get('status');
     if (status & SC.Record.READY == SC.Record.READY) {
       field.removeObserver('status',method);
-      method();
+      method.call(context);
     }
     else {
       field.addObserver('status', method);
