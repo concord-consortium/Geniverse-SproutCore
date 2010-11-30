@@ -18,18 +18,12 @@ Lab.loginController = SC.ObjectController.create(
   checkTokenUrl: '/portal/verify_cc_token',
   loginUrl: '/portal/remote_login',
   logoutUrl: '/portal/remote_logout',
-  textAreaValue: '',
   username: '',
   password: '',
-  firstName: '',
-  lastName: '',
   loggedIn: NO,
   triedPortal: NO,
   panel: null,
-  groupNumber: 1,
-  memberNumber: 1,
   welcomeMessage: 'please wait ...', 
-
   
   showCheckPanel: function() {
     this.hidePanel();
@@ -68,17 +62,6 @@ Lab.loginController = SC.ObjectController.create(
     }
   },
  
-  restoreGroupinfo: function() {
-    var lastGroup = Lab.userDefaults.readDefault('groupNumber');
-    var lastMember = Lab.userDefaults.readDefault('memberNumber');
-    if (lastGroup) {
-      Lab.loginController.set('groupNumber',lastGroup);
-    }
-    if (lastMember) {
-      Lab.loginController.set('memberNumber',lastMember);
-    }
-  },
-  
   // ask the portal if this user is logged in 
   checkCCAuthToken: function() {
     var checkTokenUrl = this.checkTokenUrl;
@@ -127,15 +110,15 @@ Lab.loginController = SC.ObjectController.create(
       SC.Logger.log(response.body());
       var login = response.get('body').login;
       var first = response.get('body').first;
-      var  last = response.get('body').last;
+      var last = response.get('body').last;
       var self = this;
       SC.Logger.log(login);
       var userFound = function(user) {
-        self.set('firstName',first);
-        self.set('lastName',last);
-        self.set('username', login);
+        user.set('firstName',first);
+        user.set('lastName',last);
+        Geniverse.store.commitRecords();
         Geniverse.userController.set('content',user);
-        self.didAuthenticate();
+        Geniverse.userController.doWhenReady(self,user,self.didAuthenticate);
       };
       Geniverse.userController.findOrCreateUser(login, userFound);
     }
@@ -148,8 +131,8 @@ Lab.loginController = SC.ObjectController.create(
   didAuthenticate: function (){
     SC.Logger.log("LOGIN: Authenticated.");
     this.set('loggedIn', YES);
-    this.restoreGroupinfo();
-    if (Lab.userDefaults.readDefault('groupNumber')) {
+    var user = Geniverse.userController.get('content');
+    if (user) {
       this.finish();
     }
     else {
@@ -174,24 +157,28 @@ Lab.loginController = SC.ObjectController.create(
   },
 
   updateGroupInfo: function() {
-    Lab.userDefaults.writeDefault('groupNumber',this.get('groupNumber')); 
-    Lab.userDefaults.writeDefault('memberNumber',this.get('memberNumber'));
+    var user = Geniverse.userController.get('content');
+    if (user) {
+      //user.set('groupId',this.get('groupId'));
+      //user.set('memberId',this.get('memberId'));
+      Geniverse.store.commitRecords();
+    }
+    else {
+      SC.Logger.log("probably an error condition -- no user when updateing groups"); 
+    }
   },
 
   finish: function() {
-    var member = this.get('memberNumber');
-    var group = this.get('groupNumber');
-    var userName = this.get('firstName');
+    var user = Geniverse.userController.get('content');
+    var member = user.get('memberId');
+    var group = user.get('groupId');
+    var userName = user.get('firstName');
     this.hidePanel();
     this.set('welcomeMessage',"Welcome %@, you are member #%@ in group %@".fmt(userName, member, group));
-    var user = Geniverse.userController.get('content');
     CcChat.chatController.set('username', user.get('username'));
     Lab.userDefaults.writeDefault('username', user.get('username'));
     this.updateGroupInfo();
     this.set('loggedIn', YES);
     Lab.LOGIN.finish();
   }
-
-
-
 }) ;

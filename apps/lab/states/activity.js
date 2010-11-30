@@ -125,7 +125,7 @@ Lab.ACTIVITY = SC.Responder.create(
     var activity = Geniverse.activityController.get('content');
     
     var activityChannel = Geniverse.activityController.get('baseChannelName');
-    var groupChannel = activityChannel+"-"+Lab.loginController.get('groupNumber');
+    var groupChannel = activityChannel+"-"+user.get('groupId');
     
     CcChat.chatController.set('username', username);
     CcChat.chatController.initChat(groupChannel);
@@ -265,8 +265,9 @@ Lab.ACTIVITY = SC.Responder.create(
     }
     SC.Logger.info("Creating defaults");
     //var organismConfigurations = Geniverse.activityController.getConfigurationForRoom(CcChat.chatRoomController.get('channelIndex'));
-    var group = Geniverse.loginController.get('groupNumber')  - 1; // the numbers 1 - 3, but need to 0 based
-    var member = Geniverse.loginController.get('memberNumber')- 1;
+    var user = Geniverse.userController.get('content');
+    var group = user.get('groupId')  - 1; // the numbers 1 - 3, but need to 0 based
+    var member = user.get('memberId')- 1;
     var organismConfigurations = Geniverse.activityController.getConfigurationForRoomMember(group,member);
     SC.Logger.info("Found " + organismConfigurations.length + " defaults");
     for (var i = 0; i < organismConfigurations.length; i++) {

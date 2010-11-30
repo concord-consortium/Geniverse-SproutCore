@@ -44,7 +44,7 @@ Lab.LoginGroupView = SC.PanelPane.extend({
          SC.Object.create({ value: 3, title: 'member 3'})
        ],
 
-       valueBinding: 'Lab.loginController.memberNumber',
+       valueBinding: 'Geniverse.userController.content.memberId',
        nameKey: 'title',
        valueKey: 'value'
      }),
@@ -58,7 +58,7 @@ Lab.LoginGroupView = SC.PanelPane.extend({
          SC.Object.create({ value: 3, title: 'group 3'})
        ],
 
-       valueBinding: 'Lab.loginController.groupNumber',
+       valueBinding: 'Geniverse.userController.content.groupId',
        nameKey: 'title',
        valueKey: 'value'
      })
