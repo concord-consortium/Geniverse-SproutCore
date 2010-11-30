@@ -29,7 +29,7 @@ Lab.LoginLoginView = SC.PanelPane.extend({
 
      welcomeView: SC.LabelView.design({
        layout: { top: 5, height: 24, left: 10, width: 400 },
-       value: "Please log in:"
+       valueBinding: 'Lab.loginController.welcomeMessage'
      }),
 
 
