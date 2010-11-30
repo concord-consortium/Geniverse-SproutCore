@@ -6,9 +6,9 @@
 
 /** @class
 
-  (Document Your Controller Here)
+  //TODO: (Document Your Controller Here)
 
-  @extends SC.Object
+  @extends SC.ObjectController
 */
 Geniverse.userController = SC.ObjectController.create(
 /** @scope Geniverse.userController.prototype */ {
