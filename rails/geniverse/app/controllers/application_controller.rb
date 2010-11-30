@@ -34,7 +34,16 @@ class ApplicationController < ActionController::Base
     attrs['guid'] = guid
     return camelcase_keys(attrs)
   end
-  
+ 
+  # like the inverse of above, convert sproutcore hashes to normal obj attributes.
+  def paramify_json(hash)
+    if request.format.json?
+      hash.delete('guid')
+      return underscore_keys(hash)
+    end
+    return hash
+  end
+
   def custom_item_hash(obj)
     return {
       :content => custom_hash(obj),
@@ -61,4 +70,14 @@ class ApplicationController < ActionController::Base
     end
     return hash
   end
+
+  def underscore_keys(hash)
+    hash.keys.each do |k|
+      ck = k.underscore
+      if ck != k
+        hash[ck] = hash[k]
+        hash.delete(k)
+      end
+    end
+    return hash  end
 end
