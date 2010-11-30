@@ -15,13 +15,15 @@ Geniverse.userController = SC.ObjectController.create(
 
   // TODO: Add your own code here.
   usernameBinding: '*user.username',
-  
+
   createUser: function (username, password){
     if (!password) { password = ""; }
     var passwordHash = SHA256(password);
     var user = Geniverse.store.createRecord(Geniverse.User, {
         username: username,
-        passwordHash: passwordHash
+        passwordHash: passwordHash,
+        groupId: 1,
+        mememberId: 1
     });
     this.set('content', user);
     Geniverse.store.commitRecords();
@@ -67,7 +69,7 @@ Geniverse.userController = SC.ObjectController.create(
         };
         self.doWhenReady(self, user, method);
       }
-    }
+    };
     self.findUser(username,nextMethod);
   }
 }) ;

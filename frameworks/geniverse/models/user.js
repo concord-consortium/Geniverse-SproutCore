@@ -15,9 +15,11 @@ Geniverse.User = SC.Record.extend(
 /** @scope Geniverse.User.prototype */ {
 
   username: SC.Record.attr(String),
-  
-  passwordHash: SC.Record.attr(String)
-
+  passwordHash: SC.Record.attr(String),
+  firstName: SC.Record.attr(String),
+  lastName: SC.Record.attr(String),
+  groupId: SC.Record.attr(Number),
+  memberId: SC.Record.attr(Number)
 });
 
 Geniverse.User.modelName = "user";
