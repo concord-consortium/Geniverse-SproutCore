@@ -35,7 +35,7 @@ Geniverse.NotepadView = SC.PalettePane.create({
       hint: "Type your personal lab notes into this Note Pad",
       isEditable: YES,
       isTextArea: YES,
-      contentBinding: "Geniverse.notepadController.content"
+      valueBinding: "Geniverse.notepadController.content"
     })
   })
 });

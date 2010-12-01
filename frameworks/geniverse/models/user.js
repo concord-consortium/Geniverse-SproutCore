@@ -19,7 +19,8 @@ Geniverse.User = SC.Record.extend(
   firstName: SC.Record.attr(String),
   lastName: SC.Record.attr(String),
   groupId: SC.Record.attr(Number),
-  memberId: SC.Record.attr(Number)
+  memberId: SC.Record.attr(Number),
+  note: SC.Record.attr(String)
 });
 
 Geniverse.User.modelName = "user";
