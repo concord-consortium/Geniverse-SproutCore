@@ -20,10 +20,11 @@ Geniverse.userController = SC.ObjectController.create(
     if (!password) { password = ""; }
     var passwordHash = SHA256(password);
     var user = Geniverse.store.createRecord(Geniverse.User, {
-        username: username,
-        passwordHash: passwordHash,
-        groupId: 1,
-        mememberId: 1
+      username: username,
+      passwordHash: passwordHash,
+      groupId: 1,
+      mememberId: 1,
+      note: ""
     });
     this.set('content', user);
     Geniverse.store.commitRecords();

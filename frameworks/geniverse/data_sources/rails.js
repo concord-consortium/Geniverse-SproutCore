@@ -4,12 +4,6 @@
 // ==========================================================================
 /*globals Geniverse */
 
-/** @class
-
-  (Document Your Data Source Here)
-
-  @extends SC.DataSource
-*/
 sc_require('models/activity');
 Geniverse.ACTIVITIES_QUERY = SC.Query.local(Geniverse.Activity, {
   orderBy: 'id'
@@ -21,6 +15,12 @@ Geniverse.DRAGONS_QUERY = SC.Query.local(Geniverse.Dragon, {
   orderBy: 'name'
 });
 
+/** @class
+
+  // TODO: (Document Your Data Source Here)
+
+  @extends SC.DataSource
+*/
 Geniverse.RailsDataSource = SC.DataSource.extend(
 /** @scope Geniverse.RailsDataSource.prototype */ {
   
