@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101118193326) do
+ActiveRecord::Schema.define(:version => 20101130195301) do
 
   create_table "activities", :force => true do |t|
     t.string   "initial_alleles"
@@ -49,6 +49,11 @@ ActiveRecord::Schema.define(:version => 20101118193326) do
     t.string   "password_hash"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "group_id"
+    t.integer  "member_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.text     "note"
   end
 
   add_index "users", ["username", "password_hash"], :name => "index_users_on_username_and_password_hash"
