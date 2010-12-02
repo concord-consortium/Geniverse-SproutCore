@@ -38,7 +38,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
   fixedAlleles: null,    // used when generating new dragons
   
   alleles: [],
-  allelesMap: {h: '1',s: '1',w: '2',l: '2',t: '2',a: '2',b: '2',p: 'X',f: 'X'},
+  allelesMap: {m: '1',mt: '1',w: '1',h: '2',c: '2',fl: '2',hl: '2',a: '2', a1: '2', a2: '2',b: 'X',d: 'X',dl: 'X',t: 'X'},
   ignoreUpdate: YES,
   
   activityBinding: 'Geniverse.activityController.content',
@@ -48,9 +48,8 @@ Geniverse.DragonGenomeView = SC.View.extend(
     if (!!activity) {
       var hiddenGenes = activity.get('hiddenGenes');
       if (!!hiddenGenes){
-        var hiddenGenes = hiddenGenes.split(/,[ ]*/);
+        hiddenGenes = hiddenGenes.split(/,[ ]*/);
         return hiddenGenes;
-        SC.RunLoop.end();
       } else {
         return [];
       }
@@ -92,7 +91,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
   }.property('alleles'),
   
   dragonView: Geniverse.OrganismView.design({
-		layout: {top: 18, left: 260, width: 200, height: 170},
+		layout: {top: 18, left: 285, width: 200, height: 170},
 	  organismBinding: "*parentView.dragon",
 	  allowDrop: YES,
     isVisibleBinding: "*parentView.showDragon"
@@ -112,7 +111,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 
   fatherLabel: SC.LabelView.design({
-		layout: {top: 0, left: 140, width: 100, height: 25},
+		layout: {top: 0, left: 145, width: 100, height: 25},
 		value: "From father"
 	}),
 	
@@ -137,7 +136,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 	
 	chromosomeB1View: Geniverse.DragonChromosomeView.design({
-	  layout: {top: 25, left: 140},
+	  layout: {top: 25, left: 145},
 	  updateDragon: function(){
 	    this.get('parentView').updateDragon();
 	  }.observes('alleles'),
@@ -165,7 +164,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 	
 	chromosomeB2View: Geniverse.DragonChromosomeView.design({
-	  layout: {top: 170, left: 140},
+	  layout: {top: 170, left: 145},
 	  updateDragon: function(){
 	    this.get('parentView').updateDragon();
 	  }.observes('alleles'),
@@ -193,7 +192,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 	
 	chromosomeBXView: Geniverse.DragonChromosomeView.design({
-	  layout: {top: 315, left: 140},
+	  layout: {top: 315, left: 145},
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
 	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
 	  updateDragon: function(){
