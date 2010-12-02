@@ -52,12 +52,12 @@ Lab.chromosomeTrainingPage = SC.Page.design({
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({
-          layout: {top: 80, left: 40, height: 500, width: 500 },
+          layout: {top: 80, left: 15, height: 500, width: 500 },
           generateDragonAtStart: YES,
           sex: 1,
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
           showGenerateNewDragon: NO,
-          showIsEditableCheck: NO
+          showIsEditableCheck: YES
         })
 
       }),
@@ -75,7 +75,7 @@ Lab.chromosomeTrainingPage = SC.Page.design({
         }),
 
         maleGenomeView: Geniverse.DragonGenomeView.design({
-          layout: {top: 80, left: 40, height: 500, width: 500 },
+          layout: {top: 80, left: 15, height: 500, width: 500 },
           generateDragonAtStart: YES,
           sex: 0,
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
