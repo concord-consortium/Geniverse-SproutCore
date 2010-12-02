@@ -135,15 +135,15 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       }
       
       // go through pulldowns and hide those which don't have alleles
-      for (var j in pulldowns[this]) {
-        if (!!pulldowns[this][j].tagName && pulldowns[this][j].tagName === 'select') {
-          if (alleles.indexOf(j) === -1 && alleles.indexOf(j.toUpperCase()) === -1){
-            pulldowns[this][j].set('isVisible', NO);
-          } else {
-            pulldowns[this][j].set('isVisible', YES);
-          }
-        }
-      }
+      // for (var j in pulldowns[this]) {
+      //   if (!!pulldowns[this][j].tagName && pulldowns[this][j].tagName === 'select') {
+      //     if (alleles.indexOf(j) === -1 && alleles.indexOf(j.toUpperCase()) === -1){
+      //       pulldowns[this][j].set('isVisible', NO);
+      //     } else {
+      //       pulldowns[this][j].set('isVisible', YES);
+      //     }
+      //   }
+      // }
     }.observes('*parentView.alleles.[]'),
     
     isEditableDidChange: function() {
@@ -175,19 +175,30 @@ Geniverse.DragonChromosomeView = SC.View.extend(
 
     _createPulldown: function(val, top, index) {
       var map = this.get('alleleToPulldown');
-      var bigVal = val.toUpperCase();
-      var smallVal = val.toLowerCase();
-      var bigTitle = Geniverse.chromosomeController.titleForAllele(bigVal);
-      var smallTitle = Geniverse.chromosomeController.titleForAllele(smallVal);
-      var dropDownMenuView = SC.SelectFieldView.create({
-          layout: { top: top, left: 0, height: 25, width: 90 },
-          
-          // not sure whether these need to be SC.Objects or not. It seems to have no effect.
-          objects: [ 
-            SC.Object.create({ value: bigVal, title: bigTitle, index: index}),
-            SC.Object.create({ value: smallVal, title: smallTitle, index: index})
-            ],
+      var sisterAlleles;
+      var allAlleles = Geniverse.chromosomeController.get('allAlleles');
+      for (var i in allAlleles){
+        for (var j in allAlleles[i]){
+          if (allAlleles[i][j] === val){
+            sisterAlleles = allAlleles[i];
+          }
+        }
+      }
+      
+      var pulldownOptions = [];
+      for (var i in sisterAlleles){
+        if (SC.typeOf(sisterAlleles[i]) === SC.T_STRING){
+          var allele = sisterAlleles[i];
+          var option = SC.Object.create({ value: allele, title: Geniverse.chromosomeController.titleForAllele(allele), index: index});
+          pulldownOptions.unshift(option);
+        }
+      }
 
+      var dropDownMenuView = SC.SelectFieldView.create({
+          layout: { top: top, left: 0, height: 25, width: 105 },
+          
+         objects: pulldownOptions,
+       
           value: val,
           nameKey: 'title',
           valueKey: 'value',
@@ -217,7 +228,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       var map = this.get('alleleToPulldown');
 
       var alleleView = SC.LabelView.create({
-          layout: { top: top, left: 0, height: 20, width: 80 },
+          layout: { top: top, left: 0, height: 20, width: 90 },
           classNames: ['static-allele'],
           textAlign: SC.ALIGN_CENTER,
           value: val // will change

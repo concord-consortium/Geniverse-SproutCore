@@ -25,39 +25,20 @@ Geniverse.chromosomeController = SC.ObjectController.create(
 		}
   },
   
-  chromosomeAlleles: {a: [], b: []},
+  allAlleles: [
+    ['M', 'm', 'MT'],
+    ['W', 'w'],
+    ['H', 'h'],
+    ['C', 'c'],
+    ['Fl', 'fl'],
+    ['Hl', 'hl'],
+    ['A1', 'A2', 'a'],
+    ['B', 'b'],
+    ['D', 'd', 'dl'],
+    ['T', 't']
+  ],
   
-  updateChromosomeAlleles: function (){
-    this.chromosomeAlleles['a'] = this.calculateChromosomeAlleles('a');
-    this.chromosomeAlleles['b'] = this.calculateChromosomeAlleles('b');
-  }.observes('dragon').cacheable(),
-  
-  // this is a very naive implementation of the alleles for the individual chromosomes.
-  // We are just getting the "a:" alleles and the "b:" alleles, and assuming all 'a' alleles
-  // are on the same chromosome
-  
-  // We return an array of the 'a' or 'b' alleles. Each item in the array is an array with the first 
-  // item being the allele's value and the second being the alternative value.
-  // e.g. [[H, h], [f, F], [a, A]]
-  // Eventually, the information about the alternative values will come from Biologica
-  calculateChromosomeAlleles: function(chromosome) {
-    if (this.get('content') === null){
-      return "...";
-    }
-    var chromosomes = this.get('content').get('alleles');
-    var pattern = new RegExp(chromosome + ':.', 'g'); ///+chromosome+:./g;
-    var matches = chromosomes.match(pattern);       // generates an array such as ["a:F", "a:s", "a:t"]
-    var alleles = [];
-    for (var i = 0; i < matches.length; i++){
-      var allele = matches[i].split(":")[1];           // gets the allele after the colon
-      alleles[i] = [allele, this._toOtherCase(allele)];  // store allele and it's opposite value (for now)
-    }
-    return alleles;
-  },
-  
-  _toOtherCase: function (c) {
-    return /[a-z]/.test(c) ? c.toUpperCase() : c.toLowerCase();
-  },
+  chromosomeAlleles: {a: this.allAlleles, b: this.allAlleles},
   
   updateDragon: function (aAlleles, bAlleles){
     if (!this._allelesEqual(aAlleles,this.chromosomeAlleles['a']) || !this._allelesEqual(bAlleles, this.chromosomeAlleles['b'])){
@@ -92,20 +73,29 @@ Geniverse.chromosomeController = SC.ObjectController.create(
   },
 
   alleleLabelMap : {
-      'H': 'horns',
-      'h': 'hornless',
-      'w': 'wings',
-      'W': 'wingless',
-      'L': 'legs',
-      'l': 'legless',
-      'T': 'fancy tail',
-      't': 'plain tail',
-      'f': 'fire',
-      'F': 'fireless',
-      'a': 'purple',
-      'A': 'red',
-      'b': 'color2',
-      'B': 'color3'
+      'M': 'Metallic',
+      'm': 'Nonmetallic',
+      'MT': 'Tawny',
+      'W': 'Wings',
+      'w': 'No wings',
+      'H': 'No horns',
+      'h': 'Horns',
+      'C': 'Colored',
+      'c': 'Colorless',
+      'Fl': 'Forelimbs',
+      'fl': 'No forelimbs',
+      'Hl': 'Hindlimbs',
+      'hl': 'No hindlimbs',
+      'A1': 'A1 armor',
+      'A2': 'A2 armor',
+      'a': 'No armor',
+      'B': 'Black',
+      'b': 'Brown',
+      'D': 'Full color',
+      'd': 'Dilute color',
+      'dl': 'dl',
+      'T': 'Flared tail',
+      't': 'Short tail'
   },
 
   titleForAllele: function(val) {
