@@ -50,7 +50,7 @@ Geniverse.userController = SC.ObjectController.create(
       method.call(context);
     }
     else {
-      field.addObserver('status', method);
+      field.addObserver('status', context, method);
     }
   },
 
