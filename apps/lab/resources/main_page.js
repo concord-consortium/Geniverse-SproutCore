@@ -33,8 +33,10 @@ Lab.mainPage = SC.Page.design({
 
 
       caselogButtonView: SC.View.design(Lab.SimpleButton, {
+        layerId: 'caselog',
+        tagName: 'a',
         hasHover: YES,
-        layout: { top: 480, left: 470, width: 372, height: 158 },
+        layout: { top: 438, left: 467, width: 372, height: 158 },
         //title: 'Go to the Case Log',
         target: 'Lab.mainPage',
         action: 'goCaseLog',

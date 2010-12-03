@@ -21,6 +21,8 @@ a#caselog {
 }
 
 a#caselog:hover {
-  background-image: url(../images/mainscreen-caselog-highlighted.png);
-  background-repeat: none;
+    cursor: pointer;
+    cursor: hand;
+    background-image: static_url('mainscreen-caselog-highlighted.png');
+    background-repeat: none;
 }
