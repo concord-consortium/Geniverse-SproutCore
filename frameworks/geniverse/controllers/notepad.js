@@ -17,48 +17,49 @@ Geniverse.notepadController = SC.ObjectController.create(
 /** @scope Geniverse.notepadController.prototype */ {
   pane: Geniverse.NotepadView,
   contentBinding: 'Geniverse.userController*content.note',
-  wasCommitted: NO,
-  lastCommitTime: 0,
-  commitDelayPeriod: 10000,
-  
+
   showPane: function() {
-    var username = Geniverse.loginController.username;
+    SC.Logger.log("Geniverse.notepadController.showPane called");
+    var username = Geniverse.userController.get('username');
+    SC.Logger.log("Geniverse.userController.get('username'):",username);
     if(username){
-      SC.Logger.log("showPane called with username:",username);
-      var note = Geniverse.userController.get('content').get('note');
+      var note = Geniverse.userController.get('note');
       SC.Logger.log("user's note:",note);
       if (!this.get('pane').get('isVisibleInWindow')){
         this.get('pane').append();
+        this.updateView(this.get('content'));
       }
     }else {
       alert("You must be logged in first to use your Note Pad.");
     }
   },
 
-  contentDidChange: function() {
-//    SC.Logger.log("Geniverse.notepadController.contentDidChange() called");
-//    SC.Logger.log("this.content:", this.content);
-//    SC.Logger.log("Geniverse.userController.content:", Geniverse.userController.content);
-    if(this.wasCommitted != SC.MIXED_STATE){
-      var now = new Date().getTime();
-      // set this.lastCommitTime if this is the first time it is being used
-      if(this.lastCommitTime == 0) this.lastCommitTime = now;
-      var elapsedTime = now - this.lastCommitTime;
-      SC.Logger.log("elapsedTime:",elapsedTime);
-      if(elapsedTime >= this.commitDelayPeriod){
-        // TODO: fix bug where the second commit returns __MIXED__ and throws:
-        // uncaught exception: SC.Error:sc300:Busy (-1)
-        this.wasCommitted = Geniverse.store.commitRecord(
-          Geniverse.User,
-          Geniverse.userController.get('content').get('id'),
-          Geniverse.userController.get('content').get('storeKey')
-        );
-        SC.Logger.log("after commitRecord: this.wasCommitted:", this.wasCommitted);
-      }
+  contentDidChange: function () {
+    var _content = this.get('content');
+    //console.log("contentDidChange to:",_content);
+    this.updateView(_content);
+  }.observes('content'),
+
+  // TODO: Persist linefeeds properly
+  commitAndRemoveView: function (){
+    var _content = this.get('content');
+    var _userNote = Geniverse.userController.get('note');
+    if(_userNote != _content){
+      //console.warn("Geniverse.userController.get('note'):",_userNote);
+      //console.warn("was NOT equal to this.get('content'):",_content);
+      //console.warn("calling Geniverse.userController.set('note', this.get('content'));");
+      Geniverse.userController.set('note', _content);
     }
-    if(this.wasCommitted){
-      this.lastCommitTime = new Date().getTime();
-    }
-  }.observes('content')
+    //console.log("Geniverse.userController.note:", Geniverse.userController.get('note'));
+    var wasCommitted = Geniverse.store.commitRecords();
+    //console.log("Geniverse.store.commitRecords() returned this.wasCommitted:", this.wasCommitted);
+    var receiver = this.pane.remove();
+    //console.log("this.pane.remove() returned receiver:", receiver);
+  },
+
+  updateView: function (newValue) {
+    //console.log("updating view's value to:",newValue);
+    this.pane.contentView.notepadView.set('value', newValue);
+  }
 
 }) ;

@@ -24,18 +24,28 @@ Geniverse.NotepadView = SC.PalettePane.create({
     }),
 
     hideButton: SC.ButtonView.extend({
-      layout: {bottom: 5, right: 5, width: 80, height: 24},
-      title: "Close",
-      action: "remove",
-      target: "Geniverse.notepadController.pane"
+      layout: { bottom: 5, right: 5, width: 200, height: 24 },
+      title: "Save and Close",
+      action: "commitAndRemoveView",
+      target: "Geniverse.notepadController"
     }),
 
+    // TODO: Solve Firefox bugs:
+    //  1: value property is not updated when notepadView doesn't have focus (lacks blue outline)
+    //  2: titleView lacks dark background, making title hard to read 
     notepadView: SC.TextFieldView.design({
       layout: { left: 10, top: 24, width: 420, height: 375 },
       hint: "Type your personal lab notes into this Note Pad",
       isEditable: YES,
       isTextArea: YES,
-      valueBinding: "Geniverse.notepadController.content"
+      //valueBinding: "Geniverse.notepadController.content"
+      value: "",
+      notepadViewValueDidChange: function () {
+        var notepadViewValue = this.get('value');
+        //console.log('notepadViewValueDidChange to:',notepadViewValue);
+        //console.log("setting notepadController content");
+        Geniverse.notepadController.set('content',notepadViewValue);
+      }.observes('value')
     })
   })
 });
