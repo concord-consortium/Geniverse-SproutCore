@@ -34,6 +34,8 @@ Geniverse.DragonGenomeView = SC.View.extend(
   
   authoredAlleleString: null,
   
+  displayChallengeDragon: NO,   // overrides generateDragonAtStart
+  
   sex: null,        // used when generating new dragons
   fixedAlleles: null,    // used when generating new dragons
   
@@ -61,10 +63,44 @@ Geniverse.DragonGenomeView = SC.View.extend(
   gwtReadyBinding: 'Geniverse.gwtController.isReady',
   
   generateDragonWhenGWTReady: function() {
-    if (this.get('generateDragonAtStart')){
+    var self = this;
+    
+    // if displayChallengeDragon, first we have to wait for challengePoolController
+    // to be ready, and then we have to wait for the length of it to be larger
+    // than the idex we have specified
+    
+    function loadChallengeDragonWhenDragonsLoaded() {
+      Geniverse.challengePoolController.addObserver('length', self, self._loadChallengeDragon);
+      self._loadChallengeDragon();
+    }
+    
+    if (this.get('displayChallengeDragon')) {
+      if (Geniverse.challengePoolController & SC.Record.READY === SC.Record.READY) {
+        loadChallengeDragonWhenDragonsLoaded();
+      } else {
+        Geniverse.challengePoolController.addObserver('status', loadChallengeDragonWhenDragonsLoaded);
+      }
+    } else if (this.get('generateDragonAtStart')){
       this.initRandomDragon();
     }
   }.observes('gwtReady'),
+  
+  _loadChallengeDragon: function() {
+    // originally we were specifying the index of the dragon from the challengePool that
+    // we wanted. However, when dragons are being created, we can't guarantee the order.
+    // Instead we just wait to find the first dragon of the correct sex
+    var machingDragons = Geniverse.challengePoolController.filterProperty('sex', this.get('sex'));
+    if (machingDragons.get('length') > 0){
+      var dragon = machingDragons[0];
+      var self = this;
+      SC.run(function() {
+	      self.set('ignoreUpdate', NO);
+		    self.set('dragon', dragon);
+  	    self.set('ignoreUpdate', YES);
+	    });
+	    Geniverse.challengePoolController.removeObserver('length', self, self._loadChallengeDragon);
+    }
+  },
   
   a1Alleles: function() {
     return this.getAllelesFor(1,'A');
@@ -337,7 +373,6 @@ Geniverse.DragonGenomeView = SC.View.extend(
 		if (typeof(generateDragonWithCallback) != "undefined") {
 		  var sex = this.get('sex');
 		  var fixedAlleles = this.get('fixedAlleles');
-		  var args = [updateDragon];
 		  if (sex !== undefined && sex !== null && fixedAlleles !== undefined && fixedAlleles !== null){
 		    Geniverse.gwtController.generateDragonWithAlleles(fixedAlleles, sex, "", updateDragon);
 		  } else if (sex !== undefined && sex !== null) {
