@@ -7,7 +7,7 @@
 /**
  *   @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
-Geniverse.NotepadView = SC.PalettePane.create({
+Geniverse.NotepadView = SC.PalettePane.design({
   layout: { width: 440, height: 430, centerX: 0, centerY: 0 },
   isModal:NO,
   contentView: SC.View.extend({
@@ -30,9 +30,7 @@ Geniverse.NotepadView = SC.PalettePane.create({
       target: "Geniverse.notepadController"
     }),
 
-    // TODO: Solve Firefox bugs:
-    //  1: value property is not updated when notepadView doesn't have focus (lacks blue outline)
-    //  2: titleView lacks dark background, making title hard to read 
+    // TODO: Solve Firefox bug: titleView lacks dark background, making title hard to read 
     notepadView: SC.TextFieldView.design({
       layout: { left: 10, top: 24, width: 420, height: 375 },
       hint: "Type your personal lab notes into this Note Pad",
