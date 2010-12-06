@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101130195301) do
+ActiveRecord::Schema.define(:version => 20101206164245) do
 
   create_table "activities", :force => true do |t|
     t.string   "initial_alleles"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20101130195301) do
     t.string   "title"
     t.string   "sc_type"
     t.string   "hidden_genes"
+    t.text     "static_genes"
   end
 
   create_table "dragons", :force => true do |t|
