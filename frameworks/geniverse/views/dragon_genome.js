@@ -56,7 +56,22 @@ Geniverse.DragonGenomeView = SC.View.extend(
         return [];
       }
     } else {
-      return ['s','p','b'];
+      return [];
+    }
+  }.property('activity').cacheable(),
+  
+  staticGenes: function() {
+    var activity = Geniverse.activityController.get('content');
+    if (!!activity) {
+      var staticGenes = activity.get('staticGenes');
+      if (!!staticGenes){
+        staticGenes = staticGenes.split(/,[ ]*/);
+        return staticGenes;
+      } else {
+        return [];
+      }
+    } else {
+      return [];
     }
   }.property('activity').cacheable(),
   

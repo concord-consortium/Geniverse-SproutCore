@@ -16,6 +16,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
 
   alleles: [],
   hiddenGenesBinding: '*parentView.hiddenGenes',
+  staticGenesBinding: '*parentView.staticGenes',
   isEditableBinding: '*parentView.isEditable',
   showEmptyOptionInPulldowns: NO,
   
@@ -98,6 +99,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     
     alleleToPulldown: [],
     hiddenGenesBinding: '*parentView.hiddenGenes',
+    staticGenesBinding: '*parentView.staticGenes',
     isEditableBinding: '*parentView.isEditable',
     
     ignoreChanges: NO,
@@ -157,14 +159,21 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       this._setupPulldowns();
       this.allelesDidChange();
     }.observes('hiddenGenes'),
+    
+    staticGenesDidChange: function() {
+      this.removeAllChildren();
+      this._setupPulldowns();
+      this.allelesDidChange();
+    }.observes('staticGenes'),
 
     _setupPulldowns: function() {
       var alls = this.get('alleles');
       var hidden = this.get('hiddenGenes');
+      var staticGenes = this.get('staticGenes');
       var editable = this.get('isEditable');
       for (var i = 0; i < alls.length; i++) {
         if (hidden.indexOf(alls[i].toLowerCase()) == -1) {
-          if (editable){
+          if (editable && staticGenes.indexOf(alls[i].toLowerCase()) == -1){
             this._createPulldown(alls[i], i*30, i);
           } else {
             this._createStaticAllele(alls[i], i*30);
