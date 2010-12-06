@@ -46,34 +46,66 @@ Geniverse.DragonGenomeView = SC.View.extend(
   activityBinding: 'Geniverse.activityController.content',
   
   hiddenGenes: function() {
-    var activity = Geniverse.activityController.get('content');
-    if (!!activity) {
-      var hiddenGenes = activity.get('hiddenGenes');
-      if (!!hiddenGenes){
-        hiddenGenes = hiddenGenes.split(/,[ ]*/);
-        return hiddenGenes;
-      } else {
-        return [];
-      }
-    } else {
-      return [];
-    }
+      return this._getHiddenOrStaticGenes('hiddenGenes');
   }.property('activity').cacheable(),
   
   staticGenes: function() {
+    return this._getHiddenOrStaticGenes('staticGenes');
+  }.property('activity').cacheable(),
+  
+  _getHiddenOrStaticGenes: function(property){
     var activity = Geniverse.activityController.get('content');
     if (!!activity) {
-      var staticGenes = activity.get('staticGenes');
-      if (!!staticGenes){
-        staticGenes = staticGenes.split(/,[ ]*/);
-        return staticGenes;
+      
+      var genes = "";
+      var rawGenes = activity.get(property);
+      if (!!rawGenes){
+        var genesHash = eval("("+rawGenes+")");
+        var sex = this.get('sex');
+        if (sex === 0){
+          genes = genesHash.male;
+        } else if (sex === 1){
+          genes = genesHash.female;
+        }
+        
+        if (!genes){
+          genes = genesHash.all;
+        }
+      }
+      
+      if (!!genes){
+        genes = genes.split(/,[ ]*/);
+        
+        // now we have an array such as ['h', 'a', 'd'],
+        // but this won't cover "sister" alleles, such as 'a3', 'a5'
+        // we want to make the array ['h', 'a', 'a3', 'a5', 'd', 'dl']
+        
+        // hard-code extras for now -- not DRY, but much more efficient than searching
+        var extras = [];
+        for (var i in genes){
+          if (genes[i] === "a"){
+            extras.push("a1", "a2");
+          } else if (genes[i] === "d"){
+            extras.push("dl");
+          } else if (genes[i] === "m"){
+            extras.push("mt");
+          }
+        }
+        
+        for (var j in extras){
+          if (SC.typeOf(extras[j]) === SC.T_STRING){
+            genes.push(extras[j]);
+          }
+        }
+        
+        return genes;
       } else {
         return [];
       }
     } else {
       return [];
     }
-  }.property('activity').cacheable(),
+  },
   
   gwtReadyBinding: 'Geniverse.gwtController.isReady',
   
