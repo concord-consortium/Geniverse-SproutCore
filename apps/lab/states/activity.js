@@ -296,7 +296,14 @@ Lab.ACTIVITY = SC.Responder.create(
       case 'heredity':
         switch (level) {
           case 'training':
-            Lab.routes.gotoLabRoute({pageName: 'chromosomeTrainingPage'});
+            switch (activityType){
+              case 'intro':
+                Lab.routes.gotoLabRoute({pageName: 'chromosomeTrainingPage'});
+                break;
+              case 'breeding':
+                Lab.routes.gotoLabRoute({pageName: 'chromosomeBreedingPage'});
+                break;
+            }
             break;
           case 'apprentice':
             switch (activityType) {
