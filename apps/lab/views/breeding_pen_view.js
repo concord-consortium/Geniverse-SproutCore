@@ -47,7 +47,7 @@ Lab.BreedingPenView = SC.View.extend(
 
     this.titleView = this.createChildView(
       SC.LabelView.design({
-        layout: { centerY: 0, height: 20, left: 0, top:0, width: 300 },
+        layout: { centerY: 0, height: 20, left: 0, top:0, right: 0 },
         //valueBinding: this.get('titlePath'),
         value: "Breeding Pen",
         controlSize: "bity",
@@ -61,7 +61,7 @@ Lab.BreedingPenView = SC.View.extend(
     this.penView = this.createChildView(
       CC.AutoScrollView.design({
         hasHorizontalScroller: NO,
-        layout: { left: 0, top: 20, width: 300, height: 280 },
+        layout: { left: 0, top: 20, bottom: 0, right: 0 },
         backgroundColor: 'white',
         contentView: SC.GridView.design({
           contentBinding: this.get('eggsControllerPath')+'.arrangedObjects',
