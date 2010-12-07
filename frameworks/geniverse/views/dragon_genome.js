@@ -36,6 +36,8 @@ Geniverse.DragonGenomeView = SC.View.extend(
   
   displayChallengeDragon: NO,   // overrides generateDragonAtStart
   
+  dragonOnRight: NO,            // dragon image on left by default
+  
   sex: null,        // used when generating new dragons
   fixedAlleles: null,    // used when generating new dragons
   
@@ -107,6 +109,24 @@ Geniverse.DragonGenomeView = SC.View.extend(
     }
   },
   
+  dragonImageLeft: function() {
+    var dragonOnRight = this.get('dragonOnRight');
+    if (dragonOnRight){
+      return 0;
+    } else {
+      return 283;
+    }
+  }.property('dragonOnRight').cacheable(),
+  
+  chromosomeLeft: function() {
+    var dragonOnRight = this.get('dragonOnRight');
+    if (dragonOnRight){
+      return 205;
+    } else {
+      return 0;
+    }
+  }.property('dragonOnRight').cacheable(),
+  
   gwtReadyBinding: 'Geniverse.gwtController.isReady',
   
   generateDragonWhenGWTReady: function() {
@@ -174,14 +194,18 @@ Geniverse.DragonGenomeView = SC.View.extend(
   }.property('alleles'),
   
   dragonView: Geniverse.OrganismView.design({
-		layout: {top: 18, left: 285, width: 200, height: 170},
+		layout: function() {
+		  return {top: 18, left: this.getPath('parentView.dragonImageLeft'), width: 200, height: 170};
+		}.property(),
 	  organismBinding: "*parentView.dragon",
 	  allowDrop: YES,
     isVisibleBinding: "*parentView.showDragon"
 	}),
 	
 	generateNewDragonButton: SC.ButtonView.extend({
-		layout: {top: 280, left: 250, width: 200, height: 25},
+		layout: function() {
+		  return {top: 280, left: this.getPath('parentView.dragonImageLeft'), width: 200, height: 25};
+		}.property(),
 	  title: "Create a new dragon",
 	  target: 'parentView',
 	  action: 'initRandomDragon',
@@ -189,17 +213,23 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 	
 	motherLabel: SC.LabelView.design({
-		layout: {top: 0, left: 0, width: 100, height: 25},
+		layout: function() {
+		  return {top: 0, left: this.getPath('parentView.chromosomeLeft'), width: 100, height: 25};
+		}.property(),
 		value: "From mother"
 	}),
 
   fatherLabel: SC.LabelView.design({
-		layout: {top: 0, left: 145, width: 100, height: 25},
+		layout: function() {
+		  return {top: 0, left: this.getPath('parentView.chromosomeLeft') + 145, width: 100, height: 25};
+		}.property(),
 		value: "From father"
 	}),
 	
 	chromosomeA1View: Geniverse.DragonChromosomeView.design({
-	  layout: {top: 25, left: 0},
+	  layout: function() {
+		  return {top: 25, left: this.getPath('parentView.chromosomeLeft')};
+		}.property(),
 	  
 	  // allelesBinding doesn't work when we have more than one instance of
 	  // dragonGenomeView. Don't know how to get it to work correctly, so
@@ -219,7 +249,9 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 	
 	chromosomeB1View: Geniverse.DragonChromosomeView.design({
-	  layout: {top: 25, left: 145},
+	  layout: function() {
+		  return {top: 25, left: this.getPath('parentView.chromosomeLeft') + 145};
+		}.property(),
 	  updateDragon: function(){
 	    this.get('parentView').updateDragon();
 	  }.observes('alleles'),
@@ -233,7 +265,9 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 	
 	chromosomeA2View: Geniverse.DragonChromosomeView.design({
-	  layout: {top: 170, left: 0},
+	  layout: function() {
+		  return {top: 170, left: this.getPath('parentView.chromosomeLeft')};
+		}.property(),
 	  updateDragon: function(){
 	    this.get('parentView').updateDragon();
 	  }.observes('alleles'),
@@ -247,7 +281,9 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 	
 	chromosomeB2View: Geniverse.DragonChromosomeView.design({
-	  layout: {top: 170, left: 145},
+	  layout: function() {
+		  return {top: 170, left: this.getPath('parentView.chromosomeLeft') + 145};
+		}.property(),
 	  updateDragon: function(){
 	    this.get('parentView').updateDragon();
 	  }.observes('alleles'),
@@ -261,7 +297,9 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 	
 	chromosomeAXView: Geniverse.DragonChromosomeView.design({
-	  layout: {top: 315, left: 0},
+	  layout: function() {
+		  return {top: 315, left: this.getPath('parentView.chromosomeLeft')};
+		}.property(),
 	  updateDragon: function(){
 	    this.get('parentView').updateDragon();
 	  }.observes('alleles'),
@@ -275,7 +313,9 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 	
 	chromosomeBXView: Geniverse.DragonChromosomeView.design({
-	  layout: {top: 315, left: 145},
+	  layout: function() {
+		  return {top: 315, left: this.getPath('parentView.chromosomeLeft') + 145};
+		}.property(),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
 	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
 	  updateDragon: function(){
@@ -295,7 +335,9 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	}),
 	
 	isEditableCheck: SC.CheckboxView.design({
-    layout: { top: 370, left: 290, width: 250, height: 18 },
+    layout: function() {
+		  return {top: 370, left: this.getPath('parentView.dragonImageLeft') + 10, width: 250, height: 18};
+		}.property(),
     title: "Editable",
     isVisibleBinding: '*parentView.showIsEditableCheck',
     valueBinding: '*parentView.isEditable'
