@@ -49,15 +49,7 @@ Lab.caselog = SC.Page.design({
         target: 'Lab.caselog',
         action: 'goTraining1',
         title: 'Drake Traits',
-        layoutStyle: {
-          background: 'transparent',
-          border: 'none',
-          height: '70px',
-          left: '91px',
-          position: 'absolute',
-          top: '304px',
-          width: '341px'
-        }
+        layout: { top: 304, left: 91, width: 341, height: 70 }
       }),
 
       experiment: SC.View.design(Lab.SimpleButton, {
@@ -67,15 +59,7 @@ Lab.caselog = SC.Page.design({
         target: 'Lab.caselog',
         action: 'goExperiment1',
         title: 'In the Clutches of Drakes',
-        layoutStyle: {
-          background: 'transparent',
-          border: 'none',
-          height: '70px',
-          left: '91px',
-          position: 'absolute',
-          top: '399px',
-          width: '341px'
-        }
+        layout: { top: 399, left: 91, width: 341, height: 70 }
       }),
 
       individual: SC.View.design(Lab.SimpleButton, {
@@ -85,15 +69,7 @@ Lab.caselog = SC.Page.design({
         target: 'Lab.caselog',
         action: 'goIndividual1',
         title: 'Drake Forecast',
-        layoutStyle: {
-          background: 'transparent',
-          border: 'none',
-          height: '70px',
-          left: '522px',
-          position: 'absolute',
-          top: '100px',
-          width: '341px'
-        }
+        layout: { top: 100, left: 522, width: 341, height: 70 }
       }),
 
       group: SC.View.design(Lab.SimpleButton, {
@@ -103,15 +79,7 @@ Lab.caselog = SC.Page.design({
         target: 'Lab.caselog',
         action: 'goGroup1',
         title: 'A Perfect Look-alike',
-        layoutStyle: {
-          background: 'transparent',
-          border: 'none',
-          height: '70px',
-          left: '522px',
-          position: 'absolute',
-          top: '195px',
-          width: '341px'
-        }
+        layout: { top: 195, left: 522, width: 341, height: 70 }
       })
 
   	})

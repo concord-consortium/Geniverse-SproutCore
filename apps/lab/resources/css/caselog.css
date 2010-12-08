@@ -57,7 +57,10 @@ a#training {
 	width: 341px;
 	}
 a#training:hover {
-	background: url(../images/caselog-training-highlighted.png) no-repeat;
+    cursor: pointer;
+    cursor: hand;
+    background-image: static_url('caselog-training-highlighted.png');
+    background-repeat: none;
 	}
 a#training.completed:hover {
 	background: url(../images/caselog-training-completed-highlighted.png) no-repeat;
@@ -72,7 +75,10 @@ a#experiment {
 	width: 341px;
 	}
 a#experiment:hover {
-	background: url(../images/caselog-experiment-highlighted.png) no-repeat;
+    cursor: pointer;
+    cursor: hand;
+    background-image: static_url('caselog-experiment-highlighted.png');
+    background-repeat: none;
 	}
 a#experiment.completed:hover {
 	background: url(../images/caselog-experiment-completed-highlighted.png) no-repeat;
@@ -87,7 +93,10 @@ a#individual {
 	width: 341px;
 	}
 a#individual:hover {
-	background: url(../images/caselog-individual-highlighted.png) no-repeat;
+    cursor: pointer;
+    cursor: hand;
+    background-image: static_url('caselog-individual-highlighted.png');
+    background-repeat: none;
 	}
 a#individual.completed:hover {
 	background: url(../images/caselog-individual-completed-highlighted.png) no-repeat;
@@ -102,7 +111,10 @@ a#group {
 	width: 341px;
 	}
 a#group:hover {
-	background: url(../images/caselog-group-highlighted.png) no-repeat;
+    cursor: pointer;
+    cursor: hand;
+    background-image: static_url('caselog-group-highlighted.png');
+    background-repeat: none;
 	}
 a#group.completed:hover {
 	background: url(../images/caselog-group-copmpleted-highlighted.png) no-repeat;
