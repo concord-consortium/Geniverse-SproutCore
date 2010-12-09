@@ -16,9 +16,9 @@ Geniverse.OrganismView = SC.View.extend(
 	label: 'Organism',
   showLabel: false,
 	classNames: ['organism-view'],
-	content: Geniverse.NO_DRAGON,
+	content: null,  //Geniverse.NO_DRAGON,
 	contentBinding: '*organism',
-	childViews: 'imageView labelView'.w(),
+	childViews: 'labelView imageView'.w(),
   isDropTarget: NO, // change this to YES in view if you want replaceable by drag-and-drop
   parent: '',       // If set, drag-and-drop will replace parentView's [parent] field
   sex: null,        // If set to 0 or 1, drag-and-drop will only work wil males and females, respectively
@@ -28,16 +28,26 @@ Geniverse.OrganismView = SC.View.extend(
 		contentBinding: '*parentView.content',
 		contentValueKey: 'imageURL',
 		canLoadInBackground: NO,
-		useImageCache: NO
+		useImageCache: YES
 	}),
 
   labelView: SC.LabelView.design({
     isVisibleBinding: '*parentView.showLabel',
-    layout: {bottom: 0, left: 0},
+    layout: { centerY: 0, height: 20, left: 0, top:0, right: 0 },
     valueBinding: '*parentView.label',
-    fontWeight: SC.BOLD_WEIGHT,
-    textAlign: SC.ALIGN_CENTER
+    // fontWeight: SC.BOLD_WEIGHT,
+    textAlign: SC.ALIGN_CENTER,
+    classNames: "dragon_label extra-transparent".w()
   }),
+  // 
+  // SC.LabelView.design({
+  //   //valueBinding: this.get('titlePath'),
+  //   value: "Breeding Pen",
+  //   controlSize: "bity",
+  //   textAlign: SC.ALIGN_CENTER,
+  //   fontWeight: SC.BOLD_WEIGHT,
+  //   classNames: "container_label".w()
+  // })
 	
   init: function() {
 	  this.invokeLast(function() {
@@ -47,10 +57,19 @@ Geniverse.OrganismView = SC.View.extend(
 	},
 	
 	contentDidChange: function() {
-	  SC.Logger.info("Content changed!");
 	  this._checkForNullDragon();
 		this.setPath('imageView.layerNeedsUpdate', YES);
 	}.observes('*content'),
+	
+  // isSelectedBinding: 'Geniverse.allDragonsSelectionController.selection',
+  
+  selectionDidChange: function() {
+    if (Geniverse.allSelectedDragonsController.get('selection').contains(this.get('content'))){
+      this.set('isSelected', YES);
+    } else {
+      this.set('isSelected', NO);
+    }
+  }.observes('Geniverse.allSelectedDragonsController.selection'),
 	
 	isSelectedDidChange: function() {
     this._setClassNames();
@@ -81,13 +100,21 @@ Geniverse.OrganismView = SC.View.extend(
   
   _setClassNames: function(){
     var classNames = [];
-    if (this.get('parentView') !== null && ""+this.get('parentView').constructor === 'SC.GridView'){
+    
+    if (this.get('parentView') !== null && ""+this.get('parentView').constructor === 'Geniverse.DragonGenomeView'){
+      // no background
+      return;
+    }
+    
       if (this.get('isSelected')){
         classNames.push((this.getPath('organism.sex') === 0) ? 'male-selected' : 'female-selected');
       } else {
-        classNames.push((this.getPath('organism.sex') === 0) ? 'male' : 'female');
+        if (!!this.get('organism')){
+          classNames.push((this.getPath('organism.sex') === 0) ? 'male' : 'female');
+        }
+        classNames.push('empty');
       }
-    }
+      
     this.get('imageView').set('classNames', classNames);
     
     this.get('imageView').displayDidChange();
@@ -95,17 +122,18 @@ Geniverse.OrganismView = SC.View.extend(
 	
   // // drag methods:
   
-    // mouseDown: function(evt) {
-    //     SC.Drag.start({ 
-    //      event: evt, 
-    //      source: this, 
-    //      dragView: this, 
-    //      ghost: NO, 
-    //      slideBack: YES, 
-    //      dataSource: this 
-    //    }) ;
-    //     return YES;
-    //  },
+  mouseDown: function(evt) {
+    if (this.get('parentView') !== null && ""+this.get('parentView').constructor === 'SC.GridView'){
+      // we are in a grid view, don't need to do anything
+      return NO;
+    }
+    
+    var selection = SC.SelectionSet.create();
+    selection.addObject(this.get('content'));
+    Geniverse.allSelectedDragonsController.set('selection', selection);
+    
+    return NO;
+  },
    
 	// drop methods: NB: none of these will be called if isDropTarget = NO
   acceptDragOperation: function(drag, op) {
@@ -113,16 +141,22 @@ Geniverse.OrganismView = SC.View.extend(
     if (!this._canDrop(dragon)){
       return;
     }
-
+    
     // next, if we are a prent view, check that dragged dragon
     // is not an egg
     var parentType = this.get('parent');
     if (!!parentType){
-      this.get('parentView').set(this.get('parent'), dragon);
-      this.get('parentView').set('child', Geniverse.NO_DRAGON);
+      SC.RunLoop.begin();
+        this.get('parentView').set(this.get('parent'), dragon);
+        this.get('parentView').set('child', null);   //Geniverse.NO_DRAGON);
+      SC.RunLoop.end();
     } else {
-      this.set('organism', dragon);
+      SC.RunLoop.begin();
+        this.set('organism', dragon);
+      SC.RunLoop.end();
     }
+    
+    this._setClassNames();
     
     return op ;
   },
@@ -133,12 +167,16 @@ Geniverse.OrganismView = SC.View.extend(
   
   dragEntered: function(drag, evt) {
     if (this._canDrop(this._getSourceDragon(drag))){
-      this.$().addClass('drop-target') ;
+      SC.RunLoop.begin();
+      // this.$().addClass('drop-target') ;
+      this.set('isSelected', YES);
+      SC.RunLoop.end();
     }
   },
 
   dragExited: function(drag, evt) {
-    this.$().removeClass('drop-target') ;
+    // this.$().removeClass('drop-target') ;
+    this.set('isSelected', NO);
   },
   
   _canDrop: function(dragon) {
@@ -157,7 +195,6 @@ Geniverse.OrganismView = SC.View.extend(
     
     var parentType = this.get('parent');
     if (!!parentType){
-      SC.Logger.log("dragon.get('isEgg') = "+dragon.get('isEgg'));
       if (dragon.get('isEgg')){
         //HACK: We used to prevent eggs from becomming parents
         //HACK: now we turn the eggs into parents without complaint.
