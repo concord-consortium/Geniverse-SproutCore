@@ -16,9 +16,9 @@ Geniverse.breedDragonController = SC.Controller.create(
   gwtReadyBinding: 'Geniverse.gwtController.isReady',
   isBreeding: NO,
 
-  mother: Geniverse.NO_DRAGON,
-  father: Geniverse.NO_DRAGON,
-  child: Geniverse.NO_DRAGON,
+  mother: null, //Geniverse.NO_DRAGON,
+  father: null, //Geniverse.NO_DRAGON,
+  child: null, //Geniverse.NO_DRAGON,
   newChild: null,
   resetCount: 0,
 
@@ -29,7 +29,7 @@ Geniverse.breedDragonController = SC.Controller.create(
   }.property('mother', 'father').cacheable(),
 
   parentsChanged: function() {
-    this.set('child', Geniverse.NO_DRAGON);
+   // this.set('child', Geniverse.NO_DRAGON);
     this.set('newChild', null);
     this.set('resetCount',this.get('resetCount') + 1); // poor mans event propogation
   }.observes('mother','father'),
@@ -37,9 +37,9 @@ Geniverse.breedDragonController = SC.Controller.create(
   // http://www.pivotaltracker.com/story/show/5298197
   // rest parents and breeding pool.
   reset: function() {
-    this.set('mother',Geniverse.NO_DRAGON);
-    this.set('father',Geniverse.NO_DRAGON);
-    this.set('child', Geniverse.NO_DRAGON);
+    this.set('mother', null); //Geniverse.NO_DRAGON);
+    this.set('father', null); //Geniverse.NO_DRAGON);
+    this.set('child',  null); //Geniverse.NO_DRAGON);
     this.set('newChild', null);
     this.set('resetCount',this.get('resetCount') + 1); // poor mans event propogation
   },
