@@ -13,7 +13,7 @@
 Geniverse.challengePoolController = SC.ArrayController.create(
   SC.CollectionViewDelegate,
 /** @scope Geniverse.challengePoolController.prototype */ {
-
+  selectionBinding: 'Geniverse.allSelectedDragonsController.selection'
   // TODO: Add your own code here.
 
 }) ;

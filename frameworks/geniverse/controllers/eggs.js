@@ -13,6 +13,8 @@
 Geniverse.eggsController = SC.ArrayController.create(
   SC.CollectionViewDelegate,
 /** @scope Geniverse.eggsController.prototype */ {
+  
+  selectionBinding: 'Geniverse.allSelectedDragonsController.selection',
     
     removeAllEggs: function () {
       // this.get('content').forEach(function(egg){
