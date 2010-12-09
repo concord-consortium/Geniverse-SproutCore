@@ -2,6 +2,8 @@
 // Project:   Lab - TopBarView
 // Copyright: 2010 Concord Consortium
 // ==========================================================================
+/*globals Lab */
+
 /**
  * Top toolbar with labels and logout button.
  * This is a composite view component.
@@ -13,7 +15,6 @@
  * http://www.itsgotwhatplantscrave.com/2009/06/20/bindings-unleashed/
  * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
-/*globals Lab */
 
 Lab.TopBarView = SC.ToolbarView.extend(
 /** @scope Lab.TopBarView.prototype */ {
@@ -21,6 +22,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
   anchorLocation: SC.ANCHOR_TOP,
 
   // childViews
+  infoButton: null,
   geniverseLabelView: null,
   welcomeLabelView: null,
   logoutButton: null,
@@ -76,6 +78,11 @@ Lab.TopBarView = SC.ToolbarView.extend(
   createChildViews: function() {
     var childViews = [];
 
+    this.infoButton = this.createChildView(
+      Lab.InfoButtonView.design()
+    );
+    childViews.push(this.infoButton);
+
     this.geniverseLabelView = this.createChildView(
       SC.LabelView.design({
         layout: { centerY: 0, height: 24, left: 8, width: 400 },
@@ -86,7 +93,6 @@ Lab.TopBarView = SC.ToolbarView.extend(
       })
     );
     childViews.push(this.geniverseLabelView);
-
 
     this.logoutButton = this.createChildView(
       SC.ButtonView.design({
