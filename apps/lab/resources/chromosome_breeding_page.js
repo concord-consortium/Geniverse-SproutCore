@@ -52,8 +52,8 @@ Lab.chromosomeBreedingPage = SC.Page.design({
 
         femaleGenomeView: Geniverse.DragonGenomeView.design({
           layout: {top: 40, left: 15, height: 500, width: 500 },
-          generateDragonAtStart: YES,
-          displayChallengeDragon: NO,
+          generateDragonAtStart: NO,
+          displayChallengeDragon: YES,
           sex: 1,
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
           showGenerateNewDragon: NO,
@@ -71,8 +71,8 @@ Lab.chromosomeBreedingPage = SC.Page.design({
 
         maleGenomeView: Geniverse.DragonGenomeView.design({
           layout: {top: 40, left: 515, height: 500, width: 500 },
-          generateDragonAtStart: YES,
-          displayChallengeDragon: NO,
+          generateDragonAtStart: NO,
+          displayChallengeDragon: YES,
           sex: 0,
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
           showGenerateNewDragon: NO,
@@ -103,7 +103,7 @@ Lab.chromosomeBreedingPage = SC.Page.design({
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
         layout: { left: 325, top: 340, width: 400, height: 200 }
-      }),
+      })
       
   	})
 	})
