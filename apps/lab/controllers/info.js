@@ -18,9 +18,31 @@ Lab.infoController = SC.ObjectController.create(
   pane: null,//Lab.InfoView,
   //contentBinding: 'Lab.userController*content.note',
   content: "",//<a href='#lab/caselog'><strong>Info</strong>rmation!</a>",
-  // TODO: (1) Set this to YES when info for display is available
-  isVisible: YES,
-  //infoButton: null,
+  isVisible: NO,
+  infoButton: null,
+
+  /**
+   * Makes the infoButton visible and sets the info view
+   * content to the message input if it exists
+   * @param message (optional)
+   */
+  displayButtonOnly: function (message) {
+    this.set('isVisible', YES);
+    if(message){
+      this.set('content',message);
+    }
+  },
+
+  /**
+   * Makes the infoButton visible, sets the info view
+   * content to the message input if it exists, and
+   * pops-up the info view.
+   * @param message (optional)
+   */
+  display: function (message){
+    this.displayButtonOnly(message);
+    this.showPane(this.infoButton);
+  },
 
   showPane: function(callingView) {
     //console.log("showPane called by:",callingView);
@@ -31,7 +53,11 @@ Lab.infoController = SC.ObjectController.create(
     var _pane = this.get('pane');
     console.log("this.get('pane'):",_pane);
     if (!_pane.get('isVisibleInWindow')){
-      _pane.popup(callingView, SC.PICKER_POINTER);
+      if(callingView){
+        _pane.popup(callingView, SC.PICKER_POINTER);
+      }else{
+        _pane.popup(null);
+      }
       this.updateView(this.get('content'));
       //callingView.set('isEnabled', NO); // disable calling infoButton
     }

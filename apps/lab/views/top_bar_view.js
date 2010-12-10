@@ -81,6 +81,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     this.infoButton = this.createChildView(
       Lab.InfoButtonView.design()
     );
+    Lab.infoController.set('infoButton', this.infoButton); // So pop-up pointer works
     childViews.push(this.infoButton);
 
     this.geniverseLabelView = this.createChildView(

@@ -34,7 +34,7 @@ Lab.InfoView = SC.PickerPane.create({
     infoView: SC.LabelView.design({
       layout: { left: 10, top: 24, width: 420, height: 375 },
       //valueBinding: "Lab.infoController.content"
-      value: "default info",
+      value: "please wait...",
       escapeHTML: NO,
       infoViewValueDidChange: function () {
         var infoViewValue = this.get('value');
