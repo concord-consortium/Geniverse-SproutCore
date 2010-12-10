@@ -13,6 +13,10 @@
 Geniverse.stableOrganismsController = SC.ArrayController.create(
 	SC.CollectionViewDelegate,
 /** @scope Geniverse.stableOrganismsController.prototype */ {
+  
+  
+  selectionBinding: 'Geniverse.allSelectedDragonsController.selection',
+  
 		collectionViewDeleteContent: function(view, content, indexes) {
 	    // destroy the records
 	    var records = indexes.map(function(idx) {

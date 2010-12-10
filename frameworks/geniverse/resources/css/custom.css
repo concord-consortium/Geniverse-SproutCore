@@ -35,6 +35,10 @@
   opacity: 0.8;
 }
 
+.extra-transparent {
+  opacity: 0.7;
+}
+
 .bity {
   font-size: 10px;
   font-weight: bold;
@@ -42,4 +46,10 @@
 .container_label {
   background-color: #46271E;
   padding: 4px;
+}
+
+.dragon_label {
+  background-color: #F5DF51;
+  padding: 4px;
+  color: black;
 }

@@ -3,17 +3,25 @@
 }
 
 .sc-theme .female {
-	background-color: #FCEBF1;
+	background-color: #F5EFC6;
 }
 
 .sc-theme .male {
-	background-color: #E1E6FA;
+	background-color: #F5EFC6;
 }
 
 .sc-theme .female-selected {
-	background-color: #FCD4E2;
+	background-color: #F5DF51;
 }
 
 .sc-theme .male-selected {
-	background-color: #C5D0FC;
+	background-color: #F5DF51;
+}
+
+.sc-theme .drop-target {
+	background-color: #F5DF51;
+}
+
+.sc-theme .empty {
+	background-color: #FFFFFF;
 }
