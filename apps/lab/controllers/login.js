@@ -175,6 +175,7 @@ Lab.loginController = SC.ObjectController.create(
     var userName = user.get('firstName');
     this.hidePanel();
     this.set('welcomeMessage',"Welcome %@, you are member #%@ in group %@".fmt(userName, member, group));
+    Lab.infoController.display(this.get('welcomeMessage'));
     CcChat.chatController.set('username', user.get('username'));
     Lab.userDefaults.writeDefault('username', user.get('username'));
     this.updateGroupInfo();

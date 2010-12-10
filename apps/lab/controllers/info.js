@@ -59,7 +59,6 @@ Lab.infoController = SC.ObjectController.create(
         _pane.popup(null);
       }
       this.updateView(this.get('content'));
-      //callingView.set('isEnabled', NO); // disable calling infoButton
     }
   },
 
@@ -75,13 +74,6 @@ Lab.infoController = SC.ObjectController.create(
     //console.log("content:", _content);
     var receiver = this.pane.remove();
     //console.log("this.pane.remove() returned receiver:", receiver);
-/*
-    console.log("this.infoButton:",this.infoButton)
-    if(this.infoButton) {
-      this.infoButton.set('isEnabled', YES); // enable calling button
-      console.log("this.infoButton.isEnabled:",this.infoButton.get('isEnabled'));
-    }
-*/
   },
 
   updateView: function (newValue) {
