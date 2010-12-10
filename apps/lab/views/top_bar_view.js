@@ -71,6 +71,11 @@ Lab.TopBarView = SC.ToolbarView.extend(
    */
   notepadButtonIsVisiblePath: 'Lab.LOGIN.userLoggedIn',
   /**
+   * Binding Path for the isEnabledButton property of the notepadController
+   */
+  notepadControllerIsEnabledButtonPath: 'Geniverse.notepadController.isEnabledButton',
+
+  /**
    * Overwritten createChildView where you set up all
    * the internal child views and where we are
    * going to use the Binding Paths
@@ -114,7 +119,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
         title:  "Note Pad",
         target: this.get('notepadButtonTargetPath'),
         action: 'showPane',
-        isVisibleBinding: this.get('notepadButtonIsVisiblePath')
+        isVisibleBinding: this.get('notepadButtonIsVisiblePath'),
+        isEnabledBinding: this.get('notepadControllerIsEnabledButtonPath')
       })
     );
     childViews.push(this.notepadButton);

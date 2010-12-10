@@ -17,9 +17,14 @@ Geniverse.notepadController = SC.ObjectController.create(
 /** @scope Geniverse.notepadController.prototype */ {
   pane: null,//Geniverse.NotepadView,
   contentBinding: 'Geniverse.userController*content.note',
+  isEnabledButton: YES,
 
-  showPane: function() {
-    //SC.Logger.log("Geniverse.notepadController.showPane called");
+  /**
+   *
+   * @param callingView
+   */
+  showPane: function(callingView) {
+    //SC.Logger.log("Geniverse.notepadController.showPane called with callingView:", callingView);
     var username = Geniverse.userController.get('username');
     //SC.Logger.log("Geniverse.userController.get('username'):",username);
     if(username){
@@ -34,6 +39,7 @@ Geniverse.notepadController = SC.ObjectController.create(
       if (!_pane.get('isVisibleInWindow')){
         _pane.append();
         this.updateView(this.get('content'));
+        this.set('isEnabledButton', NO);
       }
     }else {
       alert("You must be logged in first to use your Note Pad.");
@@ -77,6 +83,7 @@ Geniverse.notepadController = SC.ObjectController.create(
     //console.log("Geniverse.store.commitRecords() returned this.wasCommitted:", this.wasCommitted);
     var receiver = this.pane.remove();
     //console.log("this.pane.remove() returned receiver:", receiver);
+    this.set('isEnabledButton', YES);
   },
 
   updateView: function (newValue) {
