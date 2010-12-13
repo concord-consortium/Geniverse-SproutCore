@@ -107,7 +107,7 @@ Lab.StableView = SC.View.extend(
               return;
             }
             if (count > 0){
-              var lastDragon = allStableDragons.objectAt(length-1);
+              var lastDragon = allStableDragons.objectAt(count-1);
               var lastStableOrder = lastDragon.get('stableOrder');
               if (!!lastStableOrder && lastStableOrder > count){
                 dragonNum = lastStableOrder + 1;
@@ -117,11 +117,16 @@ Lab.StableView = SC.View.extend(
               self.set('dragonNum', dragonNum);
             }
 
-            SC.RunLoop.begin();
-              dragon.set('isEgg', false);
-              dragon.set('stableOrder', dragonNum);
-              Geniverse.eggsController.removeObject(dragon);
-            SC.RunLoop.end();
+            dragon.set('isEgg', false);
+            dragon.set('stableOrder', dragonNum);
+            
+            // removeObject doesn't seem to work all the time...
+            // resetting the array can't be as efficient, but it's not too bad.
+            // // Geniverse.eggsController.removeObject(dragon);
+            var oldEggs = Geniverse.eggsController.get('content');
+            Geniverse.eggsController.set('content', oldEggs.without(dragon));
+              
+            
 
             self.dragonNum = self.dragonNum + 1;
             SC.Logger.info("Stable has %d dragons", self.dragonNum);
@@ -143,9 +148,11 @@ Lab.StableView = SC.View.extend(
             // NB: This works, while the forEach method below only removes half of them.
             // This is because each time acceptDragon is called, the dragon gets removed from
             // the list, and the other dragons shift indices.
+            SC.RunLoop.begin();
             for (var i = 0; i < selection.get('length'); i++){
               acceptDragon(selection.firstObject());
             }
+            SC.RunLoop.end();
             // selection.forEach(function (dragon){
             //  SC.Logger.log("selection.length = "+selection.get('length'));
             //  acceptDragon(dragon);
