@@ -66,6 +66,12 @@ Geniverse.gwtController = SC.Controller.create(
   breedOrganisms: function(number, mother, father, handleChildFunction) {
     var self = this;
     SC.Logger.info("Breeding " + number + " dragons");
+    
+    var crossover = false;
+    if (!!Geniverse.activityController.get('content')){
+      crossover = Geniverse.activityController.get('crossoverWhenBreeding');
+    }
+    
     if (mother !== null && mother.get('gOrganism') !== null && father !== null && father.get('gOrganism') !== null) {
       var onSuccess = function(organisms) {
         window.DragonSet = organisms;
@@ -83,7 +89,7 @@ Geniverse.gwtController = SC.Controller.create(
         }
         Geniverse.store.commitRecords();
       };
-      GenGWT.breedDragons(number, mother.get('gOrganism'), father.get('gOrganism'), onSuccess);
+      GenGWT.breedDragons(number, mother.get('gOrganism'), father.get('gOrganism'), crossover, onSuccess);
     }
   },
   

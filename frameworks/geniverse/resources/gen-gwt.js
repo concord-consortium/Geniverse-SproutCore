@@ -21,8 +21,8 @@ GenGWT = {
         breedDragon(mother, father, callback, this.failure);
     },
     
-    breedDragons: function(number, mother, father, callback) {
-        breedDragons(number, mother, father, callback, this.failure);
+    breedDragons: function(number, mother, father, crossover, callback) {
+        breedDragonsWithCrossover(number, mother, father, crossover, callback, this.failure);
     },
 
     isAlive: function(dragon) {

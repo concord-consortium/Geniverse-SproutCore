@@ -30,7 +30,11 @@ Geniverse.Activity = SC.Record.extend(
   
   scType: SC.Record.attr(String),           //  e.g. heretity/training, heredity/apprentice/intro
   
-  hiddenGenes: SC.Record.attr(String)      // case-insensitive comma-separated alleles, e.g. h,w,s
+  hiddenGenes: SC.Record.attr(String),      // case-insensitive comma-separated alleles in json, e.g. {'female': 'h,w,s'}
+  
+  staticGenes: SC.Record.attr(String),      // case-insensitive comma-separated alleles in json, e.g. {'all': 'h,w,s'}
+  
+  crossoverWhenBreeding: SC.Record.attr(Boolean)
 });
 
 Geniverse.Activity.modelName = "activity";
