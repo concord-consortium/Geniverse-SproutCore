@@ -63,9 +63,10 @@ Geniverse.animationPage = SC.Page.design({
     }),
     
     meiosisView: Geniverse.AnimationView.design({
-      layout: { left: 50, top: 50, height: 300, width: 300 },
-//          className: 'meiosis',
-//          classNames: 'meiosis',
+      layout: { centerY: 0, height: 400, width: 400 },
+      layerId: 'father',
+      mode: 'parent',
+      owner: 'father',
       jsondataurl: static_url('chromosomes.json')
     })
   })

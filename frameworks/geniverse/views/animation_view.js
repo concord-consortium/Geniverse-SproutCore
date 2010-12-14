@@ -11,20 +11,36 @@
 Geniverse.AnimationView = SC.View.extend(
 /** @scope Geniverse.AnimationView.prototype */ {
   /**
+   * Default layout which can be set at design time.
+   */
+  layout: { centerX: 0, centerY: 0, height: 400, width: 400 },
+
+  /**
    * Default URL of JSON data which can be set at design time.
    */
   jsondataurl: static_url('chromosomes.json'),
 
   /**
-   * Default identifying classname for an animation which can be set at design time.
-   * Don't forget to add it to classNames.
+   * Default id for the animation's element in the DOM which can be set at design time.
    */
-  className: 'genanimation',
+  layerId: 'genanimation',
+
+  /**
+   * The mode of the animation. Possible values are 'parent' or 'offspring'.
+   * The default value is 'offspring'.
+   */
+  mode: 'offspring',
+
+  /**
+   * A unique id for each dragon entity in which the chromosomes are contained.
+   * Possible values are 'father', 'mother' and 'offspring'.
+   * The default value is 'offspring'.
+   */
+  owner: 'offspring',
 
   classNames: 'genanimation',
 
   childViews: 'cell'.w(),
-
   cell: SC.View.design({
     classNames: 'cell'
   }),
@@ -37,22 +53,22 @@ Geniverse.AnimationView = SC.View.extend(
    * you are using plugins (like Raphael) which objects are not instantiated
    * until you actually append the element to the DOM. This will allow you to
    * setup the Raphael-based jQuery plugin animation.
-  */
+   */
   didAppendToDocument :function(){
-    SC.Logger.log('loading animation:',this);
+    console.log('loading animation:',this);
     var jsonDataUrl = this.get('jsondataurl');
-    var className = this.get('className');
-    SC.Logger.log('looking for className:',className);
-    var geniverseAnimation = $("."+className);
-    SC.Logger.log('found jQuery selector geniverseAnimation:',geniverseAnimation);
+    console.log('jsonDataUrl:',jsonDataUrl);
+    var id = this.get('layerId');
+    console.log('looking for id:',id);
+    var geniverseAnimation = $("#"+id);
+    console.log('found jQuery selector geniverseAnimation:',geniverseAnimation);
     if(geniverseAnimation.length > 0){
       geniverseAnimation.geniverse(jsonDataUrl, {
-        segMoveSpeed: 1,
         loaded : function(){
-          SC.Logger.log('loaded animantion:',geniverseAnimation)
+          console.log('loaded animation:',geniverseAnimation)
         },
         animationComplete : function(){
-          SC.Logger.log('completed animation:',geniverseAnimation)
+          console.log('completed animation:',geniverseAnimation)
         }
       });
     }
