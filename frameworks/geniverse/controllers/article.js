@@ -6,12 +6,16 @@
 
 /** @class
 
-  (Document Your Controller Here)
+  FIXME: This controller needs refactoring. It was written before the Geniverse.Article model
+  was incorported and activities were being loaded in. This should be foxused more around
+  the content model object.
 
   @extends SC.Object
 */
 Geniverse.articleController = SC.ObjectController.create(
 /** @scope Geniverse.articleController.prototype */ {
+  
+  // content: null,      // Geniverse.Article
   
   isStaticVisible: YES,
   
@@ -70,6 +74,25 @@ Geniverse.articleController = SC.ObjectController.create(
     
 		sc_super();
   },
+  
+  initArticle: function(){
+    var articles = this.get('content');
+    if (!!articles && articles.get('length') > 0){
+      var article = articles.lastObject();
+      if (!!article.get('text')){
+        this.setClaimAndEvidence(article.get('text'));
+      }
+      if (!!article.get('dragons')){
+        Geniverse.articleController.receiveDragons(article.get('dragons'));
+      }
+      // 
+      Geniverse.articleController.set('isDraftDirty', NO);
+      Geniverse.articleController.set('isDraftChanged', (article !== Geniverse.articleController.get('publishedArticle')));
+    } else {
+      console.log("booo!");
+    }
+    
+  }.observes('content'),
   
   newPaperAction: function() {
     this.set('claimValue', "<i>Write your thoughts here.</i>");
@@ -131,7 +154,7 @@ Geniverse.articleController = SC.ObjectController.create(
       var message = {article: article, dragons: dragons, author: username};
       CcChat.chatController.post(articleDraftChannel, message);
       
-      if (notify === undefined || notify){
+      if (!!notify){
         var chatChannel = CcChat.chatRoomController.get('channel');
         var infoMessage = {message: '<i>'+username+" has just updated the draft paper.</i>"};
         CcChat.chatController.post(chatChannel, infoMessage);
@@ -140,6 +163,7 @@ Geniverse.articleController = SC.ObjectController.create(
   },
   
   publishAction: function() {
+    console.log("publishing");
     this.sendDraftAction(false);
     
     var article = this._htmlize(this.get('combinedArticle'));
@@ -148,7 +172,7 @@ Geniverse.articleController = SC.ObjectController.create(
     if (articleDraftChannel !== null){
       var groupName = "Group "+ Geniverse.loginController.get('groupNumber');
       var dragons = this._getGOrganismArray(Geniverse.dragonBinController.get('content'));
-      var message = {article: article, dragons: dragons, author: groupName};
+      var message = {article: article, dragons: dragons, author: groupName, group: user.get('groupId')};
       CcChat.chatController.post(articleDraftChannel, message);
       
       this.set('publishedArticle', article);
@@ -195,7 +219,7 @@ Geniverse.articleController = SC.ObjectController.create(
     var dragons = Geniverse.articleController.createDragonArray(message.dragons);
     
     var publishedArticle = Geniverse.store.createRecord(Geniverse.Article, {
-      text: message.article, authors: message.author, dragons: dragons, time: now
+      text: message.article, group: message.group, dragons: dragons, time: now
     });
     
     CcChat.chatController.addMessage({message: "<i><b>A new paper has been published by "+message.author+"</b></i>"});
@@ -260,4 +284,4 @@ Array.prototype.compareArrays = function(arr) {
         if (this[i] != arr[i]) { return false; }
     }
     return true;
-}
+} ;

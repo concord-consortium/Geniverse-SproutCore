@@ -16,17 +16,32 @@ Geniverse.Dragon = SC.Record.extend(
   
   // All the attributes that we want to be sure to persist
   name: SC.Record.attr(String),
+  
   sex: SC.Record.attr(Number),
+  
   alleles: SC.Record.attr(String),
+  
   imageURL: SC.Record.attr(String),
+  
   mother: SC.Record.toOne("Geniverse.Dragon"),
+  
   father: SC.Record.toOne("Geniverse.Dragon"),
+  
   bred: SC.Record.attr(Boolean),
+  
   user: SC.Record.toOne("Geniverse.User"),
+  
   stableOrder: SC.Record.attr(Number),
+  
   isEgg: SC.Record.attr(Boolean),
+  
   isInMarketplace: SC.Record.attr(Boolean),
-  activity: SC.Record.toOne('Geniverse.Activity'),
+  
+  activity: SC.Record.toOne('Geniverse.Activity'),        // which activity the dragon belogs to. Can only be in one
+  
+  articles: SC.Record.toMany('Geniverse.Articles', {          // any papers the dragon has been cited in
+    inverse: 'dragons', isMaster: NO 
+  }),
   
   // attributes that don't want to be persisted
   gOrganism: null,

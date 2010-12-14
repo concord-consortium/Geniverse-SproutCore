@@ -13,12 +13,24 @@
 */
 Geniverse.Article = SC.Record.extend(
 /** @scope Geniverse.Article.prototype */ {
-
-  authors: SC.Record.attr(String),
+  
+  group: SC.Record.attr(Number),        // for now, just the number. We may later want a group model
+  
+  activity: SC.Record.toOne('Geniverse.Activity'),        // which activity the paper belogs to. Can only be in one
   
   text: SC.Record.attr(String),
   
-  time: SC.Record.attr(Number)
+  dragons: SC.Record.toMany('Geniverse.Dragon', { 
+    inverse: 'articles', isMaster: NO 
+  }),
+  
+  time: SC.Record.attr(Number),
+  
+  submitted: SC.Record.attr(Boolean, { defaultValue: NO }),   // submitted to teacher
+  
+  teacherComment: SC.Record.attr(String),
+  
+  accepted: SC.Record.attr(Boolean, { defaultValue: NO })     // accepted by teacher
 
 });
 

@@ -25,7 +25,7 @@ Geniverse.PublishedArticlesView = SC.View.extend(
 			rowHeight: 30,
 			canEditContent: NO,
 			hasContentIcon: NO,
-			contentValueKey: 'authors',
+			contentValueKey: 'group',
 			isSelectable: YES,
 			showAlternatingRows: YES
     }),
