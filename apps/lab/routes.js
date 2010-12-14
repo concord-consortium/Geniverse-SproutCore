@@ -25,6 +25,29 @@ Lab.routes = SC.Object.create({
   gotoGeniverseRoute: function(routeParams) {
     this.gotoRoute(Geniverse, routeParams);
   },
+  
+  gotoLabRouteWithFixtures: function(routeParams) {
+    function loadFixtureData() {
+      console.log("fixtures");
+      Geniverse.set('store', SC.Store.create().from(SC.FixturesDataSource.create()));
+      // SC.FixturesDataSource.simulateRemoteResponse = YES;
+      // SC.FixturesDataSource.latency = 1000;
+      
+      // set up defaults
+      var activities = Geniverse.store.find(Geniverse.ACTIVITIES_QUERY);
+      Geniverse.activityController.set('content', activities.lastObject());
+      Geniverse.userController.set('content', Geniverse.store.find(Geniverse.User, 1));
+      Lab.ACTIVITY.loadData();
+    }
+    
+    if (Geniverse.gwtController.get('isReady')){
+      loadFixtureData();
+    } else {
+      Geniverse.gwtController.addObserver('isReady', loadFixtureData);
+    }
+    console.log("going to "+routeParams);
+    this.gotoLabRoute(routeParams);
+  },
 
   /**
     Navigate to the specified route

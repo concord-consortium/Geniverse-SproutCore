@@ -15,20 +15,27 @@ Lab.main = function main() {
   
   // *** setup routes ***
   
-  // activity routes (require login)
+  //  ** activity routes (require login) **
   SC.routes.add(':strand/:level/:activityType/:activityIndex', Lab.START, 'gotoActivity');
   SC.routes.add(':strand/:level/:activityType', Lab.START, 'gotoActivity');
   SC.routes.add(':strand/:level', Lab.START, 'gotoActivity');
   
-  // routes that do not require login
+  // ** routes that do not require login **
   // add routes to catch urls of the form #lab/chromosomeTrainingPage, and #lab/chromosomeTrainingPage/mainPane
   SC.routes.add('lab/:pageName/:paneName', Lab.routes, 'gotoLabRoute');
   SC.routes.add('lab/:pageName', Lab.routes, 'gotoLabRoute');
+  
+  // urls of the form #fixtures/labs/... will load Geniverse Fixtures
+  SC.routes.add('fixtures/lab/:pageName', Lab.routes, 'gotoLabRouteWithFixtures');
+  
   // urls of the form #geniverse/pageName will find the page in the Geniverse framework
   SC.routes.add('geniverse/:pageName', Lab.routes, 'gotoGeniverseRoute');
-  
+ 
   // home page (requires login)
   SC.routes.add(':', Lab.START, 'gotoHomePage');
+  
+  // *** End routes setup ***
+  
   
 
   // *** setup exception handler ***
