@@ -175,7 +175,8 @@ Lab.loginController = SC.ObjectController.create(
     var userName = user.get('firstName');
     this.hidePanel();
     this.set('welcomeMessage',"Welcome %@, you are member #%@ in group %@".fmt(userName, member, group));
-    Lab.infoController.display("<div><h2>"+this.get('welcomeMessage')+"</h2></div>");
+    Lab.infoController.displayButtonOnly("<div><h2>"+this.get('welcomeMessage')+"</h2></div>"+
+      "<a href='#heredity/apprentice/group'>#heredity/apprentice/group</a>"); // TODO: remove this link as it is just for demo purposes
     CcChat.chatController.set('username', user.get('username'));
     Lab.userDefaults.writeDefault('username', user.get('username'));
     this.updateGroupInfo();

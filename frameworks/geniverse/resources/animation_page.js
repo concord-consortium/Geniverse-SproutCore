@@ -14,7 +14,7 @@ sc_require('views/published_articles');
 sc_require('views/login');
 sc_require('views/chromosome_tool');
 sc_require('views/stats');
-sc_require('views/animation_view');
+sc_require('views/animation');
 
 Geniverse.animationPage = SC.Page.design({
   

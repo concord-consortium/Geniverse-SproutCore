@@ -19,6 +19,8 @@ sc_require('views/top_bar_view');
 sc_require('views/challenge_pool_view');
 sc_require('views/breeding_pen_view');
 sc_require('views/stable_view');
+sc_require('views/animation');
+sc_require('views/popup_animation');
 
 Lab.breedingPageGroup = SC.Page.design({
   
@@ -45,7 +47,7 @@ Lab.breedingPageGroup = SC.Page.design({
       
       layout: { top: 45, bottom: 0, left: 10, right: 0 },
       
-      childViews: 'breedView statsView challengePoolView breedingPenView challengeChromosomeToolView stableView marketplaceView chatView allArticlesView'.w(),
+      childViews: 'breedView statsView challengePoolView breedingPenView challengeChromosomeToolView stableView marketplaceView chatView allArticlesView animationButton'.w(),
 
       challengePoolView: Lab.ChallengePoolView.design({
         layout: { left: 20, top: 70, width:70, height: 300 }
@@ -169,7 +171,15 @@ Lab.breedingPageGroup = SC.Page.design({
           layout: { left: 135, top: 180, height: 100, width: 250 },
           layerId: "chatCompose"
         })
-        
+
+      }),
+
+      animationButton: Geniverse.AnimationButtonView.design({
+        layout: { left: 680, top: 40, width: 45, height: 30 },
+        selectionBinding: 'Geniverse.allSelectedDragonsController.selection',
+        selection1Binding: 'Geniverse.eggsController.selection',
+        selection2Binding: 'Geniverse.stableOrganismsController.selection',
+        isEnabledBinding: 'Geniverse.meiosisAnimationController.isEnabled'
       })
     })
   })

@@ -1,134 +1,96 @@
 {
-  "chromosomes": [{
-    "alleles": [{
-      "sex": "male",
-      "gene": "A"
+  "chromosomes": [
+    {
+      "alleles": [
+        {
+          "sex": "female",
+          "gene": "M"
+        },
+        {
+          "sex": "male",
+          "gene": "MT"
+        },
+        {
+          "sex": "female",
+          "gene": "W"
+        }
+      ]
     },
     {
-      "sex": "male",
-      "gene": "B"
+      "alleles": [
+        {
+          "sex": "male",
+          "gene": "W"
+        },
+        {
+          "sex": "female",
+          "gene": "h"
+        },
+        {
+          "sex": "male",
+          "gene": "h"
+        }
+      ]
     },
     {
-      "sex": "male",
-      "gene": "C"
+      "alleles": [
+        {
+          "sex": "female",
+          "gene": "c"
+        },
+        {
+          "sex": "male",
+          "gene": "C"
+        },
+        {
+          "sex": "female",
+          "gene": "F1"
+        }
+      ]
     },
     {
-      "sex": "male",
-      "gene": "D"
+      "alleles": [
+        {
+          "sex": "male",
+          "gene": "F1"
+        },
+        {
+          "sex": "female",
+          "gene": "h1"
+        },
+        {
+          "sex": "male",
+          "gene": "H1"
+        }
+      ]
     },
     {
-      "sex": "male",
-      "gene": "E"
-    }]
-  },
-  {
-    "alleles": [{
-      "sex": "male",
-      "gene": "A"
+      "alleles": [
+        {
+          "sex": "female",
+          "gene": "a"
+        },
+        {
+          "sex": "male",
+          "gene": "A1"
+        },
+        {
+          "sex": "male",
+          "gene": "B"
+        }
+      ]
     },
     {
-      "sex": "male",
-      "gene": "B"
-    },
-    {
-      "sex": "male",
-      "gene": "C"
-    },
-    {
-      "sex": "male",
-      "gene": "D"
-    },
-    {
-      "sex": "male",
-      "gene": "E"
-    }]
-  },
-  {
-    "alleles": [{
-      "sex": "male",
-      "gene": "A"
-    },
-    {
-      "sex": "male",
-      "gene": "B"
-    },
-    {
-      "sex": "male",
-      "gene": "C"
-    },
-    {
-      "sex": "male",
-      "gene": "D"
-    },
-    {
-      "sex": "male",
-      "gene": "E"
-    }]
-  },
-  {
-    "alleles": [{
-      "sex": "female",
-      "gene": "a"
-    },
-    {
-      "sex": "female",
-      "gene": "b"
-    },
-    {
-      "sex": "female",
-      "gene": "c"
-    },
-    {
-      "sex": "female",
-      "gene": "d"
-    },
-    {
-      "sex": "female",
-      "gene": "e"
-    }]
-  },
-  {
-    "alleles": [{
-      "sex": "female",
-      "gene": "a"
-    },
-    {
-      "sex": "female",
-      "gene": "b"
-    },
-    {
-      "sex": "female",
-      "gene": "c"
-    },
-    {
-      "sex": "female",
-      "gene": "d"
-    },
-    {
-      "sex": "female",
-      "gene": "e"
-    }]
-  },
-  {
-    "alleles": [{
-      "sex": "female",
-      "gene": "a"
-    },
-    {
-      "sex": "female",
-      "gene": "b"
-    },
-    {
-      "sex": "female",
-      "gene": "c"
-    },
-    {
-      "sex": "female",
-      "gene": "d"
-    },
-    {
-      "sex": "female",
-      "gene": "e"
-    }]
-  }]
+      "alleles": [
+        {
+          "sex": "male",
+          "gene": "D"
+        },
+        {
+          "sex": "male",
+          "gene": "t"
+        }
+      ]
+    }
+  ]
 }
