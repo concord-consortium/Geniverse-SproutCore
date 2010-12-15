@@ -15,7 +15,9 @@
 Geniverse.articleController = SC.ObjectController.create(
 /** @scope Geniverse.articleController.prototype */ {
   
-  // content: null,      // Geniverse.Article
+  // content: null,      // array of owned Geniverse.Article
+  
+  article: null,
   
   isStaticVisible: YES,
   
@@ -52,7 +54,7 @@ Geniverse.articleController = SC.ObjectController.create(
     
   }.property('claimValue', 'evidenceValue').cacheable(),
   
-  currentArticle: null,         // state of article before editing, stringized
+  currentArticle: null,         // state of article before editing, stringized TEXT
   
   currentDragons: [],           // dragons before editing
   
@@ -75,10 +77,13 @@ Geniverse.articleController = SC.ObjectController.create(
 		sc_super();
   },
   
+  started: NO,
+  
   initArticle: function(){
-    var articles = this.get('content');
-    if (!!articles && articles.get('length') > 0){
-      var article = articles.lastObject();
+    var myArticles = this.get('content');
+    if (!this.get('started') && !!myArticles && myArticles.get('length') > 0){
+      var article = myArticles.lastObject();
+      this.set('article', article);
       if (!!article.get('text')){
         this.setClaimAndEvidence(article.get('text'));
       }
@@ -88,16 +93,23 @@ Geniverse.articleController = SC.ObjectController.create(
       // 
       Geniverse.articleController.set('isDraftDirty', NO);
       Geniverse.articleController.set('isDraftChanged', (article !== Geniverse.articleController.get('publishedArticle')));
-    } else {
-      console.log("booo!");
+      this.set('started', YES);
     }
     
   }.observes('content'),
   
   newPaperAction: function() {
+    var user = Geniverse.userController.get('content');
+    var article = Geniverse.store.createRecord(Geniverse.Article, {
+        group: user.get('groupId'), activity: Geniverse.activityController.getPath('content.id')
+      });
+      
+    SC.RunLoop.begin();
+    this.set('article', article);
     this.set('claimValue', "<i>Write your thoughts here.</i>");
     this.set('evidenceValue', "");
     Geniverse.dragonBinController.clearDragons();
+    SC.RunLoop.end();
     this.editAction();
   },
   
@@ -129,7 +141,7 @@ Geniverse.articleController = SC.ObjectController.create(
   
   previewDraftAction: function() {
     var editedArticle = this.get('combinedArticle');
-    var textChanged = editedArticle !== this.get('currentArticle');
+    var textChanged = true; //for now   //editedArticle !== this.get('currentArticle');
     var dragonsChanged = !Geniverse.dragonBinController.get('content').compareArrays(this.get('currentDragons'));
     if (textChanged || dragonsChanged){
        this.set('isDraftDirty', YES);
@@ -137,7 +149,7 @@ Geniverse.articleController = SC.ObjectController.create(
     
     var htmlizedArticle = this._htmlize(editedArticle);
     var publishedDragonsChanged = !Geniverse.dragonBinController.get('content').compareArrays(this.get('publishedDragons'));
-    this.set('isDraftChanged', (htmlizedArticle !== this.get('publishedArticle') || publishedDragonsChanged));
+    this.set('isDraftChanged', (YES || htmlizedArticle !== this.get('publishedArticle') || publishedDragonsChanged));
     
     this.set('combinedArticle', htmlizedArticle);
     this.set('isStaticVisible', YES);
@@ -145,13 +157,32 @@ Geniverse.articleController = SC.ObjectController.create(
   },
   
   sendDraftAction: function(notify) {
-    var article = this._htmlize(this.get('combinedArticle'));
+    
+    var user = Geniverse.userController.get('content');
+    var articleText = this._htmlize(this.get('combinedArticle'));
+    var now = new Date().getTime();
+    
+    var article = this.get('article');
+    if (!article){
+      article = Geniverse.store.createRecord(Geniverse.Article, {
+        group: user.get('groupId'), activity: Geniverse.activityController.getPath('content.id')
+      });
+      this.set('article', article);
+    }
+    article.set('text', articleText);
+    article.set('time', now);
+    article.set('submitted', NO);
+    article.set('accepted', NO);
+    
+		
+		Geniverse.store.commitRecords();
+		
     
     var articleDraftChannel = this.get('articleDraftChannel');
     if (articleDraftChannel !== null){
       var username = CcChat.chatController.get('username');
       var dragons = this._getGOrganismArray(Geniverse.dragonBinController.get('content'));
-      var message = {article: article, dragons: dragons, author: username};
+      var message = {article: articleText, dragons: dragons, author: username};
       CcChat.chatController.post(articleDraftChannel, message);
       
       if (!!notify){
@@ -163,19 +194,33 @@ Geniverse.articleController = SC.ObjectController.create(
   },
   
   publishAction: function() {
-    console.log("publishing");
-    this.sendDraftAction(false);
+    // this.sendDraftAction(false);
+    var user = Geniverse.userController.get('content');
+    var articleText = this._htmlize(this.get('combinedArticle'));
+    var now = new Date().getTime();
     
-    var article = this._htmlize(this.get('combinedArticle'));
+    var article = this.get('article');
+    if (!article){
+      article = Geniverse.store.createRecord(Geniverse.Article, {
+        group: user.get('groupId'), activity: Geniverse.activityController.getPath('content.id')
+      });
+      this.set('article', article);
+    }
+    article.set('text', articleText);
+    article.set('time', now);
+    article.set('submitted', YES);
+    article.set('accepted', YES);
+    
+    Geniverse.store.commitRecords();
     
     var articleDraftChannel = this.get('articlePublishingChannel');
     if (articleDraftChannel !== null){
-      var groupName = "Group "+ Geniverse.loginController.get('groupNumber');
+      var groupName = "Group "+ user.get('groupId');
       var dragons = this._getGOrganismArray(Geniverse.dragonBinController.get('content'));
-      var message = {article: article, dragons: dragons, author: groupName, group: user.get('groupId')};
+      var message = {article: articleText, dragons: dragons, author: groupName, group: user.get('groupId')};
       CcChat.chatController.post(articleDraftChannel, message);
       
-      this.set('publishedArticle', article);
+      this.set('publishedArticle', articleText);
       this.set('publishedDragons', Geniverse.dragonBinController.get('content'));
     }
   },
