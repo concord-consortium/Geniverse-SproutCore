@@ -2,16 +2,15 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :articles
 
   map.resources :dragons
-
-  map.connect "users/:username", :format => 'json', :controller => 'users', :action => 'show',
-    :requirements => { :username => /[A-Za-z].*/ }
-    
+  map.connect "destroy_all_dragons", :controller => 'dragons', :action => 'destroy_all'
   map.connect "fathom/:id/:id2", :format => 'html', :controller => 'dragons', :action => 'fathom', :id => '-1', :id2 => '-1'
 
   map.resources :users
+  # custom routes should go after the default routes, so we don't overwrite any of them...
+  map.connect "users/:username", :format => 'json', :controller => 'users', :action => 'show',
+    :requirements => { :username => /[A-Za-z].*/ }
 
   map.resources :activities
-  map.connect "destroy_all_dragons", :controller => 'dragons', :action => 'destroy_all'
 
   # The priority is based upon order of creation: first created -> highest priority.
 
