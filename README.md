@@ -5,29 +5,29 @@
 
 ### Checking out the latest code
 
- $ git clone git@github.com:concord-consortium/Geniverse-SproutCore.git
- $ cd Geniverse-SproutCore
- $ git submodule init
- $ git submodule update
+    $ git clone git@github.com:concord-consortium/Geniverse-SproutCore.git
+    $ cd Geniverse-SproutCore
+    $ git submodule init
+    $ git submodule update
 
 ### Installing SproutCore
 
 This project uses the latest available SproutCore gem 
 
 To install the sproutcore gem:
-  $ gem install sproutcore
+    $ gem install sproutcore
   
 To install the lastest from SproutCore (may not be compatible with current application):
-	$ git clone git://github.com/sproutit/sproutcore-abbot.git abbot
-	$ cd abbot
-	$ rake init
-	$ cd ..
-	$ git clone git://github.com/sproutit/sproutcore-samples.git samples
-	$ cd samples
-	$ mkdir -p frameworks
-	$ cd frameworks
-	$ git clone git://github.com/sproutit/sproutcore.git sproutcore
-	$ cd ../..
+    $ git clone git://github.com/sproutit/sproutcore-abbot.git abbot
+    $ cd abbot
+    $ rake init
+    $ cd ..
+    $ git clone git://github.com/sproutit/sproutcore-samples.git samples
+    $ cd samples
+    $ mkdir -p frameworks
+    $ cd frameworks
+    $ git clone git://github.com/sproutit/sproutcore.git sproutcore
+    $ cd ../..
 Then put sproutcore-abbot/bin in your PATH 
 
 ### Setting up proxies
@@ -36,31 +36,31 @@ Although the proxies can be set up in the application's BuildFile, we have gener
 
 The default remote proxies you can use are
 
-  /rails/ http://geniverse.dev.concord.org/rails/
-  /chat/ http://geniverse.dev.concord.org/chat/
-  /geniverse/ http://geniverse.dev.concord.org/geniverse/
-  /biologica/ http://geniverse.dev.concord.org/biologica/
-  /portal/ http://geniverse-portal.dev.concord.org/
+    /rails/ http://geniverse.dev.concord.org/rails/
+    /chat/ http://geniverse.dev.concord.org/chat/
+    /geniverse/ http://geniverse.dev.concord.org/geniverse/
+    /biologica/ http://geniverse.dev.concord.org/biologica/
+    /portal/ http://geniverse-portal.dev.concord.org/
   
 ### Running Rails backend locally
 
 If you want to run the rails backend locally, the Rails application can be found in Geniverse-SproutCore/rails/geniverse
 
 Set up the database, then
- $ rake db:schema:load
- $ script/server
+    $ rake db:schema:load
+    $ script/server
 
 This should start rails on http://0.0.0.0:3000
 
 Now you can repoint your rails proxy:
 
-   /rails/ http://localhost:3000/rails/
+    /rails/ http://localhost:3000/rails/
    
 ## Running Geniverse
 
 Now run the development Geniverse-SproutCore server:
 
-	$ sc-server
+    $ sc-server
   
 And then open http://localhost:4020/lab
 
@@ -91,7 +91,7 @@ So #fixtures/foo/bar will load the activity with the route "foo/bar" in fixtures
 
 
 ---
-
+---
 
 
 node.js instructions:
