@@ -12,9 +12,13 @@ Geniverse.User.FIXTURES = [
   // All fixture records must have a unique primary key (default 'guid').  See 
   // the example below.
 
-  // { guid: 1,
-  //   firstName: "Michael",
-  //   lastName: "Scott" },
+  { guid: 1,
+    username: "Tester",
+    firstName: "Test",
+    lastName: "er",
+    groupId: 1,
+    memberId: 1,
+    note: "note"}
   //
   // { guid: 2,
   //   firstName: "Dwight",
