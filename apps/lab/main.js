@@ -28,6 +28,11 @@ Lab.main = function main() {
   // urls of the form #fixtures/labs/... will load Geniverse Fixtures
   SC.routes.add('fixtures/lab/:pageName', Lab.routes, 'gotoLabRouteWithFixtures');
   
+  //  urls of the form #fixtures/hereditry/apprentice will load fixtures first
+  SC.routes.add('fixtures/:strand/:level/:activityType/:activityIndex', Lab.routes, 'gotoActivityRouteWithFixtures');
+  SC.routes.add('fixtures/:strand/:level/:activityType', Lab.routes, 'gotoActivityRouteWithFixtures');
+  SC.routes.add('fixtures/:strand/:level', Lab.routes, 'gotoActivityRouteWithFixtures');
+  
   // urls of the form #geniverse/pageName will find the page in the Geniverse framework
   SC.routes.add('geniverse/:pageName', Lab.routes, 'gotoGeniverseRoute');
  
