@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  group: 1
+  activity_id: 1
+  text: MyText
+  time: 1
+  submitted: false
+  teacherComment: MyText
+  accepted: false
+
+two:
+  group: 1
+  activity_id: 1
+  text: MyText
+  time: 1
+  submitted: false
+  teacherComment: MyText
+  accepted: false
