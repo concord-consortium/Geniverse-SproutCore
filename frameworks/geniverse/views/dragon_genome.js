@@ -42,7 +42,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
   fixedAlleles: null,    // used when generating new dragons
   
   alleles: [],
-  allelesMap: {m: '1',mt: '1',w: '1',h: '2',c: '2',fl: '2',hl: '2',a: '2', a1: '2', a2: '2',b: 'X',d: 'X',dl: 'X',t: 'X'},
+  allelesMap: {m: '1',w: '1',h: '2',c: '2',fl: '2',hl: '2',a: '2', a1: '2', a2: '2',b: 'X',d: 'X',dl: 'X',t: 'X'},
   ignoreUpdate: YES,
   
   activityBinding: 'Geniverse.activityController.content',

@@ -49,7 +49,7 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
           var alleleJSONelement = {
             "sex": sex,
             "gene": gene
-          }
+          };
           //console.log("alleleJSONelement",alleleJSONelement);
           allelesArr.push(alleleJSONelement);
           //console.log("allelesArr",allelesArr);
@@ -64,11 +64,27 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
       }
       var json = {
         "chromosomes": chromosomesArr
-      }
+      };
       //console.log("returning json:\n",json);
       return json;
     }
     return null;
+  },
+  
+  JSONToAlleles: function(jsonData) {
+    // 1,2,3 from mother
+    // 4,5,6 from father
+    var outString = "";
+    var prefix = 'a:';
+    for (var i = 0; i < 6; i++) {
+      if (i >= 3) { prefix = 'b:'; }
+      
+      var chromo = jsonData.chromosomes[i];
+      for (var j = 0; j < chromo.alleles.length; j++) {
+        outString += prefix + chromo.alleles[j].gene;
+      }
+    }
+    return outString;
   },
 
   showPane: function() {

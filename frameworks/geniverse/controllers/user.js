@@ -23,7 +23,7 @@ Geniverse.userController = SC.ObjectController.create(
       username: username,
       passwordHash: passwordHash,
       groupId: 1,
-      mememberId: 1,
+      memberId: 1,
       note: ""
     });
     this.set('content', user);

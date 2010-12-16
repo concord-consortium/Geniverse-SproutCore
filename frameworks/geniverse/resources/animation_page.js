@@ -66,7 +66,7 @@ Geniverse.animationPage = SC.Page.design({
       layout: { centerY: 0, height: 400, width: 400 },
       layerId: 'father',
       mode: 'parent',
-      owner: 'father',
+      meiosisOwner: 'father',
       jsondataurl: static_url('chromosomes.json')
     })
   })
