@@ -3,14 +3,14 @@
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
 /*globals Geniverse */
+sc_require('views/dragon_bin');
 
 /** @class
 
-  (Document Your View Here)
+  // TODO: (Document Your View Here)
 
   @extends SC.View
 */
-sc_require('views/dragon_bin');
 Geniverse.ArticleView = SC.View.extend(SC.StaticLayout,
 /** @scope Geniverse.ArticleView.prototype */ {
   
@@ -39,11 +39,14 @@ Geniverse.ArticleView = SC.View.extend(SC.StaticLayout,
         		  });
       		  }
           }.observes('Geniverse.articleController.isStaticVisible'),
-          
+
           changeHeight: function() {
-            var height = document.getElementById('article').offsetHeight;
-            if (height > 0){
-              this.adjust('height', height);
+            var articleElement = document.getElementById('article');
+            if (articleElement) {
+              var height = articleElement.offsetHeight;
+              if ((height) && (height > 0)) {
+                this.adjust('height', height);
+              }
             }
           }
         })
