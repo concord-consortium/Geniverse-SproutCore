@@ -11,7 +11,7 @@ Geniverse.NotepadView = SC.PalettePane.design({
   layout: { width: 440, height: 430, centerX: 0, centerY: 0 },
   isModal:NO,
   contentView: SC.View.extend({
-    childViews: 'titleView notepadView hideButton'.w(),
+    childViews: 'titleView notepadView cancelButton hideButton'.w(),
 
     titleView: SC.LabelView.design({
       layout: { centerY: 0, height: 24, left: 0, top:0, width: 440 },
@@ -21,6 +21,13 @@ Geniverse.NotepadView = SC.PalettePane.design({
       fontWeight: SC.BOLD_WEIGHT,
       textAlign: SC.ALIGN_CENTER,
       classNames: "sc-pane sc-main sc-theme".w()
+    }),
+
+    cancelButton: SC.ButtonView.extend({
+      layout: { bottom: 5, right: 210, width: 150, height: 24 },
+      title: "Cancel",
+      action: "cancel",
+      target: "Geniverse.notepadController"
     }),
 
     hideButton: SC.ButtonView.extend({
