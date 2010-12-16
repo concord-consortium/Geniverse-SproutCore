@@ -27,8 +27,10 @@ Lab.routes = SC.Object.create({
   },
   
   gotoLabRouteWithFixtures: function(routeParams) {
+    SC.Logger.log("fixtures: going to ");
+    SC.Logger.dir(routeParams);
+  
     function loadFixtureData() {
-      console.log("fixtures");
       Geniverse.set('store', SC.Store.create().from(SC.FixturesDataSource.create()));
       // SC.FixturesDataSource.simulateRemoteResponse = YES;
       // SC.FixturesDataSource.latency = 1000;
@@ -45,8 +47,15 @@ Lab.routes = SC.Object.create({
     } else {
       Geniverse.gwtController.addObserver('isReady', loadFixtureData);
     }
-    console.log("going to "+routeParams);
     this.gotoLabRoute(routeParams);
+  },
+  
+  gotoActivityRouteWithFixtures: function(routeParams) {
+    SC.Logger.log("fixtures: going to ");
+    SC.Logger.dir(routeParams);
+    
+    Geniverse.set('store', SC.Store.create().from(SC.FixturesDataSource.create()));
+    Lab.START.gotoActivity(routeParams);
   },
 
   /**

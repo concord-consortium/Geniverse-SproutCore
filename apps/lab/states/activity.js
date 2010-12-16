@@ -71,32 +71,32 @@ Lab.ACTIVITY = SC.Responder.create(
         //Try to find the activity matching our scType
         var last  = activities.lastObject();
         var found = activities.find(function(act) {
-          // we get the scType and check if each of its parts matches our requested scType.
+          // we get the route and check if each of its parts matches our requested route.
           // we only look at what is defined in the DB. So an activity with "heredity/training" will
-          // be returned for a requested scType of "heredity/training/someLevel/someIndex"
+          // be returned for a requested route of "heredity/training/someLevel/someIndex"
           var matches = true;
           
-          var scType = act.get('scType');
-          if (!scType){
+          var route = act.get('route');
+          if (!route){
             matches = false;
           } else {
-            var scTypeAr = scType.split("/");
-            matches = (scTypeAr[0] === strand);
-            matches = (matches && !(scTypeAr.length > 1 && scTypeAr[1] !== level));
-            matches = (matches && !(scTypeAr.length > 2 && scTypeAr[2] !== activityType));
-            matches = (matches && !(scTypeAr.length > 3 && scTypeAr[3] !== activityIndex));
+            var routeArr = route.split("/");
+            matches = (routeArr[0] === strand);
+            matches = (matches && !(route.length > 1 && routeArr[1] !== level));
+            matches = (matches && !(route.length > 2 && routeArr[2] !== activityType));
+            matches = (matches && !(route.length > 3 && routeArr[3] !== activityIndex));
           }
           
           var title = act.get('title');
           if (matches) {
-            SC.Logger.info("Using activity named: %s, with scType: %s", title, scType);
+            SC.Logger.info("Using activity named: %s, with route: %s", title, route);
             return YES;
           } else {
-            SC.Logger.info("found non-matching activitiy named: %s, with scType: %s ", title, scType);
+            SC.Logger.info("found non-matching activitiy named: %s, with route: %s ", title, route);
           }
         });
         if (!found) {
-          SC.Logger.info("Could not find activity with scType: "+strand+"/"+level+"/"+activityType+"/"+activityIndex);
+          SC.Logger.info("Could not find activity with route: "+strand+"/"+level+"/"+activityType+"/"+activityIndex);
           found = last;
         }
         Geniverse.activityController.set('content', found);
@@ -247,7 +247,6 @@ Lab.ACTIVITY = SC.Responder.create(
     function challengeDragonsReady() {
       SC.Logger.info("challenge dragons observer called");
       if (challengeDragons.get('status') & SC.Record.READY === SC.Record.READY) {
-        SC.Logger.info("Results ready.");
         challengeDragons.removeObserver('status', challengeDragonsReady);
         Geniverse.challengePoolController.set('content', challengeDragons);
         if (Geniverse.challengePoolController.get('content').length() < 1) {
@@ -260,10 +259,8 @@ Lab.ACTIVITY = SC.Responder.create(
     }
     
     if (challengeDragons.get('status') & SC.Record.READY === SC.Record.READY) {
-      SC.Logger.log('already ready to go!');
       challengeDragonsReady();
     } else {
-      SC.Logger.log('adding challenge dragons observer');
       challengeDragons.addObserver('status', challengeDragonsReady);
     }
   },
@@ -295,45 +292,11 @@ Lab.ACTIVITY = SC.Responder.create(
     }
   },
   
-  gotoActivityRoute: function() {
+  gotoActivityRoute: function() { 
+    var pageType = Geniverse.activityController.get('pageType');
     
-    var strand = this.get('strand');
-    var level = this.get('level');
-    var activityType = this.get('activityType');
-    var activityIndex = this.get('activityIndex');
+    SC.Logger.log("ACTIVITY finding page type: "+pageType);
     
-    SC.Logger.log("ACTIVITY gotoActivityRoute: "+strand+"/"+level+"/"+activityType+"/"+activityIndex);
-    
-    switch(strand) {
-      case 'heredity':
-        switch (level) {
-          case 'training':
-            switch (activityType){
-              case 'intro':
-                Lab.routes.gotoLabRoute({pageName: 'chromosomeTrainingPage'});
-                break;
-              case 'breeding':
-                Lab.routes.gotoLabRoute({pageName: 'chromosomeBreedingPage'});
-                break;
-            }
-            break;
-          case 'apprentice':
-            switch (activityType) {
-              case 'intro':
-                Lab.routes.gotoLabRoute({pageName: 'breedingPage'});
-                break;
-              case 'individual':
-                // Lab.routes.gotoLabRoute({pageName: 'breedingPagePaper'});
-                Lab.routes.gotoLabRoute({pageName: 'breedingPage'});
-                break;
-              case 'group':
-                SC.Logger.log("going to group page");
-                Lab.routes.gotoLabRoute({pageName: 'breedingPageGroup'});
-                break;
-            }
-            break;
-        }
-        break;
-    }
+    Lab.routes.gotoLabRoute({pageName: pageType});
   }
 }) ;

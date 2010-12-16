@@ -18,7 +18,15 @@ Geniverse.User.FIXTURES = [
     lastName: "er",
     groupId: 1,
     memberId: 1,
-    note: "note"}
+    note: "note"},
+  { guid: 2,
+    username: "student",
+    firstName: "Jackie",
+    lastName: "FIXTURES",
+    groupId: 1,
+    memberId: 1,
+    note: "note",
+    passwordHash: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
   //
   // { guid: 2,
   //   firstName: "Dwight",

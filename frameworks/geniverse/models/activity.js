@@ -28,7 +28,9 @@ Geniverse.Activity = SC.Record.extend(
   
   sendBredDragons: SC.Record.attr(Boolean, { defaultValue: NO }),
   
-  scType: SC.Record.attr(String),           //  e.g. heretity/training, heredity/apprentice/intro
+  route: SC.Record.attr(String),           //  e.g. heretity/training, heredity/apprentice/intro
+  
+  pageType: SC.Record.attr(String),           //  e.g. breedingPage
   
   hiddenGenes: SC.Record.attr(String),      // case-insensitive comma-separated alleles in json, e.g. {'female': 'h,w,s'}
   

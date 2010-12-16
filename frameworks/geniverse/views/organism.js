@@ -28,7 +28,7 @@ Geniverse.OrganismView = SC.View.extend(
 		contentBinding: '*parentView.content',
 		contentValueKey: 'imageURL',
 		canLoadInBackground: NO,
-		useImageCache: YES
+		useImageCache: NO
 	}),
 
   labelView: SC.LabelView.design({
