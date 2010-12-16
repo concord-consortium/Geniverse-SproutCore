@@ -26,7 +26,7 @@ Geniverse.chromosomeController = SC.ObjectController.create(
   },
   
   allAlleles: [
-    ['M', 'm', 'MT'],
+    ['M', 'm'],
     ['W', 'w'],
     ['H', 'h'],
     ['C', 'c'],
@@ -75,7 +75,6 @@ Geniverse.chromosomeController = SC.ObjectController.create(
   alleleLabelMap : {
       'M': 'Metallic',
       'm': 'Nonmetallic',
-      'MT': 'Tawny',
       'W': 'Wings',
       'w': 'No wings',
       'H': 'No horns',
