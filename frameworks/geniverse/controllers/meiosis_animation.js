@@ -20,24 +20,44 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
   pane: null,
   isEnabledButton: YES,
 
-  allelesToJSON: function (alleles) {
-    if(alleles !== null && typeof(alleles) != 'undefined'){
-      var parsed = Geniverse.chromosomeController.processAlleleString(alleles);
+  allelesToJSON: function (alleleString) {
+    if(alleleString !== null && typeof(alleleString) != 'undefined'){
+      SC.Logger.info("alleles: " + alleleString);
+      var alleles = Geniverse.chromosomeController.processAlleleString(alleleString);
+      document.alleles = alleles;
+      SC.Logger.dir(alleles);
       var chromosomesArr = [];
-      for (var c = 0; c < parsed.length; c++) {
-        var chromo = parsed[c];
+      
+      // special way of iteracting through
+      for(var i = 1; i < 4; i++){
+        if (i === 3){
+          i = 'X';
+        }
+
+        var allelesArr = [];
+        for (var j = 0; j < alleles[i].A.length; j++){
+          var allele = {
+            sex: "female",
+            gene: alleles[i].A[j]
+          };
+          allelesArr.push(allele);
+        }
+        chromosomesArr.push({ alleles: allelesArr});
         
-        for (var s = 0; s < chromo.length; s++) {
-          var side = chromo[s];
-          var allelesArr = [];
-          for (var a = 0; a < side.length; a++) {
-            var allele = {
-              "sex": (s === 0 ? "female" : "male"),
-              "gene": side[a]
+        allelesArr = [];
+        if (alleles[i].B !== null && typeof alleles[i].B != 'undefined') {
+          for (j = 0; j < alleles[i].B.length; j++){
+            var bAllele = {
+              sex: "male",
+              gene: alleles[i].B[j]
             };
-            allelesArr.push(allele);
+            allelesArr.push(bAllele);
           }
           chromosomesArr.push({ alleles: allelesArr});
+        } else {
+          SC.Logger.info("No B side!");
+          SC.Logger.dir(alleles[i]);
+          chromosomesArr.push({ alleles: [{ sex: "male", gene: "vvv" }]});
         }
       }
       

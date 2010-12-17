@@ -53,6 +53,7 @@ Geniverse.AnimationView = SC.View.extend(
   
   dragon: null,
   dragonDidChange: function() {
+    SC.Logger.log("setting json data for dragon");
     this.set('jsonData', Geniverse.meiosisAnimationController.allelesToJSON(this.getPath('dragon.alleles')) );
   }.observes('dragon'),
   
@@ -64,13 +65,11 @@ Geniverse.AnimationView = SC.View.extend(
     var mother = this.get('motherJson');
     var father = this.get('fatherJson');
     if (mother !== null && father !== null) {
-      this.combineMotherFatherJson();
+      this.combineMotherFatherJson(mother, father);
     }
   }.observes('motherJson', 'fatherJson'),
   
-  combineMotherFatherJson: function () {
-    var mother = this.get('motherJson');
-    var father = this.get('fatherJson');
+  combineMotherFatherJson: function (mother, father) {
     var combined = { chromosomes: [] };
     combined.chromosomes = mother.chromosomes.concat(father.chromosomes);
     this.set('jsonData', combined);
@@ -149,6 +148,7 @@ Geniverse.AnimationView = SC.View.extend(
     
     if (geniverseAnimation.length > 0){
       SC.Logger.log('calling animation init:');
+      SC.Logger.dir(jsonData);
       SC.Logger.dir(options);
       geniverseAnimation.geniverse(jsonData, options);
     }

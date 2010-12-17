@@ -111,7 +111,7 @@ Lab.meiosisPage = SC.Page.design({
             }
             SC.Logger.info("Animation completed.", this.get('jsonData'));
             // get the jsonData and create a new organism from that
-            var alleles = Geniverse.meiosisAnimationController.JSONToAlleles(this.get('jsonData'));
+            var alleles = Geniverse.meiosisAnimationController.JSONToAlleles(this.get('motherJson'), this.get('fatherJson'));
             var sex = 0;
             Geniverse.gwtController.generateDragonWithAlleles(alleles, sex, "Meiosis Child", callback);
           }
