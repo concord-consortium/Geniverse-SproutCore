@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 end
 
 
+
 # == Schema Information
 #
 # Table name: users
@@ -17,5 +18,6 @@ end
 #  first_name    :string(255)
 #  last_name     :string(255)
 #  note          :text
+#  class_name    :string(255)
 #
 

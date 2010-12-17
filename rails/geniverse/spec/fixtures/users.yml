@@ -9,6 +9,7 @@ two:
   password_hash: MyString
 
 
+
 # == Schema Information
 #
 # Table name: users
@@ -23,5 +24,6 @@ two:
 #  first_name    :string(255)
 #  last_name     :string(255)
 #  note          :text
+#  class_name    :string(255)
 #
 
