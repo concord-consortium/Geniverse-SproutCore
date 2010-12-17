@@ -20,7 +20,8 @@ Geniverse.User = SC.Record.extend(
   lastName: SC.Record.attr(String),
   groupId: SC.Record.attr(Number),
   memberId: SC.Record.attr(Number),
-  note: SC.Record.attr(String)
+  note: SC.Record.attr(String),
+  className: SC.Record.attr(String)           // for now a student "owns" both group and class. Really they should belong to them...
 });
 
 Geniverse.User.modelName = "user";

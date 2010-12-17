@@ -125,7 +125,8 @@ Lab.ACTIVITY = SC.Responder.create(
     var activity = Geniverse.activityController.get('content');
     
     var activityChannel = Geniverse.activityController.get('baseChannelName');
-    var groupChannel = activityChannel+"-"+user.get('groupId');
+    var className = user.get('className');
+    var groupChannel = activityChannel+"-"+className+"-"+user.get('groupId');
     
     CcChat.chatController.set('username', username);
     CcChat.chatController.initChat(groupChannel);
