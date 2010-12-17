@@ -135,7 +135,7 @@ Lab.meiosisPage = SC.Page.design({
             self.set('father', dragon);
           }
           Geniverse.gwtController.generateDragon(0, "Meiosis Father", fatherGenerated);
-          Geniverse.gwtController.generateDragon(0, "Meiosis Mother", motherGenerated);
+          Geniverse.gwtController.generateDragon(1, "Meiosis Mother", motherGenerated);
         }.observes('gwtReady')
       })
       
