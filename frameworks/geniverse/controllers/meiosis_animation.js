@@ -9,12 +9,12 @@ sc_require('views/popup_animation');
 /** @class
 
   Shows a pop-up meiosis animation instance for a selected dragon
-  @author  Dr. Baba Kofi Weusijana <kofi@edutek.net>
-  @extends SC.ObjectController
-*/
+ @author  Dr. Baba Kofi Weusijana <kofi@edutek.net>
+ @extends SC.ObjectController
+ */
 
 Geniverse.meiosisAnimationController = SC.ObjectController.create(
-/** @scope Geniverse.meiosisAnimationController.prototype */ {
+  /** @scope Geniverse.meiosisAnimationController.prototype */ {
   NUM_CHROMOSOMES: 6,
   dragon: null,
   pane: null,
@@ -71,22 +71,18 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
   showPane: function() {
     this.set('pane', Geniverse.PopupAnimationView.create());
     var _pane = this.get('pane');
-    //console.log("meiosisAnimationController.pane:",_pane);
     var _dragon = this.get('dragon');
-    //console.log("meiosisAnimationController.dragon:",_dragon);
     var jsonData = this.allelesToJSON(_dragon.get('alleles'));
-    //console.log("jsonData:",jsonData);
     _pane.contentView.meiosisView.set('jsondataurl', jsonData);
-    //console.log("_pane.contentView.meiosisView.jsondataurl:",_pane.contentView.meiosisView.get('jsondataurl'));
-    if (!_pane.get('isVisibleInWindow')){
+    if (!_pane.get('isVisibleInWindow')) {
       _pane.append();
       this.set('isEnabledButton', NO);
     }
   },
 
-  close: function (){
+  close: function () {
     var receiver = this.pane.remove();
-    //console.log("this.pane.remove() returned receiver:", receiver);
+    //SC.Logger.log("this.pane.remove() returned receiver:", receiver);
     this.set('isEnabledButton', YES);
   }
-}) ;
+});

@@ -2,7 +2,7 @@
 // Project:   Lab.loginController
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Lab Geniverse SHA256 */
+/*globals Lab Geniverse SHA256 sc_require CcChat*/
 
 /** @class
 
@@ -116,6 +116,12 @@ Lab.loginController = SC.ObjectController.create(
       var userFound = function(user) {
         user.set('firstName',first);
         user.set('lastName',last);
+        var classWords = response.get('body').class_words;
+        if (!!classWords && classWords.length > 0){
+          user.set('className', classWords[0]);           // for now, we assume student is only in one class on portal
+        } else {
+          user.set('className', "no_class");
+        }
         Geniverse.store.commitRecords();
         Geniverse.userController.set('content',user);
         Geniverse.userController.doWhenReady(self,user,self.didAuthenticate);
@@ -141,7 +147,7 @@ Lab.loginController = SC.ObjectController.create(
   },
   
   logout: function() {
-    self = this;
+    var self = this;
     SC.Logger.info("logging out %s", this.get('username'));
     this.set('username','');
     this.set('lastName','');
@@ -175,8 +181,7 @@ Lab.loginController = SC.ObjectController.create(
     var userName = user.get('firstName');
     this.hidePanel();
     this.set('welcomeMessage',"Welcome %@, you are member #%@ in group %@".fmt(userName, member, group));
-    Lab.infoController.displayButtonOnly("<div><h2>"+this.get('welcomeMessage')+"</h2></div>"+
-      "<a href='#heredity/apprentice/group'>#heredity/apprentice/group</a>"); // TODO: remove this link as it is just for demo purposes
+    //Lab.infoController.displayButtonOnly("<div><h2>"+this.get('welcomeMessage')+"</h2></div>");
     CcChat.chatController.set('username', user.get('username'));
     Lab.userDefaults.writeDefault('username', user.get('username'));
     this.updateGroupInfo();

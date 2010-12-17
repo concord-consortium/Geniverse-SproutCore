@@ -68,6 +68,25 @@ Geniverse.notepadController = SC.ObjectController.create(
     return text;
   },
 
+  /**
+   * Close without updating the backend and revert content to user.note
+   */
+  cancel: function (){
+    Geniverse.userController.get('content').refresh();
+    var _content = this.get('content');
+    var _userNote = Geniverse.userController.get('note');
+    if(_userNote != _content){
+//      console.warn("Geniverse.userController.get('note'):",_userNote);
+//      console.warn("was NOT equal to this.get('content'):",_content);
+//      console.warn("calling this.set('content', _userNote);");
+      this.set('content', _userNote);
+      this.updateView(this.get('content'));
+    }
+//    var receiver = this.pane.remove();
+//    console.log("this.pane.remove() returned receiver:", receiver);
+//    this.set('isEnabledButton', YES);
+  },
+
   commitAndRemoveView: function (){
     var _content = this.get('content');
     var _userNote = Geniverse.userController.get('note');
