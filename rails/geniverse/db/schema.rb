@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101215203221) do
+ActiveRecord::Schema.define(:version => 20101217203255) do
 
   create_table "activities", :force => true do |t|
     t.string   "initial_alleles"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20101215203221) do
     t.boolean  "crossover_when_breeding", :default => false
     t.string   "route"
     t.string   "pageType"
+    t.text     "message"
   end
 
   create_table "articles", :force => true do |t|

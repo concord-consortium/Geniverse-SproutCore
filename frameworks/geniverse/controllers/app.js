@@ -18,7 +18,7 @@ Geniverse.appController = SC.ObjectController.create(
   loginView: null,
   mainPane:  null,
   containerView: null,
-  mainAppView: null,
+  mainAppView: null//,
   // 
   // checkLoginState: function() {
   //   var containerView = this.get('mainPane').get('appContainer');
