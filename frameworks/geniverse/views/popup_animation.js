@@ -36,9 +36,8 @@ Geniverse.PopupAnimationView = SC.PalettePane.design({
 
     meiosisView: Geniverse.AnimationView.design({
       layout: { left: 10, top: 24, width: 420, height: 400 },
-//      layerId: 'offspring',
 //      mode: 'offspring',
-//      owner: 'offspring',
+//      meiosisOwner: 'offspring',
 //      jsondataurl: static_url('chromosomes.json')
       jsondataurl: null
     })

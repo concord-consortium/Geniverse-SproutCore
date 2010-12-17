@@ -38,6 +38,12 @@ Geniverse.chromosomeController = SC.ObjectController.create(
     ['T', 't']
   ],
   
+  allelesMap: {m: '1',mt: '1',w: '1',h: '2',c: '2',fl: '2',hl: '2',a: '2', a1: '2', a2: '2',b: 'X',d: 'X',dl: 'X',t: 'X'},
+  
+  getChromosome: function(allele) {
+    return this.get('allelesMap')[allele.toLowerCase()];
+  },
+  
   chromosomeAlleles: {a: this.allAlleles, b: this.allAlleles},
   
   updateDragon: function (aAlleles, bAlleles){
@@ -104,6 +110,35 @@ Geniverse.chromosomeController = SC.ObjectController.create(
     }
     SC.Logger.warn("couldn't find maped: %s", val);
     return val;
+  },
+  
+  processAlleleString: function(alleleString) {
+    var map = this.get('allelesMap');
+    
+    if (alleleString === null || typeof(alleleString) == "undefined") {
+      return [];
+    }
+    
+    var alleleSet = alleleString.split(/,/);
+    
+    var alleles = [];
+    for (var i = 0; i < alleleSet.length; i++) {
+      var alleleInfo = alleleSet[i].split(/:/);
+      var chromo = ""+map[alleleInfo[1].toLowerCase()];
+      var side = alleleInfo[0].toUpperCase();
+      
+      if (!alleles[chromo] || !alleles[chromo][side]) {
+        var values = [alleleInfo[1]];
+        if (!alleles[chromo]) {
+          alleles[chromo] = [];
+        }
+        alleles[chromo][side] = values;
+      } else {
+        alleles[chromo][side].pushObject(alleleInfo[1]);
+      }
+    }
+    
+    return alleles;
   }
   
 }) ;

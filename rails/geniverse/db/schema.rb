@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(:version => 20101217203255) do
     t.string   "first_name"
     t.string   "last_name"
     t.text     "note"
+    t.string   "class_name"
   end
 
   add_index "users", ["username", "password_hash"], :name => "index_users_on_username_and_password_hash"

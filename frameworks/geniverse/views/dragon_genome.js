@@ -42,7 +42,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
   fixedAlleles: null,    // used when generating new dragons
   
   alleles: [],
-  allelesMap: {m: '1',mt: '1',w: '1',h: '2',c: '2',fl: '2',hl: '2',a: '2', a1: '2', a2: '2',b: 'X',d: 'X',dl: 'X',t: 'X'},
+
   ignoreUpdate: YES,
   
   activityBinding: 'Geniverse.activityController.content',
@@ -376,34 +376,15 @@ Geniverse.DragonGenomeView = SC.View.extend(
   
   _processAlleleString: function() {
     if (this.get('ignoreUpdate') == NO) {
-      var map = this.get('allelesMap');
       var dragon = this.get('dragon');
-      
+
       if (dragon === null || typeof(dragon) == "undefined") {
         this.set('alleles', []);
         return;
       }
-      
+
       var alleleString = dragon.get('alleles');
-      
-      var alleleSet = alleleString.split(/,/);
-      
-      var alleles = [];
-      for (var i = 0; i < alleleSet.length; i++) {
-        var alleleInfo = alleleSet[i].split(/:/);
-        var chromo = ""+map[alleleInfo[1].toLowerCase()];
-        var side = alleleInfo[0].toUpperCase();
-        
-        if (!alleles[chromo] || !alleles[chromo][side]) {
-          var values = [alleleInfo[1]];
-          if (!alleles[chromo]) {
-            alleles[chromo] = [];
-          }
-          alleles[chromo][side] = values;
-        } else {
-          alleles[chromo][side].pushObject(alleleInfo[1]);
-        }
-      }
+      var alleles = Geniverse.chromosomeController.processAlleleString(alleleString);
       
       this.set('alleles', alleles);
     }

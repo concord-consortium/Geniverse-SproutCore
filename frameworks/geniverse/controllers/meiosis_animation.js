@@ -20,42 +20,72 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
   pane: null,
   isEnabledButton: YES,
 
-  allelesToJSON: function (alleles) {
-    if (alleles) {
-      var arr = alleles.split(',');
-      var totalNumAlleles = arr.length;
-      if (totalNumAlleles > 0) {
-        var allelesPerChromosome = Math.round(totalNumAlleles / this.NUM_CHROMOSOMES);
-        SC.Logger.log("allelesPerChromosome", allelesPerChromosome);
-        var chromosomesArr = []; // This will eventually have this.NUM_CHROMOSOMES of elements
-        var allelesArr = []; // For the current set of alleleJSONelements
-        for (var index = 0; index < totalNumAlleles; index++) {
-          var allele = arr[index].split(':');
-          var sex = allele[0];
-          if (sex == 'a') {
-            sex = 'male';
-          } else {
-            sex = 'female';
+  allelesToJSON: function (alleleString) {
+    if(alleleString !== null && typeof(alleleString) != 'undefined'){
+      SC.Logger.info("alleles: " + alleleString);
+      var alleles = Geniverse.chromosomeController.processAlleleString(alleleString);
+      document.alleles = alleles;
+      SC.Logger.dir(alleles);
+      var chromosomesArr = [];
+      
+      // special way of iteracting through
+      for(var i = 1; i < 4; i++){
+        if (i === 3){
+          i = 'X';
+        }
+
+        var allelesArr = [];
+        for (var j = 0; j < alleles[i].A.length; j++){
+          var allele = {
+            sex: "female",
+            gene: alleles[i].A[j]
+          };
+          allelesArr.push(allele);
+        }
+        chromosomesArr.push({ alleles: allelesArr});
+        
+        allelesArr = [];
+        if (alleles[i].B !== null && typeof alleles[i].B != 'undefined') {
+          for (j = 0; j < alleles[i].B.length; j++){
+            var bAllele = {
+              sex: "male",
+              gene: alleles[i].B[j]
+            };
+            allelesArr.push(bAllele);
           }
-          var gene = allele[1];
-          var alleleJSONelement = {
-            "sex": sex,
-            "gene": gene
-          }
-          allelesArr.push(alleleJSONelement);
-          if ((allelesArr.length == allelesPerChromosome) || ((index + 1) == totalNumAlleles)) {
-            // Use this allelesArr object and then make a new instance
-            chromosomesArr.push({"alleles":allelesArr});
-            allelesArr = [];
-          }
+          chromosomesArr.push({ alleles: allelesArr});
+        } else {
+          SC.Logger.info("No B side!");
+          SC.Logger.dir(alleles[i]);
+          chromosomesArr.push({ alleles: [{ sex: "male", gene: "vvv" }]});
         }
       }
-      var json = {
-        "chromosomes": chromosomesArr
-      }
+      
+      var json = { chromosomes: chromosomesArr };
       return json;
     }
     return null;
+  },
+  
+  JSONToAlleles: function(motherJson, fatherJson) {
+    var outString = "";
+    
+    var motherString = this._JSONToAlleles(motherJson, "a:");
+    var fatherString = this._JSONToAlleles(fatherJson, "b:");
+    
+    return motherString + "," + fatherString;
+  },
+  
+  _JSONToAlleles: function(json, prefix) {
+    var outString = "";
+    
+    for (var i = 0; i < json.chromosomes.length; i++) {
+      var chromo = json.chromosomes[i];
+      for (var j = 0; j < chromo.alleles.length; j++) {
+        outString += prefix + chromo.alleles[j].gene;
+      }
+    }
+    return outString;
   },
 
   showPane: function() {
