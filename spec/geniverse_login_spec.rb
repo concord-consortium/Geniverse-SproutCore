@@ -11,15 +11,16 @@ describe "Login Test" do
       app.resize_to 1024, 768
 
       app.define_path 'labPage', 'mainPage.mainPane.mainAppView', View
-      app.define_path 'loginPage', 'loginPage.mainPane', View
+      app.define_path 'loginPage', 'loginController.panel.contentView', View
       app.define_path 'topBar', 'mainPage.mainPane.topBar', View
     }
     
-    @login_field = @app['loginPage.loginView.nameField', 'SC.TextFieldView']
-    @password_field = @app['loginPage.loginView.passwordField', 'SC.TextFieldView']
-    @login_button = @app['loginPage.loginView.loginButtonView', 'SC.ButtonView']
     @welcome_label = @app['topBar.welcomeLabelView', 'SC.LabelView']
     @logout_button = @app['topBar.logoutButton', 'SC.ButtonView']
+    
+    @login_field = @app['loginPage.usernameView', 'SC.TextFieldView']
+    @password_field = @app['loginPage.passwordView', 'SC.TextFieldView']
+    @login_button = @app['loginPage.loginButtonView', 'SC.ButtonView']
   end
   
   after(:all) do
@@ -27,29 +28,27 @@ describe "Login Test" do
   end
   
   it "will show the welcome message after login" do
-    @welcome_label.value.should eql ""
-    
-    ## FIXME: These don't work on the deployed geniverse application...
-    @welcome_label.isVisibleInWindow.should_not be_true
-    # @welcome_label.should have_text_align 'right' # check that we can test for arbitrary SC properties
-    
-    @login_field.type "Test"
-    @password_field.type "Test"
+    initial_message = "please log in"
+    @welcome_label.value.should eql initial_message
+
+    @login_field.type "student"
+    @password_field.type "password"
     @login_button.click
     
-    if (@welcome_label.value == "")
-      waittime = 10 #seconds
+    if (@welcome_label.value == initial_message)
+      waittime = 11 #seconds
       p "Waiting up to " + waittime.to_s + " seconds for @welcome_label.value to be set."
       start = Time.now
-      until @welcome_label.value != "" do
+      until @welcome_label.value != initial_message do
+        sleep 1
         p " @welcome_label.value: " + @welcome_label.value.to_s
-        elapsed = start -Time.now
+        elapsed = Time.now - start
         p " " + elapsed.to_s + " seconds have passed."
         break if (elapsed >= waittime)
       end
     end
     p "@welcome_label.value is now: " + @welcome_label.value.to_s
-    @welcome_label.value.should match /^Welcome Test*/
+    @welcome_label.value.should match /^Welcome Jackie*/
     @welcome_label.isVisibleInWindow.should be_true
   end
   
