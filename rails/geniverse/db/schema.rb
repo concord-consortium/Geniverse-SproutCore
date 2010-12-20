@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(:version => 20101220154154) do
     t.integer  "stableOrder"
     t.boolean  "isEgg",           :default => false
     t.boolean  "isInMarketplace", :default => true
-    t.integer  "activity_id",
+    t.integer  "activity_id"
     t.integer  "breeder_id"
     t.integer  "breedTime"
   end
