@@ -54,6 +54,8 @@ Geniverse.breedDragonController = SC.Controller.create(
       this._callback_version = 0;
     }
     this._callback_version++;
+    
+    var breedTime = new Date().getTime();
 
     // wrap callback passed to GWT with a version number; this way we can reject callbacks from outdated calls to breed()
     var didCreateChild = function (version) {
@@ -72,6 +74,9 @@ Geniverse.breedDragonController = SC.Controller.create(
           // child.set('isInMarketplace', false);
           child.set('isInMarketplace', true);
         }
+        
+        child.set('breedTime', breedTime);
+        
         Geniverse.eggsController.addObject(child);
         SC.RunLoop.end();
 

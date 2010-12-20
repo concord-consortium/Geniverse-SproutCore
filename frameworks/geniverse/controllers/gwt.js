@@ -81,7 +81,8 @@ Geniverse.gwtController = SC.Controller.create(
           organism = orgs[i];
           var child = Geniverse.store.createRecord(Geniverse.Dragon, {
   					bred: YES, mother: mother.get("id"), father: father.get("id"), activity: Geniverse.activityController.getPath('content.id'), 
-  					user: Geniverse.userController.get('content').get('id'), isInMarketplace: NO, isEgg: YES
+  					user: Geniverse.userController.get('content').get('id'), breeder: Geniverse.userController.get('content').get('id'),
+  					isInMarketplace: NO, isEgg: YES
   				});
           child.set('gOrganism', organism);
       

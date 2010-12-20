@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101217203255) do
+ActiveRecord::Schema.define(:version => 20101220154154) do
 
   create_table "activities", :force => true do |t|
     t.string   "initial_alleles"
@@ -54,6 +54,8 @@ ActiveRecord::Schema.define(:version => 20101217203255) do
     t.boolean  "isEgg",           :default => false
     t.boolean  "isInMarketplace", :default => true
     t.integer  "activity_id"
+    t.integer  "breeder_id"
+    t.integer  "breedTime"
   end
 
   add_index "dragons", ["activity_id"], :name => "index_dragons_on_activity_id"
