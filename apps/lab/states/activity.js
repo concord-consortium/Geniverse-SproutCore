@@ -299,5 +299,12 @@ Lab.ACTIVITY = SC.Responder.create(
     SC.Logger.log("ACTIVITY finding page type: "+pageType);
     
     Lab.routes.gotoLabRoute({pageName: pageType});
+
+    // If a message has been authored for this Activity, display it now
+    var message = Geniverse.activityController.get('message');
+    SC.Logger.info("message:",message);
+    if (message){
+      Lab.infoController.display(message);
+    }
   }
 }) ;
