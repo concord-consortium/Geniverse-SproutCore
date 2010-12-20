@@ -30,10 +30,18 @@
 
   <tr>
     <td style="padding: 10px">
-      <img src='<%=h @dragon.mother.imageURL %>' style='width: 120; height: 120;'/>
+      <% if @dragon.mother != nil %>
+        <img src='<%=h @dragon.mother.imageURL %>' style='width: 120; height: 120;'/>
+      <% else %>
+        ?
+      <% end %>
     </td>
     <td style="padding: 10px">
-      <img src='<%=h @dragon.father.imageURL %>' style='width: 120; height: 120;'/>
+      <% if @dragon.father != nil %>
+        <img src='<%=h @dragon.father.imageURL %>' style='width: 120; height: 120;'/>
+      <% else %>
+        ?
+      <% end %>
     </td>
     <td>
       <table>
