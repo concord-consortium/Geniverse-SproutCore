@@ -53,8 +53,13 @@ Geniverse.AnimationView = SC.View.extend(
   
   dragon: null,
   dragonDidChange: function() {
-    SC.Logger.log("setting json data for dragon");
-    this.set('jsonData', Geniverse.meiosisAnimationController.allelesToJSON(this.getPath('dragon.alleles')) );
+    var dragon = this.get('dragon');
+    if (dragon !== null && typeof dragon != 'undefined') {
+      SC.Logger.log("setting json data for dragon", dragon, Geniverse.meiosisAnimationController.allelesToJSON(dragon.get('alleles')));
+      this.set('jsonData', Geniverse.meiosisAnimationController.allelesToJSON(dragon.get('alleles')) );
+    } else {
+      SC.Logger.log("Dragon changed, but was null");
+    }
   }.observes('dragon'),
   
   motherJson: null,
@@ -62,14 +67,16 @@ Geniverse.AnimationView = SC.View.extend(
   fatherJson: null,
   
   jsonDidChange: function() {
-    var mother = this.get('motherJson');
-    var father = this.get('fatherJson');
-    if (mother !== null && father !== null) {
-      this.combineMotherFatherJson(mother, father);
+    if (this.get('mode') == 'offspring') {
+      var mother = this.get('motherJson');
+      var father = this.get('fatherJson');
+      if (mother !== null && father !== null) {
+        this._combineMotherFatherJson(mother, father);
+      }
     }
   }.observes('motherJson', 'fatherJson'),
   
-  combineMotherFatherJson: function (mother, father) {
+  _combineMotherFatherJson: function (mother, father) {
     var combined = { chromosomes: [] };
     combined.chromosomes = mother.chromosomes.concat(father.chromosomes);
     this.set('jsonData', combined);
@@ -81,6 +88,17 @@ Geniverse.AnimationView = SC.View.extend(
   
   animationComplete: function() {
     SC.Logger.log('completed animation');
+    if (this.get('mode') == 'offspring') {
+      var callback = function(dragon) {
+        SC.Logger.info("Created offspring dragon", dragon);
+        Geniverse.meiosisAnimationController.set('offspring', dragon);
+      };
+      SC.Logger.info("Animation completed.", this.get('jsonData'));
+      // get the jsonData and create a new organism from that
+      var alleles = Geniverse.meiosisAnimationController.JSONToAlleles(Geniverse.meiosisAnimationController.get('motherGameteJson'), Geniverse.meiosisAnimationController.get('fatherGameteJson'));
+      var sex = Geniverse.meiosisAnimationController.getOffspringSex();
+      Geniverse.gwtController.generateDragonWithAlleles(alleles, sex, "Meiosis Child", callback);
+    }
   },
   
   gameteJson: null,

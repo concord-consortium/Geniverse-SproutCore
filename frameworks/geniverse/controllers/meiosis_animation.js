@@ -15,10 +15,16 @@ sc_require('views/popup_animation');
 
 Geniverse.meiosisAnimationController = SC.ObjectController.create(
   /** @scope Geniverse.meiosisAnimationController.prototype */ {
-  NUM_CHROMOSOMES: 6,
   dragon: null,
   pane: null,
   isEnabledButton: YES,
+  
+  mother: null,
+  father: null,
+  offspring: null,
+  
+  fatherGameteJson: null,
+  motherGameteJson: null,
 
   allelesToJSON: function (alleleString) {
     if(alleleString !== null && typeof(alleleString) != 'undefined'){
@@ -57,7 +63,8 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
         } else {
           SC.Logger.info("No B side!");
           SC.Logger.dir(alleles[i]);
-          chromosomesArr.push({ alleles: [{ sex: "male", gene: "vvv" }]});
+          chromosomesArr.push({ alleles: [{ sex: "male", gene: "vvv" },{ sex: "male", gene: "www" },{ sex: "male", gene: "xxx" }]});
+          // chromosomesArr.push({ alleles: []});
         }
       }
       
@@ -87,13 +94,24 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
     }
     return outString;
   },
+  
+  getOffspringSex: function() {
+    var lastChromoAlleles = Geniverse.meiosisAnimationController.get('fatherGameteJson').chromosomes[2].alleles;
+    var sex = 1;
+    if (lastChromoAlleles.length === 0) {
+      sex = 0;
+    } else if (lastChromoAlleles[0].gene == "vvv") {
+      sex = 0;
+    }
+    return sex;
+  },
 
   showPane: function() {
     this.set('pane', Geniverse.PopupAnimationView.create());
     var _pane = this.get('pane');
     var _dragon = this.get('dragon');
     var jsonData = this.allelesToJSON(_dragon.get('alleles'));
-    _pane.contentView.meiosisView.set('jsondataurl', jsonData);
+    _pane.contentView.meiosisView.set('jsonData', jsonData);
     if (!_pane.get('isVisibleInWindow')) {
       _pane.append();
       this.set('isEnabledButton', NO);

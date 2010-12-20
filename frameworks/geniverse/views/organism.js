@@ -17,7 +17,6 @@ Geniverse.OrganismView = SC.View.extend(
   showLabel: false,
 	classNames: ['organism-view'],
 	content: null,  //Geniverse.NO_DRAGON,
-	contentBinding: '*organism',
 	childViews: 'labelView imageView'.w(),
   isDropTarget: NO, // change this to YES in view if you want replaceable by drag-and-drop
   parent: '',       // If set, drag-and-drop will replace parentView's [parent] field
