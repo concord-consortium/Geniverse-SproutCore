@@ -33,7 +33,7 @@ Geniverse.ChromosomeView = SC.View.extend(
   
   dragonView: Geniverse.OrganismView.design({
 		layout: {top: 18, right: 0, width: 180, height: 150},
-	  organismBinding: "*parentView.dragon",
+	  contentBinding: "*parentView.dragon",
 	  allowDrop: YES,
 	  isVisibleBinding: "*parentView.showDragon"
 	}),

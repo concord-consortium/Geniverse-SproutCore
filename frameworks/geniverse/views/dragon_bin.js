@@ -56,7 +56,7 @@ Geniverse.DragonBinView = SC.View.extend( SC.Border,
       backgroundColor: 'white'
     });
     this.appendChild(dragonView);
-    // dragonView.set('organism', dragon);
+    // dragonView.set('content', dragon);
     
     this.get('dragonViews').insertAt(i, dragonView);
   },
@@ -86,7 +86,7 @@ Geniverse.DragonBinView = SC.View.extend( SC.Border,
   _getSourceDragon: function(dragEvt) {
     var sourceDragon;
     if ((""+dragEvt.get('source').constructor === 'Geniverse.OrganismView')){
-      sourceDragon = dragEvt.get('source').get('organism');
+      sourceDragon = dragEvt.get('source').get('content');
     } else {
       sourceDragon = dragEvt.get('source').get('selection').get('firstObject');
     }

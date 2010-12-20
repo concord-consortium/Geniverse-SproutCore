@@ -12,7 +12,6 @@
 */
 Geniverse.OrganismView = SC.View.extend( 
 /** @scope Geniverse.OrganismView.prototype */ {
-	organismBinding: '*content',
 	label: 'Organism',
   showLabel: false,
 	classNames: ['organism-view'],
@@ -106,10 +105,10 @@ Geniverse.OrganismView = SC.View.extend(
     }
     
       if (this.get('isSelected')){
-        classNames.push((this.getPath('organism.sex') === 0) ? 'male-selected' : 'female-selected');
+        classNames.push((this.getPath('content.sex') === 0) ? 'male-selected' : 'female-selected');
       } else {
-        if (!!this.get('organism')){
-          classNames.push((this.getPath('organism.sex') === 0) ? 'male' : 'female');
+        if (!!this.get('content')){
+          classNames.push((this.getPath('content.sex') === 0) ? 'male' : 'female');
         }
         classNames.push('empty');
       }
@@ -151,7 +150,7 @@ Geniverse.OrganismView = SC.View.extend(
       SC.RunLoop.end();
     } else {
       SC.RunLoop.begin();
-        this.set('organism', dragon);
+        this.set('content', dragon);
       SC.RunLoop.end();
     }
     
@@ -209,7 +208,7 @@ Geniverse.OrganismView = SC.View.extend(
   _getSourceDragon: function(dragEvt) {
     var sourceDragon;
     if ((""+dragEvt.get('source').constructor === 'Geniverse.OrganismView')){
-      sourceDragon = dragEvt.get('source').get('organism');
+      sourceDragon = dragEvt.get('source').get('content');
     } else {
       sourceDragon = dragEvt.get('source').get('selection').get('firstObject');
     }

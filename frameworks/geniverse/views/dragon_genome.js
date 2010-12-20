@@ -197,7 +197,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 		layout: function() {
 		  return {top: 18, left: this.getPath('parentView.dragonImageLeft'), width: 200, height: 170};
 		}.property(),
-	  organismBinding: "*parentView.dragon",
+	  contentBinding: "*parentView.dragon",
 	  allowDrop: YES,
     isVisibleBinding: "*parentView.showDragon"
 	}),
