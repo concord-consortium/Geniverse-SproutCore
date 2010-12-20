@@ -5,6 +5,7 @@ daemon_controller -v0.2.5
 rails -v2.3.10
 sqlite3-ruby -v1.3.2
 passenger -v3.0.2
+ci_reporter -v1.6.3
 
 # for proxy/sc-unit-tests.rb
 trollop -v1.16.2
