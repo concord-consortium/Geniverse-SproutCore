@@ -84,7 +84,7 @@ Lab.breedingPageGroup = SC.Page.design({
           }
           
           if ((""+drag.get('source').constructor === 'Geniverse.OrganismView')){
-            var dragon = drag.get('source').get('organism');
+            var dragon = drag.get('source').get('content');
             sellDragon(dragon);
           } else {
             var selection = drag.get('source').get('selection');

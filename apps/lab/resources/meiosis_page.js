@@ -42,20 +42,8 @@ Lab.meiosisPage = SC.Page.design({
       genomePanel: SC.View.design({
         layout: {top: 40, height: 520, left: 15, width: 980 },
         childViews: 'femaleTitle femaleView motherMeiosis offspringTitle offspringView maleTitle maleView fatherMeiosis fertilization'.w(),
-        // childViews: 'femaleTitle femaleView motherMeiosis maleTitle maleView'.w(),
+        // childViews: 'femaleTitle femaleView offspringTitle offspringView maleTitle maleView'.w(),
         classNames: ['genome-view-intro'],
-        mother: null,
-        father: null,
-        offspring: null,
-        
-        init: function() {
-          sc_super();
-          $(document).bind('gamete-clicked', function(event, data) {
-            SC.Logger.log('gamete was clicked');
-            SC.Logger.dir(event);
-            SC.Logger.dir(data);
-          });
-        },
 
         femaleTitle: SC.LabelView.design({
           layout: {top: 10, left: 5, height: 25, width: 200 },
@@ -65,7 +53,7 @@ Lab.meiosisPage = SC.Page.design({
 
         femaleView: Geniverse.OrganismView.design({
           layout: {top: 40, left: 5, height: 100, width: 100 },
-          contentBinding: '*parentView.mother'
+          contentBinding: SC.Binding.from('Geniverse.meiosisAnimationController.mother').oneWay()
         }),
         
         offspringTitle: SC.LabelView.design({
@@ -76,7 +64,7 @@ Lab.meiosisPage = SC.Page.design({
 
         offspringView: Geniverse.OrganismView.design({
           layout: {top: 40, left: 440, height: 100, width: 100 },
-          contentBinding: '*parentView.offspring'
+          contentBinding: SC.Binding.from('Geniverse.meiosisAnimationController.offspring').oneWay()
         }),
         
         maleTitle: SC.LabelView.design({
@@ -87,52 +75,47 @@ Lab.meiosisPage = SC.Page.design({
 
         maleView: Geniverse.OrganismView.design({
           layout: {top: 40, left: 775, height: 100, width: 100 },
-          contentBinding: '*parentView.father'
+          contentBinding: SC.Binding.from('Geniverse.meiosisAnimationController.father').oneWay()
         }),
         
         motherMeiosis: Geniverse.AnimationView.design({
           layout: {top: 150, left: 5, height: 360, width: 320 },
           mode: 'parent',
           meiosisOwner: 'mother',
-          dragonBinding: '*parentView.mother',
-          gameteJsonBinding: '*parentView.fertilization.motherJson'
+          dragonBinding: 'Geniverse.meiosisAnimationController.mother',
+          gameteJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson'
         }),
 
         fertilization: Geniverse.AnimationView.design({
           layout: {top: 150, left: 330, height: 360, width: 320 },
           mode: 'offspring',
           meiosisOwner: 'offspring',
-          offspringBinding: '*parentView.offspring',
-          animationComplete: function() {
-            var self = this;
-            function callback(dragon) {
-              SC.Logger.info("Created offspring dragon", dragon);
-              self.set('offspring', dragon);
-            }
-            SC.Logger.info("Animation completed.", this.get('jsonData'));
-            // get the jsonData and create a new organism from that
-            var alleles = Geniverse.meiosisAnimationController.JSONToAlleles(this.get('motherJson'), this.get('fatherJson'));
-            var sex = 0;
-            Geniverse.gwtController.generateDragonWithAlleles(alleles, sex, "Meiosis Child", callback);
-          }
+          motherJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson',
+          fatherJsonBinding: 'Geniverse.meiosisAnimationController.fatherGameteJson'
         }),
         
         fatherMeiosis: Geniverse.AnimationView.design({
           layout: {top: 150, left: 655, height: 360, width: 320 },
           mode: 'parent',
           meiosisOwner: 'father',
-          dragonBinding: '*parentView.father',
-          gameteJsonBinding: '*parentView.fertilization.fatherJson'
+          dragonBinding: 'Geniverse.meiosisAnimationController.father',
+          gameteJsonBinding: 'Geniverse.meiosisAnimationController.fatherGameteJson'
         }),
 
         gwtReadyBinding: 'Geniverse.gwtController.isReady',
         generateDragons: function() {
-          var self = this;
+          SC.Logger.log("GWT is ready");
           function motherGenerated(dragon) {
-            self.set('mother', dragon);
+            SC.RunLoop.begin();
+            SC.Logger.log("created mother: ", dragon);
+            Geniverse.meiosisAnimationController.set('mother', dragon);
+            SC.RunLoop.end();
           }
           function fatherGenerated(dragon) {
-            self.set('father', dragon);
+            SC.RunLoop.begin();
+            SC.Logger.log("created father: ", dragon);
+            Geniverse.meiosisAnimationController.set('father', dragon);
+            SC.RunLoop.end();
           }
           Geniverse.gwtController.generateDragon(0, "Meiosis Father", fatherGenerated);
           Geniverse.gwtController.generateDragon(1, "Meiosis Mother", motherGenerated);

@@ -2,7 +2,7 @@
 // Project:   Geniverse - mainPage
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Geniverse, CC, CcChat, java */
+/*globals Geniverse, CC, CcChat, java, Lab */
 Lab.marginSize = 15;
 
 sc_require('views/article');
@@ -86,7 +86,7 @@ Lab.breedingPage = SC.Page.design({
           }
           
           if ((""+drag.get('source').constructor === 'Geniverse.OrganismView')){
-            var dragon = drag.get('source').get('organism');
+            var dragon = drag.get('source').get('content');
             sellDragon(dragon);
           } else {
             var selection = drag.get('source').get('selection');

@@ -27,6 +27,33 @@ class DragonsController < ApplicationController
       format.html { render :fathom => @dragons }
     end
   end
+  
+  # GET /breedingRecords/:user/:activity
+  def breedingRecords
+    @user = User.find(params[:id]) unless (params[:id] == "-1")
+    @activity = Activity.find(params[:id2]) unless (params[:id2] == "-1")
+    
+    if (@activity && @user)
+      @dragons = Dragon.find(:all, :conditions => ['breeder_id = ? AND activity_id = ?', @user, @activity])
+    elsif (@user)
+      @dragons = Dragon.find(:all, :conditions => ['breeder_id = ?', @user])
+    else
+      @dragons = Dragon.find(:all)
+    end
+    
+    respond_to do |format|
+      format.html { render :breedingRecords => @dragons }
+    end
+  end
+  
+  # GET /breedingRecordsShow/1
+  def breedingRecordsShow
+    @dragon = Dragon.find(params[:id])
+    
+    respond_to do |format|
+      format.html { render :breedingRecordsShow => @dragon }
+    end
+  end
 
   # GET /dragons/1
   # GET /dragons/1.xml

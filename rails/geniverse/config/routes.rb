@@ -4,6 +4,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :dragons
   map.connect "destroy_all_dragons", :controller => 'dragons', :action => 'destroy_all'
   map.connect "fathom/:id/:id2", :format => 'html', :controller => 'dragons', :action => 'fathom', :id => '-1', :id2 => '-1'
+  map.connect "breedingRecords/:id/:id2", :format => 'html', :controller => 'dragons', :action => 'breedingRecords', :id => '-1', :id2 => '-1'
+  map.connect "breedingRecordsShow/:id", :format => 'html', :controller => 'dragons', :action => 'breedingRecordsShow'
 
   map.resources :users
   # custom routes should go after the default routes, so we don't overwrite any of them...
