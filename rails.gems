@@ -2,3 +2,4 @@ rails -v2.3.10
 sqlite3-ruby -v1.3.2
 test-unit -v1.2.3
 ci_reporter -v1.6.3
+rspec-rails -v1.3.2
