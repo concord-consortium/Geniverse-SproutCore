@@ -7,16 +7,19 @@ class Dragon < ActiveRecord::Base
   belongs_to :activity
   
   belongs_to :user
+  belongs_to :breeder, :class_name => "User", :foreign_key => "breeder_id"
   
   def self.searchFields
     return {
       :user_id => /^(\d+|null)$/,
+      :breeder_id => /^(\d+|null)$/,
       :activity_id => /^(\d+|null)$/,
       :mother_id => /^(\d+|null)$/,
       :father_id => /^(\d+|null)$/,
       :isInMarketplace => /^(true|false)$/,
       :bred => /^(true|false)$/,
-      :isEgg => /^(true|false)$/
+      :isEgg => /^(true|false)$/,
+      :breedTime => /^(\d+|null)$/
     }
   end
 
