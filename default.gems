@@ -1,7 +1,9 @@
 # default.gems generated gem export file. Note that any env variable settings will be missing. Append these after using a ';' field separator
 sproutcore -v1.4.4
-lewbowski -v0.3.0
+lebowski -v0.3.0
 daemon_controller -v0.2.5
 rails -v2.3.10
 sqlite3-ruby -v1.3.2
 passenger -v3.0.2
+
+test-unit -v1.2.3
