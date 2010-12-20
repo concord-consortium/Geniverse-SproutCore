@@ -114,9 +114,11 @@ def start_apache
     x_instance_home File.expand_path(File.dirname(__FILE__))
     x_port APACHE_PORT
     x_host '127.0.0.1'
+    x_proxy "/portal/    http://geniverse-portal.dev.concord.org/"
     x_proxy "/biologica/ http://geniverse.dev.concord.org/biologica/"
     x_proxy "/chat/      http://geniverse.dev.concord.org/chat/"
-    x_proxy "/          http://127.0.0.1:#{SC_SERVER_PORT}/"
+    x_proxy "/rails/     http://127.0.0.1:#{RAILS_PORT}/rails/"
+    x_proxy "/           http://127.0.0.1:#{SC_SERVER_PORT}/"
   }
 
   @apache.controller.start
