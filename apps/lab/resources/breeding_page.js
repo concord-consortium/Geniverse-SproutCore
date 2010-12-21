@@ -45,7 +45,7 @@ Lab.breedingPage = SC.Page.design({
       
       layout: { top: 45, bottom: 0, left: 10, right: 0 },
       
-      childViews: 'breedView statsView challengePoolView challengeChromosomeToolView breedingPenView stableView marketplaceView '.w(),
+      childViews: 'breedView challengePoolView challengeChromosomeToolView breedingPenView stableView marketplaceView '.w(),
      
       // challenge pool to hold initial, system-created dragons
       challengePoolView: Lab.ChallengePoolView.design({
@@ -66,7 +66,7 @@ Lab.breedingPage = SC.Page.design({
       
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { left: 265, top: 150, width: 300, height: 300 }
+        layout: { left: 265, top: 140, width: 300, height: 340 }
       }),
       
       marketplaceView: SC.ImageView.design({
@@ -112,10 +112,6 @@ Lab.breedingPage = SC.Page.design({
         dragExited: function(drag, evt) {
           this.$().removeClass('drop-target') ;
         }
-      }),
-      
-      statsView: Geniverse.StatsView.design({
-        layout: { left: 565, top: 150 + (300 - 80), width: 60, height: 80 }
       }),
 
       stableView: Lab.StableView.design({

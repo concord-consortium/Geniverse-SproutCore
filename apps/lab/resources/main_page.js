@@ -24,23 +24,35 @@ Lab.mainPage = SC.Page.design({
 
     mainAppView: SC.View.design({
       layout: { top: 42, centerX: 0, width: 960},
-      childViews: 'backgroundView caselogButtonView'.w(),
+      childViews: 'backgroundView caselogButtonView journalButtonView'.w(),
 
       backgroundView: SC.ImageView.design({
         layout: { top:0, centerX: 0, width: 960},
         value: static_url('mainscreen-bg.png')
       }),
 
-
       caselogButtonView: SC.View.design(Lab.SimpleButton, {
         layerId: 'caselog',
         tagName: 'a',
         hasHover: YES,
         layout: { top: 438, left: 467, width: 372, height: 158 },
-        //title: 'Go to the Case Log',
+        alt: 'Go to the Case Log',
+        toolTip: 'Go to the Case Log',
         target: 'Lab.mainPage',
         action: 'goCaseLog',
         value: static_url('mainscreen-caselog-highlighted')
+      }),
+
+      journalButtonView: SC.View.design(Lab.SimpleButton, {
+        layerId: 'journal',
+        tagName: 'a',
+        hasHover: YES,
+        layout: { top: 477, left: 71, width: 249, height: 123 },
+        alt: 'Open the 3G Journal',
+        toolTip: 'Open the 3G Journal',
+        target: 'Lab.journalController',
+        action: 'openWindow',
+        value: static_url('mainscreen-journal-highlighted')
       }),
 
       focusMainFrom: function(pane) {

@@ -2,7 +2,7 @@
 // Project:   Lab - BreedingPenView
 // Copyright: 2010 Concord Consortium
 // ==========================================================================
-/*globals Lab */
+/*globals Lab CC Geniverse */
 /**
  * BreedingPen View with titleView and penView for eggs.
  * This is a composite view component.
@@ -18,7 +18,6 @@
 Lab.BreedingPenView = SC.View.extend(
 /** @scope Lab.BreedingPenView.prototype */ {
   classNames: ('transparent').w(),
-  layout: { left: 265, top: 70, width: 300, height: 300 },
 
   // childViews
   titleView: null,
@@ -44,29 +43,16 @@ Lab.BreedingPenView = SC.View.extend(
    */
   createChildViews: function() {
     var childViews = [];
-
-    this.titleView = this.createChildView(
-      SC.LabelView.design({
-        layout: { centerY: 0, height: 20, left: 0, top:0, right: 0 },
-        //valueBinding: this.get('titlePath'),
-        value: "Breeding Pen",
-        controlSize: "bity",
-        textAlign: SC.ALIGN_CENTER,
-        fontWeight: SC.BOLD_WEIGHT,
-        classNames: "container_label".w()
-      })
-    );
-    childViews.push(this.titleView);
-
+    
     this.penView = this.createChildView(
       CC.AutoScrollView.design({
         hasHorizontalScroller: NO,
-        layout: { left: 0, top: 20, bottom: 0, right: 0 },
+        layout: { left: 0, top: 0, bottom: 0, right: 0 },
         backgroundColor: 'white',
         contentView: SC.GridView.design({
           contentBinding: this.get('eggsControllerPath')+'.arrangedObjects',
           selectionBinding: this.get('eggsControllerPath')+'.selection',
-          rowHeight: 60,
+          rowHeight: 58,
           columnWidth: 60,
           canEditContent: NO,
           exampleView: Geniverse.OrganismView,
@@ -76,7 +62,36 @@ Lab.BreedingPenView = SC.View.extend(
         autoScrollTriggerBinding: this.get('eggsControllerPath')+'.length'
       })
     );
-    childViews.push(this.penView);
+    
+    this.statsView = this.createChildView(
+      Geniverse.StatsView.design({
+        layout: { left: 0, top: 0, bottom: 0, right: 0 },
+        contentBinding: 'Geniverse.eggsController.arrangedObjects'
+      })
+    );
+    
+    this.tabView = this.createChildView(
+      SC.TabView.design({ 
+        layout: { left: 0, top: 0, bottom: 30, right: 0 },
+        items: [ 
+          {title: "Breeding pen", value: this.penView },
+          {title: "Stats", value: this.statsView }
+        ], 
+        itemTitleKey: 'title', 
+        itemValueKey: 'value', 
+        nowShowing: this.penView
+      })
+    ); 
+    
+    childViews.push(this.tabView);
+    
+    this.recordLink = this.createChildView(
+      Geniverse.RecordLinkView.design({
+        layout: { left: 0, bottom: 0, height: 25}
+      })
+    );
+    
+    childViews.push(this.recordLink);
 
     this.set('childViews', childViews);
   }

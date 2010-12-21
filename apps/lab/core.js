@@ -8,7 +8,7 @@
 
   My cool new app.  Describe your application.
   
-  @extends SC.Object
+  @extends SC.Page
 */
 // an extension of the SC.Page object to allow us to index all created pages
 SC.Page = SC.Page.extend({

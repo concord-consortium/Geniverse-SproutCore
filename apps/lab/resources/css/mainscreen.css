@@ -1,28 +1,35 @@
 body {
-	background: #a36a4a static_url('bg2.png') repeat-x left top;
-	}
+    background: #a36a4a static_url('bg2.png') repeat-x left top;
+}
 
 #content {
-  background-repeat: no-repeat;
-  height: 600px;
-  margin: 0 auto;
-  position: relative;
-  width: 960px;
+    background-repeat: no-repeat;
+    height: 600px;
+    margin: 0 auto;
+    position: relative;
+    width: 960px;
 }
 
 a#caselog {
-  left:467px;
-  top:438px;
-  width: 372px;
-  height: 158px;
-  background:transparent;
-  position: absolute;
-  border: none;
+    left: 467px;
+    top: 438px;
+    width: 372px;
+    height: 158px;
+    background: transparent;
+    position: absolute;
+    border: none;
 }
 
 a#caselog:hover {
     cursor: pointer;
     cursor: hand;
     background-image: static_url('mainscreen-caselog-highlighted.png');
+    background-repeat: none;
+}
+
+a#journal:hover {
+    cursor: pointer;
+    cursor: hand;
+    background-image: static_url('mainscreen-journal-highlighted.png');
     background-repeat: none;
 }

@@ -149,6 +149,6 @@ Geniverse.Dragon = SC.Record.extend(
 
 Geniverse.Dragon.modelName = "dragon";
 Geniverse.Dragon.modelsName = "dragons";
-Geniverse.Dragon.CHARACTERISTICS = "horns wings legs tail fire color alive scales plates".w();
+Geniverse.Dragon.CHARACTERISTICS = "color tail wings horns forelimbs hindlimbs armor".w();
 Geniverse.railsBackedTypes.push(Geniverse.Dragon.modelName);
 

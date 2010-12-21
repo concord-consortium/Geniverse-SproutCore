@@ -8,6 +8,7 @@ class DragonTest < ActiveSupport::TestCase
 end
 
 
+
 # == Schema Information
 #
 # Table name: dragons
@@ -27,5 +28,7 @@ end
 #  isEgg           :boolean         default(FALSE)
 #  isInMarketplace :boolean         default(TRUE)
 #  activity_id     :integer
+#  breeder_id      :integer
+#  breedTime       :integer
 #
 

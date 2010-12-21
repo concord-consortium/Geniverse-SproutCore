@@ -2,7 +2,7 @@
 // Project:   Geniverse.StatsView
 // Copyright: ©2010 Concord Consortium, Inc.
 // ==========================================================================
-/*globals Geniverse, generateDragonWithSex */
+/*globals Geniverse, generateDragonWithSex sc_super*/
 
 /** @class
 
@@ -14,52 +14,103 @@
 
 Geniverse.StatsView = SC.View.extend(
   /** @scope Geniverse.StatsView.prototype */ {
-	
-		classNames: "statsLabel".w(),
-    childViews: "resetButtonView red purple ".w(),
-    //childViews: "resetButtonView red green yellow purple brown".w(),
-
-    resetButtonView: SC.ButtonView.design({
-      layout: { centerX: 0, top: 0, width: 100, height: 24 },
-      target: 'Geniverse.breedDragonController',
-      action: "reset",
-      isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
-      hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
-      isEnabled: function() {
-        return (this.get('hasParents') && (! this.get('isBeeding')));
-      }.property('hasParents','isBreeding').cacheable(),
-      
-      title: 'reset'	
-    }),
-	
-	
-    red: SC.LabelView.design({
-      layout: {left: 3, top: 30, width: 70, height: 18},
-      classNames: "red stats".w(),
-	    valueBinding: 'Geniverse.statsController.redLabel'
-    }),
-
-    purple: SC.LabelView.design({
-      layout: {left: 3, top: 50, width: 70, height: 18},
-      classNames: "purple stats".w(),
-	    valueBinding: 'Geniverse.statsController.purpleLabel'
-    })
-    //green: SC.LabelView.design({
-      //layout: {left: 3, top: 48, width: 70, height: 18},
-      //classNames: "green stats".w(),
-			//valueBinding: 'Geniverse.statsController.greenLabel'
-    //}),
-
-    //yellow: SC.LabelView.design({
-      //layout: {left: 3, top: 66, width: 70, height: 18},
-      //classNames: "yellow stats".w(),
-			//valueBinding: 'Geniverse.statsController.yellowLabel'
-    //}),
-
     
-    //brown: SC.LabelView.design({
-      //layout: {left: 3, top: 102, width: 70, height: 18},
-      //classNames: "orange stats".w(),
-			//valueBinding: 'Geniverse.statsController.brownLabel'
-    //})
+    // contentBinding: // requires a binding in view, such as 'Geniverse.eggsController.arrangedObjects',
+    
+    childViews: 'traitLabel traitPulldown statsView'.w(),
+    
+    classNames: ['black-text '],
+    
+    backgroundColor: 'white',
+    
+    traitLabel: SC.LabelView.design({
+      layout: {top: 20, left: 20, height: 25, width: 40 },
+      value: "Trait"
+    }),
+    
+    traitPulldown: SC.SelectFieldView.design({
+      layout: { top: 20, left: 60, height: 25, width: 80 },
+        
+      objects: [
+        { title: "Horns" },
+        { title: "Wings" },
+        { title: "Forelimbs" },
+        { title: "Hindlimbs" },
+        { title: "Armor" },
+        { title: "Tail" },
+        { title: "Color" }
+      ],
+     
+      nameKey: 'title',
+      valueKey: 'title'
+    }),
+    
+    statsView: SC.View.design({
+      
+      layout: { top: 60, left: 20, right: 0, bottom: 0 },
+      
+      dragonsBinding: '*parentView.content',
+      
+      dragonsObserver: function() {
+        if (this.get('isVisible')){
+          var trait = this.getPath('parentView.traitPulldown.value');
+          if (!trait){
+            return;
+          }
+          var dragonGroups = {};
+          
+          var dragons = this.get('dragons');
+          dragons.forEach(function(dragon){
+            var characteristic = dragon.characteristicValue(trait);
+            var sex = dragon.sexAsString();
+            if (!dragonGroups[characteristic]){
+              dragonGroups[characteristic] = {};
+            }
+            if (!dragonGroups[characteristic][sex]){
+              dragonGroups[characteristic][sex] = 0;
+            }
+            dragonGroups[characteristic][sex] = dragonGroups[characteristic][sex] + 1;
+          },this);
+          this.set('dragonGroups',dragonGroups);    //{'Horns': {'male': 10, 'female': 5}, 'No horns': {'male': 0, 'female': 5}}
+        }
+      }.observes('*dragons.[]', '*parentView.traitPulldown.value'),
+      
+      dragonGroups: {},
+      
+      displayProperties: ['dragonGroups'],
+      
+      
+      render: function(context, firstTime) {
+        if (!this.get('dragons') || this.get('dragons').get('length') < 1){
+          return;
+        }
+        var dragonGroups = this.get('dragonGroups');
+        var dragonsSize = this.get('dragons').get('length');
+        
+        context = context.begin('table').attr('style','border: 0');
+        
+          context = context.begin('tr');
+            context = context.begin('th').push("").attr('style','border: 0').end();
+            context = context.begin('th').push("Total").end();
+            context = context.begin('th').push("F").end();
+            context = context.begin('th').push("M").end();
+          context = context.end();
+         
+         for (var trait in dragonGroups){
+           context = context.begin('tr');
+             context = context.begin('th').push(trait).end();
+             var total = dragonGroups[trait].Male + dragonGroups[trait].Female;
+             var percent = Math.floor((total / dragonsSize) * 100).toFixed();
+             context = context.begin('td').push(total+" ("+percent+"%)").attr('style','text-align: left').end();
+             context = context.begin('td').push(dragonGroups[trait].Female).end();
+             context = context.begin('td').push(dragonGroups[trait].Male).end();
+           context = context.end();
+         }
+        
+        context = context.end();
+        
+        
+        sc_super();
+      }
+    })
 });
