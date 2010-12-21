@@ -1,5 +1,5 @@
-dir = File.expand_path(File.dirname(__FILE__))
-require "#{dir}/support/spec_helper.rb"
+CWD = File.expand_path(File.dirname(__FILE__))
+require "#{CWD}/support/spec_helper.rb"
 
 describe "SC/Rails Integration Test" do
   describe "Case Log" do
@@ -7,7 +7,7 @@ describe "SC/Rails Integration Test" do
     alias :page :selenium_driver
     
     before(:all) do
-      puts `cd #{dir}/../rails/geniverse; RAILS_ENV=test rake db:migrate; RAILS_ENV=test rake app:setup`
+      puts `cd #{CWD}/../rails/geniverse; RAILS_ENV=test rake db:migrate; RAILS_ENV=test rake app:setup; cd #{CWD}`
       start_testing_servers
       @selenium_driver = new_selenium_test
       page.start_new_browser_session
