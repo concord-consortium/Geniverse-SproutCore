@@ -14,7 +14,7 @@
 Lab.journalController = SC.ObjectController.create(
 /** @scope Lab.journalController.prototype */ {
   content: null,
-  // TODO: use the same domain, protocol, and port as this WebApp to avoid "Unsafe JavaScript attempt to access frame with URL" error
+  // NOTE: use the same domain, protocol, and port as this WebApp to avoid "Unsafe JavaScript attempt to access frame with URL" error
   journalBaseURL: "http://geniverse.buddypress.staging.concord.org",
 
   /**
@@ -27,19 +27,15 @@ Lab.journalController = SC.ObjectController.create(
     if(!className){
       className = "";
     }
-    SC.Logger.log("className:",className);
+    //SC.Logger.log("className:",className);
     var journalBaseURL = this.get('journalBaseURL');
     if(!journalBaseURL){
-      // TODO:  Domains, protocols and ports must match
-      journalBaseURL = "http://geniverse.buddypress.staging.concord.org";
+      journalBaseURL = "";
     }
-    SC.Logger.log("journalBaseURL:",journalBaseURL);
-    // I'm not saving the window's reference because accessing it causes a security error
-    // since the journal is currently in a different domain than the Lab WebApp
-    //var journalWindow =
-    window.open(journalBaseURL.toString()+"/"+className.toString());
+    //SC.Logger.log("journalBaseURL:",journalBaseURL);
+    var journalWindow = window.open(journalBaseURL.toString()+"/"+className.toString());
     //SC.Logger.log("journalWindow:",journalWindow);
-    //this.set('content',journalWindow);
+    this.set('content',journalWindow);
   }
 
 }) ;
