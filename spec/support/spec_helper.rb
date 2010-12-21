@@ -44,10 +44,11 @@ $commands = {
     :pid => nil
   },
   :rails => {
-    :path => "passenger start rails/geniverse -e production --pid-file='passenger.pid' -p #{RAILS_PORT}",
+    # :path => "passenger start rails/geniverse -e production --pid-file='passenger.pid' -p #{RAILS_PORT}",
+    :path => "rails/geniverse/script/server -p #{RAILS_PORT}"
     :name => "rails server",
     :pid => nil,
-    # :signal => 'KILL'
+    :signal => 'KILL'
   },
   :lebowski => {
     :path => "lebowski-start-server -port #{SELENIUM_PORT}",
