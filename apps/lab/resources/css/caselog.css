@@ -41,6 +41,10 @@ body {
 	position: relative;
 	width: 960px;
 	}
+	
+.black-text {
+  color: #000000;
+}
 
 /* CASE LOG LINKS
 ----------------------------------------------------*/

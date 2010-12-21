@@ -47,7 +47,7 @@ Lab.breedingPageGroup = SC.Page.design({
       
       layout: { top: 45, bottom: 0, left: 10, right: 0 },
       
-      childViews: 'breedView statsView challengePoolView breedingPenView challengeChromosomeToolView stableView marketplaceView chatView allArticlesView animationButton'.w(),
+      childViews: 'breedView challengePoolView breedingPenView challengeChromosomeToolView stableView marketplaceView chatView allArticlesView animationButton'.w(),
 
       challengePoolView: Lab.ChallengePoolView.design({
         layout: { left: 20, top: 70, width:70, height: 300 }
@@ -66,7 +66,9 @@ Lab.breedingPageGroup = SC.Page.design({
       }),
       
       // Breeding pen with eggs
-      breedingPenView: Lab.BreedingPenView.design({}),
+      breedingPenView: Lab.BreedingPenView.design({
+        layout: { left: 265, top: 60, width: 300, height: 310 }
+      }),
       
       marketplaceView: SC.ImageView.design({
         layout: { left: 570, top: 150, height: 90, width: 90 },
@@ -111,10 +113,6 @@ Lab.breedingPageGroup = SC.Page.design({
           this.$().removeClass('drop-target') ;
         }
     	}),
-      
-      statsView: Geniverse.StatsView.design({
-        layout: { left: 565, top: 70 + (300 - 80), width: 60, height: 80 }
-      }),
 
       stableView: Lab.StableView.design({}), 
 

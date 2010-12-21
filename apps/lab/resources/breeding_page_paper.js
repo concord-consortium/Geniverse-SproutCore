@@ -2,7 +2,7 @@
 // Project:   Geniverse - mainPage
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Geniverse, CC, CcChat, java */
+/*globals Geniverse, CC, CcChat, java sc_static static_url sc_require*/
 Lab.marginSize = 15;
 
 sc_require('views/article');
@@ -42,7 +42,7 @@ Lab.breedingPagePaper = SC.Page.design({
       
       layout: { top: 45, bottom: 0, left: 10, right: 0 },
       
-      childViews: 'breedView statsView challengePoolView breedingPenView stableView marketplaceView chatView allArticlesView'.w(),
+      childViews: 'breedView challengePoolView breedingPenView stableView marketplaceView chatView allArticlesView'.w(),
      
       challengePoolView: Lab.ChallengePoolView.design({
         layout: { left: 20, top: 70, width:70, height: 300 }
@@ -54,7 +54,9 @@ Lab.breedingPagePaper = SC.Page.design({
       }),
       
       // Breeding pen with eggs
-      breedingPenView: Lab.BreedingPenView.design({}),
+      breedingPenView: Lab.BreedingPenView.design({
+        layout: { left: 265, top: 60, width: 300, height: 310 }
+      }),
       
       
       breedingChromosomeToolView: Geniverse.ChromosomeToolView.design({
@@ -105,11 +107,6 @@ Lab.breedingPagePaper = SC.Page.design({
           this.$().removeClass('drop-target') ;
         }
       }),
-      
-      statsView: Geniverse.StatsView.design({
-        layout: { left: 565, top: 70 + (300 - 80), width: 60, height: 80 }
-      }),
-      
 
       stableView: Lab.StableView.design({
         layout: { left: 680, top: 70, height: 300, width: 240 }
