@@ -44,8 +44,9 @@ $commands = {
     :pid => nil
   },
   :rails => {
-    # :path => "passenger start rails/geniverse -e production -p #{RAILS_PORT}",
-    :path => "rails/geniverse/script/server -p #{RAILS_PORT}",
+    :path => "passenger start rails/geniverse -e production -p #{RAILS_PORT}",
+    # :path => "mongrel_rails start -c rails/geniverse -e production -n 5 -p #{RAILS_PORT}",
+    # :path => "rails/geniverse/script/server -p #{RAILS_PORT}",
     :name => "rails server",
     :pid => nil,
     :signal => 'KILL'
