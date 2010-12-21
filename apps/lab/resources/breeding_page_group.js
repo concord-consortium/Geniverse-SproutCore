@@ -67,7 +67,7 @@ Lab.breedingPageGroup = SC.Page.design({
       
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { left: 265, top: 60, width: 300, height: 310 }
+        layout: { left: 265, top: 60, width: 300, height: 340 }
       }),
       
       marketplaceView: SC.ImageView.design({
