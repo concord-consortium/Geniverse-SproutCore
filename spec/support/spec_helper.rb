@@ -49,7 +49,7 @@ $commands = {
     # :path => "rails/geniverse/script/server -p #{RAILS_PORT}",
     :name => "rails server",
     :pid => nil,
-    :signal => 'KILL'
+    # :signal => 'KILL'
   },
   :lebowski => {
     :path => "lebowski-start-server -port #{SELENIUM_PORT}",
