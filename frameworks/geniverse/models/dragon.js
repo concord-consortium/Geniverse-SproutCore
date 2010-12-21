@@ -31,6 +31,10 @@ Geniverse.Dragon = SC.Record.extend(
   
   user: SC.Record.toOne("Geniverse.User"),
   
+  breeder: SC.Record.toOne("Geniverse.User"),
+  
+  breedTime: SC.Record.attr(Number),
+  
   stableOrder: SC.Record.attr(Number),
   
   isEgg: SC.Record.attr(Boolean),

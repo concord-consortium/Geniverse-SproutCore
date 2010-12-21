@@ -42,7 +42,7 @@ Geniverse.DragonChatComposeView = SC.View.extend(
   _getSourceDragon: function(dragEvt) {
     var sourceDragon;
     if ((""+dragEvt.get('source').constructor === 'Geniverse.OrganismView')){
-      sourceDragon = dragEvt.get('source').get('organism');
+      sourceDragon = dragEvt.get('source').get('content');
     } else {
       sourceDragon = dragEvt.get('source').get('selection').get('firstObject');
     }

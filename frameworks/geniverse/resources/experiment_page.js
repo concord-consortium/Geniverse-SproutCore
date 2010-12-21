@@ -168,7 +168,7 @@ Geniverse.experimentPage = SC.Page.design({
             }
             
             if ((""+drag.get('source').constructor === 'Geniverse.OrganismView')){
-              var dragon = drag.get('source').get('organism');
+              var dragon = drag.get('source').get('content');
               sellDragon(dragon);
             } else {
               var selection = drag.get('source').get('selection');
@@ -283,7 +283,7 @@ Geniverse.experimentPage = SC.Page.design({
               
               
               if ((""+drag.get('source').constructor === 'Geniverse.OrganismView')){
-                var dragon = drag.get('source').get('organism');
+                var dragon = drag.get('source').get('content');
                 acceptDragon(dragon);
               } else {
                 var selection = drag.get('source').get('selection').clone();
