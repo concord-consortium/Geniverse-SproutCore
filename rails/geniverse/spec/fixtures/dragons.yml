@@ -21,6 +21,7 @@ two:
   user_id: 1
 
 
+
 # == Schema Information
 #
 # Table name: dragons
@@ -40,5 +41,7 @@ two:
 #  isEgg           :boolean         default(FALSE)
 #  isInMarketplace :boolean         default(TRUE)
 #  activity_id     :integer
+#  breeder_id      :integer
+#  breedTime       :integer
 #
 
