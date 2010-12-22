@@ -14,7 +14,7 @@ mkdir -p $REPORTS_DIR/features
 export rvm_shell_ruby_string=$SC_GEMSET
 rvm-shell -c 'rvm gemset import default.gems'
 rvm-shell run_sc_unit_tests.sh
-# rvm-shell run_lebowski_tests.sh
+rvm-shell run_lebowski_tests.sh
 
 export rvm_shell_ruby_string=$RAILS_GEMSET
 rvm-shell -c 'rvm gemset import rails.gems'
