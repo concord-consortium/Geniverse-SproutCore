@@ -82,9 +82,9 @@ Geniverse.notepadController = SC.ObjectController.create(
       this.set('content', _userNote);
       this.updateView(this.get('content'));
     }
-//    var receiver = this.pane.remove();
+    var receiver = this.pane.remove();
 //    console.log("this.pane.remove() returned receiver:", receiver);
-//    this.set('isEnabledButton', YES);
+    this.set('isEnabledButton', YES);
   },
 
   commitAndRemoveView: function (){
