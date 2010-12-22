@@ -24,10 +24,12 @@ module PortTools
   end
 
   def self.get_port(env_variable, default_port)
+    sc_server_port = default_port
     if ENV[env_variable]
-      sc_server_port = ENV[env_variable].to_i
+      sc_server_port = find_free_port(ENV[env_variable].to_i)
     else
       sc_server_port = find_free_port(default_port);
     end
+    return sc_server_port
   end
 end
