@@ -47,7 +47,7 @@ Lab.mainPage = SC.Page.design({
         layerId: 'journal',
         tagName: 'a',
         hasHover: YES,
-        layout: { top: 477, left: 71, width: 249, height: 123 },
+        layout: { top: 473, left: 71, width: 249, height: 123 },
         alt: 'Open the 3G Journal',
         toolTip: 'Open the 3G Journal',
         target: 'Lab.journalController',
