@@ -27,14 +27,14 @@ Geniverse.OrganismView = SC.View.extend(
    
     // get imageURL and make smaller if necessary
     value: function() {
-      
       if (!this.get('content')){
         return '';
       }
       
       var imageURL = this.get('content').get('imageURL');
       
-      if (!!this.get('parentView').get('parentView') && (""+this.get('parentView').get('parentView')).indexOf("SC.GridView") > -1){
+      if (!!this.get('parentView').get('parentView') && 
+              (""+this.get('parentView').get('parentView')).indexOf("SC.GridView") > -1){
         // in gridView
         var height = this.get('parentView').get('parentView').get('rowHeight');
         if (height <= 120){
