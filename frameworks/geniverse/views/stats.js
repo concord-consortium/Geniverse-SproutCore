@@ -65,9 +65,8 @@ Geniverse.StatsView = SC.View.extend(
             var sex = dragon.sexAsString();
             if (!dragonGroups[characteristic]){
               dragonGroups[characteristic] = {};
-            }
-            if (!dragonGroups[characteristic][sex]){
-              dragonGroups[characteristic][sex] = 0;
+              dragonGroups[characteristic].Male = 0;
+              dragonGroups[characteristic].Female = 0;
             }
             dragonGroups[characteristic][sex] = dragonGroups[characteristic][sex] + 1;
           },this);
