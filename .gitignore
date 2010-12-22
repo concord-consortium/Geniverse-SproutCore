@@ -14,3 +14,4 @@ spec/support/apache*
 hudson/*
 results/*
 .idea/
+logrotate.conf
