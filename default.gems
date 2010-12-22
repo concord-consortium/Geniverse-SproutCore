@@ -2,15 +2,17 @@
 sproutcore -v1.4.4
 lebowski -v0.3.0
 daemon_controller -v0.2.5
-rails -v2.3.10
-sqlite3-ruby -v1.3.2
-passenger -v3.0.2
 
 #for reporting
 ci_reporter -v1.6.3
-test-unit -v1.2.3
-rspec-rails -v2.1.0
 
 # for proxy/sc-unit-tests.rb
 trollop -v1.16.2
 capybara -v0.4.0
+
+# for rails
+rails -v2.3.10
+sqlite3-ruby -v1.3.2
+passenger -v3.0.2
+rspec-rails -v2.1.0
+test-unit -v1.2.3
