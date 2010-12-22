@@ -12,11 +12,20 @@ class ApacheConfig
     x_load_module 'proxy'
     x_load_module 'proxy_connect'
     x_load_module 'proxy_http'
+    x_load_module 'log_config'
+    # x_load_module 'dumpio'
     self.instance_eval(&blk)
     abort("You need to call x_instance_home in your block") unless @instance_home
     listen "#{@host}:#{@port}"
     pidFile  "#{@instance_home}/apache.pid"
     errorLog "#{@instance_home}/apache-error.log"
+    ### dumpio module, for debugging
+    # logLevel "debug"
+    # dumpIOInput "On"
+    # dumpIOOutput "On"
+    ### end dumpio module
+    logFormat '"%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" combined'
+    customLog "#{@instance_home}/apache-access.log combined"
     lockFile "#{@instance_home}/accept.lock"
   end
 

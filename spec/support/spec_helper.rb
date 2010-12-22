@@ -3,7 +3,7 @@ require 'rubygems'
 require 'lebowski'
 
 require "selenium/client"
-require "selenium/rspec/spec_helper"
+# require "selenium/rspec/spec_helper"
 require "selenium/rake/tasks"
 
 $:.unshift File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'proxy'))
@@ -44,10 +44,12 @@ $commands = {
     :pid => nil
   },
   :rails => {
-    :path => "rails/geniverse/script/server -p #{RAILS_PORT}",
+    :path => "passenger start rails/geniverse -e production -p #{RAILS_PORT}",
+    # :path => "mongrel_rails start -c rails/geniverse -e production -n 5 -p #{RAILS_PORT}",
+    # :path => "rails/geniverse/script/server -p #{RAILS_PORT}",
     :name => "rails server",
     :pid => nil,
-    :signal => 'KILL'
+    # :signal => 'KILL'
   },
   :lebowski => {
     :path => "lebowski-start-server -port #{SELENIUM_PORT}",
@@ -114,9 +116,11 @@ def start_apache
     x_instance_home File.expand_path(File.dirname(__FILE__))
     x_port APACHE_PORT
     x_host '127.0.0.1'
+    x_proxy "/portal/    http://geniverse-portal.dev.concord.org/"
     x_proxy "/biologica/ http://geniverse.dev.concord.org/biologica/"
     x_proxy "/chat/      http://geniverse.dev.concord.org/chat/"
-    x_proxy "/          http://127.0.0.1:#{SC_SERVER_PORT}/"
+    x_proxy "/rails/     http://127.0.0.1:#{RAILS_PORT}/rails/"
+    x_proxy "/           http://127.0.0.1:#{SC_SERVER_PORT}/"
   }
 
   @apache.controller.start
