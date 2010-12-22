@@ -17,6 +17,17 @@ Geniverse.MatchView = SC.View.extend(
   
   proposedDragonsBinding: 'Geniverse.proposedController.arrangedObjects',
   
+  childViews: 'title'.w(),
+  
+  title: SC.LabelView.design({
+    classNames: 'container_label'.w(),
+    layout: { centerX: 0, top:0, height: 20, right: 0 },
+    controlSize: "bity",
+    textAlign: SC.ALIGN_CENTER,
+    fontWeight: SC.BOLD_WEIGHT,
+    value: "Your Target Dragons"
+  }),
+  
   updateMatchViews: function () {
     
     // add dragon views
@@ -29,7 +40,7 @@ Geniverse.MatchView = SC.View.extend(
   addDragonView: function (dragon, i) {
     var height = this.get('layout').height;
     var dragonView = Geniverse.OrganismView.create({
-      layout: {top: 0, bottom: 0, left: (i * height), width: height},
+      layout: {top: 20, bottom: 0, left: (i * height), width: height},
       content: dragon,
       backgroundColor: 'green'
     });
