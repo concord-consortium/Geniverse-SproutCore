@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101220154154) do
+ActiveRecord::Schema.define(:version => 20101222202544) do
 
   create_table "activities", :force => true do |t|
     t.string   "initial_alleles"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20101220154154) do
     t.string   "route"
     t.string   "pageType"
     t.text     "message"
+    t.string   "match_dragon_alleles"
   end
 
   create_table "articles", :force => true do |t|
@@ -56,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20101220154154) do
     t.integer  "activity_id"
     t.integer  "breeder_id"
     t.integer  "breedTime"
+    t.boolean  "isMatchDragon",   :default => false
   end
 
   add_index "dragons", ["activity_id"], :name => "index_dragons_on_activity_id"

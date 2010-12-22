@@ -3,7 +3,7 @@
   <%=h object.id %>
 </p>
 
-<% textfield_names = ["initial_alleles", "message"] %>
+<% textfield_names = ["initial_alleles", "match_dragon_alleles", "message"] %>
 <% object.attributes.each do |att,val| %>
   <p>
     <%= f.label att.to_sym %><br />

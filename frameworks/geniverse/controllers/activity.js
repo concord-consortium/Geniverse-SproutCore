@@ -24,19 +24,20 @@ Geniverse.activityController = SC.ObjectController.create(
   
   // converts a string in the form "[{m: 'a:h,b:h', f: 'a:H,b:H'}, {...}]" into
   // an array of initial alleles for rooms
-  configurationAsArray: function(){
+  getConfigurationAsArray: function(isMatchingDragons){
     // TODO rename this property in the model to configuration
-    var initialAlleles = this.get('initialAlleles');
+    var initialAlleles = isMatchingDragons ? this.get('matchDragonAlleles') : this.get('initialAlleles');
     
     // FIXME: JSON.parse(initialAlleles) doesn't work here. Don't know why.
     var initialAllelesAsArray = eval(initialAlleles);
     
     return initialAllelesAsArray;
-  }.property("initialAlleles").cacheable(),
+  },
   
-  getConfigurationForRoom: function (room){
-    var configurationArray = this.get('configurationAsArray');
+  getConfigurationForRoom: function (room, isMatchingDragons){
+    var configurationArray = this.getConfigurationAsArray(isMatchingDragons);
     if (!configurationArray){
+      SC.Logger.log("No alleles for room "+room);
       return [];
     }
     var length = configurationArray.length;
@@ -54,13 +55,17 @@ Geniverse.activityController = SC.ObjectController.create(
   },
 
   //  [ rooms [users [alleles ] ] ]
-  getConfigurationForRoomMember: function(room, member) {
-    var roomConfig = Geniverse.activityController.getConfigurationForRoom(room);
+  getConfigurationForRoomMember: function(room, member, isMatchingDragons) {
+    console.log("getting for "+isMatchingDragons);
+    var roomConfig = Geniverse.activityController.getConfigurationForRoom(room, isMatchingDragons);
+    if (!roomConfig || roomConfig.length < 1){
+      return [];
+    }
     var members = roomConfig;
     SC.Logger.info("members %@", members);
     SC.Logger.dir(members);
     // if the first item is an Allelle, return the full set, but warn
-    if (typeof members[0].alleles !== 'undefined') {
+    if (!!members[0].alleles) {
       SC.Logger.warn("Room Configuration only has one set of starter Alleles in it..");
       return roomConfig;  // EG everyone in the room shares a config set
     }

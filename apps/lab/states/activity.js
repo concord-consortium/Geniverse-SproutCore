@@ -227,7 +227,7 @@ Lab.ACTIVITY = SC.Responder.create(
     /////////////////// Challenge dragons
     SC.Logger.log("LOAD: challenge dragons");
     var challengePoolQuery = SC.Query.local('Geniverse.Dragon', {
-      conditions: 'bred = false AND user = {user} AND activity = {activity} AND mother = {mother} AND father = {father}',
+      conditions: 'bred = false AND isInMarketplace = false AND isMatchDragon = false AND user = {user} AND activity = {activity} AND mother = {mother} AND father = {father}',
       user: user,
       activity: activity,
       mother: null,
@@ -252,11 +252,11 @@ Lab.ACTIVITY = SC.Responder.create(
         Geniverse.challengePoolController.set('content', challengeDragons);
         if (Geniverse.challengePoolController.get('content').length() < 1) {
           SC.Logger.info("No challenge dragons");
-          self.initChallengeDragons();
+          self.initDragonsFromJson(false);
         } else {
           SC.Logger.info("Found "+Geniverse.challengePoolController.get('content').length()+" challenge dragons");
         }
-      } else { SC.Logger.info("Results not ready."); }
+      }
     }
     
     if (challengeDragons.get('status') & SC.Record.READY === SC.Record.READY) {
@@ -264,11 +264,59 @@ Lab.ACTIVITY = SC.Responder.create(
     } else {
       challengeDragons.addObserver('status', challengeDragonsReady);
     }
+    
+     /////////////////// Match dragons
+      SC.Logger.log("LOAD: match dragons");
+      var matchPoolQuery = SC.Query.local('Geniverse.Dragon', {
+        conditions: 'bred = false AND isMatchDragon = true AND user = {user} AND activity = {activity} AND mother = {mother} AND father = {father}',
+        user: user,
+        activity: activity,
+        mother: null,
+        father: null,
+        orderBy: 'storeKey',
+        restParams: Geniverse.makeRestParams({
+          mother_id: 'null',
+          father_id: 'null',
+          bred: 'false',
+          user: user,
+          activity: activity
+        })
+      });
+
+      var matchDragons = Geniverse.store.find(matchPoolQuery);
+      
+      // we should be able to DRY this up with challengeDragonsReady, but we'd need to
+      // pass in some variables, and I can't figure out how to do this if this gets called
+      // by an observer
+      function matchDragonsReady() {
+        SC.Logger.info("match dragons observer called");
+        if (matchDragons.get('status') & SC.Record.READY === SC.Record.READY) {
+          matchDragons.removeObserver('status', matchDragonsReady);
+          Geniverse.matchController.set('content', matchDragons);
+          if (Geniverse.matchController.get('content').length() < 1) {
+            SC.Logger.info("No match dragons");
+            self.initDragonsFromJson(true);
+          } else {
+            SC.Logger.info("Found "+Geniverse.matchController.get('content').length()+" match dragons");
+          }
+        }
+      }
+      
+      if (matchDragons.get('status') & SC.Record.READY === SC.Record.READY) {
+        matchDragonsReady();
+      } else {
+        matchDragons.addObserver('status', matchDragonsReady);
+      }
   },
 
-  initChallengeDragons: function() {
+  initDragonsFromJson: function(isMatchDragons) {
     function handleDragon(dragon) { 
       SC.RunLoop.begin();
+      if (isMatchDragons){
+        dragon.set('isMatchDragon', YES);     //prevent it from showing up in other controllers
+      } else {
+        dragon.set('isInMarketplace', NO);
+      }
       SC.Logger.info("created dragon");
       SC.Logger.dir(dragon.attributes());
       SC.RunLoop.end();
@@ -278,7 +326,7 @@ Lab.ACTIVITY = SC.Responder.create(
     var user = Geniverse.userController.get('content');
     var group = user.get('groupId')  - 1; // the numbers 1 - 3, but need to 0 based
     var member = user.get('memberId')- 1;
-    var organismConfigurations = Geniverse.activityController.getConfigurationForRoomMember(group,member);
+    var organismConfigurations = Geniverse.activityController.getConfigurationForRoomMember(group,member, isMatchDragons);
     SC.Logger.info("Found " + organismConfigurations.length + " defaults");
     for (var i = 0; i < organismConfigurations.length; i++) {
       var conf = organismConfigurations[i];
