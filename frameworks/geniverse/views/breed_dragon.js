@@ -22,14 +22,25 @@ Geniverse.BreedDragonView = SC.View.extend(
   
   childBinding: 'Geniverse.breedDragonController.child',
 
-	childViews: 'fatherView motherView childView childLabel breedButtonView '.w(),
+	childViews: 'fatherView motherView childView childLabel breedButtonView breedCountLabel'.w(),
 	
 	hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
 	
   showChildView: YES,
+  showCount: YES,
+  
+  breedCountLabel: SC.LabelView.design({
+    layout: {top: 3, left: 115, width: 60, height: 18},
+		classNames: "childLabel",
+		countBinding: 'Geniverse.breedDragonController.breedCount',
+		isVisibleBinding: '*parentView.showCount',
+		value: function() {
+		  return "C: " + this.get('count');
+		}.property('count').cacheable()
+  }),
 	
   breedButtonView: SC.ButtonView.design({
-    layout: { top: 0, centerX: 0, width: 100, height: 24 },
+    layout: { top: 0, left: 10, width: 100, height: 24 },
 		target: 'Geniverse.breedDragonController',
 		action: "breed",
 		isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
