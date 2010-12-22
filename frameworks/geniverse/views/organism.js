@@ -24,7 +24,26 @@ Geniverse.OrganismView = SC.View.extend(
 	imageView: SC.ImageView.design({
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
 		contentBinding: '*parentView.content',
-		contentValueKey: 'imageURL',
+   
+    // get imageURL and make smaller if necessary
+    value: function() {
+      
+      if (!this.get('content')){
+        return '';
+      }
+      
+      var imageURL = this.get('content').get('imageURL');
+      
+      if (!!this.get('parentView').get('parentView') && (""+this.get('parentView').get('parentView')).indexOf("SC.GridView") > -1){
+        // in gridView
+        var height = this.get('parentView').get('parentView').get('rowHeight');
+        if (height <= 120){
+          imageURL = imageURL.replace('.png', '_120.png');
+        }
+      }
+      return imageURL;
+    }.property('content','parentView').cacheable(),
+    
 		canLoadInBackground: NO,
 		useImageCache: NO
 	}),
