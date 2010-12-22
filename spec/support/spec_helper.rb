@@ -33,7 +33,7 @@ SELENIUM_TEST_SETTINGS = {
   :host => "localhost",
   :port => SELENIUM_PORT,
   :browser => "*firefox",
-  :url => "http://localhost:#{APACHE_PORT}/rails",
+  :url => "http://127.0.0.1:#{APACHE_PORT}/rails/",
   :timeout_in_seconds => 60
 }
 
@@ -52,7 +52,7 @@ $commands = {
     # :signal => 'KILL'
   },
   :lebowski => {
-    :path => "lebowski-start-server -port #{SELENIUM_PORT}",
+    :path => "lebowski-start-server -port #{SELENIUM_PORT} -Djava.net.preferIPv4Stack=true",
     :name => "lebowski",
     :pid => nil
   }
