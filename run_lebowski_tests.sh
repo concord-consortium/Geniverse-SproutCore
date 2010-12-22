@@ -7,21 +7,31 @@ set +e
 source run_set_environment.sh
 setTestingEnv
 
-# rvm info
+run_lebowski_tests() {
+  # rvm info
 
-rm -f rerun.txt
+  rm -f rerun.txt
 
-#
-# The rake task is not generating both junit and html output
-# so run the spec tests manually.
-#
-# Note, there is a hard-coded path to the ci_reporter
-# gem -- will need to be updated if the gem is updated
-#
+  #
+  # The rake task is not generating both junit and html output
+  # so run the spec tests manually.
+  #
+  # Note, there is a hard-coded path to the ci_reporter
+  # gem -- will need to be updated if the gem is updated
+  #
 
-CI_RSPEC_LOADER=${GEM_HOME}/gems/ci_reporter-1.6.3/lib/ci/reporter/rake/rspec_loader
+  CI_RSPEC_LOADER=${GEM_HOME}/gems/ci_reporter-1.6.3/lib/ci/reporter/rake/rspec_loader
 
-# run the top level lebowski integration tests --format html:$REPORTS_DIR/spec/report.html
-rspec --require $CI_RSPEC_LOADER --format CI::Reporter::RSpec spec
+  # run the top level lebowski integration tests --format html:$REPORTS_DIR/spec/report.html
+  rspec --require $CI_RSPEC_LOADER --format CI::Reporter::RSpec spec
+}
+
+if [ $SC_GEMSET != ${GEM_HOME##*/} ]; then
+  echo "was using rvm: ${GEM_HOME##*/}"
+  echo "Switching to: $SC_GEMSET"
+  rvm-shell $SC_GEMSET $0
+else
+  run_lebowski_tests
+fi
 
 exit 0
