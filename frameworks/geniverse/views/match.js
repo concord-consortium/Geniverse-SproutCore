@@ -42,7 +42,54 @@ Geniverse.MatchView = SC.View.extend(
     var dragonView = Geniverse.OrganismView.create({
       layout: {top: 20, bottom: 0, left: (i * height), width: height},
       content: dragon,
-      backgroundColor: 'green'
+      isMatched: NO,
+      isDropTarget: YES,
+      mouseDown: function(evt) {      // no selection allowed
+        return NO;
+      },
+      // drop methods: NB: none of these will be called if isDropTarget = NO
+      acceptDragOperation: function(drag, op) {
+        var dragon = this._getSourceDragon(drag);
+        
+        var targetURL = this.get('content').get('imageURL');
+        console.log("targetURL = "+targetURL);
+        
+        if (dragon.get('imageURL') === targetURL){
+          SC.RunLoop.begin();
+            // this.get('parentView').get('proposedDragons').addObject(dragon);
+            this.set('isMatched', YES);
+          SC.RunLoop.end();
+          
+        } else {
+          alert("Those dragons don't look exactly the same.");
+        }
+
+        this._setClassNames();
+
+        return op ;
+      },
+
+      dragEntered: function(drag, evt) {
+          this.set('isSelected', YES);
+          this._setClassNames();
+      },
+      
+      _setClassNames: function(){
+        var classNames = [];
+        
+        console.log("this.get('isMatched') = "+this.get('isMatched'));
+        if (this.get('isMatched')){
+          classNames.push('matched');
+        } else if (this.get('isSelected')){
+          classNames.push('male-selected');
+        } else {
+          classNames.push('empty');
+        }
+
+        this.get('imageView').set('classNames', classNames);
+
+        this.get('imageView').displayDidChange();
+      }
     });
     this.appendChild(dragonView);
   }
