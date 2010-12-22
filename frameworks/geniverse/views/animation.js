@@ -168,27 +168,33 @@ Geniverse.AnimationView = SC.View.extend(
       SC.Logger.log('calling animation init:');
       SC.Logger.dir(jsonData);
       SC.Logger.dir(options);
-      geniverseAnimation.geniverse(jsonData, options);
+      var html = this.get('initialHtml');
+      SC.Logger.log('init html', html);
+      geniverseAnimation.html(html).geniverse(jsonData, options);
     }
   },
   
+  initialHtml: function() {
+    var out = "";
+    out += '<div class="cell ui-state-default ui-corner-all"></div>';
+    out += '<div class="controls">';
+    
+    out += '<button class="stop" title="Stop"><img src="' + sc_static('images/meiosis_stop_small.png') + '" /></button>';
+		out += '<button class="play" title="Play"><img src="' + sc_static('images/meiosis_play_small.png') + '" /></button>';
+		if (this.get('mode') == 'parent') {
+		  out += '<button class="swap" title="Swap Genes"><img src="' + sc_static('images/meiosis_exchange_16x16_monochrome.png') + '" /></button>';
+	  }
+		out += '<div class="scrub"></div>';
+		out += '<div class="frame"><input type="text" value="0"></div>';
+    
+    out += '</div>';
+    return out;
+    
+  }.property('mode').cacheable(),
+  
   render: function(context, firstTime) {
       context.push('<div id="' + this.get('meiosisOwner') + '" class="meiosis ui-state-default ui-corner-all">');
-			context.push('<div class="cell ui-state-default ui-corner-all"></div>');
-			
-			var controlContext = context.begin('div');
-			controlContext.attr('class', 'controls');
-			
-			controlContext.push('<button class="stop" title="Stop"><img src="' + sc_static('images/meiosis_stop_small.png') + '" /></button>');
-			controlContext.push('<button class="play" title="Play"><img src="' + sc_static('images/meiosis_play_small.png') + '" /></button>');
-			if (this.get('mode') == 'parent') {
-			  controlContext.push('<button class="swap" title="Swap Genes"><img src="' + sc_static('images/meiosis_exchange_16x16_monochrome.png') + '" /></button>');
-		  }
-			controlContext.push('<div class="scrub"></div>');
-			controlContext.push('<div class="frame"><input type="text" value="0"></div>');
-			
-			controlContext.end();
-			
+		  context.push(this.get('initialHtml'));
 			context.push('</div>');
   }
 

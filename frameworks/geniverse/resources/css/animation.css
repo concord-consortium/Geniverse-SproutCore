@@ -1,8 +1,8 @@
 /* Dragon */
-.meiosis{width:400px;margin-right:10px;border:1px solid #bbb;float:left;padding:5px;background:#eee;}
+.meiosis{width:400px;height:350px;margin-right:10px;border:1px solid #bbb;float:left;padding:5px;background:#eee;}
 
 /* Cell */
-.cell{margin-bottom:3px;}
+.cell{margin-bottom:3px;width:398px;height:324px;}
 
 /* Controls */
 .controls button{width:36px;height:26px;float:left;}
