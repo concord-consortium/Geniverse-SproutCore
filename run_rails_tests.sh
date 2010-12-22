@@ -36,7 +36,7 @@ run_rails_tests() {
   spec --require $CI_RSPEC_LOADER --format CI::Reporter::RSpec --format html:$REPORTS_DIR/spec/report.html spec
 }
 
-if [ $RAILS_GEMSET != ${GEM_HOME##*/} ]; then
+if [[ -z $GEM_HOME || $RAILS_GEMSET != ${GEM_HOME##*/} ]]; then
   echo "was using rvm: ${GEM_HOME##*/}"
   echo "Switching to: $RAILS_GEMSET"
   rvm-shell $RAILS_GEMSET $0

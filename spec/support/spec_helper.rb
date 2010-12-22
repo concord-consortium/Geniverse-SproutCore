@@ -41,7 +41,7 @@ SELENIUM_TEST_SETTINGS = {
 
 $commands = {
   :sproutcore => {
-    :path => "sc-server --mode=test --port #{SC_SERVER_PORT}",
+    :path => "sc-server --port #{SC_SERVER_PORT}",
     :name => "sproutcore server",
     :pid => nil
   },

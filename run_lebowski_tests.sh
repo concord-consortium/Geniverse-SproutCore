@@ -26,7 +26,7 @@ run_lebowski_tests() {
   rspec --require $CI_RSPEC_LOADER --format CI::Reporter::RSpec spec
 }
 
-if [ $SC_GEMSET != ${GEM_HOME##*/} ]; then
+if [[ -z $GEM_HOME || $SC_GEMSET != ${GEM_HOME##*/} ]]; then
   echo "was using rvm: ${GEM_HOME##*/}"
   echo "Switching to: $SC_GEMSET"
   rvm-shell $SC_GEMSET $0
