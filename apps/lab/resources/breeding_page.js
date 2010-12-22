@@ -61,7 +61,8 @@ Lab.breedingPage = SC.Page.design({
       
       breedView: Geniverse.BreedDragonView.design({
         layout: { top: 150 , left: 100, height: 300, width: 150 },
-        showChildView: NO // child as in baby dragon
+        showChildView: NO, // child as in baby dragon
+        showCount: NO
       }),
       
       // Breeding pen with eggs
