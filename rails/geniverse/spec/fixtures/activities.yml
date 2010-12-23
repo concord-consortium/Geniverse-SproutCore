@@ -18,6 +18,7 @@ two:
 
 
 
+
 # == Schema Information
 #
 # Table name: activities
@@ -36,5 +37,6 @@ two:
 #  route                   :string(255)
 #  pageType                :string(255)
 #  message                 :text
+#  match_dragon_alleles    :string(255)
 #
 

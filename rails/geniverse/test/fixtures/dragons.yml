@@ -12,6 +12,7 @@ two: {}
 
 
 
+
 # == Schema Information
 #
 # Table name: dragons
@@ -33,5 +34,6 @@ two: {}
 #  activity_id     :integer
 #  breeder_id      :integer
 #  breedTime       :integer
+#  isMatchDragon   :boolean         default(FALSE)
 #
 
