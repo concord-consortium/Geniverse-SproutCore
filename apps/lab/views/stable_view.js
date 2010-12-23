@@ -17,7 +17,6 @@
 
 Lab.StableView = SC.View.extend(
 /** @scope Lab.StableView.prototype */ {
-  layout: { left: 680, top: 70, height: 300, width: 240 },
 
   // childViews
   title: null,
@@ -47,7 +46,7 @@ Lab.StableView = SC.View.extend(
     this.title = this.createChildView(
       SC.LabelView.design({
         classNames: 'container_label'.w(),
-        layout: { centerX: 0, top:0, height: 20, width: 240 },
+        layout: { centerX: 0, top:0, height: 20, right: 0 },
         controlSize: "bity",
         textAlign: SC.ALIGN_CENTER,
         fontWeight: SC.BOLD_WEIGHT,
@@ -69,7 +68,7 @@ Lab.StableView = SC.View.extend(
     this.stable = this.createChildView(
       CC.AutoScrollView.design({
         hasHorizontalScroller: NO,
-        layout: { left: 0, bottom: 0, height: 280, width: 240 },
+        layout: { left: 0, top: 20, bottom: 0, right: 0 },
         backgroundColor: 'white',
         classNames: 'transparent'.w(),
         contentView: SC.GridView.design({

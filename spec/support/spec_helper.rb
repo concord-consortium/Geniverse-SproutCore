@@ -24,7 +24,9 @@ APACHE_PORT = PortTools.get_port('APACHE_PROXY_PORT', 1234);
 TEST_SETTINGS = {
   :app_root_path => "/lab",
   :app_name => "Lab",
+  :app_server_host => "127.0.0.1",
   :app_server_port => APACHE_PORT,
+  :selenium_server_host => "127.0.0.1",
   :selenium_server_port => SELENIUM_PORT,
   :browser => :firefox
 }
@@ -39,12 +41,12 @@ SELENIUM_TEST_SETTINGS = {
 
 $commands = {
   :sproutcore => {
-    :path => "sc-server --mode=test --port #{SC_SERVER_PORT}",
+    :path => "sc-server --port #{SC_SERVER_PORT}",
     :name => "sproutcore server",
     :pid => nil
   },
   :rails => {
-    :path => "passenger start rails/geniverse -e production -p #{RAILS_PORT}",
+    :path => "passenger start rails/geniverse -e test -p #{RAILS_PORT}",
     # :path => "mongrel_rails start -c rails/geniverse -e production -n 5 -p #{RAILS_PORT}",
     # :path => "rails/geniverse/script/server -p #{RAILS_PORT}",
     :name => "rails server",

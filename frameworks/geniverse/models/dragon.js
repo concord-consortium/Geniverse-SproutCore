@@ -2,7 +2,7 @@
 // Project:   Geniverse.Dragon
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Geniverse GenGWT */
+/*globals SC Geniverse GenGWT YES NO*/
 
 /** @class
 
@@ -40,6 +40,8 @@ Geniverse.Dragon = SC.Record.extend(
   isEgg: SC.Record.attr(Boolean),
   
   isInMarketplace: SC.Record.attr(Boolean),
+  
+  isMatchDragon: SC.Record.attr(Boolean,  { defaultValue: NO }),
   
   activity: SC.Record.toOne('Geniverse.Activity'),        // which activity the dragon belogs to. Can only be in one
   

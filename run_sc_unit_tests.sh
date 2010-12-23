@@ -15,7 +15,7 @@ run_sc_unit_tests() {
   ruby -rubygems proxy/sc-unit-tests.rb -t apps -o $REPORTS_DIR/tests
 }
 
-if [ $SC_GEMSET != ${GEM_HOME##*/} ]; then
+if [[ -z $GEM_HOME || $SC_GEMSET != ${GEM_HOME##*/} ]]; then
   echo "was using rvm: ${GEM_HOME##*/}"
   echo "Switching to: $SC_GEMSET"
   rvm-shell $SC_GEMSET $0

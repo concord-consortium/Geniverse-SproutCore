@@ -21,6 +21,7 @@ Geniverse.breedDragonController = SC.Controller.create(
   child: null, //Geniverse.NO_DRAGON,
   newChild: null,
   resetCount: 0,
+  breedCount: 0,
 
   hasParents: function () {
     var mother = this.get('mother');
@@ -42,6 +43,7 @@ Geniverse.breedDragonController = SC.Controller.create(
     this.set('child',  null); //Geniverse.NO_DRAGON);
     this.set('newChild', null);
     this.set('resetCount',this.get('resetCount') + 1); // poor mans event propogation
+    this.set('breedCount', 0);
   },
 
   breed: function () {
@@ -56,6 +58,7 @@ Geniverse.breedDragonController = SC.Controller.create(
     this._callback_version++;
     
     var breedTime = new Date().getTime();
+    this.set('breedCount', this.get('breedCount') + 1);
 
     // wrap callback passed to GWT with a version number; this way we can reject callbacks from outdated calls to breed()
     var didCreateChild = function (version) {
