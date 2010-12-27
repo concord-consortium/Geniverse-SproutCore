@@ -72,6 +72,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: dragons
@@ -93,5 +94,6 @@ end
 #  activity_id     :integer
 #  breeder_id      :integer
 #  breedTime       :integer
+#  isMatchDragon   :boolean         default(FALSE)
 #
 

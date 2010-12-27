@@ -6,7 +6,7 @@
 
 /** @namespace
 
-  My cool new app.  Describe your application.
+  Manages routes for the Lab application.
   
   @extends SC.Object
 */
@@ -96,6 +96,10 @@ Lab.routes = SC.Object.create({
     
     // Save the current pane so we can remove it when process the next route
     this.currentPagePane = pagePane;
+  },
+
+  gotoHomePage: function() {
+    SC.routes.set('location', '');
   }
 
 });

@@ -17,3 +17,7 @@
 	/*border: thin solid #FF0000;*/
 	text-decoration: underline;
 }
+
+img#homeButton:hover {
+    background-color: #00FFFF;
+}

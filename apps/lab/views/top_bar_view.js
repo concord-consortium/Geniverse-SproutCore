@@ -27,6 +27,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
   welcomeLabelView: null,
   logoutButton: null,
   notepadButton: null,
+  homeButton: null,
 
   /**
    * Necessary configuration xPath elements to set up binding inside the composite view instances
@@ -83,6 +84,20 @@ Lab.TopBarView = SC.ToolbarView.extend(
   createChildViews: function() {
     var childViews = [];
 
+    this.homeButton = this.createChildView(
+      SC.ImageView.design(Lab.SimpleButton, {
+        layout: { centerY: 0, left: 1, width: 16, height: 16 },
+        layerId: 'homeButton',
+        hasHover: YES,
+        alt: 'Home',
+        toolTip: "Click to go to the Lab's Home page",
+        target: 'Lab.routes',
+        action: 'gotoHomePage',
+        value: static_url('home.png')
+      })
+    );
+    childViews.push(this.homeButton);
+
     this.infoButton = this.createChildView(
       Lab.InfoButtonView.design()
     );
@@ -91,7 +106,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.geniverseLabelView = this.createChildView(
       SC.LabelView.design({
-        layout: { centerY: 0, height: 24, left: 8, width: 400 },
+        layout: { centerY: 0, height: 24, left: 20, width: 400 },
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         //value: "Geniverse Labs"
