@@ -119,7 +119,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         alt: 'Case Log',
         toolTip: "Click to go to the Lab's Case Log page",
         target: 'Lab.routes',
-        action: 'gotoHomePage'
+        action: 'gotoCaseLogPage'
       })
     );
     childViews.push(this.caseLogButton);
