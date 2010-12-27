@@ -15,7 +15,7 @@
       zoom            : 2,
       width           : 460,
       height          : 320,
-      swap            : 'user',
+      swap            : 'auto',
       alleleCount     : 12,
       segLength       : 10,
       segCount        : 3,
@@ -70,7 +70,7 @@
         inswap = null,
         timeline,
         swapui,
-        frame,
+        frame = 0,
 
         PI         = Math.PI,
         TWO_PI     = PI * 2,
@@ -174,18 +174,32 @@
           }
 
           // Perpare Chromosomes for Swappping
-          chromosomes[ 0].swapList = [ chromosomes[ 2], chromosomes[ 3] ];
-          chromosomes[ 1].swapList = [ chromosomes[ 2], chromosomes[ 3] ];
-          chromosomes[ 2].swapList = [ chromosomes[ 0], chromosomes[ 1] ];
-          chromosomes[ 3].swapList = [ chromosomes[ 0], chromosomes[ 1] ];          
-          chromosomes[ 4].swapList = [ chromosomes[ 6], chromosomes[ 7] ];
-          chromosomes[ 5].swapList = [ chromosomes[ 6], chromosomes[ 7] ];                                        
-          chromosomes[ 6].swapList = [ chromosomes[ 4], chromosomes[ 5] ];
-          chromosomes[ 7].swapList = [ chromosomes[ 4], chromosomes[ 5] ];          
-          chromosomes[ 8].swapList = [ chromosomes[10], chromosomes[11] ];
-          chromosomes[ 9].swapList = [ chromosomes[10], chromosomes[11] ];
-          chromosomes[10].swapList = [ chromosomes[ 8], chromosomes[ 9] ];
-          chromosomes[11].swapList = [ chromosomes[ 8], chromosomes[ 9] ];
+          if( mode === 'parent' ){
+            chromosomes[ 0].swapList = [ chromosomes[ 2], chromosomes[ 3] ];
+            chromosomes[ 1].swapList = [ chromosomes[ 2], chromosomes[ 3] ];
+            chromosomes[ 2].swapList = [ chromosomes[ 0], chromosomes[ 1] ];
+            chromosomes[ 3].swapList = [ chromosomes[ 0], chromosomes[ 1] ];          
+            chromosomes[ 4].swapList = [ chromosomes[ 6], chromosomes[ 7] ];
+            chromosomes[ 5].swapList = [ chromosomes[ 6], chromosomes[ 7] ];                                        
+            chromosomes[ 6].swapList = [ chromosomes[ 4], chromosomes[ 5] ];
+            chromosomes[ 7].swapList = [ chromosomes[ 4], chromosomes[ 5] ];          
+            chromosomes[ 8].swapList = [ chromosomes[10], chromosomes[11] ];
+            chromosomes[ 9].swapList = [ chromosomes[10], chromosomes[11] ];
+            chromosomes[10].swapList = [ chromosomes[ 8], chromosomes[ 9] ];
+            chromosomes[11].swapList = [ chromosomes[ 8], chromosomes[ 9] ];
+            chromosomes[ 0].copy = chromosomes[ 1];
+            chromosomes[ 1].copy = chromosomes[ 0];
+            chromosomes[ 2].copy = chromosomes[ 3];
+            chromosomes[ 3].copy = chromosomes[ 2];
+            chromosomes[ 4].copy = chromosomes[ 5];
+            chromosomes[ 5].copy = chromosomes[ 4];
+            chromosomes[ 6].copy = chromosomes[ 7];
+            chromosomes[ 7].copy = chromosomes[ 6];
+            chromosomes[ 8].copy = chromosomes[ 9];
+            chromosomes[ 9].copy = chromosomes[ 8];
+            chromosomes[10].copy = chromosomes[11];
+            chromosomes[11].copy = chromosomes[10];
+          }
           
           // Fire the loaded callback
           defaultOpts.loaded.call(defaultOpts.context);
@@ -215,20 +229,20 @@
       var geneB = alleleB.gene,
           sexB = alleleB.sex;
       alleleB.gene = alleleA.gene;
-      alleleB.sex = alleleA.sex;
       alleleA.gene = geneB;
-      alleleA.sex = sexB;
+      alleleB.sex = alleleA.sex;
+      alleleA.sex = sexB;      
       alleleA.style.call(alleleA,alleleA.SVG_outer,'outer');
       alleleA.style.call(alleleA,alleleA.SVG_inner,'inner');
       alleleB.style.call(alleleB,alleleB.SVG_outer,'outer');
       alleleB.style.call(alleleB,alleleB.SVG_inner,'inner');
+      alleleB.geneText.attr({ text:alleleB.gene });
       alleleA.geneText.attr({ text:alleleA.gene });
-      alleleB.geneText.attr({ text:geneB });
     };
 
     // Remove hover/click events when not in pairing mode
     function unbindPairEvents(){
-          
+
       for(var i=0, l=chromosomes.length; i< l; i++){
         for(var j=0, l2=chromosomes[i].alleles.length; j< l2; j++){
 
@@ -258,25 +272,6 @@
       }
     };
 
-    /*
-    addEventListener( 'keypress', function(){
-      console.log( "KEY PRESSED!" );
-      swapMulti([
-        chromosomes[0].alleles[0],
-        chromosomes[0].alleles[1],
-        chromosomes[0].alleles[2]
-      ],[
-        chromosomes[4].alleles[0],
-        chromosomes[4].alleles[1],
-        chromosomes[4].alleles[2]
-      ]);
-    }, false );
-    */
-
-    function recombinationHover( chromosome ){
-      
-    };
-
     function recombinationBindEvents(){
 
       function whichPair( i ){
@@ -286,11 +281,11 @@
         else                      { return 0; }
       };
 
-      var click = function(){
+      var click = function gvclick(){
         
         if( !inRecombSelection ){
           for(var i=this.index, l=this.parent.alleles.length; i< l; i++){
-            allele = this.parent.alleles[i];
+            var allele = this.parent.alleles[i];
             allele.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
             allele.SVG_outer.attr({ 'stroke': defaultOpts.color.hover });
             var swap1 = allele.parent.swapList[0],
@@ -306,59 +301,66 @@
             inRecombChromeIndex = this.parent.index;
           }
         }else{
-          if( whichPair( this.parent.index ) !== inRecombSelection || inRecombChromeIndex !== this.parent.index ){
-            // Reset colors of previously selected Alleles            
-            for(var i=0, l=chromosomes.length; i< l; i++){
-              for(var j=0, k=chromosomes[i].alleles.length; j< k; j++){
-                allele = chromosomes[i].alleles[j];
-                allele.SVG_inner.attr({ 'stroke': defaultOpts.color[allele.sex+'_inner'], opacity: 1 });
-                allele.SVG_outer.attr({ 'stroke': defaultOpts.color[allele.sex+'_outer'], opacity: 1 });
-
-                allele.recombOption = false;
-                allele.recombSelected = false;
+          if( inRecombChromeIndex != this.parent.index ){
+            // Collect selected alleles for swapping
+            var alleles1 = [], alleles2 = [];
+            for( var i in this.parent.alleles ){
+              if( this.parent.alleles[i].recombOption ){
+                alleles1.push( this.parent.alleles[i] );
               }
-              inRecombChromeIndex = null;
             }
-
-            for(var i=this.index, l=this.parent.alleles.length; i< l; i++){
-              allele = this.parent.alleles[i];
-              allele.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
-              allele.SVG_outer.attr({ 'stroke': defaultOpts.color.hover });
-              var swap1 = allele.parent.swapList[0],
-                  swap2 = allele.parent.swapList[1];
-              swap1.alleles[i].SVG_outer.attr({ 'stroke': defaultOpts.color.recomb_outer_hover });
-              swap2.alleles[i].SVG_outer.attr({ 'stroke': defaultOpts.color.recomb_outer_hover });
-              swap1.alleles[i].SVG_inner.attr({ 'stroke': defaultOpts.color.recomb_inner_hover });            
-              swap2.alleles[i].SVG_inner.attr({ 'stroke': defaultOpts.color.recomb_inner_hover });
-              swap1.alleles[i].recombOption = true;
-              swap2.alleles[i].recombOption = true;
-              allele.recombSelected = true;
-              inRecombSelection = whichPair( this.parent.index );
-            }            
-
-            console.log( 123 );
-            
+            var alleles = chromosomes[inRecombChromeIndex].alleles;
+            for( i=0, l=alleles.length; i< l; i++){
+              if( this.parent.alleles[i].recombOption ){
+                alleles2.push( alleles[i] );
+              }
+            }
+            // Initiate multi-swap
+            swapMulti(alleles1, alleles2);
           }
+          // Reset colors of previously selected Alleles
+          for(var i=0, l=chromosomes.length; i< l; i++){
+            for(var j=0, k=chromosomes[i].alleles.length; j< k; j++){
+              var allele = chromosomes[i].alleles[j];
+              allele.SVG_inner.attr({ 'stroke': defaultOpts.color[allele.sex+'_inner'], opacity: 1 });
+              allele.SVG_outer.attr({ 'stroke': defaultOpts.color[allele.sex+'_outer'], opacity: 1 });
+              allele.recombOption = false;
+              allele.recombSelected = false;
+            }
+            inRecombChromeIndex = null;
+          }
+          inRecombSelection = 0;          
         }
       };
 
-      hoverOver = function(){
+      var hoverOver = function gvhover(){
+        this.hovering = true;
         for(var i=this.index, l=this.parent.alleles.length; i< l; i++){
-          allele = this.parent.alleles[i];
-          allele.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
-          allele.SVG_outer.attr({ 'stroke': defaultOpts.color.hover });
+          var allele = this.parent.alleles[i];
+          if( !allele.recombOption && !inRecombSelection ){
+            allele.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
+            allele.SVG_outer.attr({ 'stroke': defaultOpts.color.hover });
+          }
         } 
       };
       
-      var hoverOut = function(){
-        for(var i=this.index, l=this.parent.alleles.length; i< l; i++){
-          allele = this.parent.alleles[i];
-          if( allele.recombSelected == true){          
+      var hoverOut = function gvout(){
+        for(var i=0, l=this.parent.alleles.length; i< l; i++){
+          var allele = this.parent.alleles[i];
+          if( allele.recombSelected == true ){
           }else{
-            allele.SVG_inner.attr({ 'stroke': defaultOpts.color[this.sex+'_inner'] });
-            allele.SVG_outer.attr({ 'stroke': defaultOpts.color[this.sex+'_outer'] });
+            if( !allele.recombOption ){
+              allele.SVG_inner.attr({ 'stroke': defaultOpts.color[allele.sex+'_inner'] });
+              allele.SVG_outer.attr({ 'stroke': defaultOpts.color[allele.sex+'_outer'] });
+            }else{
+              allele.SVG_outer.attr({ 'stroke': '#0F0' });
+              allele.SVG_inner.attr({ 'stroke': '#0F0' });
+              allele.parent.copy.alleles[allele.index].SVG_outer.attr({ 'stroke': '#0F0' });
+              allele.parent.copy.alleles[allele.index].SVG_inner.attr({ 'stroke': '#0A0' });
+            }
           }
-        } 
+        }
+        this.hovering = false;        
       };
 
       for(var i=0, l=chromosomes.length; i< l; i++){
@@ -375,7 +377,7 @@
             });
 
             allele.SVG_outer.click( function gvclick(){
-              click.call( al );              
+              click.call( al );
             });
 
           })( allele );
@@ -383,61 +385,6 @@
         }
       }
       
-    };
-
-
-    
-    // Bind pairing events wh          alleleA1.SVG_outer.hover(function gvhover(){hoverOver1();},function gvhout(){hoverOut1();});
-
-//    en reaching the pairing frame (30)
-    function bindPairEvents( chrome1, chrome2 ){
-
-      recombinationBindEvents();
-      
-      /*
-      // Bind new hovers
-      for(var i=0, l=chrome1.alleles.length; i< l; i++){
-        (function(){
-
-          var alleleA1 = chrome1.alleles[i],
-              alleleA2 = chromosomes[chrome1.index+1].alleles[i],
-              alleleB1 = chrome2.alleles[i],
-              alleleB2 = chromosomes[chrome2.index+1].alleles[i];
-
-          var hoverOver1 = function(){
-            alleleA1.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
-            alleleB1.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
-          };
-
-          var hoverOver2 = function(){
-            alleleA2.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });          
-            alleleB2.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
-          };
-
-          var hoverOut1 = function(){
-            alleleA1.SVG_inner.attr({ 'stroke': defaultOpts.color[ alleleA1.sex + '_inner' ] });
-            alleleB1.SVG_inner.attr({ 'stroke': defaultOpts.color[ alleleB1.sex + '_inner' ] });
-          };
-
-          var hoverOut2 = function(){
-            alleleA2.SVG_inner.attr({ 'stroke': defaultOpts.color[ alleleA2.sex + '_inner' ] });
-            alleleB2.SVG_inner.attr({ 'stroke': defaultOpts.color[ alleleB2.sex + '_inner' ] });
-          };
-
-          // Highlight current allele and sibling allele on hover
-          alleleA1.SVG_outer.hover(function gvhover(){hoverOver1();},function gvhout(){hoverOut1();});
-          alleleA2.SVG_outer.hover(function gvhover(){hoverOver2();},function gvhout(){hoverOut2();});
-          alleleB1.SVG_outer.hover(function gvhover(){hoverOver1();},function gvhout(){hoverOut1();});
-          alleleB2.SVG_outer.hover(function gvhover(){hoverOver2();},function gvhout(){hoverOut2();});
-          
-          alleleA1.SVG_outer.click(function gvclick(){ if( +new Date()-mouseDragging < 200 ){  swap( alleleA1, alleleB1 ); }});
-          alleleA2.SVG_outer.click(function gvclick(){ if( +new Date()-mouseDragging < 200 ){  swap( alleleA2, alleleB2 ); }});
-          alleleB1.SVG_outer.click(function gvclick(){ if( +new Date()-mouseDragging < 200 ){  swap( alleleA1, alleleB1 ); }});
-          alleleB2.SVG_outer.click(function gvclick(){ if( +new Date()-mouseDragging < 200 ){  swap( alleleA2, alleleB2 ); }});
-        
-        })();
-      }
-      */
     };
 
     // Recurse across Chromosome, applying physics by segment
@@ -525,10 +472,10 @@
       for(var i in chromosomes){
         if(chromosomes.hasOwnProperty(i)){
           var i_chrome = chromosomes[i];          
-          i_chrome.physics();
+          i_chrome.physics();          
           for(var j in i_chrome.alleles ){
             if(i_chrome.alleles.hasOwnProperty(j)){
-              j_allele = i_chrome.alleles[j];
+              var j_allele = i_chrome.alleles[j];
               j_allele.updatePath();
               j_allele.swapPathAttrs();
               if( j_allele.recombOption == true ){
@@ -926,16 +873,6 @@
 
       };
 
-      // Looks like OverdragMultipliers are causing Chromosomes to turn into dots. -F1LT3R
-      /*
-      if( mouseSpeed > defaultOpts.maxDragSpeed ){
-        this.parent.parent.overDragMultiplier = mouseSpeed;
-        overDragMultiplierB = 1;
-      }else{
-        this.parent.parent.overDragMultiplier = 1;
-        overDragMultiplierB = 0.25;
-      }
-      */
       
       // Override mouse position when dragged by Burst timeline
       if( arguments[5] ){
@@ -1195,6 +1132,10 @@
                   scrub.slider('value',e.frame*100);
                   frameInput.val(~~e.frame);
                   this.updateSVG();
+                  if(frame >= 35 && mode === 'offspring'){
+                    burst.stop();
+                    defaultOpts.animationComplete.call(defaultOpts.context);
+                  }
                 })
 
             .obj('memb2',membranes[1])
@@ -1371,11 +1312,10 @@
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
                 .key(90,defaultOpts.unfoldedAngle)
-                .key(100,PI)
               .track('rotation')
                 .key(0,0)
                 .key(41,0)
-                .key(60,HALF_PI)
+                .key(70,HALF_PI)
               .track('dragX')
                 .key(0,chromosomes[0].originX)
                 .key(30,centerX-defaultOpts.outerThickness)
@@ -1389,7 +1329,7 @@
                 .key(31,centerY-130)
                 .key(50,centerY)
                 .key(60,centerY)
-                .key(80,centerY-centerY/2)
+                .key(80,centerY+centerY/2)
                 .always(function(e){
                   
                   // Set the global frame property so geniverse.js knows when
@@ -1401,21 +1341,35 @@
                     burst.stop();
                   }
                   
-                  if(e.frame===30){
+                  if(e.frame==30 && defaultOpts.swap == "user"){
                     pairingMode = true;
                     if(swapui){swapui.attr({opacity:1});}
                     burst.stop();
-                    bindPairEvents( chromosomes[0], chromosomes[2] );
-                    bindPairEvents( chromosomes[4], chromosomes[6] );
-                    bindPairEvents( chromosomes[8], chromosomes[10] );
+                    recombinationBindEvents();              
                     draw();
                     burst.stop();
+                  }else if(e.frame==30 && defaultOpts.swap == "auto"){
+                    for(var i=0, l=chromosomes.length; i< l; i++){
+                      for(var j=0, k=chromosomes[i].alleles.length; j< k; j++){
+                        if(Math.random()>0.654321){
+                          swap( 
+                            chromosomes[i].alleles[j],
+                            chromosomes[i].swapList[~~Math.random()].alleles[j]
+                          );
+                        }
+                      }
+                    }
                   }else{
                     if(pairingMode = true){
                       pairingMode = false;
                       if(swapui){swapui.attr({opacity:0});}
                       unbindPairEvents();
                     }
+                  }
+
+                  if(frame >= 100 && mode === 'parent'){
+                    burst.stop();
+                    defaultOpts.animationComplete.call(defaultOpts.context);
                   }
 
                   scrub.slider('value',e.frame*100);
@@ -1433,7 +1387,6 @@
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
                 .key(90,defaultOpts.unfoldedAngle)
-                .key(100,PI)
               .track('rotation')
                 .key(0,0)
                 .key(40,0)
@@ -1478,7 +1431,6 @@
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
                 .key(90,defaultOpts.unfoldedAngle)
-                .key(100,PI)
               .track('rotation')
                 .key(0,0)
                 .key(40,0)
@@ -1510,7 +1462,6 @@
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
                 .key(90,defaultOpts.unfoldedAngle)
-                .key(100,PI)
               .track('rotation')
                 .key(0,0)
                 .key(40,0)
@@ -1558,7 +1509,6 @@
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
                 .key(90,defaultOpts.unfoldedAngle)
-                .key(100,PI)
               .track('rotation')
                 .key(0,0)
                 .key(41,0)
@@ -1589,7 +1539,6 @@
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
                 .key(90,defaultOpts.unfoldedAngle)
-                .key(100,PI)
               .track('rotation')
                 .key(0,0)
                 .key(41,0)
@@ -1634,7 +1583,6 @@
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
                 .key(90,defaultOpts.unfoldedAngle)
-                .key(100,PI)
               .track('rotation')
                 .key(0,0)
                 .key(41,0)
@@ -1666,7 +1614,6 @@
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
                 .key(90,defaultOpts.unfoldedAngle)
-                .key(100,PI)
               .track('rotation')
                 .key(0,0)
                 .key(41,0)
@@ -1714,11 +1661,10 @@
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
                 .key(90,defaultOpts.unfoldedAngle)
-                .key(100,PI)
               .track('rotation')
                 .key(0,0)
                 .key(41,0)
-                .key(70,HALF_PI)
+                .key(60,HALF_PI)
               .track('dragX')
                 .key(0,chromosomes[8].originX)
                 .key(30,centerX-defaultOpts.outerThickness)
@@ -1732,7 +1678,7 @@
                 .key(31,centerY+80)
                 .key(50,centerY)
                 .key(60,centerY)
-                .key(80,centerY+centerY/2)
+                .key(80,centerY-centerY/2)
                 .always(function(e){
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
@@ -1745,7 +1691,6 @@
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
                 .key(90,defaultOpts.unfoldedAngle)
-                .key(100,PI)
               .track('rotation')
                 .key(0,0)
                 .key(41,0)
@@ -1763,7 +1708,7 @@
                 .key(31,centerY+80)
                 .key(50,centerY)
                 .key(60,centerY)
-                .key(80,centerY+centerY/2)
+                .key(80,centerY+centerY/2)            
                 .always(function(e){
                   if(this.hidden){
                     if(e.frame>11){
@@ -1790,7 +1735,6 @@
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
                 .key(90,defaultOpts.unfoldedAngle)
-                .key(100,PI)
               .track('rotation')
                 .key(0,0)
                 .key(41,0)
@@ -1822,7 +1766,6 @@
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
                 .key(90,defaultOpts.unfoldedAngle)
-                .key(100,PI)
               .track('rotation')
                 .key(0,0)
                 .key(41,0)
@@ -1875,7 +1818,6 @@
     // Bind DOM UI to Burst
     ////////////////////////////////////////////////////////////////////////////
 
-    self.find('.zoom').slider();
     self.find('.play').click(function(){
       clearOffsets();
       burst.loaded = {};
@@ -1890,7 +1832,14 @@
       frame = parseInt(this.value);
       burst.frame(frame);
       scrub.slider('value',frame*100);
-      if(frame >= 100 || (defaultOpts.mode == 'offspring' && frame >= 35)){
+      if(frame === 30){
+        burst.timelines['geniverseTimeline_'+owner].play(29);
+        burst.timelines['geniverseTimeline_'+owner].play(30);
+      }
+      if(frame >= 100 && mode === 'parent'){
+        defaultOpts.animationComplete.call(defaultOpts.context);
+      }
+      if(frame >= 35 && mode === 'offspring'){
         defaultOpts.animationComplete.call(defaultOpts.context);
       }
       playing = false;
@@ -1900,12 +1849,13 @@
     // Jump straight to swap mode when clicking the "Swap" buttons...
     if( mode === 'parent' ){
       var swapButton = self.find('.swap').click(function(){
+        burst.timelines['geniverseTimeline_'+owner].play(29);
+        burst.timelines['geniverseTimeline_'+owner].play(30);
         frame = 30;
-        burst.frame(29);
-        burst.frame(30);
         scrub.slider('value',3000);
         frameInput.val(30);
         clearOffsets();
+        burst.stop();
         playing = false;
         return this;
       });      
@@ -1920,7 +1870,7 @@
       slide: function(event, ui){
         burst.loaded = {};
         burst.load('geniverseTimeline_'+owner);
-        frame=parseInt(ui.value/100);
+        frame=~~(ui.value/100);
         burst.timelines['geniverseTimeline_'+owner].play(frame);
         frameInput.val(frame);
         if(frame == burst.timelines['geniverseTimeline_'+owner].end){
@@ -1928,7 +1878,7 @@
         }
         playing = false;
         clearOffsets();
-        burst.stop();        
+        burst.stop();
       },
       stop: function(event, ui){
         playing = false;
@@ -1946,4 +1896,4 @@
 
   };
   
-})(this, this.document, this.jQuery, this.Raphael, this.burst);
+})(this, this.document, this.jQuery, this.Raphael, this.burst); 
