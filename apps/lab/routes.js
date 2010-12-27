@@ -10,7 +10,6 @@
   
   @extends SC.Object
 */
-
 Lab.routes = SC.Object.create({
 
   /**
@@ -100,6 +99,10 @@ Lab.routes = SC.Object.create({
 
   gotoHomePage: function() {
     SC.routes.set('location', '');
+  },
+
+  gotoCaseLogPage: function() {
+    SC.routes.set('location', 'lab/caselog');
   }
 
 });

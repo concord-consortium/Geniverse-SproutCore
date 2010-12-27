@@ -15,19 +15,24 @@
  * http://www.itsgotwhatplantscrave.com/2009/06/20/bindings-unleashed/
  * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
-
 Lab.TopBarView = SC.ToolbarView.extend(
 /** @scope Lab.TopBarView.prototype */ {
   layout: { top: 0, left: 0, right: 0, height: 36 },
+  layerId: 'topBar',
+  backgroundColor: '#492222',
   anchorLocation: SC.ANCHOR_TOP,
 
   // childViews
+  navBarLeft: null,
+  homeButton: null,
+  caseLogButton: null,
   infoButton: null,
   geniverseLabelView: null,
   welcomeLabelView: null,
+  navBarRight: null,
   logoutButton: null,
   notepadButton: null,
-  homeButton: null,
+  helpButton: null,
 
   /**
    * Necessary configuration xPath elements to set up binding inside the composite view instances
@@ -84,19 +89,40 @@ Lab.TopBarView = SC.ToolbarView.extend(
   createChildViews: function() {
     var childViews = [];
 
+    this.navBarLeft = this.createChildView(
+      SC.ImageView.design({
+        layout: { centerY: 0, left: 0, width: 75, height: 38 },
+        layerId: 'navBarLeft',
+        value: static_url('navbar-left.png')
+      })
+    );
+    childViews.push(this.navBarLeft);
+
     this.homeButton = this.createChildView(
       SC.ImageView.design(Lab.SimpleButton, {
-        layout: { centerY: 0, left: 1, width: 16, height: 16 },
+        layout: { centerY: 0, left: 7, width: 27, height: 26 },
         layerId: 'homeButton',
         hasHover: YES,
         alt: 'Home',
         toolTip: "Click to go to the Lab's Home page",
         target: 'Lab.routes',
-        action: 'gotoHomePage',
-        value: static_url('home.png')
+        action: 'gotoHomePage'
       })
     );
     childViews.push(this.homeButton);
+
+    this.caseLogButton = this.createChildView(
+      SC.ImageView.design(Lab.SimpleButton, {
+        layout: { centerY: 0, left: 41, width: 27, height: 26 },
+        layerId: 'caseLogButton',
+        hasHover: YES,
+        alt: 'Case Log',
+        toolTip: "Click to go to the Lab's Case Log page",
+        target: 'Lab.routes',
+        action: 'gotoCaseLogPage'
+      })
+    );
+    childViews.push(this.caseLogButton);
 
     this.infoButton = this.createChildView(
       Lab.InfoButtonView.design()
@@ -106,7 +132,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.geniverseLabelView = this.createChildView(
       SC.LabelView.design({
-        layout: { centerY: 0, height: 24, left: 20, width: 400 },
+        layout: { centerY: 0, height: 24, left: 77, width: 400 },
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         //value: "Geniverse Labs"
@@ -114,31 +140,6 @@ Lab.TopBarView = SC.ToolbarView.extend(
       })
     );
     childViews.push(this.geniverseLabelView);
-
-    this.logoutButton = this.createChildView(
-      SC.ButtonView.design({
-        layout: { centerY: 0,  height: 24, right: 5, width: 100 },
-        layerId: 'logOutButton',
-        title:  "Log out",
-        target: this.get('logoutButtonTargetPath'),
-        action: 'logoutPortal',
-        isVisibleBinding: this.get('logoutButtonIsVisiblePath')
-      })
-    );
-    childViews.push(this.logoutButton);
-
-    this.notepadButton = this.createChildView(
-      SC.ButtonView.design({
-        layout: { centerY: 0,  height: 24, right: 110, width: 100 },
-        layerId: 'notepadButton',
-        title:  "Note Pad",
-        target: this.get('notepadButtonTargetPath'),
-        action: 'showPane',
-        isVisibleBinding: this.get('notepadButtonIsVisiblePath'),
-        isEnabledBinding: this.get('notepadControllerIsEnabledButtonPath')
-      })
-    );
-    childViews.push(this.notepadButton);
 
     this.changeGroupButton = this.createChildView(
       SC.ButtonView.design({
@@ -162,6 +163,53 @@ Lab.TopBarView = SC.ToolbarView.extend(
       })
     );
     childViews.push(this.welcomeLabelView);
+
+    this.navBarRight = this.createChildView(
+      SC.ImageView.design({
+        layout: { centerY: 0, right: 0, width: 174, height: 38 },
+        layerId: 'navBarRight',
+        value: static_url('navbar-right.png')
+      })
+    );
+    childViews.push(this.navBarRight);
+
+    this.helpButton = this.createChildView(
+      SC.ImageView.design(Lab.SimpleButton, {
+        layout: { centerY: 0, right: 107, width: 27, height: 26 },
+        layerId: 'helpButton',
+        hasHover: YES,
+        alt: 'Help',
+        toolTip: "Pops up a Help window for this page",
+        target: 'Lab.routes',
+        action: 'gotoHomePage'
+      })
+    );
+    childViews.push(this.helpButton);
+
+    this.notepadButton = this.createChildView(
+      SC.ImageView.design(Lab.SimpleButton, {
+        layout: { centerY: 0, right: 73, width: 27, height: 26 },
+        layerId: 'notepadButton',
+        title:  "Note Pad",
+        target: this.get('notepadButtonTargetPath'),
+        action: 'showPane',
+        isVisibleBinding: this.get('notepadButtonIsVisiblePath'),
+        isEnabledBinding: this.get('notepadControllerIsEnabledButtonPath')
+      })
+    );
+    childViews.push(this.notepadButton);
+
+    this.logoutButton = this.createChildView(
+      SC.ImageView.design(Lab.SimpleButton, {
+        layout: { centerY: 0, right: 6, width: 27, height: 26 },
+        layerId: 'logOutButton',
+        title:  "Log out",
+        target: this.get('logoutButtonTargetPath'),
+        action: 'logoutPortal',
+        isVisibleBinding: this.get('logoutButtonIsVisiblePath')
+      })
+    );
+    childViews.push(this.logoutButton);
 
     this.set('childViews', childViews);
   }
