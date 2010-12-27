@@ -1,23 +1,49 @@
 :-moz-any-link:focus {
-  outline: none;
+    outline: none;
 }
 
 #content {
-  background-repeat: no-repeat;
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
 }
 
 .hover, .active {
-	cursor: pointer;
-	cursor: hand;
-	/*border: thin solid #FF0000;*/
-	text-decoration: underline;
+    cursor: pointer;
+    cursor: hand;
+    /*border: thin solid #FF0000;*/
+    text-decoration: underline;
+    /*background-color: #00FFFF;*/
+}
+
+div#topBar {
+    background-color: #492222;
 }
 
 img#homeButton:hover {
-    background-color: #00FFFF;
+    background-image: static_url('home-active.png');
+    background-repeat: none;
+}
+
+img#caseLogButton:hover {
+    background-image: static_url('log-active.png');
+    background-repeat: none;
+}
+
+img#helpButton:hover {
+    background-image: static_url('help-active.png');
+    background-repeat: none;
+}
+
+img#notepadButton:hover {
+    background-image: static_url('notepad-active.png');
+    background-repeat: none;
+}
+
+img#logOutButton:hover {
+    background-image: static_url('log-out-active.png');
+    background-repeat: none;
 }
