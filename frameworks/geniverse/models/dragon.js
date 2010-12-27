@@ -95,8 +95,8 @@ Geniverse.Dragon = SC.Record.extend(
           self.set('characteristics', gOrg.characteristics.array);
         });
       }
-      this.set('characteristicMap', gOrg.characteristicMap.stringMap);
-      this.set('metaInfo', gOrg.metaInfo.stringMap);
+      this.set('characteristicMap', gOrg.characteristicMap);
+      this.set('metaInfo', gOrg.metaInfo);
     }
   }.observes('gOrganism'),
   
@@ -133,7 +133,7 @@ Geniverse.Dragon = SC.Record.extend(
 
   characteristicValue: function(name) {
     if (name !== null && typeof name != 'undefined') {
-      return this.get('characteristicMap')[":" + name.toLowerCase()];
+      return this.get('characteristicMap').get(name.toLowerCase());
     }
     return "";
   }
