@@ -53,6 +53,7 @@ Geniverse.Dragon = SC.Record.extend(
   gOrganism: null,
   characteristics: null,
   metaInfo: null,
+  characteristicMap: null,
   
   gOrganismDefined: function() {
     var gOrg = this.get('gOrganism');
@@ -61,7 +62,7 @@ Geniverse.Dragon = SC.Record.extend(
   }.property('gOrganism').cacheable(),
  
   color: function() {
-    return (this.characteristicValue('color').toLowerCase());
+    return this.characteristicValue('color').toLowerCase();
   }.property('alleles').cacheable(),
 
   init: function() {
@@ -94,7 +95,8 @@ Geniverse.Dragon = SC.Record.extend(
           self.set('characteristics', gOrg.characteristics.array);
         });
       }
-      this.set('metaInfo', gOrg.metaInfo);
+      this.set('characteristicMap', gOrg.characteristicMap.stringMap);
+      this.set('metaInfo', gOrg.metaInfo.stringMap);
     }
   }.observes('gOrganism'),
   
@@ -130,27 +132,15 @@ Geniverse.Dragon = SC.Record.extend(
   }.property('sexAsString','characteristicsAsString').cacheable(),
 
   characteristicValue: function(name) {
-    return (this.get('characteristics')[this.characteristicIndex(name)]);
-  },
-
-  characteristicName: function(index) {
-    return Geniverse.Dragon.CHARACTERISTICS[index]; 
-  },
-
-  characteristicIndex: function(name) {
-    var i     = 0;
-    for (i = 0; i  < Geniverse.Dragon.CHARACTERISTICS.length; i++) {
-      if (name.toLowerCase() == (this.characteristicName(i).toLowerCase())) {
-        return i;
-      }
+    if (name !== null && typeof name != 'undefined') {
+      return this.get('characteristicMap')[":" + name.toLowerCase()];
     }
-    return -1; // boo
+    return "";
   }
 
 });
 
 Geniverse.Dragon.modelName = "dragon";
 Geniverse.Dragon.modelsName = "dragons";
-Geniverse.Dragon.CHARACTERISTICS = "color tail wings horns forelimbs hindlimbs armor".w();
 Geniverse.railsBackedTypes.push(Geniverse.Dragon.modelName);
 

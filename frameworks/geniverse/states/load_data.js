@@ -162,7 +162,7 @@ Geniverse.LOAD_DATA = SC.Responder.create(
     //var organismConfigurations = Geniverse.activityController.getConfigurationForRoom(CcChat.chatRoomController.get('channelIndex'));
     var group = Geniverse.loginController.get('groupNumber')  - 1; // the numbers 1 - 3, but need to 0 based
     var member = Geniverse.loginController.get('memberNumber')- 1;
-    var organismConfigurations = Geniverse.activityController.getConfigurationForRoomMember(group,member);
+    var organismConfigurations = Geniverse.activityController.getConfigurationForRoomMember(group,member, false);
     SC.Logger.info("Found " + organismConfigurations.length + " defaults");
     for (var i = 0; i < organismConfigurations.length; i++) {
       var conf = organismConfigurations[i];
