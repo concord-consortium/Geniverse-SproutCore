@@ -173,6 +173,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     );
     childViews.push(this.navBarRight);
 
+/*
     this.helpButton = this.createChildView(
       SC.ImageView.design(Lab.SimpleButton, {
         layout: { centerY: 0, right: 107, width: 27, height: 26 },
@@ -185,6 +186,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
       })
     );
     childViews.push(this.helpButton);
+*/
 
     this.notepadButton = this.createChildView(
       SC.ImageView.design(Lab.SimpleButton, {
