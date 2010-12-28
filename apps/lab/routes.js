@@ -90,7 +90,8 @@ Lab.routes = SC.Object.create({
     var pagePanePath = pageName + '.' + paneName;
     console.log("pagePanePath:",pagePanePath);
     var pagePane = clazz.getPath(pagePanePath);
-    console.log("pagePane:",pagePane);    
+    console.log("pagePane:",pagePane);
+    pagePane.set('pageName',pageName);
     pagePane.append();
     
     // Save the current pane so we can remove it when process the next route

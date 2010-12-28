@@ -124,12 +124,6 @@ Lab.TopBarView = SC.ToolbarView.extend(
     );
     childViews.push(this.caseLogButton);
 
-    this.infoButton = this.createChildView(
-      Lab.InfoButtonView.design()
-    );
-    Lab.infoController.set('infoButton', this.infoButton); // So pop-up pointer works
-    childViews.push(this.infoButton);
-
     this.geniverseLabelView = this.createChildView(
       SC.LabelView.design({
         layout: { centerY: 0, height: 24, left: 77, width: 400 },
@@ -173,7 +167,12 @@ Lab.TopBarView = SC.ToolbarView.extend(
     );
     childViews.push(this.navBarRight);
 
-/*
+    this.infoButton = this.createChildView(
+      Lab.InfoButtonView.design()
+    );
+    Lab.infoController.set('infoButton', this.infoButton); // So pop-up pointer works
+    childViews.push(this.infoButton);
+
     this.helpButton = this.createChildView(
       SC.ImageView.design(Lab.SimpleButton, {
         layout: { centerY: 0, right: 107, width: 27, height: 26 },
@@ -181,12 +180,13 @@ Lab.TopBarView = SC.ToolbarView.extend(
         hasHover: YES,
         alt: 'Help',
         toolTip: "Pops up a Help window for this page",
-        target: 'Lab.routes',
-        action: 'gotoHomePage'
+        target: 'Lab.helpController',
+        action: 'showPane',
+        isVisibleBinding: 'Lab.helpController.isVisible'
       })
     );
+    Lab.helpController.set('helpButton', this.helpButton); // So pop-up pointer works
     childViews.push(this.helpButton);
-*/
 
     this.notepadButton = this.createChildView(
       SC.ImageView.design(Lab.SimpleButton, {
