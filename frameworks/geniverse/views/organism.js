@@ -19,7 +19,7 @@ Geniverse.OrganismView = SC.View.extend(
 	childViews: 'labelView imageView'.w(),
   isDropTarget: NO, // change this to YES in view if you want replaceable by drag-and-drop
   parent: '',       // If set, drag-and-drop will replace parentView's [parent] field
-  sex: null,        // If set to 0 or 1, drag-and-drop will only work wil males and females, respectively
+  sex: null,        // If set to 0 or 1, drag-and-drop will only work with males and females, respectively
 
 	imageView: SC.ImageView.design({
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
@@ -156,8 +156,15 @@ Geniverse.OrganismView = SC.View.extend(
   acceptDragOperation: function(drag, op) {
     var dragon = this._getSourceDragon(drag);
     if (!this._canDrop(dragon)){
-      return;
+      return NO;
     }
+    SC.Logger.info("can drop");
+    return YES;
+  },
+  
+  // this will be called if acceptDragOperation returns YES
+  performDragOperation: function(drag, op) {
+    var dragon = this._getSourceDragon(drag);
     
     // next, if we are a prent view, check that dragged dragon
     // is not an egg
@@ -174,8 +181,7 @@ Geniverse.OrganismView = SC.View.extend(
     }
     
     this._setClassNames();
-    
-    return op ;
+    return op;
   },
 
   computeDragOperations: function(drag, evt) {
