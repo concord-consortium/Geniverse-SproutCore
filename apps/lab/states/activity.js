@@ -350,7 +350,7 @@ Lab.ACTIVITY = SC.Responder.create(
 
     // If a message has been authored for this Activity, display it now
     var message = Geniverse.activityController.get('message');
-    SC.Logger.info("message:",message);
+    SC.Logger.info("activity message:",message);
     if (message){
       Lab.infoController.display(message);
     }

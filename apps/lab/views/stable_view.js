@@ -2,7 +2,7 @@
 // Project:   Lab - StableView
 // Copyright: 2010 Concord Consortium
 // ==========================================================================
-/*globals Lab */
+/*globals Lab Geniverse CC */
 /**
  * Stable View with title and stable sub-views.
  * This is a composite view component.
@@ -17,6 +17,8 @@
 
 Lab.StableView = SC.View.extend(
 /** @scope Lab.StableView.prototype */ {
+  // default layout -- should be overridden at view creation time!
+  layout: { left: 680, top: 70, height: 300, width: 240 },
 
   // childViews
   title: null,

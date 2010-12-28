@@ -59,6 +59,7 @@ Geniverse.activityController = SC.ObjectController.create(
     console.log("getting for "+isMatchingDragons);
     var roomConfig = Geniverse.activityController.getConfigurationForRoom(room, isMatchingDragons);
     if (!roomConfig || roomConfig.length < 1){
+      SC.Logger.info("No room config for room", room);
       return [];
     }
     var members = roomConfig;
