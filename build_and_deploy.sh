@@ -1,17 +1,36 @@
 #!/bin/sh
 
+if [ -x $1 ]; then
+  echo "You must specify which server to install to.\nSupported servers: production, dev\n\nUsage: $0 [server]"
+  exit 1
+fi
+
+case "$1" in
+  production)
+    export SERVER=seymour.concord.org
+    export SERVER_PATH="/web/production/geniverse/static"
+    export LABEL_PATH="/web/production/geniverse"
+    ;;
+  dev)
+    export SERVER=otto.concord.org
+    export SERVER_PATH="/web/geniverse.dev.concord.org/static"
+    export LABEL_PATH="/web/geniverse.dev.concord.org/sproutcore"
+    ;;
+  *)
+    echo "Invalid server!"
+    exit 1
+    ;;
+esac
+
 rm -rf tmp/
 sc-build
 
 # If you don't have rsync, use scp instead
-# scp -r tmp/build/static/* otto.concord.org:/web/geniverse.dev.concord.org/static/
-rsync -rlzP tmp/build/static/* otto.concord.org:/web/geniverse.dev.concord.org/static/
-
-ssh -t otto.concord.org "sudo chown -R apache.users /web/geniverse.dev.concord.org/static"
-ssh -t otto.concord.org "sudo chmod -R ug+rw /web/geniverse.dev.concord.org/static"
+# scp -r tmp/build/static/* geniverse@$SERVER:$SERVER_PATH/
+rsync -rlzP tmp/build/static/* geniverse@$SERVER:$SERVER_PATH/
 
 echo "Lab build hash: $(sc-build-number lab)"
 
 read -p "What label should this be deployed with? " -e -r LABEL
 
-ssh -t otto.concord.org "rm /web/geniverse.dev.concord.org/sproutcore/${LABEL}; ln -s /web/geniverse.dev.concord.org/static/lab/en/$(sc-build-number lab) /web/geniverse.dev.concord.org/sproutcore/${LABEL}"
+ssh -t $SERVER "rm $LABEL_PATH/${LABEL}; ln -s $SERVER_PATH/lab/en/$(sc-build-number lab) $LABEL_PATH/${LABEL}"
