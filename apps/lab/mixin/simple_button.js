@@ -1,18 +1,21 @@
-/**
- * Cribbed from https://github.com/etgryphon/sproutcore-ui/blob/master/frameworks/foundation/mixins/simple_button.js
- */
 /*globals SCUI*/
 /*jslint evil: true */
 
 /** @class
 
+  This view come from SCUI.SimpleButton
+
   Mixin to allow for simple button actions...
 
+
+  This Mixin originally came from SCUI: http://github.com/etgryphon/sproutcore-ui and is
+  available under the MIT license.
+
   @author Evin Grano
-  @version 0.1
+  @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
+  @version 0.2
   @since 0.1
 */
-
 Lab.SimpleButton = {
 /* SimpleButton Mixin */
 
@@ -93,8 +96,24 @@ Lab.SimpleButton = {
       } else {
         // newer action method + optional target syntax...
         var _rootResponder = this.getPath('pane.rootResponder');
-        // TODO: Fix bug where _rootResponder is null after going back and forth between pages
-        _rootResponder.sendAction(action, target, this, this.get('pane'));
+        //console.log('_rootResponder:',_rootResponder);
+        var _pane = this.get('pane');
+        //console.log('_pane:',_pane);
+        if(_rootResponder){
+          _rootResponder.sendAction(action, target, this, _pane);
+        } else {
+          // TODO: Fix bug where pane.rootResponder is undefined after going back to a previous page
+          _rootResponder = SC.RootResponder.responder;
+          SC.Logger.warn('Resorted to using _rootResponder = SC.RootResponder.responder:',_rootResponder);
+          if(_rootResponder) {
+            _rootResponder.sendAction(action, target, this, _pane);
+          } else {
+            SC.Logger.error(
+              'Both pane.rootResponder and SC.RootResponder.responder were undefined for pane ',
+              _pane
+            );
+          }
+        }
       }
     }
     if (this.get('hasState')) {
