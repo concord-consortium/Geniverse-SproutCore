@@ -18,3 +18,7 @@ annotate
 script/generate migration add_message_to_activities message:text
 rake db:migrate
 annotate
+
+script/generate rspec_scaffold HelpMessage page_name:string message:text
+rake db:migrate
+annotate

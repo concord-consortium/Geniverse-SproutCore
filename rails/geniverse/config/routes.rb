@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :help_messages
+
   map.resources :articles
 
   map.resources :dragons
