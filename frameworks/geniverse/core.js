@@ -47,4 +47,4 @@ Geniverse = SC.Application.create(
 
 }) ;
 
-Geniverse.NO_DRAGON = {imageURL: sc_static("question-mark.png") };
+Geniverse.NO_DRAGON = SC.Object.create({imageURL: sc_static("question-mark.png"), alleles: "" });

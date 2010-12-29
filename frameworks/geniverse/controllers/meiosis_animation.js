@@ -15,16 +15,18 @@ sc_require('views/popup_animation');
 
 Geniverse.meiosisAnimationController = SC.ObjectController.create(
   /** @scope Geniverse.meiosisAnimationController.prototype */ {
-  dragon: null,
-  pane: null,
-  isEnabledButton: YES,
-  
-  mother: null,
-  father: null,
-  offspring: null,
-  
-  fatherGameteJson: null,
-  motherGameteJson: null,
+
+  content: SC.Object.create({
+    dragon: null,
+    pane: null,
+    isEnabledButton: NO,
+    
+    mother: null,
+    father: null,
+    offspring: null,
+    fatherGameteJson: null,
+    motherGameteJson: null
+  }),
 
   allelesToJSON: function (alleleString) {
     if(alleleString !== null && typeof(alleleString) != 'undefined'){
@@ -63,7 +65,7 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
         } else {
           SC.Logger.info("No B side!");
           SC.Logger.dir(alleles[i]);
-          chromosomesArr.push({ alleles: [{ sex: "male", gene: "vvv" }]});
+          chromosomesArr.push({ alleles: [{ sex: "male", gene: "" },{ sex: "male", gene: "" },{ sex: "male", gene: "" }]});
           // chromosomesArr.push({ alleles: []});
         }
       }
@@ -100,7 +102,7 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
     var sex = 1;
     if (lastChromoAlleles.length === 0) {
       sex = 0;
-    } else if (lastChromoAlleles[0].gene == "vvv") {
+    } else if (lastChromoAlleles[0].gene === "") {
       sex = 0;
     }
     return sex;

@@ -7,7 +7,6 @@
 
     var defaultOpts = $.extend(true,{
       mode            : 'parent',
-      owner           : 'father',
       context         : null,
       loaded          : $.noop,
       animationComplete: $.noop,
@@ -15,7 +14,7 @@
       zoom            : 2,
       width           : 460,
       height          : 320,
-      swap            : 'auto',
+      swap            : 'user',
       alleleCount     : 12,
       segLength       : 10,
       segCount        : 3,
@@ -94,7 +93,6 @@
         overDragMultiplierC = 0.2
     ;
     // ^^ GLOBAL VARIABLES.
-
 
 
     // GENERAL PROGRAM FUNCTIONS
@@ -246,7 +244,7 @@
       for(var i=0, l=chromosomes.length; i< l; i++){
         for(var j=0, l2=chromosomes[i].alleles.length; j< l2; j++){
 
-          allele = chromosomes[i].alleles[j];
+          var allele = chromosomes[i].alleles[j];
           
           for(var n=0, l3=allele.SVG_outer.events.length; n< l3; n++){
             var event = allele.SVG_outer.events[n];
@@ -545,8 +543,8 @@
               }
             }
             
+            //$(document).trigger('gamete-clicked', data);
             defaultOpts.gameteSelected.call(defaultOpts.context, data);
-            // $(document).trigger('gamete-clicked', data);
           }
         }
       });
@@ -1120,7 +1118,7 @@
             ////////////////////////////////////////////////////////////////////
             // MEMBRANES
 
-            .obj('memb1',membranes[0])
+            .obj('memb1_'+owner,membranes[0])
               .track('radius')
                 .key(0,membranes[0].radius,'inOutQuad')
                 .key(23,centerX/1.5)
@@ -1138,7 +1136,7 @@
                   }
                 })
 
-            .obj('memb2',membranes[1])
+            .obj('memb2_'+owner,membranes[1])
               .track('radius')
                 .key(0,membranes[1].radius,'inOutQuad')
                 .key(23,membranes[1].radius*1.5)
@@ -1156,27 +1154,27 @@
             ////////////////////////////////////////////////////////////////////
             // Move Chromosomes
             
-            .obj('m1',chromosomes[0])
+            .obj('m1_'+owner,chromosomes[0])
               .track('dragX')
                 .key(0,centerX-centerX/2,'inOutQuad').key(23,centerX)
                 .always(function(e){dragByAllele.call(this,e)})
-            .obj('m2',chromosomes[1])
+            .obj('m2_'+owner,chromosomes[1])
               .track('dragX')
                 .key(0,centerX-centerX/2,'inOutQuad').key(23,centerX)
                 .always(function(e){dragByAllele.call(this,e)})
-            .obj('m3',chromosomes[2])
+            .obj('m3_'+owner,chromosomes[2])
               .track('dragX')
                 .key(0,centerX-centerX/2,'inOutQuad').key(23,centerX)
                 .always(function(e){dragByAllele.call(this,e)})
-            .obj('f1',chromosomes[3])
+            .obj('f1_'+owner,chromosomes[3])
               .track('dragX')
                 .key(0,centerX+centerX/2,'inOutQuad').key(23,centerX)
                 .always(function(e){dragByAllele.call(this,e)})
-            .obj('f2',chromosomes[4])
+            .obj('f2_'+owner,chromosomes[4])
               .track('dragX')
                 .key(0,centerX+centerX/2,'inOutQuad').key(23,centerX)
                 .always(function(e){dragByAllele.call(this,e)})
-            .obj('f3',chromosomes[5])
+            .obj('f3_'+owner,chromosomes[5])
               .track('dragX')
                 .key(0,centerX+centerX/2,'inOutQuad').key(23,centerX)
                 .always(function(e){dragByAllele.call(this,e)})
@@ -1210,7 +1208,7 @@
             ////////////////////////////////////////////////////////////////////
             // MEMBRANES
 
-            .obj('memb1',membranes[0])
+            .obj('memb1_'+owner,membranes[0])
               .track('x')
                 .key(0,centerX)
                 .key(30,centerX)
@@ -1234,7 +1232,7 @@
                   this.updateSVG.call(this);
                 })
 
-            .obj('memb2',membranes[1])
+            .obj('memb2_'+owner,membranes[1])
               .track('x')
                 .key(0,centerX)
                 .key(30,centerX)
@@ -1263,7 +1261,7 @@
                   this.updateSVG.call(this);
                 })
 
-            .obj('memb3',membranes[2])
+            .obj('memb3_'+owner,membranes[2])
               .track('x')
                 .key(0,centerX+centerX/2)
               .track('y')
@@ -1282,7 +1280,7 @@
                   this.updateSVG.call(this);
                 })
 
-            .obj('memb4',membranes[3])
+            .obj('memb4_'+owner,membranes[3])
               .track('x')
                 .key(0,centerX-centerX/2)
               .track('y')
@@ -1307,7 +1305,7 @@
             // naming convention: "c" + PairLetter(a-c) + ChromosomeNumber(1-2) + OriginCopyLetter(a-b);
 
             // Chromosome A1a - chromosomes[0]
-            .obj('ca1a',chromosomes[0])
+            .obj('ca1a_'+owner,chromosomes[0])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1382,7 +1380,7 @@
                 })
 
             // Chromosome A1b - chromosomes[1]
-            .obj('ca1b',chromosomes[1])
+            .obj('ca1b_'+owner,chromosomes[1])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1426,7 +1424,7 @@
 
 
             // Chromosome A2a - chromosomes[2]
-            .obj('ca2a',chromosomes[2])
+            .obj('ca2a_'+owner,chromosomes[2])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1457,7 +1455,7 @@
 
 
             // Chromosome A2b  - chromosomes[3]
-            .obj('ca2b',chromosomes[3])
+            .obj('ca2b_'+owner,chromosomes[3])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1504,7 +1502,7 @@
             // B-PAIR
 
             // Chromosome B1a - chromosomes[4]
-            .obj('cb1a',chromosomes[4])
+            .obj('cb1a_'+owner,chromosomes[4])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1534,7 +1532,7 @@
                 })
 
             // Chromosome B1b - chromosomes[5]
-            .obj('cb1b',chromosomes[5])
+            .obj('cb1b_'+owner,chromosomes[5])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1578,7 +1576,7 @@
 
 
             // Chromosome B2a - chromosomes[6]
-            .obj('cb2a',chromosomes[6])
+            .obj('cb2a_'+owner,chromosomes[6])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1609,7 +1607,7 @@
 
 
             // Chromosome - chromosomes[7]
-            .obj('cb2b',chromosomes[7])
+            .obj('cb2b_'+owner,chromosomes[7])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1656,7 +1654,7 @@
             // C-PAIR
 
             // Chromosome C1a - chromosomes[8]
-            .obj('cc1a',chromosomes[8])
+            .obj('cc1a_'+owner,chromosomes[8])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1686,7 +1684,7 @@
                 })
 
             // Chromosome C1b - chromosomes[9]
-            .obj('cc1b',chromosomes[9])
+            .obj('cc1b_'+owner,chromosomes[9])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1730,7 +1728,7 @@
 
 
             // Chromosome C2a - chromosomes[10]
-            .obj('cc2a',chromosomes[10])
+            .obj('cc2a_'+owner,chromosomes[10])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1761,7 +1759,7 @@
 
 
             // Chromosome C2b - chromosomes[11]
-            .obj('cc2b',chromosomes[11])
+            .obj('cc2b_'+owner,chromosomes[11])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1863,11 +1861,13 @@
 
     // Update the animation when the slider is sliden
     var scrub = self.find('.scrub');
+
     scrub.slider({
       min: 1,
       max: burst.timelines['geniverseTimeline_'+owner].end*100,
       value: 0,
       slide: function(event, ui){
+        
         burst.loaded = {};
         burst.load('geniverseTimeline_'+owner);
         frame=~~(ui.value/100);
