@@ -47,3 +47,18 @@ img#logOutButton:hover {
     background-image: static_url('log-out-active.png');
     background-repeat: none;
 }
+
+#changeGroupLabel {
+    font-size: 9px;
+    text-decoration: underline;
+    /*background-color: #C56827;*/
+}
+a#changeGroup:link {
+    color: #00FFFF;
+}
+a#changeGroup:visited {
+    color: #00FFFF;
+}
+a#changeGroup:hover {
+	color: #DCF1F6;
+}

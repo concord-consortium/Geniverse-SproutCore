@@ -135,21 +135,9 @@ Lab.TopBarView = SC.ToolbarView.extend(
     );
     childViews.push(this.geniverseLabelView);
 
-    this.changeGroupButton = this.createChildView(
-      SC.ButtonView.design({
-        layout: { centerY: 0,  height: 24, right: 215, width: 120 },
-        layerId: 'changeGroup',
-        title:  "Change Group",
-        target: this.get('changeGroupButtonTargetPath'),
-        action: 'showGroupPanel',
-        isVisibleBinding: this.get('changeGroupButtonIsVisiblePath')
-      })
-    );
-    childViews.push(this.changeGroupButton);
-    
     this.welcomeLabelView = this.createChildView(
       SC.LabelView.design({
-        layout: { top: 5,  height: 24, right: 340, width: 300},
+        layout: { top: 5,  height: 24, right: 340, width: 345},
         fontWeight: SC.BOLD_WEIGHT,
         textAlign: SC.ALIGN_RIGHT,
         valueBinding: this.get('welcomePath'),
@@ -157,6 +145,55 @@ Lab.TopBarView = SC.ToolbarView.extend(
       })
     );
     childViews.push(this.welcomeLabelView);
+
+    this.changeGroupButton = this.createChildView(
+      SC.View.design({
+        layout: { centerY: 0,  height: 24, right: 300, width: 40 },
+        layerId: 'changeGroup',
+        title:  "Change",
+        target: this.get('changeGroupButtonTargetPath'),
+        action: 'showGroupPanel',
+        isVisibleBinding: this.get('changeGroupButtonIsVisiblePath'),
+        toolTip: 'Change your Member number or Group number.',
+        tagName: 'a',
+        render: function(context, firstTime) {
+          // add href attr if tagName is anchor...
+          var href, toolTip, classes, theme;
+          if (this.get('tagName') === 'a') {
+            href = this.get('href');
+            if (!href || (href.length === 0)) {
+              href = 'javascript:'+this.get('target')+'.'+this.get('action')+'();';
+            }
+            context.attr('href', href);
+          }
+
+          // if there is a title, add a child label and set its value to title
+          var _title = this.get('title');
+          if (firstTime && _title) {
+            this.appendChild(
+              this.createChildView(
+                SC.LabelView.design({
+                  layerId: 'changeGroupLabel',
+                  value: _title
+                })
+              )
+            );
+          }
+
+          // If there is a toolTip set, grab it and localize if necessary.
+          toolTip = this.get('toolTip') ;
+          if (SC.typeOf(toolTip) === SC.T_STRING) {
+            if (this.get('localize')) toolTip = toolTip.loc() ;
+            context.attr('title', toolTip) ;
+            context.attr('alt', toolTip) ;
+          }
+
+          // render inner html
+          sc_super();
+        }
+      })
+    );
+    childViews.push(this.changeGroupButton);
 
     this.navBarRight = this.createChildView(
       SC.ImageView.design({
