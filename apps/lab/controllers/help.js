@@ -4,10 +4,25 @@
 // ==========================================================================
 /*globals Lab */
 sc_require('views/help');
+// TODO: Why couldn't this code load from either Lab.HelpMessage or Geniverse.HelpMessage .js files?
+Lab.HelpMessage = SC.Record.extend(
+  /** @scope Lab.HelpMessage.prototype */ {
+  pageName: SC.Record.attr(String),
+  message: SC.Record.attr(String)
+});
+
+Lab.HelpMessage.modelName = "help_message";
+Lab.HelpMessage.modelsName = "help_messages";
+
+Geniverse.railsBackedTypes.push(Lab.HelpMessage.modelName);
+/*
+console.warn("Called Geniverse.railsBackedTypes.push(Lab.HelpMessage.modelName);",
+  Geniverse.railsBackedTypes);
+*/
 
 /** @class
 
-  Shows and manages content for a pop-up help view
+  Loads, shows, and manages content for a pop-up help view
 
   @extends SC.ObjectController
   @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
@@ -15,32 +30,49 @@ sc_require('views/help');
 Lab.helpController = SC.ObjectController.create(
 /** @scope Lab.helpController.prototype */ {
   pane: null,//Lab.HelpView,
-  //contentBinding: 'Lab.userController*content.note',
   content: "Help message loading<blink>...</blink>",
   isVisible: YES,
   helpButton: null,
 
   showPane: function(callingView) {
-    console.log("showPane called by:",callingView);
+    //console.log("showPane called by:",callingView);
     this.set('helpButton', callingView);
     var helpView = Lab.HelpView;//.create();
-    console.log("helpView:",helpView);
+    //console.log("helpView:",helpView);
     this.set('pane',helpView);
     var _pane = this.get('pane');
-    console.log("this.get('pane'):",_pane);
+    //console.log("this.get('pane'):",_pane);
     if (!_pane.get('isVisibleInWindow')){
       if(callingView){
         _pane.popup(callingView, SC.PICKER_POINTER);
       }else{
         _pane.popup(null);
       }
+      this.set('content', "Help message loading<blink>...</blink>");
       this.updateView(this.get('content'));
       var pageName = Lab.routes.currentPagePane.get('pageName');
-      if(pageName){
+      //console.log("pageName:",pageName);
+      if (pageName) {
         // TODO: Get the matching help message from the backend
-        this.set('content',pageName);
+        var helpMessageFound = function(helpMessage) {
+          var message = null;
+          if (typeof helpMessage == 'undefined') {
+            // No helpMessage exists with that pageName.
+            SC.Logger.info("No helpMessage exists with that pageName.");
+            message = "Sorry, a help message for this page was not found.<br/>pageName:"+pageName;
+          } else {
+            message = helpMessage.get('message');
+          }
+          if(!message){
+            SC.Logger.warn("Failed to get message property of helpMessage:",helpMessage);
+            message = "Sorry, a proper help message for this page was not found.<br/>pageName:"+pageName;
+          }
+          Lab.helpController.set('content', message);
+        };
+        this.findHelpMessage(pageName, helpMessageFound);
       } else {
-        this.set('content',"Sorry, I could not load a help message for this page.");
+        this.set('content',
+          "Sorry, a help message could not be loaded because the name of your page was not available.");
       }
     }
   },
@@ -66,6 +98,40 @@ Lab.helpController = SC.ObjectController.create(
       //console.log("updating helpView's value to:",newValue);
       this.pane.contentView.helpView.set('value', newValue);
     }
-  }
+  },
 
+  findHelpMessage: function (pageName, callback) {
+    var self = this;
+    //console.log("self:", self);
+    var query = SC.Query.local(Lab.HelpMessage, {conditions: 'pageName = "' + pageName + '"'});
+    //console.log("query:", query);
+    //console.log("query.recordType:", query.recordType);
+    var helpMessages = Geniverse.store.find(query);
+    //console.log("helpMessages:", helpMessages);
+    var sendFoundHelpMessage = function() {
+      var status = helpMessages.get('status');
+      //console.log("status:", status);
+      var helpMessage = helpMessages.firstObject();
+      //console.log("helpMessage:", helpMessage);
+      callback(helpMessage);
+    };
+    self.doWhenReady(self, helpMessages, sendFoundHelpMessage);
+  },
+
+  doWhenReady: function(context, field, method) {
+    var self = context;
+    //console.log("self = context:", self);
+    var status = field.get('status');
+    //console.log("status:", status, "SC.Record.READY:", SC.Record.READY);
+    if (status & SC.Record.READY == SC.Record.READY) {
+      //console.log("calling field.removeObserver('status', method);");
+      field.removeObserver('status', method);
+      //console.log("method.call(context);");
+      method.call(context);
+    }
+    else {
+      //console.log("calling field.addObserver('status', context, method);");
+      field.addObserver('status', context, method);
+    }
+  }
 }) ;
