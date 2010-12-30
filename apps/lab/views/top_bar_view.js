@@ -147,7 +147,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     childViews.push(this.welcomeLabelView);
 
     this.changeGroupButton = this.createChildView(
-      SC.View.design({
+      Lab.LinkView.design({
         layout: { centerY: 0,  height: 24, right: 300, width: 40 },
         layerId: 'changeGroup',
         title:  "Change",
@@ -155,42 +155,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         action: 'showGroupPanel',
         isVisibleBinding: this.get('changeGroupButtonIsVisiblePath'),
         toolTip: 'Change your Member number or Group number.',
-        tagName: 'a',
-        render: function(context, firstTime) {
-          // add href attr if tagName is anchor...
-          var href, toolTip, classes, theme;
-          if (this.get('tagName') === 'a') {
-            href = this.get('href');
-            if (!href || (href.length === 0)) {
-              href = 'javascript:'+this.get('target')+'.'+this.get('action')+'();';
-            }
-            context.attr('href', href);
-          }
-
-          // if there is a title, add a child label and set its value to title
-          var _title = this.get('title');
-          if (firstTime && _title) {
-            this.appendChild(
-              this.createChildView(
-                SC.LabelView.design({
-                  layerId: 'changeGroupLabel',
-                  value: _title
-                })
-              )
-            );
-          }
-
-          // If there is a toolTip set, grab it and localize if necessary.
-          toolTip = this.get('toolTip') ;
-          if (SC.typeOf(toolTip) === SC.T_STRING) {
-            if (this.get('localize')) toolTip = toolTip.loc() ;
-            context.attr('title', toolTip) ;
-            context.attr('alt', toolTip) ;
-          }
-
-          // render inner html
-          sc_super();
-        }
+        tagName: 'a'
       })
     );
     childViews.push(this.changeGroupButton);
