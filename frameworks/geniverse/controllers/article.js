@@ -7,10 +7,10 @@
 /** @class
 
   FIXME: This controller needs refactoring. It was written before the Geniverse.Article model
-  was incorported and activities were being loaded in. This should be foxused more around
+  was incorporated and activities were being loaded in. This should be focused more around
   the content model object.
 
-  @extends SC.Object
+  @extends SC.ObjectController
 */
 Geniverse.articleController = SC.ObjectController.create(
 /** @scope Geniverse.articleController.prototype */ {
