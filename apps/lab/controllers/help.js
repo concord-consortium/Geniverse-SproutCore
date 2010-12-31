@@ -4,21 +4,6 @@
 // ==========================================================================
 /*globals Lab */
 sc_require('views/help');
-// TODO: Why couldn't this code load from either Lab.HelpMessage or Geniverse.HelpMessage .js files?
-Lab.HelpMessage = SC.Record.extend(
-  /** @scope Lab.HelpMessage.prototype */ {
-  pageName: SC.Record.attr(String),
-  message: SC.Record.attr(String)
-});
-
-Lab.HelpMessage.modelName = "help_message";
-Lab.HelpMessage.modelsName = "help_messages";
-
-Geniverse.railsBackedTypes.push(Lab.HelpMessage.modelName);
-/*
-console.warn("Called Geniverse.railsBackedTypes.push(Lab.HelpMessage.modelName);",
-  Geniverse.railsBackedTypes);
-*/
 
 /** @class
 
