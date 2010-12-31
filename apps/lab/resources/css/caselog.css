@@ -49,7 +49,23 @@ body {
 /* CASE LOG LINKS
 ----------------------------------------------------*/
 #content.intro-completed {
-	background: url(../images/caselog-bg-intro-completed.png) no-repeat;
+	background: static_url('caselog-bg-intro-completed.png') no-repeat;
+	}
+a#inheritance:hover {
+    background-image: static_url('inheritance-hover.png');
+    background-repeat: none;
+	}
+a#inheritance2left:hover {
+    background-image: static_url('inheritance2-left-hover.png');
+    background-repeat: none;
+	}
+a#inheritance2right:hover {
+    background-image: static_url('inheritance2-right-hover.png');
+    background-repeat: none;
+	}
+a#meiosis:hover {
+    background-image: static_url('meiosis-hover.png');
+    background-repeat: none;
 	}
 a#training {
 	background: transparent;
