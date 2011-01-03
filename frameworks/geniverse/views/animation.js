@@ -51,12 +51,15 @@ Geniverse.AnimationView = SC.View.extend(
    */
   meiosisOwner: 'offspring',
   
+  completedAnimationCalled: NO,
+  
   dragon: null,
   dragonDidChange: function() {
     var dragon = this.get('dragon');
     if (dragon !== null && typeof dragon != 'undefined') {
       SC.Logger.log("setting json data for dragon", dragon, Geniverse.meiosisAnimationController.allelesToJSON(dragon.get('alleles')));
       this.set('jsonData', Geniverse.meiosisAnimationController.allelesToJSON(dragon.get('alleles')) );
+      this.set('completedAnimationCalled', NO);
     } else {
       SC.Logger.log("Dragon changed, but was null");
     }
@@ -72,6 +75,7 @@ Geniverse.AnimationView = SC.View.extend(
       var father = this.get('fatherJson');
       if (mother !== null && father !== null) {
         this._combineMotherFatherJson(mother, father);
+        this.set('completedAnimationCalled', NO);
       }
     }
   }.observes('motherJson', 'fatherJson'),
@@ -87,7 +91,14 @@ Geniverse.AnimationView = SC.View.extend(
   },
   
   animationComplete: function() {
-    SC.Logger.log('completed animation');
+    
+    if (this.get('completedAnimationCalled')){
+      return;
+    }
+    this.set('completedAnimationCalled', YES);
+    
+    SC.Logger.log('completed animation!');
+    
     if (this.get('mode') == 'offspring') {
       var callback = function(dragon) {
         SC.Logger.info("Created offspring dragon", dragon);

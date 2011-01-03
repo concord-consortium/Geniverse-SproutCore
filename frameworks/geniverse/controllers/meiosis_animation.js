@@ -82,7 +82,9 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
     var motherString = this._JSONToAlleles(motherJson, "a:");
     var fatherString = this._JSONToAlleles(fatherJson, "b:");
     
-    return motherString + "," + fatherString;
+    SC.Logger.log("ALLELES : "+motherString + fatherString);
+    
+    return motherString + fatherString;
   },
   
   _JSONToAlleles: function(json, prefix) {
@@ -91,7 +93,7 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
     for (var i = 0; i < json.chromosomes.length; i++) {
       var chromo = json.chromosomes[i];
       for (var j = 0; j < chromo.alleles.length; j++) {
-        outString += prefix + chromo.alleles[j].gene;
+        outString += prefix + chromo.alleles[j].gene + ",";
       }
     }
     return outString;
