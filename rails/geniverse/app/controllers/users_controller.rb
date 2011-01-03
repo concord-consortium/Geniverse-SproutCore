@@ -47,7 +47,7 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.xml
   def create
-    user_params = params[:user]
+    user_params = paramify_json(params[:user])
     user_params[:password_hash] = user_params[:passwordHash] if user_params.has_key? :passwordHash
     user_params.delete(:passwordHash)
     
