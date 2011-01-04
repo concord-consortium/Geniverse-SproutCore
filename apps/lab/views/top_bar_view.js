@@ -19,7 +19,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 /** @scope Lab.TopBarView.prototype */ {
   layout: { top: 0, left: 0, right: 0, height: 36 },
   layerId: 'topBar',
-  backgroundColor: '#492222',
+  classNames: ['brown-toolbar-view'],
   anchorLocation: SC.ANCHOR_TOP,
 
   // childViews

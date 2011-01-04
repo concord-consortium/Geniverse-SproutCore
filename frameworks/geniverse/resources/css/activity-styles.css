@@ -1,4 +1,9 @@
 .brown {
-  opacity: 0.95;
   background: #70594e;
+}
+
+.sc-view.brown-toolbar-view {
+  background: #572e2e;
+  border-top-color: #572e2e;
+  background-image: '';
 }
