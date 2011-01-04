@@ -169,8 +169,20 @@ Lab.TopBarView = SC.ToolbarView.extend(
     );
     childViews.push(this.navBarRight);
 
+    // this.infoButton = this.createChildView(
+    //   Lab.InfoButtonView.design()
+    // );
     this.infoButton = this.createChildView(
-      Lab.InfoButtonView.design()
+      SC.ImageView.design(Lab.SimpleButton, {
+        layout: { centerY: 0, right: 141, width: 27, height: 26 },
+        layerId: 'infoButton',
+        hasHover: YES,
+        alt: 'Info',
+        toolTip: "Click to see instructions",
+        target: 'Lab.infoController',
+        action: 'showPane',
+        isVisibleBinding: 'Lab.helpController.isVisible'
+      })
     );
     Lab.infoController.set('infoButton', this.infoButton); // So pop-up pointer works
     childViews.push(this.infoButton);
@@ -181,7 +193,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         layerId: 'helpButton',
         hasHover: YES,
         alt: 'Help',
-        toolTip: "Pops up a Help window for this page",
+        toolTip: "View the Help window for this page",
         target: 'Lab.helpController',
         action: 'showPane',
         isVisibleBinding: 'Lab.helpController.isVisible'
