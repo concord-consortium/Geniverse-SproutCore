@@ -18,14 +18,16 @@ Geniverse.ArticleView = SC.View.extend(SC.StaticLayout,
   
   staticView: SC.View.extend(SC.StaticLayout, {
 
-      childViews: 'textView dragonBinView newButtonView editButtonView sendDraftButtonView publishButtonView'.w(),
+      childViews: 'textView newButtonView editButtonView sendDraftButtonView'.w(),
       
       textView: SC.ScrollView.design({
         hasHorizontalScroller: NO,
-        layout: { left: 5, top: 0, right: 5, height: 130 },
+        classNames: ['article_text'],
+        layout: { left: 0, top: 0, right: 0, height: 170 },
         contentView: SC.LabelView.design({
           layout: { left: 0, top: 0, right: 0, bottom: 0 },
     		  isEditable: NO,
+    		  isTextSelectable: YES,
           escapeHTML: NO,
           valueBinding: 'Geniverse.articleController.combinedArticle',
           
@@ -52,12 +54,6 @@ Geniverse.ArticleView = SC.View.extend(SC.StaticLayout,
         })
       }),
       
-      dragonBinView: Geniverse.DragonBinView.design({
-        layout: { top: 140, height: 40, left: 20, width: 240 },
-        isDropTarget: NO,
-        dragonsBinding: 'Geniverse.dragonBinController'        
-      }),
-      
       newButtonView: SC.ButtonView.design({
         layout: { bottom: 15, height: 24, left: 0, width: 95 },
         title:  "New paper",
@@ -75,19 +71,11 @@ Geniverse.ArticleView = SC.View.extend(SC.StaticLayout,
       }),
       
       sendDraftButtonView: SC.ButtonView.design({
-        layout: { bottom: 15, height: 24, left: 190, width: 90 },
-        title:  "Send draft",
+        layout: { bottom: 15, height: 24, left: 190, width: 150 },
+        title:  "Send draft to group",
         target: 'Geniverse.articleController',
         action: 'sendDraftAction',
         isEnabledBinding: 'Geniverse.articleController.isDraftDirty'
-      }),
-      
-      publishButtonView: SC.ButtonView.design({
-        layout: { bottom: 15, height: 24, left: 290, width: 90 },
-        title:  "Publish",
-        target: 'Geniverse.articleController',
-        action: 'publishAction',
-        isEnabledBinding: 'Geniverse.articleController.isDraftChanged'
       }),
       
       isVisibleBinding: 'Geniverse.articleController.isStaticVisible'
@@ -95,40 +83,36 @@ Geniverse.ArticleView = SC.View.extend(SC.StaticLayout,
     
     editingView: SC.View.extend(SC.StaticLayout, {
 
-      childViews: 'claimLabel inputClaimView evidenceLabel inputEvidenceView dragonBinView clearDragonsButton previewButtonView'.w(),
+      childViews: 'entryView previewButtonView'.w(),
       
-      claimLabel: SC.LabelView.design({
-          layout: {left: 0, top: 0, right: 0, height: 24 },
-          value: "Claim:"
-      }),
-      
-      inputClaimView: SC.TextFieldView.design({
-        layout: {left: 0, top: 25, right: 0, height: 20 },
-        isTextArea: YES,
-        valueBinding: 'Geniverse.articleController.claimValue'
-    	}),
-    	
-    	evidenceLabel: SC.LabelView.design({
-          layout: {left: 0, top: 55, right: 0, height: 24 },
-          value: "Evidence:"
-      }),
-      
-      inputEvidenceView: SC.TextFieldView.design({
-        layout: {left: 0, top: 80, right: 0, height: 50 },
-        isTextArea: YES,
-        valueBinding: 'Geniverse.articleController.evidenceValue'
-    	}),
-      
-      dragonBinView: Geniverse.DragonBinView.design({
-        layout: { top: 140, height: 40, left: 5, width: 240 },
-        dragonsBinding: 'Geniverse.dragonBinController'
-      }),
-      
-      clearDragonsButton: SC.ButtonView.design({
-        layout: { bottom: 15, height: 24, left: 260, width: 80 },
-        title:  "Clear",
-        target: 'Geniverse.dragonBinController',
-        action: 'clearDragons'
+      entryView: SC.View.design({
+        childViews: 'claimLabel inputClaimView evidenceLabel inputEvidenceView'.w(),
+        
+        layout: {left: 0, top: 0, right: 0, height: 170 },
+        
+        classNames: ['article_text'],
+        
+        claimLabel: SC.LabelView.design({
+            layout: {left: 0, top: 0, right: 0, height: 24 },
+            value: "Claim:"
+        }),
+
+        inputClaimView: SC.TextFieldView.design({
+          layout: {left: 0, top: 25, right: 0, height: 20 },
+          isTextArea: YES,
+          valueBinding: 'Geniverse.articleController.claimValue'
+      	}),
+
+      	evidenceLabel: SC.LabelView.design({
+            layout: {left: 0, top: 55, right: 0, height: 24 },
+            value: "Evidence:"
+        }),
+
+        inputEvidenceView: SC.TextFieldView.design({
+          layout: {left: 0, top: 80, right: 0, height: 90 },
+          isTextArea: YES,
+          valueBinding: 'Geniverse.articleController.evidenceValue'
+      	})
       }),
 
       previewButtonView: SC.ButtonView.design({
