@@ -83,7 +83,15 @@ Lab.breedingPageGroup = SC.Page.design({
 
         action: function() {
           Geniverse.matchController.showPane();
-        }
+        },
+        
+        isVisible: function() {
+          return Geniverse.matchController.get('length') > 0;
+        }.property('Geniverse.matchController.arrangedObjects.[]'),
+
+        updateIsVisible: function(){
+          this.propertyDidChange('isVisible');
+        }.observes('Geniverse.matchController.arrangedObjects.[]')
       }),
       
       marketplaceView: SC.ImageView.design({
