@@ -15,23 +15,38 @@ Geniverse.MatchView = SC.View.extend(
 
   matchDragonsBinding: 'Geniverse.matchController.arrangedObjects',
   
-  proposedDragonsBinding: 'Geniverse.proposedController.arrangedObjects',
-  
-  childViews: 'title'.w(),
+  childViews: 'title dragonViews'.w(),
   
   title: SC.LabelView.design({
     classNames: 'container_label'.w(),
-    layout: { centerX: 0, top:0, height: 20, right: 0 },
+    layout: { centerX: 0, top:0, height: 20, left: 0 },
     controlSize: "bity",
     textAlign: SC.ALIGN_CENTER,
     fontWeight: SC.BOLD_WEIGHT,
     value: "Your Target Dragons"
   }),
   
+  isVisible: function() {
+    var titleWidth = (Geniverse.matchController.get('length') * this.get('layout').height);
+    titleWidth  = titleWidth < 130 ? 130 : titleWidth;
+    this.get('title').get('layout').width = titleWidth;
+    this.get('title').layoutDidChange();
+    return Geniverse.matchController.get('length') > 0;
+  }.property('Geniverse.matchController.arrangedObjects.[]'),
+  
+  updateIsVisible: function(){
+    this.propertyDidChange('isVisible');
+  }.observes('Geniverse.matchController.arrangedObjects.[]'),
+  
+  dragonViews: SC.View.design({
+    layout: { top:0, bottom: 0, left: 0, right: 0 }
+  }),
+  
   updateMatchViews: function () {
     
     // add dragon views
     var matchDragons = this.get('matchDragons');
+    this.get('dragonViews').removeAllChildren();
     for (var i = 0, ii = matchDragons.get('length'); i < ii; i++) {
       this.addDragonView(matchDragons.objectAt(i), i);
     }
@@ -66,18 +81,19 @@ Geniverse.MatchView = SC.View.extend(
 
         this._setClassNames();
 
-        return op ;
+        return NO ;
       },
 
       dragEntered: function(drag, evt) {
+          SC.RunLoop.begin();
           this.set('isSelected', YES);
+          SC.RunLoop.end();
           this._setClassNames();
       },
       
       _setClassNames: function(){
         var classNames = [];
         
-        console.log("this.get('isMatched') = "+this.get('isMatched'));
         if (this.get('isMatched')){
           classNames.push('matched');
         } else if (this.get('isSelected')){
@@ -85,13 +101,12 @@ Geniverse.MatchView = SC.View.extend(
         } else {
           classNames.push('empty');
         }
-
         this.get('imageView').set('classNames', classNames);
-
+        this.set('classNames', classNames);
         this.get('imageView').displayDidChange();
       }
     });
-    this.appendChild(dragonView);
+    this.get('dragonViews').appendChild(dragonView);
   }
 
 });
