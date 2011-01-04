@@ -128,7 +128,6 @@ Lab.TopBarView = SC.ToolbarView.extend(
       SC.LabelView.design({
         layout: { centerY: 0, height: 24, left: 77, width: 400 },
         controlSize: SC.LARGE_CONTROL_SIZE,
-        fontWeight: SC.BOLD_WEIGHT,
         //value: "Geniverse Labs"
         valueBinding: this.get('titlePath') //'Geniverse.activityController.title'
       })
@@ -138,7 +137,6 @@ Lab.TopBarView = SC.ToolbarView.extend(
     this.welcomeLabelView = this.createChildView(
       SC.LabelView.design({
         layout: { top: 5,  height: 24, right: 340, width: 345},
-        fontWeight: SC.BOLD_WEIGHT,
         textAlign: SC.ALIGN_RIGHT,
         valueBinding: this.get('welcomePath'),
         isVisibleBinding: this.get('welcomeIsVisiblePath')
