@@ -116,6 +116,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     allelesDidChange: function() {
       this.set('ignoreChanges', YES);
       var alleles = this.get('alleles');
+      SC.Logger.dir('alleles = '+alleles);
       var pulldowns = this.get('alleleToPulldown');
       
       if (!pulldowns[this]){
@@ -127,6 +128,25 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       
       for (var i = 0; i < alleles.length; i++) {
         var pd = pulldowns[this][alleles[i].toLowerCase()];
+        if (!pd) {      // not findable just by getting lower case
+          var allAlleles = Geniverse.chromosomeController.get('allAlleles');
+          for (var j in allAlleles){
+            for (var k in allAlleles[j]){
+              if (allAlleles[j][k] === alleles[i]){
+                sisterAlleles = allAlleles[j];
+                break;
+              }
+            }
+          }
+          for (var l in sisterAlleles){
+            if (SC.typeOf(sisterAlleles[l]) === SC.T_STRING){
+              pd = pulldowns[this][sisterAlleles[l].toLowerCase()];
+              if (!!pd){
+                break;
+              }
+            }
+          }
+        }
         if (!!pd && pd.get('fieldValue') != alleles[i]) {
           if (pd.get('title')) {
             pd.set('title', Geniverse.chromosomeController.titleForAllele(alleles[i]));
