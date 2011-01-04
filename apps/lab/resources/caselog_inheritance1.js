@@ -5,7 +5,7 @@
 /**
  * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
-/*globals Geniverse, CC, CcChat, java static_url sc_static */
+/*globals Geniverse, CC, CcChat, java static_url sc_static Lab */
 sc_require('mixins/simple_button');
 sc_require('views/top_bar_view');
 
@@ -35,7 +35,7 @@ Lab.caselog = SC.Page.design({
       layout: { top: 37, left: 0, right: 0 },
       layerId: 'caselogcontent',
 
-      childViews: 'background inheritance2right meiosis training experiment individual group'.w(),
+      childViews: 'background inheritance2right meiosis training apprentice1 apprentice2 apprentice3 journeyman1 journeyman2'.w(),
 
       background: SC.ImageView.design({
         layout: { top: 0, left: 0, right: 0 },
@@ -72,34 +72,54 @@ Lab.caselog = SC.Page.design({
         layout: { top: 304, left: 91, width: 341, height: 70 }
       }),
 
-      experiment: SC.View.design(Lab.SimpleButton, {
+      apprentice1: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
         layerId: 'experiment',
         target: 'Lab.caselog',
-        action: 'goExperiment1',
+        action: 'goApprentice1',
         title: 'In the Clutches of Drakes',
         layout: { top: 399, left: 91, width: 341, height: 70 }
       }),
 
-      individual: SC.View.design(Lab.SimpleButton, {
+      apprentice2: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
         layerId: 'individual',
         target: 'Lab.caselog',
-        action: 'goIndividual1',
+        action: 'goApprentice2',
         title: 'Drake Forecast',
         layout: { top: 100, left: 522, width: 341, height: 70 }
       }),
 
-      group: SC.View.design(Lab.SimpleButton, {
+      apprentice3: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
         layerId: 'group',
         target: 'Lab.caselog',
-        action: 'goGroup1',
+        action: 'goApprentice3',
         title: 'A Perfect Look-alike',
         layout: { top: 195, left: 522, width: 341, height: 70 }
+      }),
+      
+      journeyman1: SC.View.design(Lab.SimpleButton, {
+        hasHover: YES,
+        tagName: 'a',
+        layerId: 'j1',
+        target: 'Lab.caselog',
+        action: 'goJourneyman1',
+        title: 'A Perfect Look-alike',
+        layout: { top: 304, left: 522, width: 341, height: 70 }
+      }),
+      
+      journeyman2: SC.View.design(Lab.SimpleButton, {
+        hasHover: YES,
+        tagName: 'a',
+        layerId: 'j2',
+        target: 'Lab.caselog',
+        action: 'goJourneyman2',
+        title: 'A Perfect Look-alike',
+        layout: { top: 399, left: 522, width: 341, height: 70 }
       })
 
   	})
@@ -111,15 +131,21 @@ Lab.caselog = SC.Page.design({
     SC.routes.set('location', 'lab/meiosis');
   },
   goTraining1: function() {
-    SC.routes.set('location', 'lab/training1');
+    SC.routes.set('location', 'heredity/training/case01');
   },
-  goExperiment1: function() {
-    SC.routes.set('location', 'lab/experiment1');
+  goApprentice1: function() {
+    SC.routes.set('location', 'heredity/training/case02');
   },
-  goIndividual1: function() {
-    SC.routes.set('location', 'lab/individual1');
+  goApprentice2: function() {
+    SC.routes.set('location', 'heredity/training/case03');
   },
-  goGroup1: function() {
-    SC.routes.set('location', 'lab/group1');
+  goApprentice3: function() {
+    SC.routes.set('location', 'heredity/training/case04');
+  },
+  goJourneyman1: function() {
+    SC.routes.set('location', 'heredity/apprentice/case01');
+  },
+  goJourneyman2: function() {
+    SC.routes.set('location', 'heredity/apprentice/case02');
   }
 });
