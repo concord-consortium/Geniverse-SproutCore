@@ -22,6 +22,7 @@ Geniverse.breedDragonController = SC.Controller.create(
   newChild: null,
   resetCount: 0,
   breedCount: 0,
+  numberOfOffspring: 20,
 
   hasParents: function () {
     var mother = this.get('mother');
@@ -94,7 +95,7 @@ Geniverse.breedDragonController = SC.Controller.create(
         }
       };
     }(this._callback_version);
-    Geniverse.gwtController.breedOrganisms(20, this.get('mother'), this.get('father'), didCreateChild);
+    Geniverse.gwtController.breedOrganisms(this.get('numberOfOffspring'), this.get('mother'), this.get('father'), didCreateChild);
   }
   
 });
