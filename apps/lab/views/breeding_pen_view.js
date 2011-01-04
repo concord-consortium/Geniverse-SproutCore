@@ -52,7 +52,7 @@ Lab.BreedingPenView = SC.View.extend(
         contentView: SC.GridView.design({
           contentBinding: this.get('eggsControllerPath')+'.arrangedObjects',
           selectionBinding: this.get('eggsControllerPath')+'.selection',
-          rowHeight: 58,
+          rowHeight: 60,
           columnWidth: 60,
           canEditContent: NO,
           exampleView: Geniverse.OrganismView,

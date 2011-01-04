@@ -59,7 +59,7 @@ Lab.StableView = SC.View.extend(
         }.observes("Geniverse.stableOrganismsController.arrangedObjects.[]"),
         value:  function() {
           var numDragons = Geniverse.stableOrganismsController.get('length');
-          var spaces = 50 - numDragons;
+          var spaces = 25 - numDragons;
           // SC.Logger.log("recalculating");
           return "Your Stable      -   " + spaces + " spaces remaining";
         }.property('Geniverse.stableOrganismsController.arrangedObjects.[]')
@@ -103,7 +103,7 @@ Lab.StableView = SC.View.extend(
             // TODO: set these stableOrganismsController-based properties
             var allStableDragons = Geniverse.stableOrganismsController.get('arrangedObjects');
             var count = Geniverse.stableOrganismsController.get('length');
-            if (count >= 50){
+            if (count >= 25){
               alert("Your stable is full");
               return;
             }
