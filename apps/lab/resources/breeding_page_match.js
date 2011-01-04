@@ -53,28 +53,28 @@ Lab.breedingPageMatch = SC.Page.design({
       }),
       
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
-      layout: { left:55, top: 20, width: 35, height: 30 },
+        layout: { left:55, top: 20, width: 35, height: 30 },
         selectionBinding: 'Geniverse.challengePoolController.selection',
         selection1Binding: 'Geniverse.eggsController.selection',
         selection2Binding: 'Geniverse.stableOrganismsController.selection'
       }),
       
       breedView: Geniverse.BreedDragonView.design({
-        layout: { top: 50 , left: 100, height: 300, width: 150 },
+        layout: { top: 20 , left: 100, height: 330, width: 150 },
         showChildView: NO // child as in baby dragon
       }),
       
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { left: 265, top: 40, width: 300, height: 340 }
+        layout: { left: 265, top: 28, width: 300, height: 353 }
       }),
 
       stableView: Lab.StableView.design({
-        layout: { left: 580, top: 50, height: 300, width: 300 }
+        layout: { left: 580, top: 28, height: 322, width: 300 }
       }),
       
       marketplaceView: SC.ImageView.design({
-        layout: { left: 790, top: 360, height: 90, width: 90 },
+        layout: { left: 895, top: 260, height: 90, width: 90 },
         value: sc_static('sell-to-market.jpg'),
         canLoadInBackground: NO,
         useImageCache: NO,

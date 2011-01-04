@@ -67,7 +67,7 @@ Geniverse.BreedDragonView = SC.View.extend(
 	}),
 	
 	fatherView: Geniverse.OrganismView.design({
-		layout: {top: 180, right: 0, width: 140, height: 140},
+		layout: {bottom: 0, right: 0, width: 140, height: 140},
 	  classNames: "fatherView transparent".w(),
 	  contentBinding: "*parentView.father",
 	  parent: "father",

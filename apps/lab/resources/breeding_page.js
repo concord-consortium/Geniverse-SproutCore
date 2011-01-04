@@ -43,35 +43,38 @@ Lab.breedingPage = SC.Page.design({
     
     mainAppView: SC.View.design({
       
-      layout: { top: 45, bottom: 0, left: 10, right: 0 },
+      layout: { top: 25, bottom: 0, left: 10, right: 0 },
       
-      childViews: 'breedView challengePoolView challengeChromosomeToolView breedingPenView stableView marketplaceView '.w(),
+      childViews: 'breedView challengePoolView challengeChromosomeToolView breedingPenView stableView marketplaceView matchView'.w(),
      
       // challenge pool to hold initial, system-created dragons
       challengePoolView: Lab.ChallengePoolView.design({
-        layout: { left: 20, top: 150, width:70, height: 300 }
+        layout: { left: 20, top: 50, width:70, height: 300 }
       }),
       
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
-      layout: { left:55, top: 120, width: 35, height: 30 },
+        layout: { left:55, top: 20, width: 35, height: 30 },
         selectionBinding: 'Geniverse.challengePoolController.selection',
         selection1Binding: 'Geniverse.eggsController.selection',
         selection2Binding: 'Geniverse.stableOrganismsController.selection'
       }),
       
       breedView: Geniverse.BreedDragonView.design({
-        layout: { top: 150 , left: 100, height: 300, width: 150 },
-        showChildView: NO, // child as in baby dragon
-        showCount: NO
+        layout: { top: 20 , left: 100, height: 330, width: 150 },
+        showChildView: NO // child as in baby dragon
       }),
       
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { left: 265, top: 140, width: 300, height: 340 }
+        layout: { left: 265, top: 28, width: 300, height: 353 }
+      }),
+
+      stableView: Lab.StableView.design({
+        layout: { left: 580, top: 28, height: 322, width: 300 }
       }),
       
       marketplaceView: SC.ImageView.design({
-        layout: { left: 570, top: 200, height: 90, width: 90 },
+        layout: { left: 895, top: 260, height: 90, width: 90 },
         value: sc_static('sell-to-market.jpg'),
         canLoadInBackground: NO,
         useImageCache: NO,
@@ -114,9 +117,9 @@ Lab.breedingPage = SC.Page.design({
           this.$().removeClass('drop-target') ;
         }
       }),
-
-      stableView: Lab.StableView.design({
-        layout: { left: 680, top: 150, height: 300, width: 240 }
+      
+      matchView: Geniverse.MatchView.design({
+        layout: { left: 150, top: 370, height: 100, width: 400 }
       })
       
     })
