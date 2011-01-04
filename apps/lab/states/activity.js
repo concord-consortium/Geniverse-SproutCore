@@ -334,11 +334,6 @@ Lab.ACTIVITY = SC.Responder.create(
       SC.Logger.info("Creating " + conf.sex + ": " + name + " ( " + conf.alleles + ")" + " defaults");
       Geniverse.gwtController.generateDragonWithAlleles(conf.alleles, conf.sex, name, handleDragon);
     }
-    if (organismConfigurations.length === 0) {
-      SC.Logger.info("No configurations. Creating defaults.");
-      Geniverse.gwtController.generateDragon(1, 'Mother', handleDragon);
-      Geniverse.gwtController.generateDragon(0, 'Father', handleDragon);
-    }
   },
   
   gotoActivityRoute: function() { 
