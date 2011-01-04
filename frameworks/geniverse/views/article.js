@@ -86,32 +86,43 @@ Geniverse.ArticleView = SC.View.extend(SC.StaticLayout,
       childViews: 'entryView previewButtonView'.w(),
       
       entryView: SC.View.design({
-        childViews: 'claimLabel inputClaimView evidenceLabel inputEvidenceView'.w(),
+        childViews: 'claimLabel inputClaimView evidenceLabel inputEvidenceView reasoningLabel inputReasoningView'.w(),
         
         layout: {left: 0, top: 0, right: 0, height: 170 },
         
         classNames: ['article_text'],
         
         claimLabel: SC.LabelView.design({
-            layout: {left: 0, top: 0, right: 0, height: 24 },
+            layout: {left: 0, top: 0, right: 0, height: 16 },
             value: "Claim:"
         }),
 
         inputClaimView: SC.TextFieldView.design({
-          layout: {left: 0, top: 25, right: 0, height: 20 },
+          layout: {left: 0, top: 17, right: 0, height: 20 },
           isTextArea: YES,
           valueBinding: 'Geniverse.articleController.claimValue'
       	}),
 
       	evidenceLabel: SC.LabelView.design({
-            layout: {left: 0, top: 55, right: 0, height: 24 },
+            layout: {left: 0, top: 40, right: 0, height: 18 },
             value: "Evidence:"
         }),
 
         inputEvidenceView: SC.TextFieldView.design({
-          layout: {left: 0, top: 80, right: 0, height: 90 },
+          layout: {left: 0, top: 59, right: 0, height: 37 },
           isTextArea: YES,
           valueBinding: 'Geniverse.articleController.evidenceValue'
+      	}),
+      	
+        reasoningLabel: SC.LabelView.design({
+            layout: {left: 0, top: 97, right: 0, height: 18 },
+            value: "Reasoning:"
+        }),
+        
+        inputReasoningView: SC.TextFieldView.design({
+          layout: {left: 0, top: 115, right: 0, height: 50 },
+          isTextArea: YES,
+          valueBinding: 'Geniverse.articleController.reasoningValue'
       	})
       }),
 
