@@ -39,6 +39,10 @@
   opacity: 0.7;
 }
 
+.opaque {
+  opacity: 1;
+}
+
 .bity {
   font-size: 10px;
   font-weight: bold;

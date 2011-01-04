@@ -19,6 +19,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
   staticGenesBinding: '*parentView.staticGenes',
   isEditableBinding: '*parentView.isEditable',
   showEmptyOptionInPulldowns: NO,
+  classNames: ['opaque'],
   
   chromosome: '1',
   side: 'A',
@@ -63,6 +64,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     chromosomeBinding: '*parentView.chromosome',
     sideBinding: '*parentView.side',
     chromoImageUrlsBinding: '*parentView.chromoImageUrls',
+    classNames: ['opaque'],
     
     chromosomeDidChange: function() {
       this._setChromoImage();
