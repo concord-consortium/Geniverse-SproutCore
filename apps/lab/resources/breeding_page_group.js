@@ -45,33 +45,49 @@ Lab.breedingPageGroup = SC.Page.design({
 
     mainAppView: SC.View.design({
       
-      layout: { top: 45, bottom: 0, left: 10, right: 0 },
+      layout: { top: 25, bottom: 0, left: 10, right: 0 },
       
-      childViews: 'breedView challengePoolView breedingPenView challengeChromosomeToolView stableView marketplaceView chatView allArticlesView animationButton'.w(),
+      childViews: 'breedView challengePoolView breedingPenView challengeChromosomeToolView stableView matchButtonView marketplaceView chatView allArticlesView'.w(),
 
       challengePoolView: Lab.ChallengePoolView.design({
-        layout: { left: 20, top: 70, width:70, height: 300 }
+        layout: { left: 20, top: 50, width:70, height: 300 }
       }),
       
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
-      layout: { left: 20 + 70 - 35, top: 40, width: 35, height: 30 },
+        layout: { left:55, top: 20, width: 35, height: 30 },
         selectionBinding: 'Geniverse.challengePoolController.selection',
         selection1Binding: 'Geniverse.eggsController.selection',
         selection2Binding: 'Geniverse.stableOrganismsController.selection'
       }),
       
       breedView: Geniverse.BreedDragonView.design({
-        layout: { top: 70 , left: 100, height: 300, width: 150 },
+        layout: { top: 20 , left: 100, height: 330, width: 150 },
         showChildView: NO // child as in baby dragon
       }),
       
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { left: 265, top: 60, width: 300, height: 340 }
+        layout: { left: 265, top: 28, width: 300, height: 353 }
+      }),
+
+      stableView: Lab.StableView.design({
+        layout: { left: 580, top: 28, height: 322, width: 300 }
+      }),
+      
+      matchButtonView: SC.ButtonView.extend(
+      /** @scope Geniverse.ChromosomeToolView.prototype */ {
+        titleMinWidth: 0,
+        title: "Dragons to match",
+        
+        layout: { left: 895, top: 210, height: 24, width: 130 },
+
+        action: function() {
+          Geniverse.matchController.showPane();
+        }
       }),
       
       marketplaceView: SC.ImageView.design({
-        layout: { left: 570, top: 150, height: 90, width: 90 },
+        layout: { left: 895, top: 260, height: 90, width: 90 },
         value: sc_static('sell-to-market.jpg'),
         canLoadInBackground: NO,
         useImageCache: NO,
@@ -114,21 +130,27 @@ Lab.breedingPageGroup = SC.Page.design({
         }
     	}),
 
-      stableView: Lab.StableView.design({}), 
-
-      allArticlesView: SC.TabView.design({ 
-        layout: { bottom: 10, right: 30, width: 450, height: 235},
-        items: [ 
-          {title: "Your paper", value: "Geniverse.yourArticleView" },
-          {title: "Published papers", value: "Geniverse.publishedArticlesView" }
-        ], 
-        itemTitleKey: 'title', 
-        itemValueKey: 'value',
-        nowShowingBinding: 'Geniverse.articleController.nowShowing' // hack for defining the startup tab 
+      allArticlesView: SC.View.design ({
+        childViews: 'articleLabel article'.w(),
+        
+        layout: { top: 380, left: 430, width: 450, height: 235},
+        
+        articleLabel: SC.LabelView.design({
+          layout: {top: 0, left: 0, right: 0, height: 20},
+          value: "Article draft",
+          classNames: "container_label",
+          controlSize: "bity",
+          textAlign: SC.ALIGN_CENTER,
+          fontWeight: SC.BOLD_WEIGHT
+        }),
+        
+        article: Geniverse.ArticleView.design({ 
+          layout: { top: 20, left: 0, right: 0, bottom: 0}
+        })
       }),
       
       chatView: SC.View.design ({
-        layout: { bottom: 10, left: 20, width: 385, height: 215 },
+        layout: { top: 380, left: 20, width: 385, height: 215 },
         classNames: "transparent".w(),
         childViews: 'userListLabel userListView chatListView chatComposeView '.w(),
         
@@ -170,14 +192,6 @@ Lab.breedingPageGroup = SC.Page.design({
           layerId: "chatCompose"
         })
 
-      }),
-
-      animationButton: Geniverse.AnimationButtonView.design({
-        layout: { left: 680, top: 40, width: 45, height: 30 },
-        selectionBinding: 'Geniverse.allSelectedDragonsController.selection',
-        selection1Binding: 'Geniverse.eggsController.selection',
-        selection2Binding: 'Geniverse.stableOrganismsController.selection',
-        isEnabledBinding: 'Geniverse.meiosisAnimationController.isEnabled'
       })
     })
   })
