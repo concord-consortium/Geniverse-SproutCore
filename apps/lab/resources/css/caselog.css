@@ -34,13 +34,26 @@ body {
 	color: #340404;
 	font: 90% georgia, times, 'times new roman', serif;
 	}
-#caselogcontent {
-	background: static_url('caselog-bg.jpg') no-repeat;
+#caselogcontent{
 	height: 600px;
 	margin: 0 auto;
 	position: relative;
 	width: 960px;
-	}
+}
+	
+#inheritance2content {
+	height: 600px;
+	margin: 0 auto;
+	position: relative;
+	width: 960px;
+}
+	
+#meiosiscontent {
+	height: 600px;
+	margin: 0 auto;
+	position: relative;
+	width: 960px;
+}
 	
 .black-text {
   color: #000000;

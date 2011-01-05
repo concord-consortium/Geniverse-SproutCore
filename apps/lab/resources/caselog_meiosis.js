@@ -35,7 +35,7 @@ Lab.meiosis = SC.Page.design({
       layout: { top: 37, left: 0, right: 0 },
       layerId: 'meiosiscontent',
 
-      childViews: 'background inheritance inheritance2left training experiment individual group'.w(),
+      childViews: 'background inheritance inheritance2left training apprentice1 apprentice2 apprentice3 journeyman1 journeyman2'.w(),
 
       background: SC.ImageView.design({
         layout: { top: 0, left: 0, right: 0 },
@@ -124,11 +124,11 @@ Lab.meiosis = SC.Page.design({
 
   	})
 	}),
+  goInheritance1: function() {
+    SC.routes.set('location', 'lab/caselog');
+  },
   goInheritance2: function() {
     SC.routes.set('location', 'lab/inheritance2');
-  },
-  goMeiosis: function() {
-    SC.routes.set('location', 'lab/meiosis');
   },
   goTraining1: function() {
     SC.routes.set('location', 'meiosis/apprentice/case01');
