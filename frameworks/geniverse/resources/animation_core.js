@@ -1,6 +1,9 @@
-(function(window, document, $, Raphael, burst){
+sc_require('lib/burst-core');
+
+(function(window, document, $, Raphael, Burst){
 
   $.fn.geniverse = function(json_file, options) {
+    var burst = new Burst();
 
     // DEFAULTS
     //////////////////////////////////////////////////////////////////////////////
@@ -487,7 +490,11 @@
 
       if(pairingMode){
         if(!swapui){
-          swapui = paper.rect(180,5,100,105,6).insertBefore(chromosomes[0].alleles[0].SVG_inner);
+          var width = defaultOpts.width,
+                      height = defaultOpts.height,
+                      centerX = defaultOpts.width/2 - 50;
+
+          swapui = paper.rect(centerX,5,100,105,6).insertBefore(chromosomes[0].alleles[0].SVG_inner);
           swapui.attr({fill: defaultOpts.color.swapUI_fill , stroke: defaultOpts.color.swapUI_stroke });
         }
       }
@@ -1047,15 +1054,19 @@
         
     //////////////////////
     function pairingUI( swapPair ){
+      // Center swap ui respective to plugin width
+      var width = defaultOpts.width,
+          height = defaultOpts.height,
+          centerX = defaultOpts.width/2 - 50;
       switch( swapPair ){
         case "a":
-          swapui.attr({x:180,y:5,width:100,height:105});
+          swapui.attr({x:centerX,y:5,width:100,height:105});
           break;
         case "b":
-          swapui.attr({x:180,y:110,width:100,height:105});
+          swapui.attr({x:centerX,y:110,width:100,height:105});
           break;
         case "c":
-          swapui.attr({x:180,y:215,width:100,height:105});
+          swapui.attr({x:centerX,y:215,width:100,height:105});
           break;
       };
     };
@@ -1896,4 +1907,4 @@
 
   };
   
-})(this, this.document, this.jQuery, this.Raphael, this.burst); 
+})(this, this.document, this.jQuery, this.Raphael, Burst); 
