@@ -85,12 +85,12 @@ Geniverse.breedDragonController = SC.Controller.create(
         SC.RunLoop.end();
 
         nEggs++;
-        if (nEggs == 20) {
+        if (nEggs == self.get('numberOfOffspring')) {
           SC.RunLoop.begin();
           self.set('isBreeding', NO);
           SC.RunLoop.end();
         }
-        else if (nEggs > 20) {
+        else if (nEggs > self.get('numberOfOffspring')) {
           throw "Oops; GWT called back one too many times!";
         }
       };
