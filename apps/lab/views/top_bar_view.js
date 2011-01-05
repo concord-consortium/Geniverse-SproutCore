@@ -178,8 +178,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         alt: 'Info',
         toolTip: "Click to see instructions",
         target: 'Lab.infoController',
-        action: 'showPane',
-        isVisibleBinding: 'Lab.helpController.isVisible'
+        action: 'showPane'
       })
     );
     Lab.infoController.set('infoButton', this.infoButton); // So pop-up pointer works
@@ -203,12 +202,13 @@ Lab.TopBarView = SC.ToolbarView.extend(
     this.notepadButton = this.createChildView(
       SC.ImageView.design(Lab.SimpleButton, {
         layout: { centerY: 0, right: 73, width: 27, height: 26 },
+        layerId: 'helpButton',
+        hasHover: YES,
+        alt: 'Your notebook',
         layerId: 'notepadButton',
         title:  "Note Pad",
         target: this.get('notepadButtonTargetPath'),
-        action: 'showPane',
-        isVisibleBinding: this.get('notepadButtonIsVisiblePath'),
-        isEnabledBinding: this.get('notepadControllerIsEnabledButtonPath')
+        action: 'showPane'
       })
     );
     childViews.push(this.notepadButton);
@@ -219,8 +219,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         layerId: 'logOutButton',
         title:  "Log out",
         target: this.get('logoutButtonTargetPath'),
-        action: 'logoutPortal',
-        isVisibleBinding: this.get('logoutButtonIsVisiblePath')
+        action: 'logoutPortal'
       })
     );
     childViews.push(this.logoutButton);
