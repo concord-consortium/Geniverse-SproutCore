@@ -182,7 +182,8 @@ Lab.loginController = SC.ObjectController.create(
     this.hidePanel();
     this.set('welcomeMessage',"Welcome %@, you are member #%@ in group %@".fmt(userName, member, group));
     //Lab.infoController.displayButtonOnly("<div><h2>"+this.get('welcomeMessage')+"</h2></div>");
-    CcChat.chatController.set('username', user.get('username'));
+    // CcChat.chatController.set('username', user.get('username'));
+    Lab.ACTIVITY.initChatChannels();
     Lab.userDefaults.writeDefault('username', user.get('username'));
     this.updateGroupInfo();
     this.set('loggedIn', YES);
