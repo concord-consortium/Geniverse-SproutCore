@@ -67,19 +67,6 @@ Geniverse.articleController = SC.ObjectController.create(
   
   nowShowing: 'Geniverse.yourArticleView',      // hack for defining start-up tab
   
-  init: function () {
-    this.set('loadTimer', SC.Timer.schedule({
-      target: this,
-      action: '_subscribeToArticleChannels',
-      interval: 500,
-      repeats: YES
-    }));
-		
-    this.set('publishedArticle', this.get('combinedArticle'));
-    
-		sc_super();
-  },
-  
   started: NO,
   
   initArticle: function(){
@@ -226,18 +213,11 @@ Geniverse.articleController = SC.ObjectController.create(
   
   _subscribeToArticleChannels: function() {
     if (CcChat.chatController.chatHasInitialized && CcChat.chatRoomController.get('channel').length > 0){
-      
       var articleDraftChannel = CcChat.chatRoomController.get('channel') + "/articles";
       this.set('articleDraftChannel', articleDraftChannel);
-      CcChat.chatController.subscribeToChannel(articleDraftChannel, this.receiveDraftArticle);
-      
-      var articlePublishingChannel = CcChat.chatRoomController.get('baseChannelName') + "/articles";
-      this.set('articlePublishingChannel', articlePublishingChannel);
-      CcChat.chatController.subscribeToChannel(articlePublishingChannel, this.receivePublishedArticle);
-      
-      this.get('loadTimer').invalidate();
+      CcChat.chatController.subscribeToChannel(articleDraftChannel, this.receiveDraftArticle, this);
     }
-  },
+  }.observes('CcChat.chatRoomController.channel'),
   
   receiveDraftArticle: function(message) {
     var article = message.article;
