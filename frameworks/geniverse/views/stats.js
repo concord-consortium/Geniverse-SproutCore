@@ -95,7 +95,15 @@ Geniverse.StatsView = SC.View.extend(
             context = context.begin('th').push("M").end();
           context = context.end();
          
+         // we move this into an array so we can sort it
+         var allTraits = [];
          for (var trait in dragonGroups){
+           allTraits.push(trait);
+         }
+         allTraits.sort();
+         
+         for (var i = 0; i < allTraits.length; i++){
+           var trait = allTraits[i];
            context = context.begin('tr');
              context = context.begin('th').push(trait).end();
              var total = dragonGroups[trait].Male + dragonGroups[trait].Female;
