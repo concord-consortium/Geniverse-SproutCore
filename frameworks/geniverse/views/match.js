@@ -19,17 +19,20 @@ Geniverse.MatchView = SC.View.extend(
   
   title: SC.LabelView.design({
     classNames: 'container_label'.w(),
-    layout: { centerX: 0, top:0, height: 20, left: 0 },
+    layout: { top:0, height: 20, left: 0 },
     controlSize: "bity",
     textAlign: SC.ALIGN_CENTER,
     fontWeight: SC.BOLD_WEIGHT,
-    value: "Your Target Dragons"
+    value: "Target Drakes"
   }),
+  
+  isVertical: NO,
   
   isVisible: function() {
     var titleWidth = (Geniverse.matchController.get('length') * this.get('layout').height);
-    titleWidth  = titleWidth < 130 ? 130 : titleWidth;
+    titleWidth  = (titleWidth < 130 || this.get('isVertical')) ? 130 : titleWidth;
     this.get('title').get('layout').width = titleWidth;
+    this.get('title').set('textAlign', this.get('isVertical') ? SC.ALIGN_LEFT : SC.ALIGN_CENTER);
     this.get('title').layoutDidChange();
     return Geniverse.matchController.get('length') > 0;
   }.property('Geniverse.matchController.arrangedObjects.[]'),
@@ -54,8 +57,21 @@ Geniverse.MatchView = SC.View.extend(
   
   addDragonView: function (dragon, i) {
     var height = this.get('layout').height;
+    var width = this.get('layout').width;
+    var top, left;
+    console.log(" ==== "+this.get('isVertical'))
+    if (!this.get('isVertical')){
+      top = 20;
+      left = (i * height);
+      width = height;
+    } else {
+      top = 20 + (i * width);
+      left = 0;
+    }
+    console.log("top = "+top+", left = "+left);
+    console.log("width = "+width);
     var dragonView = Geniverse.OrganismView.create({
-      layout: {top: 20, bottom: 0, left: (i * height), width: height},
+      layout: {top: top, height: width, left: left, width: width},
       content: dragon,
       isMatched: NO,
       isDropTarget: YES,
