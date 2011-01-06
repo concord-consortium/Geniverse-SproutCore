@@ -59,7 +59,6 @@ Geniverse.MatchView = SC.View.extend(
     var height = this.get('layout').height;
     var width = this.get('layout').width;
     var top, left;
-    console.log(" ==== "+this.get('isVertical'))
     if (!this.get('isVertical')){
       top = 20;
       left = (i * height);
@@ -68,8 +67,6 @@ Geniverse.MatchView = SC.View.extend(
       top = 20 + (i * width);
       left = 0;
     }
-    console.log("top = "+top+", left = "+left);
-    console.log("width = "+width);
     var dragonView = Geniverse.OrganismView.create({
       layout: {top: top, height: width, left: left, width: width},
       content: dragon,

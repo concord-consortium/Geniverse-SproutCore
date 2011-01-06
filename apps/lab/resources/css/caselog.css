@@ -89,7 +89,7 @@ a#training {
 	top: 304px;
 	width: 341px;
 	}
-a#training:hover {
+a#i1-training:hover {
     cursor: pointer;
     cursor: hand;
     background-image: static_url('caselog-training-highlighted.png');
@@ -107,7 +107,7 @@ a#experiment {
 	top: 399px;
 	width: 341px;
 	}
-a#experiment:hover {
+a#i1-experiment:hover {
     cursor: pointer;
     cursor: hand;
     background-image: static_url('caselog-experiment-highlighted.png');
@@ -125,7 +125,7 @@ a#individual {
 	top: 100px;
 	width: 341px;
 	}
-a#individual:hover {
+a#i1-individual:hover {
     cursor: pointer;
     cursor: hand;
     background-image: static_url('caselog-individual-highlighted.png');
@@ -143,7 +143,7 @@ a#group {
 	top: 195px;
 	width: 341px;
 	}
-a#group:hover {
+a#i1-group:hover {
     cursor: pointer;
     cursor: hand;
     background-image: static_url('caselog-group-highlighted.png');

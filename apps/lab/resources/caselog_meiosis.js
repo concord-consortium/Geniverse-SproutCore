@@ -65,7 +65,7 @@ Lab.meiosis = SC.Page.design({
       training: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
-        layerId: 'training',
+        layerId: 'm1-training',
         target: 'Lab.meiosis',
         action: 'goTraining1',
         title: 'Drake Traits',
@@ -75,7 +75,7 @@ Lab.meiosis = SC.Page.design({
       apprentice1: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
-        layerId: 'experiment',
+        layerId: 'm1-experiment',
         target: 'Lab.meiosis',
         action: 'goApprentice1',
         title: 'In the Clutches of Drakes',
@@ -85,7 +85,7 @@ Lab.meiosis = SC.Page.design({
       apprentice2: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
-        layerId: 'individual',
+        layerId: 'm1-individual',
         target: 'Lab.meiosis',
         action: 'goApprentice2',
         title: 'Drake Forecast',
@@ -95,7 +95,7 @@ Lab.meiosis = SC.Page.design({
       apprentice3: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
-        layerId: 'group',
+        layerId: 'm1-group',
         target: 'Lab.meiosis',
         action: 'goApprentice3',
         title: 'A Perfect Look-alike',
@@ -105,7 +105,7 @@ Lab.meiosis = SC.Page.design({
       journeyman1: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
-        layerId: 'j1',
+        layerId: 'm1-journeyman1',
         target: 'Lab.meiosis',
         action: 'goJourneyman1',
         title: 'A Perfect Look-alike',
@@ -115,7 +115,7 @@ Lab.meiosis = SC.Page.design({
       journeyman2: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
-        layerId: 'j2',
+        layerId: 'm1-journeyman2',
         target: 'Lab.meiosis',
         action: 'goJourneyman2',
         title: 'A Perfect Look-alike',
@@ -131,12 +131,15 @@ Lab.meiosis = SC.Page.design({
     SC.routes.set('location', 'lab/inheritance2');
   },
   goTraining1: function() {
+    SC.Logger.log("M, t1 -> meiosis/apprentice/case01");
     SC.routes.set('location', 'meiosis/apprentice/case01');
   },
   goApprentice1: function() {
+    SC.Logger.log("M, a1 -> meiosis/apprentice/case02");
     SC.routes.set('location', 'meiosis/apprentice/case02');
   },
   goApprentice2: function() {
+    SC.Logger.log("M, a2 -> meiosis/apprentice/case03");
     SC.routes.set('location', 'meiosis/apprentice/case03');
   },
   goApprentice3: function() {

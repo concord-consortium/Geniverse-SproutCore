@@ -65,7 +65,7 @@ Lab.inheritance2 = SC.Page.design({
       training1: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
-        layerId: 'training',
+        layerId: 'i2-training1',
         target: 'Lab.inheritance2',
         action: 'goTraining1',
         title: 'Drake Traits',
@@ -75,7 +75,7 @@ Lab.inheritance2 = SC.Page.design({
       training2: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
-        layerId: 'training',
+        layerId: 'i2-training2',
         target: 'Lab.inheritance2',
         action: 'goTraining2',
         title: 'Drake Traits',
@@ -85,7 +85,7 @@ Lab.inheritance2 = SC.Page.design({
       training3: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
-        layerId: 'training',
+        layerId: 'i2-training3',
         target: 'Lab.inheritance2',
         action: 'goTraining3',
         title: 'Drake Traits',
@@ -95,7 +95,7 @@ Lab.inheritance2 = SC.Page.design({
       apprentice1: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
-        layerId: 'experiment',
+        layerId: 'i2-experiment',
         target: 'Lab.inheritance2',
         action: 'goApprentice1',
         title: 'In the Clutches of Drakes',
@@ -105,7 +105,7 @@ Lab.inheritance2 = SC.Page.design({
       apprentice2: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
-        layerId: 'individual',
+        layerId: 'i2-individual',
         target: 'Lab.inheritance2',
         action: 'goApprentice2',
         title: 'Drake Forecast',
@@ -115,7 +115,7 @@ Lab.inheritance2 = SC.Page.design({
       apprentice3: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
-        layerId: 'group',
+        layerId: 'i2-group',
         target: 'Lab.inheritance2',
         action: 'goApprentice3',
         title: 'A Perfect Look-alike',
@@ -125,7 +125,7 @@ Lab.inheritance2 = SC.Page.design({
       journeyman1: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
-        layerId: 'j1',
+        layerId: 'i2-journeyman1',
         target: 'Lab.inheritance2',
         action: 'goJourneyman1',
         title: 'A Perfect Look-alike',
@@ -135,7 +135,7 @@ Lab.inheritance2 = SC.Page.design({
       journeyman2: SC.View.design(Lab.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
-        layerId: 'j2',
+        layerId: 'i2-journeyman2',
         target: 'Lab.inheritance2',
         action: 'goJourneyman2',
         title: 'A Perfect Look-alike',
@@ -151,12 +151,15 @@ Lab.inheritance2 = SC.Page.design({
     SC.routes.set('location', 'lab/meiosis');
   },
   goTraining1: function() {
+    SC.Logger.log("I2, t1 -> heredity/apprentice/case03");
     SC.routes.set('location', 'heredity/apprentice/case03');
   },
   goTraining2: function() {
+    SC.Logger.log("I2, t2 -> heredity/apprentice/case04");
     SC.routes.set('location', 'heredity/apprentice/case04');
   },
   goTraining3: function() {
+    SC.Logger.log("I2, t3 -> heredity/journeyman/case01");
     SC.routes.set('location', 'heredity/journeyman/case01');
   },
   goApprentice1: function() {
