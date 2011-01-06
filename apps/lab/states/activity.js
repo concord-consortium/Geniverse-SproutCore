@@ -332,7 +332,7 @@ Lab.ACTIVITY = SC.Responder.create(
       var conf = organismConfigurations[i];
       var name = (typeof conf.name != "undefined") ? conf.name : ('Starter'+i);
       SC.Logger.info("Creating " + conf.sex + ": " + name + " ( " + conf.alleles + ")" + " defaults");
-      Geniverse.gwtController.generateDragonWithAlleles(conf.alleles, conf.sex, name, handleDragon);
+      Geniverse.gwtController.generateDragonWithAlleles(conf.alleles, conf.sex, name, handleDragon, true);
     }
   },
   

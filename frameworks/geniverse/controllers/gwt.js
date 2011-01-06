@@ -123,11 +123,23 @@ Geniverse.gwtController = SC.Controller.create(
     GenGWT.generateDragonWithSex(sex, handleGOrg);
   },
   
-  generateDragonWithAlleles: function(alleles, sex, name, callback) {
+  generateDragonWithAlleles: function(alleles, sex, name, callback, mustBeAlive) {
     // SC.Logger.log("Generating dragon with "+alleles);
     // alert('generating dragon');
+    var count = 0;
     var self = this;
     var handleGOrg = function(gOrg) {
+      if (!!mustBeAlive){
+        if (gOrg.characteristicMap.stringMap[':liveliness'].indexOf('Dead') > -1){
+          count++;
+          if (count > 10){
+            SC.Logger.log("Tried too many times to create this dragon, it insists on being dead");
+          } else {
+            GenGWT.generateDragonWithAlleleStringAndSex(alleles, sex, handleGOrg);
+            return;
+          }
+        }
+      }
       var org = Geniverse.store.createRecord(Geniverse.Dragon, {bred: NO});
       org.set('activity', Geniverse.activityController.get('content'));
       org.set('user', Geniverse.userController.get('content'));
