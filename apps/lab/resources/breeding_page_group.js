@@ -47,7 +47,7 @@ Lab.breedingPageGroup = SC.Page.design({
       
       layout: { top: 25, bottom: 0, left: 10, right: 0 },
       
-      childViews: 'breedView challengePoolView breedingPenView challengeChromosomeToolView stableView matchButtonView marketplaceView chatView allArticlesView'.w(),
+      childViews: 'breedView challengePoolView breedingPenView challengeChromosomeToolView stableView matchView marketplaceView chatView allArticlesView'.w(),
 
       challengePoolView: Lab.ChallengePoolView.design({
         layout: { left: 20, top: 50, width:70, height: 300 }
@@ -74,28 +74,13 @@ Lab.breedingPageGroup = SC.Page.design({
         layout: { left: 580, top: 28, height: 322, width: 300 }
       }),
       
-      matchButtonView: SC.ButtonView.extend(
-      /** @scope Geniverse.ChromosomeToolView.prototype */ {
-        titleMinWidth: 0,
-        title: "Dragons to match",
-        
-        layout: { left: 895, top: 210, height: 24, width: 130 },
-
-        action: function() {
-          Geniverse.matchController.showPane();
-        },
-        
-        isVisible: function() {
-          return Geniverse.matchController.get('length') > 0;
-        }.property('Geniverse.matchController.arrangedObjects.[]'),
-
-        updateIsVisible: function(){
-          this.propertyDidChange('isVisible');
-        }.observes('Geniverse.matchController.arrangedObjects.[]')
+      matchView: Geniverse.MatchView.design({
+        layout: { left: 895, top: 28, height: 320, width: 80 },
+        isVertical: YES
       }),
       
       marketplaceView: SC.ImageView.design({
-        layout: { left: 895, top: 260, height: 90, width: 90 },
+        layout: { left: 895, top: 340, height: 90, width: 90 },
         value: sc_static('sell-to-market.jpg'),
         canLoadInBackground: NO,
         useImageCache: NO,
