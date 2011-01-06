@@ -20,6 +20,10 @@ Lab.chromosomeBreedingPage = SC.Page.design({
   pagePath: 'Lab.chromosomeBreedingPage',
   title: 'Chromosome Breeding Page',
   
+  init: function() {
+    sc_super();
+    Geniverse.breedDragonController.set('numberOfOffspring', 18);
+  },
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page 
   // load.
@@ -90,7 +94,6 @@ Lab.chromosomeBreedingPage = SC.Page.design({
       		isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
       		hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
       		isEnabled: function() {
-      		  Geniverse.breedDragonController.set('numberOfOffspring', 18);
       		  return (this.get('hasParents') && !this.get('isBreeding'));
       		}.property('hasParents', 'isBreeding').cacheable(),
 

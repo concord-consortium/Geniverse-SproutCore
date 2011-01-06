@@ -29,6 +29,11 @@ Geniverse.BreedDragonView = SC.View.extend(
   showChildView: YES,
   showCount: YES,
   
+  init: function() {
+    sc_super();
+    Geniverse.breedDragonController.set('numberOfOffspring', 20);
+  },
+  
   breedCountLabel: SC.LabelView.design({
     layout: {top: 3, left: 115, width: 60, height: 18},
 		classNames: "childLabel",
