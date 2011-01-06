@@ -17,9 +17,11 @@ Geniverse.OrganismView = SC.View.extend(
 	classNames: ['organism-view'],
 	content: null,  //Geniverse.NO_DRAGON,
 	childViews: 'labelView imageView'.w(),
-  isDropTarget: NO, // change this to YES in view if you want replaceable by drag-and-drop
   parent: '',       // If set, drag-and-drop will replace parentView's [parent] field
   sex: null,        // If set to 0 or 1, drag-and-drop will only work with males and females, respectively
+  
+  isDropTarget: NO, // whether this is replaceable by drag-and-drop
+  canDrag: NO,      // whether this can be dragged elsewhere
 
 	imageView: SC.ImageView.design({
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
@@ -149,7 +151,30 @@ Geniverse.OrganismView = SC.View.extend(
     selection.addObject(this.get('content'));
     Geniverse.allSelectedDragonsController.set('selection', selection);
     
-    return NO;
+    return YES;
+  },
+  
+  isDragging: NO,
+  
+  mouseDragged: function(evt) {
+    if (this.get('canDrag') && !this.get('isDragging')){
+      var x = SC.Drag.start({
+        event: evt,
+        source: this,
+        dragView: this,
+        ghost: NO,
+        slideBack: YES,
+        ghostActsLikeCursor: YES
+      });
+      // debugger
+      // console.log("x.get('ghostView') = "+x.get('ghostView'));
+      // x.get('ghostView').set('value', this.get('content').get('imageURL'));
+      this.set('isDragging', YES);
+    }
+  },
+  
+  mouseUp: function(evt) {
+    this.set('isDragging', NO);
   },
    
 	// drop methods: NB: none of these will be called if isDropTarget = NO
