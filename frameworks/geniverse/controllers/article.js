@@ -81,6 +81,13 @@ Geniverse.articleController = SC.ObjectController.create(
       Geniverse.articleController.set('isDraftDirty', NO);
       Geniverse.articleController.set('isDraftChanged', (article !== Geniverse.articleController.get('publishedArticle')));
       this.set('started', YES);
+    } else {
+      if (!this.get('started')) {
+        this.set('claimValue', "<i>Write your thoughts here.</i>");
+        this.set('evidenceValue', "");
+        this.set('reasoningValue', "");
+        this.set('started', YES);
+      }
     }
     
   }.observes('content'),

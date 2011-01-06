@@ -268,7 +268,7 @@ Lab.ACTIVITY = SC.Responder.create(
      /////////////////// Match dragons
       SC.Logger.log("LOAD: match dragons");
       var matchPoolQuery = SC.Query.local('Geniverse.Dragon', {
-        conditions: 'bred = false AND isMatchDragon = true AND user = {user} AND activity = {activity} AND mother = {mother} AND father = {father}',
+        conditions: 'bred = false AND isMatchDragon = true AND user = {user} AND activity = {activity} AND isInMarketplace = false AND mother = {mother} AND father = {father}',
         user: user,
         activity: activity,
         mother: null,
@@ -314,6 +314,7 @@ Lab.ACTIVITY = SC.Responder.create(
       SC.RunLoop.begin();
       if (isMatchDragons){
         dragon.set('isMatchDragon', YES);     //prevent it from showing up in other controllers
+        dragon.set('isInMarketplace', NO);
       } else {
         dragon.set('isInMarketplace', NO);
       }
@@ -334,6 +335,25 @@ Lab.ACTIVITY = SC.Responder.create(
       SC.Logger.info("Creating " + conf.sex + ": " + name + " ( " + conf.alleles + ")" + " defaults");
       Geniverse.gwtController.generateDragonWithAlleles(conf.alleles, conf.sex, name, handleDragon, true);
     }
+  },
+  
+  reloadData: function() {
+    SC.RunLoop.begin();
+    for (var i = 0; i < Geniverse.matchController.get('length'); i++){
+      var dragon = Geniverse.matchController.objectAt(i);
+      dragon.set('isInMarketplace', YES);
+    }
+    for (var i = 0; i < Geniverse.challengePoolController.get('length'); i++){
+      var dragon = Geniverse.challengePoolController.objectAt(i);
+      dragon.set('isInMarketplace', YES);
+    }
+    
+    Geniverse.matchController.set('content', []);
+    Geniverse.challengePoolController.set('content', []);
+    Geniverse.articleController.set('article', null);
+    Geniverse.articleController.set('started', NO);
+    SC.RunLoop.end();
+    this.loadData();
   },
   
   gotoActivityRoute: function() { 
