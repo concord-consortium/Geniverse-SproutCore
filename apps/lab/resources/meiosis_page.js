@@ -41,7 +41,7 @@ Lab.meiosisPage = SC.Page.design({
       
       genomePanel: SC.View.design({
         layout: {top: 40, bottom: 10, left: 10, right: 10 },
-        childViews: 'challengePoolView femaleTitle femaleView motherMeiosis offspringTitle offspringView maleTitle maleView fatherMeiosis fertilization matchButtonView'.w(),
+        childViews: 'challengePoolView femaleTitle femaleView motherMeiosis offspringTitle offspringView maleTitle maleView fatherMeiosis fertilization matchView'.w(),
         // childViews: 'femaleTitle femaleView offspringTitle offspringView maleTitle maleView'.w(),
         classNames: ['genome-view-intro'],
         
@@ -88,7 +88,7 @@ Lab.meiosisPage = SC.Page.design({
         }),
         
         motherMeiosis: Geniverse.AnimationView.design({
-          layout: {top: 140, left: 60, height: 360, width: 310 },
+          layout: {top: 135, left: 60, height: 360, width: 310 },
           mode: 'parent',
           meiosisOwner: 'mother',
           dragonBinding: 'Geniverse.meiosisAnimationController.mother',
@@ -96,7 +96,7 @@ Lab.meiosisPage = SC.Page.design({
         }),
 
         fertilization: Geniverse.AnimationView.design({
-          layout: {top: 140, centerX: 27, height: 360, width: 310 },
+          layout: {top: 135, centerX: 27, height: 360, width: 310 },
           mode: 'offspring',
           meiosisOwner: 'offspring',
           motherJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson',
@@ -104,31 +104,15 @@ Lab.meiosisPage = SC.Page.design({
         }),
         
         fatherMeiosis: Geniverse.AnimationView.design({
-          layout: {top: 140, right: 5, height: 360, width: 310 },
+          layout: {top: 135, right: 5, height: 360, width: 310 },
           mode: 'parent',
           meiosisOwner: 'father',
           dragonBinding: 'Geniverse.meiosisAnimationController.father',
           gameteJsonBinding: 'Geniverse.meiosisAnimationController.fatherGameteJson'
         }),
         
-        matchButtonView: SC.ButtonView.extend(
-        /** @scope Geniverse.ChromosomeToolView.prototype */ {
-          titleMinWidth: 0,
-          title: "Dragons to match",
-
-          layout: { centerX: 27, top: 520, height: 24, width: 130 },
-
-          action: function() {
-            Geniverse.matchController.showPane();
-          },
-
-          isVisible: function() {
-            return Geniverse.matchController.get('length') > 0;
-          }.property('Geniverse.matchController.arrangedObjects.[]'),
-
-          updateIsVisible: function(){
-            this.propertyDidChange('isVisible');
-          }.observes('Geniverse.matchController.arrangedObjects.[]')
+        matchView: Geniverse.MatchView.design({
+          layout: { centerX: 57, top: 495, height: 90, width: 400 }
         })
       })
       
