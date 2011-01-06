@@ -116,7 +116,6 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     allelesDidChange: function() {
       this.set('ignoreChanges', YES);
       var alleles = this.get('alleles');
-      SC.Logger.dir('alleles = '+alleles);
       var pulldowns = this.get('alleleToPulldown');
       
       if (!pulldowns[this]){
@@ -129,6 +128,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       for (var i = 0; i < alleles.length; i++) {
         var pd = pulldowns[this][alleles[i].toLowerCase()];
         if (!pd) {      // not findable just by getting lower case
+          var sisterAlleles;
           var allAlleles = Geniverse.chromosomeController.get('allAlleles');
           for (var j in allAlleles){
             for (var k in allAlleles[j]){

@@ -37,7 +37,6 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
       SC.Logger.info("alleles: " + alleleString);
       var alleles = Geniverse.chromosomeController.processAlleleString(alleleString);
       document.alleles = alleles;
-      SC.Logger.dir(alleles);
       var chromosomesArr = [];
       
       // special way of iteracting through
@@ -68,7 +67,6 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
           chromosomesArr.push({ alleles: allelesArr});
         } else {
           SC.Logger.info("No B side!");
-          SC.Logger.dir(alleles[i]);
           chromosomesArr.push({ alleles: [{ sex: "male", gene: "" },{ sex: "male", gene: "" },{ sex: "male", gene: "" }]});
           // chromosomesArr.push({ alleles: []});
         }
