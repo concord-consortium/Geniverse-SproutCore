@@ -70,7 +70,8 @@ Lab.meiosisPage = SC.Page.design({
 
         offspringView: Geniverse.OrganismView.design({
           layout: {top: 27, centerX: 15, height: 100, width: 100 },
-          contentBinding: 'Geniverse.meiosisAnimationController.offspring'
+          contentBinding: 'Geniverse.meiosisAnimationController.offspring',
+          canDrag: YES
         }),
         
         maleTitle: SC.LabelView.design({
