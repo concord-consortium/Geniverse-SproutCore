@@ -1,10 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 setTestingEnv() {
   ## This script expects the following environment variables. If they aren't set in your environment, you can manually tweak them here.
   if [ -z $TEST_ENV_SET ]; then
     if [ -z $WORKSPACE ]; then
-      export WORKSPACE=$(dirname $0)
+      REL_PATH=$(dirname $0)
+      export WORKSPACE=$(cd $REL_PATH; pwd)
       echo "set WORKSPACE: $WORKSPACE"
     fi
 
