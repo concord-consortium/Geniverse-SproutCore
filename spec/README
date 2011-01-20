@@ -7,7 +7,7 @@ Install the 'lebowski' gem and others from the default.gems file
   $ rvm ruby-1.8.7-p299@geniverse gemset import
 
 Run the tests (from the Geniverse-Sproutcore main folder):
-  $ spec spec/
+  $ sh run_lebowski_tests.sh
 
 If all works successfully, you should see Selenium run through the test(s) using your browser, and then see an output
 in the console similar to
