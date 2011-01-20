@@ -13,6 +13,10 @@ require 'port_tools'
 
 dir = File.expand_path(File.dirname(__FILE__))
 
+require "#{dir}/helpers.rb"
+
+include Helpers
+
 include Lebowski::Foundation
 include Lebowski::SCUI::Views
 
