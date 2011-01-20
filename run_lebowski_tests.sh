@@ -22,16 +22,21 @@ run_lebowski_tests() {
 
   CI_RSPEC_LOADER=${GEM_HOME}/gems/ci_reporter-1.6.3/lib/ci/reporter/rake/rspec_loader
 
+  ARG=$1
+  if [ -z $1 ]; then
+    ARG="spec"
+  fi
+
   # run the top level lebowski integration tests --format html:$REPORTS_DIR/spec/report.html
-  rspec --require $CI_RSPEC_LOADER --format CI::Reporter::RSpec spec
+  rspec --require $CI_RSPEC_LOADER --format CI::Reporter::RSpec $ARG
 }
 
 if [[ -z $GEM_HOME || $SC_GEMSET != ${GEM_HOME##*/} ]]; then
   echo "was using rvm: ${GEM_HOME##*/}"
   echo "Switching to: $SC_GEMSET"
-  rvm-shell $SC_GEMSET $0
+  rvm-shell $SC_GEMSET $0 $1
 else
-  run_lebowski_tests
+  run_lebowski_tests $1
 fi
 
 exit 0
