@@ -3,6 +3,8 @@ module Helpers
     app.define_path 'labPage', 'mainPage.mainPane.mainAppView', View
     app.define_path 'loginPage', 'loginController.panel.contentView', View
     app.define_path 'topBar', 'mainPage.mainPane.topBar', View
+
+    app.define_framework 'Geniverse', 'Geniverse'
   end
 
   def define_common_ivars
