@@ -125,6 +125,7 @@ def start_apache
     x_proxy "/portal/    http://geniverse-portal.dev.concord.org/"
     x_proxy "/biologica/ http://geniverse.dev.concord.org/biologica/"
     x_proxy "/chat/      http://geniverse.dev.concord.org/chat/"
+    x_proxy "/resources/ http://geniverse.dev.concord.org/resources/"
     x_proxy "/rails/     http://127.0.0.1:#{RAILS_PORT}/rails/"
     x_proxy "/           http://127.0.0.1:#{SC_SERVER_PORT}/"
   }
