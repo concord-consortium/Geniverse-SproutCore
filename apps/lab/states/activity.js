@@ -103,7 +103,7 @@ Lab.ACTIVITY = SC.Responder.create(
         activities.removeObserver('status', setActivity);
         
         Lab.ACTIVITY.initChatChannels();
-        Lab.ACTIVITY.loadData();
+        Lab.ACTIVITY.reloadData();
         Lab.ACTIVITY.gotoActivityRoute();
       }
     }
@@ -339,17 +339,18 @@ Lab.ACTIVITY = SC.Responder.create(
   
   reloadData: function() {
     SC.RunLoop.begin();
-    for (var i = 0; i < Geniverse.matchController.get('length'); i++){
-      var dragon = Geniverse.matchController.objectAt(i);
-      dragon.set('isInMarketplace', YES);
-    }
-    for (var i = 0; i < Geniverse.challengePoolController.get('length'); i++){
-      var dragon = Geniverse.challengePoolController.objectAt(i);
-      dragon.set('isInMarketplace', YES);
-    }
+    // for (var i = 0; i < Geniverse.matchController.get('length'); i++){
+    //   var dragon = Geniverse.matchController.objectAt(i);
+    //   dragon.set('isInMarketplace', YES);
+    // }
+    // for (var i = 0; i < Geniverse.challengePoolController.get('length'); i++){
+    //   var dragon = Geniverse.challengePoolController.objectAt(i);
+    //   dragon.set('isInMarketplace', YES);
+    // }
     
     Geniverse.matchController.set('content', []);
     Geniverse.challengePoolController.set('content', []);
+    Geniverse.breedDragonController.reset();
     Geniverse.articleController.set('article', null);
     Geniverse.articleController.set('started', NO);
     SC.RunLoop.end();
