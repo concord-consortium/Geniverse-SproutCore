@@ -23,9 +23,9 @@ run_rails_tests() {
   CI_RSPEC_LOADER=${GEM_HOME}/gems/ci_reporter-1.6.3/lib/ci/reporter/rake/rspec_loader
 
   # run the rails spec tests
-  cd rails/geniverse
+  sh run_rails_setup.sh
 
-  rake db:setup --trace
+  cd rails/geniverse
 
   # not using cucumber yet
   #RAILS_ENV=cucumber rake gems:install --trace

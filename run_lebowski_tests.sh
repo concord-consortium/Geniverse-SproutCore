@@ -31,6 +31,9 @@ run_lebowski_tests() {
   rspec --require $CI_RSPEC_LOADER --format CI::Reporter::RSpec $ARG
 }
 
+# first set up the rails environment
+rvm-shell $RAILS_GEMSET run_rails_setup.sh
+
 if [[ -z $GEM_HOME || $SC_GEMSET != ${GEM_HOME##*/} ]]; then
   echo "was using rvm: ${GEM_HOME##*/}"
   echo "Switching to: $SC_GEMSET"
