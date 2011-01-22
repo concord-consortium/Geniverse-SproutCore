@@ -100,7 +100,7 @@ def start_command(name)
   else
     puts "WARNING: process  #{command[:name] || name} already started with #{command[:pid]}"
   end
-  sleep 2 # Hackish pause to spin up job.
+  # sleep 2 # Hackish pause to spin up job.
 end
 
 
@@ -146,7 +146,8 @@ def start_testing_servers
     stop_testing_servers
     raise "Couldn't start all servers!\n#{e.message}\n#{e.backtrace.join("\n")}"
   end
-  
+
+  sleep 10
   start_apache
 end
 
@@ -160,7 +161,7 @@ end
 
 def with_servers (&block)
   start_testing_servers
-  sleep 2 #shouldn't have to wait, but there ya-go.
+  # sleep 2 #shouldn't have to wait, but there ya-go.
   yield
   stop_testing_servers
 end
