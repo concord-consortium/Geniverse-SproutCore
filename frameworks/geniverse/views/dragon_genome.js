@@ -238,10 +238,14 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	  
     // allelesBinding: SC.Binding.oneWay('*parentView.a1Alleles'),
 	  updateDragon: function(){
-     this.get('parentView').updateDragon();
+      if (!!this.get('parentView')) {
+        this.get('parentView').updateDragon();
+      }
     }.observes('alleles'),
     updateAlleles: function(){
-      this.set('alleles', this.get('parentView').get('a1Alleles'));
+      if (!!this.get('parentView')) {
+        this.set('alleles', this.get('parentView').get('a1Alleles'));
+      }
     }.observes('*parentView.a1Alleles'),
     hiddenGenesBinding: '*parentView.hiddenGenes',
 	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
@@ -254,10 +258,14 @@ Geniverse.DragonGenomeView = SC.View.extend(
 		  return {top: 25, left: this.getPath('parentView.chromosomeLeft') + 145};
 		}.property(),
 	  updateDragon: function(){
-	    this.get('parentView').updateDragon();
+      if (!!this.get('parentView')) {
+	      this.get('parentView').updateDragon();
+      }
 	  }.observes('alleles'),
 	  updateAlleles: function(){
-      this.set('alleles', this.get('parentView').get('b1Alleles'));
+      if (!!this.get('parentView')) {
+        this.set('alleles', this.get('parentView').get('b1Alleles'));
+      }
     }.observes('*parentView.b1Alleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
 	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
@@ -270,10 +278,14 @@ Geniverse.DragonGenomeView = SC.View.extend(
 		  return {top: 170, left: this.getPath('parentView.chromosomeLeft')};
 		}.property(),
 	  updateDragon: function(){
-	    this.get('parentView').updateDragon();
+      if (!!this.get('parentView')) {
+	      this.get('parentView').updateDragon();
+      }
 	  }.observes('alleles'),
 	  updateAlleles: function(){
-      this.set('alleles', this.get('parentView').get('a2Alleles'));
+      if (!!this.get('parentView')) {
+        this.set('alleles', this.get('parentView').get('a2Alleles'));
+      }
     }.observes('*parentView.a2Alleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
 	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
@@ -286,10 +298,14 @@ Geniverse.DragonGenomeView = SC.View.extend(
 		  return {top: 170, left: this.getPath('parentView.chromosomeLeft') + 145};
 		}.property(),
 	  updateDragon: function(){
-	    this.get('parentView').updateDragon();
+      if (!!this.get('parentView')) {
+	      this.get('parentView').updateDragon();
+      }
 	  }.observes('alleles'),
 	  updateAlleles: function(){
-      this.set('alleles', this.get('parentView').get('b2Alleles'));
+      if (!!this.get('parentView')) {
+        this.set('alleles', this.get('parentView').get('b2Alleles'));
+      }
     }.observes('*parentView.b2Alleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
 	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
@@ -302,10 +318,14 @@ Geniverse.DragonGenomeView = SC.View.extend(
 		  return {top: 315, left: this.getPath('parentView.chromosomeLeft')};
 		}.property(),
 	  updateDragon: function(){
-	    this.get('parentView').updateDragon();
+      if (!!this.get('parentView')) {
+	      this.get('parentView').updateDragon();
+      }
 	  }.observes('alleles'),
 	  updateAlleles: function(){
-      this.set('alleles', this.get('parentView').get('aXAlleles'));
+      if (!!this.get('parentView')) {
+        this.set('alleles', this.get('parentView').get('aXAlleles'));
+      }
     }.observes('*parentView.aXAlleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
 	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
@@ -320,10 +340,14 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
 	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
 	  updateDragon: function(){
-	    this.get('parentView').updateDragon();
+      if (!!this.get('parentView')) {
+	      this.get('parentView').updateDragon();
+      }
 	  }.observes('alleles'),
 	  updateAlleles: function(){
-      this.set('alleles', this.get('parentView').get('bXAlleles'));
+      if (!!this.get('parentView')) {
+        this.set('alleles', this.get('parentView').get('bXAlleles'));
+      }
     }.observes('*parentView.bXAlleles'),
 	  chromosome: function() {
 	    if (this.get('alleles').length < 1) {
@@ -355,11 +379,13 @@ Geniverse.DragonGenomeView = SC.View.extend(
     layout: { top: 430, left: 0, width: 410, height: 18 },
     value: null,          // can't get this to work with computed properties
     valueSetter: function() {
-      var authoredAlleleString = this.get('parentView').get('authoredAlleleString');
-      if (!!authoredAlleleString){
-        this.set('value', authoredAlleleString);
-      } else {
-        this.set('value', this.get('parentView').getPath('dragon.alleles'));
+      if (!!this.get('parentView')) {
+        var authoredAlleleString = this.get('parentView').get('authoredAlleleString');
+        if (!!authoredAlleleString){
+          this.set('value', authoredAlleleString);
+        } else {
+          this.set('value', this.get('parentView').getPath('dragon.alleles'));
+        }
       }
     }.observes('*parentView.dragon.alleles'),
     isTextSelectable: YES,

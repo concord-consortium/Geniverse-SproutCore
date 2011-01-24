@@ -36,7 +36,7 @@ Geniverse.OrganismView = SC.View.extend(
       
       var imageURL = this.get('content').get('imageURL');
       
-      if (!!this.get('parentView').get('parentView') && 
+      if (!!this.get('parentView') && !!this.get('parentView').get('parentView') && 
               (""+this.get('parentView').get('parentView')).indexOf("SC.GridView") > -1){
         // in gridView
         var height = this.get('parentView').get('parentView').get('rowHeight');
@@ -139,7 +139,7 @@ Geniverse.OrganismView = SC.View.extend(
   // // drag methods:
   
   mouseDown: function(evt) {
-    if (this.get('parentView') !== null && ""+this.get('parentView').constructor === 'SC.GridView'){
+    if (!!this.get('parentView') && ""+this.get('parentView').constructor === 'SC.GridView'){
       // we are in a grid view, don't need to do anything
       return NO;
     }
@@ -191,7 +191,7 @@ Geniverse.OrganismView = SC.View.extend(
     // next, if we are a prent view, check that dragged dragon
     // is not an egg
     var parentType = this.get('parent');
-    if (!!parentType){
+    if (!!parentType && !!this.get('parentView')){
       SC.RunLoop.begin();
         this.get('parentView').set(this.get('parent'), dragon);
         this.get('parentView').set('child', null);   //Geniverse.NO_DRAGON);

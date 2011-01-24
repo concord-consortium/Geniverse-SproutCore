@@ -52,10 +52,13 @@ Geniverse.ChromosomeView = SC.View.extend(
 		layout: {top: 35, left: 0, width: 80, height: 500},
 		
 		createPullDowns: function (){
-		  this.removeAllChildren();
-  		var alleles = Geniverse.chromosomeController.get('chromosomeAlleles')['a'];
-  		for (var i = 0; i < alleles.length; i++){
-        this.get('parentView').addPullDown(this, alleles[i], i);
+      if (!!this.get('parentView')) {
+
+        this.removeAllChildren();
+        var alleles = Geniverse.chromosomeController.get('chromosomeAlleles')['a'];
+        for (var i = 0; i < alleles.length; i++){
+          this.get('parentView').addPullDown(this, alleles[i], i);
+        }
       }
 		}.observes('Geniverse.chromosomeController.alleles')
 	}),
@@ -64,10 +67,12 @@ Geniverse.ChromosomeView = SC.View.extend(
 		layout: {top: 35, left: 120, width: 80, height: 500},
 		
 		createPullDowns: function (){
-		  this.removeAllChildren();
-  		var alleles = Geniverse.chromosomeController.get('chromosomeAlleles')['b'];
-  		for (var i = 0; i < alleles.length; i++){
-        this.get('parentView').addPullDown(this, alleles[i], i);
+      if (!!this.get('parentView')) {
+        this.removeAllChildren();
+        var alleles = Geniverse.chromosomeController.get('chromosomeAlleles')['b'];
+        for (var i = 0; i < alleles.length; i++){
+          this.get('parentView').addPullDown(this, alleles[i], i);
+        }
       }
 		}.observes('Geniverse.chromosomeController.alleles')
 	}),
@@ -101,10 +106,12 @@ Geniverse.ChromosomeView = SC.View.extend(
 	},
 	
 	updateDragon: function (){
-	  var chromosomeView = this.get('parentView').get('parentView');
-	  var aAlleles = chromosomeView.getAllelesFromViews(chromosomeView.get('chromsomeAView'));
-	  var bAlleles = chromosomeView.getAllelesFromViews(chromosomeView.get('chromsomeBView'));
-    Geniverse.chromosomeController.updateDragon(aAlleles, bAlleles);
+    if (!!this.get('parentView') && !!this.get('parentView').get('parentView')) {
+      var chromosomeView = this.get('parentView').get('parentView');
+      var aAlleles = chromosomeView.getAllelesFromViews(chromosomeView.get('chromsomeAView'));
+      var bAlleles = chromosomeView.getAllelesFromViews(chromosomeView.get('chromsomeBView'));
+      Geniverse.chromosomeController.updateDragon(aAlleles, bAlleles);
+    }
 	},
 	
 	getAllelesFromViews: function (view){

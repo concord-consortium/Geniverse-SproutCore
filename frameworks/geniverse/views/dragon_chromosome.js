@@ -72,10 +72,12 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     
     _setChromoImage: function() {
       var urls = this.get('chromoImageUrls');
-      var chromoUrls = urls[this.get('chromosome')];
-      if (chromoUrls !== undefined && chromoUrls !== null) {
-        var url = chromoUrls[this.get('side')];
-        this.set('value', url);
+      if (!!urls) {
+        var chromoUrls = urls[this.get('chromosome')];
+        if (chromoUrls !== undefined && chromoUrls !== null) {
+          var url = chromoUrls[this.get('side')];
+          this.set('value', url);
+        }
       }
     }
   }),
@@ -87,7 +89,9 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     lineImageUrlsBinding: '*parentView.lineImageUrls',
     chromosomeDidChange: function() {
       var lineImages = this.get('lineImageUrls');
-      this.set('value', lineImages[this.get('chromosome')]);
+      if (!!lineImages) {
+        this.set('value', lineImages[this.get('chromosome')]);
+      }
     }.observes('chromosome')
   }),
   
@@ -96,7 +100,10 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     isVisibleBinding: '*parentView.showPulldowns',
     // allelesBinding: '*parentView.alleles',     // this frequently doesn't update until the next runloop...
     alleles: function() {                         // this works fine, but seems wrong...
+      if (!!this.get('parentView')) {
         return this.get('parentView').get('alleles');
+      }
+      return [];
     }.property('*parentView.alleles'),
     
     alleleToPulldown: [],

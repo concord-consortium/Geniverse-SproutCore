@@ -98,11 +98,12 @@ Geniverse.BreedDragonView = SC.View.extend(
 		  this.propertyDidChange('isVisible');
     }.observes("*parentView.child"),
 		isVisible: function() {
-     return !!this.get('parentView').get('child') && this.get('parentView').get('showChildView');
+      if (!!this.get('parentView')) {
+        return !!this.get('parentView').get('child') && this.get('parentView').get('showChildView');
+      }
+      return NO;
     }.property("*parentView.child")
 	}),
-	
-
 	
 	viewDidResize: function() {
 		this._resize_children();
