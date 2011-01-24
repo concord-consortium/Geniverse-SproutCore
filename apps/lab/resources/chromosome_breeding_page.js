@@ -20,10 +20,6 @@ Lab.chromosomeBreedingPage = SC.Page.design({
   pagePath: 'Lab.chromosomeBreedingPage',
   title: 'Chromosome Breeding Page',
   
-  init: function() {
-    sc_super();
-    Geniverse.breedDragonController.set('numberOfOffspring', 18);
-  },
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page 
   // load.
@@ -45,7 +41,7 @@ Lab.chromosomeBreedingPage = SC.Page.design({
       
       genomePanel: SC.View.design({
         layout: {top: 40, height: 450, left: 15, width: 1005 },
-        childViews: 'femaleTitle femaleGenomeView maleTitle maleGenomeView breedButton'.w(),
+        childViews: 'femaleTitle femaleGenomeView femalePhenotypeView maleTitle maleGenomeView malePhenotypeView breedButton'.w(),
         classNames: ['genome-view-intro'],
 
         femaleTitle: SC.LabelView.design({
@@ -58,6 +54,7 @@ Lab.chromosomeBreedingPage = SC.Page.design({
           layout: {top: 40, left: 15, height: 500, width: 500 },
           generateDragonAtStart: NO,
           displayChallengeDragon: YES,
+          showDragon: NO,
           sex: 1,
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
           showGenerateNewDragon: NO,
@@ -66,7 +63,14 @@ Lab.chromosomeBreedingPage = SC.Page.design({
             Geniverse.breedDragonController.set('mother', this.get('dragon'));
           }.observes('dragon')
         }),
-        
+
+        femalePhenotypeView: Geniverse.OrganismView.design({
+          layout: {top: 10, left: 300, width: 200, height: 170},
+          contentBinding: "*parentView.femaleGenomeView.dragon",
+          allowDrop: NO,
+          showBackground: NO
+        }),
+
         maleTitle: SC.LabelView.design({
           layout: {top: 10, height: 25, left: 530, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
@@ -77,6 +81,7 @@ Lab.chromosomeBreedingPage = SC.Page.design({
           layout: {top: 40, left: 515, height: 500, width: 500 },
           generateDragonAtStart: NO,
           displayChallengeDragon: YES,
+          showDragon: NO,
           sex: 0,
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
           showGenerateNewDragon: NO,
@@ -86,27 +91,34 @@ Lab.chromosomeBreedingPage = SC.Page.design({
             Geniverse.breedDragonController.set('father', this.get('dragon'));
           }.observes('dragon')
         }),
-        
-        breedButton: SC.ButtonView.design({
-          layout: { top: 230, left: 450, width: 100, height: 24 },
-      		target: 'Geniverse.breedDragonController',
-      		action: "breed",
-      		isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
-      		hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
-      		isEnabled: function() {
-      		  return (this.get('hasParents') && !this.get('isBreeding'));
-      		}.property('hasParents', 'isBreeding').cacheable(),
 
-      		title: function () {
-      		  return this.get('isBreeding') ? 'Breeding...' :  'Breed';
-      		}.property('isBreeding').cacheable()
-      	})
+        malePhenotypeView: Geniverse.OrganismView.design({
+          layout: {top: 10, left: 515, width: 200, height: 170},
+          contentBinding: "*parentView.maleGenomeView.dragon",
+          allowDrop: NO,
+          showBackground: NO
+        }),
+
+        breedButton: SC.ButtonView.design({
+          layout: { top: 170, left: 450, width: 100, height: 24 },
+          target: 'Geniverse.breedDragonController',
+          action: "breed",
+          isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
+          hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
+          isEnabled: function() {
+            return (this.get('hasParents') && !this.get('isBreeding'));
+          }.property('hasParents', 'isBreeding').cacheable(),
+
+          title: function () {
+            return this.get('isBreeding') ? 'Breeding...' :  'Breed';
+          }.property('isBreeding').cacheable()
+        })
 
       }),
       
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { left: 325, top: 320, width: 400, height: 230 }
+        layout: { left: 358, top: 245, width: 344, height: 287 }
       }),
       
       matchView: Geniverse.MatchView.design({
