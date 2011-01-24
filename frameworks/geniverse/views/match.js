@@ -45,13 +45,20 @@ Geniverse.MatchView = SC.View.extend(
     layout: { top:0, bottom: 0, left: 0, right: 0 }
   }),
   
+  matchViewsInitialized: NO,
+
   updateMatchViews: function () {
-    
     // add dragon views
-    var matchDragons = this.get('matchDragons');
-    this.get('dragonViews').removeAllChildren();
-    for (var i = 0, ii = matchDragons.get('length'); i < ii; i++) {
-      this.addDragonView(matchDragons.objectAt(i), i);
+    // FIXME: this seems to get called every time the data store refreshes...
+    if (! this.get('matchViewsInitialized')) {
+      var matchDragons = this.get('matchDragons');
+      this.get('dragonViews').removeAllChildren();
+      for (var i = 0, ii = matchDragons.get('length'); i < ii; i++) {
+        this.addDragonView(matchDragons.objectAt(i), i);
+      }
+      if (matchDragons.get('length') > 0) {
+        this.set('matchViewsInitialized', YES);
+      }
     }
   }.observes('*matchDragons.[]'),
   
