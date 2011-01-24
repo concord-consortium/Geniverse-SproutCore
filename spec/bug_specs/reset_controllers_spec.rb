@@ -1,7 +1,7 @@
 dir = File.expand_path(File.dirname(__FILE__))
-require "#{dir}/support/spec_helper.rb"
+require "#{dir}/../support/spec_helper.rb"
 
-describe "Navigation" do
+describe "Navigating pages resets controllers" do
   before(:all) do
     start_testing_servers
     @app = new_test {|app|
@@ -40,7 +40,7 @@ describe "Navigation" do
     begin
       tries += 1
       grid.item_views[2].drag_to(breedView['fatherView'], 30, 30)
-      @page1father = breedDragonController['father', 'Geniverse.Dragon']
+      @page1father = breedDragonController['father']
       redo if @page1father.nil? && tries < 3
     end
     sleep 1
