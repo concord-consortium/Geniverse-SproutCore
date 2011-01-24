@@ -74,28 +74,33 @@ Lab.routes = SC.Object.create({
     if (!pageName) {
       pageName = 'mainPage';
     }
-    
+    console.log("page name: ", pageName);
+
     // Default to mainPane
     var paneName = routeParams.paneName;
     if (!paneName) {
       paneName = 'mainPane';
     }
+    console.log("pane name: ", paneName);
 
     // If there is a current pane, remove it from the screen
     if (this.currentPagePane !== null) {
       this.currentPagePane.remove();
+      this.currentPagePane.destroy();
     }
         
     // Show the specified pane
-    var pagePanePath = pageName + '.' + paneName;
-    console.log("pagePanePath:",pagePanePath);
-    var pagePane = clazz.getPath(pagePanePath);
-    console.log("pagePane:",pagePane);
-    pagePane.set('pageName',pageName);
-    pagePane.append();
-    
+    var page = clazz[pageName];
+    // console.log("Page: ", page); 
+
+    var pane = page[paneName];
+    // console.log("Pane: ", pane); 
+    pane = pane.create();
+    // console.log("Created Pane: ", pane); 
+    pane.append();
+
     // Save the current pane so we can remove it when process the next route
-    this.currentPagePane = pagePane;
+    this.currentPagePane = pane;
   },
 
   gotoHomePage: function() {
