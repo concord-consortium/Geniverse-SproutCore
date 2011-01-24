@@ -18,9 +18,11 @@ Geniverse.eggsController = SC.ArrayController.create(
     
     removeAllEggs: function () {
       if (this.get('content') !== null) {
+        // FIXME We should also destroy all the Organism views associated with these eggs.
+        // Without an explicit destroy() call, they stick around, and GridView doesn't do this automatically
         this.get('content').forEach(function(egg){
           // tell the datastore to remove the egg from it's data hashes to save memory
-          SC.Logger.log("Destroying egg", egg.get('id'));
+          // SC.Logger.log("Destroying egg", egg.get('id'));
           egg.destroy();
         });
         Geniverse.store.commitRecords();
