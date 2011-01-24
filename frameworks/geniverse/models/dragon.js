@@ -72,14 +72,17 @@ Geniverse.Dragon = SC.Record.extend(
         Geniverse.gwtController.generateGOrganismWithAlleles(self.get('alleles'), self.get('sex'), function(gOrg) {
           self.set('gOrganism', gOrg);
         });
-      } else {
+      }// else {
         // SC.Logger.info('gOrganism already defined. must be a session-generated dragon.');
         // SC.Logger.dir(self);
-      }
+      // }
     });
   },
   
   setAttributes: function() {
+    if (this.get('status') & SC.Record.DESTROYED) {
+      return;
+    }
     var gOrg = this.get('gOrganism');
     if (this.get('gOrganismDefined')) {
       // this.set('name', gOrg.name);  // GWT doesn't create meaningful names, so no sense in overriding an existing name

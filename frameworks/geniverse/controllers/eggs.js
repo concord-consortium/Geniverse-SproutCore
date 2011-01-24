@@ -17,10 +17,14 @@ Geniverse.eggsController = SC.ArrayController.create(
   selectionBinding: 'Geniverse.allSelectedDragonsController.selection',
     
     removeAllEggs: function () {
-      // this.get('content').forEach(function(egg){
-      //   egg.set('isEgg', false);
-      //   egg.set('isInMarketplace', true);
-      // });
+      if (this.get('content') !== null) {
+        this.get('content').forEach(function(egg){
+          // tell the datastore to remove the egg from it's data hashes to save memory
+          SC.Logger.log("Destroying egg", egg.get('id'));
+          egg.destroy();
+        });
+        Geniverse.store.commitRecords();
+      }
       this.set('content',[]);
     },
    
@@ -36,7 +40,9 @@ Geniverse.eggsController = SC.ArrayController.create(
       records.invoke('destroy');
 
       var selIndex = indexes.get('min')-1;
-      if (selIndex<0) selIndex = 0;
+      if (selIndex<0) {
+        selIndex = 0;
+      }
       this.selectObject(this.objectAt(selIndex));
     },
 

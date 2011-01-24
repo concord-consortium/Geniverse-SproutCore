@@ -130,9 +130,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
       // SC.Logger.group('Geniverse.RailsDataSource.createRecord()');
       SC.Request.postUrl('/rails/' + recordType.modelsName).header({
                      'Accept': 'application/json'
-                 }).json()
-           .notify(this, this.didCreateRecord, store, storeKey)
-           .send(modelHash);
+                 }).json().notify(this, this.didCreateRecord, store, storeKey).send(modelHash);
       // SC.Logger.groupEnd();
       return YES;
     }
@@ -169,9 +167,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
       // SC.Logger.group('Geniverse.RailsDataSource.createRecord()');
       SC.Request.putUrl(url + '.json').header({
                      'Accept': 'application/json'
-                 }).json()
-           .notify(this, this.didUpdateRecord, store, storeKey)
-           .send(modelHash);
+                 }).json().notify(this, this.didUpdateRecord, store, storeKey).send(modelHash);
       // SC.Logger.groupEnd();
       return YES;
     }
@@ -190,8 +186,13 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
     
     // TODO: Add handlers to destroy records on the data source.
     // call store.dataSourceDidDestroy(storeKey) when done
-    
-    return NO ; // return YES if you handled the storeKey
+    // FIXME Right now we're relying on the fact that we're not sending destroy event to the rails backend
+    // in order to destroy a record in local memory. If we start sending these to the backend, we'll have to
+    // find a way to locally destroy a record without sending that fact to the backend.
+    window.setTimeout(function() {
+      store.dataSourceDidDestroy(storeKey);
+    },2);
+    return YES ; // return YES if you handled the storeKey
   }
   
 }) ;
