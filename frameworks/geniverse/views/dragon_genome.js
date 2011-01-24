@@ -142,7 +142,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
     }
     
     if (this.get('displayChallengeDragon')) {
-      if (Geniverse.challengePoolController & SC.Record.READY === SC.Record.READY) {
+      if (Geniverse.challengePoolController & SC.Record.READY) {
         loadChallengeDragonWhenDragonsLoaded();
       } else {
         Geniverse.challengePoolController.addObserver('status', loadChallengeDragonWhenDragonsLoaded);
@@ -199,7 +199,8 @@ Geniverse.DragonGenomeView = SC.View.extend(
 		}.property(),
 	  contentBinding: "*parentView.dragon",
 	  allowDrop: YES,
-    isVisibleBinding: "*parentView.showDragon"
+    isVisibleBinding: "*parentView.showDragon",
+    showBackground: NO
 	}),
 	
 	generateNewDragonButton: SC.ButtonView.extend({

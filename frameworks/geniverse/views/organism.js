@@ -22,6 +22,7 @@ Geniverse.OrganismView = SC.View.extend(
   
   isDropTarget: NO, // whether this is replaceable by drag-and-drop
   canDrag: NO,      // whether this can be dragged elsewhere
+  showBackground: YES,
 
 	imageView: SC.ImageView.design({
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
@@ -119,12 +120,8 @@ Geniverse.OrganismView = SC.View.extend(
   
   _setClassNames: function(){
     var classNames = [];
-    
-    if (this.get('parentView') !== null && ""+this.get('parentView').constructor === 'Geniverse.DragonGenomeView'){
-      // no background
-      return;
-    }
-    
+
+    if (this.get('showBackground')) {
       if (this.get('isSelected')){
         classNames.push((this.getPath('content.sex') === 0) ? 'male-selected' : 'female-selected');
       } else {
@@ -133,10 +130,10 @@ Geniverse.OrganismView = SC.View.extend(
         }
         classNames.push('empty');
       }
-      
-    this.get('imageView').set('classNames', classNames);
-    
-    this.get('imageView').displayDidChange();
+
+      this.get('imageView').set('classNames', classNames);
+      this.get('imageView').displayDidChange();
+    }
   },
 	
   // // drag methods:
