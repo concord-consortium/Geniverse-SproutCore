@@ -112,18 +112,15 @@ Geniverse.MatchView = SC.View.extend(
       },
       
       _setClassNames: function(){
-        var classNames = [];
-        
+        var imageView = this.get('imageView');
         if (this.get('isMatched')){
-          classNames.push('matched');
-        } else if (this.get('isSelected')){
-          classNames.push('male-selected');
+          imageView.set('classNames', ['matched']);
+        } else if (this.get('isSelected')) {
+          imageView.set('classNames', ['male-selected']);
         } else {
-          classNames.push('empty');
+          imageView.set('classNames', ['empty']);
         }
-        this.get('imageView').set('classNames', classNames);
-        this.set('classNames', classNames);
-        this.get('imageView').displayDidChange();
+        imageView.displayDidChange();
       }
     });
     this.get('dragonViews').appendChild(dragonView);
