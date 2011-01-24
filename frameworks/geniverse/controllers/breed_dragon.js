@@ -34,6 +34,7 @@ Geniverse.breedDragonController = SC.Controller.create(
    // this.set('child', Geniverse.NO_DRAGON);
     this.set('newChild', null);
     this.set('resetCount',this.get('resetCount') + 1); // poor mans event propogation
+    this.set('isBreeding', NO);
   }.observes('mother','father'),
 
   // http://www.pivotaltracker.com/story/show/5298197
@@ -45,6 +46,7 @@ Geniverse.breedDragonController = SC.Controller.create(
     this.set('newChild', null);
     this.set('resetCount',this.get('resetCount') + 1); // poor mans event propogation
     this.set('breedCount', 0);
+    this.set('isBreeding', NO);
   },
 
   breed: function () {
@@ -73,6 +75,11 @@ Geniverse.breedDragonController = SC.Controller.create(
         if (version !== self._callback_version) {
           console.log('breedDragonController: rejecting callback from earlier breed() ' +
             '(callback version = %d, current version = %d)', version, self._callback_version);
+          return;
+        }
+
+        if (! self.get('isBreeding')) {
+          SC.Logger.log("breedDragonController: rejecting callback when we're not breeding!");
           return;
         }
         SC.RunLoop.begin();
