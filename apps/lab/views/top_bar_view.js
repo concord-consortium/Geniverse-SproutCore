@@ -211,6 +211,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         alt: 'Your notebook',
         layerId: 'notepadButton',
         title:  "Note Pad",
+        toolTip: "Click to open your notepad",
         target: this.get('notepadButtonTargetPath'),
         action: 'showPane'
       })
@@ -224,6 +225,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         alt: 'Your journal',
         layerId: 'journalButton',
         title:  "Journal",
+        toolTip: "Click to open the class journal",
         target: this.get('journalButtonTargetPath'),
         action: 'openWindow'
       })
@@ -237,6 +239,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         hasHover: YES,
         alt: 'Log out',
         title:  "Log out",
+        toolTip: "Click to log out",
         target: this.get('logoutButtonTargetPath'),
         action: 'logoutPortal'
       })
