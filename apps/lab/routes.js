@@ -96,6 +96,7 @@ Lab.routes = SC.Object.create({
     var pane = page[paneName];
     // console.log("Pane: ", pane); 
     pane = pane.create();
+    pane.set('pageName',pageName);  // must be set so the help button works!
     // console.log("Created Pane: ", pane); 
     pane.append();
 
