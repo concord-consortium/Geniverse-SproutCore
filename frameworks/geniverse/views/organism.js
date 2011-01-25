@@ -75,7 +75,28 @@ Geniverse.OrganismView = SC.View.extend(
 	  });
 	  sc_super();
 	},
-	
+
+  isAddedToParent: NO,
+
+  didAddToParent: function(parent) {
+    this.set('isAddedToParent', YES);
+  },
+
+  scheduledForDestruction: NO,
+  didRemoveFromParent: function(parent) {
+    // schedule a delayed destruction. collection views tend to do lots of adds/removes
+    // in succession, so give it time to settle down.
+    var self = this;
+    if (! this.get('scheduledForDestruction')) {
+      this.set('scheduledForDestruction', YES);
+      window.setTimeout(function() {
+        if (! self.get('isAddedToParent')) {
+          self.destroy();
+        }
+      }, 2000);
+    }
+  },
+
 	contentDidChange: function() {
 	  this._checkForNullDragon();
 		this.setPath('imageView.layerNeedsUpdate', YES);
