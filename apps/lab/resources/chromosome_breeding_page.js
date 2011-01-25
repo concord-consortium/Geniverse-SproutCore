@@ -41,8 +41,13 @@ Lab.chromosomeBreedingPage = SC.Page.design({
       
       genomePanel: SC.View.design({
         layout: {top: 40, height: 450, left: 15, width: 1005 },
-        childViews: 'femaleTitle femaleGenomeView femalePhenotypeView maleTitle maleGenomeView malePhenotypeView breedButton'.w(),
-        classNames: ['genome-view-intro'],
+        childViews: 'background femaleTitle femaleGenomeView femalePhenotypeView maleTitle maleGenomeView malePhenotypeView breedButton'.w(),
+
+        // separate parallel background so we don't make the rest of the childViews see-through
+        background: SC.View.design({
+          layout: {top: 0, left: 0, right: 0, bottom: 0},
+          classNames: ['genome-view-intro']
+        }),
 
         femaleTitle: SC.LabelView.design({
           layout: {top: 10, height: 25, left: 325, width: 200 },

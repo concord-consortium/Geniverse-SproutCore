@@ -41,10 +41,15 @@ Lab.meiosisPage = SC.Page.design({
       
       genomePanel: SC.View.design({
         layout: {top: 40, bottom: 10, left: 10, right: 10 },
-        childViews: 'challengePoolView femaleTitle femaleView motherMeiosis offspringTitle offspringView maleTitle maleView fatherMeiosis fertilization matchView'.w(),
+        childViews: 'background challengePoolView femaleTitle femaleView motherMeiosis offspringTitle offspringView maleTitle maleView fatherMeiosis fertilization matchView'.w(),
         // childViews: 'femaleTitle femaleView offspringTitle offspringView maleTitle maleView'.w(),
-        classNames: ['genome-view-intro'],
-        
+
+        // separate parallel background so we don't make the rest of the childViews see-through
+        background: SC.View.design({
+          layout: {top: 0, left: 0, right: 0, bottom: 0},
+          classNames: ['genome-view-intro']
+        }),
+
         challengePoolView: Lab.ChallengePoolView.design({
           layout: { left: 5, top: 10, width:50, height: 300 }
         }),

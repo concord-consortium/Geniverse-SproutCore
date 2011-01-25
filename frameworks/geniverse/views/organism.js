@@ -14,7 +14,7 @@ Geniverse.OrganismView = SC.View.extend(
 /** @scope Geniverse.OrganismView.prototype */ {
 	label: 'Organism',
   showLabel: false,
-	classNames: ['organism-view'],
+	classNames: ['organism-view opaque'],
 	content: null,  //Geniverse.NO_DRAGON,
 	childViews: 'labelView imageView'.w(),
   parent: '',       // If set, drag-and-drop will replace parentView's [parent] field
@@ -27,6 +27,7 @@ Geniverse.OrganismView = SC.View.extend(
 	imageView: SC.ImageView.design({
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
 		contentBinding: '*parentView.content',
+    classNames: ['opaque'],
    
     // get imageURL and make smaller if necessary
     value: function() {
