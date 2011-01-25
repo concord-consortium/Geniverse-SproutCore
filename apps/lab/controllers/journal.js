@@ -8,10 +8,10 @@
 
   Shows and manages content for separate browser window showing the journal page
 
-  @extends SC.ObjectController
+  @extends SC.Controller
   @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
 */
-Lab.journalController = SC.ObjectController.create(
+Lab.journalController = SC.Controller.create(
 /** @scope Lab.journalController.prototype */ {
   content: null,
   // NOTE: use the same domain, protocol, and port as this WebApp to avoid "Unsafe JavaScript attempt to access frame with URL" error
