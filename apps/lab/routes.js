@@ -66,44 +66,47 @@ Lab.routes = SC.Object.create({
     */
   gotoRoute: function(clazz, routeParams) {
     SC.Logger.log("Lab.routes.gotoRoute: function(clazz, routeParams) called.");
-    console.log("clazz:",clazz);
-    console.log("routeParams:",routeParams);
+    SC.Logger.log("clazz:",clazz);
+    SC.Logger.log("routeParams:",routeParams);
 
     // Default to mainPage
     var pageName = routeParams.pageName;
     if (!pageName) {
       pageName = 'mainPage';
     }
-    console.log("page name: ", pageName);
+    SC.Logger.log("page name: ", pageName);
 
     // Default to mainPane
     var paneName = routeParams.paneName;
     if (!paneName) {
       paneName = 'mainPane';
     }
-    console.log("pane name: ", paneName);
+    SC.Logger.log("pane name: ", paneName);
 
     // If there is a current pane, remove it from the screen
-    if (this.currentPagePane !== null) {
-      this.currentPagePane.remove();
-      this.currentPagePane.destroy();
+    currentPane = this.get('currentPagePane');
+    if (currentPane !== null) {
+      currentPane.remove();
+      window.setTimeout(function() {
+        currentPane.destroy();
+      }, 500);
     }
 
     Lab.infoController.removeView();  // be sure to hide any open info panes
 
     // Show the specified pane
     var page = clazz[pageName];
-    // console.log("Page: ", page); 
+    SC.Logger.log("Page: ", page); 
 
     var pane = page[paneName];
-    // console.log("Pane: ", pane); 
+    SC.Logger.log("Pane: ", pane); 
     pane = pane.create();
     pane.set('pageName',pageName);  // must be set so the help button works!
-    // console.log("Created Pane: ", pane); 
+    // SC.Logger.log("Created Pane: ", pane); 
     pane.append();
 
     // Save the current pane so we can remove it when process the next route
-    this.currentPagePane = pane;
+    this.set('currentPagePane', pane);
   },
 
   gotoHomePage: function() {
