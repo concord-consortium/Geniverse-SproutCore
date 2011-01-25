@@ -216,6 +216,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
       SC.ImageView.design(Lab.SimpleButton, {
         layout: { centerY: 0, right: 6, width: 27, height: 26 },
         layerId: 'logOutButton',
+        hasHover: YES,
+        alt: 'Log out',
         title:  "Log out",
         target: this.get('logoutButtonTargetPath'),
         action: 'logoutPortal'
