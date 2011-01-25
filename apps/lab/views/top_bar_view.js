@@ -202,7 +202,6 @@ Lab.TopBarView = SC.ToolbarView.extend(
     this.notepadButton = this.createChildView(
       SC.ImageView.design(Lab.SimpleButton, {
         layout: { centerY: 0, right: 73, width: 27, height: 26 },
-        layerId: 'helpButton',
         hasHover: YES,
         alt: 'Your notebook',
         layerId: 'notepadButton',
