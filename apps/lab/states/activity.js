@@ -94,6 +94,7 @@ Lab.ACTIVITY = SC.Responder.create(
           } else {
             SC.Logger.info("found non-matching activitiy named: %s, with route: %s ", title, route);
           }
+          return NO;
         });
         if (!found) {
           SC.Logger.info("Could not find activity with route: "+strand+"/"+level+"/"+activityType+"/"+activityIndex);
@@ -247,7 +248,7 @@ Lab.ACTIVITY = SC.Responder.create(
     
     function challengeDragonsReady() {
       SC.Logger.info("challenge dragons observer called");
-      if (challengeDragons.get('status') & SC.Record.READY === SC.Record.READY) {
+      if ((challengeDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
         challengeDragons.removeObserver('status', challengeDragonsReady);
         Geniverse.challengePoolController.set('content', challengeDragons);
         if (Geniverse.challengePoolController.get('content').length() < 1) {
@@ -259,7 +260,7 @@ Lab.ACTIVITY = SC.Responder.create(
       }
     }
     
-    if (challengeDragons.get('status') & SC.Record.READY === SC.Record.READY) {
+    if ((challengeDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
       challengeDragonsReady();
     } else {
       challengeDragons.addObserver('status', challengeDragonsReady);
@@ -290,7 +291,7 @@ Lab.ACTIVITY = SC.Responder.create(
       // by an observer
       function matchDragonsReady() {
         SC.Logger.info("match dragons observer called");
-        if (matchDragons.get('status') & SC.Record.READY === SC.Record.READY) {
+        if ((matchDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
           matchDragons.removeObserver('status', matchDragonsReady);
           Geniverse.matchController.set('content', matchDragons);
           if (Geniverse.matchController.get('content').length() < 1) {
@@ -302,7 +303,7 @@ Lab.ACTIVITY = SC.Responder.create(
         }
       }
       
-      if (matchDragons.get('status') & SC.Record.READY === SC.Record.READY) {
+      if ((matchDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
         matchDragonsReady();
       } else {
         matchDragons.addObserver('status', matchDragonsReady);
@@ -353,6 +354,9 @@ Lab.ACTIVITY = SC.Responder.create(
     Geniverse.breedDragonController.reset();
     Geniverse.articleController.set('article', null);
     Geniverse.articleController.set('started', NO);
+
+    Lab.infoController.removeView();  // be sure to hide any open info panes
+
     SC.RunLoop.end();
     this.loadData();
   },

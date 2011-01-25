@@ -64,23 +64,17 @@ Lab.infoController = SC.ObjectController.create(
 
   contentDidChange: function () {
     var _content = this.get('content');
-    //console.log("contentDidChange to:",_content);
     this.updateView(_content);
   }.observes('content'),
 
   removeView: function (callingView){
-    //console.log("removeView called by:",callingView);
-    var _content = this.get('content');
-    //console.log("content:", _content);
-    var receiver = this.pane.remove();
-    //console.log("this.pane.remove() returned receiver:", receiver);
+    if (!!this.get('pane')) {
+      this.get('pane').remove();
+    }
   },
 
   updateView: function (newValue) {
-    //console.log("this.pane:",this.pane);
-    if(this.pane){
-      //console.log("this.pane.contentView.infoView:"+this.pane.contentView.infoView);
-      //console.log("updating infoView's value to:",newValue);
+    if (!!this.get('pane')) {
       this.pane.contentView.infoView.set('value', newValue);
     }
   }

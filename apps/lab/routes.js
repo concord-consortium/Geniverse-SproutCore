@@ -88,7 +88,9 @@ Lab.routes = SC.Object.create({
       this.currentPagePane.remove();
       this.currentPagePane.destroy();
     }
-        
+
+    Lab.infoController.removeView();  // be sure to hide any open info panes
+
     // Show the specified pane
     var page = clazz[pageName];
     // console.log("Page: ", page); 
