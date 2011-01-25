@@ -32,6 +32,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
   navBarRight: null,
   logoutButton: null,
   notepadButton: null,
+  journalButton: null,
   helpButton: null,
 
   /**
@@ -80,6 +81,10 @@ Lab.TopBarView = SC.ToolbarView.extend(
    * Binding Path for the isEnabledButton property of the notepadController
    */
   notepadControllerIsEnabledButtonPath: 'Geniverse.notepadController.isEnabledButton',
+  /**
+   * Binding Path for the target property of the journalButton
+   */
+  journalButtonTargetPath: 'Lab.journalController',
 
   /**
    * Overwritten createChildView where you set up all
@@ -211,6 +216,19 @@ Lab.TopBarView = SC.ToolbarView.extend(
       })
     );
     childViews.push(this.notepadButton);
+
+    this.journalButton = this.createChildView(
+      SC.ImageView.design(Lab.SimpleButton, {
+        layout: { centerY: 0, right: 39, width: 27, height: 26 },
+        hasHover: YES,
+        alt: 'Your journal',
+        layerId: 'journalButton',
+        title:  "Journal",
+        target: this.get('journalButtonTargetPath'),
+        action: 'openWindow'
+      })
+    );
+    childViews.push(this.journalButton);
 
     this.logoutButton = this.createChildView(
       SC.ImageView.design(Lab.SimpleButton, {
