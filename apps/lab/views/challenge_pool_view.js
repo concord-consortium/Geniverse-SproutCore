@@ -15,6 +15,8 @@
  * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
 
+sc_require('mixins/shifted_organism');
+
 Lab.ChallengePoolView = SC.View.extend(
 /** @scope Lab.ChallengePoolView.prototype */ {
   classNames: 'transparent'.w(),
@@ -23,6 +25,7 @@ Lab.ChallengePoolView = SC.View.extend(
   titleView: null,
   dragonsView: null,
   dragonSize: 75,
+  dragonExampleView: Geniverse.OrganismView.extend(Geniverse.ShiftedOrganism),
 
   /**
    * Necessary configuration xPath elements to set up binding inside the composite view instances
@@ -45,9 +48,29 @@ Lab.ChallengePoolView = SC.View.extend(
   createChildViews: function() {
     var childViews = [];
 
+    this.dragonsView = this.createChildView(
+      CC.AutoScrollView.design({
+        hasHorizontalScroller: NO,
+        layout: { left: 0, top: 20, right: 0, bottom: 0},
+        contentView: SC.GridView.design({
+          classNames: ['dragon-grid'],
+          contentBinding: this.get('challengePoolControllerPath')+'.arrangedObjects',
+          selectionBinding: this.get('challengePoolControllerPath')+'.selection',
+          rowHeight: this.get('dragonSize'),
+          columnWidth: this.get('dragonSize'),
+          canEditContent: NO,
+          exampleView: this.get('dragonExampleView'),
+          isSelectable: YES,
+          dragDataTypes: ['dragon']
+        }),
+        autoScrollTriggerBinding: this.get('challengePoolControllerPath')+'.length'
+      })
+    );
+    childViews.push(this.dragonsView);
+
     this.titleView = this.createChildView(
       SC.LabelView.design({
-        layout: { centerY: 0, height: 20, left: 0, top:0, width: 70 },
+        layout: { height: 20, left: 0, top:0, right: 0 },
         //valueBinding: this.get('titlePath'),
         value: 'Parent Pool',
         controlSize: "bity",
@@ -57,26 +80,6 @@ Lab.ChallengePoolView = SC.View.extend(
       })
     );
     childViews.push(this.titleView);
-
-    this.dragonsView = this.createChildView(
-      CC.AutoScrollView.design({
-        hasHorizontalScroller: NO,
-        layout: { left: 0, top: 20, width: 70, height: 280},
-        backgroundColor: 'white',
-        contentView: SC.GridView.design({
-          contentBinding: this.get('challengePoolControllerPath')+'.arrangedObjects',
-          selectionBinding: this.get('challengePoolControllerPath')+'.selection',
-          rowHeight: this.get('dragonSize'),
-          columnWidth: this.get('dragonSize'),
-          canEditContent: NO,
-          exampleView: Geniverse.OrganismView,
-          isSelectable: YES,
-          dragDataTypes: ['dragon']
-        }),
-        autoScrollTriggerBinding: this.get('challengePoolControllerPath')+'.length'
-      })
-    );
-    childViews.push(this.dragonsView);
 
     this.set('childViews', childViews);
   }
