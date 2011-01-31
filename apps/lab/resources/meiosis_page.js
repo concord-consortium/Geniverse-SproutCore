@@ -49,51 +49,54 @@ Lab.meiosisPage = SC.Page.design({
           layout: {top: 0, left: 0, right: 0, bottom: 0},
           classNames: ['genome-view-intro']
         }),
-
+		  // using horizontal Challenge Pool at top with 120-px drakes inside
+		  // this will necessitate moving everything down ~130px
+		  // In actuality, moving them down about 6px more to avoid cutting off label
         challengePoolView: Lab.ChallengePoolView.design({
-          layout: { left: 5, top: 10, width:50, height: 300 }
+          layout: { left: 5, top: 10, width:510, height: 120 },
+          dragonSize: 100
         }),
 
         femaleTitle: SC.LabelView.design({
-          layout: {top: 3, left: 130, height: 19, width: 200 },
+          layout: {top: 133, left: 130, height: 25, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           value: "Female Drake"
         }),
 
         femaleView: Geniverse.OrganismView.design({
-          layout: {top: 27, left: 138, height: 100, width: 100 },
+          layout: {top: 157, left: 138, height: 100, width: 100 },
           contentBinding: 'Geniverse.meiosisAnimationController.mother',
           isDropTarget: YES,
           sex: 1
         }),
         
         offspringTitle: SC.LabelView.design({
-          layout: {top: 3, centerX: 40, height: 19, width: 200 },
+          layout: {top: 139, centerX: 40, height: 25, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           value: "Offspring Drake"
         }),
 
         offspringView: Geniverse.OrganismView.design({
-          layout: {top: 27, centerX: 15, height: 100, width: 100 },
+          layout: {top: 163, centerX: 15, height: 100, width: 100 },
           contentBinding: 'Geniverse.meiosisAnimationController.offspring',
           canDrag: YES
         }),
         
         maleTitle: SC.LabelView.design({
-          layout: {top: 3, right: 10, height: 19, width: 200 },
+          layout: {top: 139, right: 10, height: 25, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           value: "Male Drake"
         }),
 
         maleView: Geniverse.OrganismView.design({
-          layout: {top: 27, right: 108, height: 100, width: 100 },
+          layout: {top: 163, right: 108, height: 100, width: 100 },
           contentBinding: 'Geniverse.meiosisAnimationController.father',
           isDropTarget: YES,
           sex: 0
         }),
         
         motherMeiosis: Geniverse.AnimationView.design({
-          layout: {top: 135, left: 60, height: 360, width: 310 },
+          layout: {top: 271, left: 60, height: 360, width: 310 },
           mode: 'parent',
           meiosisOwner: 'mother',
           dragonBinding: 'Geniverse.meiosisAnimationController.mother',
@@ -101,7 +104,7 @@ Lab.meiosisPage = SC.Page.design({
         }),
 
         fertilization: Geniverse.AnimationView.design({
-          layout: {top: 135, centerX: 27, height: 360, width: 310 },
+          layout: {top: 271, centerX: 27, height: 360, width: 310 },
           mode: 'offspring',
           meiosisOwner: 'offspring',
           motherJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson',
@@ -109,15 +112,17 @@ Lab.meiosisPage = SC.Page.design({
         }),
         
         fatherMeiosis: Geniverse.AnimationView.design({
-          layout: {top: 135, right: 5, height: 360, width: 310 },
+          layout: {top: 271, right: 5, height: 360, width: 310 },
           mode: 'parent',
           meiosisOwner: 'father',
           dragonBinding: 'Geniverse.meiosisAnimationController.father',
           gameteJsonBinding: 'Geniverse.meiosisAnimationController.fatherGameteJson'
         }),
-        
+         // Changing to left-specified and placing to right of Challenge Pool
+			// Also making 120 high to match parent pool
         matchView: Geniverse.MatchView.design({
-          layout: { centerX: 57, top: 495, height: 90, width: 400 }
+          layout: { left: 530, top: 10, height: 120, width: 400 },
+          dragonSize: 100
         })
       })
       

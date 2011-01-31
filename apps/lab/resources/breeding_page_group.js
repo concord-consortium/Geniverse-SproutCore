@@ -50,37 +50,37 @@ Lab.breedingPageGroup = SC.Page.design({
       childViews: 'breedView challengePoolView breedingPenView challengeChromosomeToolView stableView matchView marketplaceView chatView allArticlesView'.w(),
 
       challengePoolView: Lab.ChallengePoolView.design({
-        layout: { left: 20, top: 50, width:70, height: 300 }
+        layout: { left: 0, top: 50, width:80, height: 320 }
       }),
       
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { left:55, top: 20, width: 35, height: 30 },
+        layout: { left:45, top: 20, width: 35, height: 30 },
         selectionBinding: 'Geniverse.challengePoolController.selection',
         selection1Binding: 'Geniverse.eggsController.selection',
         selection2Binding: 'Geniverse.stableOrganismsController.selection'
       }),
       
       breedView: Geniverse.BreedDragonView.design({
-        layout: { top: 20 , left: 100, height: 330, width: 150 },
+        layout: { top: 20 , left: 90, height: 330, width: 150 },
         showChildView: NO // child as in baby dragon
       }),
       
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { left: 265, top: 28, width: 300, height: 353 }
+        layout: { left: 250, top: 28, width: 325, height: 426 }
       }),
 
       stableView: Lab.StableView.design({
-        layout: { left: 580, top: 28, height: 322, width: 300 }
+        layout: { left: 585, top: 28, width: 380, height: 395 }
       }),
       
       matchView: Geniverse.MatchView.design({
-        layout: { left: 895, top: 28, height: 320, width: 80 },
-        isVertical: YES
+        layout: { left: 895, top: 28, height: 340, width: 82 },
+        dragonSize: 80
       }),
       
       marketplaceView: SC.ImageView.design({
-        layout: { left: 895, top: 340, height: 90, width: 90 },
+        layout: { left: 975, top: 435, height: 90, width: 90 },
         value: sc_static('sell-to-market.jpg'),
         canLoadInBackground: NO,
         useImageCache: NO,
@@ -126,7 +126,7 @@ Lab.breedingPageGroup = SC.Page.design({
       allArticlesView: SC.View.design ({
         childViews: 'articleLabel article'.w(),
         
-        layout: { top: 380, left: 430, width: 450, height: 235},
+        layout: { top: 435, left: 430, width: 450, height: 235},
         
         articleLabel: SC.LabelView.design({
           layout: {top: 0, left: 0, right: 0, height: 20},
@@ -143,7 +143,7 @@ Lab.breedingPageGroup = SC.Page.design({
       }),
       
       chatView: SC.View.design ({
-        layout: { top: 380, left: 20, width: 385, height: 215 },
+        layout: { top: 435, left: 20, width: 385, height: 215 },
         classNames: "transparent".w(),
         childViews: 'userListLabel userListView chatListView chatComposeView '.w(),
         

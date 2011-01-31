@@ -70,7 +70,7 @@ Lab.chromosomeBreedingPage = SC.Page.design({
         }),
 
         femalePhenotypeView: Geniverse.OrganismView.design({
-          layout: {top: 10, left: 300, width: 150, height: 150},
+          layout: {top: 0, left: 300, width: 200, height: 200},
           contentBinding: "*parentView.femaleGenomeView.dragon",
           allowDrop: NO,
           showBackground: NO
@@ -98,7 +98,7 @@ Lab.chromosomeBreedingPage = SC.Page.design({
         }),
 
         malePhenotypeView: Geniverse.OrganismView.design({
-          layout: {top: 10, left: 515, width: 150, height: 150},
+          layout: {top: 0, left: 515, width: 200, height: 200},
           contentBinding: "*parentView.maleGenomeView.dragon",
           allowDrop: NO,
           showBackground: NO
@@ -123,11 +123,11 @@ Lab.chromosomeBreedingPage = SC.Page.design({
       
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { left: 358, top: 245, width: 344, height: 287 }
+        layout: { left: 329, top: 245, width: 380, height: 350 }
       }),
       
       matchView: Geniverse.MatchView.design({
-        layout: { left: 325, top: 530, height: 110, width: 400 }
+        layout: { left: 713, top: 495, height: 95, width: 320 }
       })
       
   	})

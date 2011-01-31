@@ -49,32 +49,37 @@ Lab.breedingPage = SC.Page.design({
      
       // challenge pool to hold initial, system-created dragons
       challengePoolView: Lab.ChallengePoolView.design({
-        layout: { left: 20, top: 50, width:70, height: 300 }
+        layout: { left: 0, top: 50, width:80, height: 320 }
       }),
       
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { left:55, top: 20, width: 35, height: 30 },
+        layout: { left: 45, top: 20, width: 35, height: 30 },
         selectionBinding: 'Geniverse.challengePoolController.selection',
         selection1Binding: 'Geniverse.eggsController.selection',
         selection2Binding: 'Geniverse.stableOrganismsController.selection'
       }),
       
       breedView: Geniverse.BreedDragonView.design({
-        layout: { top: 20 , left: 100, height: 330, width: 150 },
+        layout: { top: 20 , left: 90, height: 330, width: 150 },
         showChildView: NO // child as in baby dragon
       }),
       
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { left: 265, top: 28, width: 300, height: 353 }
+        layout: { left: 250, top: 28, width: 325, height: 426 }
       }),
 
       stableView: Lab.StableView.design({
-        layout: { left: 580, top: 28, height: 322, width: 300 }
+        layout: { left: 585, top: 28, width: 380, height: 395 }
+      }),
+      
+      matchView: Geniverse.MatchView.design({
+        layout: { left: 250, top: 455, height: 170, width: 620 },
+        dragonSize: 150
       }),
       
       marketplaceView: SC.ImageView.design({
-        layout: { left: 895, top: 260, height: 90, width: 90 },
+        layout: { left: 875, top: 455, height: 90, width: 90 },
         value: sc_static('sell-to-market.jpg'),
         canLoadInBackground: NO,
         useImageCache: NO,
@@ -116,12 +121,7 @@ Lab.breedingPage = SC.Page.design({
         dragExited: function(drag, evt) {
           this.$().removeClass('drop-target') ;
         }
-      }),
-      
-      matchView: Geniverse.MatchView.design({
-        layout: { left: 150, top: 370, height: 100, width: 400 }
       })
-      
     })
   })
   
