@@ -28,6 +28,7 @@ Geniverse.OrganismView = SC.View.extend(
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
 		contentBinding: '*parentView.content',
     classNames: ['opaque'],
+    valueNeedsRecalculated: YES, // simple value we can toggle to trigger the value property being recalculated
    
     // get imageURL and make smaller if necessary
     value: function() {
@@ -36,17 +37,21 @@ Geniverse.OrganismView = SC.View.extend(
       }
       
       var imageURL = this.get('content').get('imageURL');
-      
-      if (!!this.get('parentView') && !!this.get('parentView').get('parentView') && 
-              (""+this.get('parentView').get('parentView')).indexOf("SC.GridView") > -1){
-        // in gridView
-        var height = this.get('parentView').get('parentView').get('rowHeight');
-        if (height <= 75){
-          imageURL = imageURL.replace('.png', '_75.png');
-        }
+     
+      var height = this.get('clippingFrame').height;
+      if (!height) {
+        return imageURL;
+      }
+      if (height <= 75){
+        imageURL = imageURL.replace('.png', '_75.png');
       }
       return imageURL;
-    }.property('content','parentView').cacheable(),
+    }.property('content','valueNeedsRecalculated','clippingFrame').cacheable(),
+
+    viewDidResize: function() {
+      // we need to recalculate our imageURL
+      this.set('valueNeedsRecalculated', (! this.get('valueNeedsRecalculated')));
+    },
     
 		canLoadInBackground: NO,
 		useImageCache: NO
