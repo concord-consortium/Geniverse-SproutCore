@@ -22,6 +22,7 @@ Lab.ChallengePoolView = SC.View.extend(
   // childViews
   titleView: null,
   dragonsView: null,
+  dragonSize: 75,
 
   /**
    * Necessary configuration xPath elements to set up binding inside the composite view instances
@@ -65,8 +66,8 @@ Lab.ChallengePoolView = SC.View.extend(
         contentView: SC.GridView.design({
           contentBinding: this.get('challengePoolControllerPath')+'.arrangedObjects',
           selectionBinding: this.get('challengePoolControllerPath')+'.selection',
-          rowHeight: 70,
-          columnWidth: 70,
+          rowHeight: this.get('dragonSize'),
+          columnWidth: this.get('dragonSize'),
           canEditContent: NO,
           exampleView: Geniverse.OrganismView,
           isSelectable: YES,

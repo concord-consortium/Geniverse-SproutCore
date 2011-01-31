@@ -37,6 +37,8 @@ Lab.StableView = SC.View.extend(
    */
   stableOrganismsControllerPath: 'Geniverse.stableOrganismsController',
 
+  dragonSize: 75,
+
   /**
    * Overwritten createChildView where you set up all
    * the internal child views and where we are
@@ -76,8 +78,8 @@ Lab.StableView = SC.View.extend(
           classNames: ['dragon-grid'],
           contentBinding: this.get('stableOrganismsControllerPath')+'.arrangedObjects',
           selectionBinding: this.get('stableOrganismsControllerPath')+'.selection',
-          rowHeight: 60,
-          columnWidth: 60,
+          rowHeight: this.get('dragonSize'),
+          columnWidth: this.get('dragonSize'),
           canEditContent: NO,
           exampleView: Geniverse.OrganismView,
           isSelectable: YES,

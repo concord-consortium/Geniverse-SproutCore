@@ -35,6 +35,7 @@ Lab.BreedingPenView = SC.View.extend(
    * Binding Path for the eggsController of the BreedingPenView
    */
   eggsControllerPath: 'Geniverse.eggsController',
+  dragonSize: 75,
 
   /**
    * Overwritten createChildView where you set up all
@@ -52,8 +53,8 @@ Lab.BreedingPenView = SC.View.extend(
           classNames: ['dragon-grid'],
           contentBinding: this.get('eggsControllerPath')+'.arrangedObjects',
           selectionBinding: this.get('eggsControllerPath')+'.selection',
-          rowHeight: 60,
-          columnWidth: 60,
+          rowHeight: this.get('dragonSize'),
+          columnWidth: this.get('dragonSize'),
           canEditContent: NO,
           exampleView: Geniverse.OrganismView,
           isSelectable: YES,
