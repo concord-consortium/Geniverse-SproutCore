@@ -27,5 +27,14 @@
 }
 
 .sc-theme .empty {
-	background-color: #FFFFFF;
+	background-color: #936942;
 }
+
+.sc-theme .sc-list-view.dragon-grid {
+  background-color: #936942;
+}
+
+.sc-theme .sc-pane.sc-panel.popup-chromosome-view > .sc-view {
+  background: none repeat scroll 0 0 #936942;
+}
+

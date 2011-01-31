@@ -7,6 +7,7 @@
 Geniverse.PopupChromosomeView = SC.PalettePane.create({
   layout: { width: 488, height: 430, centerX: 0, centerY: 0 },
   isModal:NO,
+  classNames: ['popup-chromosome-view'],
   contentView: SC.View.extend({
     childViews: 'titleView chromosomeView hideButton'.w(),
 

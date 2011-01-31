@@ -48,8 +48,8 @@ Lab.BreedingPenView = SC.View.extend(
       CC.AutoScrollView.design({
         hasHorizontalScroller: NO,
         layout: { left: 0, top: 0, bottom: 0, right: 0 },
-        backgroundColor: 'white',
         contentView: SC.GridView.design({
+          classNames: ['dragon-grid'],
           contentBinding: this.get('eggsControllerPath')+'.arrangedObjects',
           selectionBinding: this.get('eggsControllerPath')+'.selection',
           rowHeight: 60,

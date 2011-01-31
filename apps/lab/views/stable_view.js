@@ -71,9 +71,9 @@ Lab.StableView = SC.View.extend(
       CC.AutoScrollView.design({
         hasHorizontalScroller: NO,
         layout: { left: 0, top: 20, bottom: 0, right: 0 },
-        backgroundColor: 'white',
         classNames: 'transparent'.w(),
         contentView: SC.GridView.design({
+          classNames: ['dragon-grid'],
           contentBinding: this.get('stableOrganismsControllerPath')+'.arrangedObjects',
           selectionBinding: this.get('stableOrganismsControllerPath')+'.selection',
           rowHeight: 60,
