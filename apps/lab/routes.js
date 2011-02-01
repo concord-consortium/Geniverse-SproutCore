@@ -98,7 +98,20 @@ Lab.routes = SC.Object.create({
 
     var pane = page[paneName];
     SC.Logger.log("Pane: ", pane);
-    pane = pane.create();
+    try {
+      pane = pane.create();
+    } catch(err) {
+      // FIXME This shows up consistently when going back to mainPage.mainPane.
+      // It turns out that unlike the other pages, the created instance of mainPage.mainPane
+      // ends up replacing the designed mainPane... so the second time through, it's already been
+      // created. This messes up the links within the page, too.
+      SC.Logger.error("Couldn't call 'create' on pane");
+      SC.Logger.dir(pane);
+      pane.remove();
+      // newPane = pane.__proto__.create();
+      // pane.destroy();
+      // pane = newPane;
+    }
     pane.set('pageName',pageName);  // must be set so the help button works!
     // SC.Logger.log("Created Pane: ", pane); 
     pane.append();
