@@ -15,7 +15,7 @@ Lab.routes = SC.Object.create({
   /**
     Property to store the main pane of the page that is currently shown to the user
     */
-  currentPagePane: null,
+  _currentPagePane: null,
   
   gotoLabRoute: function(routeParams) {
     this.gotoRoute(Lab, routeParams);
@@ -84,12 +84,10 @@ Lab.routes = SC.Object.create({
     SC.Logger.log("pane name: ", paneName);
 
     // If there is a current pane, remove it from the screen
-    currentPane = this.get('currentPagePane');
-    if (currentPane !== null) {
-      currentPane.remove();
-      window.setTimeout(function() {
-        currentPane.destroy();
-      }, 500);
+    if (this._currentPagePane !== null) {
+      this._currentPagePane.remove();
+      var oldPane = this._currentPagePane;
+      oldPane.destroy();
     }
 
     Lab.infoController.removeView();  // be sure to hide any open info panes
@@ -99,14 +97,14 @@ Lab.routes = SC.Object.create({
     SC.Logger.log("Page: ", page); 
 
     var pane = page[paneName];
-    SC.Logger.log("Pane: ", pane); 
+    SC.Logger.log("Pane: ", pane);
     pane = pane.create();
     pane.set('pageName',pageName);  // must be set so the help button works!
     // SC.Logger.log("Created Pane: ", pane); 
     pane.append();
 
     // Save the current pane so we can remove it when process the next route
-    this.set('currentPagePane', pane);
+    this._currentPagePane = pane;
   },
 
   gotoHomePage: function() {
