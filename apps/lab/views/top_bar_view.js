@@ -15,6 +15,9 @@
  * http://www.itsgotwhatplantscrave.com/2009/06/20/bindings-unleashed/
  * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
+
+sc_require('mixins/simple_button');
+
 Lab.TopBarView = SC.ToolbarView.extend(
 /** @scope Lab.TopBarView.prototype */ {
   layout: { top: 0, left: 0, right: 0, height: 36 },
