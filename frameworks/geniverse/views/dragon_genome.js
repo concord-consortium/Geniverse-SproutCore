@@ -44,6 +44,19 @@ Geniverse.DragonGenomeView = SC.View.extend(
   alleles: [],
 
   ignoreUpdate: YES,
+
+  resetDragonOnInit: NO,
+
+  init: function() {
+    sc_super();
+    if (this.get('resetDragonOnInit')) {
+      var oldIgnoreUpdate = this.get('ignoreUpdate');
+      this.set('ignoreUpdate', NO);
+      this._processAlleleString();
+      this.set('ignoreUpdate', oldIgnoreUpdate);
+      this.set('layerNeedsUpdate', YES);
+    }
+  },
   
   activityBinding: 'Geniverse.activityController.content',
   
@@ -403,6 +416,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
   
   _processAlleleString: function() {
     if (this.get('ignoreUpdate') == NO) {
+      SC.RunLoop.begin();
       var dragon = this.get('dragon');
 
       if (dragon === null || typeof(dragon) == "undefined") {
@@ -414,6 +428,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
       var alleles = Geniverse.chromosomeController.processAlleleString(alleleString);
       
       this.set('alleles', alleles);
+      SC.RunLoop.end();
     }
   }.observes('dragon'),
   

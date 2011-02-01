@@ -4,11 +4,11 @@
 // ==========================================================================
 /*globals Geniverse */
 
-Geniverse.PopupChromosomeView = SC.PalettePane.create({
+Geniverse.PopupChromosomeView = SC.PalettePane.extend({
   layout: { width: 488, height: 430, centerX: 0, centerY: 0 },
   isModal:NO,
   classNames: ['popup-chromosome-view'],
-  contentView: SC.View.extend({
+  contentView: SC.View.design({
     childViews: 'titleView chromosomeView hideButton'.w(),
 
     titleView: SC.LabelView.design({
@@ -21,11 +21,11 @@ Geniverse.PopupChromosomeView = SC.PalettePane.create({
       classNames: "sc-pane sc-main sc-theme".w()
     }),
 
-    hideButton: SC.ButtonView.extend({
+    hideButton: SC.ButtonView.design({
       layout: {bottom: 5, right: 5, width: 80, height: 24},
       title: "Close",
-      action: "remove",
-      target: "Geniverse.chromosomeToolController.pane"
+      action: "closePane",
+      target: "Geniverse.chromosomeToolController"
     }),
 
     chromosomeView: Geniverse.DragonGenomeView.design({
@@ -33,7 +33,16 @@ Geniverse.PopupChromosomeView = SC.PalettePane.create({
       isEditable: NO,
       showGenerateNewDragon: NO,
       ignoreUpdate: NO,
-      dragonBinding: SC.Binding.from("Geniverse.chromosomeToolController.dragon").oneWay()
+      resetDragonOnInit: YES,
+      dragon: null,
+      init: function() {
+        sc_super();
+        // we have to bind in the init function (rather than using
+        // dragonBinding: attribute) because we create many of these
+        // over time, and for whatever reason, the binding ceases to
+        // work on the later created instances.
+        this.bind('dragon', SC.Binding.from("Geniverse.chromosomeToolController.dragon").oneWay());
+      }
     })
   })
 });
