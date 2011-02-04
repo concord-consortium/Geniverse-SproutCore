@@ -15,7 +15,7 @@ sc_require('views/help');
 Lab.helpController = SC.ObjectController.create(
 /** @scope Lab.helpController.prototype */ {
   pane: null,//Lab.HelpView,
-  content: "Help message loading<blink>...</blink>",
+  content: "Help message loading...",
   isVisible: YES,
   helpButton: null,
 
@@ -33,9 +33,9 @@ Lab.helpController = SC.ObjectController.create(
       }else{
         _pane.popup(null);
       }
-      this.set('content', "Help message loading<blink>...</blink>");
+      this.set('content', "Help message loading...");
       this.updateView(this.get('content'));
-      var pageName = Lab.routes.currentPagePane.get('pageName');
+      var pageName = Lab.routes._currentPagePane.get('pageName');
       //console.log("pageName:",pageName);
       if (pageName) {
         // TODO: Get the matching help message from the backend
