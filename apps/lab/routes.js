@@ -16,6 +16,7 @@ Lab.routes = SC.Object.create({
     Property to store the main pane of the page that is currently shown to the user
     */
   _currentPagePane: null,
+  _firstHomePane: null,
   
   gotoLabRoute: function(routeParams) {
     this.gotoRoute(Lab, routeParams);
@@ -94,9 +95,14 @@ Lab.routes = SC.Object.create({
 
     // Show the specified pane
     var page = clazz[pageName];
+    
     SC.Logger.log("Page: ", page); 
 
     var pane = page[paneName];
+    
+    if (this._firstHomePane === null && page.get('pagePath') == "Lab.mainPage"){
+      this._firstHomePane = pane;
+    }
     SC.Logger.log("Pane: ", pane);
     try {
       pane = pane.create();
@@ -107,10 +113,12 @@ Lab.routes = SC.Object.create({
       // created. This messes up the links within the page, too.
       SC.Logger.error("Couldn't call 'create' on pane");
       SC.Logger.dir(pane);
-      pane.remove();
-      // newPane = pane.__proto__.create();
-      // pane.destroy();
-      // pane = newPane;
+      
+      // HACK: The version of the home page mainPane that is created after the first time
+      // is no longer a SC.mainPane but is instead an object with a type SC.mainPane and
+      // no create method. The temporarily fix this, we save the first version of the mainPane
+      // that is created and call create on that.
+      pane = this._firstHomePane.create();
     }
     pane.set('pageName',pageName);  // must be set so the help button works!
     // SC.Logger.log("Created Pane: ", pane); 
