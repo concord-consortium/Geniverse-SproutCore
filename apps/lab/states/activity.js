@@ -28,6 +28,8 @@ Lab.ACTIVITY = SC.Responder.create(
     SC.Logger.log("ACTIVITY");
   },
   
+  hasLoadedActivityData: NO,
+  
   willLoseFirstResponder: function() {
     // Called when this state loses first responder
     // SC.Logger.info("Now removing default page");
@@ -41,6 +43,8 @@ Lab.ACTIVITY = SC.Responder.create(
   gotoActivity: function() {
     Lab.makeFirstResponder(this);
     SC.Logger.log("ACTIVITY gotoActivity");
+    
+    this.set('hasLoadedActivityData', NO);
     
     Lab.LOGIN.removeObserver('userLoggedIn', Lab.ACTIVITY, 'gotoActivity');
     
@@ -137,6 +141,9 @@ Lab.ACTIVITY = SC.Responder.create(
   
   loadData: function() {
     SC.Logger.log("ACTIVITY loadData");
+    
+    this.set('hasLoadedActivityData', NO);
+    
     var user = Geniverse.userController.get('content');
     var activity = Geniverse.activityController.get('content');
     
@@ -308,6 +315,8 @@ Lab.ACTIVITY = SC.Responder.create(
       } else {
         matchDragons.addObserver('status', matchDragonsReady);
       }
+      
+      this.set('hasLoadedActivityData', YES);
   },
 
   initDragonsFromJson: function(isMatchDragons) {
@@ -339,6 +348,10 @@ Lab.ACTIVITY = SC.Responder.create(
   },
   
   reloadData: function() {
+    SC.Logger.log("Lab.Activity.reloadData");
+    
+    this.set('hasLoadedActivityData', NO);
+    
     SC.RunLoop.begin();
     // for (var i = 0; i < Geniverse.matchController.get('length'); i++){
     //   var dragon = Geniverse.matchController.objectAt(i);
@@ -361,6 +374,74 @@ Lab.ACTIVITY = SC.Responder.create(
     this.loadData();
   },
   
+  sellAllUsersDrakes: function() {
+    SC.Logger.log("selling owned drakes");
+    
+    var user = Geniverse.userController.get('content');
+    var activity = Geniverse.activityController.get('content');
+    
+    
+    // getting all owned dragons like so caused hundreds of POSTS and made script
+    // crash. Still don't understand why. So we do it twice, once for the stable
+    // dragons and once for the challange dragons. Annoying and not DRY
+    
+    // var ownedDragonsQuery = SC.Query.local('Geniverse.Dragon', {
+    //   conditions: 'user = {user} AND activity = {activity} AND isInMarketplace = false',
+    //   user: user,
+    //   activity: activity,
+    //   orderBy: 'storeKey',
+    //   restParams: Geniverse.makeRestParams({
+    //     user: user,
+    //     activity: activity,
+    //     isInMarketplace: 'false'
+    //   })
+    // });
+    // var ownedDragons = Geniverse.store.find(ownedDragonsQuery);
+    
+    // first sell stable drakes in the activity user is currently viewing
+    var stableDragons = Geniverse.stableOrganismsController.get('arrangedObjects');
+    
+    function dragonsReadyToBeSold() {
+      stableDragons.removeObserver('status', dragonsReadyToBeSold);
+      while (Geniverse.stableOrganismsController.get('length') > 0){
+        SC.Logger.log("selling drake");
+        SC.RunLoop.begin();
+        if (stableDragons.lastObject().get('status') & SC.Record.READY === SC.Record.READY){
+          stableDragons.lastObject().set('isInMarketplace', true);
+        }
+        SC.RunLoop.end();
+      }
+    }
+    
+    if (stableDragons.get('status') & SC.Record.READY === SC.Record.READY) {
+      dragonsReadyToBeSold();
+    } else {
+      stableDragons.addObserver('status', dragonsReadyToBeSold);
+    }
+    
+    // then sell challange drakes in the activity user is currently viewing
+    var challangeDragons = Geniverse.challengePoolController.get('arrangedObjects');
+    
+    function dragonsReadyToBeSold2() {
+      challangeDragons.removeObserver('status', dragonsReadyToBeSold);
+      while (Geniverse.challengePoolController.get('length') > 0){
+        SC.Logger.log("selling drake");
+        SC.RunLoop.begin();
+        if (challangeDragons.lastObject().get('status') & SC.Record.READY === SC.Record.READY){
+          challangeDragons.lastObject().set('isInMarketplace', true);
+        }
+        SC.RunLoop.end();
+      }
+    }
+    
+    if (challangeDragons.get('status') & SC.Record.READY === SC.Record.READY) {
+      dragonsReadyToBeSold2();
+    } else {
+      challangeDragons.addObserver('status', dragonsReadyToBeSold2);
+    }
+    
+  },
+  
   gotoActivityRoute: function() { 
     var pageType = Geniverse.activityController.get('pageType');
     
@@ -370,7 +451,6 @@ Lab.ACTIVITY = SC.Responder.create(
 
     // If a message has been authored for this Activity, display it now
     var message = Geniverse.activityController.get('message');
-    SC.Logger.info("activity message:",message);
     if (message){
       Lab.infoController.display(message);
     }

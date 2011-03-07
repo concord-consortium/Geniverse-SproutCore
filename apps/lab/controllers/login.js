@@ -188,5 +188,23 @@ Lab.loginController = SC.ObjectController.create(
     this.updateGroupInfo();
     this.set('loggedIn', YES);
     Lab.LOGIN.finish();
-  }
+  },
+  
+  lastGroupId: -1,
+  lastMemberId: -1,
+  
+  groupInfoDidUpdate: function() {
+    if ((Geniverse.userController.get('groupId') != this.get('lastGroupId') || 
+        Geniverse.userController.get('memberId') != this.get('lastMemberId')) &&
+        Lab.ACTIVITY.get('hasLoadedActivityData')){
+      SC.Logger.log("reloading data after group change");
+      Lab.ACTIVITY.set('hasLoadedActivityData', NO);
+      
+      Lab.ACTIVITY.sellAllUsersDrakes();
+      Lab.ACTIVITY.reloadData();
+      
+      this.set('lastGroupId', Geniverse.userController.get('groupId'));
+      this.set('lastMemberId', Geniverse.userController.get('memberId'));
+    }
+  }.observes('Geniverse.userController.memberId', 'Geniverse.userController.groupId')
 }) ;

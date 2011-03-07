@@ -38,7 +38,7 @@ Lab.InfoView = SC.PickerPane.create({
       escapeHTML: NO,
       infoViewValueDidChange: function () {
         var infoViewValue = this.get('value');
-        console.log('infoViewValueDidChange to:',infoViewValue);
+        // console.log('infoViewValueDidChange to:',infoViewValue);
 //        console.log("setting infoController content");
 //        Lab.infoController.set('content',infoViewValue);
       }.observes('value')
