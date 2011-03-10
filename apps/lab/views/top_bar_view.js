@@ -245,6 +245,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         title:  "Log out",
         toolTip: "Click to log out",
         target: this.get('logoutButtonTargetPath'),
+        isVisible: NO,
         action: 'logoutPortal'
       })
     );
