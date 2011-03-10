@@ -16,6 +16,11 @@ case "$1" in
     export SERVER_PATH="/web/geniverse.dev.concord.org/static"
     export LABEL_PATH="/web/geniverse.dev.concord.org/sproutcore"
     ;;
+  demo)
+    export SERVER=geniverse-vm1.concord.org
+    export SERVER_PATH="/web/geniverse/static"
+    export LABEL_PATH="/web/geniverse"
+    ;;
   *)
     echo "Invalid server!"
     exit 1
