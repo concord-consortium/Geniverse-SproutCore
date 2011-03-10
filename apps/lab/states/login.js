@@ -22,7 +22,7 @@ Lab.LOGIN = SC.Responder.create(
   userLoggedIn: NO,
   didBecomeFirstResponder: function() {
     SC.Logger.log("LOGIN");
-    Lab.loginController.showCheckPanel();
+    Lab.loginController.autoLogin("User", "User", "user");
   },
 
   willLoseFirstResponder: function() {
