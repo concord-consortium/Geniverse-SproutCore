@@ -38,4 +38,4 @@ echo "Lab build hash: $(sc-build-number lab)"
 
 read -p "What label should this be deployed with? " -e -r LABEL
 
-ssh -t $SERVER "rm $LABEL_PATH/${LABEL}; ln -s $SERVER_PATH/lab/en/$(sc-build-number lab) $LABEL_PATH/${LABEL}"
+ssh -t geniverse@$SERVER "rm $LABEL_PATH/${LABEL}; ln -s $SERVER_PATH/lab/en/$(sc-build-number lab) $LABEL_PATH/${LABEL}"
