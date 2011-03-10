@@ -155,7 +155,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
     }
     
     if (this.get('displayChallengeDragon')) {
-      if (Geniverse.challengePoolController & SC.Record.READY) {
+      if (Geniverse.challengePoolController.get('status') & SC.Record.READY) {
         loadChallengeDragonWhenDragonsLoaded();
       } else {
         Geniverse.challengePoolController.addObserver('status', loadChallengeDragonWhenDragonsLoaded);
