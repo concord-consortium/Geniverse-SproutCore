@@ -159,7 +159,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         title:  "Change",
         target: this.get('changeGroupButtonTargetPath'),
         action: 'showGroupPanel',
-        isVisibleBinding: this.get('changeGroupButtonIsVisiblePath'),
+        isVisible: NO,
         toolTip: 'Change your Member number or Group number.',
         tagName: 'a'
       })
@@ -230,7 +230,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
         title:  "Journal",
         toolTip: "Click to open the class journal",
         target: this.get('journalButtonTargetPath'),
-        action: 'openWindow'
+        action: 'openWindow',
+        isVisible: NO
       })
     );
     childViews.push(this.journalButton);
