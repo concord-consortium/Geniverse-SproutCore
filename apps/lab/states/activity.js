@@ -124,19 +124,6 @@ Lab.ACTIVITY = SC.Responder.create(
   },
   
   initChatChannels: function() {
-    
-    var user = Geniverse.userController.get('content');
-    var username = user.get('username');
-    var activity = Geniverse.activityController.get('content');
-    
-    var activityChannel = Geniverse.activityController.get('baseChannelName');
-    var className = user.get('className');
-    var groupChannel = activityChannel+"-"+className+"-"+user.get('groupId');
-    
-    CcChat.chatController.set('username', username);
-    CcChat.chatController.initChat(groupChannel);
-    
-    SC.Logger.info("logged into %s",groupChannel);
   },
   
   loadData: function() {

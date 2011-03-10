@@ -47,7 +47,7 @@ Lab.breedingPageGroup = SC.Page.design({
       
       layout: { top: 25, bottom: 0, left: 10, right: 0 },
       
-      childViews: 'breedView challengePoolView breedingPenView challengeChromosomeToolView stableView matchView marketplaceView chatView allArticlesView'.w(),
+      childViews: 'breedView challengePoolView breedingPenView challengeChromosomeToolView stableView matchView marketplaceView allArticlesView'.w(),
 
       challengePoolView: Lab.ChallengePoolView.design({
         layout: { left: 0, top: 50, width:80, height: 320 }
