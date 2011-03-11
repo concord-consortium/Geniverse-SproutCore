@@ -103,11 +103,24 @@ Lab.loginController = SC.ObjectController.create(
     return YES;
   },
 
+  autoLogin: function(first_name, last_name, username) {
+    var fake_response = SC.Object.create({
+      body: {
+        login: username,
+        first: first_name,
+        last: last_name,
+        class_words: []
+      }
+    });
+    this.triedPortal = YES;
+    this.didCCAuth(fake_response);
+  },
+
   didCCAuth: function(response) {
     SC.Logger.log(response);
     if (SC.ok(response)) {
       // valid user
-      SC.Logger.log(response.body());
+      SC.Logger.log(response.get('body'));
       var login = response.get('body').login;
       var first = response.get('body').first;
       var last = response.get('body').last;
