@@ -170,7 +170,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
       SC.ImageView.design({
         layout: { centerY: 0, right: 0, width: 174, height: 38 },
         layerId: 'navBarRight',
-        value: static_url('navbar-right.png')
+        value: static_url('navbar-right-demo.png')
       })
     );
     childViews.push(this.navBarRight);
