@@ -232,6 +232,8 @@ Lab.ACTIVITY = SC.Responder.create(
         mother_id: 'null',
         father_id: 'null',
         bred: 'false',
+        isInMarketplace: 'false',
+        isMatchDragon: 'false',
         user: user,
         activity: activity
       })
@@ -274,6 +276,8 @@ Lab.ACTIVITY = SC.Responder.create(
           father_id: 'null',
           bred: 'false',
           user: user,
+          isMatchDragon: 'true',
+          isInMarketplace: 'false',
           activity: activity
         })
       });
@@ -390,14 +394,10 @@ Lab.ACTIVITY = SC.Responder.create(
     
     function dragonsReadyToBeSold() {
       stableDragons.removeObserver('status', dragonsReadyToBeSold);
-      while (Geniverse.stableOrganismsController.get('length') > 0){
-        SC.Logger.log("selling drake");
-        SC.RunLoop.begin();
-        if (stableDragons.lastObject().get('status') & SC.Record.READY === SC.Record.READY){
-          stableDragons.lastObject().set('isInMarketplace', true);
-        }
-        SC.RunLoop.end();
-      }
+      SC.RunLoop.begin();
+      stableDragons.setEach('isInMarketplace', true);
+      SC.RunLoop.end();
+      SC.Logger.log("done selling stable dragons");
     }
     
     if (stableDragons.get('status') & SC.Record.READY === SC.Record.READY) {
@@ -411,14 +411,10 @@ Lab.ACTIVITY = SC.Responder.create(
     
     function dragonsReadyToBeSold2() {
       challangeDragons.removeObserver('status', dragonsReadyToBeSold);
-      while (Geniverse.challengePoolController.get('length') > 0){
-        SC.Logger.log("selling drake");
-        SC.RunLoop.begin();
-        if (challangeDragons.lastObject().get('status') & SC.Record.READY === SC.Record.READY){
-          challangeDragons.lastObject().set('isInMarketplace', true);
-        }
-        SC.RunLoop.end();
-      }
+      SC.RunLoop.begin();
+      challangeDragons.setEach('isInMarketplace', true);
+      SC.RunLoop.end();
+      SC.Logger.log("done selling stable dragons");
     }
     
     if (challangeDragons.get('status') & SC.Record.READY === SC.Record.READY) {
