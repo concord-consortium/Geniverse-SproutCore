@@ -193,16 +193,77 @@ Lab.loginController = SC.ObjectController.create(
   lastGroupId: -1,
   lastMemberId: -1,
   
+  loadTimer: null,
+  setupTimer: function(array, callback) {
+	  if (this.get('loadTimer') !== null) {
+	    this.get('loadTimer').invalidate();
+    }
+    
+    this.set('loadTimer', SC.Timer.schedule({
+      target: this,
+      action: function() {
+        function isReady(item, index){
+          return ((item.get('status') & SC.Record.READY) === SC.Record.READY);
+        }
+        if (array.every(isReady)) {
+          this.get('loadTimer').invalidate();
+          callback();
+        }
+      },
+      interval: 500,
+      repeats: YES
+    }));
+	},
+  
   groupInfoDidUpdate: function() {
+    var self = this;
     if ((Geniverse.userController.get('groupId') != this.get('lastGroupId') || 
         Geniverse.userController.get('memberId') != this.get('lastMemberId')) &&
         Lab.ACTIVITY.get('hasLoadedActivityData')){
       SC.Logger.log("reloading data after group change");
       Lab.ACTIVITY.set('hasLoadedActivityData', NO);
       
-      Lab.ACTIVITY.sellAllUsersDrakes();
-      Lab.ACTIVITY.reloadData();
+      var user = Geniverse.userController.get('content');
+      var challengeDragons = Geniverse.challengePoolController.get('arrangedObjects');
+      var watchDragonsArray = [];
+      challengeDragons.forEach(function(item){
+        watchDragonsArray.push(item);
+      });
       
+      function sellAndReload(){
+        if ((user.get('status') & SC.Record.READY) === SC.Record.READY) {
+          user.removeObserver('status', sellAndReload);
+          Lab.ACTIVITY.sellAllUsersDrakes();
+          
+          Geniverse.store.commitRecords();
+          
+          
+          function reload(){
+            if ((challengeDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
+              challengeDragons.removeObserver('status', reload);
+              Lab.ACTIVITY.reloadData();
+            }
+          }
+          self.setupTimer(watchDragonsArray, reload);
+          
+          
+          // if ((challengeDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
+          //             reload();
+          //           } else {
+          //             SC.Logger.log("challengeDragons.get('status') = "+challengeDragons.get('status'))
+          //             challengeDragons.addObserver('status', reload);
+          //           }
+        }
+      }
+      
+      if ((user.get('status') & SC.Record.READY) === SC.Record.READY) {
+        sellAndReload();
+      } else {
+        user.addObserver('status', sellAndReload);
+      }
+        
+        
+        
       this.set('lastGroupId', Geniverse.userController.get('groupId'));
       this.set('lastMemberId', Geniverse.userController.get('memberId'));
     }
