@@ -35,11 +35,11 @@ Lab.inheritance2 = SC.Page.design({
       layout: { top: 37, left: 0, right: 0 },
       layerId: 'inheritance2content',
 
-      childViews: 'background inheritance meiosis training1 training2 training3 apprentice1 apprentice2 apprentice3 journeyman1 journeyman2'.w(),
+      childViews: 'background inheritance training1 training2 training3 apprentice1 apprentice2 apprentice3 journeyman1 journeyman2'.w(),
 
       background: SC.ImageView.design({
         layout: { top: 0, left: 0, right: 0 },
-        value: static_url('caselog-bg-inheritance2')
+        value: static_url('caselog-inheritance2-demo-bg-layers')
       }),
 
       inheritance: SC.View.design(Lab.SimpleButton, {
