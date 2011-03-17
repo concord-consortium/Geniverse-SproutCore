@@ -1,6 +1,4 @@
 source :rubygems
-source :rubyforge
-source :gemcutter
 
 # for sproutcore
 gem "sproutcore", "~> 1.4.4"

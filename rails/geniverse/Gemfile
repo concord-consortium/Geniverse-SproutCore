@@ -1,6 +1,4 @@
 source :rubygems
-source :rubyforge
-source :gemcutter
 
 # for rails
 gem "rails", "2.3.10"
