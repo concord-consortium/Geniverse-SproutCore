@@ -1,0 +1,88 @@
+{
+    "chromosomes": [
+        {
+            "alleles": [
+                {
+                    "on": true
+                },
+                {
+                    "on": false
+                }
+            ]
+        },
+        {
+            "alleles": [
+                {
+                    "on": true
+                },
+                {
+                    "on": false
+                }
+            ]
+        },
+        {
+            "alleles": [
+                {
+                    "on": false
+                },
+                {
+                    "on": true
+                },
+                {
+                    "on": false
+                },
+                {
+                    "on": false
+                },
+                {
+                    "on": false
+                }
+            ]
+        },
+        {
+            "alleles": [
+                {
+                    "on": false
+                },
+                {
+                    "on": true
+                },
+                {
+                    "on": false
+                },
+                {
+                    "on": false
+                },
+                {
+                    "on": false
+                }
+            ]
+        },
+        {
+            "alleles": [
+                {
+                    "on": false
+                },
+                {
+                    "on": false
+                },
+                {
+                    "on": true
+                }
+            ]
+        },
+        {
+            "alleles": [
+                {
+                    "on": false
+                },
+                {
+                    "on": false
+                },
+                {
+                    "on": true
+                }
+            ]
+        }
+    ]
+}
