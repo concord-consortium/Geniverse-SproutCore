@@ -29,6 +29,7 @@ Geniverse.eggsController = SC.ArrayController.create(
     // SC.Logger.log("Destroying egg", egg.get('id'));
     if (egg.get('state') & SC.Record.READY) {
       egg.removeObserver('state', Geniverse.eggsController, '_destroyEgg');
+      Geniverse.store.unloadRecord(Geniverse.Dragon, egg.id);
       egg.destroy();
     } else {
       // egg isn't in a ready state -- add an observer to remove the egg when it is ready.
