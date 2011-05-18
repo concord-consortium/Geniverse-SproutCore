@@ -91,7 +91,6 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
   
   _JSONToAlleles: function(json, prefix) {
     var outString = "";
-    
     for (var i = 0; i < json.chromosomes.length; i++) {
       var chromo = json.chromosomes[i];
       for (var j = 0; j < chromo.alleles.length; j++) {

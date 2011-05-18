@@ -100,7 +100,8 @@ Geniverse.chromosomeController = SC.ObjectController.create(
       'd': 'Dilute color',
       'dl': 'dl',
       'T': 'Flared tail',
-      't': 'Short tail'
+      't': 'Short tail',
+	  '' : ''
   },
 
   titleForAllele: function(val) {

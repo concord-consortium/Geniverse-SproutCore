@@ -23,7 +23,7 @@ Geniverse.AnimationView = SC.View.extend(
   jsondataurlDidChange: function() {
     this.drawAnimationOnceAppended();
   }.observes('jsondataurl'),
-  
+ 
   /**
    * optional object which represents the json data
    */
@@ -50,6 +50,8 @@ Geniverse.AnimationView = SC.View.extend(
    * The default value is 'offspring'.
    */
   meiosisOwner: 'offspring',
+
+  geneMap: null,
   
   completedAnimationCalled: NO,
   
@@ -158,6 +160,7 @@ Geniverse.AnimationView = SC.View.extend(
     if (jsonData === null) {
       jsonData = this.get('jsondataurl');
     }
+	var geneMap = this.get('geneMap');
     SC.Logger.log('jsonData:',jsonData);
     var id = "#"+ this.get('layerId') + " #" + this.get('meiosisOwner');
     SC.Logger.log('looking for id:',id);
@@ -181,7 +184,7 @@ Geniverse.AnimationView = SC.View.extend(
       SC.Logger.dir(options);
       var html = this.get('initialHtml');
       SC.Logger.log('init html', html);
-      geniverseAnimation.html(html).geniverse(jsonData, options);
+      geniverseAnimation.html(html).geniverse(jsonData, geneMap, options);
     }
   },
   
