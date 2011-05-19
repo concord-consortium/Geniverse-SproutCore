@@ -103,6 +103,13 @@ Geniverse.OrganismView = SC.View.extend(
     }
   },
 
+  destroy: function() {
+    SC.Logger.log("OrganismView destroyed!");
+    Geniverse.allSelectedDragonsController.removeObserver('selection', this, 'selectionDidChange');
+    Geniverse.allSelectedDragonsController.removeObserver('selection', this, this.selectionDidChange);
+    sc_super();
+  },
+
 	contentDidChange: function() {
 	  this._checkForNullDragon();
 		this.setPath('imageView.layerNeedsUpdate', YES);
