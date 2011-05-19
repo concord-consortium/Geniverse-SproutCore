@@ -55,3 +55,22 @@ Lab.main = function main() {
 } ;
 
 function main() { Lab.main(); }
+
+
+// FOR BETTER NAMES WHILE DEBUGGING/PROFILING
+// Use Chrome v13 for the best heap profiling experience.
+//
+// This method effectively evals something like:
+// SC.mixin(SC.ListItemView, { create: function() { SC.Logger.log("Created new SC.ListItemView"); return new SC._ListItemView(this, arguments); } });
+// SC._ListItemView = function(base_type, args){ base_type.call(this, args); };
+// SC.mixin(SC._ListItemView, SC.ListItemView);
+// SC._ListItemView.prototype = SC.ListItemView.prototype; 
+function profileDebug(prefix, klass) {
+  eval('SC.mixin(' + prefix + '.' + klass + ', { create: function() { SC.Logger.log("Created new ' + prefix + '.' + klass + '"); return new ' + prefix + '._' + klass + '(this, arguments); } });');
+  eval(prefix + '._' + klass + ' = function(base_type, args){ base_type.call(this, args); };');
+  eval('SC.mixin(' + prefix + '._' + klass + ', ' + prefix + '.' + klass + ');');
+  eval(prefix + '._' + klass + '.prototype = ' + prefix + '.' + klass + '.prototype;');
+}
+
+// profileDebug("Geniverse", "Dragon");
+// profileDebug("Geniverse", "OrganismView");
