@@ -74,7 +74,7 @@ Lab.ACTIVITY = SC.Responder.create(
         
         //Try to find the activity matching our scType
         var last  = activities.lastObject();
-        var found = activities.find(function(act) {
+        var found = activities.filter(function(act) {
           // we get the route and check if each of its parts matches our requested route.
           // we only look at what is defined in the DB. So an activity with "heredity/training" will
           // be returned for a requested route of "heredity/training/someLevel/someIndex"
@@ -100,10 +100,12 @@ Lab.ACTIVITY = SC.Responder.create(
           }
           return NO;
         });
-        if (!found) {
+
+        if (!found || found.length < 1) {
           SC.Logger.info("Could not find activity with route: "+strand+"/"+level+"/"+activityType+"/"+activityIndex);
           found = last;
         }
+        found = found[0];
         Geniverse.activityController.set('content', found);
         activities.removeObserver('status', setActivity);
         
