@@ -12,7 +12,6 @@
 */
 
 Geniverse.MatchOrganism = {
-  isMatched: NO,
   isDropTarget: YES,
 
   mouseDown: function(evt) {
@@ -27,8 +26,7 @@ Geniverse.MatchOrganism = {
     
     if (dragon.get('imageURL') === targetURL){
       SC.RunLoop.begin();
-        // this.get('parentView').get('proposedDragons').addObject(dragon);
-        this.set('isMatched', YES);
+        this.get('content').set('hasBeenMatched', YES);
       SC.RunLoop.end();
       
     } else {
@@ -49,7 +47,7 @@ Geniverse.MatchOrganism = {
   
   _setClassNames: function(){
     var imageView = this.get('imageView');
-    if (this.get('isMatched')){
+    if (this.get('content').get('hasBeenMatched')){
       imageView.set('classNames', ['matched']);
     } else if (this.get('isSelected')) {
       imageView.set('classNames', ['male-selected']);
