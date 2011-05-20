@@ -31,6 +31,12 @@ Geniverse.MatchView = SC.View.extend(
   updateIsVisible: function(){
     this.propertyDidChange('isVisible');
   }.observes('Geniverse.matchController.arrangedObjects.[]'),
+
+  destroy: function() {
+    Geniverse.matchController.removeObserver("arrangedObjects", this, this.updateIsVisible);
+    Geniverse.matchController.removeObserver("[]", this, this.updateIsVisible);
+    sc_super();
+  },
  
 
   createChildViews: function() {

@@ -214,7 +214,12 @@ Geniverse.individualPage = SC.Page.design({
               var spaces = 50 - numDragons;
               // SC.Logger.log("recalculating");
               return "Your Stable      -   " + spaces + " spaces remaining";
-            }.property('Geniverse.stableOrganismsController.arrangedObjects.[]')
+            }.property('Geniverse.stableOrganismsController.arrangedObjects.[]'),
+            destroy: function() {
+              Geniverse.stableOrganismsController.removeObserver("arrangedObjects", this, this.woo);
+              Geniverse.stableOrganismsController.removeObserver("[]", this, this.woo);
+              sc_super();
+            }
           }),
 
           stable: CC.AutoScrollView.design({

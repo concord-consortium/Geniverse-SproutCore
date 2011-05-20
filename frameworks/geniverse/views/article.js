@@ -42,6 +42,11 @@ Geniverse.ArticleView = SC.View.extend(SC.StaticLayout,
       		  }
           }.observes('Geniverse.articleController.isStaticVisible'),
 
+          destroy: function() {
+            Geniverse.articleController.removeObserver('isStaticVisible', this, this.checkIfHeightChanged);
+            sc_super();
+          },
+
           changeHeight: function() {
             var articleElement = document.getElementById('article');
             if (articleElement) {

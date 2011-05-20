@@ -60,7 +60,12 @@ Geniverse.ChromosomeView = SC.View.extend(
           this.get('parentView').addPullDown(this, alleles[i], i);
         }
       }
-		}.observes('Geniverse.chromosomeController.alleles')
+		}.observes('Geniverse.chromosomeController.alleles'),
+
+    destroy: function() {
+      Geniverse.chromosomeController.removeObserver('alleles', this, this.createPullDowns);
+      sc_super();
+    }
 	}),
 	
 	chromsomeBView: SC.View.extend({
@@ -74,7 +79,12 @@ Geniverse.ChromosomeView = SC.View.extend(
           this.get('parentView').addPullDown(this, alleles[i], i);
         }
       }
-		}.observes('Geniverse.chromosomeController.alleles')
+		}.observes('Geniverse.chromosomeController.alleles'),
+
+    destroy: function() {
+      Geniverse.chromosomeController.removeObserver('alleles', this, this.createPullDowns);
+      sc_super();
+    }
 	}),
 	
 	generateNewDragonButton: SC.ButtonView.extend({
