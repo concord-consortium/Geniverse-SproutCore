@@ -741,8 +741,8 @@ console.log(geneInfo);
       }
 	
 	// use visibleMap.json to filter visible genes -Dan
-//	   if (this.on == true) { 
-	   if (false) { 
+     if (this.on == true) { 
+     // if (false) { 
 	   		this.geneText.show(); 
 			this.geneFrame.show(); 
 		} else { 
