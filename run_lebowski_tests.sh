@@ -12,11 +12,6 @@ rm -f rerun.txt
 # The rake task is not generating both junit and html output
 # so run the spec tests manually.
 #
-# Note, there is a hard-coded path to the ci_reporter
-# gem -- will need to be updated if the gem is updated
-#
-
-CI_RSPEC_LOADER=${GEM_HOME}/gems/ci_reporter-1.6.3/lib/ci/reporter/rake/rspec_loader
 
 # either run the spec file/dir passed in, or default to the whole spec suite
 ARG=$1
