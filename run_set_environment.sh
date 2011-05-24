@@ -16,7 +16,7 @@ setTestingEnv() {
     # Note, there is a hard-coded path to the ci_reporter
     # gem -- will need to be updated if the gem is updated
     #
-    export CI_RSPEC_LOADER=${WORKSPACE}/bundled_gems/ci_reporter-1.6.3/lib/ci/reporter/rake/rspec_loader
+    export CI_RSPEC_LOADER="$(bundle show ci_reporter)/lib/ci/reporter/rake/rspec_loader"
 
     # set up bundler
     sh -c 'bundle install --path bundled_gems'
