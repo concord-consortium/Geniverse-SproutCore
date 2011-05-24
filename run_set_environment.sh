@@ -9,21 +9,22 @@ setTestingEnv() {
       echo "set WORKSPACE: $WORKSPACE"
     fi
 
-    if [ -z $SC_GEMSET ]; then
-      export SC_GEMSET="ruby-1.9.2-p0@geniverse"
-      echo "set SC_GEMSET: $SC_GEMSET"
-    fi
-  
-    if [ -z $RAILS_GEMSET ]; then
-      export RAILS_GEMSET="ruby-1.8.7-p302@geniverse-rails"
-      echo "set RAILS_GEMSET: $RAILS_GEMSET"
-    fi
-
     export RAILS_ENV=test
     export REPORTS_DIR="$WORKSPACE/hudson/reports"
     export CI_REPORTS=$REPORTS_DIR/spec/
-    # make sure rvm-shell is on the path
-    export PATH=${HOME}/.rvm/bin:$PATH
+
+    # Note, there is a hard-coded path to the ci_reporter
+    # gem -- will need to be updated if the gem is updated
+    #
+    export CI_RSPEC_LOADER="$(bundle show ci_reporter)/lib/ci/reporter/rake/rspec_loader"
+
+    # set up bundler
+    sh -c 'bundle install --path bundled_gems'
+    sh -c 'cd rails/geniverse && bundle install --path ../../bundled_gems'
+
+    # make sure the rails db is ready
+    sh -c 'cd rails/geniverse && rake db:setup --trace'
+
     export TEST_ENV_SET="true"
   fi
 }
