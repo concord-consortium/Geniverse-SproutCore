@@ -16,3 +16,5 @@ hudson/*
 results/*
 .idea/
 logrotate.conf
+bundled_gems
+.bundle/
