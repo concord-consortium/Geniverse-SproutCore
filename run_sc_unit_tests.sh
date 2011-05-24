@@ -1,4 +1,4 @@
-#!/usr/bin/env rvm-shell
+#!/bin/bash
 
 set +e
 
