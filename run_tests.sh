@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set +e
 
@@ -9,10 +9,6 @@ rm -r $REPORTS_DIR
 mkdir -p $REPORTS_DIR
 mkdir -p $REPORTS_DIR/spec
 mkdir -p $REPORTS_DIR/features
-
-# set up bundler
-sh -c 'bundle install'
-sh -c 'cd rails/geniverse && bundle install'
 
 sh run_sc_unit_tests.sh
 sh run_lebowski_tests.sh
