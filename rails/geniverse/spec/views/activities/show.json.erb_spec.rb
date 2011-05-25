@@ -8,30 +8,36 @@ describe "activities/show.json.erb" do
   # end
   include ActivitiesHelper
   before(:each) do
-    assigns[:activity] = @activity = stub_model(
-      Activity,
-      :title => "Apprentice Heredity Intro",
-      :initial_alleles => "[{m: 'a:f,b:f', f: 'a:F,b:F'}, {m: 'a:W,b:W', f: 'a:w,b:w'}]",
-      :base_channel_name => "apprenticeHeredityIntro",
-      :max_users_in_room => 100,
-      :send_bred_dragons => true,
-      :sc_type => "Apprentice/Heredity/Intro"
-    )
+    @activity_hash = {
+      :title => "value for title",
+      :initial_alleles => "value for initial_alleles",
+      :base_channel_name => "value for base_channel_name",
+      :max_users_in_room => 1,
+      :send_bred_dragons => false,
+      :hidden_genes => "value for hidden_genes",
+      :static_genes => "value for static_genes",
+      :crossover_when_breeding => false,
+      :route => "/value/for/route",
+      :pageType => "value for pageType",
+      :message => "value for message",
+      :match_dragon_alleles => "value for match_dragon_alleles"
+    }
+    assigns[:activity] = @activity = stub_model(Activity, @activity_hash)
   end
 
   it "renders showing JSON of an activity as SproutCore client expects it" do
-
     render
-    # p "response.body:"
-    # p response.body
-    # p ""
     response.body.should match("\"content\":")
     response.body.should match("\"guid\":\"/rails/activities/[0-9]*")
-    response.body.should match("\"title\":\"Apprentice Heredity Intro\"")
-    response.body.should match("[{m: 'a:f,b:f', f: 'a:F,b:F'}, {m: 'a:W,b:W', f: 'a:w,b:w'}]")
-    response.body.should match("\"baseChannelName\":\"apprenticeHeredityIntro\"")
-    response.body.should match("\"maxUsersInRoom\":100")
-    response.body.should match("\"sendBredDragons\":true")
-    response.body.should match("\"scType\":\"Apprentice/Heredity/Intro\"")
+    @activity_hash.each do |k,v|
+      k_str = k.to_s.camelcase.sub(/^[A-Z]/) {|l| l.downcase }
+      expected = %!"#{k_str}":!
+      if v.kind_of?(Fixnum) || v.kind_of?(FalseClass) || v.kind_of?(TrueClass)
+        expected << v.to_s
+      else
+        expected << %!"#{v.to_s}"!
+      end
+      response.body.should match(expected)
+    end
   end
 end

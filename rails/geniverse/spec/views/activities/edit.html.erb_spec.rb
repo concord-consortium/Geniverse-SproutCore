@@ -4,14 +4,20 @@ describe "/activities/edit.html.erb" do
   include ActivitiesHelper
 
   before(:each) do
-    assigns[:activity] = @activity = stub_model(Activity,
-      :new_record? => false,
+    assigns[:activity] = @activity = stub_model(Activity,{
       :title => "value for title",
       :initial_alleles => "value for initial_alleles",
       :base_channel_name => "value for base_channel_name",
       :max_users_in_room => 1,
       :send_bred_dragons => false,
-      :sc_type => "value for sc_type"
+      :hidden_genes => "value for hidden_genes",
+      :static_genes => "value for static_genes",
+      :crossover_when_breeding => false,
+      :route => "/value/for/route",
+      :pageType => "value for pageType",
+      :message => "value for message",
+      :match_dragon_alleles => "value for match_dragon_alleles"
+    }
     )
   end
 
@@ -19,12 +25,13 @@ describe "/activities/edit.html.erb" do
     render
 
     response.should have_tag("form[action=#{activity_path(@activity)}][method=post]") do
-      with_tag('input#activity_title[name=?]', "activity[title]")
-      with_tag('input#activity_initial_alleles[name=?]', "activity[initial_alleles]")
-      with_tag('input#activity_base_channel_name[name=?]', "activity[base_channel_name]")
-      with_tag('input#activity_max_users_in_room[name=?]', "activity[max_users_in_room]")
-      with_tag('input#activity_send_bred_dragons[name=?]', "activity[send_bred_dragons]")
-      with_tag('input#activity_sc_type[name=?]', "activity[sc_type]")
+      %w{ title base_channel_name max_users_in_room send_bred_dragons hidden_genes static_genes crossover_when_breeding route pageType }.each do |att|
+        with_tag("input#activity_#{att}[name=?]", "activity[#{att}]")
+      end
+
+      %w{ initial_alleles match_dragon_alleles message }.each do |att|
+        with_tag("textarea#activity_#{att}[name=?]", "activity[#{att}]")
+      end
     end
   end
 end

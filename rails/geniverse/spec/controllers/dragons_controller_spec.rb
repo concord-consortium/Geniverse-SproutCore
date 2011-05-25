@@ -8,7 +8,7 @@ describe DragonsController do
 
   describe "GET index" do
     it "assigns all dragons as @dragons" do
-      Dragon.stub(:find).with(:all).and_return([mock_dragon])
+      Dragon.stub(:find).with(:all, {:conditions=>{}}).and_return([mock_dragon])
       get :index
       assigns[:dragons].should == [mock_dragon]
     end
@@ -81,13 +81,13 @@ describe DragonsController do
 
       it "assigns the requested dragon as @dragon" do
         Dragon.stub(:find).and_return(mock_dragon(:update_attributes => true))
-        put :update, :id => "1"
+        put :update, :id => "1", :dragon => {}
         assigns[:dragon].should equal(mock_dragon)
       end
 
       it "redirects to the dragon" do
         Dragon.stub(:find).and_return(mock_dragon(:update_attributes => true))
-        put :update, :id => "1"
+        put :update, :id => "1", :dragon => {}
         response.should redirect_to(dragon_url(mock_dragon))
       end
     end
@@ -101,13 +101,13 @@ describe DragonsController do
 
       it "assigns the dragon as @dragon" do
         Dragon.stub(:find).and_return(mock_dragon(:update_attributes => false))
-        put :update, :id => "1"
+        put :update, :id => "1", :dragon => {}
         assigns[:dragon].should equal(mock_dragon)
       end
 
       it "re-renders the 'edit' template" do
         Dragon.stub(:find).and_return(mock_dragon(:update_attributes => false))
-        put :update, :id => "1"
+        put :update, :id => "1", :dragon => {}
         response.should render_template('edit')
       end
     end
@@ -122,7 +122,7 @@ describe DragonsController do
 
         it "assigns the requested dragon as @dragon" do
           Dragon.stub(:find).and_return(mock_dragon(:update_attributes => true))
-          put :update, :format => :json, :id => "1"
+          put :update, :format => :json, :id => "1", :dragon => {}
           assigns[:dragon].should equal(mock_dragon)
         end
 
@@ -134,6 +134,7 @@ describe DragonsController do
           mock_dragon.should_receive(:mother)
           mock_dragon.should_receive(:user)
           mock_dragon.should_receive(:activity)
+          mock_dragon.should_receive(:breeder)
           put :update, :format => 'json', :id => "1", :dragon => {:these => 'params'}
           response.should be_success
         end
