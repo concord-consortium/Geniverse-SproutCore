@@ -8,7 +8,13 @@ describe Activity do
       :base_channel_name => "value for base_channel_name",
       :max_users_in_room => 1,
       :send_bred_dragons => false,
-      :sc_type => "value for sc_type"
+      :hidden_genes => "value for hidden_genes",
+      :static_genes => "value for static_genes",
+      :crossover_when_breeding => false,
+      :route => "/value/for/route",
+      :pageType => "value for pageType",
+      :message => "value for message",
+      :match_dragon_alleles => "value for match_dragon_alleles"
     }
   end
 
@@ -18,26 +24,20 @@ describe Activity do
 end
 
 
-
-
-# == Schema Information
-#
-# Table name: activities
-#
-#  id                      :integer         not null, primary key
-#  initial_alleles         :string(255)
-#  base_channel_name       :string(255)
-#  max_users_in_room       :integer
-#  send_bred_dragons       :boolean
-#  created_at              :datetime
-#  updated_at              :datetime
-#  title                   :string(255)
-#  hidden_genes            :string(255)
-#  static_genes            :text
-#  crossover_when_breeding :boolean         default(FALSE)
-#  route                   :string(255)
-#  pageType                :string(255)
-#  message                 :text
-#  match_dragon_alleles    :string(255)
-#
+#  create_table "activities", :force => true do |t|
+#    t.string   "initial_alleles"
+#    t.string   "base_channel_name"
+#    t.integer  "max_users_in_room"
+#    t.boolean  "send_bred_dragons"
+#    t.datetime "created_at"
+#    t.datetime "updated_at"
+#    t.string   "title"
+#    t.string   "hidden_genes"
+#    t.text     "static_genes"
+#    t.boolean  "crossover_when_breeding", :default => false
+#    t.string   "route"
+#    t.string   "pageType"
+#    t.text     "message"
+#    t.string   "match_dragon_alleles"
+#  end
 

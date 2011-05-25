@@ -4,33 +4,30 @@ describe "/activities/index.html.erb" do
   include ActivitiesHelper
 
   before(:each) do
+    @activity_hash = {
+      :title => "value for title",
+      :initial_alleles => "value for initial_alleles",
+      :base_channel_name => "value for base_channel_name",
+      :max_users_in_room => 1,
+      :send_bred_dragons => false,
+      :hidden_genes => "value for hidden_genes",
+      :static_genes => "value for static_genes",
+      :crossover_when_breeding => false,
+      :route => "/value/for/route",
+      :pageType => "value for pageType",
+      :message => "value for message",
+      :match_dragon_alleles => "value for match_dragon_alleles"
+    }
     assigns[:activities] = [
-      stub_model(Activity,
-        :title => "value for title",
-        :initial_alleles => "value for initial_alleles",
-        :base_channel_name => "value for base_channel_name",
-        :max_users_in_room => 1,
-        :send_bred_dragons => false,
-        :sc_type => "value for sc_type"
-      ),
-      stub_model(Activity,
-        :title => "value for title",
-        :initial_alleles => "value for initial_alleles",
-        :base_channel_name => "value for base_channel_name",
-        :max_users_in_room => 1,
-        :send_bred_dragons => false,
-        :sc_type => "value for sc_type"
-      )
+      stub_model(Activity, @activity_hash),
+      stub_model(Activity, @activity_hash)
     ]
   end
 
   it "renders a list of activities" do
     render
-    response.should have_tag("tr>td", "value for title".to_s, 2)
-    response.should have_tag("tr>td", "value for initial_alleles".to_s, 2)
-    response.should have_tag("tr>td", "value for base_channel_name".to_s, 2)
-    response.should have_tag("tr>td", 1.to_s, 2)
-    response.should have_tag("tr>td", false.to_s, 2)
-    response.should have_tag("tr>td", "value for sc_type".to_s, 2)
+    @activity_hash.each do |k,v|
+      response.should have_tag("tr>td", v.to_s, 2)
+    end
   end
 end

@@ -4,27 +4,20 @@ describe "/activities/new.html.erb" do
   include ActivitiesHelper
 
   before(:each) do
-    assigns[:activity] = stub_model(Activity,
-      :new_record? => true,
-      :title => "value for title",
-      :initial_alleles => "value for initial_alleles",
-      :base_channel_name => "value for base_channel_name",
-      :max_users_in_room => 1,
-      :send_bred_dragons => false,
-      :sc_type => "value for sc_type"
-    )
+    assigns[:activity] = @activity = stub_model(Activity, {:id => nil})
   end
 
   it "renders new activity form" do
     render
 
     response.should have_tag("form[action=?][method=post]", activities_path) do
-      with_tag("input#activity_title[name=?]", "activity[title]")
-      with_tag("input#activity_initial_alleles[name=?]", "activity[initial_alleles]")
-      with_tag("input#activity_base_channel_name[name=?]", "activity[base_channel_name]")
-      with_tag("input#activity_max_users_in_room[name=?]", "activity[max_users_in_room]")
-      with_tag("input#activity_send_bred_dragons[name=?]", "activity[send_bred_dragons]")
-      with_tag("input#activity_sc_type[name=?]", "activity[sc_type]")
+      %w{ title base_channel_name max_users_in_room send_bred_dragons hidden_genes static_genes crossover_when_breeding route pageType }.each do |att|
+        with_tag("input#activity_#{att}[name=?]", "activity[#{att}]")
+      end
+
+      %w{ initial_alleles match_dragon_alleles message }.each do |att|
+        with_tag("textarea#activity_#{att}[name=?]", "activity[#{att}]")
+      end
     end
   end
 end

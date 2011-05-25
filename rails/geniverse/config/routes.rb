@@ -9,10 +9,10 @@ ActionController::Routing::Routes.draw do |map|
   map.connect "breedingRecords/:id/:id2", :format => 'html', :controller => 'dragons', :action => 'breedingRecords', :id => '-1', :id2 => '-1'
   map.connect "breedingRecordsShow/:id", :format => 'html', :controller => 'dragons', :action => 'breedingRecordsShow'
 
-  map.resources :users
-  # custom routes should go after the default routes, so we don't overwrite any of them...
+  # map username first, so usernames don't fall through and get interpreted as ids
   map.connect "users/:username", :format => 'json', :controller => 'users', :action => 'show',
-    :requirements => { :username => /[A-Za-z].*/ }
+    :requirements => { :username => /[a-z][a-z0-9]*/i } # usernames must start with an alpha character, but can have numbers or letters after that
+  map.resources :users, :except => :new
 
   map.resources :activities
 
