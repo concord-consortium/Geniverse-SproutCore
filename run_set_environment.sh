@@ -18,12 +18,15 @@ setTestingEnv() {
     #
     export CI_RSPEC_LOADER="$(bundle show ci_reporter)/lib/ci/reporter/rake/rspec_loader"
 
-    # set up bundler
-    sh -c "bundle install --path $WORKSPACE/bundled_gems"
-    sh -c "cd rails/geniverse && bundle install --path $WORKSPACE/bundled_gems"
+    if [ -z $TEST_SETUP_DONE ]; then
+      # set up bundler
+      sh -c "bundle install --path $WORKSPACE/bundled_gems"
+      sh -c "cd rails/geniverse && bundle install --path $WORKSPACE/bundled_gems"
 
-    # make sure the rails db is ready
-    sh -c 'cd rails/geniverse && rake db:setup --trace'
+      # make sure the rails db is ready
+      sh -c 'cd rails/geniverse && rake db:setup --trace'
+      export TEST_SETUP_DONE="true"
+    fi
 
     export TEST_ENV_SET="true"
   fi
