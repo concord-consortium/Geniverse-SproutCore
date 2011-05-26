@@ -32,13 +32,15 @@ TEST_SETTINGS = {
   :app_server_port => APACHE_PORT,
   :selenium_server_host => "127.0.0.1",
   :selenium_server_port => SELENIUM_PORT,
-  :browser => :firefox
+  :browser => "*googlechrome"
+  # :browser => :firefox
 }
 
 SELENIUM_TEST_SETTINGS = {
   :host => "localhost",
   :port => SELENIUM_PORT,
-  :browser => "*firefox",
+  # :browser => "*firefox",
+  :browser => "*googlechrome",
   :url => "http://127.0.0.1:#{APACHE_PORT}/rails/",
   :timeout_in_seconds => 60
 }
@@ -58,7 +60,8 @@ $commands = {
     # :signal => 'KILL'
   },
   :lebowski => {
-    :path => "bundle exec lebowski-start-server -port #{SELENIUM_PORT} -Djava.net.preferIPv4Stack=true",
+    # this basically does what lebowski-start-server does, but we want to be able to override the selenium-server jar with a newer one tha supports chrome on os x
+    :path => "java -jar #{dir}/selenium-server.jar -userExtensions #{dir}/user-extensions.js -port #{SELENIUM_PORT} -Djava.net.preferIPv4Stack=true",
     :name => "lebowski",
     :pid => nil
   }
