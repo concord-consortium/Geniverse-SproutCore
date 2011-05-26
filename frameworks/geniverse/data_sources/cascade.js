@@ -8,6 +8,6 @@ Geniverse.CascadeDataSource = SC.CascadeDataSource.extend({
   dataSources: "rails fixtures".w(),
 
   rails: Geniverse.RailsDataSource.create(),
-  fixtures: SC.Record.fixtures
+  fixtures: SC.FixturesDataSource.extend({simulateRemoteResponse: YES}).create()
 });
 
