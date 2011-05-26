@@ -18,3 +18,4 @@ results/*
 logrotate.conf
 bundled_gems
 .bundle/
+"/
