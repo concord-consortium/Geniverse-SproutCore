@@ -6,7 +6,8 @@ require "selenium/client"
 # require "selenium/rspec/spec_helper"
 require "selenium/rake/tasks"
 
-$:.unshift File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'proxy'))
+ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
+$:.unshift File.expand_path(File.join(ROOT, 'proxy'))
 
 require 'apache_config'
 require 'port_tools'
@@ -43,25 +44,42 @@ SELENIUM_TEST_SETTINGS = {
   :timeout_in_seconds => 60
 }
 
-$commands = {
-  :sproutcore => {
-    :path => "bundle exec sc-server --port #{SC_SERVER_PORT}",
-    :name => "sproutcore server",
-    :pid => nil
-  },
-  :rails => {
-    :path => "cd rails/geniverse; unset BUNDLE_GEMFILE; bundle exec passenger start -e test -p #{RAILS_PORT}",
-    # :path => "mongrel_rails start -c rails/geniverse -e production -n 5 -p #{RAILS_PORT}",
-    # :path => "rails/geniverse/script/server -p #{RAILS_PORT}",
-    :name => "rails server",
-    :pid => nil,
-    # :signal => 'KILL'
-  },
-  :lebowski => {
-    :path => "bundle exec lebowski-start-server -port #{SELENIUM_PORT} -Djava.net.preferIPv4Stack=true",
-    :name => "lebowski",
-    :pid => nil
-  }
+require 'daemon_controller'
+require 'socket'
+
+# monkey-patch so that launching passenger will work
+class DaemonController
+  def determine_lock_file(identifier, pid_file)
+    return LockFile.new(File.expand_path(pid_file + ".lock2")) if identifier == "Rails Backend"
+    return LockFile.new(File.expand_path(pid_file + ".lock"))
+  end
+end
+
+$daemons = {
+  :rails => DaemonController.new(
+    :identifier => "Rails Backend",
+    :start_command => "cd rails/geniverse; unset BUNDLE_GEMFILE; bundle exec passenger start -d -e test -p #{RAILS_PORT}",
+    :ping_command => lambda { TCPSocket.new('localhost', RAILS_PORT)},
+    :pid_file => "#{ROOT}/rails/geniverse/passenger.#{RAILS_PORT}.pid",
+    :log_file => "#{ROOT}/rails/geniverse/passenger.#{RAILS_PORT}.log",
+    :timeout => 25
+  ),
+  :sproutcore => DaemonController.new(
+    :identifier => "SproutCore App",
+    :start_command => "bundle exec sc-server --port #{SC_SERVER_PORT} & echo $! > sc-server.pid",
+    :ping_command => lambda { TCPSocket.new('localhost', SC_SERVER_PORT)},
+    :pid_file => "sc-server.pid",
+    :log_file => "sc-server.log",
+    :timeout => 25
+  ),
+  :lebowski => DaemonController.new(
+    :identifier => "Lebowski Server",
+    :start_command => "bundle exec lebowski-start-server -port #{SELENIUM_PORT} -log lebowski.log -Djava.net.preferIPv4Stack=true & echo $! > lebowski.pid",
+    :ping_command => lambda { TCPSocket.new('localhost', SELENIUM_PORT)},
+    :pid_file => "lebowski.pid",
+    :log_file => "lebowski.log",
+    :timeout => 25
+  ),
 }
 
 # create a new started test applicaion 
@@ -79,42 +97,6 @@ end
 
 def new_selenium_test
   return Selenium::Client::Driver.new SELENIUM_TEST_SETTINGS
-end
-
-def start_command(name)
-  command = $commands[name.to_sym]
-  unless command[:pid]
-    command[:pid] = fork do
-      puts "Starting process  #{command[:name] || name} with #{command[:path]} #{command[:args]}"
-      Signal.trap("HUP") do
-        puts "Stopping process #{command[:name] || name}"
-        exit
-      end
-      if (command[:args])
-        exec(command[:path] || name, command[:args])
-      else
-        exec(command[:path])
-      end
-    end
-    puts "Started  #{command[:name] || name} with PID: #{command[:pid]}" 
-  else
-    puts "WARNING: process  #{command[:name] || name} already started with #{command[:pid]}"
-  end
-  # sleep 2 # Hackish pause to spin up job.
-end
-
-
-def stop_command(name)
-  command = $commands[name.to_sym]
-  if command && command[:pid]
-    signal = command[:signal] || 'TERM'
-    Process.kill(signal,command[:pid])
-    Process.wait(command[:pid])
-    command[:pid] = nil;
-    puts "#{command[:name] || name} stopped"
-  else
-    puts "WARNING: #{command[:name] || name} does not seem to be running"
-  end
 end
 
 def start_apache
@@ -139,21 +121,31 @@ end
 
 def start_testing_servers
   begin
-    $commands.keys.each do |command|
-      start_command(command)
+    $daemons.each do |key, daemon|
+      puts "Starting: #{key.to_s}"
+      if defined? Bundler
+        Bundler.with_clean_env do
+          puts "bundler defined"
+          daemon.start
+        end
+      else
+        daemon.start
+      end
     end
+
+    start_apache
   rescue => e
+    $stderr.puts "Couldn't start all servers!\n#{e.message}\n#{e.backtrace.join("\n")}"
     stop_testing_servers
     raise "Couldn't start all servers!\n#{e.message}\n#{e.backtrace.join("\n")}"
   end
 
-  sleep 10
-  start_apache
 end
 
 def stop_testing_servers
-  $commands.keys.each do |command|
-    stop_command(command)
+  $daemons.each do |key, daemon|
+    puts "Stopping #{key.to_s}"
+    daemon.stop
   end
   
   stop_apache
@@ -161,7 +153,6 @@ end
 
 def with_servers (&block)
   start_testing_servers
-  # sleep 2 #shouldn't have to wait, but there ya-go.
   yield
   stop_testing_servers
 end
