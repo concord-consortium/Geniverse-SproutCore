@@ -4,6 +4,7 @@ source :rubygems
 gem "rails", "~> 2.3.10"
 gem "rack", "~> 1.1.2"
 gem "sqlite3-ruby", "1.2.5"
+gem "passenger", "~> 3.0.7"
 
 group :test do
   # For rspec
