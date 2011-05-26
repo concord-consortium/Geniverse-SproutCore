@@ -26,6 +26,7 @@ Geniverse.chromosomeController = SC.ObjectController.create(
   },
   
   allAlleles: [
+    ['T', 'Tk', 't'],
     ['M', 'm'],
     ['W', 'w'],
     ['H', 'h'],
@@ -35,10 +36,11 @@ Geniverse.chromosomeController = SC.ObjectController.create(
     ['A1', 'A2', 'a'],
     ['B', 'b'],
     ['D', 'd', 'dl'],
-    ['T', 't']
+    ['Rh', 'Hoxa1']
   ],
   
-  allelesMap: {m: '1',mt: '1',w: '1',h: '2',c: '2',fl: '2',hl: '2',a: '2', a1: '2', a2: '2',b: 'X',d: 'X',dl: 'X',t: 'X'},
+  allelesMap: {t: '1',tk: '1',m: '1',mt: '1',w: '1',h: '2',c: '2',fl: '2',hl: '2',a: '2', a1: '2', a2: '2',
+                b: 'X',d: 'X',dl: 'X',rh: 'X',hoxa1: 'X'},
   
   getChromosome: function(allele) {
     return this.get('allelesMap')[allele.toLowerCase()];
@@ -79,6 +81,9 @@ Geniverse.chromosomeController = SC.ObjectController.create(
   },
 
   alleleLabelMap : {
+      'T': 'Long tail',
+      'Tk': 'Kinked tail',
+      't': 'Short tail',
       'M': 'Metallic',
       'm': 'Nonmetallic',
       'W': 'Wings',
@@ -99,9 +104,9 @@ Geniverse.chromosomeController = SC.ObjectController.create(
       'D': 'Full color',
       'd': 'Dilute color',
       'dl': 'dl',
-      'T': 'Flared tail',
-      't': 'Short tail',
-	  '' : ''
+      'Rh': 'Nose spike',
+      'Hoxa1': 'No nose spike',
+	    '' : ''
   },
 
   titleForAllele: function(val) {
