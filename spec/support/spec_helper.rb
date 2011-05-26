@@ -45,12 +45,12 @@ SELENIUM_TEST_SETTINGS = {
 
 $commands = {
   :sproutcore => {
-    :path => "sc-server --port #{SC_SERVER_PORT}",
+    :path => "bundle exec sc-server --port #{SC_SERVER_PORT}",
     :name => "sproutcore server",
     :pid => nil
   },
   :rails => {
-    :path => "passenger start rails/geniverse -e test -p #{RAILS_PORT}",
+    :path => "cd rails/geniverse; unset BUNDLE_GEMFILE; bundle exec passenger start -e test -p #{RAILS_PORT}",
     # :path => "mongrel_rails start -c rails/geniverse -e production -n 5 -p #{RAILS_PORT}",
     # :path => "rails/geniverse/script/server -p #{RAILS_PORT}",
     :name => "rails server",
@@ -58,7 +58,7 @@ $commands = {
     # :signal => 'KILL'
   },
   :lebowski => {
-    :path => "lebowski-start-server -port #{SELENIUM_PORT} -Djava.net.preferIPv4Stack=true",
+    :path => "bundle exec lebowski-start-server -port #{SELENIUM_PORT} -Djava.net.preferIPv4Stack=true",
     :name => "lebowski",
     :pid => nil
   }
