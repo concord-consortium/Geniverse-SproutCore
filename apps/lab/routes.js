@@ -87,8 +87,8 @@ Lab.routes = SC.Object.create({
     // If there is a current pane, remove it from the screen
     if (this._currentPagePane !== null) {
       this._currentPagePane.remove();
-      var oldPane = this._currentPagePane;
-      oldPane.destroy();
+      // var oldPane = this._currentPagePane;
+      // oldPane.destroy();
     }
 
     Lab.infoController.removeView();  // be sure to hide any open info panes
@@ -98,28 +98,28 @@ Lab.routes = SC.Object.create({
     
     SC.Logger.log("Page: ", page); 
 
-    var pane = page[paneName];
+    var pane = page.get(paneName);
     
-    if (this._firstHomePane === null && page.get('pagePath') == "Lab.mainPage"){
-      this._firstHomePane = pane;
-    }
+    // if (this._firstHomePane === null && page.get('pagePath') == "Lab.mainPage"){
+    //   this._firstHomePane = pane;
+    // }
     SC.Logger.log("Pane: ", pane);
-    try {
-      pane = pane.create();
-    } catch(err) {
+    // try {
+      // pane = pane.create();
+    // } catch(err) {
       // FIXME This shows up consistently when going back to mainPage.mainPane.
       // It turns out that unlike the other pages, the created instance of mainPage.mainPane
       // ends up replacing the designed mainPane... so the second time through, it's already been
       // created. This messes up the links within the page, too.
-      SC.Logger.error("Couldn't call 'create' on pane");
-      SC.Logger.dir(pane);
+    //  SC.Logger.error("Couldn't call 'create' on pane");
+    //  SC.Logger.dir(pane);
       
       // HACK: The version of the home page mainPane that is created after the first time
       // is no longer a SC.mainPane but is instead an object with a type SC.mainPane and
       // no create method. The temporarily fix this, we save the first version of the mainPane
       // that is created and call create on that.
-      pane = this._firstHomePane.create();
-    }
+    //  pane = this._firstHomePane.create();
+    // }
     pane.set('pageName',pageName);  // must be set so the help button works!
     // SC.Logger.log("Created Pane: ", pane); 
     pane.append();
