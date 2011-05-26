@@ -50,7 +50,7 @@ $commands = {
     :pid => nil
   },
   :rails => {
-    :path => "cd rails/geniverse; unset BUNDLE_GEMFILE; bundle exec passenger start -e test -p #{RAILS_PORT}",
+    :path => "cd rails/geniverse; unset BUNDLE_GEMFILE; exec bundle exec passenger start -e test -p #{RAILS_PORT} --log-file /dev/null",
     # :path => "mongrel_rails start -c rails/geniverse -e production -n 5 -p #{RAILS_PORT}",
     # :path => "rails/geniverse/script/server -p #{RAILS_PORT}",
     :name => "rails server",
