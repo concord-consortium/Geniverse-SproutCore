@@ -44,14 +44,18 @@ Geniverse.userController = SC.ObjectController.create(
 
   doWhenReady: function(context, field, method) {
     var self = context;
-    var status = field.get('status');
-    if (status & SC.Record.READY == SC.Record.READY) {
-      field.removeObserver('status',method);
-      method.call(context);
-    }
-    else {
-      field.addObserver('status', context, method);
-    }
+    var outer = this;
+    var checkStatus = function() {
+      var status = field.get('status');
+      if (status & SC.Record.READY_CLEAN) {
+        field.removeObserver('status', outer, checkStatus);
+        method.call(context);
+      }
+      else {
+        field.addObserver('status', outer, checkStatus);
+      }
+    };
+    checkStatus();
   },
 
   findOrCreateUser: function(username, callback) {      
