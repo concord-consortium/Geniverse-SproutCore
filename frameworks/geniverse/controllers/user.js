@@ -64,7 +64,7 @@ Geniverse.userController = SC.ObjectController.create(
       else {
         user = self.createUser(username);
         SC.Logger.log("couldn't find user %@", username);
-        var method = function(user) {
+        var method = function() {
           SC.Logger.log("created username %@", username);
           callback(user);
         };
