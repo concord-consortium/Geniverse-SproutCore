@@ -6,7 +6,8 @@
 
 // This page describes the main user interface for your application.  
 Lab.loginPage = SC.Page.design({
-
+  pagePath: 'Lab.loginPage',
+  title: 'Lab Login Page',
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page 
   // load.
