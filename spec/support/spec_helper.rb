@@ -108,13 +108,38 @@ def stop_command(name)
   command = $commands[name.to_sym]
   if command && command[:pid]
     signal = command[:signal] || 'TERM'
-    Process.kill(signal,command[:pid])
-    Process.wait(command[:pid])
-    command[:pid] = nil;
-    puts "#{command[:name] || name} stopped"
+    begin
+      Timeout.timeout(10, Timeout::Error) do
+        send_signal(command[:pid],signal)
+      end
+      command[:pid] = nil;
+      puts "#{command[:name] || name} stopped"
+    rescue Timeout::Error
+      # ok, the default signal didn't work. let's be more forceful
+      if signal == 'TERM'
+        puts "Trying SIGABRT #{command[:pid]}: #{command[:name] || name}"
+        signal ='ABRT'
+        retry
+      elsif signal == 'ABRT'
+        puts "Forcing stop #{command[:pid]}: #{command[:name] || name}"
+        signal = 'KILL'
+        retry
+      elsif signal == 'KILL'
+        puts "Failed to stop #{command[:pid]}: #{command[:name] || name}"
+      else
+        puts "Trying SIGTERM #{command[:pid]}: #{command[:name] || name}"
+        signal = 'TERM'
+        retry
+      end
+    end
   else
     puts "WARNING: #{command[:name] || name} does not seem to be running"
   end
+end
+
+def send_signal(pid, signal)
+  Process.kill(signal,pid)
+  Process.wait(pid)
 end
 
 def start_apache
