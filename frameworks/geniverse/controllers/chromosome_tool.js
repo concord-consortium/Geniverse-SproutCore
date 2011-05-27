@@ -17,21 +17,21 @@ Geniverse.chromosomeToolController = SC.Controller.create(
 /** @scope Geniverse.chromosomeToolController.prototype */ {
   dragon: null,
   _pane: Geniverse.PopupChromosomeView,
-  _paneInstance: null,
+  paneInstance: null,
 
   showPane: function() {
     SC.RunLoop.begin();
     this.closePane();
-    this._paneInstance = this._pane.create();
+    this.paneInstance = this._pane.create();
     Geniverse.chromosomeToolController.notifyPropertyChange('dragon');
-    this._paneInstance.append();
+    this.paneInstance.append();
     SC.RunLoop.end();
   },
 
   closePane: function() {
-    if (!!this._paneInstance) {
-      this._paneInstance.remove();
-      this._paneInstance.destroy();
+    if (!!this.paneInstance) {
+      this.paneInstance.remove();
+      this.paneInstance.destroy();
     }
   }
 
