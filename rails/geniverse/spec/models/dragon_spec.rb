@@ -26,17 +26,17 @@ describe Dragon do
     Dragon.create!(third_attributes)
 
     params = {:user_id => 1}
-    Dragon.search(params).size.should be 1
+    Dragon.search(params).size.should be Dragon.find_all_by_user_id(1).count
     params = {:user_id => 2}
-    Dragon.search(params).size.should be 1
+    Dragon.search(params).size.should be Dragon.find_all_by_user_id(2).count
     params = {:isInMarketplace => true}
-    Dragon.search(params).size.should be 2
+    Dragon.search(params).size.should be Dragon.find_all_by_isInMarketplace(true).count
     params = {:isInMarketplace => true, :user_id => 1}
-    Dragon.search(params).size.should be 0
+    Dragon.search(params).size.should be Dragon.find_all_by_isInMarketplace_and_user_id(true, 1).count
     params = {:activity_id => 2}
-    Dragon.search(params).size.should be 1
+    Dragon.search(params).size.should be Dragon.find_all_by_activity_id(2).count
     params = {:activity_id => 4}
-    Dragon.search(params).size.should be 0
+    Dragon.search(params).size.should be Dragon.find_all_by_activity_id(4).count
 
   end
 
