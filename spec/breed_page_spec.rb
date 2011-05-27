@@ -46,14 +46,8 @@ describe "Geniverse Dragons Test" do
   end
   
   it "should be able to drag mother and father from challenge pool to breed view" do
-    mother = father = nil
-    i = 0
-    while ((mother.nil? || father.nil?) && i < 4) do
-      contender = @challenge_pool_view.dragons_view.content_view.child_views[i]
-      father = contender if (contender.content['sex'] == 0 && father.nil?)
-      mother = contender if (contender.content['sex'] == 1 && mother.nil?)
-      i += 1
-    end
+    mother = get_female_from_challenge_pool(@challenge_pool_view)
+    father = get_male_from_challenge_pool(@challenge_pool_view)
 
     father.drag_to @father_view, 20, 20
     mother.drag_to @mother_view, 20, 20
