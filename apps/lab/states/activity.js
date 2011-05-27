@@ -310,16 +310,18 @@ Lab.ACTIVITY = SC.Responder.create(
         controller = Geniverse.challengePoolController;
       }
       controller.set('content', dragons);
-      if (controller.get('content').length() < 1) {
-        SC.Logger.info("No dragons for "+isMatchDragons);
-        self.initDragonsFromJson(isMatchDragons);
+      var dragonsRequired = self.getOrganismConfigurations(isMatchDragons).length;
+      var currentDragons = controller.get('content').length();
+      if (currentDragons < dragonsRequired) {
+        SC.Logger.info("Need "+ (dragonsRequired - currentDragons) + " dragons for "+isMatchDragons);
+        self.initDragonsFromJson(isMatchDragons, dragonsRequired - currentDragons);
       } else {
         SC.Logger.info("Found "+controller.get('content').length()+" dragons for "+isMatchDragons);
       }
     }
   },
 
-  initDragonsFromJson: function(isMatchDragons) {
+  initDragonsFromJson: function(isMatchDragons, count) {
     function handleDragon(dragon) { 
       SC.RunLoop.begin();
       if (isMatchDragons){
@@ -335,7 +337,9 @@ Lab.ACTIVITY = SC.Responder.create(
     SC.Logger.info("Creating defaults");
     var organismConfigurations = this.getOrganismConfigurations(isMatchDragons);
     SC.Logger.info("Found " + organismConfigurations.length + " defaults");
-    for (var i = 0; i < organismConfigurations.length; i++) {
+    
+    var dragonsRequired = !!count ? count : organismConfigurations.length;
+    for (var i = 0; i < dragonsRequired; i++) {
       var conf = organismConfigurations[i];
       var name = (typeof conf.name != "undefined") ? conf.name : ('Starter'+i);
       Geniverse.gwtController.generateDragonWithAlleles(conf.alleles, conf.sex, name, handleDragon, true);
