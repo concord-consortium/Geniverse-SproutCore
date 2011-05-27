@@ -53,7 +53,10 @@ describe "Navigating pages resets controllers" do
     # NOTE we can't just keep around content, because it will follow any changes made to it over time
     @page1dragons = []
     organism_views = challenge_pool.dragons_view.content_view.child_views
-    organism_views.each {|d| @page1dragons << d.content['id'].to_s}
+    i = 0
+    while i < organism_views.count
+      @page1dragons << d[i].content['id'].to_s
+    end
 
     # click to case log
     @app['topBar.caseLogButton', 'SC.ImageView'].click
@@ -66,7 +69,10 @@ describe "Navigating pages resets controllers" do
     # record what start dragons there are
     @page2dragons = []
     organism_views = challenge_pool.dragons_view.content_view.child_views
-    organism_views.each {|d| @page2dragons << d.content['id'].to_s}
+    i = 0
+    while i < organism_views.count
+      @page2dragons << d[i].content['id'].to_s
+    end
 
     @page2mother = breedDragonController['mother']
     @page2father = breedDragonController['father']
