@@ -256,17 +256,7 @@ Lab.ACTIVITY = SC.Responder.create(
     var self = this;
     
     function challengeDragonsReady() {
-      SC.Logger.info("challenge dragons observer called");
-      if ((challengeDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
-        challengeDragons.removeObserver('status', challengeDragonsReady);
-        Geniverse.challengePoolController.set('content', challengeDragons);
-        if (Geniverse.challengePoolController.get('content').length() < 1) {
-          SC.Logger.info("No challenge dragons");
-          self.initDragonsFromJson(false);
-        } else {
-          SC.Logger.info("Found "+Geniverse.challengePoolController.get('content').length()+" challenge dragons");
-        }
-      }
+      self.initDragons(challengeDragons, this, false, self);
     }
     
     if ((challengeDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
@@ -297,21 +287,8 @@ Lab.ACTIVITY = SC.Responder.create(
 
       var matchDragons = Geniverse.store.find(matchPoolQuery);
       
-      // we should be able to DRY this up with challengeDragonsReady, but we'd need to
-      // pass in some variables, and I can't figure out how to do this if this gets called
-      // by an observer
       function matchDragonsReady() {
-        SC.Logger.info("match dragons observer called");
-        if ((matchDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
-          matchDragons.removeObserver('status', matchDragonsReady);
-          Geniverse.matchController.set('content', matchDragons);
-          if (Geniverse.matchController.get('content').length() < 1) {
-            SC.Logger.info("No match dragons");
-            self.initDragonsFromJson(true);
-          } else {
-            SC.Logger.info("Found "+Geniverse.matchController.get('content').length()+" match dragons");
-          }
-        }
+        self.initDragons(matchDragons, this, true, self);
       }
       
       if ((matchDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
@@ -322,8 +299,29 @@ Lab.ACTIVITY = SC.Responder.create(
       
       this.set('hasLoadedActivityData', YES);
   },
+  
+  initDragons: function(dragons, observer, isMatchDragons, self) {
+    if ((dragons.get('status') & SC.Record.READY) === SC.Record.READY) {
+      dragons.removeObserver('status', observer);
+      var controller;
+      if (isMatchDragons){
+        controller = Geniverse.matchController;
+      } else {
+        controller = Geniverse.challengePoolController;
+      }
+      controller.set('content', dragons);
+      var dragonsRequired = self.getOrganismConfigurations(isMatchDragons).length;
+      var currentDragons = controller.get('content').length();
+      if (currentDragons < dragonsRequired) {
+        SC.Logger.info("Need "+ (dragonsRequired - currentDragons) + " dragons for "+isMatchDragons);
+        self.initDragonsFromJson(isMatchDragons, dragonsRequired - currentDragons);
+      } else {
+        SC.Logger.info("Found "+controller.get('content').length()+" dragons for "+isMatchDragons);
+      }
+    }
+  },
 
-  initDragonsFromJson: function(isMatchDragons) {
+  initDragonsFromJson: function(isMatchDragons, count) {
     function handleDragon(dragon) { 
       SC.RunLoop.begin();
       if (isMatchDragons){
@@ -337,18 +335,22 @@ Lab.ACTIVITY = SC.Responder.create(
       SC.RunLoop.end();
     }
     SC.Logger.info("Creating defaults");
-    //var organismConfigurations = Geniverse.activityController.getConfigurationForRoom(CcChat.chatRoomController.get('channelIndex'));
+    var organismConfigurations = this.getOrganismConfigurations(isMatchDragons);
+    SC.Logger.info("Found " + organismConfigurations.length + " defaults");
+    
+    var dragonsRequired = !!count ? count : organismConfigurations.length;
+    for (var i = 0; i < dragonsRequired; i++) {
+      var conf = organismConfigurations[i];
+      var name = (typeof conf.name != "undefined") ? conf.name : ('Starter'+i);
+      Geniverse.gwtController.generateDragonWithAlleles(conf.alleles, conf.sex, name, handleDragon, true);
+    }
+  },
+  
+  getOrganismConfigurations: function(isMatchDragons) {
     var user = Geniverse.userController.get('content');
     var group = user.get('groupId')  - 1; // the numbers 1 - 3, but need to 0 based
     var member = user.get('memberId')- 1;
-    var organismConfigurations = Geniverse.activityController.getConfigurationForRoomMember(group,member, isMatchDragons);
-    SC.Logger.info("Found " + organismConfigurations.length + " defaults");
-    for (var i = 0; i < organismConfigurations.length; i++) {
-      var conf = organismConfigurations[i];
-      var name = (typeof conf.name != "undefined") ? conf.name : ('Starter'+i);
-      SC.Logger.info("Creating " + conf.sex + ": " + name + " ( " + conf.alleles + ")" + " defaults");
-      Geniverse.gwtController.generateDragonWithAlleles(conf.alleles, conf.sex, name, handleDragon, true);
-    }
+    return Geniverse.activityController.getConfigurationForRoomMember(group,member, isMatchDragons);  
   },
   
   reloadData: function() {

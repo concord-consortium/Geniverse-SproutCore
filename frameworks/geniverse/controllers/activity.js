@@ -56,23 +56,18 @@ Geniverse.activityController = SC.ObjectController.create(
 
   //  [ rooms [users [alleles ] ] ]
   getConfigurationForRoomMember: function(room, member, isMatchingDragons) {
-    console.log("getting for "+isMatchingDragons);
     var roomConfig = Geniverse.activityController.getConfigurationForRoom(room, isMatchingDragons);
     if (!roomConfig || roomConfig.length < 1){
       SC.Logger.info("No room config for room", room);
       return [];
     }
     var members = roomConfig;
-    SC.Logger.info("members %@", members);
-    SC.Logger.dir(members);
     // if the first item is an Allelle, return the full set, but warn
     if (!!members[0].alleles) {
       SC.Logger.warn("Room Configuration only has one set of starter Alleles in it..");
       return roomConfig;  // EG everyone in the room shares a config set
     }
     var member_index = member % members.length;
-    SC.Logger.info("member_index %@",member_index);
-    SC.Logger.info("item to return %@", members[member_index]);
     return members[member_index];
   }
   
