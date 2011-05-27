@@ -27,19 +27,23 @@ describe "Navigating pages resets controllers" do
 
     breedDragonController = @app['Geniverse.breedDragonController', 'SC.Controller']
     # drag a mother and a father to the breed view
-    grid = @app['breedingPage.mainPane.mainAppView.challengePoolView.dragonsView.contentView', Lebowski::Foundation::Views::CollectionView]
+    challenge_pool = @app['breedingPage.mainPane.mainAppView.challengePoolView', 'Lab.ChallengePoolView']
     breedView = @app['breedingPage.mainPane.mainAppView.breedView', 'Geniverse.BreedDragonView']
+
+    mother = get_female_from_challenge_pool(challenge_pool)
+    father = get_male_from_challenge_pool(challenge_pool)
+
     tries = 0
     begin
       tries += 1
-      grid.item_views[1].drag_to(breedView['motherView'], 30, 30)
+      mother.drag_to(breedView['motherView'], 30, 30)
       @page1mother = breedDragonController['mother']
       redo if @page1mother.nil? && tries < 3
     end
     tries = 0
     begin
       tries += 1
-      grid.item_views[2].drag_to(breedView['fatherView'], 30, 30)
+      father.drag_to(breedView['fatherView'], 30, 30)
       @page1father = breedDragonController['father']
       redo if @page1father.nil? && tries < 3
     end
@@ -48,7 +52,8 @@ describe "Navigating pages resets controllers" do
     # record what starter dragons there are
     # NOTE we can't just keep around content, because it will follow any changes made to it over time
     @page1dragons = []
-    grid.content.each {|d| @page1dragons << d['id']}
+    organism_views = challenge_pool.dragons_view.content_view.child_views
+    organism_views.each {|d| @page1dragons << d.content['id'].to_s}
 
     # click to case log
     @app['topBar.caseLogButton', 'SC.ImageView'].click
@@ -60,7 +65,8 @@ describe "Navigating pages resets controllers" do
 
     # record what start dragons there are
     @page2dragons = []
-    grid.content.each {|d| @page2dragons << d['id']}
+    organism_views = challenge_pool.dragons_view.content_view.child_views
+    organism_views.each {|d| @page2dragons << d.content['id'].to_s}
 
     @page2mother = breedDragonController['mother']
     @page2father = breedDragonController['father']
