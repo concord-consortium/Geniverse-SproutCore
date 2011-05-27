@@ -13,7 +13,7 @@ describe "Geniverse Dragons Test" do
       app.resize_to 1024, 768
 
       define_common_paths(app)
-      app.define_path 'breedPage', "breedingPage.mainPane.mainAppView"
+      app.define_path 'breedPage', "breedingPageGroup.mainPane.mainAppView"
     }
 
     define_common_ivars
@@ -32,16 +32,13 @@ describe "Geniverse Dragons Test" do
     @chromosome_tool_controller = @app['Geniverse.chromosomeToolController', 'SC.Controller']
 
     login("student", "password")
+    hide_info_pane
   end
   
   after(:all) do
     stop_testing_servers
   end
 
-  it "should hide the info pane" do
-    @app['infoController', 'SC.ObjectController'].pane.content_view.hide_button.click
-  end
-  
   it "should have challenge pool with 4 dragons" do
     sleep 3
 
