@@ -2,27 +2,27 @@ GenGWT = {
 
     // 'callback' should be a function that takes a dragon (GOrganism)
     generateDragon: function(callback) {
-        generateDragonWithCallback(callback, this.failure);
+        generateDragonWithCallback(this.wrapCallback(callback), this.failure);
     },
 
     generateDragonWithSex: function(sex, callback) {
-        generateDragonWithSex(sex, callback, this.failure);
+        generateDragonWithSex(sex, this.wrapCallback(callback), this.failure);
     },
 
     generateDragonWithAlleleString: function(alleles, callback) {
-        generateDragonWithAlleleString(alleles, callback, this.failure);
+        generateDragonWithAlleleString(alleles, this.wrapCallback(callback), this.failure);
     },
 
     generateDragonWithAlleleStringAndSex: function(alleles, sex, callback) {
-        generateDragonWithAlleleStringAndSex(alleles, sex, callback, this.failure);
+        generateDragonWithAlleleStringAndSex(alleles, sex, this.wrapCallback(callback), this.failure);
     },
 
     breedDragon: function(mother, father, callback) {
-        breedDragon(mother, father, callback, this.failure);
+        breedDragon(mother, father, this.wrapCallback(callback), this.failure);
     },
     
     breedDragons: function(number, mother, father, crossover, callback) {
-        breedDragonsWithCrossover(number, mother, father, crossover, callback, this.failure);
+        breedDragonsWithCrossover(number, mother, father, crossover, this.wrapCallback(callback), this.failure);
     },
 
     isAlive: function(dragon) {
@@ -65,6 +65,32 @@ GenGWT = {
 
     getCharacteristics: function(dragon, callback) {
         getDragonCharacteristics(dragon, callback, this.failure);
+    },
+    
+    wrapCallback: function(callback) {
+      function wrappedCallback(gOrg){
+        if (GenGWT.orgIsValid(gOrg)){
+          callback(gOrg);
+        } else {
+          console.log("WARN: Organism generated was not valid");
+          console.log(gOrg);
+          alert("The application created an invalid Drake. Please reload the page and try again.");
+        }
+      }
+      return wrappedCallback;
+    },
+    
+    orgIsValid: function(gOrg) {
+      if (!!gOrg.size){
+        var allAreValid = true;
+        for (var i = 0; i < gOrg.size; i++) {
+          if (!GenGWT.orgIsValid(gOrg.array[i])) {
+            allAreValid = false;
+          }
+        }
+        return allAreValid;
+      }
+      return (!!gOrg.alleles && (!!gOrg.sex || gOrg.sex == 0) && !!gOrg.imageURL);
     },
 
     failure: function(errorMsg) {
