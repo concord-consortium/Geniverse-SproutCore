@@ -58,16 +58,22 @@ module Helpers
 
   def get_female_from_challenge_pool(challenge_pool_view)
     organism_views = challenge_pool_view.dragons_view.content_view.child_views
-    organism_views.each do |org_view|
+    i = 0
+    while i < organism_views.count
+      org_view = organism_views[i]
       return org_view if org_view.content['sex'] == 1
+      i += 1
     end
     return nil
   end
 
   def get_male_from_challenge_pool(challenge_pool_view)
     organism_views = challenge_pool_view.dragons_view.content_view.child_views
-    organism_views.each do |org_view|
+    i = 0
+    while i < organism_views.count
+      org_view = organism_views[i]
       return org_view if org_view.content['sex'] == 0
+      i += 1
     end
     return nil
   end

@@ -1,8 +1,7 @@
 dir = File.expand_path(File.dirname(__FILE__))
 require "#{dir}/support/spec_helper.rb"
 
-describe "Geniverse Dragons Test" do
-  
+describe "Breed Dragons Test" do
 
   before(:all) do
     start_testing_servers
