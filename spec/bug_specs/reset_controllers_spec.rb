@@ -55,7 +55,7 @@ describe "Navigating pages resets controllers" do
     organism_views = challenge_pool.dragons_view.content_view.child_views
     i = 0
     while i < organism_views.count
-      @page1dragons << d[i].content['id'].to_s
+      @page1dragons << organism_views[i].content['id'].to_s
     end
 
     # click to case log
@@ -71,7 +71,7 @@ describe "Navigating pages resets controllers" do
     organism_views = challenge_pool.dragons_view.content_view.child_views
     i = 0
     while i < organism_views.count
-      @page2dragons << d[i].content['id'].to_s
+      @page2dragons << organism_views[i].content['id'].to_s
     end
 
     @page2mother = breedDragonController['mother']
