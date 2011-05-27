@@ -69,8 +69,8 @@ $commands = {
 
 # create a new started test applicaion 
 # configured with mysystem settings
-def new_test
-  app =  MainApplication.new TEST_SETTINGS
+def new_test(opts = {})
+  app =  MainApplication.new TEST_SETTINGS.merge(opts)
   app.start
   app.maximize  # TODO: Seems like dragging doesn't work unless we are maximized.
   sleep 2       # TODO: hackish pause, CanvasView is not ready otherwise..
