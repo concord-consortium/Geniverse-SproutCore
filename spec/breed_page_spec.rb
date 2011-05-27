@@ -13,7 +13,7 @@ describe "Geniverse Dragons Test" do
       app.resize_to 1024, 768
 
       define_common_paths(app)
-      app.define_path 'breedPage', "breedingPageGroup.mainPane.mainAppView"
+      app.define_path 'breedPage', "breedingPage.mainPane.mainAppView"
     }
 
     define_common_ivars
@@ -42,7 +42,7 @@ describe "Geniverse Dragons Test" do
   it "should have challenge pool with 4 dragons" do
     sleep 3
 
-    @challenge_pool_view.dragons_view.content_view.child_views.count.should be 4
+    @challenge_pool_view.dragons_view.content_view.child_views.count.should == 4
   end
   
   it "should be able to drag mother and father from challenge pool to breed view" do
@@ -66,13 +66,13 @@ describe "Geniverse Dragons Test" do
     
     @breed_button.click
     sleep 3
-    dragon1 = breeding_pen_organism_views(@breeding_pen_view).count.should be 20
+    dragon1 = breeding_pen_organism_views(@breeding_pen_view).count.should == 20
   end
   
   it "should replace the 20 dragons when breeding again" do
     @breed_button.click
     sleep 3
-    dragon1 = breeding_pen_organism_views(@breeding_pen_view).count.should be 20
+    dragon1 = breeding_pen_organism_views(@breeding_pen_view).count.should == 20
   end
   
   it "should be able to view genome of one of the bred dragons" do
@@ -90,15 +90,15 @@ describe "Geniverse Dragons Test" do
   end
   
   it "should be able to drag dragons from breeding pen to stable" do
-    stable_organism_views(@stable_view).count.should be 0
+    stable_organism_views(@stable_view).count.should == 0
     
     dragon1view = breeding_pen_organism_views(@breeding_pen_view)[0]
     alleles = dragon1view.content['alleles']
     
     dragon1view.drag_to @stable_view, 20, 20
     
-    stable_organism_views(@stable_view).count.should be 1
-    breeding_pen_organism_views(@breeding_pen_view).count.should be 19
+    stable_organism_views(@stable_view).count.should == 1
+    breeding_pen_organism_views(@breeding_pen_view).count.should == 19
     stable_organism_views(@stable_view)[0].content['alleles'].should == alleles
   end
   
@@ -110,8 +110,8 @@ describe "Geniverse Dragons Test" do
      sleep 1
      dragon3.drag_to @stable_view, 10, 20
      
-     stable_organism_views(@stable_view).count.should be 3
-     breeding_pen_organism_views(@breeding_pen_view).count.should be 17
+     stable_organism_views(@stable_view).count.should == 3
+     breeding_pen_organism_views(@breeding_pen_view).count.should == 17
    end
    
    it "should always add new dragons to the end" do
@@ -119,14 +119,14 @@ describe "Geniverse Dragons Test" do
      alleles4 = dragon4view.content['alleles']
      
      dragon4view.drag_to @stable_view, 100, 100
-     stable_organism_views(@stable_view).count.should be 4
+     stable_organism_views(@stable_view).count.should == 4
      stable_organism_views(@stable_view)[3].content['alleles'].should == alleles4
      
      dragon5view = breeding_pen_organism_views(@breeding_pen_view)[2]
      alleles5 = dragon5view.content['alleles']
      
      dragon5view.drag_to @stable_view, 5, 20
-     stable_organism_views(@stable_view).count.should be 5
+     stable_organism_views(@stable_view).count.should == 5
      stable_organism_views(@stable_view)[4].content['alleles'].should == alleles5
    end
  
