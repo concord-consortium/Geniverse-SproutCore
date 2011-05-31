@@ -1,6 +1,7 @@
 dir = File.expand_path(File.dirname(__FILE__))
 require "#{dir}/../support/spec_helper.rb"
 
+describe "Bugs" do
 describe "Navigating pages resets controllers" do
   before(:all) do
     start_testing_servers
@@ -97,4 +98,5 @@ describe "Navigating pages resets controllers" do
     @page2mother.should be_nil
   end
 
+end
 end

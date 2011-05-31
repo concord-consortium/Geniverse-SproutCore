@@ -1,6 +1,7 @@
 dir = File.expand_path(File.dirname(__FILE__))
 require "#{dir}/../support/spec_helper.rb"
 
+describe "Bugs" do
 describe "Disappearing Target Drakes" do
   before(:all) do
     start_testing_servers
@@ -95,4 +96,5 @@ describe "Disappearing Target Drakes" do
     # verify target dragons are visible
   end
 
+end
 end

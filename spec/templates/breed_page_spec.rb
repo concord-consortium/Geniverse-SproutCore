@@ -1,7 +1,8 @@
 dir = File.expand_path(File.dirname(__FILE__))
 require "#{dir}/support/spec_helper.rb"
 
-describe "Breed Dragons Test" do
+describe "Templates" do
+describe "Breeding Page" do
 
   before(:all) do
     start_testing_servers
@@ -123,4 +124,5 @@ describe "Breed Dragons Test" do
      stable_organism_views(@stable_view)[4].content['alleles'].should == alleles5
    end
  
+end
 end

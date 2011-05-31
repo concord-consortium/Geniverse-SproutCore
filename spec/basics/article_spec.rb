@@ -1,7 +1,7 @@
 dir = File.expand_path(File.dirname(__FILE__))
 require "#{dir}/support/spec_helper.rb"
 
-describe "Geniverse Article Test" do
+describe "Articles" do
   before(:all) do
     start_testing_servers
     @app = new_test({:app_root_path => "/lab#pagetype/reference/breedingPageGroup"}) {|app|
