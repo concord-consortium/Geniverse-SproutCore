@@ -82,7 +82,7 @@ Geniverse.loginController = SC.ObjectController.create(
       SC.Logger.log("passwords match!");
       this.finishLogin(user);
     } else {
-      alert("Passwords do not match");
+      SC.AlertPane.error("", "Passwords do not match");
     }
   },
   

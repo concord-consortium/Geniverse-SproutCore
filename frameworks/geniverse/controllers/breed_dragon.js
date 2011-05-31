@@ -52,7 +52,7 @@ Geniverse.breedDragonController = SC.Controller.create(
   breed: function () {
     if (this.get('mother').characteristicValue('Liveliness').indexOf('Alive') < 0 ||
         this.get('father').characteristicValue('Liveliness').indexOf('Alive') < 0 ){
-          alert("You can't breed a dead Drake!");
+          SC.AlertPane.error("", "You can't breed a dead Drake!");
           return;
     }
     

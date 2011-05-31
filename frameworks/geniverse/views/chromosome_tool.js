@@ -20,9 +20,9 @@ Geniverse.ChromosomeToolView = SC.ButtonView.extend(
   action: function() {
     var selectionSet = this.get('selection');
     if (selectionSet.get('length') < 1) {
-      alert('You must select a dragon first!');
+      SC.AlertPane.info("", 'You must select a dragon first!');
     } else if (selectionSet.get('length') > 1) {
-      alert('You can only view the chromosomes of one dragon at a time!');
+      SC.AlertPane.info("", 'You can only view the chromosomes of one dragon at a time!');
     } else {
       Geniverse.chromosomeToolController.showPane();
     }

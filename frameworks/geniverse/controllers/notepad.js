@@ -42,7 +42,7 @@ Geniverse.notepadController = SC.ObjectController.create(
         this.set('isEnabledButton', NO);
       }
     }else {
-      alert("You must be logged in first to use your Note Pad.");
+      SC.AlertPane.error("", "You must be logged in first to use your Note Pad.");
     }
   },
 
