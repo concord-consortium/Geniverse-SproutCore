@@ -26,8 +26,9 @@ describe "Breeding Page" do
     @breed_button = @app['breedPage.breedView.breedButtonView', 'SC.ButtonView']
     @breeding_pen_view = @app['breedPage.breedingPenView', 'Lab.BreedingPenView']
     @stable_view = @app['breedPage.stableView', 'Lab.StableView']
-    @target_view = @app['breedPage.matchView', 'Geniverse.MatchView']
     @marketplace_view = @app['breedPage.marketplaceView', 'SC.ImageView']
+
+    @match_view = @app['breedPage.matchView', 'Geniverse.MatchView']
 
     @chromosome_tool_controller = @app['Geniverse.chromosomeToolController', 'SC.Controller']
 
@@ -123,6 +124,51 @@ describe "Breeding Page" do
      stable_organism_views(@stable_view).count.should == 5
      stable_organism_views(@stable_view)[4].content['alleles'].should == alleles5
    end
- 
+
+   def get_match_org_view(org_views, org, want_match)
+     org_views.count.times do |i|
+       puts "comparing:\n#{org_views[i].content['imageURL']}\n#{org.content['imageURL']}"
+       if ((org_views[i].content['imageURL'] == org.content['imageURL']) == want_match)
+         puts "matched expected: #{want_match}"
+         return org_views[i]
+       end
+     end
+     return nil
+   end
+
+   it 'should not match an incorrect dragon' do
+     org_to_drag = stable_organism_views(@stable_view)[4]
+
+     # figure out which match dragon doesn't match
+     org_dest_view = get_match_org_view(match_organism_views(@match_view), org_to_drag, false)
+     org_to_drag.drag_to org_dest_view, 30, 30
+
+     sleep 1
+
+     # should pop up an SC.AlertPane
+     @app.responding_panes.count.should == 3
+
+     pane = @app.key_pane Lebowski::Foundation::Panes::AlertPane
+     pane.should_not be nil
+     pane.is_info?.should be true
+     pane.button_count.should == 1
+     pane.has_button?('ok').should be true
+     pane.click_button 'ok'
+   end
+
+   it 'should not highlight an incorrect dragon' do
+     org_to_drag = stable_organism_views(@stable_view)[4]
+     org_dest_view = get_match_org_view(match_organism_views(@match_view), org_to_drag, false)
+     org_dest_view.content['hasBeenMatched'].should == false
+   end
+
+   it 'should match a correct dragon' do
+     pending "make sure there's no popup and target gets green highlight"
+     org_dest_view.content['hasBeenMatched'].should == true
+   end
+
+   it 'should retain match status after a "breed and drag to stable"' do
+     pending "make sure target still had green highlight"
+   end
 end
 end
