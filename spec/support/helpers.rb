@@ -52,6 +52,10 @@ module Helpers
     breeding_pen_view.pen_view.content_view.child_views
   end
 
+  def match_organism_views(match_view)
+    match_view.dragons_view.content_view.child_views
+  end
+
   def hide_info_pane
     @app['infoController', 'SC.ObjectController'].pane.content_view.hide_button.click
   end
