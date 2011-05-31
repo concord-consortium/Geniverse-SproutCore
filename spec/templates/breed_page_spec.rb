@@ -1,5 +1,5 @@
 dir = File.expand_path(File.dirname(__FILE__))
-require "#{dir}/support/spec_helper.rb"
+require "#{dir}/../support/spec_helper.rb"
 
 describe "Templates" do
 describe "Breeding Page" do
