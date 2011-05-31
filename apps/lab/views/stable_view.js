@@ -111,7 +111,8 @@ Lab.StableView = SC.View.extend(
             var allStableDragons = Geniverse.stableOrganismsController.get('arrangedObjects');
             var count = Geniverse.stableOrganismsController.get('length');
             if (count >= 25){
-              alert("Your stable is full");
+              SC.AlertPane.error("Can't move dragon", 
+                "Your stable is full. If you want to save more dragons, sell some to the marketplace");
               return;
             }
             if (count > 0){
@@ -157,10 +158,19 @@ Lab.StableView = SC.View.extend(
             // This is because each time acceptDragon is called, the dragon gets removed from
             // the list, and the other dragons shift indices.
             SC.RunLoop.begin();
-            for (var i = 0; i < selection.get('length'); i++){
+            // By keeping the RunLoop outside the loop, moving drakes is much faster. 
+            // stableOrganismsController's length doesn't change until the RunLoop ends,
+            // though, so we have to check the length first here.
+            var spacesRemaining = 25 - Geniverse.stableOrganismsController.get('length');
+            var drakesToBeMoved = Math.min(spacesRemaining, selection.get('length'));
+            for (var i = 0; i < drakesToBeMoved; i++){
               acceptDragon(selection.firstObject());
             }
             SC.RunLoop.end();
+            if (drakesToBeMoved < selection.get('length')) {
+              SC.AlertPane.error("Can't move dragon", 
+                "Your stable is full. If you want to save more dragons, sell some to the marketplace");
+            }
             // selection.forEach(function (dragon){
             //  SC.Logger.log("selection.length = "+selection.get('length'));
             //  acceptDragon(dragon);
