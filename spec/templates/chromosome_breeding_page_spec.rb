@@ -72,6 +72,53 @@ describe "Templates" do
       end
     end
 
+    def change_pulldown_value(pulldowns, allele)
+      alleleLabelMap = @chromosome_controller['alleleLabelMap']
+      pulldowns.count.times do |i|
+        pulldown = pulldowns[i]
+        if pulldown['fieldValue'] == allele
+          # we found the right pulldown. select one of the other options
+          opts = pulldown['objects']
+          opts.count.times do |i|
+            opt = opts[i]
+            if opt['value'] != allele && opt['value'] != 'dl'  # avoid dead dragons...
+              count = 0
+              while pulldown['fieldValue'] != opt['value']
+                puts "selecting (#{count}): #{opt['value']}"
+                return nil if count > 4
+                # select_with_value turned out to be pretty unreliable. select_with_name seems to work much better
+                pulldown.select_with_name alleleLabelMap[allele] if count > 0
+                pulldown.select_with_name alleleLabelMap[opt['value']]
+                sleep 0.5
+                count += 1
+              end
+              return opt['value']
+            end
+          end
+        end
+      end
+      return nil
+    end
+
+    it "should change the dragon phenotype when each pulldown is changed" do
+      allelesMap = @chromosome_controller['allelesMap']
+
+      organism = @female_phenotype_view.content
+      genome_view = @female_genome_view
+
+      # cycle through each allele, and change the pulldown to a new value. make sure the dragon phenotype view changes
+      alleles = organism['alleles'].split(',')
+      alleles.each do |allele_str|
+        side, allele = allele_str.split(':')
+        chromo = allelesMap[allele.downcase]
+        chromo_view = genome_view['chromosome'+side.upcase+chromo+'View']
+        new_val = change_pulldown_value(chromo_view.pullDowns.child_views, allele)
+        new_val.should_not be nil
+        sleep 0.5
+        @female_phenotype_view.content['alleles'].should match("#{side}:#{new_val}")
+      end
+    end
+
     it "should be able to breed 20 dragons" do
       @breed_button.click
       sleep 3
