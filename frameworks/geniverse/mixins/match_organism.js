@@ -30,7 +30,7 @@ Geniverse.MatchOrganism = {
       SC.RunLoop.end();
       
     } else {
-      alert("Those dragons don't look exactly the same.");
+      SC.AlertPane.info("", "Those dragons don't look exactly the same!");
     }
 
     this._setClassNames();
