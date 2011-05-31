@@ -114,7 +114,7 @@ describe "Templates" do
         chromo_view = genome_view['chromosome'+side.upcase+chromo+'View']
         new_val = change_pulldown_value(chromo_view.pullDowns.child_views, allele)
         new_val.should_not be nil
-        sleep 0.5
+        sleep 1.5
         @female_phenotype_view.content['alleles'].should match("#{side}:#{new_val}")
       end
     end
