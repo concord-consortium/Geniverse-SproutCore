@@ -147,27 +147,17 @@ sc_require('lib/burst-core');
       function loadData(data){
 	    var x, y, index=0, len=defaultOpts.segLength*defaultOpts.segCount*defaultOpts.alleleCount;
 
-console.log(data);
         for ( var i in data ) {
-	console.log("i");
-	console.log(i);
-	console.log(defaultOpts.alleleCount/2);
           if ( data.hasOwnProperty(i) ) {
             for ( var j=0; j< (defaultOpts.alleleCount/2); j++ ) {
-	console.log("j");
-	console.log(j)
               if ( data[i].hasOwnProperty(j) ) {
-	console.log("has own property J")
-	console.log(data[i][j]);
                 // Create copies if in meiosis ( Mode: 'parent' )
                 if( mode==='parent' ){
                   var dw = defaultOpts.width/4,
                       dh = defaultOpts.height/4;
                   x = random( dw ) + centerX -dw/2;
                   y = random( dh ) + centerY -dh/2;
-console.log("making new chromosome " + index);                                      
                   chromosomes[index] = new Chromosome({ paper: paper, x:x, y:y, data: data[i][j], index:index, hidden: false });
-console.log("making new chromosome " + index);                                      
                   chromosomes[index+1] = new Chromosome({ paper: paper, x:x, y:y, data: data[i][j], index:index+1, hidden: true });
                   index+=2;
                 }else{
@@ -184,7 +174,6 @@ console.log("making new chromosome " + index);
               }
             }
           }
-console.log("finished traversing chromosomes");
 
           // Perpare Chromosomes for Swappping
           if( mode === 'parent' ){
@@ -252,13 +241,9 @@ console.log("finished traversing chromosomes");
         	}
 		});
 	  }
-console.log("before");
-console.log(geneInfo);
 	 if (mode==='parent') {
 		geneInfo = $.extend(true, geneInfo, geneMapping);
 	}
-console.log("after");
-console.log(geneInfo);
 	 loadData(geneInfo);
 	  
     };
@@ -583,8 +568,6 @@ console.log(geneInfo);
               if( dist( chromosomes[i].alleles[0].segs[0].x, chromosomes[i].alleles[0].segs[0].y, this.attrs.cx, this.attrs.cy ) < this.attrs.r ){
                 data.chromosomes[data.chromosomes.length] = {alleles:[]};
                 for(var j=0, l2=chromosomes[i].alleles.length; j< l2; j++){
-					console.log(l2);
-					console.log(j);
                   data.chromosomes[data.chromosomes.length-1].alleles[j] = {
                     sex : chromosomes[i].alleles[j].sex,
                     gene: chromosomes[i].alleles[j].gene,
@@ -598,7 +581,6 @@ console.log(geneInfo);
             defaultOpts.gameteSelected.call(defaultOpts.context, data);
 			// change all membranes to unselected color then select the currently clicked gamete
 			for (var i=0; i<4; i++) {
-				console.log(membranes[i]);
 				membranes[i].SVG.attr({ fill:defaultOpts.color.cell_fill, stroke:defaultOpts.color.cell_stroke });
 			}
 			this.attr({ fill:defaultOpts.color.cell_selected, stroke:defaultOpts.color.cell_stroke });
