@@ -36,8 +36,8 @@ sc_require('lib/burst-core');
         hover              : "#00FF00",
         male_inner         : "rgba(0,0,255,1)",
         male_outer         : "rgba(0,0,255,.1)",
-        female_inner       : "rgba(255,0,255,1)",
-        female_outer       : "rgba(255,0,255,.1)",
+        female_inner       : "rgba(0,0,255,1)",
+        female_outer       : "rgba(0,0,255,.1)",
         male_outer_hover   : "rgba(0,0,255,.1)",
         female_outer_hover : "rgba(255,0,255,.1)",
 
