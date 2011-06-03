@@ -6,10 +6,10 @@
                     "on": true
                 },
                 {
-                    "on": false
+                    "on": true
                 },
 	            {
-	                "on": false
+	                "on": true
 	            }
             ]
         },
@@ -19,58 +19,26 @@
                 	"on": true
             	},
             	{
-                	"on": false
+                	"on": true
             	},
             	{
-                	"on": false
+                	"on": true
             	}
             ]
         },
         {
             "alleles": [
                 {
-                    "on": false
+                    "on": true
                 },
                 {
                     "on": true
                 },
                 {
-                    "on": false
-                },
-                {
-                    "on": false
-                },
-                {
-                    "on": false
-                }
-            ]
-        },
-        {
-            "alleles": [
-                {
-                    "on": false
-                },
-                {
                     "on": true
                 },
                 {
-                    "on": false
-                },
-                {
-                    "on": false
-                },
-                {
-                    "on": false
-                }
-            ]
-        },
-        {
-            "alleles": [
-                {
-                    "on": false
-                },
-                {
-                    "on": false
+                    "on": true
                 },
                 {
                     "on": true
@@ -80,10 +48,42 @@
         {
             "alleles": [
                 {
-                    "on": false
+                    "on": true
                 },
                 {
-                    "on": false
+                    "on": true
+                },
+                {
+                    "on": true
+                },
+                {
+                    "on": true
+                },
+                {
+                    "on": true
+                }
+            ]
+        },
+        {
+            "alleles": [
+                {
+                    "on": true
+                },
+                {
+                    "on": true
+                },
+                {
+                    "on": true
+                }
+            ]
+        },
+        {
+            "alleles": [
+                {
+                    "on": true
+                },
+                {
+                    "on": true
                 },
                 {
                     "on": true
