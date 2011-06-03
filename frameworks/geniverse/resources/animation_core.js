@@ -157,8 +157,8 @@ sc_require('lib/burst-core');
                       dh = defaultOpts.height/4;
                   x = random( dw ) + centerX -dw/2;
                   y = random( dh ) + centerY -dh/2;
-                  chromosomes[index] = new Chromosome({ paper: paper, x:x, y:y, data: data[i][j], index:index, hidden: false });
-                  chromosomes[index+1] = new Chromosome({ paper: paper, x:x, y:y, data: data[i][j], index:index+1, hidden: true });
+                  chromosomes[index] = new Chromosome({ paper: paper, x:x, y:y, data: data[i][j], index:index, hidden: true });
+                  chromosomes[index+1] = new Chromosome({ paper: paper, x:x, y:y, data: data[i][j], index:index+1, hidden: false });
                   index+=2;
                 }else{
                   if( index < 3 ){
@@ -697,15 +697,25 @@ sc_require('lib/burst-core');
 
       this.segCount = defaultOpts.segCount;
       this.segLength = defaultOpts.segLength;
-
+	  this.rightLabelOffsetX = 17;
+	  this.labelOffsetY = -4.5;
+	  this.labelWidth = Geniverse.chromosomeController.alleleLabelMap[this.gene].length*7;
+	  this.leftLabelOffsetX = -1 * (this.labelWidth + this.rightLabelOffsetX);
+	
       this.genPath();
 
       this.SVG_inner = this.build();
       this.style(this.SVG_inner, 'inner');
       this.SVG_outer = this.build();
       this.style(this.SVG_outer, 'outer');
+
+      this.labelLink = this.paper.path("M"+(this.x)+","+(this.y)+" L"+(this.x+this.labelOffsetX)+","+(this.y+this.labelOfsetY)).attr( {
+		'stroke'	  : '#000',
+		'stroke-width': '0.5px'
+	  })
+
 // make geneFrame variable widths by looking at length of string -Dan
-     this.geneFrame = this.paper.rect(this.x-6, this.y-7, Geniverse.chromosomeController.alleleLabelMap[this.gene].length*7, 14, 1).attr({
+     this.geneFrame = this.paper.rect(this.x-6, this.y-7, this.labelWidth, 14, 1).attr({
         'fill'          : '#FFF',
         'stroke'        : defaultOpts.color[ this.sex + '_outer' ],
         "stroke-width"  : "2px"
@@ -717,21 +727,15 @@ sc_require('lib/burst-core');
         'fill'        : '#000',
         'text-anchor' : 'start'
       }).toFront();
-      
+     
       if( this.parent.hidden ){
         this.hide();
       }
 	
-	// use visibleMap.json to filter visible genes -Dan
-     if (this.on == true) { 
-     // if (false) { 
-	   		this.geneText.show(); 
-			this.geneFrame.show(); 
-		} else { 
-			this.geneText.hide(); 
-			this.geneFrame.hide(); 
-		}
-      
+	  this.labelLink.hide();
+      this.geneText.hide(); 
+	  this.geneFrame.hide(); 
+     
       
       this.SVG_outer.drag(this.dragmove_mouse, this.dragstart_mouse, this.dragstop_mouse);
 
@@ -739,11 +743,25 @@ sc_require('lib/burst-core');
 
       this.SVG_outer.hover(function(){
         if(!this.parent.parent.hidden){
-          document.body.style.cursor='pointer';
+			for(var i=0; i < this.parent.parent.alleleCount; i++){
+		    	if (this.parent.parent.alleles[i].on) { 
+			  		this.parent.parent.alleles[i].labelLink.show(); 
+					this.parent.parent.alleles[i].geneText.show(); 
+					this.parent.parent.alleles[i].geneFrame.show(); 
+				}
+			}
+            document.body.style.cursor='pointer';
         }
       },function(){
         if(!this.parent.parent.hidden){
-          document.body.style.cursor='auto';
+			for(var i=0; i < this.parent.parent.alleleCount; i++){
+		    	if (this.parent.parent.alleles[i].on == true) { 
+			  		this.parent.parent.alleles[i].labelLink.hide(); 
+					this.parent.parent.alleles[i].geneText.hide(); 
+					this.parent.parent.alleles[i].geneFrame.hide(); 
+				}
+			}
+            document.body.style.cursor='auto';
         }
       });
             
@@ -796,8 +814,9 @@ sc_require('lib/burst-core');
           x = this.segs[0].x + offsetX,
           y = this.segs[0].y + offsetY;
       
-      this.geneFrame.attr({ 'x': x-17, 'y': y-4.5}).toFront();
-      this.geneText.attr({ 'x': x-15, 'y': y}).toFront();
+	  this.labelLink.attr({ path: "M"+ x +","+ y+" L"+ ((x > this.paper.width/2) ? x+this.leftLabelOffsetX : x+this.rightLabelOffsetX) +","+ (y+this.labelOffsetY)}).toFront();
+	  this.geneFrame.attr({ 'x':((x > this.paper.width/2) ? x+this.leftLabelOffsetX : x+this.rightLabelOffsetX), 'y': (y+this.labelOffsetY)}).toFront();
+      this.geneText.attr({ 'x': ((x > this.paper.width/2) ? x+this.leftLabelOffsetX : x+this.rightLabelOffsetX)+2, 'y': y}).toFront();
       
       if(!this.jqObj) {
           this.jqObj = $(this.genekey);
@@ -1360,8 +1379,8 @@ sc_require('lib/burst-core');
             
             // naming convention: "c" + PairLetter(a-c) + ChromosomeNumber(1-2) + OriginCopyLetter(a-b);
 
-            // Chromosome A1a - chromosomes[0]
-            .obj('ca1a_'+owner,chromosomes[0])
+            // Chromosome A1a - chromosomes[1]
+            .obj('ca1a_'+owner,chromosomes[1])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1437,8 +1456,8 @@ sc_require('lib/burst-core');
                   
                 })
 
-            // Chromosome A1b - chromosomes[1]
-            .obj('ca1b_'+owner,chromosomes[1])
+            // Chromosome A1b - chromosomes[0]
+            .obj('ca1b_'+owner,chromosomes[0])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1481,8 +1500,8 @@ sc_require('lib/burst-core');
                 })
 
 
-            // Chromosome A2a - chromosomes[2]
-            .obj('ca2a_'+owner,chromosomes[2])
+            // Chromosome A2a - chromosomes[3]
+            .obj('ca2a_'+owner,chromosomes[3])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1512,8 +1531,8 @@ sc_require('lib/burst-core');
                 })
 
 
-            // Chromosome A2b  - chromosomes[3]
-            .obj('ca2b_'+owner,chromosomes[3])
+            // Chromosome A2b  - chromosomes[2]
+            .obj('ca2b_'+owner,chromosomes[2])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1559,8 +1578,8 @@ sc_require('lib/burst-core');
             ////////////////////////////////////////////////////////////////////
             // B-PAIR
 
-            // Chromosome B1a - chromosomes[4]
-            .obj('cb1a_'+owner,chromosomes[4])
+            // Chromosome B1a - chromosomes[5]
+            .obj('cb1a_'+owner,chromosomes[5])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1589,8 +1608,8 @@ sc_require('lib/burst-core');
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
                 })
 
-            // Chromosome B1b - chromosomes[5]
-            .obj('cb1b_'+owner,chromosomes[5])
+            // Chromosome B1b - chromosomes[4]
+            .obj('cb1b_'+owner,chromosomes[4])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1633,8 +1652,8 @@ sc_require('lib/burst-core');
                 })
 
 
-            // Chromosome B2a - chromosomes[6]
-            .obj('cb2a_'+owner,chromosomes[6])
+            // Chromosome B2a - chromosomes[7]
+            .obj('cb2a_'+owner,chromosomes[7])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1664,8 +1683,8 @@ sc_require('lib/burst-core');
                 })
 
 
-            // Chromosome - chromosomes[7]
-            .obj('cb2b_'+owner,chromosomes[7])
+            // Chromosome - chromosomes[6]
+            .obj('cb2b_'+owner,chromosomes[6])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1711,8 +1730,8 @@ sc_require('lib/burst-core');
             ////////////////////////////////////////////////////////////////////
             // C-PAIR
 
-            // Chromosome C1a - chromosomes[8]
-            .obj('cc1a_'+owner,chromosomes[8])
+            // Chromosome C1a - chromosomes[9]
+            .obj('cc1a_'+owner,chromosomes[9])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1741,8 +1760,8 @@ sc_require('lib/burst-core');
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
                 })
 
-            // Chromosome C1b - chromosomes[9]
-            .obj('cc1b_'+owner,chromosomes[9])
+            // Chromosome C1b - chromosomes[8]
+            .obj('cc1b_'+owner,chromosomes[8])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1785,8 +1804,8 @@ sc_require('lib/burst-core');
                 })
 
 
-            // Chromosome C2a - chromosomes[10]
-            .obj('cc2a_'+owner,chromosomes[10])
+            // Chromosome C2a - chromosomes[11]
+            .obj('cc2a_'+owner,chromosomes[11])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1816,8 +1835,8 @@ sc_require('lib/burst-core');
                 })
 
 
-            // Chromosome C2b - chromosomes[11]
-            .obj('cc2b_'+owner,chromosomes[11])
+            // Chromosome C2b - chromosomes[10]
+            .obj('cc2b_'+owner,chromosomes[10])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
@@ -1950,7 +1969,7 @@ sc_require('lib/burst-core');
 
     // Set Draw-Loop Interval
     ////////////////////////////////////////////////////////////////////////////
-    drawLoop = window.setInterval(function(){ draw(); }, 500);
+    drawLoop = window.setInterval(function(){ draw(); }, 50);
 
   };
   
