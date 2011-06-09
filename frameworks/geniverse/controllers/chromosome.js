@@ -106,6 +106,7 @@ Geniverse.chromosomeController = SC.ObjectController.create(
       'dl': 'dl',
       'Rh': 'Nose spike',
       'Hoxa1': 'No nose spike',
+	  'Y' : 'Y',
 	    '' : ''
   },
 
