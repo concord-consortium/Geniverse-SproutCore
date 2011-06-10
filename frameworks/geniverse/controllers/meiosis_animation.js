@@ -30,7 +30,7 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
   
   clearOffspring: function() {
     this.set('offspring', null);
-  }.observes('mother', 'father'),
+  }.observes('mother', 'father','fatherGameteJson','motherGameteJson'),
 
   allelesToJSON: function (alleleString) {
     if(alleleString !== null && typeof(alleleString) != 'undefined'){
@@ -105,7 +105,7 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
     var sex = 1;
     if (lastChromoAlleles.length === 0) {
       sex = 0;
-    } else if (lastChromoAlleles[0].gene === "") {
+    } else if (lastChromoAlleles[0].gene === "" || lastChromoAlleles[0].gene === "Y") {
       sex = 0;
     }
     return sex;

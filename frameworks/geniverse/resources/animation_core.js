@@ -83,6 +83,7 @@ sc_require('lib/burst-core');
         cos        = Math.cos,
         atan2      = Math.atan2,
         random     = function( amt ){ return Math.random() * amt; },
+		gvRand	   = function (center,variation){ return center + random( variation ) - variation/2; },
         centerX    = defaultOpts.width / 2,
         centerY    = defaultOpts.height / 2,
         mouseX     = 0,
@@ -121,7 +122,7 @@ sc_require('lib/burst-core');
     function constrain( aNumber, aMin, aMax ){
       return Math.min( Math.max( aNumber, aMin ), aMax );
     };
-    
+
     // Find the distance between two points 
     var dist = function dist(x1, y1, x2, y2){
       return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
@@ -152,23 +153,22 @@ sc_require('lib/burst-core');
             for ( var j=0; j< (defaultOpts.alleleCount/2); j++ ) {
               if ( data[i].hasOwnProperty(j) ) {
                 // Create copies if in meiosis ( Mode: 'parent' )
+				var yLenOffset = ((data[i][j].alleles.length)*defaultOpts.segLength*defaultOpts.segCount)/4;
                 if( mode==='parent' ){
-                  var dw = defaultOpts.width/4,
-                      dh = defaultOpts.height/4;
-                  x = random( dw ) + centerX -dw/2;
-                  y = random( dh ) + centerY -dh/2;
-                  chromosomes[index] = new Chromosome({ paper: paper, x:x, y:y, data: data[i][j], index:index, hidden: true });
-                  chromosomes[index+1] = new Chromosome({ paper: paper, x:x, y:y, data: data[i][j], index:index+1, hidden: false });
+				  x = gvRand(centerX,defaultOpts.width/4);
+				  y = gvRand(centerY - yLenOffset,defaultOpts.height/4);
+                  chromosomes[index] = new Chromosome({ paper: paper, x:x, y:y, yLenOffset: yLenOffset, data: data[i][j], index:index, startHidden: true });
+                  chromosomes[index+1] = new Chromosome({ paper: paper, x:x, y:y, yLenOffset: yLenOffset, data: data[i][j], index:index+1, startHidden: false });
                   index+=2;
                 }else{
                   if( index < 3 ){
-                    x = centerX - centerX/2;
-                    y = defaultOpts.height/2;
+                    x = gvRand(centerX - centerX/2,30);
+                    y = gvRand(defaultOpts.height/2 - yLenOffset,20);
                   }else{
-                    x = centerX + centerX/3;
-                    y = defaultOpts.height/2;
+                    x = gvRand(centerX + centerX/3,30);
+                    y = gvRand(defaultOpts.height/2 - yLenOffset,20);
                   }
-                  chromosomes[index] = new Chromosome({ paper: paper, x:x, y:y, data: data[i][j], index:index, hidden: false });
+                  chromosomes[index] = new Chromosome({ paper: paper, x:x, y:y, yLenOffset: yLenOffset, data: data[i][j], index:index, startHidden: false });
                   index+=1;
                 }
               }
@@ -563,9 +563,9 @@ sc_require('lib/burst-core');
         if( mode === 'parent' ){
           clearOffsets();
           var data = {chromosomes:[]};
-          if(frame===100){
+          if(frame===80){
             for(var i=0, l=chromosomes.length; i< l; i++){
-              if( dist( chromosomes[i].alleles[0].segs[0].x, chromosomes[i].alleles[0].segs[0].y, this.attrs.cx, this.attrs.cy ) < this.attrs.r ){
+              if( dist( chromosomes[i].alleles[0].segs[defaultOpts.segCount-1].x, chromosomes[i].alleles[0].segs[defaultOpts.segCount-1].y, this.attrs.cx, this.attrs.cy ) < this.attrs.r ){
                 data.chromosomes[data.chromosomes.length] = {alleles:[]};
                 for(var j=0, l2=chromosomes[i].alleles.length; j< l2; j++){
                   data.chromosomes[data.chromosomes.length-1].alleles[j] = {
@@ -732,10 +732,15 @@ sc_require('lib/burst-core');
         this.hide();
       }
 	
-	  this.labelLink.hide();
-      this.geneText.hide(); 
-	  this.geneFrame.hide(); 
-     
+	  if (this.gene == "Y" && !this.parent.hidden){
+		this.labelLink.show();
+	    this.geneText.show(); 
+		this.geneFrame.show();	
+	  } else {
+	    this.labelLink.hide();
+        this.geneText.hide(); 
+	    this.geneFrame.hide(); 
+      }
       
       this.SVG_outer.drag(this.dragmove_mouse, this.dragstart_mouse, this.dragstop_mouse);
 
@@ -745,7 +750,9 @@ sc_require('lib/burst-core');
         if(!this.parent.parent.hidden){
 			for(var i=0; i < this.parent.parent.alleleCount; i++){
 		    	if (this.parent.parent.alleles[i].on) { 
-			  		this.parent.parent.alleles[i].labelLink.show(); 
+			  		if (this.parent.parent.alleles[i].gene != "") {
+						this.parent.parent.alleles[i].labelLink.show(); 
+					}
 					this.parent.parent.alleles[i].geneText.show(); 
 					this.parent.parent.alleles[i].geneFrame.show(); 
 				}
@@ -755,7 +762,7 @@ sc_require('lib/burst-core');
       },function(){
         if(!this.parent.parent.hidden){
 			for(var i=0; i < this.parent.parent.alleleCount; i++){
-		    	if (this.parent.parent.alleles[i].on == true) { 
+		    	if (this.parent.parent.alleles[i].on == true && this.parent.parent.alleles[i].gene != "Y") { 
 			  		this.parent.parent.alleles[i].labelLink.hide(); 
 					this.parent.parent.alleles[i].geneText.hide(); 
 					this.parent.parent.alleles[i].geneFrame.hide(); 
@@ -773,6 +780,7 @@ sc_require('lib/burst-core');
       this.SVG_outer.attr({stroke:"rgba(0,0,0,0)"});
       this.geneFrame.attr({opacity:0});
       this.geneText.attr({opacity:0});
+	  this.labelLink.attr({opacity:0});
     };
 
     Allele.prototype.show = function(){
@@ -780,6 +788,7 @@ sc_require('lib/burst-core');
       this.style(this.SVG_outer, 'outer');
       this.geneFrame.attr({opacity:1});
       this.geneText.attr({opacity:1});
+	  this.labelLink.attr({opacity:1});
     };
 
     // Return next allele object in this.alleles, if none exists, return false
@@ -992,6 +1001,7 @@ sc_require('lib/burst-core');
       this.dragY = this.y;
       this.originX = this.x;
       this.originY = this.y;
+	  this.hidden = this.startHidden;
       
       this.foldFactor = 1;
 
@@ -1008,18 +1018,21 @@ sc_require('lib/burst-core');
       var x=this.x, y=this.y;
       
       // Loop through alleles array
+// Use this to see randomization ---> var alleleColor = "rgba("+random(255)+","+random(255)+","+random(255)+",1)";
       for(var i=0; i < this.alleleCount; i++){
         // Creatye and store a new Allele 
+		var thisGene = ((i == 0 && this.data.alleles[i].gene == "")? "Y" : this.data.alleles[i].gene);
         this.alleles[i] = new Allele({
           paper   : this.paper,
           x       : x,
           y       : y,
           sex     : this.data.alleles[i].sex,
-          gene    : this.data.alleles[i].gene,
+          gene    : thisGene,
 		  on      : this.data.alleles[i].on,  // add the mapping of gene visibility - Dan
           parent  : this,
           index   : i
         });
+// Use this to see randomization ---> this.alleles[i].SVG_inner.attr({"stroke": alleleColor});
         
         // Get the last XY position of the last segment of the new Allele Object
         var lastSeg = this.alleles[ i ].segs[ this.alleles[ i ].segCount - 1 ];
@@ -1036,7 +1049,9 @@ sc_require('lib/burst-core');
 
     Chromosome.prototype.hide = function(){
       for(var i=0; i < this.alleleCount; i++){
-        this.alleles[i].hide();
+        if (this.alleles[i].gene != 'Y') { 
+			this.alleles[i].hide(); 
+		}
       }
       this.hidden = true;
     };
@@ -1044,6 +1059,11 @@ sc_require('lib/burst-core');
     Chromosome.prototype.show = function(){
       for(var i=0; i < this.alleleCount; i++){
         this.alleles[i].show();
+		if (this.alleles[i].gene == "Y"){
+			this.alleles[i].labelLink.show(); 
+			this.alleles[i].geneText.show(); 
+			this.alleles[i].geneFrame.show(); 
+		}
       }
       this.hidden = false;
     };
@@ -1164,7 +1184,18 @@ sc_require('lib/burst-core');
     ////////////////////////////////////////////////////////////////////////////
 
     function generateTimeline( mode ){    
-    
+	  var endDx = 60;
+	  var endDy = 10;
+	  var checkShowHide = function (e){
+	    if(this.startHidden){
+          if(e.frame>11){
+            this.show();
+          }else{
+            this.hide();
+          }
+		}
+  	  }
+
       switch( mode ){
         
         case 'offspring':
@@ -1186,8 +1217,9 @@ sc_require('lib/burst-core');
             allele.dragstart.call(allele.SVG_outer, true);
             allele.dragmove.call(allele.SVG_outer,null,null,null,null,null,true,this.dragX,this.dragY);
           };
-          
-          timeline = burst.timeline( 'geniverseTimeline_' + owner, 1, 35, 0.25, false )
+
+		
+          timeline = burst.timeline( 'geniverseTimeline_' + owner, 1, 23, 0.25, false )
 
             ////////////////////////////////////////////////////////////////////
             // MEMBRANES
@@ -1204,7 +1236,7 @@ sc_require('lib/burst-core');
                   scrub.slider('value',e.frame*100);
                   frameInput.val(~~e.frame);
                   this.updateSVG();
-                  if(frame >= 35 && mode === 'offspring'){
+                  if(frame >= 23 && mode === 'offspring'){
                     burst.stop();
                     defaultOpts.animationComplete.call(defaultOpts.context);
                   }
@@ -1227,30 +1259,53 @@ sc_require('lib/burst-core');
 
             ////////////////////////////////////////////////////////////////////
             // Move Chromosomes
-            
             .obj('m1_'+owner,chromosomes[0])
               .track('dragX')
-                .key(0,centerX-centerX/2,'inOutQuad').key(23,centerX)
+                .key(0,chromosomes[0].originX,'inOutQuad')
+				.key(23,gvRand(centerX,endDx))
+			  .track('dragY')
+	            .key(0,chromosomes[0].originY)
+				.key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
                 .always(function(e){dragByAllele.call(this,e)})
             .obj('m2_'+owner,chromosomes[1])
               .track('dragX')
-                .key(0,centerX-centerX/2,'inOutQuad').key(23,centerX)
+                .key(0,chromosomes[1].originX,'inOutQuad')
+				.key(23,gvRand(centerX,endDx))
+ 			  .track('dragY')
+	            .key(0,chromosomes[1].originY)
+	            .key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
                 .always(function(e){dragByAllele.call(this,e)})
             .obj('m3_'+owner,chromosomes[2])
               .track('dragX')
-                .key(0,centerX-centerX/2,'inOutQuad').key(23,centerX)
+                .key(0,chromosomes[2].originX,'inOutQuad')
+				.key(23,gvRand(centerX,endDx))
+			  .track('dragY')
+	            .key(0,chromosomes[2].originY)
+	            .key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
                 .always(function(e){dragByAllele.call(this,e)})
             .obj('f1_'+owner,chromosomes[3])
               .track('dragX')
-                .key(0,centerX+centerX/2,'inOutQuad').key(23,centerX)
+                .key(0,chromosomes[3].originX,'inOutQuad')
+				.key(23,gvRand(centerX,endDx))
+			  .track('dragY')
+	            .key(0,chromosomes[3].originY)
+	            .key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
                 .always(function(e){dragByAllele.call(this,e)})
             .obj('f2_'+owner,chromosomes[4])
               .track('dragX')
-                .key(0,centerX+centerX/2,'inOutQuad').key(23,centerX)
+                .key(0,chromosomes[4].originX,'inOutQuad')
+				.key(23,gvRand(centerX,endDx))
+			  .track('dragY')
+	            .key(0,chromosomes[4].originY)
+	            .key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
                 .always(function(e){dragByAllele.call(this,e)})
             .obj('f3_'+owner,chromosomes[5])
               .track('dragX')
-                .key(0,centerX+centerX/2,'inOutQuad').key(23,centerX)
+                .key(0,chromosomes[5].originX,'inOutQuad')
+				.key(23,gvRand(centerX,endDx))
+			  .track('dragY')
+	            .key(0,chromosomes[5].originY)
+	            .key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
                 .always(function(e){dragByAllele.call(this,e)})
           ;
 
@@ -1277,8 +1332,24 @@ sc_require('lib/burst-core');
           :--------:-----------------------------------------------------------:
           */    
       	
-		  pairOffset = 10;
-          timeline = burst.timeline( 'geniverseTimeline_' + owner, 1, 101, 0.5, false )
+		  var pairOffset = 10;
+		  var randomize = function() {return 0.5 - Math.random();}
+		  var chromNums = [[[0,1].sort(randomize),[2,3].sort(randomize)].sort(randomize),[[4,5].sort(randomize),[6,7].sort(randomize)].sort(randomize),[[8,9].sort(randomize),[10,11].sort(randomize)].sort(randomize)].sort(randomize);
+console.log(chromNums);
+		  var ca1a = chromNums[0][0][0];
+		  var ca1b = chromNums[0][0][1];
+		  var ca2a = chromNums[0][1][0];
+		  var ca2b = chromNums[0][1][1];
+		  var cb1a = chromNums[1][0][0];
+		  var cb1b = chromNums[1][0][1];
+		  var cb2a = chromNums[1][1][0];
+		  var cb2b = chromNums[1][1][1];
+		  var cc1a = chromNums[2][0][0];
+		  var cc1b = chromNums[2][0][1];
+		  var cc2a = chromNums[2][1][0];
+		  var cc2b = chromNums[2][1][1];
+
+         timeline = burst.timeline( 'geniverseTimeline_' + owner, 1, 80, 0.5, false )
 
             ////////////////////////////////////////////////////////////////////
             // MEMBRANES
@@ -1287,22 +1358,22 @@ sc_require('lib/burst-core');
               .track('x')
                 .key(0,centerX)
                 .key(30,centerX)
-                .key(31,centerX)
+                .key(35,centerX)
                 .key(50,centerX/2)
-                .key(100,centerX/2)
+//                .key(100,centerX/2)
               .track('y')
                 .key(0,centerY)
                 .key(60,centerY)
                 .key(80,centerY-centerY/2)
-                .key(100,centerY-centerY/2)
+//                .key(100,centerY-centerY/2)
               .track('radius')
                 .key(0,centerY-10)
                 .key(30,centerY-10)
-                .key(31,centerY-10)
-                .key(40,centerY/1.5)
+                .key(35,centerY-10)
+                .key(50,centerY/1.5)
                 .key(60,centerY/1.5)
                 .key(80,centerY/2.5)
-                .key(100,centerY/2.5)
+//                .key(100,centerY/2.5)
                 .always(function(e){
                   this.updateSVG.call(this);
                 })
@@ -1311,27 +1382,27 @@ sc_require('lib/burst-core');
               .track('x')
                 .key(0,centerX)
                 .key(30,centerX)
-                .key(31,centerX)
+                .key(35,centerX)
                 .key(50,centerX+centerX/2)
-                .key(100,centerX+centerX/2)
+//                .key(100,centerX+centerX/2)
               .track('y')
                 .key(0,centerY)
                 .key(60,centerY)
                 .key(80,centerY-centerY/2)
-                .key(100,centerY-centerY/2)
+//                .key(100,centerY-centerY/2)
               .track('opacity')
                 .key(21,0)
-                .key(31,0.5)
+                .key(35,0.5)
                 .key(50,0.7)
-                .key(100,0.7)
+//                .key(100,0.7)
               .track('radius')
                 .key(0,centerY-10)
                 .key(30,centerY-10)
-                .key(31,centerY-10)
+                .key(35,centerY-10)
                 .key(50,centerY/1.5)
                 .key(60,centerY/1.5)
                 .key(80,centerY/2.5)
-                .key(100,centerY/2.5)
+//                .key(100,centerY/2.5)
                 .always(function(e){
                   this.updateSVG.call(this);
                 })
@@ -1342,15 +1413,15 @@ sc_require('lib/burst-core');
               .track('y')
                 .key(60,centerY)
                 .key(80,centerY+centerY/2)
-                .key(100,centerY+centerY/2)
+//                .key(100,centerY+centerY/2)
               .track('opacity')
                 .key(50,0)
                 .key(80,0.7)
-                .key(100,0.7)
+//                .key(100,0.7)
               .track('radius')
                 .key(60,centerY/1.5)
                 .key(80,centerY/2.5)
-                .key(100,centerY/2.5)
+//                .key(100,centerY/2.5)
                 .always(function(e){
                   this.updateSVG.call(this);
                 })
@@ -1361,15 +1432,15 @@ sc_require('lib/burst-core');
               .track('y')
                 .key(60,centerY)
                 .key(80,centerY+centerY/2)
-                .key(100,centerY+centerY/2)
+//                .key(100,centerY+centerY/2)
               .track('opacity')
                 .key(50,0)
                 .key(80,0.7)
-                .key(100,0.7)
+//                .key(100,0.7)
               .track('radius')
                 .key(60,centerY/1.5)
                 .key(80,centerY/2.5)
-                .key(100,centerY/2.5)
+//                .key(100,centerY/2.5)
                 .always(function(e){
                   this.updateSVG.call(this);
                 })
@@ -1379,38 +1450,39 @@ sc_require('lib/burst-core');
             
             // naming convention: "c" + PairLetter(a-c) + ChromosomeNumber(1-2) + OriginCopyLetter(a-b);
 
-            // Chromosome A1a - chromosomes[1]
-            .obj('ca1a_'+owner,chromosomes[1])
+            // Chromosome A1a - chromosomes[0 or 1]
+            .obj('ca1a_'+owner,chromosomes[ca1a])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
-                .key(90,defaultOpts.unfoldedAngle)
+                .key(80,defaultOpts.unfoldedAngle)
               .track('rotation')
                 .key(0,0)
-                .key(41,0)
-//                .key(70,HALF_PI)
-                .key(70,0)
+                .key(40,0)
+                .key(70,HALF_PI)
+                .key(80,0)
               .track('dragX')
-                .key(0,chromosomes[0].originX)
+                .key(0,chromosomes[ca1a].originX)
                 .key(30,centerX-defaultOpts.outerThickness)
-                .key(31,centerX-defaultOpts.outerThickness)
+                .key(35,centerX-defaultOpts.outerThickness)
                 .key(50,centerX-centerX/2-30)
                 .key(70,centerX-centerX/2-30)
-                .key(80,centerX-centerX/2)
+                .key(80,gvRand(centerX-centerX/2,endDx))
               .track('dragY')
-                .key(0,chromosomes[0].originY)
+                .key(0,chromosomes[ca1a].originY)
                 .key(30,centerY-130)
-                .key(31,centerY-130)
+                .key(35,centerY-130)
                 .key(50,centerY)
                 .key(60,centerY)
-                .key(80,centerY+centerY/2)
+                .key(80,gvRand(centerY + centerY/2 - chromosomes[ca1a].yLenOffset,endDy/2))
                 .always(function(e){
+			      checkShowHide.call(this,e);
                   
                   // Set the global frame property so geniverse.js knows when
                   // you are in either pairing or final selection mode.
                   frame = ~~e.frame;
 
-                  if(e.frame > 100){
+                  if(e.frame > 80){
                    // burst.timelines['geniverseTimeline_'+owner].play(100);
                     burst.stop();
                   }
@@ -1442,7 +1514,7 @@ sc_require('lib/burst-core');
                     }
                   }
 
-                  if(frame >= 100 && mode === 'parent'){
+                  if(frame >= 80 && mode === 'parent'){
                     burst.stop();
                     defaultOpts.animationComplete.call(defaultOpts.context);
                   }
@@ -1456,119 +1528,99 @@ sc_require('lib/burst-core');
                   
                 })
 
-            // Chromosome A1b - chromosomes[0]
-            .obj('ca1b_'+owner,chromosomes[0])
+            // Chromosome A1b - chromosomes[0 or 1]
+            .obj('ca1b_'+owner,chromosomes[ca1b])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
-                .key(90,defaultOpts.unfoldedAngle)
+                .key(80,defaultOpts.unfoldedAngle)
               .track('rotation')
                 .key(0,0)
                 .key(40,0)
-                .key(50,0)
+                .key(70,HALF_PI)
+                .key(80,0)
               .track('dragX')
-                .key(0,chromosomes[1].originX + pairOffset)
+                .key(0,chromosomes[ca1b].originX + pairOffset)
                 .key(30,centerX-defaultOpts.outerThickness + pairOffset)
-                .key(31,centerX-defaultOpts.outerThickness + pairOffset)
+                .key(35,centerX-defaultOpts.outerThickness + pairOffset)
                 .key(50,centerX-centerX/2-30 + pairOffset)
                 .key(70,centerX-centerX/2-30 + pairOffset)
-                .key(80,centerX-centerX/2 + pairOffset)
+                .key(80,gvRand(centerX-centerX/2,endDx))
               .track('dragY')
-                .key(0,chromosomes[1].originY)
+                .key(0,chromosomes[ca1b].originY)
                 .key(30,centerY-130)
-                .key(31,centerY-130)
+                .key(35,centerY-130)
                 .key(50,centerY)
                 .key(60,centerY)
-                .key(80,centerY-centerY/2)
+                .key(80,gvRand(centerY - centerY/2 - chromosomes[ca1b].yLenOffset,endDy/2))
                 .always(function(e){
-                  if(this.hidden){
-                    if(e.frame>11){
-                      this.show();
-                    }else{
-                      this.hide();
-                    }
-                  }else{
-                    if(e.frame<11){
-                      this.hide();
-                    }else{
-                      this.show();
-                    }
-                  }
+			      checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
                 })
 
 
-            // Chromosome A2a - chromosomes[3]
-            .obj('ca2a_'+owner,chromosomes[3])
+            // Chromosome A2a - chromosomes[2 or 3]
+            .obj('ca2a_'+owner,chromosomes[ca2a])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
-                .key(90,defaultOpts.unfoldedAngle)
+                .key(80,defaultOpts.unfoldedAngle)
               .track('rotation')
                 .key(0,0)
                 .key(40,0)
-                .key(50,0)
+                .key(70,HALF_PI)
+                .key(80,0)
               .track('dragX')
-                .key(0,chromosomes[2].x)
+                .key(0,chromosomes[ca2a].x)
                 .key(30,centerX+defaultOpts.outerThickness)
-                .key(31,centerX+defaultOpts.outerThickness)
+                .key(35,centerX+defaultOpts.outerThickness)
                 .key(50,centerX+centerX/2+30)
                 .key(70,centerX+centerX/2+30)
-                .key(80,centerX+centerX/2)
+                .key(80,gvRand(centerX+centerX/2,endDx))
               .track('dragY')
-                .key(0,chromosomes[2].y)
+                .key(0,chromosomes[ca2a].y)
                 .key(30,centerY-130)
-                .key(31,centerY-130)
+                .key(35,centerY-130)
                 .key(50,centerY)
                 .key(60,centerY)
-                .key(80,centerY-centerY/2)
+                .key(80,gvRand(centerY - centerY/2 - chromosomes[ca2a].yLenOffset,endDy/2))
                 .always(function(e){
+			      checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
                 })
 
 
-            // Chromosome A2b  - chromosomes[2]
-            .obj('ca2b_'+owner,chromosomes[2])
+            // Chromosome A2b  - chromosomes[2 or 3]
+            .obj('ca2b_'+owner,chromosomes[ca2b])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
-                .key(90,defaultOpts.unfoldedAngle)
+                .key(80,defaultOpts.unfoldedAngle)
               .track('rotation')
                 .key(0,0)
                 .key(40,0)
-                .key(50,0)
+                .key(70,HALF_PI)
+                .key(80,0)
               .track('dragX')
-                .key(0,chromosomes[3].originX + pairOffset)
+                .key(0,chromosomes[ca2b].originX + pairOffset)
                 .key(30,centerX+defaultOpts.outerThickness + pairOffset)
-                .key(31,centerX+defaultOpts.outerThickness + pairOffset)
+                .key(35,centerX+defaultOpts.outerThickness + pairOffset)
                 .key(50,centerX+centerX/2+30 + pairOffset)
                 .key(70,centerX+centerX/2+30 + pairOffset)
-                .key(80,centerX+centerX/2 + pairOffset)
+                .key(80,gvRand(centerX+centerX/2,endDx))
               .track('dragY')
-                .key(0,chromosomes[3].originY)
+                .key(0,chromosomes[ca2b].originY)
                 .key(30,centerY-130)
-                .key(31,centerY-130)
+                .key(35,centerY-130)
                 .key(50,centerY)
                 .key(60,centerY)
-                .key(80,centerY+centerY/2)
+                .key(80,gvRand(centerY + centerY/2 - chromosomes[ca2b].yLenOffset,endDy/2))
                 .always(function(e){
-                  if(this.hidden){
-                    if(e.frame>11){
-                      this.show();
-                    }else{
-                      this.hide();
-                    }
-                  }else{
-                    if(e.frame<11){
-                      this.hide();
-                    }else{
-                      this.show();
-                    }
-                  }
+			      checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
@@ -1578,149 +1630,131 @@ sc_require('lib/burst-core');
             ////////////////////////////////////////////////////////////////////
             // B-PAIR
 
-            // Chromosome B1a - chromosomes[5]
-            .obj('cb1a_'+owner,chromosomes[5])
+            // Chromosome B1a - chromosomes[4 or 5]
+            .obj('cb1a_'+owner,chromosomes[cb1a])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
-                .key(90,defaultOpts.unfoldedAngle)
+                .key(80,defaultOpts.unfoldedAngle)
               .track('rotation')
                 .key(0,0)
-                .key(41,0)
-                .key(70,0)
+                .key(40,0)
+                .key(70,HALF_PI)
+                .key(80,0)
               .track('dragX')
-                .key(0,chromosomes[4].originX)
+                .key(0,chromosomes[cb1a].originX)
                 .key(30,centerX-defaultOpts.outerThickness)
-                .key(31,centerX-defaultOpts.outerThickness)
+                .key(35,centerX-defaultOpts.outerThickness)
                 .key(50,centerX-centerX/2-30)
                 .key(70,centerX-centerX/2-30)
-                .key(80,centerX-centerX/2)
+                .key(80,gvRand(centerX-centerX/2,endDx))
               .track('dragY')
-                .key(0,chromosomes[4].originY)
+                .key(0,chromosomes[cb1a].originY)
                 .key(30,centerY-25)
-                .key(31,centerY-25)
+                .key(35,centerY-25)
                 .key(50,centerY)
                 .key(60,centerY)
-                .key(80,centerY-centerY/2)
+                .key(80,gvRand(centerY - centerY/2 - chromosomes[cb1a].yLenOffset,endDy/2))
                 .always(function(e){
+			      checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
                 })
 
-            // Chromosome B1b - chromosomes[4]
-            .obj('cb1b_'+owner,chromosomes[4])
+            // Chromosome B1b - chromosomes[4 or 5]
+            .obj('cb1b_'+owner,chromosomes[cb1b])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
-                .key(90,defaultOpts.unfoldedAngle)
+                .key(80,defaultOpts.unfoldedAngle)
               .track('rotation')
                 .key(0,0)
-                .key(41,0)
-                .key(70,0)
+                .key(40,0)
+                .key(70,HALF_PI)
+                .key(80,0)
               .track('dragX')
-                .key(0,chromosomes[5].originX + pairOffset)
+                .key(0,chromosomes[cb1b].originX + pairOffset)
                 .key(30,centerX-defaultOpts.outerThickness + pairOffset)
-                .key(31,centerX-defaultOpts.outerThickness + pairOffset)
+                .key(35,centerX-defaultOpts.outerThickness + pairOffset)
                 .key(50,centerX-centerX/2-30 + pairOffset)
                 .key(70,centerX-centerX/2-30 + pairOffset)
-                .key(80,centerX-centerX/2 + pairOffset)
+                .key(80,gvRand(centerX-centerX/2,endDx))
               .track('dragY')
-                .key(0,chromosomes[5].originY)
+                .key(0,chromosomes[cb1b].originY)
                 .key(30,centerY-25)
-                .key(31,centerY-25)
+                .key(35,centerY-25)
                 .key(50,centerY)
                 .key(60,centerY)
-                .key(80,centerY+centerY/2)
+                .key(80,gvRand(centerY + centerY/2 - chromosomes[cb1b].yLenOffset,endDy/2))
                 .always(function(e){
-                  if(this.hidden){
-                    if(e.frame>11){
-                      this.show();
-                    }else{
-                      this.hide();
-                    }
-                  }else{
-                    if(e.frame<11){
-                      this.hide();
-                    }else{
-                      this.show();
-                    }
-                  }
+			      checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
                 })
 
 
-            // Chromosome B2a - chromosomes[7]
-            .obj('cb2a_'+owner,chromosomes[7])
+            // Chromosome B2a - chromosomes[6 or 7]
+            .obj('cb2a_'+owner,chromosomes[cb2a])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
-                .key(90,defaultOpts.unfoldedAngle)
+                .key(80,defaultOpts.unfoldedAngle)
               .track('rotation')
                 .key(0,0)
-                .key(41,0)
-                .key(70,0)
+                .key(40,0)
+                .key(70,HALF_PI)
+                .key(80,0)
               .track('dragX')
-                .key(0,chromosomes[6].originX)
+                .key(0,chromosomes[cb2a].originX)
                 .key(30,centerX+defaultOpts.outerThickness)
-                .key(31,centerX+defaultOpts.outerThickness)
+                .key(35,centerX+defaultOpts.outerThickness)
                 .key(50,centerX+centerX/2+30)
                 .key(70,centerX+centerX/2+30)
-                .key(80,centerX+centerX/2)
+                .key(80,gvRand(centerX+centerX/2,endDx))
               .track('dragY')
-                .key(0,chromosomes[6].originY)
+                .key(0,chromosomes[cb2a].originY)
                 .key(30,centerY-25)
-                .key(31,centerY-25)
+                .key(35,centerY-25)
                 .key(50,centerY)
                 .key(60,centerY)
-                .key(80,centerY-centerY/2)
+                .key(80,gvRand(centerY - centerY/2 - chromosomes[cb2a].yLenOffset,endDy/2))
                 .always(function(e){
+			      checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
                 })
 
 
-            // Chromosome - chromosomes[6]
-            .obj('cb2b_'+owner,chromosomes[6])
+            // Chromosome - chromosomes[6 or 7]
+            .obj('cb2b_'+owner,chromosomes[cb2b])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
-                .key(90,defaultOpts.unfoldedAngle)
+                .key(80,defaultOpts.unfoldedAngle)
               .track('rotation')
                 .key(0,0)
-                .key(41,0)
-                .key(70,0)
+                .key(40,0)
+                .key(70,HALF_PI)
+                .key(80,0)
               .track('dragX')
-                .key(0,chromosomes[7].originX + pairOffset)
+                .key(0,chromosomes[cb2b].originX + pairOffset)
                 .key(30,centerX+defaultOpts.outerThickness + pairOffset)
-                .key(31,centerX+defaultOpts.outerThickness + pairOffset)
+                .key(35,centerX+defaultOpts.outerThickness + pairOffset)
                 .key(50,centerX+centerX/2+30 + pairOffset)
                 .key(70,centerX+centerX/2+30 + pairOffset)
-                .key(80,centerX+centerX/2 + pairOffset)         
+                .key(80,gvRand(centerX+centerX/2,endDx))         
               .track('dragY')
-                .key(0,chromosomes[7].originY)
+                .key(0,chromosomes[cb2b].originY)
                 .key(30,centerY-25)
-                .key(31,centerY-25)
+                .key(35,centerY-25)
                 .key(50,centerY)
                 .key(60,centerY)
-                .key(80,centerY+centerY/2)
+                .key(80,gvRand(centerY + centerY/2 - chromosomes[cb2b].yLenOffset,endDy/2))
                 .always(function(e){
-                  if(this.hidden){
-                    if(e.frame>11){
-                      this.show();
-                    }else{
-                      this.hide();
-                    }
-                  }else{
-                    if(e.frame<11){
-                      this.hide();
-                    }else{
-                      this.show();
-                    }
-                  }
+			      checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
@@ -1730,149 +1764,131 @@ sc_require('lib/burst-core');
             ////////////////////////////////////////////////////////////////////
             // C-PAIR
 
-            // Chromosome C1a - chromosomes[9]
-            .obj('cc1a_'+owner,chromosomes[9])
+            // Chromosome C1a - chromosomes[8 or 9]
+            .obj('cc1a_'+owner,chromosomes[cc1a])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
-               .key(90,defaultOpts.unfoldedAngle)
+               .key(80,defaultOpts.unfoldedAngle)
               .track('rotation')
                 .key(0,0)
-                .key(41,0)
-                .key(60,0)
+                .key(40,0)
+                .key(70,HALF_PI)
+                .key(80,0)
               .track('dragX')
-                .key(0,chromosomes[8].originX)
+                .key(0,chromosomes[cc1a].originX)
                 .key(30,centerX-defaultOpts.outerThickness)
-                .key(31,centerX-defaultOpts.outerThickness)
+                .key(35,centerX-defaultOpts.outerThickness)
                 .key(50,centerX-centerX/2-30)
                 .key(70,centerX-centerX/2-30)
-                .key(80,centerX-centerX/2)
+                .key(80,gvRand(centerX-centerX/2,endDx))
               .track('dragY')
-                .key(0,chromosomes[8].originY)
+                .key(0,chromosomes[cc1a].originY)
                 .key(30,centerY+80)
-                .key(31,centerY+80)
+                .key(35,centerY+80)
                 .key(50,centerY)
                 .key(60,centerY)
-                .key(80,centerY-centerY/2)
+                .key(80,gvRand(centerY - centerY/2 - chromosomes[cc1a].yLenOffset,endDy/2))
                 .always(function(e){
+			      checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
                 })
 
-            // Chromosome C1b - chromosomes[8]
-            .obj('cc1b_'+owner,chromosomes[8])
+            // Chromosome C1b - chromosomes[8 or 9]
+            .obj('cc1b_'+owner,chromosomes[cc1b])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
-                .key(90,defaultOpts.unfoldedAngle)
+                .key(80,defaultOpts.unfoldedAngle)
               .track('rotation')
                 .key(0,0)
-                .key(41,0)
-                .key(70,0)
-              .track('dragX')
-                .key(0,chromosomes[9].originX + pairOffset)
+                .key(40,0)
+                .key(70,HALF_PI)
+                .key(80,0)
+             .track('dragX')
+                .key(0,chromosomes[cc1b].originX + pairOffset)
                 .key(30,centerX-defaultOpts.outerThickness + pairOffset)
-                .key(31,centerX-defaultOpts.outerThickness + pairOffset)
+                .key(35,centerX-defaultOpts.outerThickness + pairOffset)
                 .key(50,centerX-centerX/2-30 + pairOffset)
                 .key(70,centerX-centerX/2-30 + pairOffset)
-                .key(80,centerX-centerX/2 + pairOffset)
+                .key(80,gvRand(centerX-centerX/2,endDx))
               .track('dragY')
-                .key(0,chromosomes[9].originY)
+                .key(0,chromosomes[cc1b].originY)
                 .key(30,centerY+80)
-                .key(31,centerY+80)
+                .key(35,centerY+80)
                 .key(50,centerY)
                 .key(60,centerY)
-                .key(80,centerY+centerY/2)            
+                .key(80,gvRand(centerY + centerY/2 - chromosomes[cc1b].yLenOffset,endDy/2))            
                 .always(function(e){
-                  if(this.hidden){
-                    if(e.frame>11){
-                      this.show();
-                    }else{
-                      this.hide();
-                    }
-                  }else{
-                    if(e.frame<11){
-                      this.hide();
-                    }else{
-                      this.show();
-                    }
-                  }
+			      checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
                 })
 
 
-            // Chromosome C2a - chromosomes[11]
-            .obj('cc2a_'+owner,chromosomes[11])
+            // Chromosome C2a - chromosomes[10 or 11]
+            .obj('cc2a_'+owner,chromosomes[cc2a])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
-                .key(90,defaultOpts.unfoldedAngle)
+                .key(80,defaultOpts.unfoldedAngle)
               .track('rotation')
                 .key(0,0)
-                .key(41,0)
-                .key(70,0)
+                .key(40,0)
+                .key(70,HALF_PI)
+                .key(80,0)
               .track('dragX')
-                .key(0,chromosomes[10].originX)
+                .key(0,chromosomes[cc2a].originX)
                 .key(30,centerX+defaultOpts.outerThickness)
-                .key(31,centerX+defaultOpts.outerThickness)
+                .key(35,centerX+defaultOpts.outerThickness)
                 .key(50,centerX+centerX/2+30)
                 .key(70,centerX+centerX/2+30)
-                .key(80,centerX+centerX/2)
+                .key(80,gvRand(centerX+centerX/2,endDx))
               .track('dragY')
-                .key(0,chromosomes[10].originY)
+                .key(0,chromosomes[cc2a].originY)
                 .key(30,centerY+80)
-                .key(31,centerY+80)
+                .key(35,centerY+80)
                 .key(50,centerY)
                 .key(60,centerY)
-                .key(80,centerY+centerY/2)
+                .key(80,gvRand(centerY + centerY/2 - chromosomes[cc2a].yLenOffset,endDy/2))
                 .always(function(e){
+			      checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
                 })
 
 
-            // Chromosome C2b - chromosomes[10]
-            .obj('cc2b_'+owner,chromosomes[10])
+            // Chromosome C2b - chromosomes[10 or 11]
+            .obj('cc2b_'+owner,chromosomes[cc2b])
               .track('foldFactor')
                 .key(0,PI)
                 .key(30,defaultOpts.unfoldedAngle)
-                .key(90,defaultOpts.unfoldedAngle)
+                .key(80,defaultOpts.unfoldedAngle)
               .track('rotation')
                 .key(0,0)
-                .key(41,0)
-                .key(70,0)
+                .key(40,0)
+                .key(70,HALF_PI)
+                .key(80,0)
               .track('dragX')
-                .key(0,chromosomes[11].originX + pairOffset)
+                .key(0,chromosomes[cc2b].originX + pairOffset)
                 .key(30,centerX+defaultOpts.outerThickness + pairOffset)
-                .key(31,centerX+defaultOpts.outerThickness + pairOffset)
+                .key(35,centerX+defaultOpts.outerThickness + pairOffset)
                 .key(50,centerX+centerX/2+30 + pairOffset)
                 .key(70,centerX+centerX/2+30 + pairOffset)
-                .key(80,centerX+centerX/2 + pairOffset)
+                .key(80,gvRand(centerX+centerX/2,endDx))
               .track('dragY')
-                .key(0,chromosomes[11].originY)
+                .key(0,chromosomes[cc2b].originY)
                 .key(30,centerY+80)
-                .key(31,centerY+80)
+                .key(35,centerY+80)
                 .key(50,centerY)
                 .key(60,centerY)
-                .key(80,centerY-centerY/2)
+                .key(80,gvRand(centerY - centerY/2 - chromosomes[cc2b].yLenOffset,endDy/2))
                 .always(function(e){
-                  if(this.hidden){
-                    if(e.frame>11){
-                      this.show();
-                    }else{
-                      this.hide();
-                    }
-                  }else{
-                    if(e.frame<11){
-                      this.hide();
-                    }else{
-                      this.show();
-                    }
-                  }
+			      checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
@@ -1969,7 +1985,7 @@ sc_require('lib/burst-core');
 
     // Set Draw-Loop Interval
     ////////////////////////////////////////////////////////////////////////////
-    drawLoop = window.setInterval(function(){ draw(); }, 50);
+    drawLoop = window.setInterval(function(){ draw(); }, 100);
 
   };
   
