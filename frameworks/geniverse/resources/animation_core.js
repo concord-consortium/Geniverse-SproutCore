@@ -1335,7 +1335,6 @@ sc_require('lib/burst-core');
 		  var pairOffset = 10;
 		  var randomize = function() {return 0.5 - Math.random();}
 		  var chromNums = [[[0,1].sort(randomize),[2,3].sort(randomize)].sort(randomize),[[4,5].sort(randomize),[6,7].sort(randomize)].sort(randomize),[[8,9].sort(randomize),[10,11].sort(randomize)].sort(randomize)].sort(randomize);
-console.log(chromNums);
 		  var ca1a = chromNums[0][0][0];
 		  var ca1b = chromNums[0][0][1];
 		  var ca2a = chromNums[0][1][0];
