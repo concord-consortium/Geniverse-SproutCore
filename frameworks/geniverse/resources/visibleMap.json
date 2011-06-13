@@ -67,7 +67,7 @@
         {
             "alleles": [
                 {
-                    "on": false
+                    "on": true
                 },
                 {
                     "on": false
@@ -80,7 +80,7 @@
         {
             "alleles": [
                 {
-                    "on": false
+                    "on": true
                 },
                 {
                     "on": false
