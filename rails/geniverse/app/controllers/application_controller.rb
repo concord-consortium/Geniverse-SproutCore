@@ -25,6 +25,15 @@ class ApplicationController < ActionController::Base
       end
       attrs.delete(attr_key)
     end
+
+    ## change each :has_many association from the array of objects into an array of path ids
+    obj.class.reflect_on_all_associations(:has_many).each do |assoc|
+      name = assoc.name.to_s
+      attrs[name] = obj.send(name) if obj.send(name)
+      if attrs[name].kind_of? Array
+        attrs[name] = attrs[name].map {|i| polymorphic_path(i) }
+      end
+    end
     
     # remove these attributes
     attrs.delete('id')
