@@ -5,6 +5,9 @@
 
 <% textfield_names = ["initial_alleles", "match_dragon_alleles", "message"] %>
 <% object.attributes.each do |att,val| %>
+  <% next if att == "id" %>
+  <% next if att == "created_at" %>
+  <% next if att == "updated_at" %>
   <p>
     <%= f.label att.to_sym %><br />
     <% if (textfield_names.grep(att.to_s).size > 0) %>
