@@ -40,7 +40,10 @@ Geniverse.Activity = SC.Record.extend(
   
   crossoverWhenBreeding: SC.Record.attr(Boolean),
 
-  message: SC.Record.attr(String) // info text (perhaps HTML formatted) for display when this activity is initialized
+  message: SC.Record.attr(String), // info text (perhaps HTML formatted) for display when this activity is initialized
+
+  myCase: SC.Record.toOne('Geniverse.Case'),
+  myCaseOrder: SC.Record.attr(Number, { defaultValue: 1 })
 });
 
 Geniverse.Activity.modelName = "activity";
