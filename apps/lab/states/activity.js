@@ -310,9 +310,17 @@ Lab.ACTIVITY = SC.Responder.create(
       controller.set('content', dragons);
       var dragonsRequired = self.getOrganismConfigurations(isMatchDragons).length;
       var currentDragons = controller.get('content').length();
-      if (currentDragons < dragonsRequired) {
-        SC.Logger.info("Need "+ (dragonsRequired - currentDragons) + " dragons for "+isMatchDragons);
-        self.initDragonsFromJson(isMatchDragons, dragonsRequired - currentDragons);
+      if (currentDragons != dragonsRequired) {
+        SC.Logger.info("Regenerating dragons for "+isMatchDragons);
+        // get rid of existing drakes
+        SC.RunLoop.begin();
+          var length = controller.get('length');
+          for (var i = 0; i < length; i++){
+            controller.objectAt(i).set('isInMarketplace', YES);
+          }
+        SC.RunLoop.end();
+        
+        self.initDragonsFromJson(isMatchDragons, dragonsRequired);
       } else {
         SC.Logger.info("Found "+controller.get('content').length()+" dragons for "+isMatchDragons);
       }
