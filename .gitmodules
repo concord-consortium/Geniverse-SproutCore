@@ -4,3 +4,6 @@
 [submodule "capybara-testrunner"]
 	path = capybara-testrunner
 	url = git://github.com/concord-consortium/capybara-testrunner.git
+[submodule "frameworks/ki"]
+	path = frameworks/ki
+	url = https://github.com/FrozenCanuck/Ki.git
