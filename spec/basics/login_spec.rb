@@ -22,7 +22,7 @@ describe "Login" do
   
   it "will show the welcome message after login" do
     initial_message = "please log in"
-    @welcome_label.value.should eql ""
+    @welcome_label.value.should eql initial_message
     @login_prompt.value.should eql initial_message
 
     login("student", "password")
