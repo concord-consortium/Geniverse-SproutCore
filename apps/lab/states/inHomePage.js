@@ -2,14 +2,15 @@
 // Project:   Lab
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Lab SC Ki console*/
+/*globals Lab Geniverse CcChat window Ki*/
 
-Lab.statechart = Ki.Statechart.create({
-
-  initialState: 'loggedOut',
+Lab.inHomePage = Ki.State.extend({
   
-  loggedOut: Ki.State.plugin('Lab.loggedOut'),
+  enterState: function() { 
+    Lab.routes.gotoLabRoute({pageName: 'mainPage'});
+  },
   
-  loggedIn: Ki.State.plugin('Lab.loggedIn')
-
+  exitState: function() { 
+  }
+  
 });
