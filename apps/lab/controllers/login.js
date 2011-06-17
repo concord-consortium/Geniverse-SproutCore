@@ -13,6 +13,8 @@
 sc_require('views/login');
 Lab.loginController = SC.ObjectController.create(
 /** @scope Lab.loginController.prototype */ {
+  
+  defaultResponder: 'Lab.statechart',
 
   // TODO: Add your own code here.
   checkTokenUrl: '/portal/verify_cc_token',
@@ -90,19 +92,6 @@ Lab.loginController = SC.ObjectController.create(
     return YES;
   },
 
-  // logout from the portal
-  logoutPortal: function() {
-    SC.Request.postUrl(this.logoutUrl,null).header({'Accept': 'application/json'}).json()
-      .notify(this, 'logout')
-      .send();
-    var cc_auth_token = SC.Cookie.find('cc_auth_token');
-    if (cc_auth_token) {
-      cc_auth_token.destroy();
-    }
-    this.triedPortal = NO;
-    return YES;
-  },
-
   autoLogin: function(first_name, last_name, username) {
     var fake_response = SC.Object.create({
       body: {
@@ -142,7 +131,7 @@ Lab.loginController = SC.ObjectController.create(
       Geniverse.userController.findOrCreateUser(login, userFound);
     }
     else {
-      SC.Logger.log("Login failure..");
+      SC.Logger.log("Login failure.");
       this.showLoginPanel();
     }
   },
@@ -160,6 +149,13 @@ Lab.loginController = SC.ObjectController.create(
   },
   
   logout: function() {
+    this.set('triedPortal', false);
+    
+    var cc_auth_token = SC.Cookie.find('cc_auth_token');
+    if (cc_auth_token) {
+      cc_auth_token.destroy();
+    }
+    
     var self = this;
     SC.Logger.info("logging out %s", this.get('username'));
     this.set('username','');
@@ -167,12 +163,10 @@ Lab.loginController = SC.ObjectController.create(
     this.set('firstName', '');
     this.set('password', '');
     this.set('loggedIn', NO);
-    Lab.LOGIN.set('userLoggedIn', NO); 
+    
     Lab.userDefaults.writeDefault('username', '');
     Lab.userDefaults.writeDefault('password', '');
     Lab.userDefaults.writeDefault('chatroom', '');
-    Lab.makeFirstResponder(Lab.LOGIN);
-    Lab.LOGIN.addObserver('userLoggedIn', Lab.ACTIVITY, 'gotoActivity');
   },
 
   updateGroupInfo: function() {
@@ -202,7 +196,8 @@ Lab.loginController = SC.ObjectController.create(
     Lab.userDefaults.writeDefault('username', user.get('username'));
     this.updateGroupInfo();
     this.set('loggedIn', YES);
-    Lab.LOGIN.finish();
+    
+    Lab.statechart.sendAction('logIn');
   },
   
   lastGroupId: -1,

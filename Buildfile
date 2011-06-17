@@ -4,7 +4,7 @@
 # ===========================================================================
 
 config :all, 
-  :required => [:geniverse, :sproutcore, :cc], 
+  :required => [:geniverse, :sproutcore, :cc, :ki], 
   :load_fixtures => true
 
 config :geniverse,

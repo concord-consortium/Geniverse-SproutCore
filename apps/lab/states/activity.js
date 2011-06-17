@@ -46,8 +46,6 @@ Lab.ACTIVITY = SC.Responder.create(
     
     this.set('hasLoadedActivityData', NO);
     
-    Lab.LOGIN.removeObserver('userLoggedIn', Lab.ACTIVITY, 'gotoActivity');
-    
     // this is hard-coded for now, but will; be switched with a system that looks up
     // the appropriate activity and goes to the route specified
     

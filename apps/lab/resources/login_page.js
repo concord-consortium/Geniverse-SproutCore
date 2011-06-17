@@ -12,7 +12,7 @@ Lab.loginPage = SC.Page.design({
   // Add childViews to this pane for views to display immediately on page 
   // load.
   mainPane: SC.MainPane.design({
-    defaultResponder: Lab.LOGIN,
+    defaultResponder: Lab.statechart,
     
     
     title: "Welcome to the Geniverse Labs",

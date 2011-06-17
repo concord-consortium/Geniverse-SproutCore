@@ -20,6 +20,7 @@ sc_require('mixins/simple_button');
 
 Lab.TopBarView = SC.ToolbarView.extend(
 /** @scope Lab.TopBarView.prototype */ {
+  
   layout: { top: 0, left: 0, right: 0, height: 36 },
   layerId: 'topBar',
   classNames: ['brown-toolbar-view'],
@@ -243,8 +244,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
         alt: 'Log out',
         title:  "Log out",
         toolTip: "Click to log out",
-        target: this.get('logoutButtonTargetPath'),
-        action: 'logoutPortal'
+        target: Lab.statechart,
+        action: 'logOut'
       })
     );
     childViews.push(this.logoutButton);

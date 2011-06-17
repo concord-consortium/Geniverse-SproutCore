@@ -2,7 +2,7 @@
 // Project:   Lab
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Lab */
+/*globals Lab SC*/
 
 // This is the function that will start your app running.  The default
 // implementation will load any fixtures you have created then instantiate
@@ -13,12 +13,14 @@
 //
 Lab.main = function main() {
   
+  Lab.statechart.initStatechart();
+  
   // *** setup routes ***
   
   //  ** activity routes (require login) **
-  SC.routes.add(':strand/:level/:activityType/:activityIndex', Lab.START, 'gotoActivity');
-  SC.routes.add(':strand/:level/:activityType', Lab.START, 'gotoActivity');
-  SC.routes.add(':strand/:level', Lab.START, 'gotoActivity');
+  SC.routes.add(':strand/:level/:activityType/:activityIndex', Lab.routes, 'gotoActivity');
+  SC.routes.add(':strand/:level/:activityType', Lab.routes, 'gotoActivity');
+  SC.routes.add(':strand/:level', Lab.routes, 'gotoActivity');
   
   // ** routes that do not require login **
   // add routes to catch urls of the form #lab/chromosomeTrainingPage, and #lab/chromosomeTrainingPage/mainPane
@@ -37,7 +39,7 @@ Lab.main = function main() {
   SC.routes.add('geniverse/:pageName', Lab.routes, 'gotoGeniverseRoute');
  
   // home page (requires login)
-  SC.routes.add(':', Lab.START, 'gotoHomePage');
+  SC.routes.add(':', Lab.routes, 'gotoHomePage');
   
   // *** End routes setup ***
   
@@ -48,10 +50,6 @@ Lab.main = function main() {
     // Will do nothing because uncaught exception will show in console
     // for developers
   };
-  
-  
-  // *** START ***
-  Lab.makeFirstResponder(Lab.START);
 } ;
 
 function main() { Lab.main(); }

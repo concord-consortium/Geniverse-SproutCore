@@ -18,6 +18,20 @@ Lab.routes = SC.Object.create({
   _currentPagePane: null,
   _firstHomePane: null,
   
+  gotoHomePage: function(routeParams) {
+    SC.routes.set('location', '');
+    Lab.statechart.sendAction('gotoHomePage');
+  },
+  
+  gotoActivity: function(routeParams) { 
+    Lab.ACTIVITY.set('strand', routeParams.strand);                // heredity, ...
+    Lab.ACTIVITY.set('level', routeParams.level);                  // apprentice, journeyman, master
+    Lab.ACTIVITY.set('activityType', routeParams.activityType);    // intro, individual, group
+    Lab.ACTIVITY.set('activityIndex', routeParams.activityIndex);  // 0,1,2
+      
+    Lab.statechart.sendAction('gotoActivity');
+  },
+  
   gotoLabRoute: function(routeParams) {
     this.gotoRoute(Lab, routeParams);
   },
@@ -126,10 +140,6 @@ Lab.routes = SC.Object.create({
 
     // Save the current pane so we can remove it when process the next route
     this._currentPagePane = pane;
-  },
-
-  gotoHomePage: function() {
-    SC.routes.set('location', '');
   },
 
   gotoCaseLogPage: function() {
