@@ -18,7 +18,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
   
   dragon: null,
 
-  childViews: 'motherLabel fatherLabel chromosomeA1View chromosomeA2View chromosomeAXView chromosomeB1View chromosomeB2View chromosomeBXView generateNewDragonButton isEditableCheck allelesOutputTitle allelesOutput dragonView'.w(),
+  childViews: 'motherLabel fatherLabel chromosomeA1View chromosomeA2View chromosomeAXView chromosomeB1View chromosomeB2View chromosomeBXView generateNewDragonButton isEditableCheck allelesOutputTitle allelesOutput dragonView switchSexButton'.w(),
               
   showDragon: YES,
   
@@ -27,7 +27,9 @@ Geniverse.DragonGenomeView = SC.View.extend(
   showGenerateNewDragon: YES,
   
   isEditable: YES,
-  
+ 
+  showSwitchSex: NO,
+
   showIsEditableCheck: NO,
   
   showAllelesOutput: NO,
@@ -242,6 +244,23 @@ Geniverse.DragonGenomeView = SC.View.extend(
 		}.property(),
 		value: "From father"
 	}),
+
+  switchSexButton: SC.ButtonView.design({
+		layout: function() {
+		  return {top: 310, left: this.getPath('parentView.dragonImageLeft'), width: 150, height: 25};
+		}.property(),
+    isEnabled: YES,
+    title: 'Switch Sex',
+    isVisibleBinding: '*parentView.showSwitchSex',
+    action: function() {
+      var self = this.get('parentView');
+      self.set('sex', (self.get('sex') + 1) % 2);
+      self._initDragon(self.get('sex'), self.getPath('dragon.alleles'));
+    }
+  }),
+
+  switchSex: function() {
+  },
 	
 	chromosomeA1View: Geniverse.DragonChromosomeView.design({
 	  layout: function() {
@@ -476,27 +495,33 @@ Geniverse.DragonGenomeView = SC.View.extend(
   },
   
   initRandomDragon: function () {
-    var self = this;
-    function updateDragon(dragon) {
-	    SC.run(function() {
-	      self.set('ignoreUpdate', NO);
-		    self.set('dragon', dragon);
-  	    self.set('ignoreUpdate', YES);
-	    });
-	  }
     
 		if (typeof(generateDragonWithCallback) != "undefined") {
 		  var sex = this.get('sex');
 		  var fixedAlleles = this.get('fixedAlleles');
-		  if (sex !== undefined && sex !== null && fixedAlleles !== undefined && fixedAlleles !== null){
-		    Geniverse.gwtController.generateDragonWithAlleles(fixedAlleles, sex, "", updateDragon);
-		  } else if (sex !== undefined && sex !== null) {
-		    Geniverse.gwtController.generateDragon(sex, "", updateDragon);
-		  } else if (fixedAlleles !== undefined && fixedAlleles !== null) {
-		    Geniverse.gwtController.generateDragonWithAlleles(fixedAlleles, -1, "", updateDragon);
-		  } else {
-		    Geniverse.gwtController.generateRandomDragon(updateDragon);
-		  }
+      this._initDragon(sex, fixedAlleles);
 		}
+  },
+
+  _initDragon: function(sex, fixedAlleles) {
+    var self = this;
+    function updateDragon(dragon) {
+      SC.run(function() {
+        self.set('ignoreUpdate', NO);
+        self.set('dragon', dragon);
+        self.set('ignoreUpdate', YES);
+      });
+    }
+
+    if (sex !== undefined && sex !== null && fixedAlleles !== undefined && fixedAlleles !== null){
+      Geniverse.gwtController.generateDragonWithAlleles(fixedAlleles, sex, "", updateDragon);
+    } else if (sex !== undefined && sex !== null) {
+      Geniverse.gwtController.generateDragon(sex, "", updateDragon);
+    } else if (fixedAlleles !== undefined && fixedAlleles !== null) {
+      Geniverse.gwtController.generateDragonWithAlleles(fixedAlleles, -1, "", updateDragon);
+    } else {
+      Geniverse.gwtController.generateRandomDragon(updateDragon);
+    }
+  
   }
 });

@@ -61,6 +61,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
           layout: {top: 80, left: 15, height: 500, width: 500 },
           generateDragonAtStart: NO,
           sex: 1,
+          showSwitchSex: YES,
           displayChallengeDragon: YES,
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO,
