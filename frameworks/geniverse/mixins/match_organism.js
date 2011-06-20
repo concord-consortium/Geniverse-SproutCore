@@ -20,20 +20,12 @@ Geniverse.MatchOrganism = {
 
   acceptDragOperation: function(drag, op) {
     var dragon = this._getSourceDragon(drag);
-    
-    var targetURL = this.get('content').get('imageURL');
-    console.log("targetURL = "+targetURL);
-    
-    if (dragon.get('imageURL') === targetURL){
-      SC.RunLoop.begin();
-        this.get('content').set('hasBeenMatched', YES);
-      SC.RunLoop.end();
-      
+
+    if (Geniverse.matchController.doesMatch(this.get('content'), dragon)) {
+      this._setClassNames();
     } else {
       SC.AlertPane.info("", "Those dragons don't look exactly the same!");
     }
-
-    this._setClassNames();
 
     return NO ;
   },

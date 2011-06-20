@@ -20,7 +20,7 @@ Geniverse.matchController = SC.ArrayController.create(
 /** @scope Geniverse.challengePoolController.prototype */ {
   
   allowsSelection: NO,
-  
+
   pane: Geniverse.PopupMatchView,
   
   showPane: function() {
@@ -31,6 +31,36 @@ Geniverse.matchController = SC.ArrayController.create(
     if (!this.get('pane').get('isVisibleInWindow')){
       this.get('pane').append();
     }
-  }
+  },
 
+  // for one-at-a-time matching
+  oneAtATime: NO,
+  currentDragonIdx: 0,
+  currentDragon: function() {
+    var dragons = this.get('arrangedObjects');
+    var dragon = Geniverse.NO_DRAGON;
+    if (dragons && dragons.get('length') > 0) {
+      dragon = dragons.objectAt(this.get('currentDragonIdx') % dragons.length());
+    }
+    return dragon;
+  },
+  
+  nextDragon: function() {
+    SC.RunLoop.begin();
+    this.set('currentDragonIdx', this.get('currentDragonIdx') + 1);
+    SC.RunLoop.end();
+  },
+
+  doesMatch: function(expected, received) {
+    if (expected.get('imageURL') === received.get('imageURL')) {
+      // match!
+      expected.set('hasBeenMatched', YES);
+      return YES;
+    }
+    return NO;
+  },
+
+  doesMatchCurrent: function(received) {
+    return this.doesMatch(this.currentDragon(), received);
+  }
 }) ;

@@ -127,8 +127,11 @@ Geniverse.OrganismView = SC.View.extend(
   },
 
 	contentDidChange: function() {
+    SC.RunLoop.begin();
 	  this._checkForNullDragon();
+    this._setClassNames();
 		this.setPath('imageView.layerNeedsUpdate', YES);
+    SC.RunLoop.end();
 	}.observes('*content'),
 	
   // isSelectedBinding: 'Geniverse.allDragonsSelectionController.selection',

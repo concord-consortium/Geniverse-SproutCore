@@ -21,7 +21,7 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
     this.organismView = buttonView.get('parentView');
     this._revealImage();
     
-    if (this._drakesMatch()){
+    if (this._drakesMatch(this.organismView.get('content'))){
       this.successfulMatch = YES;
       SC.AlertPane.plain(
         "Good work!", 
@@ -62,15 +62,13 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
   
   alertPaneDidDismiss: function() {
     if (this.successfulMatch){
-      
-    } else {
-      this._hideImage();
+      Geniverse.matchController.nextDragon();
     }
+    this._hideImage();
   },
   
-  _drakesMatch: function() {
-    // placeholder...
-    return NO;
+  _drakesMatch: function(dragon) {
+    return Geniverse.matchController.doesMatchCurrent(dragon);
   },
   
   exitState: function() { 
