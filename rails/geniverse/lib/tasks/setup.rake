@@ -411,7 +411,7 @@ cases << {:hidden_genes=>"{'all': 'm, c, a, b, d'}",
   :initial_alleles=>"[ [ [\r\n {alleles: 'a:m,b:m,a:W,b:W,a:H,b:H,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:Fl,b:FL,a:Hl,b:Hl,a:T,b:T', sex: 1, name: 'Starting Mother'}, \r\n {alleles: 'a:m,b:m,a:W,b:w,a:h,b:H,a:C,b:C,a:A1,b:A1,a:B,a:D,a:Fl,b:fl,a:Hl,b:hl,a:T', sex: 0, name: 'Starting Father'} \r\n] ] ];\r\n\r\n//for traits that are varying/selectable\r\n//male is STATIC heterozygous\r\n//female is SELECTABLE homozygous dominant",
   :pageType=>"chromosomeBreedingPage",
   :match_dragon_alleles=>""}
-cases << {:hidden_genes=>"{'all': 'm, c, a, b, d, h, w, fl, hl, t'}",
+cases << {:hidden_genes=>"",
   :crossover_when_breeding=>true,
   :title=>"Heredity: Challenge 1",
   :base_channel_name=>"heredityChallenge1",
@@ -421,7 +421,7 @@ cases << {:hidden_genes=>"{'all': 'm, c, a, b, d, h, w, fl, hl, t'}",
   :route=>"heredity/challenge/case01",
   :max_users_in_room=>nil,
   :initial_alleles=>"[ [\r\n\r\n[\r\n{alleles:'a:m,b:m,a:W,b:W,a:h,b:h,a:C,b:C,a:Fl,b:Fl,a:Hl,b:Hl,a:A1,b:A1,a:B,b:B,a:D,b:D,a:T,b:T', sex: 0, name: 'Nightwing Father'},\r\n{alleles:'a:m,b:m,a:W,b:w,a:H,b:h,a:C,b:C,a:Fl,b:fl,a:Hl,b:hl,a:A1,b:A1,a:B,b:B,a:D,b:D,a:T,b:t', sex: 1, name: 'Heterozygous Mother'}\r\n]\r\n\r\n] ];\r\n\r\n//Students are not given a recessive test cross - the target drakes are a series of increasingly recessive drakes, so they will breed it.\r\n// The presence of three parents is a bit of a red herring - no need for Nightwing female - should we have only two?\r\n// removed: {alleles:'a:m,b:m,a:W,b:W,a:h,b:h,a:C,b:C,a:Fl,b:Fl,a:Hl,b:Hl,a:A1,b:A1,a:B,b:B,a:D,b:D,a:T,b:T', sex: 1, name: 'Nightwing Mother'}, \r\n\r\n//fixed traits:  Charcoal, armor \r\n//female:   a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D\r\n//male:      a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,a:D\r\n\r\n\r\n// Nightwing (for reference)\r\n//a:m,b:m,a:W,b:W,a:h,b:h,a:C,b:C,a:Fl,b:Fl,a:Hl,b:Hl,a:A1,b:A1,a:B,b:B,a:D,b:D,a:T,b:T\r\n",
-  :pageType=>"breedingPage",
+  :pageType=>"chromosomeChallengePage",
   :match_dragon_alleles=>"[ [ [ \r\n{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:H,b:H,a:Fl,b:Fl,a:Hl,b:hl,a:t,b:t', sex: 1, name: 'Match-Female-one trait recessive'},\r\n{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:H,b:H,a:Fl,b:Fl,a:hl,b:hl,a:t,b:t', sex: 1, name: 'Match Female-two traits recessive'},\r\n{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:h,b:h,a:Fl,b:Fl,a:hl,b:hl,a:t,b:t', sex: 1, name: 'Match Female-three traits recessive'},\r\n{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:w,b:w,a:h,b;h,a:fl,b:fl,a:hl,b:hl,a:t', sex: 0, name: 'Match Male-all (varying) traits recessive'}\r\n] ] ];\r\n\r\n\r\n//\"Match Male-all (varying) traits recessive\" is the recessive test cross\r\n"}
 
     cases.each do |c|
