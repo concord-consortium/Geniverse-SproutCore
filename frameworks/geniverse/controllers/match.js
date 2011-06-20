@@ -51,6 +51,11 @@ Geniverse.matchController = SC.ArrayController.create(
     SC.RunLoop.end();
   },
 
+  isLastDragon: function() {
+    var idx = this.get('currentDragonIdx');
+    return (idx !== 0 && (idx+1) >= this.get('length'));
+  },
+
   doesMatch: function(expected, received) {
     if (expected.get('imageURL') === received.get('imageURL')) {
       // match!
