@@ -7,6 +7,8 @@
 Lab.matchOneAtATimeChallenge = Ki.State.extend({
   
   successfulMatch: NO,
+
+  challengeComplete: NO,
   
   organismView: null,
   
@@ -61,14 +63,34 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
   },
   
   alertPaneDidDismiss: function() {
-    if (this.successfulMatch){
-      Geniverse.matchController.nextDragon();
+    if (this.challengeComplete) {
+      // TODO Navigate to the next challenge!
+    } else if (this.successfulMatch){
+      if (Geniverse.matchController.isLastDragon()) {
+        this._challengeComplete();
+      } else {
+        Geniverse.matchController.nextDragon();
+      }
     }
     this._hideImage();
   },
   
   _drakesMatch: function(dragon) {
     return Geniverse.matchController.doesMatchCurrent(dragon);
+  },
+
+  _challengeComplete: function() {
+    this.challengeComplete = YES;
+
+    // Notify the user that they're done
+    SC.AlertPane.plain(
+      "Good work!", 
+      "You've completed all the trials in this challenge!",
+      "",
+      "OK",
+      "",
+      this
+    );
   },
   
   exitState: function() { 
