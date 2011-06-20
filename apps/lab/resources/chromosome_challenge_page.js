@@ -27,12 +27,15 @@ Lab.chromosomeChallengePage = SC.Page.design({
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'], 
-    childViews: 'backgroundView mainAppView topBar'.w(),
+    childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
     backgroundView: SC.ImageView.design({
       value: static_url('lab_background.png'),
       classNames: ['transparent','scalingimage']
     }),
     topBar: Lab.TopBarView.design({
+      classNames: ['brown']
+    }),
+    bottomBar: Lab.BottomBarView.design({
       classNames: ['brown']
     }),
 

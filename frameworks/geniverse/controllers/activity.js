@@ -2,7 +2,7 @@
 // Project:   Geniverse.activityController
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Geniverse CcChat GenGWT */
+/*globals Geniverse CcChat GenGWT SC*/
 
 /** @class
 
@@ -21,6 +21,11 @@ Geniverse.activityController = SC.ObjectController.create(
       CcChat.chatController.subscribeToChannel(chatroom+'/org', this.receiveDragon);
     }
   },
+  
+  // grab this from DB now, so it's around when we need it
+  initCase: function() {
+      var myCase = this.get('myCase');
+  }.observes('content'),
   
   // converts a string in the form "[{m: 'a:h,b:h', f: 'a:H,b:H'}, {...}]" into
   // an array of initial alleles for rooms
@@ -69,6 +74,46 @@ Geniverse.activityController = SC.ObjectController.create(
     }
     var member_index = member % members.length;
     return members[member_index];
+  },
+  
+  getActivityList: function() {
+    var myCase = this.get('myCase');
+    if (myCase) {
+      return myCase.get('activities');
+    } else {
+      return [];
+    }
+  },
+  
+  getNextActivity: function() {
+    var activityList = this.getActivityList();
+    if (activityList.get('length') < 2){
+      return null;
+    }
+    
+    var length = activityList.get('length');
+    for (var i = 0; i < (length - 1); i++){
+      if (activityList.objectAt(i) == this.get('content')){
+        return activityList.objectAt(i+1);
+      }
+    }
+    return null;
+  },
+  
+  getPreviousActivity: function() {
+    var activityList = this.getActivityList();
+    if (activityList.get('length') < 2){
+      return null;
+    }
+    
+    var length = activityList.get('length');
+    for (var i = 1; i < length; i++){
+      if (activityList.objectAt(i) == this.get('content')){
+        return activityList.objectAt(i-1);
+      }
+    }
+    
+    return null;
   }
   
 });
