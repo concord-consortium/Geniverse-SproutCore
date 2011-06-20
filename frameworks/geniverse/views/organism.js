@@ -34,13 +34,12 @@ Geniverse.OrganismView = SC.View.extend(
    
     // get imageURL and make smaller if necessary
     value: function() {
-      console.log("recalculating image")
       if (!this.get('content')){
         return '';
       }
       
       if (this.get('hideImage')){
-        return 'http://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Question_mark_alternate.svg/200px-Question_mark_alternate.svg.png';
+        return '/resources/icons/question_mark.png';
       }
       
       var imageURL = this.get('content').get('imageURL');
@@ -81,13 +80,6 @@ Geniverse.OrganismView = SC.View.extend(
     action: "revealClicked",
     target: "Lab.statechart"
   }),
-  
-  // revealButtonView: SC.ButtonView.design({      
-  //   layout: { centerX: 0, centerY: 20, width: 250, height: 24 },      
-  //   title: "Change Title",      
-  //   action: "toggleGreeting",      
-  //   target: "Lab.statechart"     
-  // }),
   
   // 
   // SC.LabelView.design({
