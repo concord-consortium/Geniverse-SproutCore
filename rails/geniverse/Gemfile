@@ -4,6 +4,8 @@ source :rubygems
 gem "rails", "~> 2.3.10"
 gem "rack", "~> 1.1.2"
 gem "sqlite3-ruby", "1.2.5"
+gem "mysql", "2.8.1"
+gem "mysql2", "0.2.11"
 
 # passenger 3.0.6 and 3.0.7 weren't working on otto
 gem "passenger", "3.0.2"
