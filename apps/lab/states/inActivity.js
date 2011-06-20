@@ -8,7 +8,7 @@ Lab.inActivity = Ki.State.extend({
   
   substatesAreConcurrent: NO,
   
-  matchOneAtATimeChallange: Ki.State.plugin('Lab.matchOneAtATimeChallange'),
+  matchOneAtATimeChallenge: Ki.State.plugin('Lab.matchOneAtATimeChallenge'),
   
   currentChallenge: null,
   
@@ -22,7 +22,7 @@ Lab.inActivity = Ki.State.extend({
     Geniverse.activityController.removeObserver('content', this.activityLoaded);
     
     var pageType = Geniverse.activityController.get('pageType');
-    var challengeType = Lab[pageType].get('challengeType')
+    var challengeType = Lab[pageType].get('challengeType');
     if (!!challengeType) {
       this.gotoState(challengeType);
     }

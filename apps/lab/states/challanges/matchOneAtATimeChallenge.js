@@ -4,7 +4,7 @@
 // ==========================================================================
 /*globals Lab Geniverse CcChat window Ki YES NO SC*/
 
-Lab.matchOneAtATimeChallange = Ki.State.extend({
+Lab.matchOneAtATimeChallenge = Ki.State.extend({
   
   successfulMatch: NO,
   
