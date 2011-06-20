@@ -16,24 +16,31 @@ Geniverse.OrganismView = SC.View.extend(
   showLabel: false,
 	classNames: ['organism-view opaque'],
 	content: null,  //Geniverse.NO_DRAGON,
-	childViews: 'labelView imageView'.w(),
+	childViews: 'labelView imageView revealButtonView'.w(),
   parent: '',       // If set, drag-and-drop will replace parentView's [parent] field
   sex: null,        // If set to 0 or 1, drag-and-drop will only work with males and females, respectively
   
   isDropTarget: NO, // whether this is replaceable by drag-and-drop
   canDrag: NO,      // whether this can be dragged elsewhere
   showBackground: YES,
+  useRevealButton: NO,  // hides dragon and show a reveal button
 
 	imageView: SC.ImageView.design({
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
 		contentBinding: '*parentView.content',
+		hideImageBinding: '*parentView.useRevealButton',
     classNames: ['opaque'],
     valueNeedsRecalculated: YES, // simple value we can toggle to trigger the value property being recalculated
    
     // get imageURL and make smaller if necessary
     value: function() {
+      console.log("recalculating image")
       if (!this.get('content')){
         return '';
+      }
+      
+      if (this.get('hideImage')){
+        return 'http://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Question_mark_alternate.svg/200px-Question_mark_alternate.svg.png';
       }
       
       var imageURL = this.get('content').get('imageURL');
@@ -65,6 +72,23 @@ Geniverse.OrganismView = SC.View.extend(
     textAlign: SC.ALIGN_CENTER,
     classNames: "dragon_label extra-transparent".w()
   }),
+  
+  revealButtonView: SC.ButtonView.design({
+    isVisibleBinding: '*parentView.useRevealButton',
+    layout: { centerY: 0, height: 24, bottom:25, left: 5, right: 5 },
+    title: "Reveal",
+    isEnabled: YES,
+    action: "revealClicked",
+    target: "Lab.statechart"
+  }),
+  
+  // revealButtonView: SC.ButtonView.design({      
+  //   layout: { centerX: 0, centerY: 20, width: 250, height: 24 },      
+  //   title: "Change Title",      
+  //   action: "toggleGreeting",      
+  //   target: "Lab.statechart"     
+  // }),
+  
   // 
   // SC.LabelView.design({
   //   //valueBinding: this.get('titlePath'),

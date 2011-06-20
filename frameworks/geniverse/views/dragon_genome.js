@@ -2,7 +2,7 @@
 // Project:   Geniverse.DragonGenomeView
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Geniverse generateDragonWithCallback */
+/*globals Geniverse generateDragonWithCallback SC YES NO sc_require sc_super*/
 
 /** @class
 
@@ -18,7 +18,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
   
   dragon: null,
 
-  childViews: 'dragonView motherLabel fatherLabel chromosomeA1View chromosomeA2View chromosomeAXView chromosomeB1View chromosomeB2View chromosomeBXView generateNewDragonButton isEditableCheck allelesOutputTitle allelesOutput'.w(),
+  childViews: 'motherLabel fatherLabel chromosomeA1View chromosomeA2View chromosomeAXView chromosomeB1View chromosomeB2View chromosomeBXView generateNewDragonButton isEditableCheck allelesOutputTitle allelesOutput dragonView'.w(),
               
   showDragon: YES,
   
@@ -37,6 +37,8 @@ Geniverse.DragonGenomeView = SC.View.extend(
   displayChallengeDragon: NO,   // overrides generateDragonAtStart
   
   dragonOnRight: NO,            // dragon image on left by default
+  
+  useRevealButton: NO,          // hide drake image and show reveal button
   
   sex: null,        // used when generating new dragons
   fixedAlleles: null,    // used when generating new dragons
@@ -213,6 +215,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	  contentBinding: "*parentView.dragon",
 	  allowDrop: YES,
     isVisibleBinding: "*parentView.showDragon",
+    useRevealButtonBinding: "*parentView.useRevealButton",
     showBackground: NO
 	}),
 	
