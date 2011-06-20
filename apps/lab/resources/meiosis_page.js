@@ -20,18 +20,23 @@ Lab.meiosisPage = SC.Page.design({
   pagePath: 'Lab.meiosisPage',
   title: 'Meiosis Page',
   
+  // challengeType: 'matchOneAtATimeChallange',
+  
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page 
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'], 
-    childViews: 'backgroundView mainAppView topBar'.w(),
+    childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
     backgroundView: SC.ImageView.design({
       value: static_url('lab_background.png'),
       classNames: ['transparent','scalingimage']
     }),
     topBar: Lab.TopBarView.design({
+      classNames: ['brown']
+    }),
+    bottomBar: Lab.BottomBarView.design({
       classNames: ['brown']
     }),
 

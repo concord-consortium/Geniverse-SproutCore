@@ -26,10 +26,39 @@ Lab.inActivity = Ki.State.extend({
     if (!!challengeType) {
       this.gotoState(challengeType);
     }
+    
+    if (Geniverse.activityController.get('myCase').get('status') & SC.Record.READY == SC.Record.READY) {
+      this.caseLoaded();
+    } else {
+      Geniverse.activityController.get('myCase').addObserver('status', this, this.caseLoaded);
+    }
+  },
+  
+  caseLoaded: function(){
+    Geniverse.activityController.removeObserver('myCase', this.caseLoaded);
+  
+    SC.RunLoop.begin();
+      Lab.navigationController.set('showPreviousButton', (!!Geniverse.activityController.getPreviousActivity()));
+      Lab.navigationController.set('showNextButton', (!!Geniverse.activityController.getNextActivity()));
+    SC.RunLoop.end();
   },
   
   startTrial: function() {
     gotoState('inTrial');
+  },
+  
+  gotoNextActivity: function() {
+    var next = Geniverse.activityController.getNextActivity();
+    if (!!next){
+      SC.routes.set('location', next.get('route'));
+    }
+  },
+  
+  gotoPreviousActivity: function() {
+    var previous = Geniverse.activityController.getPreviousActivity();
+    if (!!previous){
+      SC.routes.set('location', previous.get('route'));
+    }
   },
   
   exitState: function() { 
