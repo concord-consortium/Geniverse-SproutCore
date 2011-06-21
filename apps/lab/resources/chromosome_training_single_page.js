@@ -11,11 +11,10 @@ sc_require('views/breeding_pen_view');
 sc_require('views/stable_view');
 sc_require('views/bottom_bar_view');
 
-Lab.chromosomeChallengePage = SC.Page.design({
+Lab.chromosomeTrainingSinglePage = SC.Page.design({
   
-  pagePath: 'Lab.chromosomeChallengePage',
-  title: 'Chromosome Challenge Page',
-  challengeType: 'matchOneAtATimeChallenge',
+  pagePath: 'Lab.chromosomeTrainingSinglePage',
+  title: 'Chromosome Training Page',
   
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page 
@@ -37,9 +36,9 @@ Lab.chromosomeChallengePage = SC.Page.design({
 
     mainAppView: SC.View.design({
       
-      childViews: 'genomePanel targetDrakes'.w(),
+      childViews: 'drakeGenomePanel'.w(),
       
-      genomePanel: SC.View.design({
+      drakeGenomePanel: SC.View.design({
         layout: {top: 50, height: 550, left: 15, width: 500 },
         childViews: 'background title genomeView'.w(),
 
@@ -53,28 +52,22 @@ Lab.chromosomeChallengePage = SC.Page.design({
           layout: {top: 20, height: 25, left: 20, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
-          value: "Drake"
+          value: "Female Drake"
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({
           layout: {top: 80, left: 15, height: 500, width: 500 },
           generateDragonAtStart: NO,
-          sex: 1,
-          showSwitchSex: YES,
           displayChallengeDragon: YES,
+          sex: 1,
+//        fixedAlleles: "a:A,a:A,a:B,b:B",
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO,
-          useRevealButton: YES,
-          showEmptyOptions: YES,
-          startWithEmptyOptions: YES
+          showSwitchSex: YES
         })
-      }),
 
-      targetDrakes: Geniverse.MatchView.design({
-        layout: { left: 530, top: 240, height: 170, width: 170 },
-        onlyOne: YES,
-        dragonSize: 150
       })
-    })
-  })
+      
+  	})
+	})
 });

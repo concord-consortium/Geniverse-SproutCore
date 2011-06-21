@@ -5,15 +5,11 @@
 /*globals Lab Geniverse CC, CcChat, java static_url sc_static sc_require */
 Lab.marginSize = 15;
 
-sc_require('views/article');
-sc_require('views/breed_dragon');
-sc_require('views/dragon_genome');
-sc_require('views/dragon_bin');
-sc_require('views/dragon_chat_compose');
-sc_require('views/organism');
-sc_require('views/published_articles');
-sc_require('views/login');
-sc_require('resources/top_bar_view');
+sc_require('views/top_bar_view');
+sc_require('views/challenge_pool_view');
+sc_require('views/breeding_pen_view');
+sc_require('views/stable_view');
+sc_require('views/bottom_bar_view');
 
 Lab.meiosisPage = SC.Page.design({
   
