@@ -38,15 +38,21 @@ Lab.inActivity = Ki.State.extend({
   
   caseLoaded: function(){
     Geniverse.activityController.removeObserver('myCase', this.caseLoaded);
-  
-    SC.RunLoop.begin();
-      Lab.navigationController.set('showPreviousButton', (!!Geniverse.activityController.getPreviousActivity()));
-      Lab.navigationController.set('showNextButton', (!!Geniverse.activityController.getNextActivity()));
-    SC.RunLoop.end();
+    
+    this.enablePreviousNavButton((!!Geniverse.activityController.getPreviousActivity()));
+    this.enableNextNavButton((!!Geniverse.activityController.getNextActivity()));
   },
   
-  startTrial: function() {
-    gotoState('inTrial');
+  enablePreviousNavButton: function(enable) {
+    Lab.navigationController.set('showPreviousButton', enable);
+  },
+  
+  enableNextNavButton: function(enable) {
+    Lab.navigationController.set('showNextButton', enable);
+  },
+  
+  blockNextNavButton: function(block) {
+    Lab.navigationController.set('blockNextButton', block);
   },
   
   gotoNextActivity: function() {

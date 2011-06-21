@@ -34,7 +34,7 @@ Lab.BottomBarView = SC.ToolbarView.extend(
     this.navBarLeftArrowBW = this.createChildView(
       SC.ImageView.design({
         layout: { centerY: 0, centerX: -40, width:38, height: 38 },
-        value: static_url('200px-GreenButton_LeftArrow_bw.png'),
+        value: static_url('arrow_left_bw.png'),
         canLoadInBackground: YES,
     		useImageCache: YES
       })
@@ -44,9 +44,9 @@ Lab.BottomBarView = SC.ToolbarView.extend(
     this.navBarRightArrowBW = this.createChildView(
       SC.ImageView.design({
         layout: { centerY: 0, centerX: 40, width:38, height: 38 },
-        value: static_url('200px-GreenButton_RightArrow_bw.png'),
+        value: static_url('arrow_right_bw.png'),
         canLoadInBackground: YES,
-    		useImageCache: YES
+       useImageCache: YES
       })
     );
     childViews.push(this.navBarRightArrowBW);
@@ -55,7 +55,7 @@ Lab.BottomBarView = SC.ToolbarView.extend(
       SC.ImageView.design(Lab.SimpleButton, {
         layout: { centerY: 0, centerX: -40, width:38, height: 38 },
         layerId: 'navBarLeftArrow',
-        value: static_url('200px-GreenButton_LeftArrow.png'),
+        value: static_url('arrow_left_green.png'),
         alt: 'Back',
         toolTip: "Click to go to back to the previous activity",
         target: 'Lab.statechart',
@@ -71,7 +71,7 @@ Lab.BottomBarView = SC.ToolbarView.extend(
       SC.ImageView.design(Lab.SimpleButton, {
         layout: { centerY: 0, centerX: 40, width:38, height: 38 },
         layerId: 'navBarRightArrow',
-        value: static_url('200px-GreenButton_RightArrow.png'),
+        value: static_url('arrow_right_green.png'),
         alt: 'Forward',
         toolTip: "Click to go to forward to the next activity",
         target: 'Lab.statechart',
@@ -82,6 +82,18 @@ Lab.BottomBarView = SC.ToolbarView.extend(
       })
     );
     childViews.push(this.navBarRightArrow);
+    
+    this.navBarRightArrowRed = this.createChildView(
+      SC.ImageView.design({
+        layout: { centerY: 0, centerX: 40, width:38, height: 38 },
+        value: static_url('arrow_right_red.png'),
+        canLoadInBackground: YES,
+    		useImageCache: YES,
+    		toolTip: "You can't move forward until you complete the challenge",
+    		isVisibleBinding: 'Lab.navigationController.blockNextButton'
+      })
+    );
+    childViews.push(this.navBarRightArrowRed);
 
     this.set('childViews', childViews);
   }
