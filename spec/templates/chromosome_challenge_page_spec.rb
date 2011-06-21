@@ -53,14 +53,29 @@ describe "Templates" do
 
     it 'should match after changing alleles' do
       change_allele_value('a', 't')
-      change_allele_value('a', 'h')
-      change_allele_value('a', 'hl')
 
       verify_correct_match
     end
 
     it 'should complete the challenge after all 4 are matched' do
-      pending
+      change_allele_value('a', 'hl')
+      verify_correct_match
+
+      change_allele_value('a', 'h')
+      verify_correct_match
+
+      @switch_sex_button.click
+      change_allele_value('a', 'w')
+      change_allele_value('b', 'w')
+      change_allele_value('a', 'fl')
+      change_allele_value('b', 'fl')
+      change_allele_value('a', 'T')
+      change_allele_value('b', 'T')
+
+      sleep 3
+
+      verify_correct_match
+      verify_challenge_complete
     end
 
     def verify_incorrect_match
@@ -78,6 +93,18 @@ describe "Templates" do
 
     def verify_correct_match
       @reveal_button.click
+      # should pop up an SC.AlertPane
+      @app.responding_panes.count.should == 3
+
+      pane = @app.key_pane Lebowski::Foundation::Panes::AlertPane
+      pane.should_not be nil
+      pane.is_plain?.should == true
+      pane.button_count.should == 1
+      pane.has_button?('OK').should == true
+      pane.click_button 'OK'
+    end
+
+    def verify_challenge_complete
       # should pop up an SC.AlertPane
       @app.responding_panes.count.should == 3
 
