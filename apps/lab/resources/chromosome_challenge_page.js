@@ -68,7 +68,9 @@ Lab.chromosomeChallengePage = SC.Page.design({
           displayChallengeDragon: YES,
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO,
-          useRevealButton: YES
+          useRevealButton: YES,
+          showEmptyOptions: YES,
+          startWithEmptyOptions: YES
         })
       }),
 

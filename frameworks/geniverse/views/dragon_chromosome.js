@@ -19,6 +19,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
   staticGenesBinding: '*parentView.staticGenes',
   isEditableBinding: '*parentView.isEditable',
   showEmptyOptionInPulldowns: NO,
+  startWithEmptyOption: NO,
   classNames: ['opaque'],
   
   chromosome: '1',
@@ -232,12 +233,23 @@ Geniverse.DragonChromosomeView = SC.View.extend(
         }
       }
 
+      var startingVal = val;
+
+      //showEmptyOptionInPulldowns
+      var emptyOption = SC.Object.create({ value: ' ', title: ' ', index: index});
+      if (this.get('parentView').get('showEmptyOptionInPulldowns')){
+        pulldownOptions.unshift(emptyOption);
+        if (this.getPath('parentView.startWithEmptyOption')) {
+          startingVal = ' ';
+        }
+      }
+
       var dropDownMenuView = SC.SelectFieldView.create({
           layout: { top: top, left: 0, height: 25, width: 105 },
           
          objects: pulldownOptions,
        
-          value: val,
+          value: startingVal,
           nameKey: 'title',
           valueKey: 'value',
           
@@ -250,10 +262,6 @@ Geniverse.DragonChromosomeView = SC.View.extend(
           }.observes('value')
       });
       
-      //showEmptyOptionInPulldowns
-      if (this.get('parentView').get('showEmptyOptionInPulldowns')){
-        dropDownMenuView.objects.unshift(SC.Object.create({ value: ' ', title: ' ', index: index}));
-      }
 
       if (!map[this]) {
         map[this] = [];

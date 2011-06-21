@@ -43,25 +43,49 @@ describe "Templates" do
       @phenotype_view.content.should_not be nil
     end
 
-    it 'should not match by default' do
-      verify_incorrect_match
+    it 'should have all empty pulldowns at the start' do
+      verify_pulldowns_empty('a', 't')
+      verify_pulldowns_empty('b', 't')
+      verify_pulldowns_empty('a', 'h')
+      verify_pulldowns_empty('b', 'h')
     end
 
+    it 'should have a disabled reveal button until all alleles are selected' do
+      pending
+    end
+
+    it 'should give an error message when the wrong alleles are selected' do
+      change_allele_value('a', 't')
+      change_allele_value('b', 't')
+      change_allele_value('a', 'W')
+      change_allele_value('b', 'W')
+      change_allele_value('a', 'h')
+      change_allele_value('b', 'h')
+      change_allele_value('a', 'Fl')
+      change_allele_value('b', 'Fl')
+      change_allele_value('a', 'Hl')
+      change_allele_value('b', 'Hl')
+
+      verify_incorrect_match
+    end
     it 'should count how many times it takes to get a correct match' do
       pending
     end
 
     it 'should match after changing alleles' do
-      change_allele_value('a', 't')
+      change_allele_value('a', 'H')
+      change_allele_value('b', 'H')
 
       verify_correct_match
     end
 
     it 'should complete the challenge after all 4 are matched' do
       change_allele_value('a', 'hl')
+      change_allele_value('b', 'hl')
       verify_correct_match
 
       change_allele_value('a', 'h')
+      change_allele_value('b', 'h')
       verify_correct_match
 
       @switch_sex_button.click
@@ -120,11 +144,24 @@ describe "Templates" do
       pane.click_button 'OK'
     end
 
-    def change_allele_value(side, allele)
+    def get_pulldowns(side, allele)
       allelesMap = @chromosome_controller['allelesMap']
       chromo = allelesMap[allele.downcase]
       chromo_view = @genome_view['chromosome'+side.upcase+chromo+'View']
       pulldowns = chromo_view.pullDowns.child_views
+      return pulldowns
+    end
+
+    def verify_pulldowns_empty(side, allele)
+      pulldowns = get_pulldowns(side, allele)
+      pulldowns.count.times do |i|
+        pulldown = pulldowns[i]
+        pulldown['fieldValue'].should == ' '
+      end
+    end
+
+    def change_allele_value(side, allele)
+      pulldowns = get_pulldowns(side, allele)
       pulldowns.count.times do |i|
         pulldown = pulldowns[i]
         pulldown['objects'].count.times do |j|

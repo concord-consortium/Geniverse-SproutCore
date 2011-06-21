@@ -33,7 +33,11 @@ Geniverse.DragonGenomeView = SC.View.extend(
   showIsEditableCheck: NO,
   
   showAllelesOutput: NO,
-  
+
+  showEmptyOptions: NO,
+
+  startWithEmptyOptions: NO,
+
   authoredAlleleString: null,
   
   displayChallengeDragon: NO,   // overrides generateDragonAtStart
@@ -283,7 +287,10 @@ Geniverse.DragonGenomeView = SC.View.extend(
       }
     }.observes('*parentView.a1Alleles'),
     hiddenGenesBinding: '*parentView.hiddenGenes',
-	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
+	  showEmptyOptionInPulldowns: function() {
+      return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
+    }.property(),
+    startWithEmptyOption: '*parentView.startWithEmptyOptions',
 	  chromosome: '1',
     side: 'A'
 	}),
@@ -303,7 +310,10 @@ Geniverse.DragonGenomeView = SC.View.extend(
       }
     }.observes('*parentView.b1Alleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
-	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
+	  showEmptyOptionInPulldowns: function() {
+      return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
+    }.property(),
+    startWithEmptyOption: '*parentView.startWithEmptyOptions',
 	  chromosome: '1',
     side: 'B'
 	}),
@@ -323,7 +333,10 @@ Geniverse.DragonGenomeView = SC.View.extend(
       }
     }.observes('*parentView.a2Alleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
-	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
+	  showEmptyOptionInPulldowns: function() {
+      return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
+    }.property(),
+    startWithEmptyOption: '*parentView.startWithEmptyOptions',
 	  chromosome: '2',
     side: 'A'
 	}),
@@ -343,7 +356,10 @@ Geniverse.DragonGenomeView = SC.View.extend(
       }
     }.observes('*parentView.b2Alleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
-	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
+	  showEmptyOptionInPulldowns: function() {
+      return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
+    }.property(),
+    startWithEmptyOption: '*parentView.startWithEmptyOptions',
 	  chromosome: '2',
     side: 'B'
 	}),
@@ -363,7 +379,10 @@ Geniverse.DragonGenomeView = SC.View.extend(
       }
     }.observes('*parentView.aXAlleles'),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
-	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
+	  showEmptyOptionInPulldowns: function() {
+      return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
+    }.property(),
+    startWithEmptyOption: '*parentView.startWithEmptyOptions',
 	  chromosome: 'X',
     side: 'A'
 	}),
@@ -373,7 +392,10 @@ Geniverse.DragonGenomeView = SC.View.extend(
 		  return {top: 315, left: this.getPath('parentView.chromosomeLeft') + 145};
 		}.property(),
 	  hiddenGenesBinding: '*parentView.hiddenGenes',
-	  showEmptyOptionInPulldownsBinding: '*parentView.showAllelesOutput',
+	  showEmptyOptionInPulldowns: function() {
+      return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
+    }.property(),
+    startWithEmptyOption: '*parentView.startWithEmptyOptions',
 	  updateDragon: function(){
       if (!!this.get('parentView')) {
 	      this.get('parentView').updateDragon();
