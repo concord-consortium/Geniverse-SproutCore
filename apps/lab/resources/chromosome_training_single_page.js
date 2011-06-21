@@ -15,9 +15,9 @@ sc_require('views/published_articles');
 sc_require('views/login');
 sc_require('resources/top_bar_view');
 
-Lab.chromosomeTrainingPage = SC.Page.design({
+Lab.chromosomeTrainingSinglePage = SC.Page.design({
   
-  pagePath: 'Lab.chromosomeTrainingPage',
+  pagePath: 'Lab.chromosomeTrainingSinglePage',
   title: 'Chromosome Training Page',
   
   // The main pane is made visible on screen as soon as your app is loaded.
@@ -40,9 +40,9 @@ Lab.chromosomeTrainingPage = SC.Page.design({
 
     mainAppView: SC.View.design({
       
-      childViews: 'femaleGenomePanel maleGenomePanel'.w(),
+      childViews: 'drakeGenomePanel'.w(),
       
-      femaleGenomePanel: SC.View.design({
+      drakeGenomePanel: SC.View.design({
         layout: {top: 50, height: 550, left: 15, width: 500 },
         childViews: 'background title genomeView'.w(),
 
@@ -66,36 +66,8 @@ Lab.chromosomeTrainingPage = SC.Page.design({
           sex: 1,
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
           showGenerateNewDragon: NO,
-          showIsEditableCheck: NO
-        })
-
-      }),
-      
-      maleGenomePanel: SC.View.design({
-        layout: {top: 50, height: 550, left: 600, width: 500 },
-        childViews: 'background maleTitle maleGenomeView'.w(),
-
-        // separate parallel background so we don't make the rest of the childViews see-through
-        background: SC.View.design({
-          layout: {top: 0, left: 0, right: 0, bottom: 0},
-          classNames: ['genome-view-intro']
-        }),
-
-        maleTitle: SC.LabelView.design({
-          layout: {top: 20, height: 25, left: 20, width: 200 },
-          controlSize: SC.LARGE_CONTROL_SIZE,
-          fontWeight: SC.BOLD_WEIGHT,
-          value: "Male Drake"
-        }),
-
-        maleGenomeView: Geniverse.DragonGenomeView.design({
-          layout: {top: 80, left: 15, height: 500, width: 500 },
-          generateDragonAtStart: NO,
-          displayChallengeDragon: YES,
-          sex: 0,
-//        fixedAlleles: "a:A,a:A,a:B,b:B",
-          showGenerateNewDragon: NO,
-          showIsEditableCheck: NO
+          showIsEditableCheck: NO,
+          showSwitchSex: YES
         })
 
       })
