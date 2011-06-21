@@ -25,7 +25,7 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
     
     if (this._drakesMatch(this.organismView.get('content'))){
       this.successfulMatch = YES;
-      SC.AlertPane.plain(
+      SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
         "Good work!", 
         "The drake you have created matches the target drake.",
         "",
@@ -35,7 +35,7 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
       );
     } else {
       this.successfulMatch = NO;
-      SC.AlertPane.error(
+      SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).error(
         "That's not the drake!", 
         "The drake you have created doesn't match the target drake. Please try again.",
         "",
@@ -83,7 +83,7 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
     this.challengeComplete = YES;
 
     // Notify the user that they're done
-    SC.AlertPane.plain(
+    SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
       "Good work!", 
       "You've completed all the trials in this challenge!",
       "",
