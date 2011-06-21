@@ -268,6 +268,9 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       }
       map[this][val.toLowerCase()] = dropDownMenuView;
       this.appendChild(dropDownMenuView);
+
+      // force the menu to make sure it sets its parent view properties
+      dropDownMenuView.updater();
     },
     
     _createStaticAllele: function(val, top){
