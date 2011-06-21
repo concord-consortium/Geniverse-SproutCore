@@ -13,10 +13,17 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
   organismView: null,
   
   enterState: function() { 
+    // for now, we assume that there are match dragons
+    this.startChallenge();
   },
   
-  startTrial: function() {
-    
+  startChallenge: function() {
+    this.statechart.getState('inActivity').blockNextNavButton(true);
+  },
+  
+  endChallenge: function() {
+    this.challengeComplete = YES;
+    this.statechart.getState('inActivity').blockNextNavButton(false);
   },
   
   revealClicked: function(buttonView) {
@@ -80,8 +87,6 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
   },
 
   _challengeComplete: function() {
-    this.challengeComplete = YES;
-
     // Notify the user that they're done
     SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
       "Good work!", 
@@ -91,6 +96,8 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
       "",
       this
     );
+    
+    this.endChallenge();
   },
   
   exitState: function() { 

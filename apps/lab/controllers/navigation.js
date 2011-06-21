@@ -17,6 +17,8 @@ Lab.navigationController = SC.ObjectController.create(
   
   showPreviousButton: NO,
   
-  showNextButton: NO
+  showNextButton: NO,
+  
+  blockNextButton: NO,        // red arrow indicating progress is blocked
   
 }) ;
