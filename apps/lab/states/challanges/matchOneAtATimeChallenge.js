@@ -30,27 +30,35 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
     this.organismView = buttonView.get('parentView');
     this._revealImage();
     
-    if (this._drakesMatch(this.organismView.get('content'))){
-      this.successfulMatch = YES;
-      SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
-        "Good work!", 
-        "The drake you have created matches the target drake.",
-        "",
-        "OK",
-        "",
-        this
-      );
-    } else {
-      this.successfulMatch = NO;
-      SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).error(
-        "That's not the drake!", 
-        "The drake you have created doesn't match the target drake. Please try again.",
-        "",
-        "Try again",
-        "",
-        this
-      );
-    }
+    SC.Timer.schedule({
+      target: this,
+      action: function () {
+        if (this._drakesMatch(this.organismView.get('content'))){
+          this.successfulMatch = YES;
+          SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
+            "Good work!", 
+            "The drake you have created matches the target drake.",
+            "",
+            "OK",
+            "",
+            this
+          );
+        } else {
+          this.successfulMatch = NO;
+          SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).error(
+            "That's not the drake!", 
+            "The drake you have created doesn't match the target drake. Please try again.",
+            "",
+            "Try again",
+            "",
+            this
+          );
+        } 
+      },
+      interval: 500,
+      repeats: NO
+    });
+    
   },
   
   _revealImage: function(){
