@@ -80,6 +80,8 @@ describe "Templates" do
 
     def verify_incorrect_match
       @reveal_button.click
+
+      sleep 1  # there's a delay before the results pop up
       # should pop up an SC.AlertPane
       @app.responding_panes.count.should == 3
 
@@ -93,6 +95,8 @@ describe "Templates" do
 
     def verify_correct_match
       @reveal_button.click
+
+      sleep 1  # there's a delay before the results pop up
       # should pop up an SC.AlertPane
       @app.responding_panes.count.should == 3
 
