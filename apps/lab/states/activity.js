@@ -238,7 +238,7 @@ Lab.ACTIVITY = SC.Responder.create(
       activity: activity,
       mother: null,
       father: null,
-      orderBy: 'storeKey',
+      orderBy: 'name, storeKey',
       restParams: Geniverse.makeRestParams({
         mother_id: 'null',
         father_id: 'null',
@@ -271,7 +271,7 @@ Lab.ACTIVITY = SC.Responder.create(
         activity: activity,
         mother: null,
         father: null,
-        orderBy: 'storeKey',
+        orderBy: 'name, storeKey',
         restParams: Geniverse.makeRestParams({
           mother_id: 'null',
           father_id: 'null',
@@ -348,6 +348,14 @@ Lab.ACTIVITY = SC.Responder.create(
     for (var i = 0; i < dragonsRequired; i++) {
       var conf = organismConfigurations[i];
       var name = (typeof conf.name != "undefined") ? conf.name : ('Starter'+i);
+
+      // prefix the name with the order number so that we can sort by
+      // name and always get dragons in the same order
+      if (i < 10) {
+        name = "0" + i + " - " + name;
+      } else {
+        name = "" + i + " - " + name;
+      }
       Geniverse.gwtController.generateDragonWithAlleles(conf.alleles, conf.sex, name, handleDragon, true);
     }
   },
