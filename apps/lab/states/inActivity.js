@@ -27,10 +27,12 @@ Lab.inActivity = Ki.State.extend({
       this.gotoState(challengeType);
     }
     
-    if (Geniverse.activityController.get('myCase').get('status') & SC.Record.READY == SC.Record.READY) {
-      this.caseLoaded();
-    } else {
-      Geniverse.activityController.get('myCase').addObserver('status', this, this.caseLoaded);
+    if (!!Geniverse.activityController.get('myCase')) {
+      if (Geniverse.activityController.get('myCase').get('status') & SC.Record.READY == SC.Record.READY) {
+        this.caseLoaded();
+      } else {
+        Geniverse.activityController.get('myCase').addObserver('status', this, this.caseLoaded);
+      }
     }
   },
   
