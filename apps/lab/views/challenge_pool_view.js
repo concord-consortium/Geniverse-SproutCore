@@ -15,8 +15,6 @@
  * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
 
-sc_require('mixins/shifted_organism');
-
 Lab.ChallengePoolView = SC.View.extend(
 /** @scope Lab.ChallengePoolView.prototype */ {
   classNames: 'transparent'.w(),
