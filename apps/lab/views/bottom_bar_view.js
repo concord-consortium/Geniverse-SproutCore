@@ -15,7 +15,8 @@ Lab.BottomBarView = SC.ToolbarView.extend(
   anchorLocation: SC.ANCHOR_BOTTOM,
 
   // childViews
-  geniverseLabelView: null,
+  navBarLeftArrow: null,
+  navBarRightArrow: null,
 
   /**
    * Overwritten createChildView where you set up all
@@ -25,16 +26,43 @@ Lab.BottomBarView = SC.ToolbarView.extend(
   createChildViews: function() {
     var childViews = [];
     
+    // this is a little funny, but it seems to be much more stable to lay the
+    // active buttons ontop of the disabled images, binding the button's isVisible 
+    // to the controller, than to bind the button's image value to the controller.
+    // In the latter method the image frequently doesn't repaint right away...
+    
+    this.navBarLeftArrowBW = this.createChildView(
+      SC.ImageView.design({
+        layout: { centerY: 0, centerX: -40, width:38, height: 38 },
+        value: static_url('200px-GreenButton_LeftArrow_bw.png'),
+        canLoadInBackground: YES,
+    		useImageCache: YES
+      })
+    );
+    childViews.push(this.navBarLeftArrowBW);
+
+    this.navBarRightArrowBW = this.createChildView(
+      SC.ImageView.design({
+        layout: { centerY: 0, centerX: 40, width:38, height: 38 },
+        value: static_url('200px-GreenButton_RightArrow_bw.png'),
+        canLoadInBackground: YES,
+    		useImageCache: YES
+      })
+    );
+    childViews.push(this.navBarRightArrowBW);
+    
     this.navBarLeftArrow = this.createChildView(
       SC.ImageView.design(Lab.SimpleButton, {
         layout: { centerY: 0, centerX: -40, width:38, height: 38 },
         layerId: 'navBarLeftArrow',
-        value: 'http://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/GreenButton_LeftArrow.svg/200px-GreenButton_RightArrow.svg.png',
+        value: static_url('200px-GreenButton_LeftArrow.png'),
         alt: 'Back',
         toolTip: "Click to go to back to the previous activity",
         target: 'Lab.statechart',
         action: 'gotoPreviousActivity',
-        isVisibleBinding: 'Lab.navigationController.showPreviousButton'
+        canLoadInBackground: NO,
+    		useImageCache: NO,
+    		isVisibleBinding: 'Lab.navigationController.showPreviousButton'
       })
     );
     childViews.push(this.navBarLeftArrow);
@@ -43,12 +71,14 @@ Lab.BottomBarView = SC.ToolbarView.extend(
       SC.ImageView.design(Lab.SimpleButton, {
         layout: { centerY: 0, centerX: 40, width:38, height: 38 },
         layerId: 'navBarRightArrow',
-        value: 'http://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/GreenButton_RightArrow.svg/200px-GreenButton_RightArrow.svg.png',
+        value: static_url('200px-GreenButton_RightArrow.png'),
         alt: 'Forward',
         toolTip: "Click to go to forward to the next activity",
         target: 'Lab.statechart',
         action: 'gotoNextActivity',
-        isVisibleBinding: 'Lab.navigationController.showNextButton'
+        canLoadInBackground: NO,
+    		useImageCache: NO,
+    		isVisibleBinding: 'Lab.navigationController.showNextButton'
       })
     );
     childViews.push(this.navBarRightArrow);
