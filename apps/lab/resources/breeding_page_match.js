@@ -18,6 +18,7 @@ sc_require('views/stats');
 sc_require('views/top_bar_view');
 sc_require('views/challenge_pool_view');
 sc_require('views/breeding_pen_view');
+sc_require('views/bottom_bar_view');
 
 Lab.breedingPageMatch = SC.Page.design({
   

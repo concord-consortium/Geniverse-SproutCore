@@ -21,6 +21,7 @@ sc_require('views/breeding_pen_view');
 sc_require('views/stable_view');
 sc_require('views/animation');
 sc_require('views/popup_animation');
+sc_require('views/bottom_bar_view');
 
 Lab.breedingPageGroup = SC.Page.design({
   
