@@ -10,7 +10,6 @@
 
   @extends SC.Object
 */
-sc_require('views/login');
 Lab.loginController = SC.ObjectController.create(
 /** @scope Lab.loginController.prototype */ {
   

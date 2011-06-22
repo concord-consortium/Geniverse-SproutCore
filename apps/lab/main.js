@@ -14,6 +14,7 @@
 Lab.main = function main() {
   
   Lab.statechart.initStatechart();
+  // Lab.statechart.set('trace', YES);
   
   // *** setup routes ***
   

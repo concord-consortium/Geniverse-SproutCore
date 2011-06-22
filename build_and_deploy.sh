@@ -14,7 +14,7 @@ case "$1" in
   dev)
     export SERVER=otto.concord.org
     export SERVER_PATH="/web/geniverse.dev.concord.org/static"
-    export LABEL_PATH="/web/geniverse.dev.concord.org/sproutcore"
+    export LABEL_PATH="/web/geniverse.dev.concord.org"
     ;;
   *)
     echo "Invalid server!"
