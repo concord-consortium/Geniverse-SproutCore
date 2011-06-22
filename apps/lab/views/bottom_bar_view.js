@@ -15,8 +15,11 @@ Lab.BottomBarView = SC.ToolbarView.extend(
   anchorLocation: SC.ANCHOR_BOTTOM,
 
   // childViews
+  navBarLeftArrowBW: null,
+  navBarRightArrowBW: null,
   navBarLeftArrow: null,
   navBarRightArrow: null,
+  navBarRightArrowRed: null,
 
   /**
    * Overwritten createChildView where you set up all
