@@ -2,7 +2,7 @@
 // Project:   Geniverse.MatchView
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Geniverse */
+/*globals Geniverse SC CC YES NO sc_require sc_super*/
 
 /** @class
 
@@ -62,6 +62,13 @@ Geniverse.MatchView = SC.View.extend(
         content: Geniverse.NO_DRAGON
       }));
       childViews.push(this.dragonView);
+      
+      // we will probably make this a graphic later
+      this.labelView = this.createChildView(SC.LabelView.design({
+        layout: { bottom: 0, enterX: 0, height: 24, cwidth: 400 },
+        valueBinding: 'Geniverse.matchController.matchedCountLabel'
+      }));
+      childViews.push(this.labelView);
     } else {
       this.dragonsView = this.createChildView(
         CC.AutoScrollView.design({
