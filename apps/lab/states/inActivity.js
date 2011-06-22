@@ -56,6 +56,7 @@ Lab.inActivity = Ki.State.extend({
   },
   
   gotoNextActivity: function() {
+    this.blockNextNavButton(false);
     var next = Geniverse.activityController.getNextActivity();
     if (!!next){
       SC.routes.set('location', next.get('route'));
@@ -63,6 +64,7 @@ Lab.inActivity = Ki.State.extend({
   },
   
   gotoPreviousActivity: function() {
+    this.blockNextNavButton(false);
     var previous = Geniverse.activityController.getPreviousActivity();
     if (!!previous){
       SC.routes.set('location', previous.get('route'));
