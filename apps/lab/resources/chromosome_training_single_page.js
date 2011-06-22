@@ -52,7 +52,10 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           layout: {top: 20, height: 25, left: 20, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
-          value: "Female Drake"
+          sexBinding: '*parentView.genomeView.sex',
+          value: function() {
+            return (this.get('sex') === 0 ? "Male " : "Female ") + "Drake";
+          }.property('sex')
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({
