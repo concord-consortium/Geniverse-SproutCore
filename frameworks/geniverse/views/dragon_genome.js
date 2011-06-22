@@ -251,7 +251,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 
   switchSexButton: SC.ButtonView.design({
 		layout: function() {
-		  return {top: 310, left: this.getPath('parentView.dragonImageLeft'), width: 150, height: 25};
+		  return {top: 430, left: 0, width: 130, height: 25};
 		}.property(),
     isEnabled: YES,
     title: 'Switch Sex',
