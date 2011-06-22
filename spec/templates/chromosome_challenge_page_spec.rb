@@ -93,8 +93,8 @@ describe "Templates" do
       change_allele_value('b', 'w')
       change_allele_value('a', 'fl')
       change_allele_value('b', 'fl')
-      change_allele_value('a', 'T')
-      change_allele_value('b', 'T')
+      change_allele_value('a', 'H')
+      change_allele_value('b', 'H')
 
       sleep 3
 
@@ -103,45 +103,43 @@ describe "Templates" do
     end
 
     def verify_incorrect_match
+      target_url = @match_view.dragonView.content.imageURL
+      source_url = @phenotype_view.content.imageURL
+      source_url.should_not eq(target_url), "Image urls should not match!\ns: #{source_url}\nt: #{target_url}"
+
       @reveal_button.click
 
       sleep 1  # there's a delay before the results pop up
-      # should pop up an SC.AlertPane
-      @app.responding_panes.count.should == 3
 
-      pane = @app.key_pane Lebowski::Foundation::Panes::AlertPane
-      pane.should_not be nil
-      pane.is_error?.should == true
-      pane.button_count.should == 1
-      pane.has_button?('Try Again').should == true
-      pane.click_button 'Try Again'
+      verify_alert(:error, "Try again")
     end
 
     def verify_correct_match
+      target_url = @match_view.dragonView.content.imageURL
+      source_url = @phenotype_view.content.imageURL
+      source_url.should eq(target_url), "Image urls should match!\ns: #{source_url}\nt: #{target_url}"
+
       @reveal_button.click
 
       sleep 1  # there's a delay before the results pop up
-      # should pop up an SC.AlertPane
-      @app.responding_panes.count.should == 3
 
-      pane = @app.key_pane Lebowski::Foundation::Panes::AlertPane
-      pane.should_not be nil
-      pane.is_plain?.should == true
-      pane.button_count.should == 1
-      pane.has_button?('OK').should == true
-      pane.click_button 'OK'
+      verify_alert(:plain, "OK")
     end
 
     def verify_challenge_complete
+      verify_alert(:plain, "OK")
+    end
+
+    def verify_alert(type, button_title)
       # should pop up an SC.AlertPane
-      @app.responding_panes.count.should == 3
+      @app.responding_panes.count.should eq(3), "There should be 3 responding panes."
 
       pane = @app.key_pane Lebowski::Foundation::Panes::AlertPane
-      pane.should_not be nil
-      pane.is_plain?.should == true
-      pane.button_count.should == 1
-      pane.has_button?('OK').should == true
-      pane.click_button 'OK'
+      pane.should_not be_nil, "pane should exist"
+      pane.type.should eq(type), "pane should be #{type.to_s}. is: #{pane.type.to_s}"
+      pane.button_count.should eq(1), "pane should only have 1 button."
+      pane.has_button?(button_title).should be_true, "pane should have #{button_title} button."
+      pane.click_button button_title
     end
 
     def get_pulldowns(side, allele)
