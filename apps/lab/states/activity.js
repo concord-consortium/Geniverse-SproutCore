@@ -403,7 +403,7 @@ Lab.ACTIVITY = SC.Responder.create(
     
     // getting all owned dragons like so caused hundreds of POSTS and made script
     // crash. Still don't understand why. So we do it twice, once for the stable
-    // dragons and once for the challange dragons. Annoying and not DRY
+    // dragons and once for the challenge dragons. Annoying and not DRY
     
     // var ownedDragonsQuery = SC.Query.local('Geniverse.Dragon', {
     //   conditions: 'user = {user} AND activity = {activity} AND isInMarketplace = false',
@@ -435,21 +435,21 @@ Lab.ACTIVITY = SC.Responder.create(
       stableDragons.addObserver('status', dragonsReadyToBeSold);
     }
     
-    // then sell challange drakes in the activity user is currently viewing
-    var challangeDragons = Geniverse.challengePoolController.get('arrangedObjects');
+    // then sell challenge drakes in the activity user is currently viewing
+    var challengeDragons = Geniverse.challengePoolController.get('arrangedObjects');
     
     function dragonsReadyToBeSold2() {
-      challangeDragons.removeObserver('status', dragonsReadyToBeSold);
+      challengeDragons.removeObserver('status', dragonsReadyToBeSold);
       SC.RunLoop.begin();
-      challangeDragons.setEach('isInMarketplace', true);
+      challengeDragons.setEach('isInMarketplace', true);
       SC.RunLoop.end();
       SC.Logger.log("done selling stable dragons");
     }
     
-    if (challangeDragons.get('status') & SC.Record.READY === SC.Record.READY) {
+    if (challengeDragons.get('status') & SC.Record.READY === SC.Record.READY) {
       dragonsReadyToBeSold2();
     } else {
-      challangeDragons.addObserver('status', dragonsReadyToBeSold2);
+      challengeDragons.addObserver('status', dragonsReadyToBeSold2);
     }
     
   },
