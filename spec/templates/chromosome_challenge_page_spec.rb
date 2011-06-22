@@ -93,8 +93,6 @@ describe "Templates" do
       change_allele_value('b', 'w')
       change_allele_value('a', 'fl')
       change_allele_value('b', 'fl')
-      change_allele_value('a', 'H')
-      change_allele_value('b', 'H')
 
       sleep 3
 
@@ -103,9 +101,7 @@ describe "Templates" do
     end
 
     def verify_incorrect_match
-      target_url = @match_view.dragonView.content.imageURL
-      source_url = @phenotype_view.content.imageURL
-      source_url.should_not eq(target_url), "Image urls should not match!\ns: #{source_url}\nt: #{target_url}"
+      verify_images(false)
 
       @reveal_button.click
 
@@ -115,9 +111,7 @@ describe "Templates" do
     end
 
     def verify_correct_match
-      target_url = @match_view.dragonView.content.imageURL
-      source_url = @phenotype_view.content.imageURL
-      source_url.should eq(target_url), "Image urls should match!\ns: #{source_url}\nt: #{target_url}"
+      verify_images(true)
 
       @reveal_button.click
 
@@ -128,6 +122,19 @@ describe "Templates" do
 
     def verify_challenge_complete
       verify_alert(:plain, "OK")
+    end
+
+    def verify_images(should_match)
+      target_url = @match_view.dragonView.content.imageURL
+      target_alleles = @match_view.dragonView.content.alleles
+      source_url = @phenotype_view.content.imageURL
+      source_alleles = @phenotype_view.content.alleles
+      err_msg = "Image urls should not match!\ns: #{source_url}\nt: #{target_url}\ns: #{source_alleles}\nt: #{target_alleles}"
+      if should_match
+        source_url.should eq(target_url), err_msg
+      else
+        source_url.should_not eq(target_url), err_msg
+      end
     end
 
     def verify_alert(type, button_title)
