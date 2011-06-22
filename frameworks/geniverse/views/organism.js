@@ -23,12 +23,17 @@ Geniverse.OrganismView = SC.View.extend(
   isDropTarget: NO, // whether this is replaceable by drag-and-drop
   canDrag: NO,      // whether this can be dragged elsewhere
   showBackground: YES,
+  hideDragon: NO, // hides the dragon
   useRevealButton: NO,  // hides dragon and show a reveal button
 
 	imageView: SC.ImageView.design({
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
 		contentBinding: '*parentView.content',
-		hideImageBinding: '*parentView.useRevealButton',
+    hideDragonBinding: '*parentView.hideDragon',
+    useRevealButtonBinding: '*parentView.useRevealButton',
+		hideImage: function() {
+      return this.get('hideDragon') || this.get('useRevealButton');
+    }.property('hideDragon', 'useRevealButton').cacheable(),
     classNames: ['opaque'],
     valueNeedsRecalculated: YES, // simple value we can toggle to trigger the value property being recalculated
    
