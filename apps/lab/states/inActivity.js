@@ -9,6 +9,7 @@ Lab.inActivity = Ki.State.extend({
   substatesAreConcurrent: NO,
   
   matchOneAtATimeChallenge: Ki.State.plugin('Lab.matchOneAtATimeChallenge'),
+  matchThreeToOneChallenge: Ki.State.plugin('Lab.matchThreeToOneChallenge'),
   
   currentChallenge: null,
   

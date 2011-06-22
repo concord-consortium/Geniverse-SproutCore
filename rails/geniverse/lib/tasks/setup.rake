@@ -430,6 +430,27 @@ cases << {:hidden_genes=>"{'all': 'm,c,a,b,d,hoxa1,rh'}",
 {alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:h,b:h,a:Fl,b:Fl,a:hl,b:hl,a:t,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Match Female-three traits recessive'},
 {alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:w,b:w,a:h,b:h,a:fl,b:fl,a:hl,b:hl,a:t,a:Hoxa1', sex: 0, name: 'Match Male-all (varying) traits recessive'}
 ] ] ];!}
+cases << {:hidden_genes=>"{'all': 'm,c,a,b,d,hoxa1,rh'}",
+  :crossover_when_breeding=>true,
+  :title=>"Heredity: Challenge 2",
+  :base_channel_name=>"heredityChallenge2",
+  :message=>"<br />\r\n<h2>Challenge: Match this series of target drakes.</h2>\r\n<br />\r\n\r\n1. In order to match these target drakes, you will need to perform \"back-crosses\" by breeding offspring with parents and offspring with other offspring. \r\n<br /><br />\r\n\r\n2. Select offspring drakes and drag them to your stable to keep them aside for use in breeding. Once a drake is in your stable, you can drag it to replace a parent and then click the Breed button. If you no longer need a drake, you can remove it  by dragging it from the stable to the marketplace button.\r\n<br /><br />\r\n\r\n3. After you create the final target drake (the last one in the row of targets) publish a paper explaining how to use this drake to test the genotype of any other drake.",
+  :send_bred_dragons=>nil,
+  :static_genes=>"",
+  :route=>"heredity/challenge/case02",
+  :max_users_in_room=>nil,
+  :initial_alleles=>%![[[
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:Hoxa1', sex: 1, name: 'Heterozygous Mother'},
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:Hoxa1', sex: 1, name: 'Heterozygous Mother'},
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:Hoxa1', sex: 1, name: 'Heterozygous Mother'}
+]]];!,
+  :pageType=>"chromosomeTripleChallengePage",
+  :match_dragon_alleles=>%![ [ [
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:H,b:H,a:Fl,b:Fl,a:Hl,b:hl,a:t,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Match-Female-one trait recessive'},
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:H,b:H,a:Fl,b:Fl,a:hl,b:hl,a:t,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Match Female-two traits recessive'},
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:h,b:h,a:Fl,b:Fl,a:hl,b:hl,a:t,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Match Female-three traits recessive'},
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:w,b:w,a:h,b:h,a:fl,b:fl,a:hl,b:hl,a:t,a:Hoxa1', sex: 0, name: 'Match Male-all (varying) traits recessive'}
+] ] ];!}
 
     cases.each do |c|
       a = Activity.find_by_route(c[:route])
