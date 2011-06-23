@@ -216,7 +216,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
   
   dragonView: Geniverse.OrganismView.design({
 		layout: function() {
-		  return {top: 18, left: this.getPath('parentView.dragonImageLeft'), width: 200, height: 200};
+		  return {top: 18, left: this.getPath('parentView.dragonImageLeft'), width: 200, height: 215};
 		}.property(),
 	  contentBinding: "*parentView.dragon",
 	  allowDrop: YES,

@@ -70,7 +70,7 @@ Geniverse.OrganismView = SC.View.extend(
 
   labelView: SC.LabelView.design({
     isVisibleBinding: '*parentView.showLabel',
-    layout: { centerY: 0, height: 20, left: 0, top:0, right: 0 },
+    layout: { height: 20, left: 0, top:0, right: 0 },
     valueBinding: '*parentView.label',
     // fontWeight: SC.BOLD_WEIGHT,
     textAlign: SC.ALIGN_CENTER,
@@ -79,7 +79,7 @@ Geniverse.OrganismView = SC.View.extend(
   
   revealButtonView: SC.ButtonView.design({
     isVisibleBinding: '*parentView.useRevealButton',
-    layout: { centerY: 0, height: 24, bottom:25, left: 5, right: 5 },
+    layout: { height: 24, bottom: 0, left: 5, right: 5 },
     title: "Reveal",
     isEnabled: YES,
     action: "revealClicked",
