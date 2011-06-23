@@ -51,7 +51,6 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
       var match = matches[i];
       var orgView = this.organismViews[i];
 
-      SC.Logger.log("" + i + ": isDupe " + dupe);
       if (dupe) {
         this.duplicateOrganismViews.push(orgView);
       } else if (match) {
