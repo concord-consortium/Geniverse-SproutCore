@@ -54,7 +54,8 @@ Geniverse.OrganismView = SC.View.extend(
         return imageURL;
       }
       if (height <= 75){
-        imageURL = imageURL.replace('.png', '_75.png');
+        // move /a/b/drake.png to /a/b/75/drake.png
+        imageURL = imageURL.replace(/^(.*)\/(.*?)$/, '$1/75/$2');
       }
       return imageURL;
     }.property('content','valueNeedsRecalculated','clippingFrame').cacheable(),
