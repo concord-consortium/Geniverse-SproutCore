@@ -441,7 +441,7 @@ activities << {:hidden_genes=>"{'all': 'm,c,a,b,d,hoxa1,rh'}",
   :route=>"heredity/challenge/case01",
   :max_users_in_room=>nil,
   :initial_alleles=>%![[[
-{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:Hoxa1', sex: 1, name: 'Heterozygous Mother'}
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Heterozygous Mother'}
 ]]];!,
   :pageType=>"chromosomeChallengePage",
   :match_dragon_alleles=>%![ [ [
@@ -460,9 +460,9 @@ activities << {:hidden_genes=>"{'all': 'm,c,a,b,d,hoxa1,rh'}",
   :route=>"heredity/challenge/case02",
   :max_users_in_room=>nil,
   :initial_alleles=>%![[[
-{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:Hoxa1', sex: 1, name: 'Heterozygous Mother'},
-{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:Hoxa1', sex: 1, name: 'Heterozygous Mother'},
-{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:Hoxa1', sex: 1, name: 'Heterozygous Mother'}
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Heterozygous Mother'},
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Heterozygous Mother'},
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Heterozygous Mother'}
 ]]];!,
   :pageType=>"chromosomeTripleChallengePage",
   :match_dragon_alleles=>%![ [ [
