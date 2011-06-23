@@ -37,136 +37,144 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
 
     mainAppView: SC.View.design({
       
-      childViews: 'revealButton genome1Panel genome2Panel genome3Panel targetDrakes'.w(),
+      childViews: 'genomePanels revealButton targetDrakes'.w(),
       
-      genome1Panel: SC.View.design({
-        layout: {top: 250, height: 660, left: 15, width: 300 },
-        childViews: 'background title genomeView phenotypeView'.w(),
+      genomePanels: SC.View.design({
+        layout: {top: 40, height: 600, left: 0, width: 900 },
+        childViews: 'genome1Panel genome2Panel genome3Panel'.w(),
 
-        // separate parallel background so we don't make the rest of the childViews see-through
-        background: SC.View.design({
-          layout: {top: 0, left: 0, right: 0, bottom: 0},
-          classNames: ['genome-view-intro']
+        genome1Panel: SC.View.design({
+          layout: {top: 0, height: 660, left: 0, width: 290 },
+          childViews: 'background title genomeView phenotypeView'.w(),
+
+          // separate parallel background so we don't make the rest of the childViews see-through
+          background: SC.View.design({
+            layout: {top: 0, left: 0, right: 0, bottom: 0},
+            classNames: ['genome-view-intro']
+          }),
+
+          phenotypeView: Geniverse.OrganismView.design({
+            layout: {top: -30, left: 40, width: 200, height: 200},
+            contentBinding: "*parentView.genomeView.dragon",
+            allowDrop: NO,
+            showBackground: NO,
+            hideDragon: YES
+          }),
+
+          title: SC.LabelView.design({
+            layout: {top: 150, height: 25, left: 5, width: 200 },
+            controlSize: SC.LARGE_CONTROL_SIZE,
+            fontWeight: SC.BOLD_WEIGHT,
+            sexBinding: '*parentView.genomeView.sex',
+            value: function() {
+              return (this.get('sex') === 0 ? "Male " : "Female ") + "Drake";
+            }.property('sex')
+          }),
+
+          genomeView: Geniverse.DragonGenomeView.design({
+            layout: {top: 155, left: 5, height: 500, width: 300 },
+            generateDragonAtStart: NO,
+            sex: 1,
+            showSwitchSex: YES,
+            showDragon: NO,
+            displayChallengeDragon: YES,
+            showGenerateNewDragon: NO,
+            showIsEditableCheck: NO,
+            showEmptyOptions: YES,
+            startWithEmptyOptions: YES,
+            showFromLabels: NO
+          })
         }),
 
-        phenotypeView: Geniverse.OrganismView.design({
-          layout: {top: -30, left: 50, width: 200, height: 200},
-          contentBinding: "*parentView.genomeView.dragon",
-          allowDrop: NO,
-          showBackground: NO,
-          hideDragon: YES
+        genome2Panel: SC.View.design({
+          layout: {top: 0, height: 600, left: 290, width: 290 },
+          childViews: 'background title genomeView phenotypeView'.w(),
+
+          // separate parallel background so we don't make the rest of the childViews see-through
+          background: SC.View.design({
+            layout: {top: 0, left: 0, right: 0, bottom: 0},
+            classNames: ['genome-view-intro']
+          }),
+
+          phenotypeView: Geniverse.OrganismView.design({
+            layout: {top: -30, left: 40, width: 200, height: 200},
+            contentBinding: "*parentView.genomeView.dragon",
+            allowDrop: NO,
+            showBackground: NO,
+            hideDragon: YES
+          }),
+
+          title: SC.LabelView.design({
+            layout: {top: 150, height: 25, left: 5, width: 200 },
+            controlSize: SC.LARGE_CONTROL_SIZE,
+            fontWeight: SC.BOLD_WEIGHT,
+            sexBinding: '*parentView.genomeView.sex',
+            value: function() {
+              return (this.get('sex') === 0 ? "Male " : "Female ") + "Drake";
+            }.property('sex')
+          }),
+
+          genomeView: Geniverse.DragonGenomeView.design({
+            layout: {top: 155, left: 5, height: 500, width: 300 },
+            generateDragonAtStart: NO,
+            sex: 1,
+            showSwitchSex: YES,
+            showDragon: NO,
+            displayChallengeDragon: YES,
+            showGenerateNewDragon: NO,
+            showIsEditableCheck: NO,
+            showEmptyOptions: YES,
+            startWithEmptyOptions: YES,
+            showFromLabels: NO
+          })
         }),
 
-        title: SC.LabelView.design({
-          layout: {top: 150, height: 25, left: 20, width: 200 },
-          controlSize: SC.LARGE_CONTROL_SIZE,
-          fontWeight: SC.BOLD_WEIGHT,
-          sexBinding: '*parentView.genomeView.sex',
-          value: function() {
-            return (this.get('sex') === 0 ? "Male " : "Female ") + "Drake";
-          }.property('sex')
-        }),
+        genome3Panel: SC.View.design({
+          layout: {top: 0, height: 600, left: 580, width: 290 },
+          childViews: 'background title genomeView phenotypeView'.w(),
 
-        genomeView: Geniverse.DragonGenomeView.design({
-          layout: {top: 185, left: 15, height: 500, width: 300 },
-          generateDragonAtStart: NO,
-          sex: 1,
-          showSwitchSex: YES,
-          showDragon: NO,
-          displayChallengeDragon: YES,
-          showGenerateNewDragon: NO,
-          showIsEditableCheck: NO,
-          showEmptyOptions: YES,
-          startWithEmptyOptions: YES
-        })
-      }),
+          // separate parallel background so we don't make the rest of the childViews see-through
+          background: SC.View.design({
+            layout: {top: 0, left: 0, right: 0, bottom: 0},
+            classNames: ['genome-view-intro']
+          }),
 
-      genome2Panel: SC.View.design({
-        layout: {top: 250, height: 660, left: 330, width: 300 },
-        childViews: 'background title genomeView phenotypeView'.w(),
+          phenotypeView: Geniverse.OrganismView.design({
+            layout: {top: -30, left: 40, width: 200, height: 200},
+            contentBinding: "*parentView.genomeView.dragon",
+            allowDrop: NO,
+            showBackground: NO,
+            hideDragon: YES
+          }),
 
-        // separate parallel background so we don't make the rest of the childViews see-through
-        background: SC.View.design({
-          layout: {top: 0, left: 0, right: 0, bottom: 0},
-          classNames: ['genome-view-intro']
-        }),
+          title: SC.LabelView.design({
+            layout: {top: 150, height: 25, left: 5, width: 200 },
+            controlSize: SC.LARGE_CONTROL_SIZE,
+            fontWeight: SC.BOLD_WEIGHT,
+            sexBinding: '*parentView.genomeView.sex',
+            value: function() {
+              return (this.get('sex') === 0 ? "Male " : "Female ") + "Drake";
+            }.property('sex')
+          }),
 
-        phenotypeView: Geniverse.OrganismView.design({
-          layout: {top: -30, left: 50, width: 200, height: 200},
-          contentBinding: "*parentView.genomeView.dragon",
-          allowDrop: NO,
-          showBackground: NO,
-          hideDragon: YES
-        }),
-
-        title: SC.LabelView.design({
-          layout: {top: 150, height: 25, left: 20, width: 200 },
-          controlSize: SC.LARGE_CONTROL_SIZE,
-          fontWeight: SC.BOLD_WEIGHT,
-          sexBinding: '*parentView.genomeView.sex',
-          value: function() {
-            return (this.get('sex') === 0 ? "Male " : "Female ") + "Drake";
-          }.property('sex')
-        }),
-
-        genomeView: Geniverse.DragonGenomeView.design({
-          layout: {top: 185, left: 15, height: 500, width: 300 },
-          generateDragonAtStart: NO,
-          sex: 1,
-          showSwitchSex: YES,
-          showDragon: NO,
-          displayChallengeDragon: YES,
-          showGenerateNewDragon: NO,
-          showIsEditableCheck: NO,
-          showEmptyOptions: YES,
-          startWithEmptyOptions: YES
-        })
-      }),
-
-      genome3Panel: SC.View.design({
-        layout: {top: 250, height: 660, left: 645, width: 300 },
-        childViews: 'background title genomeView phenotypeView'.w(),
-
-        // separate parallel background so we don't make the rest of the childViews see-through
-        background: SC.View.design({
-          layout: {top: 0, left: 0, right: 0, bottom: 0},
-          classNames: ['genome-view-intro']
-        }),
-
-        phenotypeView: Geniverse.OrganismView.design({
-          layout: {top: -30, left: 50, width: 200, height: 200},
-          contentBinding: "*parentView.genomeView.dragon",
-          allowDrop: NO,
-          showBackground: NO,
-          hideDragon: YES
-        }),
-
-        title: SC.LabelView.design({
-          layout: {top: 150, height: 25, left: 20, width: 200 },
-          controlSize: SC.LARGE_CONTROL_SIZE,
-          fontWeight: SC.BOLD_WEIGHT,
-          sexBinding: '*parentView.genomeView.sex',
-          value: function() {
-            return (this.get('sex') === 0 ? "Male " : "Female ") + "Drake";
-          }.property('sex')
-        }),
-
-        genomeView: Geniverse.DragonGenomeView.design({
-          layout: {top: 185, left: 15, height: 500, width: 300 },
-          generateDragonAtStart: NO,
-          sex: 1,
-          showSwitchSex: YES,
-          showDragon: NO,
-          displayChallengeDragon: YES,
-          showGenerateNewDragon: NO,
-          showIsEditableCheck: NO,
-          showEmptyOptions: YES,
-          startWithEmptyOptions: YES
+          genomeView: Geniverse.DragonGenomeView.design({
+            layout: {top: 155, left: 5, height: 500, width: 300 },
+            generateDragonAtStart: NO,
+            sex: 1,
+            showSwitchSex: YES,
+            showDragon: NO,
+            displayChallengeDragon: YES,
+            showGenerateNewDragon: NO,
+            showIsEditableCheck: NO,
+            showEmptyOptions: YES,
+            startWithEmptyOptions: YES,
+            showFromLabels: NO
+          })
         })
       }),
 
       revealButton: SC.ButtonView.design({
-        layout: { top: 218, height: 24, left: 425, width: 100 },
+        layout: { top: 218, height: 24, left: 900, width: 100 },
         title: "Reveal All",
         isEnabled: YES,
         action: "revealClicked",
@@ -174,16 +182,16 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
       }),
   
       targetDrakes: Geniverse.MatchView.design({
-        layout: { left: 398, top: 40, height: 170, width: 170 },
+        layout: { left: 873, top: 40, height: 170, width: 157 },
         onlyOne: YES,
         dragonSize: 150
       }),
 
       organismViews: function() {
-        return [this.getPath('genome1Panel.phenotypeView'),
-        this.getPath('genome2Panel.phenotypeView'),
-        this.getPath('genome3Panel.phenotypeView') ];
-      }.property('*genome1Panel.phenotypeView', '*genome2Panel.phenotypeView', '*genome3Panel.phenotypeView').cacheable()
+        return [this.getPath('genomePanels.genome1Panel.phenotypeView'),
+        this.getPath('genomePanels.genome2Panel.phenotypeView'),
+        this.getPath('genomePanels.genome3Panel.phenotypeView') ];
+      }.property('*genomePanels.genome1Panel.phenotypeView', '*genomePanels.genome2Panel.phenotypeView', '*genomePanels.genome3Panel.phenotypeView').cacheable()
     })
   })
 });
