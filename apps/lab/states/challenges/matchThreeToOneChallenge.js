@@ -11,6 +11,8 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
   challengeComplete: NO,
   
   organismViews: [],
+  matchedOrganismViews: [],
+  duplicateOrganismViews: [],
   
   enterState: function() { 
     // for now, we assume that there are match dragons
@@ -30,20 +32,44 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
     var parent = buttonView.get('parentView');
     this.organismViews = parent.get('organismViews');
     this._revealImages();
-    
+
+    this.matchedOrganismViews = [];
+    this.duplicateOrganismViews = [];
+
+    var alleleStrs = this.organismViews.map(function(orgView) { return orgView.getPath('content.alleles'); });
+    var dupes = alleleStrs.map(function(alleles) {
+      if (alleleStrs.indexOf(alleles) != alleleStrs.lastIndexOf(alleles)) {
+        return YES;
+      }
+      return NO;
+    });
+    var self = this;
+    var matches = this.organismViews.map(function(orgView) { return self._drakesMatch(orgView.get('content')); });
+
+    for (var i = 0; i < this.organismViews.length; i++) {
+      var dupe = dupes[i];
+      var match = matches[i];
+      var orgView = this.organismViews[i];
+
+      SC.Logger.log("" + i + ": isDupe " + dupe);
+      if (dupe) {
+        this.duplicateOrganismViews.push(orgView);
+      } else if (match) {
+        this.matchedOrganismViews.push(orgView);
+      }
+    }
+
+    this._showAlert();
+  },
+
+  _showAlert: function() {
     SC.Timer.schedule({
       target: this,
       action: function () {
-        var numMatched = 0;
-        for (var i = 0; i < this.organismViews.length; i++) {
-          // TODO Skip duplicately defined drakes...
-          if (this._drakesMatch(this.organismViews[i].get('content'))) {
-            numMatched++;
-          }
-        }
+        var numMatched = this.matchedOrganismViews.length;
         if (numMatched === 3){
           this.successfulMatch = YES;
-          SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
+          SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).plain(
             "Good work!", 
             "All of the drakes you have created match the target drake.",
             "",
@@ -54,21 +80,33 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
         } else {
           this.successfulMatch = NO;
           this._resetTargetMatchedState();
-          var msg = "";
-          if (numMatched === 0) {
-            msg = "None of the drakes you have created match the target. Please try again.";
+
+          if (this.duplicateOrganismViews.length > 0) {
+            SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).error(
+              "You have some duplicates.",
+              "Some of your dragons are exactly the same! All of your dragons need to have different alleles.",
+              "",
+              "Try again",
+              "",
+              this
+            );
           } else {
-            msg = "Only " + numMatched + " of the drakes you have created match the target. Please try again.";
+            var msg = "";
+            if (numMatched === 0) {
+              msg = "None of the drakes you have created match the target. Please try again.";
+            } else {
+              msg = "Only " + numMatched + " of the drakes you have created match the target. Please try again.";
+            }
+            SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).error(
+              "You didn't get all of them.",
+              msg,
+              "",
+              "Try again",
+              "",
+              this
+            );
           }
-          SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).error(
-            "You didn't get all of them.", 
-            msg,
-            "",
-            "Try again",
-            "",
-            this
-          );
-        } 
+        }
       },
       interval: 500,
       repeats: NO
