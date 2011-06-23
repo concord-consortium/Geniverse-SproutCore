@@ -262,12 +262,13 @@ Geniverse.DragonGenomeView = SC.View.extend(
     isVisibleBinding: '*parentView.showSwitchSex',
     action: function() {
       var self = this.get('parentView');
-      self.set('sex', (self.get('sex') + 1) % 2);
-      self._initDragon(self.get('sex'), self.getPath('dragon.alleles'));
+      self.switchSex();
     }
   }),
 
   switchSex: function() {
+      this.set('sex', (this.get('sex') + 1) % 2);
+      this._initDragon(this.get('sex'), this.getPath('dragon.alleles'));
   },
 	
 	chromosomeA1View: Geniverse.DragonChromosomeView.design({
@@ -529,9 +530,24 @@ Geniverse.DragonGenomeView = SC.View.extend(
 		}
   },
 
+  secondXAlleles: null,
   _initDragon: function(sex, fixedAlleles) {
     var self = this;
+    var currentDragon = this.get('dragon');
+    if (sex === 1 && !!currentDragon && currentDragon.get('sex') === 0 && !!this.get('secondXAlleles')) {
+      // going from male to female. Restore second X chromosome alleles
+      fixedAlleles = fixedAlleles + "," + this.get('secondXAlleles');
+      this.secondXAlleles = null;
+    }
     function updateDragon(dragon) {
+      if (sex === 0 && !!currentDragon && currentDragon.get('sex') === 1) {
+        // we're switching from female to male, store the current alleles of the second X chromosome
+        // so that we can restore them if we switch back to female again
+        var oldAlleles = currentDragon.get('alleles').split(",");
+        var newAlleles = dragon.get('alleles').split(",");
+        var save = oldAlleles.filter(function(allele) { return newAlleles.indexOf(allele) === -1; });
+        self.set('secondXAlleles', save.join(","));
+      }
       SC.run(function() {
         self.set('ignoreUpdate', NO);
         self.set('dragon', dragon);
