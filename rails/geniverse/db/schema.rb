@@ -12,7 +12,7 @@
 ActiveRecord::Schema.define(:version => 20110616161657) do
 
   create_table "activities", :force => true do |t|
-    t.string   "initial_alleles"
+    t.text     "initial_alleles"
     t.string   "base_channel_name"
     t.integer  "max_users_in_room"
     t.boolean  "send_bred_dragons"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20110616161657) do
     t.string   "route"
     t.string   "pageType"
     t.text     "message"
-    t.string   "match_dragon_alleles"
+    t.text     "match_dragon_alleles"
     t.integer  "myCase_id"
     t.integer  "myCaseOrder"
   end
@@ -93,6 +93,6 @@ ActiveRecord::Schema.define(:version => 20110616161657) do
     t.string   "class_name"
   end
 
-  add_index "users", ["username", "password_hash"], :name => "index_users_on_username_and_password_hash"
+  add_index "users", ["username", "password_hash"], :name => "index_users_on_username_and_password_hash", :length => {"username"=>10, "password_hash"=>20}
 
 end
