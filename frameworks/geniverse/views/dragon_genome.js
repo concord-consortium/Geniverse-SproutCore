@@ -294,7 +294,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	  showEmptyOptionInPulldowns: function() {
       return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
     }.property(),
-    startWithEmptyOption: '*parentView.startWithEmptyOptions',
+    startWithEmptyOptionBinding: '*parentView.startWithEmptyOptions',
 	  chromosome: '1',
     side: 'A'
 	}),
@@ -317,7 +317,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	  showEmptyOptionInPulldowns: function() {
       return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
     }.property(),
-    startWithEmptyOption: '*parentView.startWithEmptyOptions',
+    startWithEmptyOptionBinding: '*parentView.startWithEmptyOptions',
 	  chromosome: '1',
     side: 'B'
 	}),
@@ -340,7 +340,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	  showEmptyOptionInPulldowns: function() {
       return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
     }.property(),
-    startWithEmptyOption: '*parentView.startWithEmptyOptions',
+    startWithEmptyOptionBinding: '*parentView.startWithEmptyOptions',
 	  chromosome: '2',
     side: 'A'
 	}),
@@ -363,7 +363,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	  showEmptyOptionInPulldowns: function() {
       return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
     }.property(),
-    startWithEmptyOption: '*parentView.startWithEmptyOptions',
+    startWithEmptyOptionBinding: '*parentView.startWithEmptyOptions',
 	  chromosome: '2',
     side: 'B'
 	}),
@@ -386,7 +386,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	  showEmptyOptionInPulldowns: function() {
       return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
     }.property(),
-    startWithEmptyOption: '*parentView.startWithEmptyOptions',
+    startWithEmptyOptionBinding: '*parentView.startWithEmptyOptions',
 	  chromosome: 'X',
     side: 'A'
 	}),
@@ -399,7 +399,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	  showEmptyOptionInPulldowns: function() {
       return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
     }.property(),
-    startWithEmptyOption: '*parentView.startWithEmptyOptions',
+    startWithEmptyOptionBinding: '*parentView.startWithEmptyOptions',
 	  updateDragon: function(){
       if (!!this.get('parentView')) {
 	      this.get('parentView').updateDragon();
