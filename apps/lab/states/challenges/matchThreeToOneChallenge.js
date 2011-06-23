@@ -53,6 +53,7 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
           );
         } else {
           this.successfulMatch = NO;
+          this._resetTargetMatchedState();
           var msg = "";
           if (numMatched === 0) {
             msg = "None of the drakes you have created match the target. Please try again.";
@@ -112,6 +113,10 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
   
   _drakesMatch: function(dragon) {
     return Geniverse.matchController.doesMatchCurrent(dragon);
+  },
+  
+  _resetTargetMatchedState: function() {
+    Geniverse.matchController.currentDragon().set('hasBeenMatched', NO);
   },
 
   _challengeComplete: function() {
