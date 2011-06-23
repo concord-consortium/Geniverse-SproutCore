@@ -469,7 +469,7 @@ activities << {:hidden_genes=>"{'all': 'm,c,a,b,d,hoxa1,rh'}",
 {alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:H,b:H,a:Fl,b:Fl,a:Hl,b:hl,a:t,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Match-Female-one trait recessive'},
 {alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:H,b:H,a:Fl,b:Fl,a:hl,b:hl,a:t,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Match Female-two traits recessive'},
 {alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:h,b:h,a:Fl,b:Fl,a:hl,b:hl,a:t,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Match Female-three traits recessive'},
-{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:w,b:w,a:h,b:h,a:fl,b:fl,a:hl,b:hl,a:t,a:Hoxa1', sex: 0, name: 'Match Male-all (varying) traits recessive'}
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:w,b:w,a:h,b:h,a:fl,b:fl,a:Hl,b:Hl,a:t,a:Hoxa1', sex: 0, name: 'Match Male-all (varying) traits recessive'}
 ] ] ];!}
 activities << { :myCase_id=>1,
   :myCaseOrder=>1,
