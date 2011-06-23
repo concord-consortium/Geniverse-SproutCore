@@ -129,7 +129,7 @@ describe "Templates" do
       target_alleles = @match_view.dragonView.content.alleles
       source_url = @phenotype_view.content.imageURL
       source_alleles = @phenotype_view.content.alleles
-      err_msg = "Image urls should not match!\ns: #{source_url}\nt: #{target_url}\ns: #{source_alleles}\nt: #{target_alleles}"
+      err_msg = "Image urls should " + (should_match ? "" : "not " ) + "match!\ns: #{source_url}\nt: #{target_url}\ns: #{source_alleles}\nt: #{target_alleles}"
       if should_match
         source_url.should eq(target_url), err_msg
       else
