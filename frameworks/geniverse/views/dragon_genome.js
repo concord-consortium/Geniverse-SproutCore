@@ -38,6 +38,8 @@ Geniverse.DragonGenomeView = SC.View.extend(
 
   startWithEmptyOptions: NO,
 
+  showFromLabels: YES,
+
   authoredAlleleString: null,
   
   displayChallengeDragon: NO,   // overrides generateDragonAtStart
@@ -239,19 +241,21 @@ Geniverse.DragonGenomeView = SC.View.extend(
 		layout: function() {
 		  return {top: 0, left: this.getPath('parentView.chromosomeLeft'), width: 100, height: 25};
 		}.property(),
-		value: "From mother"
+		value: "From mother",
+		isVisibleBinding: '*parentView.showFromLabels'
 	}),
 
   fatherLabel: SC.LabelView.design({
 		layout: function() {
 		  return {top: 0, left: this.getPath('parentView.chromosomeLeft') + 145, width: 100, height: 25};
 		}.property(),
-		value: "From father"
+		value: "From father",
+		isVisibleBinding: '*parentView.showFromLabels'
 	}),
 
   switchSexButton: SC.ButtonView.design({
 		layout: function() {
-		  return {top: 430, left: 0, width: 130, height: 25};
+		  return {top: 415, left: 0, width: 130, height: 25};
 		}.property(),
     isEnabled: YES,
     title: 'Switch Sex',
