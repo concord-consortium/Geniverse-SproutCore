@@ -68,6 +68,9 @@ Lab.chromosomeChallengePage = SC.Page.design({
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO,
           useRevealButton: YES,
+          revealButtonNeedsEnabled: function() {
+            this.set('revealButtonEnabled', this.get('allAllelesSelected'));
+          }.observes('allAllelesSelected'),
           showEmptyOptions: YES,
           startWithEmptyOptions: YES
         })

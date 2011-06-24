@@ -57,6 +57,24 @@ Geniverse.DragonChromosomeView = SC.View.extend(
   showPulldowns: function() {
     return this.get('alleles').length > 0;
   }.property('alleles'),
+ 
+  allAllelesSelected: YES,
+  pulldownsDidChange: function() {
+    var pds = this.getPath('pullDowns.childViews');
+    if (!! pds) {
+      for (var i = 0; i < pds.length; i++) {
+        var pd = pds[i];
+        if (pd.get('fieldValue') == ' ') {
+          this.set('allAllelesSelected', NO);
+          this.propertyDidChange('allAllelesSelected');
+          return;
+        }
+      }
+    }
+    this.set('allAllelesSelected', YES);
+    this.propertyDidChange('allAllelesSelected');
+  },
+
   
   childViews: 'chromoImage linesImage pullDowns'.w(),
   
@@ -259,6 +277,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
             alleles[index] = this.get('value');
             this.get('parentView').get('parentView').set('alleles', alleles);
             this.get('parentView').get('parentView').propertyDidChange('alleles');
+            this.get('parentView').get('parentView').pulldownsDidChange();
           }.observes('value')
       });
       

@@ -47,6 +47,8 @@ Geniverse.DragonGenomeView = SC.View.extend(
   dragonOnRight: NO,            // dragon image on left by default
   
   useRevealButton: NO,          // hide drake image and show reveal button
+
+  revealButtonEnabled: YES,
   
   sex: null,        // used when generating new dragons
   fixedAlleles: null,    // used when generating new dragons
@@ -224,6 +226,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	  allowDrop: YES,
     isVisibleBinding: "*parentView.showDragon",
     useRevealButtonBinding: "*parentView.useRevealButton",
+    revealButtonEnabledBinding: "*parentView.revealButtonEnabled",
     showBackground: NO
 	}),
 	
@@ -270,6 +273,25 @@ Geniverse.DragonGenomeView = SC.View.extend(
       this.set('sex', (this.get('sex') + 1) % 2);
       this._initDragon(this.get('sex'), this.getPath('dragon.alleles'));
   },
+
+  allAllelesSelected: NO,
+  a1AllSelectedBinding: '*chromosomeA1View.allAllelesSelected',
+  b1AllSelectedBinding: '*chromosomeB1View.allAllelesSelected',
+  a2AllSelectedBinding: '*chromosomeA2View.allAllelesSelected',
+  b2AllSelectedBinding: '*chromosomeB2View.allAllelesSelected',
+  aXAllSelectedBinding: '*chromosomeAXView.allAllelesSelected',
+  bXAllSelectedBinding: '*chromosomeBXView.allAllelesSelected',
+  pulldownsDidChange: function() {
+    this.set('allAllelesSelected', (
+      this.get('a1AllSelected') &&
+      this.get('b1AllSelected') &&
+      this.get('a2AllSelected') &&
+      this.get('b2AllSelected') &&
+      this.get('aXAllSelected') &&
+      this.get('bXAllSelected')
+    ));
+  }.observes('a1AllSelected', 'a2AllSelected', 'aXAllSelected',
+             'b1AllSelected', 'b2AllSelected', 'bXAllSelected' ),
 	
 	chromosomeA1View: Geniverse.DragonChromosomeView.design({
 	  layout: function() {

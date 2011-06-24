@@ -25,6 +25,7 @@ Geniverse.OrganismView = SC.View.extend(
   showBackground: YES,
   hideDragon: NO, // hides the dragon
   useRevealButton: NO,  // hides dragon and show a reveal button
+  revealButtonEnabled: YES,
 
 	imageView: SC.ImageView.design({
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
@@ -82,7 +83,7 @@ Geniverse.OrganismView = SC.View.extend(
     isVisibleBinding: '*parentView.useRevealButton',
     layout: { height: 24, bottom: 0, left: 5, right: 5 },
     title: "Reveal",
-    isEnabled: YES,
+    isEnabledBinding: '*parentView.revealButtonEnabled',
     action: "revealClicked",
     target: "Lab.statechart"
   }),

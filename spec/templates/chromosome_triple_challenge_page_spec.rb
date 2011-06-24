@@ -68,10 +68,7 @@ describe "Templates" do
     end
 
     it 'should have a disabled reveal button until all alleles are selected' do
-      pending
-    end
-
-    it 'should give an error message when the wrong alleles are selected for all dragons' do
+      @reveal_button.isEnabled.should be_false, "Reveal button should be disabled when not all alleles are specified"
       [@genome_view1, @genome_view2, @genome_view3].each do |view|
         ['a','b'].each do |side|
           ['t','w','H','Fl','Hl'].each do |allele|
@@ -79,7 +76,10 @@ describe "Templates" do
           end
         end
       end
+      @reveal_button.isEnabled.should be_true, "Reveal button should be enabled when all alleles are specified"
+    end
 
+    it 'should give an error message when the wrong alleles are selected for all dragons' do
       [@phenotype_view1, @phenotype_view2, @phenotype_view3].each do |view|
         verify_images(view, false)
       end

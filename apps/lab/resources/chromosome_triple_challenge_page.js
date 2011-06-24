@@ -39,6 +39,17 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
       
       childViews: 'genomePanels revealButton targetDrakes'.w(),
       
+      panel1AllSelectedBinding: '*genomePanels.genome1Panel.genomeView.allAllelesSelected',
+      panel2AllSelectedBinding: '*genomePanels.genome2Panel.genomeView.allAllelesSelected',
+      panel3AllSelectedBinding: '*genomePanels.genome3Panel.genomeView.allAllelesSelected',
+      allAllelesSelected: NO,
+      allAllelesSelectedChanged: function() {
+        this.set('allAllelesSelected', (this.get('panel1AllSelected') &&
+                this.get('panel2AllSelected') &&
+                this.get('panel3AllSelected')
+               ));
+      }.observes('panel1AllSelected', 'panel2AllSelected', 'panel3AllSelected'),
+
       genomePanels: SC.View.design({
         layout: {top: 40, height: 600, left: 0, width: 900 },
         childViews: 'genome1Panel genome2Panel genome3Panel'.w(),
@@ -176,7 +187,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
       revealButton: SC.ButtonView.design({
         layout: { top: 218, height: 24, left: 900, width: 100 },
         title: "Reveal All",
-        isEnabled: YES,
+        isEnabledBinding: '*parentView.allAllelesSelected',
         action: "revealClicked",
         target: "Lab.statechart"
       }),
