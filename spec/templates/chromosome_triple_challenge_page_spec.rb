@@ -20,15 +20,15 @@ describe "Templates" do
 
       @genome_view1 = @app['mainPage.genomePanels.genome1Panel.genomeView', 'Geniverse.DragonGenomeView']
       @switch_sex_button1 = @app['mainPage.genomePanels.genome1Panel.genomeView.switchSexButton', 'SC.ButtonView']
-      @phenotype_view1 = @app['mainPage.genomePanels.genome1Panel.genomeView.dragonView', 'Geniverse.OrganismView']
+      @phenotype_view1 = @app['mainPage.genomePanels.genome1Panel.phenotypeView', 'Geniverse.OrganismView']
 
       @genome_view2 = @app['mainPage.genomePanels.genome2Panel.genomeView', 'Geniverse.DragonGenomeView']
       @switch_sex_button2 = @app['mainPage.genomePanels.genome2Panel.genomeView.switchSexButton', 'SC.ButtonView']
-      @phenotype_view2 = @app['mainPage.genomePanels.genome2Panel.genomeView.dragonView', 'Geniverse.OrganismView']
+      @phenotype_view2 = @app['mainPage.genomePanels.genome2Panel.phenotypeView', 'Geniverse.OrganismView']
 
       @genome_view3 = @app['mainPage.genomePanels.genome3Panel.genomeView', 'Geniverse.DragonGenomeView']
       @switch_sex_button3 = @app['mainPage.genomePanels.genome3Panel.genomeView.switchSexButton', 'SC.ButtonView']
-      @phenotype_view3 = @app['mainPage.genomePanels.genome3Panel.genomeView.dragonView', 'Geniverse.OrganismView']
+      @phenotype_view3 = @app['mainPage.genomePanels.genome3Panel.phenotypeView', 'Geniverse.OrganismView']
 
       @match_view = @app['mainPage.targetDrakes', 'Geniverse.MatchView']
       @reveal_button = @app['mainPage.revealButton', 'SC.ButtonView']
@@ -86,6 +86,12 @@ describe "Templates" do
       verify_incorrect_match("None of the drakes you have created match the target. Please try again.")
     end
 
+    it 'should leave all 3 dragons hidden' do
+      @phenotype_view1.hideDragon.should eq(true), "First dragon should be hidden: #{@phenotype_view1.hideDragon}"
+      @phenotype_view2.hideDragon.should eq(true), "Second dragon should be hidden: #{@phenotype_view2.hideDragon}"
+      @phenotype_view3.hideDragon.should eq(true), "Third dragon should be hidden: #{@phenotype_view3.hideDragon}"
+    end
+
     it 'should give an error message when the wrong alleles are selected for 2 dragons' do
       change_allele_value(@genome_view1, 'a', 'W')
       change_allele_value(@genome_view1, 'b', 'W')
@@ -95,6 +101,12 @@ describe "Templates" do
         verify_images(view, false)
       end
       verify_incorrect_match("Only 1 of the drakes you have created match the target. Please try again.")
+    end
+
+    it 'should leave the 2 incorrect dragons hidden' do
+      @phenotype_view1.hideDragon.should be_false, "First dragon should be visible"
+      @phenotype_view2.hideDragon.should be_true, "Second dragon should be hidden"
+      @phenotype_view3.hideDragon.should be_true, "Third dragon should be hidden"
     end
 
     it 'should give an error message when the wrong alleles are selected for 1 dragons' do
@@ -107,6 +119,12 @@ describe "Templates" do
       verify_incorrect_match("Only 2 of the drakes you have created match the target. Please try again.")
     end
 
+    it 'should leave the 1 incorrect dragon hidden' do
+      @phenotype_view1.hideDragon.should be_false, "First dragon should be visible"
+      @phenotype_view2.hideDragon.should be_false, "Second dragon should be visible"
+      @phenotype_view3.hideDragon.should be_true, "Third dragon should be hidden"
+    end
+
     it 'should give an error message when more than one dragon shares the same alleles' do
       change_allele_value(@genome_view3, 'a', 'W')
       change_allele_value(@genome_view3, 'b', 'w')
@@ -115,6 +133,12 @@ describe "Templates" do
         verify_images(view, true)
       end
       verify_incorrect_match("Some of your dragons are exactly the same! All of your dragons need to have different alleles.")
+    end
+
+    it 'should leave the 2 duplicate dragons hidden' do
+      @phenotype_view1.hideDragon.should be_false, "First dragon should be visible"
+      @phenotype_view2.hideDragon.should be_true, "Second dragon should be hidden"
+      @phenotype_view3.hideDragon.should be_true, "Third dragon should be hidden"
     end
 
     it 'should count how many times it takes to get a correct match' do
@@ -126,6 +150,12 @@ describe "Templates" do
       change_allele_value(@genome_view3, 'b', 'W')
 
       verify_correct_match
+    end
+
+    it 'should hide all of the dragons again' do
+      @phenotype_view1.hideDragon.should be_true, "First dragon should be hidden"
+      @phenotype_view2.hideDragon.should be_true, "Second dragon should be hidden"
+      @phenotype_view3.hideDragon.should be_true, "Third dragon should be hidden"
     end
 
     it 'should complete the challenge after all 4 are matched' do

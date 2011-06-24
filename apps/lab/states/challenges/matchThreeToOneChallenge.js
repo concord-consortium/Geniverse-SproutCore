@@ -135,8 +135,19 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
   
   _hideImages: function(){
     SC.RunLoop.begin();
-    for (var i = 0; i < this.organismViews.length; i++) {
-      this.organismViews[i].set('hideDragon', YES);
+    var i = 0;
+    if (this.successfulMatch) {
+      // hide all of them again
+      for (i = 0; i < this.organismViews.length; i++) {
+        this.organismViews[i].set('hideDragon', YES);
+      }
+    } else {
+      for (i = 0; i < this.incorrectOrganismViews.length; i++) {
+        this.incorrectOrganismViews[i].set('hideDragon', YES);
+      }
+      for (i = 0; i < this.duplicateOrganismViews.length; i++) {
+        this.duplicateOrganismViews[i].set('hideDragon', YES);
+      }
     }
     SC.RunLoop.end();
     for (i = 0; i < this.organismViews.length; i++) {
