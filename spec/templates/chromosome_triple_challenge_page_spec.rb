@@ -1,0 +1,269 @@
+dir = File.expand_path(File.dirname(__FILE__))
+require "#{dir}/../support/spec_helper.rb"
+
+describe "Templates" do
+  describe "Chromosome Triple Challenge Page" do
+
+    before(:all) do
+      start_testing_servers
+      @app = new_test({:app_root_path => "/lab#heredity/challenge/case02"}) {|app|
+        app['isLoaded'] == true
+
+        app.move_to 1, 1 
+        app.resize_to 1024, 768
+
+        define_common_paths(app)
+        app.define_path 'mainPage', "chromosomeTripleChallengePage.mainPane.mainAppView"
+      }
+
+      define_common_ivars
+
+      @genome_view1 = @app['mainPage.genomePanels.genome1Panel.genomeView', 'Geniverse.DragonGenomeView']
+      @switch_sex_button1 = @app['mainPage.genomePanels.genome1Panel.genomeView.switchSexButton', 'SC.ButtonView']
+      @phenotype_view1 = @app['mainPage.genomePanels.genome1Panel.genomeView.dragonView', 'Geniverse.OrganismView']
+
+      @genome_view2 = @app['mainPage.genomePanels.genome2Panel.genomeView', 'Geniverse.DragonGenomeView']
+      @switch_sex_button2 = @app['mainPage.genomePanels.genome2Panel.genomeView.switchSexButton', 'SC.ButtonView']
+      @phenotype_view2 = @app['mainPage.genomePanels.genome2Panel.genomeView.dragonView', 'Geniverse.OrganismView']
+
+      @genome_view3 = @app['mainPage.genomePanels.genome3Panel.genomeView', 'Geniverse.DragonGenomeView']
+      @switch_sex_button3 = @app['mainPage.genomePanels.genome3Panel.genomeView.switchSexButton', 'SC.ButtonView']
+      @phenotype_view3 = @app['mainPage.genomePanels.genome3Panel.genomeView.dragonView', 'Geniverse.OrganismView']
+
+      @match_view = @app['mainPage.targetDrakes', 'Geniverse.MatchView']
+      @reveal_button = @app['mainPage.revealButton', 'SC.ButtonView']
+
+      @chromosome_controller = @app['Geniverse.chromosomeController', 'SC.ObjectController']
+      @match_controller = @app['Geniverse.matchController', 'SC.ArrayController']
+
+      login("student", "password")
+      hide_info_pane
+    end
+
+    after(:all) do
+      stop_testing_servers
+    end
+
+    it "should have a female" do
+      sleep 3
+
+      @phenotype_view1.content.should_not be_nil, "First chromosome view should have a starter dragon"
+      @phenotype_view1.content.sex.should eq(1), "First chromosome view should have a female starter dragon"
+
+      @phenotype_view2.content.should_not be_nil, "Second chromosome view should have a starter dragon"
+      @phenotype_view2.content.sex.should eq(1), "Second chromosome view should have a female starter dragon"
+
+      @phenotype_view3.content.should_not be_nil, "Third chromosome view should have a starter dragon"
+      @phenotype_view3.content.sex.should eq(1), "Third chromosome view should have a female starter dragon"
+    end
+
+    it 'should have all empty pulldowns at the start' do
+      [@genome_view1, @genome_view2, @genome_view3].each do |view|
+        ['a','b'].each do |side|
+          ['t','h'].each do |allele|
+            verify_pulldowns_empty(view, side, allele)
+          end
+        end
+      end
+    end
+
+    it 'should have a disabled reveal button until all alleles are selected' do
+      pending
+    end
+
+    it 'should give an error message when the wrong alleles are selected for all dragons' do
+      [@genome_view1, @genome_view2, @genome_view3].each do |view|
+        ['a','b'].each do |side|
+          ['t','w','H','Fl','Hl'].each do |allele|
+            change_allele_value(view, side, allele)
+          end
+        end
+      end
+
+      [@phenotype_view1, @phenotype_view2, @phenotype_view3].each do |view|
+        verify_images(view, false)
+      end
+      verify_incorrect_match("None of the drakes you have created match the target. Please try again.")
+    end
+
+    it 'should give an error message when the wrong alleles are selected for 2 dragons' do
+      change_allele_value(@genome_view1, 'a', 'W')
+      change_allele_value(@genome_view1, 'b', 'W')
+
+      verify_images(@phenotype_view1, true)
+      [@phenotype_view2, @phenotype_view3].each do |view|
+        verify_images(view, false)
+      end
+      verify_incorrect_match("Only 1 of the drakes you have created match the target. Please try again.")
+    end
+
+    it 'should give an error message when the wrong alleles are selected for 1 dragons' do
+      change_allele_value(@genome_view2, 'a', 'W')
+      change_allele_value(@genome_view2, 'b', 'w')
+
+      verify_images(@phenotype_view1, true)
+      verify_images(@phenotype_view2, true)
+      verify_images(@phenotype_view3, false)
+      verify_incorrect_match("Only 2 of the drakes you have created match the target. Please try again.")
+    end
+
+    it 'should give an error message when more than one dragon shares the same alleles' do
+      change_allele_value(@genome_view3, 'a', 'W')
+      change_allele_value(@genome_view3, 'b', 'w')
+
+      [@phenotype_view1, @phenotype_view2, @phenotype_view3].each do |view|
+        verify_images(view, true)
+      end
+      verify_incorrect_match("Some of your dragons are exactly the same! All of your dragons need to have different alleles.")
+    end
+
+    it 'should count how many times it takes to get a correct match' do
+      pending
+    end
+
+    it 'should match after all dragons are correct and different' do
+      change_allele_value(@genome_view3, 'a', 'w')
+      change_allele_value(@genome_view3, 'b', 'W')
+
+      verify_correct_match
+    end
+
+    it 'should complete the challenge after all 4 are matched' do
+      [@genome_view1, @genome_view2, @genome_view3].each do |view|
+        change_allele_value(view, 'a', 'hl')
+        change_allele_value(view, 'b', 'hl')
+      end
+      verify_correct_match
+
+      [@genome_view1, @genome_view2, @genome_view3].each do |view|
+        change_allele_value(view, 'a', 'h')
+        change_allele_value(view, 'b', 'h')
+      end
+      verify_correct_match
+
+      @switch_sex_button1.click
+      @switch_sex_button2.click
+      @switch_sex_button3.click
+      [@genome_view1, @genome_view2, @genome_view3].each do |view|
+        change_allele_value(view, 'a', 'w')
+        change_allele_value(view, 'b', 'w')
+        change_allele_value(view, 'a', 'fl')
+        change_allele_value(view, 'b', 'fl')
+      end
+
+      change_allele_value(@genome_view1, 'a', 'hl')
+      change_allele_value(@genome_view1, 'b', 'Hl')
+
+      change_allele_value(@genome_view2, 'a', 'Hl')
+      change_allele_value(@genome_view2, 'b', 'hl')
+
+      change_allele_value(@genome_view3, 'a', 'Hl')
+      change_allele_value(@genome_view3, 'b', 'Hl')
+
+      sleep 3
+
+      verify_correct_match
+      verify_challenge_complete
+    end
+
+    def verify_incorrect_match(msg = nil)
+      @reveal_button.click
+
+      sleep 1  # there's a delay before the results pop up
+
+      verify_alert(:error, "Try again", msg)
+    end
+
+    def verify_correct_match
+      [@phenotype_view1, @phenotype_view2, @phenotype_view3].each do |view|
+        verify_images(view, true)
+      end
+
+      @reveal_button.click
+
+      sleep 1  # there's a delay before the results pop up
+
+      verify_alert(:plain, "OK")
+    end
+
+    def verify_challenge_complete
+      verify_alert(:plain, "OK")
+    end
+
+    def verify_images(phenotype_view, should_match)
+      target_url = @match_view.dragonView.content.imageURL
+      target_alleles = @match_view.dragonView.content.alleles
+      source_url = phenotype_view.content.imageURL
+      source_alleles = phenotype_view.content.alleles
+      err_msg = "Image urls should " + (should_match ? "" : "not " ) + "match!\ns: #{source_url}\nt: #{target_url}\ns: #{source_alleles}\nt: #{target_alleles}"
+      if should_match
+        source_url.should eq(target_url), err_msg
+      else
+        source_url.should_not eq(target_url), err_msg
+      end
+    end
+
+    def verify_alert(type, button_title, msg = nil)
+      # should pop up an SC.AlertPane
+      @app.responding_panes.count.should eq(3), "There should be 3 responding panes."
+
+      pane = @app.key_pane Lebowski::Foundation::Panes::AlertPane
+      pane.should_not be_nil, "pane should exist"
+      begin
+        debugger
+        pane.type.should eq(type), "pane should be #{type.to_s}. is: #{pane.type.to_s}"
+        pane.button_count.should eq(1), "pane should only have 1 button."
+        pane.has_button?(button_title).should be_true, "pane should have #{button_title} button."
+
+        pane.description.should eq(msg) if msg
+      ensure
+        pane.click_button button_title
+      end
+    end
+
+    def get_pulldowns(genome_view, side, allele)
+      allelesMap = @chromosome_controller['allelesMap']
+      chromo = allelesMap[allele.downcase]
+      chromo_view = genome_view['chromosome'+side.upcase+chromo+'View']
+      pulldowns = chromo_view.pullDowns.child_views
+      return pulldowns
+    end
+
+    def verify_pulldowns_empty(genome_view, side, allele)
+      pulldowns = get_pulldowns(genome_view, side, allele)
+      pulldowns.count.times do |i|
+        pulldown = pulldowns[i]
+        pulldown['fieldValue'].should == ' '
+      end
+    end
+
+    def change_allele_value(genome_view, side, allele)
+      pulldowns = get_pulldowns(genome_view, side, allele)
+      pulldowns.count.times do |i|
+        pulldown = pulldowns[i]
+        pulldown['objects'].count.times do |j|
+          if pulldown['objects'][j]['value'] == allele
+            # we found the correct pulldown
+            select_option(pulldown, allele)
+            return
+          end
+        end
+      end
+      false.should == true
+    end
+
+    def select_option(pulldown, allele)
+      alleleLabelMap = @chromosome_controller['alleleLabelMap']
+      count = 0
+      while pulldown['fieldValue'] != allele
+        puts "selecting (#{count}): #{allele}"
+        return nil if count > 4
+        # select_with_value turned out to be pretty unreliable. select_with_name seems to work much better
+        pulldown.select_with_name alleleLabelMap[allele] if count > 0
+        sleep 0.5
+        count += 1
+      end
+    end
+
+  end
+end
