@@ -13,6 +13,7 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
   organismViews: [],
   matchedOrganismViews: [],
   duplicateOrganismViews: [],
+  incorrectOrganismViews: [],
   
   enterState: function() { 
     // for now, we assume that there are match dragons
@@ -35,6 +36,7 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
 
     this.matchedOrganismViews = [];
     this.duplicateOrganismViews = [];
+    this.incorrectOrganismViews = [];
 
     var alleleStrs = this.organismViews.map(function(orgView) { return orgView.getPath('content.alleles'); });
     var dupes = alleleStrs.map(function(alleles) {
@@ -51,10 +53,12 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
       var match = matches[i];
       var orgView = this.organismViews[i];
 
-      if (dupe) {
+      if (dupe && match) {
         this.duplicateOrganismViews.push(orgView);
       } else if (match) {
         this.matchedOrganismViews.push(orgView);
+      } else {
+        this.incorrectOrganismViews.push(orgView);
       }
     }
 
@@ -66,6 +70,9 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
       target: this,
       action: function () {
         var numMatched = this.matchedOrganismViews.length;
+        var numDupes = this.duplicateOrganismViews.length;
+        var numIncorrect = this.incorrectOrganismViews.length;
+
         if (numMatched === 3){
           this.successfulMatch = YES;
           SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).plain(
@@ -80,16 +87,9 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
           this.successfulMatch = NO;
           this._resetTargetMatchedState();
 
-          if (this.duplicateOrganismViews.length > 0) {
-            SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).error(
-              "You have some duplicates.",
-              "Some of your dragons are exactly the same! All of your dragons need to have different alleles.",
-              "",
-              "Try again",
-              "",
-              this
-            );
-          } else {
+          // if we only have matches and duplicates, display the message about duplicates.
+          // otherwise, display a message about incorrect dragons.
+          if (numIncorrect > 0) {
             var msg = "";
             if (numMatched === 0) {
               msg = "None of the drakes you have created match the target. Please try again.";
@@ -99,6 +99,15 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
             SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).error(
               "You didn't get all of them.",
               msg,
+              "",
+              "Try again",
+              "",
+              this
+            );
+          } else {
+            SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).error(
+              "You have some duplicates.",
+              "Some of your dragons are exactly the same! All of your dragons need to have different alleles.",
               "",
               "Try again",
               "",
