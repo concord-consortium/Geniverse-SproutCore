@@ -15,11 +15,11 @@ Lab.loggedOut =  Ki.State.extend({
   
   // this and gotoActivity just set this property for later
   gotoHomePage: function() {
-    Lab.statechart.get('loggedIn').startPage = 'home';
+    Lab.statechart.getState('atLocation').startPage = 'home';
   },
 
   gotoActivity: function() {
-    Lab.statechart.get('loggedIn').startPage = 'activity';
+    Lab.statechart.getState('atLocation').startPage = 'activity';
   },
    
   logIn: function() { 

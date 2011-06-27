@@ -4,18 +4,14 @@
 // ==========================================================================
 /*globals Lab Geniverse CcChat window Ki*/
 
-Lab.inHomePage = Ki.State.extend({
+Lab.showingBlogButton =  Ki.State.extend({
   
-  enterState: function() { 
-    Lab.routes.gotoLabRoute({pageName: 'mainPage'});
+  enterState: function() {
   },
   
-  gotoActivity: function() {
-    Lab.statechart.getState('atLocation').startPage = "activity";
-    this.gotoState('inActivity');
+  createBlogPost: function() {
   },
   
   exitState: function() { 
   }
-  
 });

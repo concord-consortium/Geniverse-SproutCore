@@ -72,6 +72,11 @@ Lab.inActivity = Ki.State.extend({
     }
   },
   
+  gotoHomePage: function() {
+    Lab.statechart.getState('atLocation').startPage = "home";
+    this.gotoState('inHomePage');
+  },
+  
   exitState: function() { 
   }
   
