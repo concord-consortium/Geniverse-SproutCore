@@ -66,11 +66,12 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO,
+          showFromLabels: NO,
           showSwitchSex: YES
         })
 
       })
       
-  	})
+    })
 	})
 });

@@ -87,6 +87,7 @@ Geniverse.trainingPage = SC.Page.design({
           hiddenGenes: ['s','p','b'],
           showGenerateNewDragon: NO,
           showIsEditableCheck: YES,
+          showFromLabels: NO,
           showAllelesOutput: YES
         })
 
@@ -117,6 +118,7 @@ Geniverse.trainingPage = SC.Page.design({
           hiddenGenes: ['s','p','b'],
           showGenerateNewDragon: NO,
           showIsEditableCheck: YES,
+          showFromLabels: NO,
           showAllelesOutput: YES
         })
 

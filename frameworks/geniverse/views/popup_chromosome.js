@@ -35,6 +35,16 @@ Geniverse.PopupChromosomeView = SC.PalettePane.extend({
       ignoreUpdate: NO,
       resetDragonOnInit: YES,
       dragon: null,
+      dragonDidChange: function() {
+        var dragon = this.get('dragon');
+        if (!!dragon) {
+          if (dragon.get('bred')) {
+            this.set('showFromLabels', YES);
+            return;
+          }
+        }
+        this.set('showFromLabels', NO);
+      }.observes('dragon'),
       init: function() {
         sc_super();
         // we have to bind in the init function (rather than using

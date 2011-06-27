@@ -72,6 +72,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
             this.set('revealButtonEnabled', this.get('allAllelesSelected'));
           }.observes('allAllelesSelected'),
           showEmptyOptions: YES,
+          showFromLabels: NO,
           startWithEmptyOptions: YES
         })
       }),
