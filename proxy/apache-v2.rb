@@ -9,7 +9,7 @@ apache = ApacheConfig.new {
   x_proxy "/rails/     http://geniverse.dev.concord.org/rails/" 
 # x_proxy "/portal/    http://geniverse-portal.dev.concord.org/" 
 #fakeit 
-x_proxy "/portal/verify_cc_token    http://geniverse-portal.dev.concord.org/fake_token.txt" 
+x_proxy "/portal/verify_cc_token    http://geniverse-portal.dev.concord.org/portal/fake_token.txt" 
   x_proxy "/chat/      http://geniverse.dev.concord.org/chat/"
   x_proxy "/biologica/ http://geniverse.dev.concord.org/biologica/"
   x_proxy "/resources/ http://geniverse.dev.concord.org/resources/"
