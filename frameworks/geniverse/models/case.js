@@ -15,6 +15,7 @@ Geniverse.Case = SC.Record.extend(
 /** @scope Geniverse.Case.prototype */ {
   name: SC.Record.attr(String),
   order: SC.Record.attr(Number, { defaultValue: 1 }),
+  introImageUrl: SC.Record.attr(String),
   activities: SC.Record.toMany("Geniverse.Activity", { inverse: 'myCase' })
 });
 
