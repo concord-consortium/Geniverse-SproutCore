@@ -6,31 +6,27 @@
 
 Lab.loggedIn = Ki.State.extend({
   
-  substatesAreConcurrent: NO,
+  substatesAreConcurrent: YES,
   
-  inHomePage: Ki.State.plugin('Lab.inHomePage'),
-  
-  inActivity: Ki.State.plugin('Lab.inActivity'),
-  
-  startPage: null,
-  
-  enterState: function() { 
-    if (Lab.statechart.get('loggedIn').startPage === "home"){
-      this.gotoHomePage();
-    } else {
-      this.gotoState('inActivity');
+  atLocation: Ki.State.design({
+    
+    substatesAreConcurrent: NO,
+    
+    inHomePage: Ki.State.plugin('Lab.inHomePage'),
+    inActivity: Ki.State.plugin('Lab.inActivity'),
+
+    startPage: null,
+    
+    enterState: function() { 
+      if (Lab.statechart.getState('atLocation').startPage === "home"){
+        Lab.statechart.getState('atLocation').gotoState('inHomePage');
+      } else {
+        Lab.statechart.getState('atLocation').gotoState('inActivity');
+      }
     }
-  },
+  }),
   
-  gotoHomePage: function() {
-    Lab.statechart.get('loggedIn').startPage = "home";
-    this.gotoState('inHomePage');
-  },
-      
-  gotoActivity: function() {
-    Lab.statechart.get('loggedIn').startPage = "activity";
-    this.gotoState('inActivity');
-  },
+  showingBlogButton: Ki.State.plugin('Lab.showingBlogButton'),
   
   logOut: function() { 
     SC.Request.postUrl(Lab.loginController.logoutUrl,null).header({'Accept': 'application/json'}).json()

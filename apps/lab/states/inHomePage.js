@@ -10,6 +10,11 @@ Lab.inHomePage = Ki.State.extend({
     Lab.routes.gotoLabRoute({pageName: 'mainPage'});
   },
   
+  gotoActivity: function() {
+    Lab.statechart.getState('atLocation').startPage = "activity";
+    this.gotoState('inActivity');
+  },
+  
   exitState: function() { 
   }
   
