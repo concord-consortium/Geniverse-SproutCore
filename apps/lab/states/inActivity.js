@@ -21,6 +21,10 @@ Lab.inActivity = Ki.State.extend({
   showingIntroScreen: Ki.State.plugin('Lab.showingIntroScreen'),
   
   enterState: function() { 
+    this.gotoActivity();
+  },
+  
+  gotoActivity: function() {
     Geniverse.activityController.addObserver('content', this, this.activityLoaded);
     Lab.makeFirstResponder(Lab.ACTIVITY);
     Lab.ACTIVITY.gotoActivity();
