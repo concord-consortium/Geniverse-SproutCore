@@ -28,7 +28,7 @@ Geniverse.blogPostController = SC.Controller.create(
       "<b>Evidence</b>" +
       "<p>" +
       "${evidence}</br>" +
-      "${url}" +
+      "<a href='${url}'>${url}</a>" +
       "</p>" +
       "<b>Reasoning</b>" +
       "<p>" +
@@ -36,18 +36,26 @@ Geniverse.blogPostController = SC.Controller.create(
       "</p>";
       
     content = content
-                .replace("${evidence}", this.get('content1'))
-                .replace("${url}", this.get('content2'))
-                .replace("${reasoning}", this.get('content3'));
+                .replace(/\$\{evidence\}/g, this.get('content1'))
+                .replace(/\$\{url\}/g, this.get('content2'))
+                .replace(/\$\{reasoning\}/g, this.get('content3'));
                 
     return content;
   }.property('content1', 'content2', 'content3'),
   
-  blankContent: function() {
+  blogPostView: null,
+  
+  showBlogPane: function() {
+    this.blogPostView = Geniverse.BlogPostView.create();
+    this.blogPostView.append();
+  },
+  
+  hideBlogPane: function() {
     this.set('title', '');
     this.set('content1', '');
     this.set('content2', '');
     this.set('content3', '');
+    this.blogPostView.remove();
   }
 
 }) ;

@@ -24,6 +24,7 @@ Geniverse.BlogPostView = SC.PalettePane.design({
       value: 'Post to the Blog',
       controlSize: "bity",
       fontWeight: SC.BOLD_WEIGHT,
+      controlSize: SC.LARGE_CONTROL_SIZE,
       textAlign: SC.ALIGN_CENTER,
       classNames: "sc-pane sc-main sc-theme".w()
     }),

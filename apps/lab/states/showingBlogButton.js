@@ -2,7 +2,7 @@
 // Project:   Lab
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Lab Geniverse CcChat window Ki*/
+/*globals Lab Geniverse CcChat window Ki SC*/
 
 Lab.showingBlogButton =  Ki.State.extend({
   
@@ -24,16 +24,12 @@ Lab.showingBlogButton =  Ki.State.extend({
   
   showingBlogPostPanel: Ki.State.design({
     
-    blogPostView: null,
-    
     enterState: function() {
-      this.blogPostView = Geniverse.BlogPostView.create();
-      this.blogPostView.append();
+      Geniverse.blogPostController.showBlogPane();
     },
     
     exitState: function() {
-      Geniverse.blogPostController.blankContent();
-      this.blogPostView.remove();
+      Geniverse.blogPostController.hideBlogPane();
     },
     
     post: function() {
@@ -57,7 +53,33 @@ Lab.showingBlogButton =  Ki.State.extend({
         post_content: content
       };
       
-      SC.Request.postUrl("/portal/blog/post_blog").json().send(data);
+      SC.Request.postUrl("/portal/blog/post_blog").json().notify(this, '_showConfirmation').send(data);
+    },
+    
+    _showConfirmation: function(response){
+      if (SC.ok(response)) {
+        var match = response.rawRequest.response.match(/<int>(.*)<\/int>/);
+        if (match.length > 0) {
+          var postId = match[1];
+          var className = Geniverse.userController.get('className');
+          var postURL = "http://geniverse.buddypress.staging.concord.org/" + className + "/?p=" + postId;
+          SC.AlertPane.extend({
+            layout: {top: 0, centerX: 0, width: 300, height: 100 },
+            displayDescription: function() {
+              var desc = this.get('description');
+              if (!desc || desc.length === 0) {return desc;} 
+              return '<p class="description">' + desc.split('\n').join('</p><p class="description">') + '</p>';
+            }.property('description').cacheable()
+          }).plain(
+            "Blog post successfully created", 
+            "Your latest post can be found <a target='_blank' href='"+postURL+"'>here</a>.<br/>(Link will open in a new tab) ",
+            "",
+            "OK",
+            "",
+            this
+          );
+        }
+      }
     }
   })
   
