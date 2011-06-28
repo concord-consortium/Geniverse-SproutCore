@@ -54,7 +54,7 @@ Lab.inActivity = Ki.State.extend({
     this.enablePreviousNavButton((!!Geniverse.activityController.getPreviousActivity()));
     this.enableNextNavButton((!!Geniverse.activityController.getNextActivity()));
 
-    if (Geniverse.activityController.get('myCaseOrder') === 1) {
+    if (Geniverse.activityController.get('myCaseOrder') === 1 && !!Geniverse.introScreenController.get('imageUrl')) {
       this.get('showingIntroScreen').gotoState('showingIntroScreenPanel');
     }
   },

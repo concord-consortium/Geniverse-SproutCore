@@ -36,6 +36,8 @@ Geniverse.activityController = SC.ObjectController.create(
         } else {
           myCase.addObserver('status', this, setIntroImageUrl);
         }
+      } else {
+        Geniverse.introScreenController.set('imageUrl', null);
       }
   }.observes('*content'),
   
