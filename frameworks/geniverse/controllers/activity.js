@@ -25,7 +25,17 @@ Geniverse.activityController = SC.ObjectController.create(
   // grab this from DB now, so it's around when we need it
   initCase: function() {
       var myCase = this.get('myCase');
-  }.observes('content'),
+      var setIntroImageUrl = function() {
+        myCase.removeObserver('status', this, setIntroImageUrl);
+        SC.Logger.info("Setting intro screen url: ", myCase.get('introImageUrl'));
+        Geniverse.introScreenController.set('imageUrl', myCase.get('introImageUrl'));
+      };
+      if (myCase.get('status') & SC.READY) {
+        setIntroImageUrl();
+      } else {
+        myCase.addObserver('status', this, setIntroImageUrl);
+      }
+  }.observes('*content'),
   
   // converts a string in the form "[{m: 'a:h,b:h', f: 'a:H,b:H'}, {...}]" into
   // an array of initial alleles for rooms
