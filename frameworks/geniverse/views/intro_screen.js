@@ -5,20 +5,17 @@
 /*globals Geniverse */
 
 Geniverse.IntroScreenView = SC.PanelPane.design({
+  layout: {top: 5, left: 5, bottom: 5, right: 5 },
   isModal: YES,
 
   defaultResponder: 'Lab.statechart',
 
   contentView: SC.View.extend({
-    childViews: 'titleView imageView hideButton'.w(),
-
-    titleView: SC.LabelView.design({
-      layout: { height: 24, left: 0, top:0, width: 200 },
-      value: 'Introduction',
-      controlSize: "bity",
-      fontWeight: SC.BOLD_WEIGHT,
-      textAlign: SC.ALIGN_LEFT,
-      classNames: "sc-pane sc-main sc-theme".w()
+    childViews: 'background imageView hideButton'.w(),
+    // separate parallel background so we don't make the rest of the childViews see-through
+    background: SC.View.design({
+      layout: {top: 0, left: 0, right: 0, bottom: 0},
+      classNames: ['genome-view-intro']
     }),
 
     hideButton: SC.ButtonView.extend({
@@ -28,7 +25,7 @@ Geniverse.IntroScreenView = SC.PanelPane.design({
     }),
 
     imageView: SC.ImageView.design({
-      layout: { left: 5, top: 29, right: 5, bottom: 34 },
+      layout: { left: 5, top: 5, right: 5, bottom: 34 },
       valueBinding: "Geniverse.introScreenController.imageUrl"
     })
 
