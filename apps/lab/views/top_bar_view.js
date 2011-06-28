@@ -35,6 +35,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
   welcomeLabelView: null,
   navBarRight: null,
   logoutButton: null,
+  blogButton: null,
   notepadButton: null,
   journalButton: null,
   helpButton: null,
@@ -169,16 +170,27 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.navBarRight = this.createChildView(
       SC.ImageView.design({
-        layout: { centerY: 0, right: 0, width: 174, height: 38 },
+        layout: { centerY: 0, right: 0, width: 208, height: 38 },
         layerId: 'navBarRight',
         value: static_url('navbar-right.png')
       })
     );
     childViews.push(this.navBarRight);
 
-    // this.infoButton = this.createChildView(
-    //   Lab.InfoButtonView.design()
-    // );
+    this.blogButton = this.createChildView(
+      SC.ImageView.design(Lab.SimpleButton, {
+        layout: { centerY: 0, right: 175, width: 27, height: 26 },
+        layerId: 'blogButton',
+        hasHover: YES,
+        alt: 'Create Blog Post',
+        title:  "Create a blog post",
+        toolTip: "Create a blog post",
+        target: Lab.statechart,
+        action: 'showBlogPostPanel'
+      })
+    );
+    childViews.push(this.blogButton);
+    
     this.infoButton = this.createChildView(
       SC.ImageView.design(Lab.SimpleButton, {
         layout: { centerY: 0, right: 141, width: 27, height: 26 },
