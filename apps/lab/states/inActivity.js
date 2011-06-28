@@ -6,12 +6,19 @@
 
 Lab.inActivity = Ki.State.extend({
   
-  substatesAreConcurrent: NO,
+  substatesAreConcurrent: YES,
   
-  matchOneAtATimeChallenge: Ki.State.plugin('Lab.matchOneAtATimeChallenge'),
-  matchThreeToOneChallenge: Ki.State.plugin('Lab.matchThreeToOneChallenge'),
-  
-  currentChallenge: null,
+  challengeState: Ki.State.design({
+    substatesAreConcurrent: NO,
+    initialSubstate: 'defaultChallenge',
+    matchOneAtATimeChallenge: Ki.State.plugin('Lab.matchOneAtATimeChallenge'),
+    matchThreeToOneChallenge: Ki.State.plugin('Lab.matchThreeToOneChallenge'),
+    defaultChallenge: Ki.State.plugin('Lab.defaultChallenge'),
+
+    currentChallenge: null
+  }),
+
+  showingIntroScreen: Ki.State.plugin('Lab.showingIntroScreen'),
   
   enterState: function() { 
     Geniverse.activityController.addObserver('content', this, this.activityLoaded);
@@ -25,7 +32,7 @@ Lab.inActivity = Ki.State.extend({
     var pageType = Geniverse.activityController.get('pageType');
     var challengeType = Lab[pageType].get('challengeType');
     if (!!challengeType) {
-      this.gotoState(challengeType);
+      this.get('challengeState').gotoState(challengeType);
     }
     
     if (!!Geniverse.activityController.get('myCase')) {
@@ -42,6 +49,10 @@ Lab.inActivity = Ki.State.extend({
     
     this.enablePreviousNavButton((!!Geniverse.activityController.getPreviousActivity()));
     this.enableNextNavButton((!!Geniverse.activityController.getNextActivity()));
+
+    if (Geniverse.activityController.get('myCaseOrder') === 1) {
+      this.get('showingIntroScreen').gotoState('showingIntroScreenPanel');
+    }
   },
   
   enablePreviousNavButton: function(enable) {
