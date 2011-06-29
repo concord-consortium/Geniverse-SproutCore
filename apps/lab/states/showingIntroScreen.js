@@ -24,7 +24,9 @@ Lab.showingIntroScreen =  Ki.State.extend({
 
     enterState: function() {
       this.set('infoPaneShouldBeHidden', YES);
-      this.introScreenView = Geniverse.IntroScreenView.create();
+      this.introScreenView = Geniverse.IntroScreenView.create({
+        layerId: "introScreenView"
+      });
       this.introScreenView.append();
     },
 

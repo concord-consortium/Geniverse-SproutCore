@@ -6,7 +6,8 @@ cases = []
     
 cases << { :id=>1,
   :name=>"Case 1",
-  :order=>1
+  :order=>1,
+  :introImageUrl=>"http://geniverse.dev.concord.org/resources/character_sketches.jpg"
   }
   
   cases.each do |c|
