@@ -16,7 +16,7 @@ Geniverse.BlogPostView = SC.PalettePane.design({
   
   
   contentView: SC.View.extend({
-    childViews: 'titleView blogTitleView blogPostView1 blogPostView2 blogPostView3 cancelButton hideButton'.w(),
+    childViews: 'titleView blogTitleView blogPostView1 blogPostView2 blogPostView3 cancelButton postButton'.w(),
 
     titleView: SC.LabelView.design({
       layout: { centerY: 0, height: 24, left: 0, top:0, width: 440 },
@@ -35,7 +35,7 @@ Geniverse.BlogPostView = SC.PalettePane.design({
       action: "closePanel"
     }),
 
-    hideButton: SC.ButtonView.extend({
+    postButton: SC.ButtonView.extend({
       layout: { bottom: 5, right: 5, width: 200, height: 24 },
       title: "Post",
       action: "post"
