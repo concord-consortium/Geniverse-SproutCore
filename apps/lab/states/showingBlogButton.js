@@ -58,7 +58,7 @@ Lab.showingBlogButton =  Ki.State.extend({
     
     _showConfirmation: function(response){
       if (SC.ok(response)) {
-        var match = response.rawRequest.response.match(/<int>(.*)<\/int>/);
+        var match = response.rawRequest.responseText.match(/<int>(.*)<\/int>/);
         if (match.length > 0) {
           var postId = match[1];
           var className = Geniverse.userController.get('className');
