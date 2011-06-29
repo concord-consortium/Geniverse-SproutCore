@@ -15,6 +15,8 @@ dir = File.expand_path(File.dirname(__FILE__))
 
 require "#{dir}/helpers.rb"
 
+USE_CHROME = ENV['USE_CHROME'] || false
+
 include Helpers
 
 include Lebowski::Foundation
@@ -32,15 +34,13 @@ TEST_SETTINGS = {
   :app_server_port => APACHE_PORT,
   :selenium_server_host => "127.0.0.1",
   :selenium_server_port => SELENIUM_PORT,
-  # :browser => "*googlechrome"
-  :browser => :firefox
+  :browser => (USE_CHROME ? "*googlechrome" : :firefox)
 }
 
 SELENIUM_TEST_SETTINGS = {
   :host => "localhost",
   :port => SELENIUM_PORT,
-  :browser => "*firefox",
-  # :browser => "*googlechrome",
+  :browser => (USE_CHROME ? "*googlechrome" : "*firefox"),
   :url => "http://127.0.0.1:#{APACHE_PORT}/rails/",
   :timeout_in_seconds => 60
 }
