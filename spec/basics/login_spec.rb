@@ -3,7 +3,8 @@ require "#{dir}/../support/spec_helper.rb"
 
 describe "Login" do
   before(:all) do
-    start_testing_servers
+    # start servers and don't use fake authentication
+    start_testing_servers(false)
     @app = new_test {|app|
       app['isLoaded'] == true
 
@@ -13,7 +14,8 @@ describe "Login" do
       define_common_paths(app)
     }
     
-    define_common_ivars  
+    # don't skip the login vars
+    define_common_ivars(false)
   end
   
   after(:all) do

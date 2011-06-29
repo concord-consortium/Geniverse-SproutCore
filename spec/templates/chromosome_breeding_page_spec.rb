@@ -31,7 +31,6 @@ describe "Templates" do
 
       @chromosome_controller = @app['Geniverse.chromosomeController', 'SC.ObjectController']
 
-      login("student", "password")
       hide_info_pane
     end
 

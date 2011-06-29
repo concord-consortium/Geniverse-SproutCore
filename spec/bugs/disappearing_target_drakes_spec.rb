@@ -15,8 +15,6 @@ describe "Disappearing Target Drakes" do
     }
 
     define_common_ivars
-
-    login("student", "password")
   end
 
   after(:all) do

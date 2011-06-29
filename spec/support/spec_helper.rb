@@ -145,12 +145,13 @@ def send_signal(pid, signal)
   Process.wait(pid)
 end
 
-def start_apache
+def start_apache(fake_authentication = true)
   @apache = ApacheConfig.new {
     x_instance_home File.expand_path(File.dirname(__FILE__))
     x_port APACHE_PORT
     x_host '127.0.0.1'
-    x_proxy "/portal/blog/post_blog    http://www.concord.org/~sfentress/dummy_blog_response.txt"
+    x_proxy "/portal/blog/post_blog    http://geniverse.dev.concord.org/portal/dummy_blog_response.txt"
+    x_proxy "/portal/verify_cc_token   http://geniverse.dev.concord.org/portal/fake_token.txt" if fake_authentication
     x_proxy "/portal/    http://geniverse-portal.dev.concord.org/portal/"
     x_proxy "/biologica/ http://geniverse.dev.concord.org/biologica/"
     x_proxy "/chat/      http://geniverse.dev.concord.org/chat/"
@@ -166,7 +167,7 @@ def stop_apache
   @apache.controller.stop
 end
 
-def start_testing_servers
+def start_testing_servers(fake_authentication = true)
   begin
     $commands.keys.each do |command|
       start_command(command)
@@ -177,7 +178,7 @@ def start_testing_servers
   end
 
   sleep 10
-  start_apache
+  start_apache(fake_authentication)
 end
 
 def stop_testing_servers

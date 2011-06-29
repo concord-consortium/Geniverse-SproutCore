@@ -3,7 +3,7 @@ require "#{dir}/../support/spec_helper.rb"
 
 describe "Blog post" do
   before(:all) do
-    start_testing_servers
+    start_testing_servers(false)
     @app = new_test {|app|
       app['isLoaded'] == true
 
@@ -13,7 +13,7 @@ describe "Blog post" do
       define_common_paths(app)
     }
     
-    define_common_ivars  
+    define_common_ivars(false)
     @blog_button = @app['topBar.blogButton', 'SC.ImageView']
   end
   

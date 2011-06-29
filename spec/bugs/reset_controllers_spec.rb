@@ -16,7 +16,6 @@ describe "Navigating pages resets controllers" do
 
     define_common_ivars
 
-    login("student", "password")
     # navigate to an activity
     # click case log
     @app['topBar.caseLogButton', 'SC.ImageView'].click

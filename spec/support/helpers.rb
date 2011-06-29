@@ -9,14 +9,16 @@ module Helpers
     app.define_framework 'Geniverse', 'Geniverse'
   end
 
-  def define_common_ivars
+  def define_common_ivars(skip_login = true)
     @welcome_label = @app['topBar.welcomeLabelView', 'SC.LabelView']
     @logout_button = @app['topBar.logoutButton', 'SC.ImageView']
     
-    @login_field = @app['loginPage.usernameView', 'SC.TextFieldView']
-    @password_field = @app['loginPage.passwordView', 'SC.TextFieldView']
-    @login_button = @app['loginPage.loginButtonView', 'SC.ButtonView']
-    @login_prompt = @app['loginPage.welcomeView', 'SC.LabelView']
+    unless skip_login
+      @login_field = @app['loginPage.usernameView', 'SC.TextFieldView']
+      @password_field = @app['loginPage.passwordView', 'SC.TextFieldView']
+      @login_button = @app['loginPage.loginButtonView', 'SC.ButtonView']
+      @login_prompt = @app['loginPage.welcomeView', 'SC.LabelView']
+    end
   end
 
   def login(username="student", password="password", initial_message="please log in")

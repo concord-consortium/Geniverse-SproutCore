@@ -28,8 +28,6 @@ describe "Navigation" do
       @forward_button_blocked = @app['mainPane.bottomBar.navBarRightArrowRed', 'SC.ImageView']
       
       @pageTitle = @app['mainPane.topBar.geniverseLabelView', 'SC.LabelView']
-
-      login("student", "password")
     end
 
     after(:all) do

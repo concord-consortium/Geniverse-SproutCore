@@ -42,7 +42,6 @@ describe "Articles" do
     @mother_view = @app['breedPage.breedView.motherView', 'Geniverse.OrganismView']
     @father_view = @app['breedPage.breedView.fatherView', 'Geniverse.OrganismView']
 
-    login("student", 'password')
     hide_info_pane
   end
 

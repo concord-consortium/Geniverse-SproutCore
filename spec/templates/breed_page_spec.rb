@@ -32,7 +32,6 @@ describe "Breeding Page" do
 
     @chromosome_tool_controller = @app['Geniverse.chromosomeToolController', 'SC.Controller']
 
-    login("student", "password")
     hide_info_pane
   end
   
