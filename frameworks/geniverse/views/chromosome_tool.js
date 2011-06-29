@@ -16,20 +16,18 @@ Geniverse.ChromosomeToolView = SC.ButtonView.extend(
   title: "",
   icon: sc_static('magnifying-glass.png'),
   classNames: 'chromosome-tool',
+  
+  selectionBinding: 'Geniverse.allSelectedDragonsController.selection',
 
   action: function() {
     var selectionSet = this.get('selection');
-    if (selectionSet.get('length') < 1) {
-      SC.AlertPane.info("", 'You must select a dragon first!');
-    } else if (selectionSet.get('length') > 1) {
+    if (selectionSet.get('length') > 1) {
       SC.AlertPane.info("", 'You can only view the chromosomes of one dragon at a time!');
     } else {
       Geniverse.chromosomeToolController.showPane();
     }
   },
   
-  // FIXME: These three selection bindings are silly.
-  // Will turn into an array, once I work out how...
   selectionDidChange: function() {
     var selectionSet = this.get('selection');
     if (selectionSet.get('length') < 1 || selectionSet.get('length') > 1) {
@@ -38,26 +36,6 @@ Geniverse.ChromosomeToolView = SC.ButtonView.extend(
       var dragon = selectionSet.firstObject();
       Geniverse.chromosomeToolController.set('dragon', dragon);
     }
-  }.observes('selection'),
-  
-  selection1DidChange: function() {
-    var selectionSet = this.get('selection1');
-    if (selectionSet.get('length') < 1 || selectionSet.get('length') > 1) {
-      Geniverse.chromosomeToolController.set('dragon', null);
-    } else {
-      var dragon = selectionSet.firstObject();
-      Geniverse.chromosomeToolController.set('dragon', dragon);
-    }
-  }.observes('selection1'),
-  
-  selection2DidChange: function() {
-    var selectionSet = this.get('selection2');
-    if (selectionSet.get('length') < 1 || selectionSet.get('length') > 1) {
-      Geniverse.chromosomeToolController.set('dragon', null);
-    } else {
-      var dragon = selectionSet.firstObject();
-      Geniverse.chromosomeToolController.set('dragon', dragon);
-    }
-  }.observes('selection1')
+  }.observes('selection')
 
 });

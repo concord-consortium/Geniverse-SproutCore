@@ -46,10 +46,7 @@ Lab.breedingPageGroup = SC.Page.design({
       }),
       
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { left:45, top: 20, width: 35, height: 30 },
-        selectionBinding: 'Geniverse.challengePoolController.selection',
-        selection1Binding: 'Geniverse.eggsController.selection',
-        selection2Binding: 'Geniverse.stableOrganismsController.selection'
+        layout: { left:45, top: 20, width: 35, height: 30 }
       }),
       
       breedView: Geniverse.BreedDragonView.design({

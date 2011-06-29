@@ -9,7 +9,7 @@ Geniverse.PopupChromosomeView = SC.PalettePane.extend({
   isModal:NO,
   classNames: ['popup-chromosome-view'],
   contentView: SC.View.design({
-    childViews: 'titleView chromosomeView hideButton'.w(),
+    childViews: 'titleView noticeLabel chromosomeView hideButton'.w(),
 
     titleView: SC.LabelView.design({
       layout: { centerY: 0, height: 24, left: 0, top:0, width: 488 },
@@ -19,6 +19,19 @@ Geniverse.PopupChromosomeView = SC.PalettePane.extend({
       fontWeight: SC.BOLD_WEIGHT,
       textAlign: SC.ALIGN_CENTER,
       classNames: "sc-pane sc-main sc-theme".w()
+    }),
+    
+    noticeLabel: SC.LabelView.design({
+      layout: { centerY: 0, height: 24, left: 0, top:24, width: 488 },
+      //valueBinding: this.get('titlePath'),
+      value: 'Select a drake to see its traits',
+      controlSize: SC.LARGE_CONTROL_SIZE,
+      fontWeight: SC.BOLD_WEIGHT,
+      textAlign: SC.ALIGN_CENTER,
+      dragonBinding: 'Geniverse.chromosomeToolController.dragon',
+      isVisible: function() {
+        return !Geniverse.chromosomeToolController.get("dragon");
+      }.property('dragon')
     }),
 
     hideButton: SC.ButtonView.design({
