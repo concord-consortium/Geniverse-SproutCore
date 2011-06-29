@@ -139,18 +139,6 @@ describe "Templates" do
       end
     end
 
-    def verify_alert(type, button_title)
-      # should pop up an SC.AlertPane
-      @app.responding_panes.count.should eq(3), "There should be 3 responding panes."
-
-      pane = @app.key_pane Lebowski::Foundation::Panes::AlertPane
-      pane.should_not be_nil, "pane should exist"
-      pane.type.should eq(type), "pane should be #{type.to_s}. is: #{pane.type.to_s}"
-      pane.button_count.should eq(1), "pane should only have 1 button."
-      pane.has_button?(button_title).should be_true, "pane should have #{button_title} button."
-      pane.click_button button_title
-    end
-
     def get_pulldowns(side, allele)
       allelesMap = @chromosome_controller['allelesMap']
       chromo = allelesMap[allele.downcase]
