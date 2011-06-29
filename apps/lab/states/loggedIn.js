@@ -28,6 +28,8 @@ Lab.loggedIn = Ki.State.extend({
   
   showingBlogButton: Ki.State.plugin('Lab.showingBlogButton'),
   
+  warningUserBeforeLeaving: Ki.State.plugin('Lab.warningUserBeforeLeaving'),
+  
   logOut: function() { 
     SC.Request.postUrl(Lab.loginController.logoutUrl,null).header({'Accept': 'application/json'}).json()
       .notify(this, function(){

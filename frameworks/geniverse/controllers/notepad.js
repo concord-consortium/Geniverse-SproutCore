@@ -2,7 +2,7 @@
 // Project:   Geniverse.notepadController
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Geniverse */
+/*globals Geniverse Lab */
 
 /** @class
 
@@ -41,6 +41,10 @@ Geniverse.notepadController = SC.ObjectController.create(
         this.updateView(this.get('content'));
         this.set('isEnabledButton', NO);
       }
+      
+      // this should be refactored into a Geniverse statechart at some point
+      Lab.statechart.sendAction('warnUserBeforeLeaving');
+      
     }else {
       SC.AlertPane.error("", "You must be logged in first to use your Note Pad.");
     }
@@ -85,6 +89,8 @@ Geniverse.notepadController = SC.ObjectController.create(
     var receiver = this.pane.remove();
 //    console.log("this.pane.remove() returned receiver:", receiver);
     this.set('isEnabledButton', YES);
+    
+    Lab.statechart.sendAction('dontWarnUserBeforeLeaving');
   },
 
   commitAndRemoveView: function (){
@@ -103,6 +109,8 @@ Geniverse.notepadController = SC.ObjectController.create(
     var receiver = this.pane.remove();
     //console.log("this.pane.remove() returned receiver:", receiver);
     this.set('isEnabledButton', YES);
+    
+    Lab.statechart.sendAction('dontWarnUserBeforeLeaving');
   },
 
   updateView: function (newValue) {
