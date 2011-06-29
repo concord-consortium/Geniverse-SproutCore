@@ -7,6 +7,8 @@ module Helpers
     app.define_path 'bottomBar', 'mainPage.mainPane.bottomBar', View
 
     app.define_framework 'Geniverse', 'Geniverse'
+    
+    app.define_path 'blogPostView', 'Geniverse.blogPostController.blogPostView'
   end
 
   def define_common_ivars(skip_login = true)
