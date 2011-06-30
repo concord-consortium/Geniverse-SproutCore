@@ -54,8 +54,7 @@ Lab.breedingPagePaper = SC.Page.design({
       
       
       breedingChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { left: 570, top: 70, width: 35, height: 40 },
-        selectionBinding: 'Geniverse.eggsController.selection'
+        layout: { left: 570, top: 70, width: 35, height: 40 }
       }),
       
       marketplaceView: SC.ImageView.design({

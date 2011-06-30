@@ -21,7 +21,7 @@ Geniverse.BlogPostView = SC.PalettePane.design({
     titleView: SC.LabelView.design({
       layout: { centerY: 0, height: 24, left: 0, top:0, width: 440 },
       //valueBinding: this.get('titlePath'),
-      value: 'Post to the Blog',
+      value: 'Post to the Journal',
       controlSize: "bity",
       fontWeight: SC.BOLD_WEIGHT,
       controlSize: SC.LARGE_CONTROL_SIZE,
