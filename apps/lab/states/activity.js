@@ -310,7 +310,7 @@ Lab.ACTIVITY = SC.Responder.create(
       controller.set('content', dragons);
       var dragonsRequired = self.getOrganismConfigurations(isMatchDragons).length;
       var currentDragons = controller.get('content').length();
-      if (currentDragons != dragonsRequired) {
+      if ((Geniverse.NEVER_SAVE_MATCH_DRAGONS && isMatchDragons) || currentDragons != dragonsRequired) {
         SC.Logger.info("Regenerating dragons for "+isMatchDragons);
         // get rid of existing drakes
         SC.RunLoop.begin();
