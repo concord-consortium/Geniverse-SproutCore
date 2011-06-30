@@ -91,8 +91,8 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             displayChallengeDragon: YES,
             showGenerateNewDragon: NO,
             showIsEditableCheck: NO,
-            showEmptyOptions: YES,
-            startWithEmptyOptions: YES,
+            showEmptyOptions: NO,
+            startWithEmptyOptions: NO,
             showFromLabels: NO
           })
         }),
@@ -134,8 +134,8 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             displayChallengeDragon: YES,
             showGenerateNewDragon: NO,
             showIsEditableCheck: NO,
-            showEmptyOptions: YES,
-            startWithEmptyOptions: YES,
+            showEmptyOptions: NO,
+            startWithEmptyOptions: NO,
             showFromLabels: NO
           })
         }),
@@ -177,8 +177,8 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             displayChallengeDragon: YES,
             showGenerateNewDragon: NO,
             showIsEditableCheck: NO,
-            showEmptyOptions: YES,
-            startWithEmptyOptions: YES,
+            showEmptyOptions: NO,
+            startWithEmptyOptions: NO,
             showFromLabels: NO
           })
         })

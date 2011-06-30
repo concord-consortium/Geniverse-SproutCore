@@ -71,9 +71,9 @@ Lab.chromosomeChallengePage = SC.Page.design({
           revealButtonNeedsEnabled: function() {
             this.set('revealButtonEnabled', this.get('allAllelesSelected'));
           }.observes('allAllelesSelected'),
-          showEmptyOptions: YES,
+          showEmptyOptions: NO,
           showFromLabels: NO,
-          startWithEmptyOptions: YES
+          startWithEmptyOptions: NO
         })
       }),
 
