@@ -39,6 +39,13 @@ Lab.showingBlogButton =  Ki.State.extend({
       
       this._showWaitDialog();
       
+      this._failureTimer = SC.Timer.schedule({
+			  target: this,
+			  action: '_showFailureMessage',
+			  interval: 10000,
+			  repeats: NO
+		  });
+      
       this.closePanel();
     },
     
@@ -74,8 +81,32 @@ Lab.showingBlogButton =  Ki.State.extend({
       );
     },
     
+    _failureTimer: null,
+    
+    _showFailureMessage: function() {
+      this._waitDialog.dismiss();
+      SC.AlertPane.extend({
+        layout: {top: 0, centerX: 0, width: 400, height: 100 }
+      }).show(
+        "Error posting to the journal", 
+        "Your post doesn't seem to have reached the journal. Please check your internet connection and try again.",
+        "",
+        "OK",
+        this
+      );
+      
+      Geniverse.blogPostController.restoreBlogPost();
+    },
+    
+    // delegate for _showFailureMessage alertPane
+    alertPaneDidDismiss: function() {
+      Lab.statechart.getState('showingBlogButton').gotoState('showingBlogPostPanel');
+    },
+    
     _showConfirmation: function(response){
       this._waitDialog.dismiss();
+      this.get('_failureTimer').invalidate();
+      
       if (SC.ok(response)) {
         var match = response.rawRequest.responseText.match(/<int>(.*)<\/int>/);
         if (match.length > 0) {
