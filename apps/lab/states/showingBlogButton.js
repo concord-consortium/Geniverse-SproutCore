@@ -2,7 +2,7 @@
 // Project:   Lab
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Lab Geniverse CcChat window Ki SC*/
+/*globals Lab Geniverse CcChat window Ki SC static_url*/
 
 Lab.showingBlogButton =  Ki.State.extend({
   
@@ -37,6 +37,8 @@ Lab.showingBlogButton =  Ki.State.extend({
       var content = Geniverse.blogPostController.get('content');
       this._postToWPBlog(title, content);
       
+      this._showWaitDialog();
+      
       this.closePanel();
     },
     
@@ -56,7 +58,24 @@ Lab.showingBlogButton =  Ki.State.extend({
       SC.Request.postUrl("/portal/blog/post_blog").json().notify(this, '_showConfirmation').send(data);
     },
     
+    _waitDialog: null,
+    
+    _showWaitDialog: function() {
+      this._waitDialog = SC.AlertPane.extend({
+        layout: {top: 0, centerX: 0, width: 300, height: 100 }
+      }).show(
+        "", 
+        "Posting to the journal...",
+        "",
+        "Dismiss",
+        "",
+        "",
+        'spinner-icon-48'
+      );
+    },
+    
     _showConfirmation: function(response){
+      this._waitDialog.dismiss();
       if (SC.ok(response)) {
         var match = response.rawRequest.responseText.match(/<int>(.*)<\/int>/);
         if (match.length > 0) {
@@ -64,19 +83,19 @@ Lab.showingBlogButton =  Ki.State.extend({
           var className = Geniverse.userController.get('className');
           var postURL = "http://geniverse.buddypress.staging.concord.org/" + className + "/?p=" + postId;
           SC.AlertPane.extend({
-            layout: {top: 0, centerX: 0, width: 300, height: 100 },
+            layout: {top: 0, centerX: 0, width: 360, height: 100 },
             displayDescription: function() {
               var desc = this.get('description');
               if (!desc || desc.length === 0) {return desc;} 
               return '<p class="description">' + desc.split('\n').join('</p><p class="description">') + '</p>';
             }.property('description').cacheable()
           }).plain(
-            "Blog post successfully created", 
+            "Journal post successfully created", 
             "Your latest post can be found <a target='_blank' href='"+postURL+"'>here</a>.<br/>(Link will open in a new tab) ",
             "",
             "OK",
             "",
-            this
+            ""
           );
         }
       }
