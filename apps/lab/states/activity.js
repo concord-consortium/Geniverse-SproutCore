@@ -387,6 +387,7 @@ Lab.ACTIVITY = SC.Responder.create(
     Geniverse.breedDragonController.reset();
     Geniverse.articleController.set('article', null);
     Geniverse.articleController.set('started', NO);
+    Geniverse.scoringController.resetScore();
 
     Lab.infoController.removeView();  // be sure to hide any open info panes
 
