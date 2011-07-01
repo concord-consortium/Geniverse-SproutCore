@@ -31,15 +31,7 @@ Geniverse.StatsView = SC.View.extend(
     traitPulldown: SC.SelectFieldView.design({
       layout: { top: 20, left: 60, height: 25, width: 80 },
         
-      objects: [
-        { title: "Horns" },
-        { title: "Wings" },
-        { title: "Forelimbs" },
-        { title: "Hindlimbs" },
-        { title: "Armor" },
-        { title: "Tail" },
-        { title: "Color" }
-      ],
+      objectsBinding: 'Geniverse.statisticsController.traitList',
      
       nameKey: 'title',
       valueKey: 'title'
@@ -47,77 +39,85 @@ Geniverse.StatsView = SC.View.extend(
     
     statsView: SC.View.design({
       
-      layout: { top: 60, left: 20, right: 0, bottom: 0 },
+      layout: { top: 60, left: 10, right: 0, bottom: 0 },
       
       dragonsBinding: '*parentView.content',
-      
-      dragonsObserver: function() {
-        if (this.get('isVisible')){
-          var trait = this.getPath('parentView.traitPulldown.value');
-          if (!trait){
-            return;
-          }
-          var dragonGroups = {};
-          
-          var dragons = this.get('dragons');
-          dragons.forEach(function(dragon){
-            var characteristic = dragon.characteristicValue(trait);
-            var sex = dragon.sexAsString();
-            if (!dragonGroups[characteristic]){
-              dragonGroups[characteristic] = {};
-              dragonGroups[characteristic].Male = 0;
-              dragonGroups[characteristic].Female = 0;
-            }
-            dragonGroups[characteristic][sex] = dragonGroups[characteristic][sex] + 1;
-          },this);
-          this.set('dragonGroups',dragonGroups);    //{'Horns': {'male': 10, 'female': 5}, 'No horns': {'male': 0, 'female': 5}}
-        }
-      }.observes('*dragons.[]', '*parentView.traitPulldown.value'),
-      
-      dragonGroups: {},
-      
-      displayProperties: ['dragonGroups'],
-      
-      
-      render: function(context, firstTime) {
-        if (!this.get('dragons') || this.get('dragons').get('length') < 1){
-          return;
-        }
-        var dragonGroups = this.get('dragonGroups');
-        var dragonsSize = this.get('dragons').get('length');
-        
-        context = context.begin('table').attr('style','border: 0');
-        
-          context = context.begin('tr');
-            context = context.begin('th').push("").attr('style','border: 0').end();
-            context = context.begin('th').push("Total").end();
-            context = context.begin('th').push("F").end();
-            context = context.begin('th').push("M").end();
-          context = context.end();
+	    breedingCompleteBinding: 'Geniverse.statisticsController.breedingComplete',
+			dragonGroupsBinding: 'Geniverse.statisticsController.dragonGroups',
+			cumulativeCountsBinding: 'Geniverse.statisticsController.cumulativeCounts',
+			cumulativeSizeBinding: 'Geniverse.statisticsController.cumulativeSize',
+//			resetBinding: 'Geniverse.statisticsController.reset',
+			motherBinding: 'Geniverse.breedDragonController.mother',
+			fatherBinding: 'Geniverse.breedDragonController.father',
+			refresh: NO,
+
+			menuChangeObserver: function(){
+				this.set('refresh',!this.get('refresh'));
+			}.observes('*parentView.traitPulldown.value'),
+      	
+	 	  displayProperties: ['breedingComplete','*parentView.traitPulldown.value','mother','father','refresh'],
+	      
+			render: function(context, firstTime) {
+				if (!this.get('dragons') || this.get('dragons').get('length') < 1){
+					context = context.begin('div').end();
+					this.set('cumulativeCounts',{});
+					this.set('cumulativeSize',0);
+					return;
+				}
+				var trait = this.getPath('parentView.traitPulldown.value');
+				if (!trait){
+					return;
+				}
+				var dragonGroups = this.get('dragonGroups');
+				var dragonsSize = this.get('dragons').get('length');
+				var cumulativeCounts = this.get('cumulativeCounts');
+				var cumulativeSize = this.get('cumulativeSize');
+				var pad = '3px';  
+				context = context.begin('table').attr('style','border: 0'); 
+				context = context.begin('tr');
+				context = context.begin('th').push("").attr('style','border: 0').end();
+				context = context.begin('th').push("current clutch").attr('colspan','3').attr('style','border: 0; color:purple').end();
+				context = context.begin('th').push("").attr('style','border: 0').end();
+				context = context.begin('th').push("all clutches").attr('colspan','3').attr('style','border: 0; color:purple').end();
+				context = context.end();
+				context = context.begin('tr');
+				context = context.begin('th').push("").attr('style','border: 0; padding: '+pad).end();
+				context = context.begin('th').push("Total").attr('style','padding: '+pad).end();
+				context = context.begin('th').push("F").attr('style','padding: '+pad).end();
+				context = context.begin('th').push("M").attr('style','padding: '+pad).end();
+				context = context.begin('th').push("").attr('style','border: 0; padding: '+pad).end();
+				context = context.begin('th').push("Total").attr('style','padding: '+pad).end();
+				context = context.begin('th').push("F").attr('style','padding: '+pad).end();
+				context = context.begin('th').push("M").attr('style','padding: '+pad).end();
+				context = context.end();
          
-         // we move this into an array so we can sort it
-         var allTraits = [];
-         for (var trait in dragonGroups){
-           allTraits.push(trait);
-         }
-         allTraits.sort();
-         
-         for (var i = 0; i < allTraits.length; i++){
-           var trait = allTraits[i];
-           context = context.begin('tr');
-             context = context.begin('th').push(trait).end();
-             var total = dragonGroups[trait].Male + dragonGroups[trait].Female;
-             var percent = Math.floor((total / dragonsSize) * 100).toFixed();
-             context = context.begin('td').push(total+" ("+percent+"%)").attr('style','text-align: left').end();
-             context = context.begin('td').push(dragonGroups[trait].Female).end();
-             context = context.begin('td').push(dragonGroups[trait].Male).end();
-           context = context.end();
-         }
-        
-        context = context.end();
-        
-        
-        sc_super();
-      }
-    })
-});
+				// we move this into an array so we can sort it
+				var allCharacteristics = [];
+				for (var characteristic in dragonGroups[trait]){
+					allCharacteristics.push(characteristic);
+				}
+				allCharacteristics.sort();
+				         
+				for (var i = 0; i < allCharacteristics.length; i++){
+					var characteristic = allCharacteristics[i];
+					context = context.begin('tr');
+					context = context.begin('th').push(characteristic).attr('style','padding: '+pad).end();
+					var total = dragonGroups[trait][characteristic].Male + dragonGroups[trait][characteristic].Female;
+					var percent = Math.floor((total / dragonsSize) * 100).toFixed();
+					var cumulativeTotal = cumulativeCounts[trait][characteristic].Male + cumulativeCounts[trait][characteristic].Female;
+					var cumulativePercent = Math.floor((cumulativeTotal / cumulativeSize) * 100).toFixed();
+					context = context.begin('td').push(total+" ("+percent+"%)").attr('style','text-align: left').attr('style','padding: '+pad).end();
+					context = context.begin('td').push(dragonGroups[trait][characteristic].Female).attr('style','padding: '+pad).end();
+					context = context.begin('td').push(dragonGroups[trait][characteristic].Male).attr('style','padding: '+pad).end();
+					context = context.begin('td').push("").attr('style','border: 0; padding: '+pad).end();
+					context = context.begin('td').push(cumulativeTotal+" ("+cumulativePercent+"%)").attr('style','text-align: left').attr('style','padding: '+pad).end();
+					context = context.begin('td').push(cumulativeCounts[trait][characteristic].Female).attr('style','padding: '+pad).end();
+					context = context.begin('td').push(cumulativeCounts[trait][characteristic].Male).attr('style','padding: '+pad).end();
+					context = context.end();
+				}
+
+				context = context.end();
+				sc_super();
+			}
+		})
+	});
