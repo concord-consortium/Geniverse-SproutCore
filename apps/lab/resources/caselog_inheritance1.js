@@ -6,7 +6,6 @@
  * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
 /*globals Geniverse, CC, CcChat, java static_url sc_static Lab */
-sc_require('mixins/simple_button');
 sc_require('views/top_bar_view');
 
 Lab.marginSize = 15;
@@ -42,7 +41,7 @@ Lab.caselog = SC.Page.design({
         value: static_url('caselog-bg-inheritance')
       }),
 
-      inheritance2right: SC.View.design(Lab.SimpleButton, {
+      inheritance2right: SC.View.design(Geniverse.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
         layerId: 'inheritance2right',
@@ -52,7 +51,7 @@ Lab.caselog = SC.Page.design({
         layout: { top: 193, right: 3, width: 43, height: 146 }
       }),
 
-      meiosis: SC.View.design(Lab.SimpleButton, {
+      meiosis: SC.View.design(Geniverse.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
         layerId: 'meiosis',
@@ -62,7 +61,7 @@ Lab.caselog = SC.Page.design({
         layout: { top: 348, right: 0, width: 42, height: 145 }
       }),
 
-      training: SC.View.design(Lab.SimpleButton, {
+      training: SC.View.design(Geniverse.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
         layerId: 'i1-training',
@@ -72,7 +71,7 @@ Lab.caselog = SC.Page.design({
         layout: { top: 304, left: 91, width: 341, height: 70 }
       }),
 
-      apprentice1: SC.View.design(Lab.SimpleButton, {
+      apprentice1: SC.View.design(Geniverse.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
         layerId: 'i1-experiment',
@@ -82,7 +81,7 @@ Lab.caselog = SC.Page.design({
         layout: { top: 399, left: 91, width: 341, height: 70 }
       }),
 
-      apprentice2: SC.View.design(Lab.SimpleButton, {
+      apprentice2: SC.View.design(Geniverse.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
         layerId: 'i1-individual',
@@ -92,7 +91,7 @@ Lab.caselog = SC.Page.design({
         layout: { top: 100, left: 522, width: 341, height: 70 }
       }),
 
-      apprentice3: SC.View.design(Lab.SimpleButton, {
+      apprentice3: SC.View.design(Geniverse.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
         layerId: 'i1-group',
@@ -102,7 +101,7 @@ Lab.caselog = SC.Page.design({
         layout: { top: 195, left: 522, width: 341, height: 70 }
       }),
       
-      journeyman1: SC.View.design(Lab.SimpleButton, {
+      journeyman1: SC.View.design(Geniverse.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
         layerId: 'i1-journeyman1',
@@ -112,7 +111,7 @@ Lab.caselog = SC.Page.design({
         layout: { top: 304, left: 522, width: 341, height: 70 }
       }),
       
-      journeyman2: SC.View.design(Lab.SimpleButton, {
+      journeyman2: SC.View.design(Geniverse.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
         layerId: 'i1-journeyman2',

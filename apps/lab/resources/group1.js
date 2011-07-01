@@ -6,7 +6,6 @@
  * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
 /*globals Geniverse, CC, CcChat, java static_url sc_static */
-sc_require('mixins/simple_button');
 sc_require('views/top_bar_view');
 
 Lab.marginSize = 15;
@@ -42,7 +41,7 @@ Lab.group1 = SC.Page.design({
         value: static_url('group-bg1.jpg')
       }),
 
-      returnButton: SC.View.design(Lab.SimpleButton, {
+      returnButton: SC.View.design(Geniverse.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
         layerId: 'returnButton',
@@ -62,7 +61,7 @@ Lab.group1 = SC.Page.design({
         }
       }),
 
-      continueButton: SC.View.design(Lab.SimpleButton, {
+      continueButton: SC.View.design(Geniverse.SimpleButton, {
         hasHover: YES,
         tagName: 'a',
         layerId: 'continueButton',

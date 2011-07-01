@@ -16,8 +16,6 @@
  * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
 
-sc_require('mixins/simple_button');
-
 Lab.TopBarView = SC.ToolbarView.extend(
 /** @scope Lab.TopBarView.prototype */ {
   
@@ -109,7 +107,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     childViews.push(this.navBarLeft);
 
     this.homeButton = this.createChildView(
-      SC.ImageView.design(Lab.SimpleButton, {
+      SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, left: 7, width: 27, height: 26 },
         layerId: 'homeButton',
         hasHover: YES,
@@ -122,7 +120,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     childViews.push(this.homeButton);
 
     this.caseLogButton = this.createChildView(
-      SC.ImageView.design(Lab.SimpleButton, {
+      SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, left: 41, width: 27, height: 26 },
         layerId: 'caseLogButton',
         hasHover: YES,
@@ -178,7 +176,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     childViews.push(this.navBarRight);
 
     this.blogButton = this.createChildView(
-      SC.ImageView.design(Lab.SimpleButton, {
+      SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, right: 175, width: 27, height: 26 },
         layerId: 'blogButton',
         hasHover: YES,
@@ -192,7 +190,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     childViews.push(this.blogButton);
     
     this.infoButton = this.createChildView(
-      SC.ImageView.design(Lab.SimpleButton, {
+      SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, right: 141, width: 27, height: 26 },
         layerId: 'infoButton',
         hasHover: YES,
@@ -206,7 +204,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     childViews.push(this.infoButton);
 
     this.helpButton = this.createChildView(
-      SC.ImageView.design(Lab.SimpleButton, {
+      SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, right: 107, width: 27, height: 26 },
         layerId: 'helpButton',
         hasHover: YES,
@@ -221,7 +219,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     childViews.push(this.helpButton);
 
     this.notepadButton = this.createChildView(
-      SC.ImageView.design(Lab.SimpleButton, {
+      SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, right: 73, width: 27, height: 26 },
         hasHover: YES,
         alt: 'Your notebook',
@@ -235,7 +233,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     childViews.push(this.notepadButton);
 
     this.journalButton = this.createChildView(
-      SC.ImageView.design(Lab.SimpleButton, {
+      SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, right: 39, width: 27, height: 26 },
         hasHover: YES,
         alt: 'Your journal',
@@ -249,7 +247,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     childViews.push(this.journalButton);
 
     this.logoutButton = this.createChildView(
-      SC.ImageView.design(Lab.SimpleButton, {
+      SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, right: 6, width: 27, height: 26 },
         layerId: 'logOutButton',
         hasHover: YES,

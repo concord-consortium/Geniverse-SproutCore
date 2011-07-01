@@ -4,7 +4,6 @@
 // ==========================================================================
 /*globals Lab SC YES NO*/
 
-sc_require('mixins/simple_button');
 
 Lab.BottomBarView = SC.ToolbarView.extend(
 /** @scope Lab.TopBarView.prototype */ {
@@ -55,7 +54,7 @@ Lab.BottomBarView = SC.ToolbarView.extend(
     childViews.push(this.navBarRightArrowBW);
     
     this.navBarLeftArrow = this.createChildView(
-      SC.ImageView.design(Lab.SimpleButton, {
+      SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, centerX: -40, width:38, height: 38 },
         layerId: 'navBarLeftArrow',
         value: static_url('arrow_left_green.png'),
@@ -71,7 +70,7 @@ Lab.BottomBarView = SC.ToolbarView.extend(
     childViews.push(this.navBarLeftArrow);
 
     this.navBarRightArrow = this.createChildView(
-      SC.ImageView.design(Lab.SimpleButton, {
+      SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, centerX: 40, width:38, height: 38 },
         layerId: 'navBarRightArrow',
         value: static_url('arrow_right_green.png'),
