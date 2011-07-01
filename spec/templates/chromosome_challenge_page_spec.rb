@@ -24,6 +24,7 @@ describe "Templates" do
       @phenotype_view = @app['mainPage.genomePanel.genomeView.dragonView', 'Geniverse.OrganismView']
       @reveal_button = @app['mainPage.genomePanel.genomeView.dragonView.revealButtonView', 'SC.ButtonView']
 
+      @score_view = @app['mainPage.scoreLabel', 'Geniverse.ScoreView']
       @match_view = @app['mainPage.targetDrakes', 'Geniverse.MatchView']
 
       @chromosome_controller = @app['Geniverse.chromosomeController', 'SC.ObjectController']
@@ -68,15 +69,37 @@ describe "Templates" do
     it 'should give an error message when the wrong alleles are selected' do
       verify_incorrect_match
     end
-    it 'should count how many times it takes to get a correct match' do
-      pending
+
+    it 'should track how many changes it takes to get a match' do
+      @score_view['value'].should eq("moves: 0"), "Score should start at 0"
+    end
+
+    it 'should increment the score by 1 whenever an allele is changed' do
+      change_allele_value('a', 't')
+
+      @score_view['value'].should eq("moves: 1"), "Score should show 1"
+    end
+
+    it 'should not increment the score if the allele value does not change' do
+      change_allele_value('b', 't')
+
+      @score_view['value'].should eq("moves: 1"), "Score should still show 1"
+    end
+
+    it 'should increment the score by 1 whenever the sex is changed' do
+      @switch_sex_button.click
+      sleep 1
+      @switch_sex_button.click
+
+      @score_view['value'].should eq("moves: 3"), "Score should be 3"
     end
 
     it 'should match after changing alleles' do
-      change_allele_value('a', 't')
-      change_allele_value('b', 't')
-
       verify_correct_match
+    end
+
+    it 'should reset the score after the match is correct' do
+      @score_view['value'].should eq("moves: 0"), "Score should reset to 0 after a match"
     end
 
     it 'should complete the challenge after all 4 are matched' do
