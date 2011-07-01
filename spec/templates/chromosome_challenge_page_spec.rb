@@ -24,11 +24,13 @@ describe "Templates" do
       @phenotype_view = @app['mainPage.genomePanel.genomeView.dragonView', 'Geniverse.OrganismView']
       @reveal_button = @app['mainPage.genomePanel.genomeView.dragonView.revealButtonView', 'SC.ButtonView']
 
+      @score_view = @app['mainPage.scoreLabel', 'Geniverse.ScoreView']
       @match_view = @app['mainPage.targetDrakes', 'Geniverse.MatchView']
 
       @chromosome_controller = @app['Geniverse.chromosomeController', 'SC.ObjectController']
       @match_controller = @app['Geniverse.matchController', 'SC.ArrayController']
 
+      sleep 5
       hide_info_pane
     end
 
@@ -37,47 +39,67 @@ describe "Templates" do
     end
 
     it "should have a female" do
-      sleep 3
-
       @phenotype_view.content.should_not be nil
     end
 
-    it 'should have all empty pulldowns at the start' do
-      verify_pulldowns_empty('a', 't')
-      verify_pulldowns_empty('b', 't')
-      verify_pulldowns_empty('a', 'h')
-      verify_pulldowns_empty('b', 'h')
-    end
-
-    it 'should have a disabled reveal button until all alleles are selected' do
-      @reveal_button.isEnabled.should be_false, "Reveal button should be disabled when not all alleles are specified"
-
-      change_allele_value('a', 't')
-      change_allele_value('b', 't')
-      change_allele_value('a', 'W')
-      change_allele_value('b', 'W')
-      change_allele_value('a', 'h')
-      change_allele_value('b', 'h')
-      change_allele_value('a', 'Fl')
-      change_allele_value('b', 'Fl')
-      change_allele_value('a', 'Hl')
-      change_allele_value('b', 'Hl')
-
-      @reveal_button.isEnabled.should be_true, "Reveal button should be enabled when all alleles are specified"
-    end
+#    it 'should have all empty pulldowns at the start' do
+#      verify_pulldowns_empty('a', 't')
+#      verify_pulldowns_empty('b', 't')
+#      verify_pulldowns_empty('a', 'h')
+#      verify_pulldowns_empty('b', 'h')
+#    end
+#
+#    it 'should have a disabled reveal button until all alleles are selected' do
+#      @reveal_button.isEnabled.should be_false, "Reveal button should be disabled when not all alleles are specified"
+#
+#      change_allele_value('a', 't')
+#      change_allele_value('b', 't')
+#      change_allele_value('a', 'W')
+#      change_allele_value('b', 'W')
+#      change_allele_value('a', 'h')
+#      change_allele_value('b', 'h')
+#      change_allele_value('a', 'Fl')
+#      change_allele_value('b', 'Fl')
+#      change_allele_value('a', 'Hl')
+#      change_allele_value('b', 'Hl')
+#
+#      @reveal_button.isEnabled.should be_true, "Reveal button should be enabled when all alleles are specified"
+#    end
 
     it 'should give an error message when the wrong alleles are selected' do
       verify_incorrect_match
     end
-    it 'should count how many times it takes to get a correct match' do
-      pending
+
+    it 'should track how many changes it takes to get a match' do
+      @score_view['value'].should eq("moves: 0"), "Score should start at 0"
+    end
+
+    it 'should increment the score by 1 whenever an allele is changed' do
+      change_allele_value('a', 't')
+
+      @score_view['value'].should eq("moves: 1"), "Score should show 1"
+    end
+
+    it 'should not increment the score if the allele value does not change' do
+      change_allele_value('b', 't')
+
+      @score_view['value'].should eq("moves: 1"), "Score should still show 1"
+    end
+
+    it 'should increment the score by 1 whenever the sex is changed' do
+      @switch_sex_button.click
+      sleep 1
+      @switch_sex_button.click
+
+      @score_view['value'].should eq("moves: 3"), "Score should be 3"
     end
 
     it 'should match after changing alleles' do
-      change_allele_value('a', 'H')
-      change_allele_value('b', 'H')
-
       verify_correct_match
+    end
+
+    it 'should reset the score after the match is correct' do
+      @score_view['value'].should eq("moves: 0"), "Score should reset to 0 after a match"
     end
 
     it 'should complete the challenge after all 4 are matched' do

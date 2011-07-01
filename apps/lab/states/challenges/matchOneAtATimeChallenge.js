@@ -81,6 +81,7 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
     if (this.challengeComplete) {
       // TODO Navigate to the next challenge!
     } else if (this.successfulMatch){
+      Geniverse.scoringController.resetScore();
       if (Geniverse.matchController.isLastDragon()) {
         this._challengeComplete();
       } else {

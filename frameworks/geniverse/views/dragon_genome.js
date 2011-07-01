@@ -59,6 +59,8 @@ Geniverse.DragonGenomeView = SC.View.extend(
 
   resetDragonOnInit: NO,
 
+  trackScore: NO,
+
   init: function() {
     sc_super();
     if (this.get('resetDragonOnInit')) {
@@ -266,6 +268,9 @@ Geniverse.DragonGenomeView = SC.View.extend(
     action: function() {
       var self = this.get('parentView');
       self.switchSex();
+      if (self.get('trackScore')) {
+        Geniverse.scoringController.incrementScore(1);
+      }
     }
   }),
 
@@ -318,6 +323,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
       return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
     }.property(),
     startWithEmptyOptionBinding: '*parentView.startWithEmptyOptions',
+    trackScoreBinding: '*parentView.trackScore',
 	  chromosome: '1',
     side: 'A'
 	}),
@@ -341,6 +347,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
       return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
     }.property(),
     startWithEmptyOptionBinding: '*parentView.startWithEmptyOptions',
+    trackScoreBinding: '*parentView.trackScore',
 	  chromosome: '1',
     side: 'B'
 	}),
@@ -364,6 +371,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
       return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
     }.property(),
     startWithEmptyOptionBinding: '*parentView.startWithEmptyOptions',
+    trackScoreBinding: '*parentView.trackScore',
 	  chromosome: '2',
     side: 'A'
 	}),
@@ -387,6 +395,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
       return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
     }.property(),
     startWithEmptyOptionBinding: '*parentView.startWithEmptyOptions',
+    trackScoreBinding: '*parentView.trackScore',
 	  chromosome: '2',
     side: 'B'
 	}),
@@ -410,6 +419,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
       return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
     }.property(),
     startWithEmptyOptionBinding: '*parentView.startWithEmptyOptions',
+    trackScoreBinding: '*parentView.trackScore',
 	  chromosome: 'X',
     side: 'A'
 	}),
@@ -423,6 +433,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
       return (this.getPath('parentView.showAllelesOutput') || this.getPath('parentView.showEmptyOptions'));
     }.property(),
     startWithEmptyOptionBinding: '*parentView.startWithEmptyOptions',
+    trackScoreBinding: '*parentView.trackScore',
 	  updateDragon: function(){
       if (!!this.get('parentView')) {
 	      this.get('parentView').updateDragon();

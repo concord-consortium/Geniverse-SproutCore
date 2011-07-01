@@ -37,7 +37,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
 
     mainAppView: SC.View.design({
       
-      childViews: 'genomePanel targetDrakes'.w(),
+      childViews: 'genomePanel scoreLabel targetDrakes'.w(),
       
       genomePanel: SC.View.design({
         layout: {top: 50, height: 550, left: 15, width: 500 },
@@ -68,13 +68,20 @@ Lab.chromosomeChallengePage = SC.Page.design({
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO,
           useRevealButton: YES,
+          trackScore: YES,
           revealButtonNeedsEnabled: function() {
             this.set('revealButtonEnabled', this.get('allAllelesSelected'));
           }.observes('allAllelesSelected'),
-          showEmptyOptions: YES,
+          showEmptyOptions: NO,
           showFromLabels: NO,
-          startWithEmptyOptions: YES
+          startWithEmptyOptions: NO
         })
+      }),
+
+      scoreLabel: Geniverse.ScoreView.design({
+        layout: { left: 530, top: 210, height: 24, width: 170 },
+        showScore: YES,
+        showTargetScore: NO
       }),
 
       targetDrakes: Geniverse.MatchView.design({
