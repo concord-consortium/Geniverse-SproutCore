@@ -37,7 +37,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
 
     mainAppView: SC.View.design({
       
-      childViews: 'genomePanels revealButton targetDrakes'.w(),
+      childViews: 'genomePanels revealButton scoreLabel targetDrakes'.w(),
       
       panel1AllSelectedBinding: '*genomePanels.genome1Panel.genomeView.allAllelesSelected',
       panel2AllSelectedBinding: '*genomePanels.genome2Panel.genomeView.allAllelesSelected',
@@ -93,6 +93,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             showIsEditableCheck: NO,
             showEmptyOptions: NO,
             startWithEmptyOptions: NO,
+            trackScore: YES,
             showFromLabels: NO
           })
         }),
@@ -136,6 +137,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             showIsEditableCheck: NO,
             showEmptyOptions: NO,
             startWithEmptyOptions: NO,
+            trackScore: YES,
             showFromLabels: NO
           })
         }),
@@ -179,21 +181,28 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             showIsEditableCheck: NO,
             showEmptyOptions: NO,
             startWithEmptyOptions: NO,
+            trackScore: YES,
             showFromLabels: NO
           })
         })
       }),
 
       revealButton: SC.ButtonView.design({
-        layout: { top: 218, height: 24, left: 900, width: 100 },
+        layout: { top: 248, height: 24, left: 900, width: 100 },
         title: "Reveal All",
         isEnabledBinding: '*parentView.allAllelesSelected',
         action: "revealClicked",
         target: "Lab.statechart"
       }),
-  
+
+      scoreLabel: Geniverse.ScoreView.design({
+        layout: { left: 873, top: 40, height: 24, width: 157 },
+        showScore: YES,
+        showTargetScore: NO
+      }),
+
       targetDrakes: Geniverse.MatchView.design({
-        layout: { left: 873, top: 40, height: 170, width: 157 },
+        layout: { left: 873, top: 70, height: 170, width: 157 },
         onlyOne: YES,
         dragonSize: 150
       }),
