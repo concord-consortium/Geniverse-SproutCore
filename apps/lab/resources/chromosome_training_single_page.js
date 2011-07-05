@@ -40,7 +40,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
       
       drakeGenomePanel: SC.View.design({
         layout: {top: 50, height: 550, left: 15, width: 500 },
-        childViews: 'background title genomeView switchSexButton'.w(),
+        childViews: 'background title genomeView switchSexButton nextButton'.w(),
 
         // separate parallel background so we don't make the rest of the childViews see-through
         background: SC.View.design({
@@ -68,6 +68,15 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           tootTip: 'Click to switch the sex of the current drake',
           target: 'parentView.genomeView',
           action: 'switchSex'
+        }),
+
+        nextButton: SC.ButtonView.design({
+          layout: {bottom: 20, right: 20, width: 100, height: 24},
+          classNames: ['bring-it-button'],
+          fontWeight: SC.BOLD_WEIGHT,
+          title: "Bring it on!",
+          target: 'Lab.statechart',
+          action: 'gotoNextActivity'
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({

@@ -8,3 +8,7 @@ img.switchsex:hover {
     background-repeat: none;
 }
 
+.sc-theme .sc-button-view.sc-regular-size.square.bring-it-button .sc-button-label {
+  font-weight: bold;
+}
+
