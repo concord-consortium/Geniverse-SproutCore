@@ -48,7 +48,7 @@ Geniverse.matchController = SC.ArrayController.create(
   // this will be obsolete once we use a graphic
   matchedCountLabel: function() {
     var numDragons = this.get('arrangedObjects').get('length');
-    return "" + (this.get('currentDragonIdx')+1) + "/" + numDragons;
+    return "Trial " + (this.get('currentDragonIdx')+1) + " of " + numDragons;
   }.property('currentDragonIdx', 'arrangedObjects.length'),
   
   nextDragon: function() {
