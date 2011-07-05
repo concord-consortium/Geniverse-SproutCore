@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110628175718) do
+ActiveRecord::Schema.define(:version => 20110705195301) do
 
   create_table "activities", :force => true do |t|
     t.text     "initial_alleles"
@@ -66,12 +66,13 @@ ActiveRecord::Schema.define(:version => 20110628175718) do
     t.boolean  "isInMarketplace", :default => true
     t.integer  "activity_id"
     t.integer  "breeder_id"
-    t.integer  "breedTime"
     t.boolean  "isMatchDragon",   :default => false
+    t.string   "breedTime",       :limit => 16
   end
 
   add_index "dragons", ["activity_id"], :name => "index_dragons_on_activity_id"
   add_index "dragons", ["id"], :name => "index_dragons_on_id"
+  add_index "dragons", ["mother_id", "father_id", "breeder_id", "breedTime", "id"], :name => "breed_record_index"
   add_index "dragons", ["user_id"], :name => "index_dragons_on_user_id"
 
   create_table "help_messages", :force => true do |t|
