@@ -24,7 +24,7 @@ describe "Intro Screen" do
 
     @infoController = @app['infoController']
 
-    sleep 3
+    sleep 5
     @introScreenView = @app['#introScreenView', 'Geniverse.IntroScreenView']
   end
 

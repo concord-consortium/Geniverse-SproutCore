@@ -54,8 +54,14 @@ Lab.inActivity = Ki.State.extend({
     this.enablePreviousNavButton((!!Geniverse.activityController.getPreviousActivity()));
     this.enableNextNavButton((!!Geniverse.activityController.getNextActivity()));
 
-    if (Geniverse.activityController.get('myCaseOrder') === 1 && !!Geniverse.introScreenController.get('imageUrl') && Geniverse.introScreenController.get('imageUrl').length > 5) {
-      this.get('showingIntroScreen').gotoState('showingIntroScreenPanel');
+    var myCase = Geniverse.activityController.get('myCase');
+    if (Geniverse.activityController.get('myCaseOrder') === 1) {
+      var imageUrl = myCase.get('introImageUrl');
+      if (!!imageUrl) {
+        if (imageUrl.length > 5) {
+          this.get('showingIntroScreen').gotoState('showingIntroScreenPanel');
+        }
+      }
     }
   },
   
