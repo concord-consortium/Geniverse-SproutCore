@@ -18,7 +18,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
   
   dragon: null,
 
-  childViews: 'motherLabel fatherLabel chromosomeA1View chromosomeA2View chromosomeAXView chromosomeB1View chromosomeB2View chromosomeBXView generateNewDragonButton isEditableCheck allelesOutputTitle allelesOutput dragonView switchSexButton'.w(),
+  childViews: 'motherLabel fatherLabel chromosomeA1View chromosomeA2View chromosomeAXView chromosomeB1View chromosomeB2View chromosomeBXView generateNewDragonButton isEditableCheck allelesOutputTitle allelesOutput dragonView'.w(),
               
   showDragon: YES,
   
@@ -258,25 +258,12 @@ Geniverse.DragonGenomeView = SC.View.extend(
 		isVisibleBinding: '*parentView.showFromLabels'
 	}),
 
-  switchSexButton: SC.ButtonView.design({
-		layout: function() {
-		  return {top: 415, left: 0, width: 130, height: 25};
-		}.property(),
-    isEnabled: YES,
-    title: 'Switch Sex',
-    isVisibleBinding: '*parentView.showSwitchSex',
-    action: function() {
-      var self = this.get('parentView');
-      self.switchSex();
-      if (self.get('trackScore')) {
-        Geniverse.scoringController.incrementScore(1);
-      }
-    }
-  }),
-
   switchSex: function() {
       this.set('sex', (this.get('sex') + 1) % 2);
       this._initDragon(this.get('sex'), this.getPath('dragon.alleles'));
+      if (this.get('trackScore')) {
+        Geniverse.scoringController.incrementScore(1);
+      }
   },
 
   allAllelesSelected: NO,

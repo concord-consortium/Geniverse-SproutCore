@@ -56,7 +56,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
 
         genome1Panel: SC.View.design({
           layout: {top: 0, height: 660, left: 0, width: 290 },
-          childViews: 'background title genomeView phenotypeView'.w(),
+          childViews: 'background title genomeView phenotypeView switchSexButton'.w(),
 
           // separate parallel background so we don't make the rest of the childViews see-through
           background: SC.View.design({
@@ -73,7 +73,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           }),
 
           title: SC.LabelView.design({
-            layout: {top: 150, height: 25, left: 5, width: 200 },
+            layout: {top: 150, height: 25, left: 75, width: 200 },
             controlSize: SC.LARGE_CONTROL_SIZE,
             fontWeight: SC.BOLD_WEIGHT,
             sexBinding: '*parentView.genomeView.sex',
@@ -82,11 +82,22 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             }.property('sex')
           }),
 
+          switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
+            layout: { top: 148, left: 5, width: 50, height: 28 },
+            isEnabled: YES,
+            hasHover: YES,
+            classNames: "switchsex".w(),
+            alt: 'Switch Sex',
+            title: 'Switch Sex',
+            tootTip: 'Click to switch the sex of the current drake',
+            target: 'parentView.genomeView',
+            action: 'switchSex'
+          }),
+
           genomeView: Geniverse.DragonGenomeView.design({
             layout: {top: 155, left: 5, height: 500, width: 300 },
             generateDragonAtStart: NO,
             sex: 1,
-            showSwitchSex: YES,
             showDragon: NO,
             displayChallengeDragon: YES,
             showGenerateNewDragon: NO,
@@ -100,7 +111,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
 
         genome2Panel: SC.View.design({
           layout: {top: 0, height: 600, left: 290, width: 290 },
-          childViews: 'background title genomeView phenotypeView'.w(),
+          childViews: 'background title genomeView phenotypeView switchSexButton'.w(),
 
           // separate parallel background so we don't make the rest of the childViews see-through
           background: SC.View.design({
@@ -117,7 +128,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           }),
 
           title: SC.LabelView.design({
-            layout: {top: 150, height: 25, left: 5, width: 200 },
+            layout: {top: 150, height: 25, left: 75, width: 200 },
             controlSize: SC.LARGE_CONTROL_SIZE,
             fontWeight: SC.BOLD_WEIGHT,
             sexBinding: '*parentView.genomeView.sex',
@@ -126,11 +137,22 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             }.property('sex')
           }),
 
+          switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
+            layout: { top: 148, left: 5, width: 50, height: 28 },
+            isEnabled: YES,
+            hasHover: YES,
+            classNames: "switchsex".w(),
+            alt: 'Switch Sex',
+            title: 'Switch Sex',
+            tootTip: 'Click to switch the sex of the current drake',
+            target: 'parentView.genomeView',
+            action: 'switchSex'
+          }),
+
           genomeView: Geniverse.DragonGenomeView.design({
             layout: {top: 155, left: 5, height: 500, width: 300 },
             generateDragonAtStart: NO,
             sex: 1,
-            showSwitchSex: YES,
             showDragon: NO,
             displayChallengeDragon: YES,
             showGenerateNewDragon: NO,
@@ -144,7 +166,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
 
         genome3Panel: SC.View.design({
           layout: {top: 0, height: 600, left: 580, width: 290 },
-          childViews: 'background title genomeView phenotypeView'.w(),
+          childViews: 'background title genomeView phenotypeView switchSexButton'.w(),
 
           // separate parallel background so we don't make the rest of the childViews see-through
           background: SC.View.design({
@@ -161,7 +183,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           }),
 
           title: SC.LabelView.design({
-            layout: {top: 150, height: 25, left: 5, width: 200 },
+            layout: {top: 150, height: 25, left: 75, width: 200 },
             controlSize: SC.LARGE_CONTROL_SIZE,
             fontWeight: SC.BOLD_WEIGHT,
             sexBinding: '*parentView.genomeView.sex',
@@ -170,11 +192,22 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             }.property('sex')
           }),
 
+          switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
+            layout: { top: 148, left: 5, width: 50, height: 28 },
+            isEnabled: YES,
+            hasHover: YES,
+            classNames: "switchsex".w(),
+            alt: 'Switch Sex',
+            title: 'Switch Sex',
+            tootTip: 'Click to switch the sex of the current drake',
+            target: 'parentView.genomeView',
+            action: 'switchSex'
+          }),
+
           genomeView: Geniverse.DragonGenomeView.design({
             layout: {top: 155, left: 5, height: 500, width: 300 },
             generateDragonAtStart: NO,
             sex: 1,
-            showSwitchSex: YES,
             showDragon: NO,
             displayChallengeDragon: YES,
             showGenerateNewDragon: NO,
