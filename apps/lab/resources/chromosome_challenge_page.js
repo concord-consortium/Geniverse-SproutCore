@@ -90,9 +90,9 @@ Lab.chromosomeChallengePage = SC.Page.design({
       }),
 
       scoreLabel: Geniverse.ScoreView.design({
-        layout: { left: 530, top: 210, height: 24, width: 170 },
+        layout: { left: 530, top: 200, height: 36, width: 150 },
         showScore: YES,
-        showTargetScore: NO
+        showTargetScore: YES
       }),
 
       targetDrakes: Geniverse.MatchView.design({

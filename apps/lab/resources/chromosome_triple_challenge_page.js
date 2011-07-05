@@ -221,7 +221,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
       }),
 
       revealButton: SC.ButtonView.design({
-        layout: { top: 248, height: 24, left: 900, width: 100 },
+        layout: { top: 260, height: 24, left: 900, width: 100 },
         title: "Reveal All",
         isEnabledBinding: '*parentView.allAllelesSelected',
         action: "revealClicked",
@@ -229,13 +229,13 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
       }),
 
       scoreLabel: Geniverse.ScoreView.design({
-        layout: { left: 873, top: 40, height: 24, width: 157 },
+        layout: { left: 873, top: 40, height: 36, width: 150 },
         showScore: YES,
         showTargetScore: NO
       }),
 
       targetDrakes: Geniverse.MatchView.design({
-        layout: { left: 873, top: 70, height: 170, width: 157 },
+        layout: { left: 873, top: 85, height: 170, width: 157 },
         onlyOne: YES,
         dragonSize: 150
       }),
