@@ -19,7 +19,7 @@ describe "Templates" do
       define_common_ivars
 
       @genome_view = @app['mainPage.genomePanel.genomeView', 'Geniverse.DragonGenomeView']
-      @switch_sex_button = @app['mainPage.genomePanel.genomeView.switchSexButton', 'SC.ButtonView']
+      @switch_sex_button = @app['mainPage.genomePanel.switchSexButton', 'SC.ImageView']
 
       @phenotype_view = @app['mainPage.genomePanel.genomeView.dragonView', 'Geniverse.OrganismView']
       @reveal_button = @app['mainPage.genomePanel.genomeView.dragonView.revealButtonView', 'SC.ButtonView']
@@ -71,19 +71,19 @@ describe "Templates" do
     end
 
     it 'should track how many changes it takes to get a match' do
-      @score_view['value'].should eq("moves: 0"), "Score should start at 0"
+      @score_view.scoreView['value'].should eq("Your moves: 0"), "Score should start at 0"
     end
 
     it 'should increment the score by 1 whenever an allele is changed' do
       change_allele_value('a', 't')
 
-      @score_view['value'].should eq("moves: 1"), "Score should show 1"
+      @score_view.scoreView['value'].should eq("Your moves: 1"), "Score should show 1"
     end
 
     it 'should not increment the score if the allele value does not change' do
       change_allele_value('b', 't')
 
-      @score_view['value'].should eq("moves: 1"), "Score should still show 1"
+      @score_view.scoreView['value'].should eq("Your moves: 1"), "Score should still show 1"
     end
 
     it 'should increment the score by 1 whenever the sex is changed' do
@@ -91,7 +91,7 @@ describe "Templates" do
       sleep 1
       @switch_sex_button.click
 
-      @score_view['value'].should eq("moves: 3"), "Score should be 3"
+      @score_view.scoreView['value'].should eq("Your moves: 3"), "Score should be 3"
     end
 
     it 'should match after changing alleles' do
@@ -99,7 +99,7 @@ describe "Templates" do
     end
 
     it 'should reset the score after the match is correct' do
-      @score_view['value'].should eq("moves: 0"), "Score should reset to 0 after a match"
+      @score_view.scoreView['value'].should eq("Your moves: 0"), "Score should reset to 0 after a match"
     end
 
     it 'should complete the challenge after all 4 are matched' do

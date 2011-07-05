@@ -19,15 +19,15 @@ describe "Templates" do
       define_common_ivars
 
       @genome_view1 = @app['mainPage.genomePanels.genome1Panel.genomeView', 'Geniverse.DragonGenomeView']
-      @switch_sex_button1 = @app['mainPage.genomePanels.genome1Panel.genomeView.switchSexButton', 'SC.ButtonView']
+      @switch_sex_button1 = @app['mainPage.genomePanels.genome1Panel.switchSexButton', 'SC.ImageView']
       @phenotype_view1 = @app['mainPage.genomePanels.genome1Panel.phenotypeView', 'Geniverse.OrganismView']
 
       @genome_view2 = @app['mainPage.genomePanels.genome2Panel.genomeView', 'Geniverse.DragonGenomeView']
-      @switch_sex_button2 = @app['mainPage.genomePanels.genome2Panel.genomeView.switchSexButton', 'SC.ButtonView']
+      @switch_sex_button2 = @app['mainPage.genomePanels.genome2Panel.switchSexButton', 'SC.ImageView']
       @phenotype_view2 = @app['mainPage.genomePanels.genome2Panel.phenotypeView', 'Geniverse.OrganismView']
 
       @genome_view3 = @app['mainPage.genomePanels.genome3Panel.genomeView', 'Geniverse.DragonGenomeView']
-      @switch_sex_button3 = @app['mainPage.genomePanels.genome3Panel.genomeView.switchSexButton', 'SC.ButtonView']
+      @switch_sex_button3 = @app['mainPage.genomePanels.genome3Panel.switchSexButton', 'SC.ImageView']
       @phenotype_view3 = @app['mainPage.genomePanels.genome3Panel.phenotypeView', 'Geniverse.OrganismView']
 
       @match_view = @app['mainPage.targetDrakes', 'Geniverse.MatchView']
