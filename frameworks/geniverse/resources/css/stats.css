@@ -22,3 +22,14 @@
 .purple{
   color: #FF00FF;
 }
+
+table.statsPadding td{
+	padding: 3px;
+}
+table.statsPadding th{
+	padding: 3px;
+}
+
+table.statsPadding {
+	border: 0;
+}

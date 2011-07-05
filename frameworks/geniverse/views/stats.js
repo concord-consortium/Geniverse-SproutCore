@@ -46,22 +46,17 @@ Geniverse.StatsView = SC.View.extend(
 			dragonGroupsBinding: 'Geniverse.statisticsController.dragonGroups',
 			cumulativeCountsBinding: 'Geniverse.statisticsController.cumulativeCounts',
 			cumulativeSizeBinding: 'Geniverse.statisticsController.cumulativeSize',
-//			resetBinding: 'Geniverse.statisticsController.reset',
 			motherBinding: 'Geniverse.breedDragonController.mother',
 			fatherBinding: 'Geniverse.breedDragonController.father',
+			menuBinding: '*parentView.traitPulldown.value', // can't use display properties to observe menu directly
 			refresh: NO,
-
-			menuChangeObserver: function(){
-				this.set('refresh',!this.get('refresh'));
-			}.observes('*parentView.traitPulldown.value'),
       	
-	 	  displayProperties: ['breedingComplete','*parentView.traitPulldown.value','mother','father','refresh'],
+	 	  displayProperties: ['breedingComplete','menu','mother','father','refresh'],
 	      
 			render: function(context, firstTime) {
 				if (!this.get('dragons') || this.get('dragons').get('length') < 1){
 					context = context.begin('div').end();
-					this.set('cumulativeCounts',{});
-					this.set('cumulativeSize',0);
+					Geniverse.statisticsController.reset();
 					return;
 				}
 				var trait = this.getPath('parentView.traitPulldown.value');
@@ -73,7 +68,7 @@ Geniverse.StatsView = SC.View.extend(
 				var cumulativeCounts = this.get('cumulativeCounts');
 				var cumulativeSize = this.get('cumulativeSize');
 				var pad = '3px';  
-				context = context.begin('table').attr('style','border: 0'); 
+				context = context.begin('table').attr('class','statsPadding'); 
 				context = context.begin('tr');
 				context = context.begin('th').push("").attr('style','border: 0').end();
 				context = context.begin('th').push("current clutch").attr('colspan','3').attr('style','border: 0; color:purple').end();
@@ -81,14 +76,14 @@ Geniverse.StatsView = SC.View.extend(
 				context = context.begin('th').push("all clutches").attr('colspan','3').attr('style','border: 0; color:purple').end();
 				context = context.end();
 				context = context.begin('tr');
-				context = context.begin('th').push("").attr('style','border: 0; padding: '+pad).end();
-				context = context.begin('th').push("Total").attr('style','padding: '+pad).end();
-				context = context.begin('th').push("F").attr('style','padding: '+pad).end();
-				context = context.begin('th').push("M").attr('style','padding: '+pad).end();
-				context = context.begin('th').push("").attr('style','border: 0; padding: '+pad).end();
-				context = context.begin('th').push("Total").attr('style','padding: '+pad).end();
-				context = context.begin('th').push("F").attr('style','padding: '+pad).end();
-				context = context.begin('th').push("M").attr('style','padding: '+pad).end();
+				context = context.begin('th').push("").attr('style','border: 0').end();
+				context = context.begin('th').push("Total").end();
+				context = context.begin('th').push("F").end();
+				context = context.begin('th').push("M").end();
+				context = context.begin('th').push("").attr('style','border: 0').end();
+				context = context.begin('th').push("Total").end();
+				context = context.begin('th').push("F").end();
+				context = context.begin('th').push("M").end();
 				context = context.end();
          
 				// we move this into an array so we can sort it
@@ -101,18 +96,18 @@ Geniverse.StatsView = SC.View.extend(
 				for (var i = 0; i < allCharacteristics.length; i++){
 					var characteristic = allCharacteristics[i];
 					context = context.begin('tr');
-					context = context.begin('th').push(characteristic).attr('style','padding: '+pad).end();
+					context = context.begin('th').push(characteristic).end();
 					var total = dragonGroups[trait][characteristic].Male + dragonGroups[trait][characteristic].Female;
 					var percent = Math.floor((total / dragonsSize) * 100).toFixed();
 					var cumulativeTotal = cumulativeCounts[trait][characteristic].Male + cumulativeCounts[trait][characteristic].Female;
 					var cumulativePercent = Math.floor((cumulativeTotal / cumulativeSize) * 100).toFixed();
-					context = context.begin('td').push(total+" ("+percent+"%)").attr('style','text-align: left').attr('style','padding: '+pad).end();
-					context = context.begin('td').push(dragonGroups[trait][characteristic].Female).attr('style','padding: '+pad).end();
-					context = context.begin('td').push(dragonGroups[trait][characteristic].Male).attr('style','padding: '+pad).end();
+					context = context.begin('td').push(total+" ("+percent+"%)").attr('style','text-align: left').end();
+					context = context.begin('td').push(dragonGroups[trait][characteristic].Female).end();
+					context = context.begin('td').push(dragonGroups[trait][characteristic].Male).end();
 					context = context.begin('td').push("").attr('style','border: 0; padding: '+pad).end();
-					context = context.begin('td').push(cumulativeTotal+" ("+cumulativePercent+"%)").attr('style','text-align: left').attr('style','padding: '+pad).end();
-					context = context.begin('td').push(cumulativeCounts[trait][characteristic].Female).attr('style','padding: '+pad).end();
-					context = context.begin('td').push(cumulativeCounts[trait][characteristic].Male).attr('style','padding: '+pad).end();
+					context = context.begin('td').push(cumulativeTotal+" ("+cumulativePercent+"%)").attr('style','text-align: left').end();
+					context = context.begin('td').push(cumulativeCounts[trait][characteristic].Female).end();
+					context = context.begin('td').push(cumulativeCounts[trait][characteristic].Male).end();
 					context = context.end();
 				}
 
