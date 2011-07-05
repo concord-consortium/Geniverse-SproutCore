@@ -15,6 +15,6 @@ sc_require('views/blog_post');
 Geniverse.introScreenController = SC.Controller.create(
 /** @scope Geniverse.chromosomeToolController.prototype */ {
 
-  imageUrl: "http://sc.local/static/lab/en/current/resources/images/mainscreen-bg.png"
+  imageUrl: ""
 
 }) ;
