@@ -78,15 +78,13 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
   },
   
   alertPaneDidDismiss: function() {
-    if (this.challengeComplete) {
-      // TODO Navigate to the next challenge!
-    } else if (this.successfulMatch){
+    if (this.successfulMatch){
       Geniverse.scoringController.resetScore();
       if (Geniverse.matchController.isLastDragon()) {
         this._challengeComplete();
-      } else {
-        Geniverse.matchController.nextDragon();
       }
+      Geniverse.matchController.nextDragon();
+      this.successfulMatch = NO;
     }
     this._hideImage();
   },

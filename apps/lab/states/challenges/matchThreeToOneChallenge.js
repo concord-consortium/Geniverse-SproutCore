@@ -160,15 +160,13 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
   },
   
   alertPaneDidDismiss: function() {
-    if (this.challengeComplete) {
-      // TODO Navigate to the next challenge!
-    } else if (this.successfulMatch){
+    if (this.successfulMatch){
       Geniverse.scoringController.resetScore();
       if (Geniverse.matchController.isLastDragon()) {
         this._challengeComplete();
-      } else {
-        Geniverse.matchController.nextDragon();
       }
+      Geniverse.matchController.nextDragon();
+      this.successfulMatch = NO;
     }
     this._hideImages();
   },
@@ -178,7 +176,7 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
   },
   
   _resetTargetMatchedState: function() {
-    Geniverse.matchController.currentDragon().set('hasBeenMatched', NO);
+    Geniverse.matchController.setPath('currentDragon.hasBeenMatched', NO);
   },
 
   _challengeComplete: function() {

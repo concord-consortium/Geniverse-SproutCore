@@ -32,6 +32,7 @@ describe "Templates" do
 
       sleep 5
       hide_info_pane
+      @first_dragon_id = @match_controller['currentDragon']['guid']
     end
 
     after(:all) do
@@ -121,6 +122,14 @@ describe "Templates" do
 
       verify_correct_match
       verify_challenge_complete
+    end
+
+    it 'should cycle back to to the first target dragon' do
+      @match_controller['currentDragonIdx'].should == 0
+    end
+
+    it 'should not know that the first dragon was previously matched' do
+      @match_controller['currentDragon']['hasBeenMatched'].should be_false, "Match dragon should not have been marked as matched"
     end
 
     def verify_incorrect_match
