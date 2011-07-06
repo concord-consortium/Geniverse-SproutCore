@@ -41,7 +41,6 @@ Lab.singleMeiosisPage = SC.Page.design({
       genomePanel: SC.View.design({
         layout: {top: 40, bottom: 10, left: 10, right: 10 },
         childViews: 'background challengePoolView parentTitle drakeParentView meiosisView'.w(),
-        // childViews: 'femaleTitle femaleView offspringTitle offspringView maleTitle maleView'.w(),
 
         // separate parallel background so we don't make the rest of the childViews see-through
         background: SC.View.design({
