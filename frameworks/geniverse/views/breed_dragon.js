@@ -28,6 +28,7 @@ Geniverse.BreedDragonView = SC.View.extend(
 
   showChildView: YES,
   showCount: YES,
+  trackScoreBinding: 'Geniverse.breedDragonController.trackScore',
 
   // init: function() {
   //   sc_super();

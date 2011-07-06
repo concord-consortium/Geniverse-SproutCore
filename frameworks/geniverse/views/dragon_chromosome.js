@@ -11,6 +11,7 @@
   @extends SC.View
 */
 sc_require('controllers/chromosome');
+sc_require('controllers/scoring');
 Geniverse.DragonChromosomeView = SC.View.extend(
 /** @scope Geniverse.DragonChromosomeView.prototype */ {
 
@@ -25,7 +26,8 @@ Geniverse.DragonChromosomeView = SC.View.extend(
   chromosome: '1',
   side: 'A',
   showLines: NO,
-  
+  trackScore: NO,
+
   // sc_static is search/replaced via the build tools not by the runtime,
   // therefore we have to pre-calculate all of the possible images and urls here
   chromoImageUrls: {
@@ -59,7 +61,10 @@ Geniverse.DragonChromosomeView = SC.View.extend(
   }.property('alleles'),
  
   allAllelesSelected: YES,
-  pulldownsDidChange: function() {
+  pulldownsDidChange: function(ignore) {
+    if (this.get('trackScore') && !ignore) {
+      Geniverse.scoringController.incrementScore(1);
+    }
     var pds = this.getPath('pullDowns.childViews');
     if (!! pds) {
       for (var i = 0; i < pds.length; i++) {
@@ -271,13 +276,13 @@ Geniverse.DragonChromosomeView = SC.View.extend(
           nameKey: 'title',
           valueKey: 'value',
           
-          updater: function(){
+          updater: function(ignore){
             var index = this.get('objects')[0].get('index');
             var alleles = this.get('parentView').get('parentView').get('alleles');
             alleles[index] = this.get('value');
             this.get('parentView').get('parentView').set('alleles', alleles);
             this.get('parentView').get('parentView').propertyDidChange('alleles');
-            this.get('parentView').get('parentView').pulldownsDidChange();
+            this.get('parentView').get('parentView').pulldownsDidChange(ignore === true);
           }.observes('value')
       });
       
@@ -289,7 +294,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       this.appendChild(dropDownMenuView);
 
       // force the menu to make sure it sets its parent view properties
-      dropDownMenuView.updater();
+      dropDownMenuView.updater(true);
     },
     
     _createStaticAllele: function(val, top){

@@ -310,7 +310,7 @@ Lab.ACTIVITY = SC.Responder.create(
       controller.set('content', dragons);
       var dragonsRequired = self.getOrganismConfigurations(isMatchDragons).length;
       var currentDragons = controller.get('content').length();
-      if (currentDragons != dragonsRequired) {
+      if ((Geniverse.NEVER_SAVE_MATCH_DRAGONS && isMatchDragons) || currentDragons != dragonsRequired) {
         SC.Logger.info("Regenerating dragons for "+isMatchDragons);
         // get rid of existing drakes
         SC.RunLoop.begin();
@@ -387,6 +387,7 @@ Lab.ACTIVITY = SC.Responder.create(
     Geniverse.breedDragonController.reset();
     Geniverse.articleController.set('article', null);
     Geniverse.articleController.set('started', NO);
+    Geniverse.scoringController.resetScore();
 
     Lab.infoController.removeView();  // be sure to hide any open info panes
 

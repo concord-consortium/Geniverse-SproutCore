@@ -1,0 +1,14 @@
+img.switchsex {
+    background-image: static_url('change-sex.png');
+    background-repeat: none;
+}
+
+img.switchsex:hover {
+    background-image: static_url('change-sex-active.png');
+    background-repeat: none;
+}
+
+.sc-theme .sc-button-view.sc-regular-size.square.bring-it-button .sc-button-label {
+  font-weight: bold;
+}
+

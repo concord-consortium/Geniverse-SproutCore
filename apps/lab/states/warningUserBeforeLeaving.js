@@ -28,7 +28,7 @@ Lab.warningUserBeforeLeaving =  Ki.State.extend({
 
     enterState: function() {
       function askConfirm(){
-        return "You have unsaved changes. Are you sure you want to leave this page?";
+        return "You have unsaved changes in your notepad. Are you sure you want to leave this page?";
       }
       window.onbeforeunload = askConfirm;
     },

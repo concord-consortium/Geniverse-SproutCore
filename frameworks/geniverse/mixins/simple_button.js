@@ -16,7 +16,7 @@
   @version 0.2
   @since 0.1
 */
-Lab.SimpleButton = {
+Geniverse.SimpleButton = {
 /* SimpleButton Mixin */
 
   target: null,

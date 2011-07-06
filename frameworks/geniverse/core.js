@@ -40,6 +40,8 @@ Geniverse = SC.Application.create(
   userDefaults: SC.UserDefaults.create({appDomain: "Geniverse"}),
   
   railsBackedTypes: [],
+
+  NEVER_SAVE_MATCH_DRAGONS: YES,
   
   // TODO: Add global constants or singleton objects needed by your app here.
   

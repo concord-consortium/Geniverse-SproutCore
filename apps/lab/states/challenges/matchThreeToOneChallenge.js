@@ -91,11 +91,15 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
           // otherwise, display a message about incorrect dragons.
           if (numIncorrect > 0) {
             var msg = "";
-            if (numMatched === 0) {
-              msg = "None of the drakes you have created match the target. Please try again.";
+            if (numIncorrect === 3) {
+              msg = "None of the drakes you have created match the target.";
             } else {
-              msg = "Only " + numMatched + " of the drakes you have created match the target. Please try again.";
+              msg = "" + numIncorrect + " of the drakes you have created do" + (numIncorrect === 1 ? "es" : "") + "n't match the target.";
+              if (numDupes !== 0) {
+                msg += " Also, some of your drakes are exactly the same! All of your drakes need to have different alleles.";
+              }
             }
+            msg += " Please try again.";
             SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).error(
               "You didn't get all of them.",
               msg,
@@ -107,7 +111,7 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
           } else {
             SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).error(
               "You have some duplicates.",
-              "Some of your dragons are exactly the same! All of your dragons need to have different alleles.",
+              "Some of your drakes are exactly the same! All of your drakes need to have different alleles.",
               "",
               "Try again",
               "",
@@ -156,16 +160,15 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
   },
   
   alertPaneDidDismiss: function() {
-    if (this.challengeComplete) {
-      // TODO Navigate to the next challenge!
-    } else if (this.successfulMatch){
+    if (this.successfulMatch){
+      Geniverse.scoringController.resetScore();
       if (Geniverse.matchController.isLastDragon()) {
         this._challengeComplete();
-      } else {
-        Geniverse.matchController.nextDragon();
       }
+      Geniverse.matchController.nextDragon();
     }
     this._hideImages();
+    this.successfulMatch = NO;
   },
   
   _drakesMatch: function(dragon) {
@@ -173,7 +176,7 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
   },
   
   _resetTargetMatchedState: function() {
-    Geniverse.matchController.currentDragon().set('hasBeenMatched', NO);
+    Geniverse.matchController.setPath('currentDragon.hasBeenMatched', NO);
   },
 
   _challengeComplete: function() {

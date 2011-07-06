@@ -28,7 +28,7 @@ Geniverse.MatchView = SC.View.extend(
   dragonView: null,
 
   updateCurrentDragon: function() {
-    this.setPath('dragonView.content', Geniverse.matchController.currentDragon());
+    this.setPath('dragonView.content', Geniverse.matchController.get('currentDragon'));
     if (!!this.get('dragonView')) {
       this.get('dragonView').contentDidChange();
     }

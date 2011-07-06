@@ -3,7 +3,6 @@
 // Copyright: 2010 Concord Consortium
 // ==========================================================================
 /*globals Lab */
-sc_require('mixins/simple_button');
 
 // This page describes the main user interface for your application.
 Lab.mainPage = SC.Page.design({
@@ -31,7 +30,7 @@ Lab.mainPage = SC.Page.design({
         value: static_url('mainscreen-bg.png')
       }),
 
-      caselogButtonView: SC.View.design(Lab.SimpleButton, {
+      caselogButtonView: SC.View.design(Geniverse.SimpleButton, {
         layerId: 'caselog',
         tagName: 'a',
         hasHover: YES,
@@ -43,7 +42,7 @@ Lab.mainPage = SC.Page.design({
         value: static_url('mainscreen-caselog-highlighted')
       }),
 
-      journalButtonView: SC.View.design(Lab.SimpleButton, {
+      journalButtonView: SC.View.design(Geniverse.SimpleButton, {
         layerId: 'journal',
         tagName: 'a',
         hasHover: YES,

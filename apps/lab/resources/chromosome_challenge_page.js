@@ -37,11 +37,11 @@ Lab.chromosomeChallengePage = SC.Page.design({
 
     mainAppView: SC.View.design({
       
-      childViews: 'genomePanel targetDrakes'.w(),
+      childViews: 'genomePanel scoreLabel targetDrakes'.w(),
       
       genomePanel: SC.View.design({
         layout: {top: 50, height: 550, left: 15, width: 500 },
-        childViews: 'background title genomeView'.w(),
+        childViews: 'background switchSexButton title genomeView'.w(),
 
         // separate parallel background so we don't make the rest of the childViews see-through
         background: SC.View.design({
@@ -50,7 +50,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
         }),
 
         title: SC.LabelView.design({
-          layout: {top: 20, height: 25, left: 20, width: 200 },
+          layout: {top: 20, height: 25, left: 75, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
           sexBinding: '*parentView.genomeView.sex',
@@ -59,22 +59,40 @@ Lab.chromosomeChallengePage = SC.Page.design({
           }.property('sex')
         }),
 
+        switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
+          layout: { top: 18, left: 20, width: 50, height: 28 },
+          isEnabled: YES,
+          hasHover: YES,
+          classNames: "switchsex".w(),
+          alt: 'Switch Sex',
+          title: 'Switch Sex',
+          tootTip: 'Click to switch the sex of the current drake',
+          target: 'parentView.genomeView',
+          action: 'switchSex'
+        }),
+
         genomeView: Geniverse.DragonGenomeView.design({
           layout: {top: 80, left: 15, height: 500, width: 500 },
           generateDragonAtStart: NO,
           sex: 1,
-          showSwitchSex: YES,
           displayChallengeDragon: YES,
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO,
           useRevealButton: YES,
+          trackScore: YES,
           revealButtonNeedsEnabled: function() {
             this.set('revealButtonEnabled', this.get('allAllelesSelected'));
           }.observes('allAllelesSelected'),
-          showEmptyOptions: YES,
+          showEmptyOptions: NO,
           showFromLabels: NO,
-          startWithEmptyOptions: YES
+          startWithEmptyOptions: NO
         })
+      }),
+
+      scoreLabel: Geniverse.ScoreView.design({
+        layout: { left: 530, top: 200, height: 36, width: 150 },
+        showScore: YES,
+        showTargetScore: YES
       }),
 
       targetDrakes: Geniverse.MatchView.design({

@@ -22,6 +22,7 @@ Geniverse.MatchOrganism = {
     var dragon = this._getSourceDragon(drag);
 
     if (Geniverse.matchController.doesMatch(this.get('content'), dragon)) {
+      this.setPath('content.hasBeenMatched', YES);
       this._setClassNames();
     } else {
       SC.AlertPane.info("", "Those dragons don't look exactly the same!");
