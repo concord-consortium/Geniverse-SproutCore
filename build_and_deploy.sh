@@ -28,12 +28,14 @@ case "$1" in
     ;;
 esac
 
+echo "Building application... "
 rm -rf tmp/
 $CMD_PREFIX sc-build
 
+echo "Sending files to the server... "
 # If you don't have rsync, use scp instead
 # scp -r tmp/build/static/* geniverse@$SERVER:$SERVER_PATH/
-rsync -rlzP tmp/build/static/* geniverse@$SERVER:$SERVER_PATH/
+rsync -rqlzP tmp/build/static/* geniverse@$SERVER:$SERVER_PATH/
 
 BUILD_NUM=$($CMD_PREFIX sc-build-number lab)
 echo "Lab build hash: $BUILD_NUM"
@@ -42,3 +44,4 @@ read -p "What label should this be deployed with? " -e -r LABEL
 
 ssh -t geniverse@$SERVER "rm $LABEL_PATH/${LABEL}; ln -s $SERVER_PATH/lab/en/$BUILD_NUM $LABEL_PATH/${LABEL}"
 
+echo "All done!"
