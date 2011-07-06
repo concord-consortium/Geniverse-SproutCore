@@ -63,7 +63,7 @@
         </tr>
       </table>
     </td>
-    <td><%=h Time.at(@dragon.breedTime/1000.0).strftime("Bred at %H:%M on %h %d, %Y") %></td>
+    <td><%=h Time.at(@dragon.breedTime.to_i/1000.0).strftime("Bred at %H:%M on %h %d, %Y") %></td>
   </tr>
   
 
