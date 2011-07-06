@@ -7,7 +7,7 @@
 /**
  *   @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
-Lab.InfoView = SC.PickerPane.create({
+Lab.InfoView = SC.PalettePane.create({
   layout: { width: 440, height: 430, centerX: 0, centerY: 0 },
   isModal:NO,
   contentView: SC.View.extend({

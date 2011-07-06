@@ -54,9 +54,7 @@ Lab.infoController = SC.ObjectController.create(
     console.log("this.get('pane'):",_pane);
     if (!_pane.get('isVisibleInWindow')){
       if(callingView){
-        _pane.popup(callingView, SC.PICKER_POINTER);
-      }else{
-        _pane.popup(null);
+        _pane.append();
       }
       this.updateView(this.get('content'));
     }
