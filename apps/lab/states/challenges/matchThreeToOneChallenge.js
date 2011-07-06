@@ -166,9 +166,9 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
         this._challengeComplete();
       }
       Geniverse.matchController.nextDragon();
-      this.successfulMatch = NO;
     }
     this._hideImages();
+    this.successfulMatch = NO;
   },
   
   _drakesMatch: function(dragon) {
