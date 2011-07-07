@@ -29,7 +29,7 @@
         {
             "alleles": [
                 {
-                    "on": true
+                    "on": false
                 },
                 {
                     "on": false
@@ -39,38 +39,6 @@
                 },
                 {
                     "on": true
-                },
-                {
-                    "on": true
-                }
-            ]
-        },
-        {
-            "alleles": [
-                {
-                    "on": true
-                },
-                {
-                    "on": false
-                },
-                {
-                    "on": true
-                },
-                {
-                    "on": true
-                },
-                {
-                    "on": true
-                }
-            ]
-        },
-        {
-            "alleles": [
-                {
-                    "on": true
-                },
-                {
-                    "on": false
                 },
                 {
                     "on": false
@@ -80,7 +48,39 @@
         {
             "alleles": [
                 {
+                    "on": false
+                },
+                {
+                    "on": false
+                },
+                {
                     "on": true
+                },
+                {
+                    "on": true
+                },
+                {
+                    "on": false
+                }
+            ]
+        },
+        {
+            "alleles": [
+                {
+                    "on": false
+                },
+                {
+                    "on": false
+                },
+                {
+                    "on": false
+                }
+            ]
+        },
+        {
+            "alleles": [
+                {
+                    "on": false
                 },
                 {
                     "on": false
