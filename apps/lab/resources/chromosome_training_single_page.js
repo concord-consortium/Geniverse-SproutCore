@@ -65,7 +65,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           classNames: "switchsex".w(),
           alt: 'Switch Sex',
           title: 'Switch Sex',
-          tootTip: 'Click to switch the sex of the current drake',
+          toolTip: 'Click to switch the sex of the drake',
           target: 'parentView.genomeView',
           action: 'switchSex'
         }),
@@ -75,6 +75,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           classNames: ['bring-it-button'],
           fontWeight: SC.BOLD_WEIGHT,
           title: "Bring it on!",
+          toolTip: 'Click when ready for the challenge.',
           target: 'Lab.statechart',
           action: 'gotoNextActivity'
         }),
