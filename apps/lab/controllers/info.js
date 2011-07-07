@@ -52,10 +52,11 @@ Lab.infoController = SC.ObjectController.create(
     this.set('pane',infoView);
     var _pane = this.get('pane');
     console.log("this.get('pane'):",_pane);
+    console.log("!_pane.get('isVisibleInWindow'):",!_pane.get('isVisibleInWindow'));
     if (!_pane.get('isVisibleInWindow')){
-      if(callingView){
+//      if(callingView){
         _pane.append();
-      }
+//      }
       this.updateView(this.get('content'));
     }
   },

@@ -67,7 +67,8 @@
 }
 
 .sc-view .parchment {
-	background-image:static_url('parchment.png');
+	background-image:static_url('parchment.jpg');
+	background-size: 100%;
 	border: 0;
 	background-color: transparent;
 }
