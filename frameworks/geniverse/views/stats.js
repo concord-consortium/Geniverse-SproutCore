@@ -50,13 +50,16 @@ Geniverse.StatsView = SC.View.extend(
 			fatherBinding: 'Geniverse.breedDragonController.father',
 			menuBinding: '*parentView.traitPulldown.value', // can't use display properties to observe menu directly
 			refresh: NO,
+			
+			resetCumulativeStats: function (){
+				Geniverse.statisticsController.reset();				
+			}.observes('menu','mother','father'),
       	
 	 	  displayProperties: ['breedingComplete','menu','mother','father','refresh'],
 	      
 			render: function(context, firstTime) {
 				if (!this.get('dragons') || this.get('dragons').get('length') < 1){
 					context = context.begin('div').end();
-					Geniverse.statisticsController.reset();
 					return;
 				}
 				var trait = this.getPath('parentView.traitPulldown.value');
