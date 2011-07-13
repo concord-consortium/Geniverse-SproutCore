@@ -153,7 +153,12 @@ Geniverse.DragonGenomeView = SC.View.extend(
       return 0;
     }
   }.property('dragonOnRight').cacheable(),
-  
+
+  destroy: function() {
+    Geniverse.challengePoolController.removeObserver('length', this, this._loadChallengeDragon);
+    sc_super();
+  },
+
   gwtReadyBinding: 'Geniverse.gwtController.isReady',
   
   generateDragonWhenGWTReady: function() {
