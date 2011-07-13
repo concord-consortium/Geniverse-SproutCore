@@ -183,12 +183,12 @@ Geniverse.DragonChromosomeView = SC.View.extend(
           }
         }
         if (!!pd && pd.get('fieldValue') != alleles[i]) {
-          if (pd.get('title')) {
+          if (pd instanceof SC.SelectFieldView) {
             pd.set('title', Geniverse.chromosomeController.titleForAllele(alleles[i]));
             pd.set('value',alleles[i]);
           }
           else {
-            pd.set('value', alleles[i]);
+            pd.set('value', Geniverse.chromosomeController.titleForAllele(alleles[i]));
           }
         }
       }
