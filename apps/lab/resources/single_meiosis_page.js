@@ -72,7 +72,6 @@ Lab.singleMeiosisPage = SC.Page.design({
 					layout: {top: 271, left: 55, height: 360, width: 310 },
 					mode: 'parent',
 					meiosisOwner: 'mother',
-					geneMap: static_url('visibleMap.json'),	
 					dragonBinding: 'Geniverse.meiosisAnimationController.mother',
 					gameteJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson'
         }),
