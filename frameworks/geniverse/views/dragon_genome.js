@@ -165,6 +165,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
     
     function loadChallengeDragonWhenDragonsLoaded() {
       Geniverse.challengePoolController.addObserver('length', self, self._loadChallengeDragon);
+      Geniverse.challengePoolController.removeObserver('status', loadChallengeDragonWhenDragonsLoaded);
       self._loadChallengeDragon();
     }
     

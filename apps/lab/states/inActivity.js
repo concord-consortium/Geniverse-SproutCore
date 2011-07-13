@@ -24,10 +24,18 @@ Lab.inActivity = Ki.State.extend({
     this.gotoActivity();
   },
   
+  lastNavigation: 0,
+
   gotoActivity: function() {
-    Geniverse.activityController.addObserver('content', this, this.activityLoaded);
-    Lab.makeFirstResponder(Lab.ACTIVITY);
-    Lab.ACTIVITY.gotoActivity();
+    // FIXME This is a hack to get around the fact that when you navigate using the bottom_bar arrows,
+    // it triggers gotoActivity *twice*.
+    var t = new Date().getTime();
+    if ((t - this.lastNavigation) > 2000) {
+      this.lastNavigation = t;
+      Geniverse.activityController.addObserver('content', this, this.activityLoaded);
+      Lab.makeFirstResponder(Lab.ACTIVITY);
+      Lab.ACTIVITY.gotoActivity();
+    }
   },
   
   activityLoaded: function(){
