@@ -101,7 +101,6 @@ Lab.meiosisPage = SC.Page.design({
           layout: {top: 271, left: 60, height: 360, width: 310 },
           mode: 'parent',
           meiosisOwner: 'mother',
-		  geneMap: static_url('visibleMap.json'),	
           dragonBinding: 'Geniverse.meiosisAnimationController.mother',
           gameteJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson'
         }),
@@ -110,7 +109,6 @@ Lab.meiosisPage = SC.Page.design({
           layout: {top: 271, centerX: 27, height: 360, width: 310 },
           mode: 'offspring',
           meiosisOwner: 'offspring',
-		  geneMap: static_url('visibleMap.json'),
           motherJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson',
           fatherJsonBinding: 'Geniverse.meiosisAnimationController.fatherGameteJson'
         }),
@@ -119,7 +117,6 @@ Lab.meiosisPage = SC.Page.design({
           layout: {top: 271, right: 5, height: 360, width: 310 },
           mode: 'parent',
           meiosisOwner: 'father',
- 		  geneMap: static_url('visibleMap.json'),
           dragonBinding: 'Geniverse.meiosisAnimationController.father',
           gameteJsonBinding: 'Geniverse.meiosisAnimationController.fatherGameteJson'
         }),

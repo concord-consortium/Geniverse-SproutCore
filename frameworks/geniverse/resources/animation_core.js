@@ -2,7 +2,7 @@ sc_require('lib/burst-core');
 
 (function(window, document, $, Raphael, Burst){
 
-  $.fn.geniverse = function(json_file, geneMap, options) { // geneMap is file containing visiblity that can be merged -Dan
+  $.fn.geniverse = function(json_file, options) {
     var burst = new Burst();
 
     // DEFAULTS
@@ -81,10 +81,10 @@ sc_require('lib/burst-core');
         Q_PI       = PI / 4,
         sin        = Math.sin,
         cos        = Math.cos,
-        atan2      = Math.atan2,
-        random     = function( amt ){ return Math.random() * amt; },
-		gvRand	   = function (center,variation){ return center + random( variation ) - variation/2; },
-        centerX    = defaultOpts.width / 2,
+				atan2      = Math.atan2,
+				random     = function( amt ){ return Math.random() * amt; },
+				gvRand	   = function (center,variation){ return center + random( variation ) - variation/2; },
+				centerX    = defaultOpts.width / 2,
         centerY    = defaultOpts.height / 2,
         mouseX     = 0,
         mouseY     = 0,
@@ -129,7 +129,7 @@ sc_require('lib/burst-core');
     };
 
     // Loads a geniverse data file and builds the scene
-    function load( input, inputMap ){
+    function load( input ){
       var data;
 
       switch( mode ){
@@ -146,34 +146,33 @@ sc_require('lib/burst-core');
       }
         
       function loadData(data){
-	    var x, y, index=0, len=defaultOpts.segLength*defaultOpts.segCount*defaultOpts.alleleCount;
-
-        for ( var i in data ) {
-          if ( data.hasOwnProperty(i) ) {
-            for ( var j=0; j< (defaultOpts.alleleCount/2); j++ ) {
-              if ( data[i].hasOwnProperty(j) ) {
-                // Create copies if in meiosis ( Mode: 'parent' )
-				var yLenOffset = ((data[i][j].alleles.length)*defaultOpts.segLength*defaultOpts.segCount)/4;
-                if( mode==='parent' ){
-				  x = gvRand(centerX,defaultOpts.width/4);
-				  y = gvRand(centerY - yLenOffset,defaultOpts.height/4);
-                  chromosomes[index] = new Chromosome({ paper: paper, x:x, y:y, yLenOffset: yLenOffset, data: data[i][j], index:index, startHidden: true });
-                  chromosomes[index+1] = new Chromosome({ paper: paper, x:x, y:y, yLenOffset: yLenOffset, data: data[i][j], index:index+1, startHidden: false });
-                  index+=2;
-                }else{
-                  if( index < 3 ){
-                    x = gvRand(centerX - centerX/2,30);
-                    y = gvRand(defaultOpts.height/2 - yLenOffset,20);
-                  }else{
-                    x = gvRand(centerX + centerX/3,30);
-                    y = gvRand(defaultOpts.height/2 - yLenOffset,20);
-                  }
-                  chromosomes[index] = new Chromosome({ paper: paper, x:x, y:y, yLenOffset: yLenOffset, data: data[i][j], index:index, startHidden: false });
-                  index+=1;
-                }
-              }
-            }
-          }
+				var x, y, index=0, len=defaultOpts.segLength*defaultOpts.segCount*defaultOpts.alleleCount;
+				for ( var i in data ) {
+					if ( data.hasOwnProperty(i) ) {
+						for ( var j=0; j< (defaultOpts.alleleCount/2); j++ ) {
+							if ( data[i].hasOwnProperty(j) ) {
+								// Create copies if in meiosis ( Mode: 'parent' )
+								var yLenOffset = ((data[i][j].alleles.length)*defaultOpts.segLength*defaultOpts.segCount)/4;
+								if( mode==='parent' ){
+									x = gvRand(centerX,defaultOpts.width/4);
+									y = gvRand(centerY - yLenOffset,defaultOpts.height/4);
+									chromosomes[index] = new Chromosome({ paper: paper, x:x, y:y, yLenOffset: yLenOffset, data: data[i][j], index:index, startHidden: true });
+									chromosomes[index+1] = new Chromosome({ paper: paper, x:x, y:y, yLenOffset: yLenOffset, data: data[i][j], index:index+1, startHidden: false });
+									index+=2;
+								}else{
+									if( index < 3 ){
+										x = gvRand(centerX - centerX/2,30);
+										y = gvRand(defaultOpts.height/2 - yLenOffset,20);
+									}else{
+										x = gvRand(centerX + centerX/3,30);
+										y = gvRand(defaultOpts.height/2 - yLenOffset,20);
+									}
+									chromosomes[index] = new Chromosome({ paper: paper, x:x, y:y, yLenOffset: yLenOffset, data: data[i][j], index:index, startHidden: false });
+									index+=1;
+								}
+							}
+						}
+					}
 
           // Perpare Chromosomes for Swappping
           if( mode === 'parent' ){
@@ -208,42 +207,23 @@ sc_require('lib/burst-core');
         }
         
       };
-	//  read in json data about drake genes (input url) and map of which genes show (inputMap url) and merge these objects -Dan
 	  var geneInfo;
-	  var geneMapping;			
       
-      if( isJson( input ) ){
-        geneInfo = $.isPlainObject( input ) ? input : JSON.parse( input );
-      } else {
-		$.ajax({
-        url: input,
-        data: {},
-        cache: false,
-        async: false,
-        dataType: 'json',
-        success: function(response){
-          geneInfo = response;
-        	}
-		});
-	  }
+		if( isJson( input ) ){
+			geneInfo = $.isPlainObject( input ) ? input : JSON.parse( input );
+		} else {
+			$.ajax({
+				url: input,
+				data: {},
+				cache: false,
+				async: false,
+				dataType: 'json',
+				success: function(response){
+					geneInfo = response;
+				}
+			});
+		}
 	  
-	  if( isJson( inputMap ) ){
-        geneMapping = $.isPlainObject( inputMap ) ? input : JSON.parse( inputMap );
-      } else {
-		$.ajax({
-        url: inputMap,
-        data: {},
-        cache: false,
-        async: false,
-        dataType: 'json',
-        success: function(response){
-          geneMapping = response;
-        	}
-		});
-	  }
-	 if (mode==='parent') {
-		geneInfo = $.extend(true, geneInfo, geneMapping);
-	}
 	 loadData(geneInfo);
 	  
     };
@@ -251,14 +231,11 @@ sc_require('lib/burst-core');
     // Swap Two Genes Between Two Chromosomes
     function swap( alleleA, alleleB ){
       var geneB = alleleB.gene,
-          sexB = alleleB.sex,
-		  onB = alleleB.on;
+          sexB = alleleB.sex;
       alleleB.gene = alleleA.gene;
       alleleA.gene = geneB;
       alleleB.sex = alleleA.sex;
       alleleA.sex = sexB;      
-      alleleB.on = alleleA.on;
-      alleleA.on = onB;      
       alleleA.style.call(alleleA,alleleA.SVG_outer,'outer');
       alleleA.style.call(alleleA,alleleA.SVG_inner,'inner');
       alleleB.style.call(alleleB,alleleB.SVG_outer,'outer');
@@ -570,8 +547,7 @@ sc_require('lib/burst-core');
                 for(var j=0, l2=chromosomes[i].alleles.length; j< l2; j++){
                   data.chromosomes[data.chromosomes.length-1].alleles[j] = {
                     sex : chromosomes[i].alleles[j].sex,
-                    gene: chromosomes[i].alleles[j].gene,
-					on	: chromosomes[i].alleles[j].on
+                    gene: chromosomes[i].alleles[j].gene
                   };
                 }
               }
@@ -687,39 +663,40 @@ sc_require('lib/burst-core');
     ////////////////////////////////////////////////////////////////////////////
 
     function Allele( props ){
-      this.type="Allele";
-      $.extend(this, props);
+			this.type="Allele";
+			$.extend(this, props);
 
-      this.paper = this.parent.paper;
-      this.segs = [];
-      this.x = this.x || this.parent.x;
-      this.y = this.y || this.parent.y;      
+			this.paper = this.parent.paper;
+			this.segs = [];
+			this.x = this.x || this.parent.x;
+			this.y = this.y || this.parent.y;
+			this.hiddenGenes = Geniverse.activityController.get('hiddenGenes');
 
-      this.segCount = defaultOpts.segCount;
-      this.segLength = defaultOpts.segLength;
-	  this.rightLabelOffsetX = 17;
-	  this.labelOffsetY = -4.5;
-	  this.labelWidth = Geniverse.chromosomeController.alleleLabelMap[this.gene].length*7;
-	  this.leftLabelOffsetX = -1 * (this.labelWidth + this.rightLabelOffsetX);
-	
-      this.genPath();
+			this.segCount = defaultOpts.segCount;
+			this.segLength = defaultOpts.segLength;
+			this.rightLabelOffsetX = 17;
+			this.labelOffsetY = -4.5;
+			this.labelWidth = Geniverse.chromosomeController.alleleLabelMap[this.gene].length*7;
+			this.leftLabelOffsetX = -1 * (this.labelWidth + this.rightLabelOffsetX);
 
-      this.SVG_inner = this.build();
-      this.style(this.SVG_inner, 'inner');
-      this.SVG_outer = this.build();
-      this.style(this.SVG_outer, 'outer');
+			this.genPath();
 
-      this.labelLink = this.paper.path("M"+(this.x)+","+(this.y)+" L"+(this.x+this.labelOffsetX)+","+(this.y+this.labelOfsetY)).attr( {
-		'stroke'	  : '#000',
-		'stroke-width': '0.5px'
-	  })
+			this.SVG_inner = this.build();
+			this.style(this.SVG_inner, 'inner');
+			this.SVG_outer = this.build();
+			this.style(this.SVG_outer, 'outer');
 
-// make geneFrame variable widths by looking at length of string -Dan
-     this.geneFrame = this.paper.rect(this.x-6, this.y-7, this.labelWidth, 14, 1).attr({
-        'fill'          : '#FFF',
-        'stroke'        : defaultOpts.color[ this.sex + '_outer' ],
-        "stroke-width"  : "2px"
-      });
+			this.labelLink = this.paper.path("M"+(this.x)+","+(this.y)+" L"+(this.x+this.labelOffsetX)+","+(this.y+this.labelOfsetY)).attr( {
+				'stroke'	  : '#000',
+				'stroke-width': '0.5px'
+			})
+
+			// make geneFrame variable widths by looking at length of string -Dan
+			this.geneFrame = this.paper.rect(this.x-6, this.y-7, this.labelWidth, 14, 1).attr({
+				'fill'          : '#FFF',
+				'stroke'        : defaultOpts.color[ this.sex + '_outer' ],
+				"stroke-width"  : "2px"
+			});
       
       this.geneText = this.paper.text(this.x, this.y, Geniverse.chromosomeController.alleleLabelMap[this.gene]).attr( {
         'font'        : '14px Helvetica, Arial',
@@ -732,45 +709,45 @@ sc_require('lib/burst-core');
         this.hide();
       }
 	
-	  if (this.gene == "Y" && !this.parent.hidden){
-		this.labelLink.show();
-	    this.geneText.show(); 
-		this.geneFrame.show();	
-	  } else {
-	    this.labelLink.hide();
-        this.geneText.hide(); 
-	    this.geneFrame.hide(); 
-      }
+			if (this.gene == "Y" && !this.parent.hidden){
+				this.labelLink.show();
+				this.geneText.show(); 
+				this.geneFrame.show();	
+			} else {
+				this.labelLink.hide();
+				this.geneText.hide(); 
+				this.geneFrame.hide(); 
+			}
       
       this.SVG_outer.drag(this.dragmove_mouse, this.dragstart_mouse, this.dragstop_mouse);
 
       var raphobj = this.SVG_inner;
 
       this.SVG_outer.hover(function(){
-        if(!this.parent.parent.hidden){
-			for(var i=0; i < this.parent.parent.alleleCount; i++){
-		    	if (this.parent.parent.alleles[i].on) { 
-			  		if (this.parent.parent.alleles[i].gene != "") {
-						this.parent.parent.alleles[i].labelLink.show(); 
+				if(!this.parent.parent.hidden){
+					for(var i=0; i < this.parent.parent.alleleCount; i++){
+						if(this.parent.hiddenGenes.indexOf(this.parent.parent.alleles[i].gene.toLowerCase()) == -1){
+							if (this.parent.parent.alleles[i].gene != "") {
+								this.parent.parent.alleles[i].labelLink.show(); 
+							}
+							this.parent.parent.alleles[i].geneText.show(); 
+							this.parent.parent.alleles[i].geneFrame.show(); 
+						}
 					}
-					this.parent.parent.alleles[i].geneText.show(); 
-					this.parent.parent.alleles[i].geneFrame.show(); 
+					document.body.style.cursor='pointer';
 				}
-			}
-            document.body.style.cursor='pointer';
-        }
-      },function(){
-        if(!this.parent.parent.hidden){
-			for(var i=0; i < this.parent.parent.alleleCount; i++){
-		    	if (this.parent.parent.alleles[i].on == true && this.parent.parent.alleles[i].gene != "Y") { 
-			  		this.parent.parent.alleles[i].labelLink.hide(); 
-					this.parent.parent.alleles[i].geneText.hide(); 
-					this.parent.parent.alleles[i].geneFrame.hide(); 
+			},function(){
+				if(!this.parent.parent.hidden){
+					for(var i=0; i < this.parent.parent.alleleCount; i++){
+						if ((this.parent.hiddenGenes.indexOf(this.parent.parent.alleles[i].gene.toLowerCase()) == -1) && this.parent.parent.alleles[i].gene != "Y") { 
+							this.parent.parent.alleles[i].labelLink.hide(); 
+							this.parent.parent.alleles[i].geneText.hide(); 
+							this.parent.parent.alleles[i].geneFrame.hide(); 
+						}
+					}
+					document.body.style.cursor='auto';
 				}
-			}
-            document.body.style.cursor='auto';
-        }
-      });
+			});
             
       return this;
     };
@@ -1028,7 +1005,6 @@ sc_require('lib/burst-core');
           y       : y,
           sex     : this.data.alleles[i].sex,
           gene    : thisGene,
-		  on      : this.data.alleles[i].on,  // add the mapping of gene visibility - Dan
           parent  : this,
           index   : i
         });
@@ -1154,7 +1130,7 @@ sc_require('lib/burst-core');
     };
 
     // Initiate the load function that generates the scene
-    load( json_file, geneMap );    
+    load( json_file );    
 
     // Full JSON generation function
     self.data("get-json", function(){
@@ -1168,7 +1144,6 @@ sc_require('lib/burst-core');
           var allele = chromosome.alleles[ chromosome.alleles.push({}) - 1 ];
           allele.sex = this.sex;
           allele.gene = this.gene;
-		  allele.on = this.on;
         });
         
       });

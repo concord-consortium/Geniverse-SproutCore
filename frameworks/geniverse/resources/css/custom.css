@@ -78,3 +78,11 @@
 	color: #8a6331;
 	text-shadow: 0px 2px 3px #f8eddf;
 }
+
+.instTitle {
+	font-size: 24px;
+}
+
+ul.instList li {
+	list-style:square static_url('diamondBullet.png');
+}

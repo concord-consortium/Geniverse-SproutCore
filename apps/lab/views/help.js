@@ -7,20 +7,25 @@
 /**
  *   @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
-Lab.HelpView = SC.PickerPane.create({
-  layout: { width: 440, height: 430, centerX: 0, centerY: 0 },
+Lab.HelpView = SC.PalettePane.create({
+  layout: { width: 600, height: 600, centerX: 0, centerY: 0 },
   isModal:NO,
   contentView: SC.View.extend({
-    childViews: 'titleView helpView hideButton'.w(),
+    childViews: 'titleView helpView hideButton helpIcon'.w(),
+		classNames: 'parchment'.w(),
+
+		helpIcon: SC.ImageView.design({
+			layout: { top: 0, left: 4, width: 25, height: 25 },
+			value: static_url('stampedHelp.png')
+		}),
 
     titleView: SC.LabelView.design({
-      layout: { centerY: 0, height: 24, left: 0, top:0, width: 440 },
+      layout: { centerY: 0, height: 24, left: 0, top:0, width: 600 },
       //valueBinding: this.get('titlePath'),
       value: 'Help',
-      controlSize: "bity",
+      controlSize: "info-title",
       fontWeight: SC.BOLD_WEIGHT,
-      textAlign: SC.ALIGN_CENTER,
-      classNames: "sc-pane sc-main sc-theme".w()
+      textAlign: SC.ALIGN_CENTER
     }),
 
     hideButton: SC.ButtonView.extend({
@@ -32,7 +37,7 @@ Lab.HelpView = SC.PickerPane.create({
 
     // TODO: Solve Firefox bug: titleView lacks dark background, making title hard to read 
     helpView: SC.LabelView.design({
-      layout: { left: 10, top: 24, width: 420, height: 375 },
+      layout: { left: 10, top: 30, width: 580, height: 539 },
       //valueBinding: "Lab.helpController.content"
       value: "please wait...",
       escapeHTML: NO,
