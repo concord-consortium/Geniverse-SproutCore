@@ -11,7 +11,6 @@ Lab.InfoView = SC.PalettePane.create({
   layout: { width: 440, height: 430, centerX: 0, centerY: 0 },
   isModal:NO,
   contentView: SC.View.extend({
-//	  layout: { left: -5, top:-5 },
     childViews: 'titleView infoView hideButton instIcon'.w(),
 		classNames: 'parchment'.w(),
 

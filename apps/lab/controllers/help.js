@@ -21,18 +21,18 @@ Lab.helpController = SC.ObjectController.create(
 
   showPane: function(callingView) {
     //console.log("showPane called by:",callingView);
-    this.set('helpButton', callingView);
+//    this.set('helpButton', callingView);
     var helpView = Lab.HelpView;//.create();
     //console.log("helpView:",helpView);
     this.set('pane',helpView);
     var _pane = this.get('pane');
     //console.log("this.get('pane'):",_pane);
     if (!_pane.get('isVisibleInWindow')){
-      if(callingView){
-        _pane.popup(callingView, SC.PICKER_POINTER);
-      }else{
-        _pane.popup(null);
-      }
+//      if(callingView){
+      _pane.append();
+//      }else{
+//        _pane.popup(null);
+//      }
       this.set('content', "Help message loading...");
       this.updateView(this.get('content'));
       var pageName = Lab.routes._currentPagePane.get('pageName');
@@ -69,11 +69,9 @@ Lab.helpController = SC.ObjectController.create(
   }.observes('content'),
 
   removeView: function (callingView){
-    //console.log("removeView called by:",callingView);
-    var _content = this.get('content');
-    //console.log("content:", _content);
-    var receiver = this.pane.remove();
-    //console.log("this.pane.remove() returned receiver:", receiver);
+    if (!!this.get('pane')) {
+      this.get('pane').remove();
+    }
   },
 
   updateView: function (newValue) {
