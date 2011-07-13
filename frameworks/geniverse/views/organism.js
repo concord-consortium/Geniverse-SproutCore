@@ -171,7 +171,7 @@ Geniverse.OrganismView = SC.View.extend(
   _checkForNullDragon: function() {
     var dragon = this.get('content');
     if (this._isNull(dragon)) {
-      SC.Logger.info("Dragon was null!");
+      // SC.Logger.info("Dragon was null!");
       this.set('content', this.get('defaultContent'));
       return YES;
     }

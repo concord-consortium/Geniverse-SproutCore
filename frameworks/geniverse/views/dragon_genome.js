@@ -169,7 +169,11 @@ Geniverse.DragonGenomeView = SC.View.extend(
     // than the idex we have specified
     
     function loadChallengeDragonWhenDragonsLoaded() {
-      Geniverse.challengePoolController.addObserver('length', self, self._loadChallengeDragon);
+      if (self.get('sex') === 1) {
+        Geniverse.challengePoolController.addObserver('firstFemale', self, self._loadChallengeDragon);
+      } else {
+        Geniverse.challengePoolController.addObserver('firstMale', self, self._loadChallengeDragon);
+      }
       Geniverse.challengePoolController.removeObserver('status', loadChallengeDragonWhenDragonsLoaded);
       self._loadChallengeDragon();
     }
@@ -186,19 +190,14 @@ Geniverse.DragonGenomeView = SC.View.extend(
   }.observes('gwtReady'),
   
   _loadChallengeDragon: function() {
-    // originally we were specifying the index of the dragon from the challengePool that
-    // we wanted. However, when dragons are being created, we can't guarantee the order.
-    // Instead we just wait to find the first dragon of the correct sex
-    var machingDragons = Geniverse.challengePoolController.filterProperty('sex', this.get('sex'));
-    if (machingDragons.get('length') > 0){
-      var dragon = machingDragons[0];
+    var dragon = (this.get('sex') === 1) ? Geniverse.challengePoolController.get('firstFemale') : Geniverse.challengePoolController.get('firstMale');
+    if (!!dragon) {
       var self = this;
       SC.run(function() {
-	      self.set('ignoreUpdate', NO);
-		    self.set('dragon', dragon);
-  	    self.set('ignoreUpdate', YES);
-	    });
-	    Geniverse.challengePoolController.removeObserver('length', self, self._loadChallengeDragon);
+        self.set('ignoreUpdate', NO);
+        self.set('dragon', dragon);
+        self.set('ignoreUpdate', YES);
+      });
     }
   },
   

@@ -60,6 +60,10 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     return this.get('alleles').length > 0;
   }.property('alleles'),
  
+  resetPulldowns: function() {
+   this.get('pullDowns').resetPulldowns();
+  },
+
   allAllelesSelected: YES,
   pulldownsDidChange: function(ignore) {
     if (this.get('trackScore') && !ignore) {
@@ -184,7 +188,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
             pd.set('value',alleles[i]);
           }
           else {
-            pd.set('value', Geniverse.chromosomeController.titleForAllele(alleles[i]));
+            pd.set('value', alleles[i]);
           }
         }
       }
@@ -202,22 +206,30 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     }.observes('*parentView.alleles.[]'),
     
     isEditableDidChange: function() {
-      this.removeAllChildren();
-      this._setupPulldowns();
-      this.allelesDidChange();
+      this.resetPulldowns();
     }.observes('isEditable'),
     
     hiddenGenesDidChange: function() {
-      this.removeAllChildren();
-      this._setupPulldowns();
-      this.allelesDidChange();
+      this.resetPulldowns();
     }.observes('hiddenGenes'),
     
     staticGenesDidChange: function() {
-      this.removeAllChildren();
-      this._setupPulldowns();
-      this.allelesDidChange();
+      this.resetPulldowns();
     }.observes('staticGenes'),
+
+    resetPulldowns: function() {
+      // remove and destroy all the children
+      var children = this.get('childViews');
+      var view = children.objectAt(children.get('length')-1);
+      while (!!view) {
+        this.removeChild(view);
+        view.destroy();
+        view = children.objectAt(children.get('length')-1);
+      }
+      var map = this.get('alleleToPulldown');
+      map[this] = null;
+      this.allelesDidChange();
+    },
 
     _setupPulldowns: function() {
       var alls = this.get('alleles');
@@ -277,12 +289,17 @@ Geniverse.DragonChromosomeView = SC.View.extend(
           valueKey: 'value',
           
           updater: function(ignore){
-            var index = this.get('objects')[0].get('index');
-            var alleles = this.get('parentView').get('parentView').get('alleles');
-            alleles[index] = this.get('value');
-            this.get('parentView').get('parentView').set('alleles', alleles);
-            this.get('parentView').get('parentView').propertyDidChange('alleles');
-            this.get('parentView').get('parentView').pulldownsDidChange(ignore === true);
+            if (!!this.get('value')) {
+              var firstObj = this.get('objects')[0];
+              var index = firstObj.get('index');
+              var alleles = this.get('parentView').get('parentView').get('alleles');
+              if (this.get('value').length < 5 || this.get('value') == 'Hoxa1') {
+                alleles[index] = this.get('value');
+                this.get('parentView').get('parentView').set('alleles', alleles);
+                this.get('parentView').get('parentView').propertyDidChange('alleles');
+                this.get('parentView').get('parentView').pulldownsDidChange(ignore === true);
+              }
+            }
           }.observes('value')
       });
       
