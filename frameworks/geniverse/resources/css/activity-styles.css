@@ -7,3 +7,11 @@
   border-top-color: #572e2e;
   background-image: '';
 }
+
+.instTitle {
+	font-size: 24px;
+}
+
+ul.instList li {
+	list-style: disc;
+}

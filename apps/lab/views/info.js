@@ -11,20 +11,26 @@ Lab.InfoView = SC.PalettePane.create({
   layout: { width: 440, height: 430, centerX: 0, centerY: 0 },
   isModal:NO,
   contentView: SC.View.extend({
-    childViews: 'titleView infoView hideButton'.w(),
+//	  layout: { left: -5, top:-5 },
+    childViews: 'titleView infoView hideButton instIcon'.w(),
+		classNames: 'parchment'.w(),
+
+		instIcon: SC.ImageView.design({
+			layout: { top: 0, left: 4, width: 25, height: 25 },
+			value: static_url('stampedInstructions.png')
+		}),
 
     titleView: SC.LabelView.design({
       layout: { centerY: 0, height: 24, left: 0, top:0, width: 440 },
       //valueBinding: this.get('titlePath'),
-      value: 'Info',
-      controlSize: "bity",
+      value: 'Instructions',
+      controlSize: "info-title",
       fontWeight: SC.BOLD_WEIGHT,
-      textAlign: SC.ALIGN_CENTER,
-      classNames: "sc-pane sc-main sc-theme".w()
+      textAlign: SC.ALIGN_CENTER
     }),
 
     hideButton: SC.ButtonView.extend({
-      layout: { bottom: 5, right: 5, width: 100, height: 24 },
+      layout: { bottom: 8, right: 8, width: 100, height: 24 },
       title: "Close",
       action: "removeView",
       target: "Lab.infoController"

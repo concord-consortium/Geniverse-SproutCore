@@ -17,16 +17,16 @@ Geniverse.BlogPostView = SC.PalettePane.design({
   
   contentView: SC.View.extend({
     childViews: 'titleView blogTitleView blogPostView1 blogPostView2 blogPostView3 cancelButton postButton'.w(),
+		classNames: 'parchment'.w(),
 
     titleView: SC.LabelView.design({
-      layout: { centerY: 0, height: 24, left: 0, top:0, width: 440 },
+      layout: { centerY: 0, height: 24, left: 0, top:5, width: 440 },
       //valueBinding: this.get('titlePath'),
       value: 'Post to the Journal',
-      controlSize: "bity",
+      controlSize: "info-title",
       fontWeight: SC.BOLD_WEIGHT,
-      controlSize: SC.LARGE_CONTROL_SIZE,
       textAlign: SC.ALIGN_CENTER,
-      classNames: "sc-pane sc-main sc-theme".w()
+//      classNames: "sc-pane sc-main sc-theme".w()
     }),
 
     cancelButton: SC.ButtonView.extend({

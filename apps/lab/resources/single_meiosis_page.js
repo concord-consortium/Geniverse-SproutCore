@@ -40,7 +40,7 @@ Lab.singleMeiosisPage = SC.Page.design({
       
       genomePanel: SC.View.design({
         layout: {top: 40, bottom: 10, left: 10, right: 10 },
-        childViews: 'background challengePoolView parentTitle drakeParentView meiosisView'.w(),
+        childViews: 'background challengePoolView parentTitle drakeParentView meiosisView nextButton'.w(),
 
         // separate parallel background so we don't make the rest of the childViews see-through
         background: SC.View.design({
@@ -75,7 +75,18 @@ Lab.singleMeiosisPage = SC.Page.design({
 					geneMap: static_url('visibleMap.json'),	
 					dragonBinding: 'Geniverse.meiosisAnimationController.mother',
 					gameteJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson'
-        })
+        }),
+
+        nextButton: SC.ButtonView.design({
+          layout: {left: 435, top: 58, width: 100, height: 24},
+          classNames: ['bring-it-button'],
+          fontWeight: SC.BOLD_WEIGHT,
+          title: "Bring it on!",
+          toolTip: 'Click when ready for the challenge.',
+          target: 'Lab.statechart',
+          action: 'gotoNextActivity'
+        }),
+
       })      
   	})
 	})

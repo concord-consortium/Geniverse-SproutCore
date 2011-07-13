@@ -89,7 +89,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             classNames: "switchsex".w(),
             alt: 'Switch Sex',
             title: 'Switch Sex',
-            tootTip: 'Click to switch the sex of the current drake',
+            toolTip: 'Click to switch the sex of the drake',
             target: 'parentView.genomeView',
             action: 'switchSex'
           }),
@@ -144,7 +144,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             classNames: "switchsex".w(),
             alt: 'Switch Sex',
             title: 'Switch Sex',
-            tootTip: 'Click to switch the sex of the current drake',
+            toolTip: 'Click to switch the sex of the drake',
             target: 'parentView.genomeView',
             action: 'switchSex'
           }),
@@ -199,7 +199,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             classNames: "switchsex".w(),
             alt: 'Switch Sex',
             title: 'Switch Sex',
-            tootTip: 'Click to switch the sex of the current drake',
+            toolTip: 'Click to switch the sex of the drake',
             target: 'parentView.genomeView',
             action: 'switchSex'
           }),
