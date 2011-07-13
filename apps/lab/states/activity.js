@@ -146,9 +146,9 @@ Lab.ACTIVITY = SC.Responder.create(
     var activity = Geniverse.activityController.get('content');
     
     // Clear all data jumping between activities
-    Geniverse.stableOrganismsController.set('content', null);
-    Geniverse.eggsController.set('content',null);
-    Geniverse.challengePoolController.set('content', null);
+    Geniverse.stableOrganismsController.set('content', []);
+    Geniverse.eggsController.set('content',[]);
+    Geniverse.challengePoolController.set('content', []);
     
     /////////////////// Stable
     SC.Logger.log("LOAD: stable");
@@ -315,8 +315,16 @@ Lab.ACTIVITY = SC.Responder.create(
         // get rid of existing drakes
         SC.RunLoop.begin();
           var length = controller.get('length');
+          var putInMarketplace = function(dragon) {
+            if ((dragon.get('status') & SC.Record.READY) === SC.Record.READY) {
+              dragon.removeObserver('status', putInMarketplace);
+              dragon.set('isInMarketplace', YES);
+            } else {
+              dragon.addObserver('status', putInMarketplace);
+            }
+          };
           for (var i = 0; i < length; i++){
-            controller.objectAt(i).set('isInMarketplace', YES);
+            putInMarketplace(controller.objectAt(i));
           }
         SC.RunLoop.end();
         
