@@ -28,8 +28,12 @@ Lab.InfoView = SC.PalettePane.create({
       textAlign: SC.ALIGN_CENTER
     }),
 
-    hideButton: SC.ButtonView.extend({
-      layout: { bottom: 8, right: 8, width: 100, height: 24 },
+    hideButton: SC.ImageView.extend(Geniverse.SimpleButton, {
+      layout: { bottom: 8, right: 8, width: 118, height: 27 },
+      isEnabled: YES,
+      hasHover: YES,
+      classNames: 'closeButton'.w(),
+      alt: 'Close',
       title: "Close",
       action: "removeView",
       target: "Lab.infoController"

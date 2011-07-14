@@ -70,14 +70,16 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           action: 'switchSex'
         }),
 
-        nextButton: SC.ButtonView.design({
-          layout: {bottom: 20, right: 20, width: 100, height: 24},
-          classNames: ['bring-it-button'],
-          fontWeight: SC.BOLD_WEIGHT,
-          title: "Bring it on!",
+        nextButton: SC.ImageView.design(Geniverse.SimpleButton, {
+          layout: {bottom: 20, right: 20, width: 118, height: 27},
+          isEnabled: YES,
+          hasHover: YES,
+          classNames: 'bringItButton'.w(),
+          alt: 'Bring it on!',
+          title: 'Bring it on!',
           toolTip: 'Click when ready for the challenge.',
           target: 'Lab.statechart',
-          action: 'gotoNextActivity'
+          action: 'gotoNextActivity',
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({

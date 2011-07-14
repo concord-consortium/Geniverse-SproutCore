@@ -76,16 +76,17 @@ Lab.singleMeiosisPage = SC.Page.design({
 					gameteJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson'
         }),
 
-        nextButton: SC.ButtonView.design({
-          layout: {left: 435, top: 58, width: 100, height: 24},
-          classNames: ['bring-it-button'],
-          fontWeight: SC.BOLD_WEIGHT,
-          title: "Bring it on!",
+        nextButton: SC.ImageView.design(Geniverse.SimpleButton, {
+          layout: {left: 435, top: 58, width: 118, height: 27},
+          isEnabled: YES,
+          hasHover: YES,
+          classNames: 'bringItButton'.w(),
+          alt: 'Bring it on!',
+          title: 'Bring it on!',
           toolTip: 'Click when ready for the challenge.',
           target: 'Lab.statechart',
           action: 'gotoNextActivity'
-        }),
-
+        })
       })      
   	})
 	})

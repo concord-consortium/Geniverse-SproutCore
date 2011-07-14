@@ -86,3 +86,36 @@
 ul.instList li {
 	list-style:square static_url('diamondBullet.png');
 }
+
+img.bringItButton {
+    background: static_url('gv-butt-bring-it.png') no-repeat top left;
+}
+
+img.bringItButton:hover {
+    background-position: top right;
+}
+
+img.closeButton {
+    background: static_url('gv-butt-close.png') no-repeat top left;
+}
+
+img.closeButton:hover {
+  background-position: top right;
+}
+
+img.cancelButton {
+    background: static_url('gv-butt-cancel.png') no-repeat top left;
+}
+
+img.cancelButton:hover {
+  background-position: top right;
+}
+
+img.postButton {
+    background: static_url('gv-butt-post.png') no-repeat top left;
+}
+
+img.postButton:hover {
+  background-position: top right;
+}
+

@@ -7,6 +7,9 @@
 /**
  *   @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
+
+sc_require('mixins/simple_button');
+
 Geniverse.BlogPostView = SC.PalettePane.design({
   layout: { width: 440, height: 505, centerX: 0, centerY: 0 },
   isModal:NO,
@@ -29,14 +32,22 @@ Geniverse.BlogPostView = SC.PalettePane.design({
 //      classNames: "sc-pane sc-main sc-theme".w()
     }),
 
-    cancelButton: SC.ButtonView.extend({
-      layout: { bottom: 5, right: 210, width: 150, height: 24 },
+    cancelButton: SC.ImageView.extend(Geniverse.SimpleButton, {
+      layout: { bottom: 5, right: 128, width: 118, height: 27 },
+      isEnabled: YES,
+      hasHover: YES,
+      classNames: 'cancelButton'.w(),
+      alt: 'Cancel',
       title: "Cancel",
       action: "closePanel"
     }),
 
-    postButton: SC.ButtonView.extend({
-      layout: { bottom: 5, right: 5, width: 200, height: 24 },
+    postButton: SC.ImageView.extend(Geniverse.SimpleButton, {
+      layout: { bottom: 5, right: 5, width: 118, height: 27 },
+      isEnabled: YES,
+      hasHover: YES,
+      classNames: 'postButton'.w(),
+      alt: 'Post to blog',
       title: "Post",
       action: "post"
     }),
