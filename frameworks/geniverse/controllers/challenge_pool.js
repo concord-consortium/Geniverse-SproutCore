@@ -13,7 +13,31 @@
 Geniverse.challengePoolController = SC.ArrayController.create(
   SC.CollectionViewDelegate,
 /** @scope Geniverse.challengePoolController.prototype */ {
-  selectionBinding: 'Geniverse.allSelectedDragonsController.selection'
+  selectionBinding: 'Geniverse.allSelectedDragonsController.selection',
   // TODO: Add your own code here.
+  dragonsChanged: function() {
+    if (this.get('length') > 0) {
+      var matchingDragons = this.filterProperty('sex', 1);
+      var dragon = null;
+      if (matchingDragons.get('length') > 0){
+        dragon = matchingDragons[0];
+        this.set('firstFemale', dragon);
+      } else {
+        this.set('firstFemale', null);
+      }
+      matchingDragons = this.filterProperty('sex', 0);
+      if (matchingDragons.get('length') > 0){
+        dragon = matchingDragons[0];
+        this.set('firstMale', dragon);
+      } else {
+        this.set('firstMale', null);
+      }
+    } else {
+      this.set('firstFemale', null);
+      this.set('firstMale', null);
+    }
+  }.observes('length'),
 
-}) ;
+  firstFemale: null,
+  firstMale: null
+});
