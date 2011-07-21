@@ -15,7 +15,7 @@ sc_require('lib/burst-core');
       animationComplete: $.noop,
       gameteSelected  : $.noop,
       zoom            : 2,
-      width           : 460,
+      width           : 310,
       height          : 320,
       swap            : 'none', // was 'user' but this causes pause at frame 30
       alleleCount     : 12,
