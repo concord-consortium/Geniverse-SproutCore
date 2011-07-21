@@ -53,7 +53,7 @@ Geniverse.StatsView = SC.View.extend(
 			
 			resetCumulativeStats: function (){
 				Geniverse.statisticsController.reset();				
-			}.observes('menu','mother','father'),
+			}.observes('mother','father'),
       	
 	 	  displayProperties: ['breedingComplete','menu','mother','father','refresh'],
 	      
@@ -88,14 +88,12 @@ Geniverse.StatsView = SC.View.extend(
 				context = context.begin('th').push("F").end();
 				context = context.begin('th').push("M").end();
 				context = context.end();
-         
 				// we move this into an array so we can sort it
 				var allCharacteristics = [];
 				for (var characteristic in dragonGroups[trait]){
 					allCharacteristics.push(characteristic);
 				}
 				allCharacteristics.sort();
-				         
 				for (var i = 0; i < allCharacteristics.length; i++){
 					var characteristic = allCharacteristics[i];
 					context = context.begin('tr');
