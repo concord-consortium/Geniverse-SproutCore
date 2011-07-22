@@ -51,8 +51,6 @@ Geniverse.AnimationView = SC.View.extend(
    */
   meiosisOwner: 'offspring',
 
-  geneMap: null,
-  
   completedAnimationCalled: NO,
   
   dragon: null,
@@ -72,6 +70,7 @@ Geniverse.AnimationView = SC.View.extend(
   fatherJson: null,
   
   jsonDidChange: function() {
+console.log("mother or father gamete set");
     if (this.get('mode') == 'offspring') {
       var mother = this.get('motherJson');
       var father = this.get('fatherJson');
@@ -160,7 +159,6 @@ Geniverse.AnimationView = SC.View.extend(
     if (jsonData === null) {
       jsonData = this.get('jsondataurl');
     }
-	var geneMap = this.get('geneMap');
     SC.Logger.log('jsonData:',jsonData);
     var id = "#"+ this.get('layerId') + " #" + this.get('meiosisOwner');
     SC.Logger.log('looking for id:',id);
@@ -184,7 +182,7 @@ Geniverse.AnimationView = SC.View.extend(
       SC.Logger.dir(options);
       var html = this.get('initialHtml');
       SC.Logger.log('init html', html);
-      geniverseAnimation.html(html).geniverse(jsonData, geneMap, options);
+      geniverseAnimation.html(html).geniverse(jsonData, options);
     }
   },
   
