@@ -69,7 +69,7 @@ Lab.singleMeiosisPage = SC.Page.design({
 
         // geneMap can be json object or url to file containing json object - dan
 				meiosisView: Geniverse.AnimationView.design({
-					layout: {top: 271, left: 55, height: 360, width: 310 },
+					layout: {top: 271, left: 55, height: 360, width: 325 },
 					mode: 'parent',
 					meiosisOwner: 'mother',
 					dragonBinding: 'Geniverse.meiosisAnimationController.mother',

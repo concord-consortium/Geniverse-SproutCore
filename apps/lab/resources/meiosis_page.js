@@ -98,7 +98,7 @@ Lab.meiosisPage = SC.Page.design({
 
         // geneMap can be json object or url to file containing json object - dan
         motherMeiosis: Geniverse.AnimationView.design({
-          layout: {top: 271, left: 60, height: 360, width: 310 },
+          layout: {top: 271, left: 60, height: 360, width: 325 },
           mode: 'parent',
           meiosisOwner: 'mother',
           dragonBinding: 'Geniverse.meiosisAnimationController.mother',
@@ -106,7 +106,7 @@ Lab.meiosisPage = SC.Page.design({
         }),
 
         fertilization: Geniverse.AnimationView.design({
-          layout: {top: 271, centerX: 27, height: 360, width: 310 },
+          layout: {top: 271, centerX: 27, height: 360, width: 325 },
           mode: 'offspring',
           meiosisOwner: 'offspring',
           motherJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson',
@@ -114,7 +114,7 @@ Lab.meiosisPage = SC.Page.design({
         }),
         
         fatherMeiosis: Geniverse.AnimationView.design({
-          layout: {top: 271, right: 5, height: 360, width: 310 },
+          layout: {top: 271, right: 5, height: 360, width: 325 },
           mode: 'parent',
           meiosisOwner: 'father',
           dragonBinding: 'Geniverse.meiosisAnimationController.father',
