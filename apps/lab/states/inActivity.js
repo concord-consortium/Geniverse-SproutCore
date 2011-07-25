@@ -41,6 +41,8 @@ Lab.inActivity = Ki.State.extend({
   activityLoaded: function(){
     Geniverse.activityController.removeObserver('content', this.activityLoaded);
     
+    Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', YES);     // set this here, it may get overrided by a challenge
+    
     var pageType = Geniverse.activityController.get('pageType');
     var challengeType = Lab[pageType].get('challengeType');
     if (!!challengeType) {
