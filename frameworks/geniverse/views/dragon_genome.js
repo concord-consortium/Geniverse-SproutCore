@@ -107,11 +107,9 @@ Geniverse.DragonGenomeView = SC.View.extend(
     // than the idex we have specified
     
     function loadChallengeDragonWhenDragonsLoaded() {
-      if (self.get('sex') === 1) {
-        Geniverse.challengePoolController.addObserver('firstFemale', self, self._loadChallengeDragon);
-      } else {
-        Geniverse.challengePoolController.addObserver('firstMale', self, self._loadChallengeDragon);
-      }
+      Geniverse.challengePoolController.addObserver('firstFemale', self, self._loadChallengeDragon);
+      Geniverse.challengePoolController.addObserver('firstMale', self, self._loadChallengeDragon);
+      
       Geniverse.challengePoolController.removeObserver('status', loadChallengeDragonWhenDragonsLoaded);
       self._loadChallengeDragon();
     }
@@ -129,10 +127,16 @@ Geniverse.DragonGenomeView = SC.View.extend(
   
   _loadChallengeDragon: function() {
     var dragon = (this.get('sex') === 1) ? Geniverse.challengePoolController.get('firstFemale') : Geniverse.challengePoolController.get('firstMale');
+    if (!dragon) {
+      // if we didn't find any drakes of the expected sex, see if we can find one of the other sex and
+      // then later we'll switch the sex of this genome panel.
+      dragon = (this.get('sex') === 0) ? Geniverse.challengePoolController.get('firstFemale') : Geniverse.challengePoolController.get('firstMale');
+    }
     if (!!dragon) {
       var self = this;
       SC.run(function() {
         self.set('ignoreUpdate', NO);
+        self.set('sex', dragon.get('sex'));
         self.set('dragon', dragon);
         self.set('ignoreUpdate', YES);
       });

@@ -19,6 +19,8 @@ Lab.ACTIVITY = SC.Responder.create(
   activityType: null,
   activityIndex: null,
   
+  LOAD_CHALLENGE_DRAKES: YES,
+  
   /**
     The next state to check if this state does not implement the action.
   */
@@ -310,7 +312,8 @@ Lab.ACTIVITY = SC.Responder.create(
       controller.set('content', dragons);
       var dragonsRequired = self.getOrganismConfigurations(isMatchDragons).length;
       var currentDragons = controller.get('content').length();
-      if ((Geniverse.NEVER_SAVE_MATCH_DRAGONS && isMatchDragons) || currentDragons != dragonsRequired) {
+      if ((Geniverse.NEVER_SAVE_MATCH_DRAGONS && isMatchDragons) || 
+          (!Lab.ACTIVITY.get("LOAD_CHALLENGE_DRAKES") && !isMatchDragons) || currentDragons != dragonsRequired) {
         SC.Logger.info("Regenerating dragons for "+isMatchDragons);
         // get rid of existing drakes
         SC.RunLoop.begin();

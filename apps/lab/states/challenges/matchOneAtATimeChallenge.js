@@ -19,6 +19,7 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
   
   startChallenge: function() {
     this.statechart.getState('inActivity').blockNextNavButton(true);
+    Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', NO);
   },
   
   endChallenge: function() {
