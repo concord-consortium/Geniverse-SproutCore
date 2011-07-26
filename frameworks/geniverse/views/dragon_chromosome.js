@@ -66,7 +66,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
 
   allAllelesSelected: YES,
   pulldownsDidChange: function(ignore) {
-    if (this.get('trackScore') && !ignore) {
+    if (this.get('trackScore') && !ignore && !this.get('pullDowns').get('autoChangingPulldowns')) {
       Geniverse.scoringController.incrementScore(1);
     }
     var pds = this.getPath('pullDowns.childViews');
@@ -141,6 +141,8 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     
     ignoreChanges: NO,
     
+    autoChangingPulldowns: NO,
+    
     init: function() {
       sc_super();
       this.invokeLast(function() {
@@ -150,6 +152,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     
     allelesDidChange: function() {
       this.set('ignoreChanges', YES);
+      this.set('autoChangingPulldowns', YES);
       var alleles = this.get('alleles');
       var pulldowns = this.get('alleleToPulldown');
       
@@ -192,6 +195,8 @@ Geniverse.DragonChromosomeView = SC.View.extend(
           }
         }
       }
+      
+      this.set('autoChangingPulldowns', NO);
       
       // go through pulldowns and hide those which don't have alleles
       // for (var j in pulldowns[this]) {
