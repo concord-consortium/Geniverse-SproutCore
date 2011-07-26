@@ -28,7 +28,8 @@ Geniverse.statisticsController = SC.Controller.create(
     { title: "Hindlimbs" },
     { title: "Armor" },
     { title: "Tail" },
-    { title: "Color" }
+    { title: "Color" },
+		{ title: "Rostral horn"}
   ],
 
 
