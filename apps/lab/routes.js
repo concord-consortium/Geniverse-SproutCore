@@ -144,6 +144,11 @@ Lab.routes = SC.Object.create({
 
   gotoCaseLogPage: function() {
     SC.routes.set('location', 'lab/caselog');
+  },
+
+// hack for showing external case log
+  gotoCaseLogPage2: function() {
+    window.location.href = 'http://geniverse.concord.org/caselog/';
   }
 
 });

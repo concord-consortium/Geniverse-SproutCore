@@ -38,7 +38,7 @@ Lab.mainPage = SC.Page.design({
         alt: 'Go to the Case Log',
         toolTip: 'Go to the Case Log',
         target: 'Lab.mainPage',
-        action: 'goCaseLog',
+        action: 'goCaseLog2',  // use caselog2 to go to external page
         value: static_url('mainscreen-caselog-highlighted')
       }),
 
@@ -61,7 +61,12 @@ Lab.mainPage = SC.Page.design({
   }),
 
   goCaseLog: function() {
-    SC.routes.set('location', 'lab/caselog');
+    SC.routes.set('location', 'lab/caselog');  //use caselog2 to go to an iframe containing the case log
+  },
+
+//hack for getting new case log to show up
+  goCaseLog2: function() {
+    window.location.href = 'http://geniverse.concord.org/caselog/';
   }
 
 });
