@@ -60,8 +60,16 @@ Geniverse.DragonGenomeView = SC.View.extend(
   resetDragonOnInit: NO,
 
   trackScore: NO,
-
-	hiddenGenesBinding: 'Geniverse.activityController.hiddenGenes',
+  
+  activityBinding: 'Geniverse.activityController.content',
+  
+  hiddenGenes: function() {
+    return Geniverse.activityController.getHiddenOrStaticGenes('hiddenGenes', this.get('sex'));
+  }.property('activity', 'sex').cacheable(),
+  
+  staticGenes: function() {
+    return Geniverse.activityController.getHiddenOrStaticGenes('staticGenes', this.get('sex'));
+  }.property('activity', 'sex').cacheable(),
 	
   init: function() {
     sc_super();

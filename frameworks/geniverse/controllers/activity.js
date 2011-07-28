@@ -129,20 +129,16 @@ Geniverse.activityController = SC.ObjectController.create(
     
     return null;
   },
-
-	getHiddenGenes: function() {
-		return this.get('content').get('hiddenGenes');
-	},
   
   hiddenGenes: function() {
-      return this._getHiddenOrStaticGenes('hiddenGenes');
+      return this.getHiddenOrStaticGenes('hiddenGenes');
   }.property('*content').cacheable(),
   
   staticGenes: function() {
-    return this._getHiddenOrStaticGenes('staticGenes');
+    return this.getHiddenOrStaticGenes('staticGenes');
   }.property('*content').cacheable(),
   
-  _getHiddenOrStaticGenes: function(property){
+  getHiddenOrStaticGenes: function(property, sex){
     var activity = this.get('content');
     if (!!activity) {
       
@@ -150,7 +146,6 @@ Geniverse.activityController = SC.ObjectController.create(
       var rawGenes = activity.get(property);
       if (!!rawGenes){
         var genesHash = eval("("+rawGenes+")");
-        var sex = this.get('sex');
         if (sex === 0){
           genes = genesHash.male;
         } else if (sex === 1){
@@ -194,7 +189,7 @@ Geniverse.activityController = SC.ObjectController.create(
     } else {
       return [];
     }
-  },
+  }
 
 
 });

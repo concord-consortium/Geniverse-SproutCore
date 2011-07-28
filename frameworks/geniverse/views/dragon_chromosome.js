@@ -16,8 +16,8 @@ Geniverse.DragonChromosomeView = SC.View.extend(
 /** @scope Geniverse.DragonChromosomeView.prototype */ {
 
   alleles: [],
-  hiddenGenesBinding: 'Geniverse.activityController.hiddenGenes',
-  staticGenesBinding: 'Geniverse.activityController.staticGenes',
+  hiddenGenesBinding: '*parentView.hiddenGenes',
+  staticGenesBinding: '*parentView.staticGenes',
   isEditableBinding: '*parentView.isEditable',
   showEmptyOptionInPulldowns: NO,
   startWithEmptyOption: NO,
@@ -135,8 +135,8 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     }.property('*parentView.alleles'),
     
     alleleToPulldown: [],
-    hiddenGenesBinding: 'Geniverse.activityController.hiddenGenes',
-    staticGenesBinding: 'Geniverse.activityController.staticGenes',
+    hiddenGenesBinding: '*parentView.hiddenGenes',
+    staticGenesBinding: '*parentView.staticGenes',
     isEditableBinding: '*parentView.isEditable',
     
     ignoreChanges: NO,
