@@ -15,7 +15,7 @@ Lab.journalController = SC.Controller.create(
 /** @scope Lab.journalController.prototype */ {
   content: null,
   // NOTE: use the same domain, protocol, and port as this WebApp to avoid "Unsafe JavaScript attempt to access frame with URL" error
-  journalBaseURL: "http://geniverse.buddypress.staging.concord.org",
+  journalBaseURL: "/journal/",
 
   /**
    * Opens the journal's web page
@@ -33,7 +33,7 @@ Lab.journalController = SC.Controller.create(
       journalBaseURL = "";
     }
     //SC.Logger.log("journalBaseURL:",journalBaseURL);
-    var journalWindow = window.open(journalBaseURL.toString()+"/"+className.toString());
+    var journalWindow = window.open(journalBaseURL.toString() + className.toString());
     //SC.Logger.log("journalWindow:",journalWindow);
     this.set('content',journalWindow);
   }

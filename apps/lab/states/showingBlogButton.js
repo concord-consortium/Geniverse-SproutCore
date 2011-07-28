@@ -57,7 +57,7 @@ Lab.showingBlogButton =  Ki.State.extend({
       var className = Geniverse.userController.get('className');
       
       var data = {
-        blog_url: "http://geniverse.buddypress.staging.concord.org/" + className + "/xmlrpc.php",
+        blog_url: "http://" + document.domain + Lab.journalController.get('journalBaseURL') + className + "/xmlrpc.php",
         post_title: title,
         post_content: content
       };
@@ -112,7 +112,7 @@ Lab.showingBlogButton =  Ki.State.extend({
         if (match.length > 0) {
           var postId = match[1];
           var className = Geniverse.userController.get('className');
-          var postURL = "http://geniverse.buddypress.staging.concord.org/" + className + "/?p=" + postId;
+          var postURL = Lab.journalController.get('journalBaseURL') + className + "/?p=" + postId;
           SC.AlertPane.extend({
             layout: {top: 0, centerX: 0, width: 360, height: 100 },
             displayDescription: function() {
