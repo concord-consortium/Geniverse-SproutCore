@@ -488,7 +488,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
       this.set("authoredAlleleString", outStrIgnoredGenesRemoved);
       
       var self = this;
-      Geniverse.gwtController.generateDragonWithAlleles(outStr, this.getPath('dragon.sex'), this.getPath('dragon.name'), function(dragon) {
+      Geniverse.gwtController.generateDragonWithAlleles(outStr, this.get('sex'), this.getPath('dragon.name'), function(dragon) {
   	    SC.run(function() {
   		    self.set('dragon', dragon);
   	    });
