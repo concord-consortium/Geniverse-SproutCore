@@ -96,9 +96,12 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
 
   _challengeComplete: function() {
     // Notify the user that they're done
-    SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
+    var moveOnMessage = (!!Geniverse.activityController.getNextActivity()) ? 
+      "Move on to the next challenge using the green arrow below." :
+      "Go back to the case log using the button at the top left to go to a new case.";
+    SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 350, height: 100 }}).plain(
       "Good work!", 
-      "You've completed all the trials in this challenge!",
+      "You've completed all the trials in this challenge!\n"+moveOnMessage,
       "",
       "OK",
       "",
