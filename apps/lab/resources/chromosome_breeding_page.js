@@ -65,7 +65,9 @@ Lab.chromosomeBreedingPage = SC.Page.design({
           showIsEditableCheck: NO,
           showFromLabels: NO,
           updateBreedDragon: function() {
-            Geniverse.breedDragonController.set('mother', this.get('dragon'));
+            if (this.get('isVisibleInWindow')){
+              Geniverse.breedDragonController.set('mother', this.get('dragon'));
+            }
           }.observes('dragon')
         }),
 
@@ -94,7 +96,9 @@ Lab.chromosomeBreedingPage = SC.Page.design({
           showFromLabels: NO,
           dragonOnRight: YES,
           updateBreedDragon: function() {
-            Geniverse.breedDragonController.set('father', this.get('dragon'));
+            if (this.get('isVisibleInWindow')){
+              Geniverse.breedDragonController.set('father', this.get('dragon'));
+            }
           }.observes('dragon')
         }),
 
