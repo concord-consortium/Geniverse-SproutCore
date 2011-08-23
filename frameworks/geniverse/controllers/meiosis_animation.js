@@ -28,6 +28,15 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
     motherGameteJson: null
   }),
   
+  reset: function() {
+    this.set('dragon', null);
+    this.set('mother', null);
+    this.set('father', null);
+    this.set('offspring', null);
+    this.set('fatherGameteJson', null);
+    this.set('motherGameteJson', null);
+  },
+  
   clearOffspring: function() {
     this.set('offspring', null);
   }.observes('mother', 'father','fatherGameteJson','motherGameteJson'),
