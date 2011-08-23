@@ -140,15 +140,15 @@ Geniverse.DragonGenomeView = SC.View.extend(
       // then later we'll switch the sex of this genome panel.
       dragon = (this.get('sex') === 0) ? Geniverse.challengePoolController.get('firstFemale') : Geniverse.challengePoolController.get('firstMale');
     }
-    if (!!dragon) {
-      var self = this;
-      SC.run(function() {
-        self.set('ignoreUpdate', NO);
-        self.set('sex', dragon.get('sex'));
-        self.set('dragon', dragon);
-        self.set('ignoreUpdate', YES);
-      });
-    }
+    
+    // dragon may be null -- that's ok
+    var self = this;
+    SC.run(function() {
+      self.set('ignoreUpdate', NO);
+      self.set('sex', !!dragon ? dragon.get('sex') : 1);
+      self.set('dragon', dragon);
+      self.set('ignoreUpdate', YES);
+    });
   },
   
   a1Alleles: function() {
