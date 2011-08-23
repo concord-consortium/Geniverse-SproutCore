@@ -59,7 +59,7 @@ Geniverse.matchController = SC.ArrayController.create(
 
   isLastDragon: function() {
     var idx = this.get('currentDragonIdx');
-    return (idx !== 0 && (idx+1) >= this.get('length'));
+    return (idx+1) >= this.get('length');
   },
 
   doesMatch: function(expected, received) {
