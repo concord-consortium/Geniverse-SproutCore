@@ -57,11 +57,10 @@ Geniverse.AnimationView = SC.View.extend(
   dragonDidChange: function() {
     var dragon = this.get('dragon');
     if (dragon !== null && typeof dragon != 'undefined') {
-      SC.Logger.log("setting json data for dragon", dragon, Geniverse.meiosisAnimationController.allelesToJSON(dragon.get('alleles')));
       this.set('jsonData', Geniverse.meiosisAnimationController.allelesToJSON(dragon.get('alleles')) );
       this.set('completedAnimationCalled', NO);
     } else {
-      SC.Logger.log("Dragon changed, but was null");
+      this.set('jsonData', null);
     }
   }.observes('dragon'),
   
@@ -70,13 +69,14 @@ Geniverse.AnimationView = SC.View.extend(
   fatherJson: null,
   
   jsonDidChange: function() {
-console.log("mother or father gamete set");
     if (this.get('mode') == 'offspring') {
       var mother = this.get('motherJson');
       var father = this.get('fatherJson');
       if (mother !== null && father !== null) {
         this._combineMotherFatherJson(mother, father);
         this.set('completedAnimationCalled', NO);
+      } else {
+        this.set('jsonData', null);
       }
     }
   }.observes('motherJson', 'fatherJson'),
@@ -98,8 +98,6 @@ console.log("mother or father gamete set");
     }
     this.set('completedAnimationCalled', YES);
     
-    SC.Logger.log('completed animation!');
-    
     if (this.get('mode') == 'offspring') {
       var callback = function(dragon) {
         SC.Logger.info("Created offspring dragon", dragon);
@@ -115,7 +113,6 @@ console.log("mother or father gamete set");
   
   gameteJson: null,
   gameteSelected: function(data) {
-    SC.Logger.info("gamete selected");
     SC.Logger.dir(data);
     SC.RunLoop.begin();
     this.set('gameteJson', data);
@@ -179,10 +176,13 @@ console.log("mother or father gamete set");
     if (geniverseAnimation.length > 0){
       SC.Logger.log('calling animation init:');
       SC.Logger.dir(jsonData);
-      SC.Logger.dir(options);
       var html = this.get('initialHtml');
-      SC.Logger.log('init html', html);
-      geniverseAnimation.html(html).geniverse(jsonData, options);
+      
+      if (jsonData){
+        geniverseAnimation.html(html).geniverse(jsonData, options);
+      } else {
+        geniverseAnimation.html(html);
+      }
     }
   },
   
