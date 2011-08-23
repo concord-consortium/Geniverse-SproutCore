@@ -145,7 +145,8 @@ Geniverse.DragonGenomeView = SC.View.extend(
     var self = this;
     SC.run(function() {
       self.set('ignoreUpdate', NO);
-      self.set('sex', !!dragon ? dragon.get('sex') : 1);
+      if (!!dragon)
+        self.set('sex', dragon.get('sex'));
       self.set('dragon', dragon);
       self.set('ignoreUpdate', YES);
     });
