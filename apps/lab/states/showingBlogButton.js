@@ -57,7 +57,7 @@ Lab.showingBlogButton =  Ki.State.extend({
       var className = Geniverse.userController.get('className');
       
       var data = {
-        blog_url: "http://" + document.domain + Lab.journalController.get('journalBaseURL') + className + "/xmlrpc.php",
+        blog_name: className,
         post_title: title,
         post_content: content
       };
