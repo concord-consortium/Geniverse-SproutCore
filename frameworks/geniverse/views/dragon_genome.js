@@ -135,7 +135,8 @@ Geniverse.DragonGenomeView = SC.View.extend(
   
   _loadChallengeDragon: function() {
     var dragon = (this.get('sex') === 1) ? Geniverse.challengePoolController.get('firstFemale') : Geniverse.challengePoolController.get('firstMale');
-    if (!dragon) {
+
+    if (!dragon && !Geniverse.challengePoolController.configContains(this.get('sex'))) {
       // if we didn't find any drakes of the expected sex, see if we can find one of the other sex and
       // then later we'll switch the sex of this genome panel.
       dragon = (this.get('sex') === 0) ? Geniverse.challengePoolController.get('firstFemale') : Geniverse.challengePoolController.get('firstMale');
