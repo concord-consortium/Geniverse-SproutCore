@@ -298,7 +298,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
               var firstObj = this.get('objects')[0];
               var index = firstObj.get('index');
               var alleles = this.get('parentView').get('parentView').get('alleles');
-              if (this.get('value').length < 5 || this.get('value') == 'Hoxa1') {
+              if (this.get('value').length < 5) {
                 alleles[index] = this.get('value');
                 this.get('parentView').get('parentView').set('alleles', alleles);
                 this.get('parentView').get('parentView').propertyDidChange('alleles');
