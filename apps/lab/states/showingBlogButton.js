@@ -35,7 +35,8 @@ Lab.showingBlogButton =  Ki.State.extend({
     post: function() {
       var title = Geniverse.blogPostController.get('title');
       var content = Geniverse.blogPostController.get('content');
-      this._postToWPBlog(title, content);
+      var tags = this._get_blog_tags();
+      this._postToWPBlog(title, content, tags);
       
       this._showWaitDialog();
       
@@ -53,13 +54,14 @@ Lab.showingBlogButton =  Ki.State.extend({
       this.gotoState('ready');
     },
     
-    _postToWPBlog: function(title, content) {
+    _postToWPBlog: function(title, content, tags) {
       var className = Geniverse.userController.get('className');
       
       var data = {
         blog_name: className,
         post_title: title,
-        post_content: content
+        post_content: content,
+        post_tags: tags
       };
       
       SC.Request.postUrl("/portal/blog/post_blog").json().notify(this, '_showConfirmation').send(data);
@@ -67,6 +69,26 @@ Lab.showingBlogButton =  Ki.State.extend({
     
     _waitDialog: null,
     
+    _get_blog_tags: function() {
+      var tags = "";
+      var activityNum = "";
+      var caseName = Geniverse.activityController.getPath('myCase.name');
+      if (!!caseName) {
+        tags += caseName;
+        activityNum += (caseName + ": ");
+      }
+
+      var caseOrder = Geniverse.activityController.get('myCaseOrder');
+      if (!!caseOrder) {
+        activityNum += caseOrder;
+        if (!!caseName) {
+          tags += ",";
+        }
+        tags += activityNum;
+      }
+      return tags;
+    },
+
     _showWaitDialog: function() {
       this._waitDialog = SC.AlertPane.extend({
         layout: {top: 0, centerX: 0, width: 300, height: 100 }
