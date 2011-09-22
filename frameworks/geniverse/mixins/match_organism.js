@@ -20,13 +20,15 @@ Geniverse.MatchOrganism = {
 
   acceptDragOperation: function(drag, op) {
     var dragon = this._getSourceDragon(drag);
-
-    if (Geniverse.matchController.doesMatch(this.get('content'), dragon)) {
-      this.setPath('content.hasBeenMatched', YES);
-      this._setClassNames();
-    } else {
-      SC.AlertPane.info("", "Those dragons don't look exactly the same!");
-    }
+    
+    Lab.statechart.sendAction('checkMatchDragon', [this.get('content'), dragon], this);
+    
+    // if (Geniverse.matchController.doesMatch(this.get('content'), dragon)) {
+    //   this.setPath('content.hasBeenMatched', YES);
+    //   this._setClassNames();
+    // } else {
+    //   SC.AlertPane.info("", "Those dragons don't look exactly the same!");
+    // }
 
     return NO ;
   },
