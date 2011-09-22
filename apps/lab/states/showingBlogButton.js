@@ -75,16 +75,14 @@ Lab.showingBlogButton =  Ki.State.extend({
       var caseName = Geniverse.activityController.getPath('myCase.name');
       if (!!caseName) {
         tags += caseName;
-        activityNum += (caseName + ": ");
       }
 
-      var caseOrder = Geniverse.activityController.get('myCaseOrder');
-      if (!!caseOrder) {
-        activityNum += caseOrder;
+      var challengeTitle = Geniverse.activityController.get('title');
+      if (!!challengeTitle) {
         if (!!caseName) {
           tags += ",";
         }
-        tags += activityNum;
+        tags += challengeTitle;
       }
       return tags;
     },
