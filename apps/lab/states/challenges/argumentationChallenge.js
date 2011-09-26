@@ -26,9 +26,12 @@ Lab.argumentationChallenge = Ki.State.extend({
   didSendBlogPost: function() {
     if (!this.challengeComplete){
       this.endChallenge();
+      var moveOnMessage = (!!Geniverse.activityController.getNextActivity()) ? 
+        "move on to the next challenge using the green arrow below." :
+        "go back to the case log to go to a new case.";
       SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 350, height: 100 }}).plain(
         "Good work!", 
-        "You have posted to the journal.\nYou can continue to work on this challenge if you like, or you can move on to the next challenge using the green arrow below.",
+        "You have posted to the journal.\nYou can continue to work on this challenge if you like, or you can "+moveOnMessage,
         "",
         "OK",
         ""
