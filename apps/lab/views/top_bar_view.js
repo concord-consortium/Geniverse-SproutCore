@@ -174,24 +174,10 @@ Lab.TopBarView = SC.ToolbarView.extend(
       })
     );
     childViews.push(this.navBarRight);
-
-    this.blogButton = this.createChildView(
-      SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 0, right: 175, width: 27, height: 26 },
-        layerId: 'blogButton',
-        hasHover: YES,
-        alt: 'Create Blog Post',
-        title:  "Create a blog post",
-        toolTip: "Create a blog post",
-        target: Lab.statechart,
-        action: 'showBlogPostPanel'
-      })
-    );
-    childViews.push(this.blogButton);
     
     this.infoButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 0, right: 141, width: 27, height: 26 },
+        layout: { centerY: 0, right: 175, width: 27, height: 26 },
         layerId: 'infoButton',
         hasHover: YES,
         alt: 'Info',
@@ -202,22 +188,36 @@ Lab.TopBarView = SC.ToolbarView.extend(
     );
     Lab.infoController.set('infoButton', this.infoButton); // So pop-up pointer works
     childViews.push(this.infoButton);
-
-    this.helpButton = this.createChildView(
+    
+    this.blogButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 0, right: 107, width: 27, height: 26 },
-        layerId: 'helpButton',
+        layout: { centerY: 0, right: 141, width: 27, height: 26 },
+        layerId: 'blogButton',
         hasHover: YES,
-        alt: 'Help',
-        toolTip: "View the Help window for this page",
-        target: 'Lab.helpController',
-        action: 'showPane',
-        isVisibleBinding: 'Lab.helpController.isVisible'
+        alt: 'Post claim to the Journal',
+        title:  "Post claim to the Journal",
+        toolTip: "Post claim to the Journal",
+        target: Lab.statechart,
+        action: 'showBlogPostPanel'
       })
     );
-    Lab.helpController.set('helpButton', this.helpButton); // So pop-up pointer works
-    childViews.push(this.helpButton);
-
+    childViews.push(this.blogButton);
+    
+    
+    this.journalButton = this.createChildView(
+      SC.ImageView.design(Geniverse.SimpleButton, {
+        layout: { centerY: 0, right: 107, width: 27, height: 26 },
+        hasHover: YES,
+        alt: 'Your journal',
+        layerId: 'journalButton',
+        title:  "Journal",
+        toolTip: "Click to open the class journal",
+        target: this.get('journalButtonTargetPath'),
+        action: 'openWindow'
+      })
+    );
+    childViews.push(this.journalButton);
+    
     this.notepadButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, right: 73, width: 27, height: 26 },
@@ -232,19 +232,20 @@ Lab.TopBarView = SC.ToolbarView.extend(
     );
     childViews.push(this.notepadButton);
 
-    this.journalButton = this.createChildView(
+    this.helpButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, right: 39, width: 27, height: 26 },
+        layerId: 'helpButton',
         hasHover: YES,
-        alt: 'Your journal',
-        layerId: 'journalButton',
-        title:  "Journal",
-        toolTip: "Click to open the class journal",
-        target: this.get('journalButtonTargetPath'),
-        action: 'openWindow'
+        alt: 'Help',
+        toolTip: "View the Help window for this page",
+        target: 'Lab.helpController',
+        action: 'showPane',
+        isVisibleBinding: 'Lab.helpController.isVisible'
       })
     );
-    childViews.push(this.journalButton);
+    Lab.helpController.set('helpButton', this.helpButton); // So pop-up pointer works
+    childViews.push(this.helpButton);
 
     this.logoutButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
