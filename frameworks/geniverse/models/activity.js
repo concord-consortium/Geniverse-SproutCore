@@ -41,7 +41,9 @@ Geniverse.Activity = SC.Record.extend(
   crossoverWhenBreeding: SC.Record.attr(Boolean),
 
   message: SC.Record.attr(String), // info text (perhaps HTML formatted) for display when this activity is initialized
-
+  
+  isArgumentationChallenge: SC.Record.attr(Boolean, {defaultValue: NO}),    // whether chal. is solved by a blog post 
+  
   myCase: SC.Record.toOne('Geniverse.Case'),
   myCaseOrder: SC.Record.attr(Number, { defaultValue: 1 })
 });
