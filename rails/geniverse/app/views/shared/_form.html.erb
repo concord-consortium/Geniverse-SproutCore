@@ -4,6 +4,7 @@
 </p>
 
 <% textfield_names = ["initial_alleles", "match_dragon_alleles", "message"] %>
+<% checkbox_names = ["is_argumentation_challenge", "crossover_when_breeding", "send_bred_dragons"] %>
 <% object.attributes.each do |att,val| %>
   <% next if att == "id" %>
   <% next if att == "created_at" %>
@@ -12,6 +13,8 @@
     <%= f.label att.to_sym %><br />
     <% if (textfield_names.grep(att.to_s).size > 0) %>
       <%= f.text_area att.to_sym %>
+    <% elsif (checkbox_names.grep(att.to_s).size > 0) %>
+      <%= f.check_box att.to_sym %>
     <% else %>
       <%= f.text_field att.to_sym %>
     <% end %>

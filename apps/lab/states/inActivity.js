@@ -11,6 +11,7 @@ Lab.inActivity = Ki.State.extend({
   challengeState: Ki.State.design({
     substatesAreConcurrent: NO,
     initialSubstate: 'defaultChallenge',
+    argumentationChallenge: Ki.State.plugin('Lab.argumentationChallenge'),
     matchOneAtATimeChallenge: Ki.State.plugin('Lab.matchOneAtATimeChallenge'),
     matchThreeToOneChallenge: Ki.State.plugin('Lab.matchThreeToOneChallenge'),
     matchTargetDrakesListChallenge: Ki.State.plugin('Lab.matchTargetDrakesListChallenge'),
@@ -46,12 +47,13 @@ Lab.inActivity = Ki.State.extend({
     
     var pageType = Geniverse.activityController.get('pageType');
     var challengeType = Lab[pageType].get('challengeType');
-    if (!!challengeType) {
+    
+    if (!!Geniverse.activityController.get('isArgumentationChallenge')) {
+      this.get('challengeState').gotoState('argumentationChallenge');
+    } else if (!!challengeType) {
       this.get('challengeState').gotoState(challengeType);
-    } else {
-      if (!!Geniverse.activityController.get('matchDragonAlleles')) {
-        this.get('challengeState').gotoState('matchTargetDrakesListChallenge');
-      }
+    } else if (!!Geniverse.activityController.get('matchDragonAlleles')) {
+      this.get('challengeState').gotoState('matchTargetDrakesListChallenge');
     }
     
     if (!!Geniverse.activityController.get('myCase')) {

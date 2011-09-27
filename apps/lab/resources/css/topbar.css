@@ -32,6 +32,11 @@ img#journalButton:hover {
     background-repeat: none;
 }
 
+img#blogButton:hover {
+    background-image: static_url('blog-post-active.png');
+    background-repeat: none;
+}
+
 img#logOutButton:hover {
     background-image: static_url('log-out-active.png');
     background-repeat: none;

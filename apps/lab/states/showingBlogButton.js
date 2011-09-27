@@ -145,8 +145,9 @@ Lab.showingBlogButton =  Ki.State.extend({
             "Your latest post can be found <a target='_blank' href='"+postURL+"'>here</a>.<br/>(Link will open in a new tab) ",
             "",
             "OK",
-            "",
-            ""
+            {
+              alertPaneDidDismiss: function() { Lab.statechart.sendAction('didSendBlogPost'); }
+            }
           );
         }
       }

@@ -9,10 +9,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110705195301) do
+ActiveRecord::Schema.define(:version => 20110926152856) do
 
   create_table "activities", :force => true do |t|
-    t.text     "initial_alleles"
+    t.string   "initial_alleles"
     t.string   "base_channel_name"
     t.integer  "max_users_in_room"
     t.boolean  "send_bred_dragons"
@@ -21,13 +21,14 @@ ActiveRecord::Schema.define(:version => 20110705195301) do
     t.string   "title"
     t.string   "hidden_genes"
     t.text     "static_genes"
-    t.boolean  "crossover_when_breeding", :default => false
+    t.boolean  "crossover_when_breeding",    :default => false
     t.string   "route"
     t.string   "pageType"
     t.text     "message"
-    t.text     "match_dragon_alleles"
+    t.string   "match_dragon_alleles"
     t.integer  "myCase_id"
     t.integer  "myCaseOrder"
+    t.boolean  "is_argumentation_challenge", :default => false
   end
 
   create_table "articles", :force => true do |t|
@@ -62,12 +63,12 @@ ActiveRecord::Schema.define(:version => 20110705195301) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "stableOrder"
-    t.boolean  "isEgg",           :default => false
-    t.boolean  "isInMarketplace", :default => true
+    t.boolean  "isEgg",                         :default => false
+    t.boolean  "isInMarketplace",               :default => true
     t.integer  "activity_id"
     t.integer  "breeder_id"
-    t.boolean  "isMatchDragon",   :default => false
     t.string   "breedTime",       :limit => 16
+    t.boolean  "isMatchDragon",                 :default => false
   end
 
   add_index "dragons", ["activity_id"], :name => "index_dragons_on_activity_id"
@@ -95,6 +96,6 @@ ActiveRecord::Schema.define(:version => 20110705195301) do
     t.string   "class_name"
   end
 
-  add_index "users", ["username", "password_hash"], :name => "index_users_on_username_and_password_hash", :length => {"username"=>10, "password_hash"=>20}
+  add_index "users", ["username", "password_hash"], :name => "index_users_on_username_and_password_hash"
 
 end
