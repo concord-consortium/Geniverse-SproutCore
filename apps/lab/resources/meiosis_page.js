@@ -100,6 +100,7 @@ Lab.meiosisPage = SC.Page.design({
         motherMeiosis: Geniverse.AnimationView.design({
           layout: {top: 271, left: 60, height: 360, width: 325 },
           mode: 'parent',
+					swapping: false,
           meiosisOwner: 'mother',
           dragonBinding: 'Geniverse.meiosisAnimationController.mother',
           gameteJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson'
@@ -116,6 +117,7 @@ Lab.meiosisPage = SC.Page.design({
         fatherMeiosis: Geniverse.AnimationView.design({
           layout: {top: 271, right: 5, height: 360, width: 325 },
           mode: 'parent',
+					swapping: false,
           meiosisOwner: 'father',
           dragonBinding: 'Geniverse.meiosisAnimationController.father',
           gameteJsonBinding: 'Geniverse.meiosisAnimationController.fatherGameteJson'
