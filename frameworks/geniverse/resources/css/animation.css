@@ -1,17 +1,17 @@
 /* Dragon */
-.meiosis{width:400px;height:350px;margin-right:10px;border:1px solid #bbb;float:left;padding:5px;background:#eee;}
+.meiosis{width:325px;height:354px;margin-right:10px;border:1px solid #bbb;float:left;padding:5px;background:#eee;}
 
 /* Cell */
-.cell{margin-bottom:3px;width:398px;height:324px;}
+.cell{margin-bottom:3px;width:321px;height:319px;}
 
 /* Controls */
-.controls button{width:36px;height:26px;float:left;}
-.controls .zoom{width:50px;float:left;margin:5px 8px 0 6px;}
-.controls .scrub{width:145px;float:left;margin:5px 8px 0 6px;}
-.controls .frame input{width:40px;border:1px solid #bbb;text-align:center;color:#888}
+.controls button{width:32px;height:32px;float:left;margin-top:1px;}
+.controls .zoom{width:50px;float:left;margin:5px 8px 3px 6px;}
+.controls .scrub{width:145px;float:left;margin:10px 8px 0 6px;}
+.controls .frame input{width:40px;border:1px solid #bbb;text-align:center;color:#888;margin-top:8px;}
 
 /* UI Slider */
-.ui-slider .ui-slider-handle { width: 10px; margin-left: -5px; }
+.ui-slider .ui-slider-handle { width: 10px; margin-left: -5px; margin-top:0px; }
   
 /* Debug */
 #debug-pointer{background:red;width:10px;height:10px;position:absolute;left:0;top:0;}
