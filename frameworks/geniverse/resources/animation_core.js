@@ -426,9 +426,16 @@ sc_require('lib/burst-core');
           distance = dist( seg.x, seg.y, nextSeg.x, nextSeg.y ),
           angle = seg.angle*parent.foldFactor+nextSeg.angle*parent.foldFactor/2+parent.rotation,
           nx = seg.x + sin(angle)*defaultOpts.segLength,
-          ny = seg.y + cos(angle)*defaultOpts.segLength;
-      seg.x += (nx-seg.x) / (defaultOpts.segMoveSpeed*seg.parent.parent.overDragMultiplier)/2*direction;
-      seg.y += (ny-seg.y) / (defaultOpts.segMoveSpeed*seg.parent.parent.overDragMultiplier)/2*direction;
+          ny = seg.y + cos(angle)*defaultOpts.segLength,
+					scaleFactor = 1;
+			if (!playing){
+				var segRot = Math.atan2( nextSeg.x-seg.x, nextSeg.y-seg.y );
+				if ((Math.abs(segRot) > defaultOpts.foldedAngle) && (Math.abs(Math.abs(segRot)-Math.PI) > defaultOpts.foldedAngle)){
+							scaleFactor = 10;
+				}
+			}
+      seg.x += ((nx-seg.x) / (defaultOpts.segMoveSpeed*seg.parent.parent.overDragMultiplier)/2*direction)*scaleFactor;
+      seg.y += ((ny-seg.y) / (defaultOpts.segMoveSpeed*seg.parent.parent.overDragMultiplier)/2*direction)*scaleFactor;
       seg.x = constrain( seg.x, 0, defaultOpts.width );
       seg.y = constrain( seg.y, 0, defaultOpts.height );
     };
@@ -440,14 +447,23 @@ sc_require('lib/burst-core');
         seg.y = nextSeg.y;
       }else{
         var distance = dist( seg.x, seg.y, nextSeg.x, nextSeg.y );
-        if( distance > minDist ){
+        if( distance > minDist*2 ){
           var angle = Math.atan2( nextSeg.x-seg.x, nextSeg.y-seg.y ),
               rnd = random( defaultOpts.foldDamp ) - ( defaultOpts.foldDamp / 2 );
-          nx = seg.x + sin(angle+rnd)*(defaultOpts.segLength*overDragMultiplierC);
-          ny = seg.y + cos(angle+rnd)*(defaultOpts.segLength*overDragMultiplierC);
+          nx = seg.x + sin(angle+rnd)*(distance/2);
+          ny = seg.y + cos(angle+rnd)*(distance/2);
           seg.x += (nx-seg.x) / 1;
           seg.y += (ny-seg.y) / 1;
-        }
+        } else {
+					if (distance > minDist){
+          	var angle = Math.atan2( nextSeg.x-seg.x, nextSeg.y-seg.y ),
+              	rnd = random( defaultOpts.foldDamp ) - ( defaultOpts.foldDamp / 2 );
+          			nx = seg.x + sin(angle+rnd)*(defaultOpts.segLength*overDragMultiplierC);
+          			ny = seg.y + cos(angle+rnd)*(defaultOpts.segLength*overDragMultiplierC);
+          			seg.x += (nx-seg.x) / 1;
+          			seg.y += (ny-seg.y) / 1;
+							}
+					}
       }
       seg.x = constrain( seg.x, 0, defaultOpts.width );
       seg.y = constrain( seg.y, 0, defaultOpts.height );      
@@ -524,12 +540,12 @@ sc_require('lib/burst-core');
 
       this.SVG.hover(
         function(){ // only change color if not selected -Dan
-          if((frame===100 && mode==='parent') && (this.attr("fill") === defaultOpts.color.cell_fill)){
+          if((frame===80 && mode==='parent') && (this.attr("fill") === defaultOpts.color.cell_fill)){
             this.attr({ fill:defaultOpts.color.cell_fill_hover, stroke:defaultOpts.color.cell_stroke_hover })
              document.body.style.cursor='pointer';
           }
         },function(){ // only change color if not already hover color -Dan
-	          if((frame===100 && mode==='parent') && (this.attr("fill") === defaultOpts.color.cell_fill_hover)){
+	          if((frame===80 && mode==='parent') && (this.attr("fill") === defaultOpts.color.cell_fill_hover)){
             this.attr({ fill:defaultOpts.color.cell_fill, stroke:defaultOpts.color.cell_stroke });
              document.body.style.cursor='auto';
           }
@@ -978,7 +994,7 @@ sc_require('lib/burst-core');
       this.dragY = this.y;
       this.originX = this.x;
       this.originY = this.y;
-	  this.hidden = this.startHidden;
+	  	this.hidden = this.startHidden;
       
       this.foldFactor = 1;
 
@@ -1334,12 +1350,10 @@ sc_require('lib/burst-core');
                 .key(30,centerX)
                 .key(35,centerX)
                 .key(50,centerX/2)
-//                .key(100,centerX/2)
               .track('y')
                 .key(0,centerY)
                 .key(60,centerY)
                 .key(80,centerY-centerY/2)
-//                .key(100,centerY-centerY/2)
               .track('radius')
                 .key(0,centerY-10)
                 .key(30,centerY-10)
@@ -1347,7 +1361,6 @@ sc_require('lib/burst-core');
                 .key(50,centerY/1.5)
                 .key(60,centerY/1.5)
                 .key(80,centerY/2.5)
-//                .key(100,centerY/2.5)
                 .always(function(e){
                   this.updateSVG.call(this);
                 })
@@ -1358,17 +1371,15 @@ sc_require('lib/burst-core');
                 .key(30,centerX)
                 .key(35,centerX)
                 .key(50,centerX+centerX/2)
-//                .key(100,centerX+centerX/2)
               .track('y')
                 .key(0,centerY)
                 .key(60,centerY)
                 .key(80,centerY-centerY/2)
-//                .key(100,centerY-centerY/2)
               .track('opacity')
-                .key(21,0)
+              	.key(0,0)
+              	.key(21,0)
                 .key(35,0.5)
                 .key(50,0.7)
-//                .key(100,0.7)
               .track('radius')
                 .key(0,centerY-10)
                 .key(30,centerY-10)
@@ -1376,7 +1387,6 @@ sc_require('lib/burst-core');
                 .key(50,centerY/1.5)
                 .key(60,centerY/1.5)
                 .key(80,centerY/2.5)
-//                .key(100,centerY/2.5)
                 .always(function(e){
                   this.updateSVG.call(this);
                 })
@@ -1385,17 +1395,17 @@ sc_require('lib/burst-core');
               .track('x')
                 .key(0,centerX+centerX/2)
               .track('y')
-                .key(60,centerY)
+              	.key(0,centerY)
+              	.key(60,centerY)
                 .key(80,centerY+centerY/2)
-//                .key(100,centerY+centerY/2)
               .track('opacity')
-                .key(50,0)
+              	.key(0,0)
+              	.key(50,0)
                 .key(80,0.7)
-//                .key(100,0.7)
               .track('radius')
-                .key(60,centerY/1.5)
+              	.key(0,centerY/1.5)
+              	.key(60,centerY/1.5)
                 .key(80,centerY/2.5)
-//                .key(100,centerY/2.5)
                 .always(function(e){
                   this.updateSVG.call(this);
                 })
@@ -1404,17 +1414,17 @@ sc_require('lib/burst-core');
               .track('x')
                 .key(0,centerX-centerX/2)
               .track('y')
-                .key(60,centerY)
+              	.key(0,centerY)
+              	.key(60,centerY)
                 .key(80,centerY+centerY/2)
-//                .key(100,centerY+centerY/2)
               .track('opacity')
-                .key(50,0)
+              	.key(0,0)
+              	.key(50,0)
                 .key(80,0.7)
-//                .key(100,0.7)
               .track('radius')
-                .key(60,centerY/1.5)
+              	.key(0,centerY/1.5)
+              	.key(60,centerY/1.5)
                 .key(80,centerY/2.5)
-//                .key(100,centerY/2.5)
                 .always(function(e){
                   this.updateSVG.call(this);
                 })
@@ -1463,7 +1473,7 @@ sc_require('lib/burst-core');
                   
                   if(e.frame==30 && defaultOpts.swap == "user"){
 // need to look at this to prevent pause - Dan
-					pairingMode = true;
+										pairingMode = true;
                     if(swapui){swapui.attr({opacity:1});}
                     burst.stop();
                     recombinationBindEvents();              
@@ -1888,9 +1898,13 @@ sc_require('lib/burst-core');
       burst.loaded = {};
       burst.load('geniverseTimeline_'+owner);
       burst.play();
+			playing = true;
     });
     self.find('.stop').click(function(){
       burst.stop();
+    });
+    self.find('.retry').click(function(){
+			Geniverse.meiosisAnimationController.set('retry',true);
     });
     
     var frameInput = self.find('.frame input').change(function(e){
@@ -1901,7 +1915,7 @@ sc_require('lib/burst-core');
         burst.timelines['geniverseTimeline_'+owner].play(29);
         burst.timelines['geniverseTimeline_'+owner].play(30);
       }
-      if(frame >= 100 && mode === 'parent'){
+      if(frame >= 80 && mode === 'parent'){
         defaultOpts.animationComplete.call(defaultOpts.context);
       }
       if(frame >= 35 && mode === 'offspring'){
@@ -1919,6 +1933,21 @@ sc_require('lib/burst-core');
         frame = 30;
         scrub.slider('value',3000);
         frameInput.val(30);
+        clearOffsets();
+        burst.stop();
+        playing = false;
+        return this;
+      });      
+    }
+
+    // Jump to the end to allow gamete selection
+    if( mode === 'parent' ){
+      var endButton = self.find('.end').click(function(){
+        burst.timelines['geniverseTimeline_'+owner].play(79);
+        burst.timelines['geniverseTimeline_'+owner].play(80);
+        frame = 80;
+        scrub.slider('value',8000);
+        frameInput.val(80);
         clearOffsets();
         burst.stop();
         playing = false;
@@ -1951,7 +1980,7 @@ sc_require('lib/burst-core');
         playing = false;
         burst.stop();
         frame=parseInt(ui.value/100);
-        if(frame>100){frame=100};
+        if(frame>80){frame=80};
         clearOffsets();
         burst.frame(frame);
       }

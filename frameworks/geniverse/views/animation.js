@@ -43,6 +43,7 @@ Geniverse.AnimationView = SC.View.extend(
    * The default value is 'offspring'.
    */
   mode: 'offspring',
+  swaping: false,
 
   /**
    * A unique id for each dragon entity in which the chromosomes are contained.
@@ -62,7 +63,7 @@ Geniverse.AnimationView = SC.View.extend(
     } else {
       this.set('jsonData', null);
     }
-  }.observes('dragon'),
+  }.observes('dragon','Geniverse.meiosisAnimationController.retry'),
   
   motherJson: null,
   
@@ -193,11 +194,14 @@ Geniverse.AnimationView = SC.View.extend(
     
     out += '<button class="stop" title="Stop"><img src="' + sc_static('images/meiosis_stop_small.png') + '" /></button>';
 		out += '<button class="play" title="Play"><img src="' + sc_static('images/meiosis_play_small.png') + '" /></button>';
-		if (this.get('mode') == 'parent') {
+		out += '<button class="end" title="End"><img src="' + sc_static('images/meiosis_end_small.png') + '" /></button>';
+		if ((this.get('mode') == 'parent') && this.get('swapping')) {
 		  out += '<button class="swap" title="Swap Genes"><img src="' + sc_static('images/meiosis_exchange_16x16_monochrome.png') + '" /></button>';
 	  }
+		out += '<button class="retry" title="Retry"><img src="' + sc_static('images/meiosis_retry_monochrome.png') + '" /></button>';
 		out += '<div class="scrub"></div>';
-		out += '<div class="frame"><input type="text" value="0"></div>';
+		
+//		out += '<div class="frame"><input type="text" value="0"></div>';
     
     out += '</div>';
     return out;

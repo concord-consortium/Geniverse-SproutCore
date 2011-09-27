@@ -25,7 +25,8 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
     father: null,
     offspring: null,
     fatherGameteJson: null,
-    motherGameteJson: null
+    motherGameteJson: null,
+		retry: true
   }),
   
   reset: function() {
