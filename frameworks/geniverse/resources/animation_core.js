@@ -1941,7 +1941,6 @@ sc_require('lib/burst-core');
     }
 
     // Jump to the end to allow gamete selection
-    if( mode === 'parent' ){
       var endButton = self.find('.end').click(function(){
         burst.timelines['geniverseTimeline_'+owner].play(79);
         burst.timelines['geniverseTimeline_'+owner].play(80);
@@ -1953,7 +1952,6 @@ sc_require('lib/burst-core');
         playing = false;
         return this;
       });      
-    }
 
     // Update the animation when the slider is sliden
     var scrub = self.find('.scrub');
