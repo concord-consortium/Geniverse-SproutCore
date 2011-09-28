@@ -63,7 +63,25 @@ Geniverse.AnimationView = SC.View.extend(
     } else {
       this.set('jsonData', null);
     }
-  }.observes('dragon','Geniverse.meiosisAnimationController.retry'),
+  }.observes('dragon'),
+
+	resetMother: function () {
+		if (this.get('meiosisOwner') === 'mother') {
+			this.dragonDidChange();
+	    SC.RunLoop.begin();
+			this.set('gameteJson',null);
+	    SC.RunLoop.end();
+		}
+	}.observes('Geniverse.meiosisAnimationController.retryMother'),
+
+	resetFather: function () {
+		if (this.get('meiosisOwner') === 'father') {
+			this.dragonDidChange();
+	    SC.RunLoop.begin();
+			this.set('gameteJson',null);
+	    SC.RunLoop.end();
+		}
+	}.observes('Geniverse.meiosisAnimationController.retryFather'),
   
   motherJson: null,
   
@@ -73,14 +91,22 @@ Geniverse.AnimationView = SC.View.extend(
     if (this.get('mode') == 'offspring') {
       var mother = this.get('motherJson');
       var father = this.get('fatherJson');
-      if (mother !== null && father !== null) {
+     if (mother !== null && father !== null) {
         this._combineMotherFatherJson(mother, father);
-        this.set('completedAnimationCalled', NO);
+//				this.set('completedAnimationCalled', NO);
       } else {
-        this.set('jsonData', null);
-      }
-    }
-  }.observes('motherJson', 'fatherJson'),
+				if (mother !== null){
+					this.set('jsonData',mother);
+				} else {
+					if (father != null) {
+	        	this.set('jsonData',father);						
+					}
+    		}
+//				this.set('jsonData',null);
+    	}
+			this.set('completedAnimationCalled', NO);			
+		}
+ }.observes('motherJson', 'fatherJson'),
   
   _combineMotherFatherJson: function (mother, father) {
     var combined = { chromosomes: [] };
@@ -165,6 +191,8 @@ Geniverse.AnimationView = SC.View.extend(
     var options = {
       mode: this.get('mode'),
       owner: this.get('meiosisOwner'),
+			mother: (this.get('motherJson') != null),
+			father: (this.get('fatherJson') != null),
       segMoveSpeed: 5,
       width: 320, // FIXME
       height: 320, // FIXME
@@ -195,12 +223,13 @@ Geniverse.AnimationView = SC.View.extend(
     out += '<button class="stop" title="Stop"><img src="' + sc_static('images/meiosis_stop_small.png') + '" /></button>';
 		out += '<button class="play" title="Play"><img src="' + sc_static('images/meiosis_play_small.png') + '" /></button>';
 		out += '<button class="end" title="End"><img src="' + sc_static('images/meiosis_end_small.png') + '" /></button>';
-		if ((this.get('mode') == 'parent') && this.get('swapping')) {
+		if ((this.get('mode') === 'parent') && this.get('swapping')) {
 		  out += '<button class="swap" title="Swap Genes"><img src="' + sc_static('images/meiosis_exchange_16x16_monochrome.png') + '" /></button>';
 	  }
-		out += '<button class="retry" title="Retry"><img src="' + sc_static('images/meiosis_retry_monochrome.png') + '" /></button>';
-		out += '<div class="scrub"></div>';
-		
+		if (this.get('mode') === 'parent') {
+			out += '<button class="retry" title="Retry"><img src="' + sc_static('images/meiosis_retry_monochrome.png') + '" /></button>';
+		}
+		out += '<div class="scrub"></div>';			
 //		out += '<div class="frame"><input type="text" value="0"></div>';
     
     out += '</div>';

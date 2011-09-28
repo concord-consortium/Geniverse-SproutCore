@@ -26,7 +26,8 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
     offspring: null,
     fatherGameteJson: null,
     motherGameteJson: null,
-		retry: true
+		retryMother: false,
+		retryFather: false
   }),
   
   reset: function() {
@@ -41,6 +42,14 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
   clearOffspring: function() {
     this.set('offspring', null);
   }.observes('mother', 'father','fatherGameteJson','motherGameteJson'),
+
+  clearMotherGamete: function(){
+		this.set('motherGameteJson',null);
+	}.observes('mother'),
+	
+  clearFatherGamete: function(){
+		this.set('fatherGameteJson',null);
+	}.observes('father'),
 
   allelesToJSON: function (alleleString) {
     if(alleleString !== null && typeof(alleleString) != 'undefined'){

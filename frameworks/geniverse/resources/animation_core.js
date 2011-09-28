@@ -10,6 +10,8 @@ sc_require('lib/burst-core');
 
     var defaultOpts = $.extend(true,{
       mode            : 'parent',
+			mother					: null,
+			father					: null,
       context         : null,
       loaded          : $.noop,
       animationComplete: $.noop,
@@ -34,10 +36,10 @@ sc_require('lib/burst-core');
         
       color: {
         hover              : "#00FF00",
-        male_inner         : "rgba(0,0,255,1)",
-        male_outer         : "rgba(0,0,255,.1)",
-        female_inner       : "rgba(0,0,255,1)",
-        female_outer       : "rgba(0,0,255,.1)",
+        male_inner         : "rgba(53,150,181,1)",
+        male_outer         : "rgba(53,150,181,.1)",
+        female_inner       : "rgba(128,60,223,1)",
+        female_outer       : "rgba(128,60,223,.1)",
         male_outer_hover   : "rgba(0,0,255,.1)",
         female_outer_hover : "rgba(255,0,255,.1)",
 
@@ -66,6 +68,8 @@ sc_require('lib/burst-core');
         chromosomes = [],
         mode = defaultOpts.mode,
         owner = defaultOpts.owner,
+				mother = defaultOpts.mother,
+				father = defaultOpts.father,
         inRecombSelection = 0,
         inRecombChromeIndex = null,
         pairingMode = false,
@@ -74,6 +78,7 @@ sc_require('lib/burst-core');
         timeline,
         swapui,
         frame = 0,
+				maxMembraneOpacity = 0.9,
 
         PI         = Math.PI,
         TWO_PI     = PI * 2,
@@ -134,14 +139,14 @@ sc_require('lib/burst-core');
 
       switch( mode ){
         case 'parent':
-          membranes[0] = new Membrane({ paper: paper, x: centerX, y: centerY, radius: centerY - 10, opacity:0.7, hidden:false });
-          membranes[1] = new Membrane({ paper: paper, x: centerX, y: centerY, radius: centerY - 10, opacity:0.7, hidden:true });
-          membranes[2] = new Membrane({ paper: paper, x: centerX, y: centerY, radius: centerY - 10, opacity:0.7, hidden:true });
-          membranes[3] = new Membrane({ paper: paper, x: centerX, y: centerY, radius: centerY - 10, opacity:0.7, hidden:true });
+          membranes[0] = new Membrane({ paper: paper, x: centerX, y: centerY, radius: centerY - 10, opacity:maxMembraneOpacity, hidden:false });
+          membranes[1] = new Membrane({ paper: paper, x: centerX, y: centerY, radius: centerY - 10, opacity:maxMembraneOpacity, hidden:true });
+          membranes[2] = new Membrane({ paper: paper, x: centerX, y: centerY, radius: centerY - 10, opacity:maxMembraneOpacity, hidden:true });
+          membranes[3] = new Membrane({ paper: paper, x: centerX, y: centerY, radius: centerY - 10, opacity:maxMembraneOpacity, hidden:true });
           break;
         case 'offspring':
-          membranes[0] = new Membrane({ paper: paper, x: centerX-centerX/2, y: centerY, radius: centerY/2, opacity:0.7, hidden:false });
-          membranes[1] = new Membrane({ paper: paper, x: centerX+centerX/3, y: centerY, radius: centerY/2, opacity:0.7, hidden:false, isSperm: true });
+          membranes[0] = new Membrane({ paper: paper, x: centerX-centerX/2, y: centerY, radius: centerY/2, opacity:maxMembraneOpacity, hidden:false });
+          membranes[1] = new Membrane({ paper: paper, x: centerX+centerX/3, y: centerY, radius: centerY/2, opacity:maxMembraneOpacity, hidden:false, isSperm: true });
           break;
       }
         
@@ -160,7 +165,7 @@ sc_require('lib/burst-core');
 									chromosomes[index+1] = new Chromosome({ paper: paper, x:x, y:y, yLenOffset: yLenOffset, data: data[i][j], index:index+1, startHidden: false });
 									index+=2;
 								}else{
-									if( index < 3 ){
+									if(( index < 3 ) && (mother)){
 										x = gvRand(centerX - centerX/2,30);
 										y = gvRand(defaultOpts.height/2 - yLenOffset,20);
 									}else{
@@ -1175,7 +1180,7 @@ sc_require('lib/burst-core');
     ////////////////////////////////////////////////////////////////////////////
 
     function generateTimeline( mode ){    
-	  var endDx = 60;
+	  var endDx = 40;
 	  var endDy = 10;
 	  var checkShowHide = function (e){
 	    if(this.startHidden){
@@ -1184,7 +1189,7 @@ sc_require('lib/burst-core');
           }else{
             this.hide();
           }
-		}
+				}
   	  }
 
       switch( mode ){
@@ -1209,8 +1214,8 @@ sc_require('lib/burst-core');
             allele.dragmove.call(allele.SVG_outer,null,null,null,null,null,true,this.dragX,this.dragY);
           };
 
-		
-          timeline = burst.timeline( 'geniverseTimeline_' + owner, 1, 23, 0.25, false )
+					if (mother && father){
+          	timeline = burst.timeline( 'geniverseTimeline_' + owner, 1, 23, 0.25, false )
 
             ////////////////////////////////////////////////////////////////////
             // MEMBRANES
@@ -1253,53 +1258,119 @@ sc_require('lib/burst-core');
             .obj('m1_'+owner,chromosomes[0])
               .track('dragX')
                 .key(0,chromosomes[0].originX,'inOutQuad')
-				.key(23,gvRand(centerX,endDx))
+								.key(23,gvRand(centerX,endDx))
 			  .track('dragY')
 	            .key(0,chromosomes[0].originY)
-				.key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
+							.key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
                 .always(function(e){dragByAllele.call(this,e)})
             .obj('m2_'+owner,chromosomes[1])
               .track('dragX')
                 .key(0,chromosomes[1].originX,'inOutQuad')
-				.key(23,gvRand(centerX,endDx))
+								.key(23,gvRand(centerX,endDx))
  			  .track('dragY')
 	            .key(0,chromosomes[1].originY)
-	            .key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
+	            .key(23,gvRand(centerY - chromosomes[1].yLenOffset,endDy))
                 .always(function(e){dragByAllele.call(this,e)})
             .obj('m3_'+owner,chromosomes[2])
               .track('dragX')
                 .key(0,chromosomes[2].originX,'inOutQuad')
-				.key(23,gvRand(centerX,endDx))
+								.key(23,gvRand(centerX,endDx))
 			  .track('dragY')
 	            .key(0,chromosomes[2].originY)
-	            .key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
+	            .key(23,gvRand(centerY - chromosomes[2].yLenOffset,endDy))
                 .always(function(e){dragByAllele.call(this,e)})
             .obj('f1_'+owner,chromosomes[3])
               .track('dragX')
                 .key(0,chromosomes[3].originX,'inOutQuad')
-				.key(23,gvRand(centerX,endDx))
+								.key(23,gvRand(centerX,endDx))
 			  .track('dragY')
 	            .key(0,chromosomes[3].originY)
-	            .key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
+	            .key(23,gvRand(centerY - chromosomes[3].yLenOffset,endDy))
                 .always(function(e){dragByAllele.call(this,e)})
             .obj('f2_'+owner,chromosomes[4])
               .track('dragX')
                 .key(0,chromosomes[4].originX,'inOutQuad')
-				.key(23,gvRand(centerX,endDx))
+								.key(23,gvRand(centerX,endDx))
 			  .track('dragY')
 	            .key(0,chromosomes[4].originY)
-	            .key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
+	            .key(23,gvRand(centerY - chromosomes[4].yLenOffset,endDy))
                 .always(function(e){dragByAllele.call(this,e)})
             .obj('f3_'+owner,chromosomes[5])
               .track('dragX')
                 .key(0,chromosomes[5].originX,'inOutQuad')
-				.key(23,gvRand(centerX,endDx))
+								.key(23,gvRand(centerX,endDx))
 			  .track('dragY')
 	            .key(0,chromosomes[5].originY)
-	            .key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
+	            .key(23,gvRand(centerY - chromosomes[5].yLenOffset,endDy))
                 .always(function(e){dragByAllele.call(this,e)})
           ;
+				} else {
+		          	timeline = burst.timeline( 'geniverseTimeline_' + owner, 1, 23, 0.25, false )
 
+		            ////////////////////////////////////////////////////////////////////
+		            // MEMBRANES
+
+		            .obj('memb1_'+owner,membranes[0])
+		              .track('radius')
+		                .key(0,membranes[0].radius,'inOutQuad')
+		                .key(23,centerX/1.5)
+		              .track('x')
+		                .key(0,membranes[0].x,'inOutQuad')
+		                .key(23,centerX)
+		                .always(function(e){
+		                  frame = ~~e.frame;
+		                  scrub.slider('value',e.frame*100);
+		                  frameInput.val(~~e.frame);
+		                  this.updateSVG();
+		                  if(frame >= 23 && mode === 'offspring'){
+		                    burst.stop();
+		                    defaultOpts.animationComplete.call(defaultOpts.context);
+		                  }
+		                })
+
+		            .obj('memb2_'+owner,membranes[1])
+		              .track('radius')
+		                .key(0,membranes[1].radius,'inOutQuad')
+		                .key(23,membranes[1].radius*1.5)
+		              .track('opacity')
+		                .key(0,membranes[1].opacity,'inOutQuad')
+		                .key(23,0)
+		              .track('x')
+		                .key(0,membranes[1].x,'inOutQuad')
+		                .key(23,centerX-centerX/6)
+		                .always(function(e){
+		                  this.updateSVG();
+		                })
+
+
+		            ////////////////////////////////////////////////////////////////////
+		            // Move Chromosomes
+		            .obj('m1_'+owner,chromosomes[0])
+		              .track('dragX')
+		                .key(0,chromosomes[0].originX,'inOutQuad')
+										.key(23,gvRand(centerX,endDx))
+					  .track('dragY')
+			            .key(0,chromosomes[0].originY)
+									.key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
+		                .always(function(e){dragByAllele.call(this,e)})
+		            .obj('m2_'+owner,chromosomes[1])
+		              .track('dragX')
+		                .key(0,chromosomes[1].originX,'inOutQuad')
+										.key(23,gvRand(centerX,endDx))
+		 			  .track('dragY')
+			            .key(0,chromosomes[1].originY)
+			            .key(23,gvRand(centerY - chromosomes[1].yLenOffset,endDy))
+		                .always(function(e){dragByAllele.call(this,e)})
+		            .obj('m3_'+owner,chromosomes[2])
+		              .track('dragX')
+		                .key(0,chromosomes[2].originX,'inOutQuad')
+										.key(23,gvRand(centerX,endDx))
+					  .track('dragY')
+			            .key(0,chromosomes[2].originY)
+			            .key(23,gvRand(centerY - chromosomes[2].yLenOffset,endDy))
+		                .always(function(e){dragByAllele.call(this,e)})
+		          ;
+					}
 
           break;
         
@@ -1378,8 +1449,8 @@ sc_require('lib/burst-core');
               .track('opacity')
               	.key(0,0)
               	.key(21,0)
-                .key(35,0.5)
-                .key(50,0.7)
+                .key(35,maxMembraneOpacity*0.66)
+                .key(50,maxMembraneOpacity)
               .track('radius')
                 .key(0,centerY-10)
                 .key(30,centerY-10)
@@ -1401,7 +1472,7 @@ sc_require('lib/burst-core');
               .track('opacity')
               	.key(0,0)
               	.key(50,0)
-                .key(80,0.7)
+                .key(80,maxMembraneOpacity)
               .track('radius')
               	.key(0,centerY/1.5)
               	.key(60,centerY/1.5)
@@ -1420,7 +1491,7 @@ sc_require('lib/burst-core');
               .track('opacity')
               	.key(0,0)
               	.key(50,0)
-                .key(80,0.7)
+                .key(80,maxMembraneOpacity)
               .track('radius')
               	.key(0,centerY/1.5)
               	.key(60,centerY/1.5)
@@ -1451,7 +1522,8 @@ sc_require('lib/burst-core');
                 .key(35,centerX-defaultOpts.outerThickness)
                 .key(50,centerX-centerX/2-30)
                 .key(70,centerX-centerX/2-30)
-                .key(80,gvRand(centerX-centerX/2,endDx))
+                .key(80,centerX-centerX/2-endDx/2)
+//                .key(80,gvRand(centerX-centerX/2,endDx))
               .track('dragY')
                 .key(0,chromosomes[ca1a].originY)
                 .key(30,centerY-130)
@@ -1529,7 +1601,8 @@ sc_require('lib/burst-core');
                 .key(35,centerX-defaultOpts.outerThickness + pairOffset)
                 .key(50,centerX-centerX/2-30 + pairOffset)
                 .key(70,centerX-centerX/2-30 + pairOffset)
-                .key(80,gvRand(centerX-centerX/2,endDx))
+                .key(80,centerX-centerX/2-endDx/2)
+//                .key(80,gvRand(centerX-centerX/2,endDx))
               .track('dragY')
                 .key(0,chromosomes[ca1b].originY)
                 .key(30,centerY-130)
@@ -1562,7 +1635,8 @@ sc_require('lib/burst-core');
                 .key(35,centerX+defaultOpts.outerThickness)
                 .key(50,centerX+centerX/2+30)
                 .key(70,centerX+centerX/2+30)
-                .key(80,gvRand(centerX+centerX/2,endDx))
+                .key(80,centerX+centerX/2-endDx/2)
+//                .key(80,gvRand(centerX+centerX/2,endDx))
               .track('dragY')
                 .key(0,chromosomes[ca2a].y)
                 .key(30,centerY-130)
@@ -1595,7 +1669,8 @@ sc_require('lib/burst-core');
                 .key(35,centerX+defaultOpts.outerThickness + pairOffset)
                 .key(50,centerX+centerX/2+30 + pairOffset)
                 .key(70,centerX+centerX/2+30 + pairOffset)
-                .key(80,gvRand(centerX+centerX/2,endDx))
+                .key(80,centerX+centerX/2-endDx/2)
+//                .key(80,gvRand(centerX+centerX/2,endDx))
               .track('dragY')
                 .key(0,chromosomes[ca2b].originY)
                 .key(30,centerY-130)
@@ -1631,7 +1706,8 @@ sc_require('lib/burst-core');
                 .key(35,centerX-defaultOpts.outerThickness)
                 .key(50,centerX-centerX/2-30)
                 .key(70,centerX-centerX/2-30)
-                .key(80,gvRand(centerX-centerX/2,endDx))
+                .key(80,centerX-centerX/2)
+//                .key(80,gvRand(centerX-centerX/2,endDx))
               .track('dragY')
                 .key(0,chromosomes[cb1a].originY)
                 .key(30,centerY-25)
@@ -1663,7 +1739,8 @@ sc_require('lib/burst-core');
                 .key(35,centerX-defaultOpts.outerThickness + pairOffset)
                 .key(50,centerX-centerX/2-30 + pairOffset)
                 .key(70,centerX-centerX/2-30 + pairOffset)
-                .key(80,gvRand(centerX-centerX/2,endDx))
+                .key(80,centerX-centerX/2)
+//                .key(80,gvRand(centerX-centerX/2,endDx))
               .track('dragY')
                 .key(0,chromosomes[cb1b].originY)
                 .key(30,centerY-25)
@@ -1696,7 +1773,8 @@ sc_require('lib/burst-core');
                 .key(35,centerX+defaultOpts.outerThickness)
                 .key(50,centerX+centerX/2+30)
                 .key(70,centerX+centerX/2+30)
-                .key(80,gvRand(centerX+centerX/2,endDx))
+                .key(80,centerX+centerX/2)
+//                .key(80,gvRand(centerX+centerX/2,endDx))
               .track('dragY')
                 .key(0,chromosomes[cb2a].originY)
                 .key(30,centerY-25)
@@ -1729,7 +1807,8 @@ sc_require('lib/burst-core');
                 .key(35,centerX+defaultOpts.outerThickness + pairOffset)
                 .key(50,centerX+centerX/2+30 + pairOffset)
                 .key(70,centerX+centerX/2+30 + pairOffset)
-                .key(80,gvRand(centerX+centerX/2,endDx))         
+                .key(80,centerX+centerX/2)
+//                .key(80,gvRand(centerX+centerX/2,endDx))         
               .track('dragY')
                 .key(0,chromosomes[cb2b].originY)
                 .key(30,centerY-25)
@@ -1765,7 +1844,8 @@ sc_require('lib/burst-core');
                 .key(35,centerX-defaultOpts.outerThickness)
                 .key(50,centerX-centerX/2-30)
                 .key(70,centerX-centerX/2-30)
-                .key(80,gvRand(centerX-centerX/2,endDx))
+                .key(80,centerX-centerX/2+endDx/2)
+//                .key(80,gvRand(centerX-centerX/2,endDx))
               .track('dragY')
                 .key(0,chromosomes[cc1a].originY)
                 .key(30,centerY+80)
@@ -1797,7 +1877,8 @@ sc_require('lib/burst-core');
                 .key(35,centerX-defaultOpts.outerThickness + pairOffset)
                 .key(50,centerX-centerX/2-30 + pairOffset)
                 .key(70,centerX-centerX/2-30 + pairOffset)
-                .key(80,gvRand(centerX-centerX/2,endDx))
+                .key(80,centerX-centerX/2+endDx/2)
+//                .key(80,gvRand(centerX-centerX/2,endDx))
               .track('dragY')
                 .key(0,chromosomes[cc1b].originY)
                 .key(30,centerY+80)
@@ -1830,7 +1911,8 @@ sc_require('lib/burst-core');
                 .key(35,centerX+defaultOpts.outerThickness)
                 .key(50,centerX+centerX/2+30)
                 .key(70,centerX+centerX/2+30)
-                .key(80,gvRand(centerX+centerX/2,endDx))
+                .key(80,centerX+centerX/2+endDx/2)
+//                .key(80,gvRand(centerX+centerX/2,endDx))
               .track('dragY')
                 .key(0,chromosomes[cc2a].originY)
                 .key(30,centerY+80)
@@ -1863,7 +1945,8 @@ sc_require('lib/burst-core');
                 .key(35,centerX+defaultOpts.outerThickness + pairOffset)
                 .key(50,centerX+centerX/2+30 + pairOffset)
                 .key(70,centerX+centerX/2+30 + pairOffset)
-                .key(80,gvRand(centerX+centerX/2,endDx))
+                .key(80,centerX+centerX/2+endDx/2)
+//                .key(80,gvRand(centerX+centerX/2,endDx))
               .track('dragY')
                 .key(0,chromosomes[cc2b].originY)
                 .key(30,centerY+80)
@@ -1887,24 +1970,30 @@ sc_require('lib/burst-core');
     // ^^ Burst Timeline Generation
     
     // Generate the timeline based on the mode (parent/offspring)
-    generateTimeline( mode );      
+	    generateTimeline( mode );      			
     
     
     // Bind DOM UI to Burst
     ////////////////////////////////////////////////////////////////////////////
 
     self.find('.play').click(function(){
-      clearOffsets();
-      burst.loaded = {};
-      burst.load('geniverseTimeline_'+owner);
-      burst.play();
-			playing = true;
+			if ((mode === 'parent') || ((mode === 'offspring') && (mother && father))){
+      	clearOffsets();
+      	burst.loaded = {};
+      	burst.load('geniverseTimeline_'+owner);
+      	burst.play();
+				playing = true;
+			}
     });
     self.find('.stop').click(function(){
       burst.stop();
     });
     self.find('.retry').click(function(){
-			Geniverse.meiosisAnimationController.set('retry',true);
+			if (owner === 'mother') {
+				Geniverse.meiosisAnimationController.set('retryMother',true);			
+			} else {
+				Geniverse.meiosisAnimationController.set('retryFather',true);
+			}
     });
     
     var frameInput = self.find('.frame input').change(function(e){
@@ -1942,20 +2031,22 @@ sc_require('lib/burst-core');
 
     // Jump to the end to allow gamete selection
       var endButton = self.find('.end').click(function(){
-        burst.timelines['geniverseTimeline_'+owner].play(79);
-        burst.timelines['geniverseTimeline_'+owner].play(80);
-        frame = 80;
-        scrub.slider('value',8000);
-        frameInput.val(80);
-        clearOffsets();
-        burst.stop();
-        playing = false;
-        return this;
+				if ((mode === 'parent') || ((mode === 'offspring') && (mother && father))){
+					burst.timelines['geniverseTimeline_'+owner].play(79);
+					burst.timelines['geniverseTimeline_'+owner].play(80);
+					frame = 80;
+					scrub.slider('value',8000);
+					frameInput.val(80);
+					clearOffsets();
+					burst.stop();
+					playing = false;
+					return this;
+				}
       });      
 
     // Update the animation when the slider is sliden
     var scrub = self.find('.scrub');
-
+		if ((mode === 'parent') || ((mode === 'offspring') && (mother && father))){
     scrub.slider({
       min: 1,
       max: burst.timelines['geniverseTimeline_'+owner].end*100,
@@ -1983,6 +2074,7 @@ sc_require('lib/burst-core');
         burst.frame(frame);
       }
     });
+		}
 
     // Set Draw-Loop Interval
     ////////////////////////////////////////////////////////////////////////////
