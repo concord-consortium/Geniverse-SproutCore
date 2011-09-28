@@ -436,7 +436,7 @@ sc_require('lib/burst-core');
 			if (!playing){
 				var segRot = Math.atan2( nextSeg.x-seg.x, nextSeg.y-seg.y );
 				if ((Math.abs(segRot) > defaultOpts.foldedAngle) && (Math.abs(Math.abs(segRot)-Math.PI) > defaultOpts.foldedAngle)){
-							scaleFactor = 10;
+							scaleFactor = 5;
 				}
 			}
       seg.x += ((nx-seg.x) / (defaultOpts.segMoveSpeed*seg.parent.parent.overDragMultiplier)/2*direction)*scaleFactor;
@@ -1541,6 +1541,7 @@ sc_require('lib/burst-core');
                   if(e.frame > 80){
                    // burst.timelines['geniverseTimeline_'+owner].play(100);
                     burst.stop();
+										playing = false;
                   }
                   
                   if(e.frame==30 && defaultOpts.swap == "user"){
@@ -1572,6 +1573,7 @@ sc_require('lib/burst-core');
 
                   if(frame >= 80 && mode === 'parent'){
                     burst.stop();
+										playing = false;
                     defaultOpts.animationComplete.call(defaultOpts.context);
                   }
 
@@ -2074,7 +2076,7 @@ sc_require('lib/burst-core');
         burst.frame(frame);
       }
     });
-		}
+	}
 
     // Set Draw-Loop Interval
     ////////////////////////////////////////////////////////////////////////////
