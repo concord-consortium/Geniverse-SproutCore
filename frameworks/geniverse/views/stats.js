@@ -90,7 +90,7 @@ Geniverse.StatsView = SC.View.extend(
 				context = context.end();
 				// we move this into an array so we can sort it
 				var allCharacteristics = [];
-				for (var characteristic in dragonGroups[trait]){
+				for (var characteristic in cumulativeCounts[trait]){
 					allCharacteristics.push(characteristic);
 				}
 				allCharacteristics.sort();
@@ -98,6 +98,11 @@ Geniverse.StatsView = SC.View.extend(
 					var characteristic = allCharacteristics[i];
 					context = context.begin('tr');
 					context = context.begin('th').push(characteristic).end();
+					if (!dragonGroups[trait][characteristic]) {
+						dragonGroups[trait][characteristic] = {};
+						dragonGroups[trait][characteristic].Male = 0;
+						dragonGroups[trait][characteristic].Female = 0;
+					}
 					var total = dragonGroups[trait][characteristic].Male + dragonGroups[trait][characteristic].Female;
 					var percent = Math.floor((total / dragonsSize) * 100).toFixed();
 					var cumulativeTotal = cumulativeCounts[trait][characteristic].Male + cumulativeCounts[trait][characteristic].Female;
