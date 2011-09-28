@@ -1234,6 +1234,7 @@ sc_require('lib/burst-core');
                   this.updateSVG();
                   if(frame >= 23 && mode === 'offspring'){
                     burst.stop();
+										playing = false;
                     defaultOpts.animationComplete.call(defaultOpts.context);
                   }
                 })
@@ -1324,6 +1325,7 @@ sc_require('lib/burst-core');
 		                  this.updateSVG();
 		                  if(frame >= 23 && mode === 'offspring'){
 		                    burst.stop();
+												playing = false;
 		                    defaultOpts.animationComplete.call(defaultOpts.context);
 		                  }
 		                })
@@ -1552,6 +1554,7 @@ sc_require('lib/burst-core');
                     recombinationBindEvents();              
                     draw();
                     burst.stop();
+										playing = false;
                   }else if(e.frame==30 && defaultOpts.swap == "auto"){
                     for(var i=0, l=chromosomes.length; i< l; i++){
                       for(var j=0, k=chromosomes[i].alleles.length; j< k; j++){
@@ -1989,6 +1992,7 @@ sc_require('lib/burst-core');
     });
     self.find('.stop').click(function(){
       burst.stop();
+			playing = false;
     });
     self.find('.retry').click(function(){
 			if (owner === 'mother') {
