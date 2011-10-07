@@ -177,7 +177,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     
     this.infoButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 0, right: 175, width: 27, height: 26 },
+        layout: { centerY: 0, right: 176, width: 27, height: 26 },
         layerId: 'infoButton',
         hasHover: YES,
         alt: 'Info',
