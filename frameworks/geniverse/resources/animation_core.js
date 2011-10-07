@@ -36,10 +36,10 @@ sc_require('lib/burst-core');
         
       color: {
         hover              : "#00FF00",
-        male_inner         : "rgba(53,150,181,1)",
-        male_outer         : "rgba(53,150,181,.1)",
-        female_inner       : "rgba(128,60,223,1)",
-        female_outer       : "rgba(128,60,223,.1)",
+        male_inner         : "rgba(128,60,223,1)",
+        male_outer         : "rgba(128,60,223,.1)",
+        female_inner       : "rgba(53,150,181,1)",
+        female_outer       : "rgba(53,150,181,.1)",
         male_outer_hover   : "rgba(0,0,255,.1)",
         female_outer_hover : "rgba(255,0,255,.1)",
 
@@ -100,7 +100,10 @@ sc_require('lib/burst-core');
         mouseDragging = +new Date(),
         overDragMultiplier = 1,
         overDragMultiplierB = 0.5,
-        overDragMultiplierC = 0.2
+        overDragMultiplierC = 0.2,
+				startMem = 0,
+				clickStartX = 0,
+				clickStartY = 0
     ;
     // ^^ GLOBAL VARIABLES.
 
@@ -858,6 +861,16 @@ sc_require('lib/burst-core');
 
     Allele.prototype.dragstart_mouse = function(x,y){
       mouseDragging = +new Date();
+			var minDist = 999;
+			clickStartX = this.parent.segs[0].x;
+			clickStartY = this.parent.segs[0].y;
+			for(var i = 0; i < membranes.length; i++){
+				var distToMem = dist(clickStartX, clickStartY, membranes[i].x, membranes[i].y);
+				if (distToMem < minDist){
+					minDist = distToMem;
+					startMem = i;
+				}
+			}
     };
 
     Allele.prototype.dragmove_mouse = function(x,y){
@@ -867,10 +880,16 @@ sc_require('lib/burst-core');
       }
     };
 
-    Allele.prototype.dragstop_mouse = function(){
+    Allele.prototype.dragstop_mouse = function(e){
       if(!playing){
         this.parent.parent.offsetOriginX = this.parent.parent.offsetX||0;
         this.parent.parent.offsetOriginY = this.parent.parent.offsetY||0;
+				if (dist((this.parent.segs[0].x+this.parent.parent.offsetX), (this.parent.segs[0].y+this.parent.parent.offsetY), membranes[startMem].x, membranes[startMem].y) > membranes[startMem].radius){
+					this.parent.parent.offsetX = 0;
+					this.parent.parent.offsetY = 0;
+					this.parent.parent.offsetOriginX = 0;
+					this.parent.parent.offsetOriginY = 0;
+				}
       }
     };
 
