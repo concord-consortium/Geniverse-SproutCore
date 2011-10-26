@@ -12,7 +12,7 @@ sc_require('views/bottom_bar_view');
 Lab.singleMeiosisPage = SC.Page.design({
   
   pagePath: 'Lab.singleMeiosisPage',
-  title: 'Siimple Meiosis Page',
+  title: 'Simple Meiosis Page',
   
   // challengeType: 'matchOneAtATimeChallenge',
   
