@@ -168,8 +168,18 @@ Lab.ACTIVITY = SC.Responder.create(
         })
     });
     var stableOrganisms = Geniverse.store.find(stableQuery);
-    Geniverse.stableOrganismsController.set('content', stableOrganisms);
-    
+    // FIXME For some unknown reason, loading the stable organisms immediately sometimes
+    // causes the existing challenge dragons to not be able to be put into the marketplace.
+    // By delaying setting the stable dragons in the controller, we can avoid this.
+    // Obviously this is a HACK and at some future point we should find out why
+    // it interferes.
+    var finishInitLater = function() {
+      Geniverse.stableOrganismsController.set('content', stableOrganisms);
+    };
+    var timer = SC.Timer.schedule({
+      action: finishInitLater, interval: 1000
+    });
+
     /////////////////// Eggs
     SC.Logger.log("LOAD: eggs");
     // Geniverse.EGGS_QUERY = SC.Query.local('Geniverse.Dragon', {
@@ -314,7 +324,14 @@ Lab.ACTIVITY = SC.Responder.create(
       var currentDragons = controller.get('content').length();
       if ((Geniverse.NEVER_SAVE_MATCH_DRAGONS && isMatchDragons) || 
           (!Lab.ACTIVITY.get("LOAD_CHALLENGE_DRAKES") && !isMatchDragons) || currentDragons != dragonsRequired) {
-        SC.Logger.info("Regenerating dragons for "+isMatchDragons);
+        SC.Logger.info("Regenerating " + (isMatchDragons ? "match" : "challenge" ) + " dragons");
+        if (Geniverse.NEVER_SAVE_MATCH_DRAGONS && isMatchDragons) {
+          SC.Logger.info("because saving match dragons is disabled");
+        } else if (!Lab.ACTIVITY.get("LOAD_CHALLENGE_DRAKES") && !isMatchDragons) {
+          SC.Logger.info("because LOAD_CHALLENGE_DRAKES is false");
+        } else if (currentDragons != dragonsRequired) {
+          SC.Logger.info("because current dragons (" + currentDragons + ") doesn't match the needed dragons (" + dragonsRequired + ")");
+        }
         // get rid of existing drakes
         SC.RunLoop.begin();
           var length = controller.get('length');
@@ -442,7 +459,7 @@ Lab.ACTIVITY = SC.Responder.create(
       SC.Logger.log("done selling stable dragons");
     }
     
-    if (stableDragons.get('status') & SC.Record.READY === SC.Record.READY) {
+    if ((stableDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
       dragonsReadyToBeSold();
     } else {
       stableDragons.addObserver('status', dragonsReadyToBeSold);
@@ -459,7 +476,7 @@ Lab.ACTIVITY = SC.Responder.create(
       SC.Logger.log("done selling stable dragons");
     }
     
-    if (challengeDragons.get('status') & SC.Record.READY === SC.Record.READY) {
+    if ((challengeDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
       dragonsReadyToBeSold2();
     } else {
       challengeDragons.addObserver('status', dragonsReadyToBeSold2);

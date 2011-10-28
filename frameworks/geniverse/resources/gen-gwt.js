@@ -10,11 +10,19 @@ GenGWT = {
     },
 
     generateDragonWithAlleleString: function(alleles, callback) {
+      if (!alleles) {
+        if (!!console) { console.error("Need to define alleles!"); } // console.trace(); }
+      } else {
         generateDragonWithAlleleString(alleles, this.wrapCallback(callback), this.failure);
+      }
     },
 
     generateDragonWithAlleleStringAndSex: function(alleles, sex, callback) {
+      if (!alleles) {
+        if (!!console) { console.error("Need to define alleles!"); } // console.trace(); }
+      } else {
         generateDragonWithAlleleStringAndSex(alleles, sex, this.wrapCallback(callback), this.failure);
+      }
     },
 
     breedDragon: function(mother, father, callback) {

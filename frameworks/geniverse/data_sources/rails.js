@@ -178,7 +178,11 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
   didUpdateRecord: function(response, store, storeKey) {
     if (SC.ok(response)) {
       var url = store.idFor(storeKey);
-      store.dataSourceDidComplete(storeKey, null, url); // update url
+      try {
+        store.dataSourceDidComplete(storeKey, null, url); // update url
+      } catch (e) {
+        SC.Logger.error("Error in dataSourceDidComplete for ", storeKey, url);
+      }
     } else { store.dataSourceDidError(storeKey, response); }
   },
 
