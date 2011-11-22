@@ -119,3 +119,6 @@ img.postButton:hover {
   background-position: top right;
 }
 
+.textFieldLabel {
+	color: gray;
+}
