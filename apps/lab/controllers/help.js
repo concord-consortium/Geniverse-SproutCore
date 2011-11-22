@@ -18,6 +18,13 @@ Lab.helpController = SC.ObjectController.create(
   content: "Help message loading...",
   isVisible: YES,
   helpButton: null,
+	iframe: SC.WebView.create({								//This is an empty iFrame used to make sure the InfoView will be on top of applets
+		layoutBinding: 'Lab.HelpView.layout',
+		value: static_url('empty.html')}),
+	currentPageView: function(){
+		var pageType = Geniverse.activityController.get('pageType');
+		return Lab[pageType].mainPane.mainAppView;
+	}.property(),
 
   showPane: function(callingView) {
     //console.log("showPane called by:",callingView);
@@ -29,6 +36,7 @@ Lab.helpController = SC.ObjectController.create(
     //console.log("this.get('pane'):",_pane);
     if (!_pane.get('isVisibleInWindow')){
 //      if(callingView){
+			this.get('currentPageView').appendChild(this.get('iframe'));
       _pane.append();
 //      }else{
 //        _pane.popup(null);
@@ -71,6 +79,7 @@ Lab.helpController = SC.ObjectController.create(
   removeView: function (callingView){
     if (!!this.get('pane')) {
       this.get('pane').remove();
+			this.get('currentPageView').removeChild(this.get('iframe'));
     }
   },
 

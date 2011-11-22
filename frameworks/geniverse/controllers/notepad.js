@@ -18,6 +18,12 @@ Geniverse.notepadController = SC.ObjectController.create(
   pane: null,//Geniverse.NotepadView,
   contentBinding: 'Geniverse.userController*content.note',
   isEnabledButton: YES,
+	iframe: null,
+	currentPageView: function(){
+		var pageType = Geniverse.activityController.get('pageType');
+		return Lab[pageType].mainPane.mainAppView;
+	}.property(),
+	notepadView: null,
 
   /**
    *
@@ -37,6 +43,10 @@ Geniverse.notepadController = SC.ObjectController.create(
       var _pane = this.get('pane');
       //console.log("this.get('pane'):",_pane);
       if (!_pane.get('isVisibleInWindow')){
+				this.set('iframe',SC.WebView.create({								//This is an empty iFrame used to make sure the InfoView will be on top of applets
+					layoutBinding: 'Geniverse.notepadController.pane.layout',
+					value: static_url('empty.html')}));
+					this.get('currentPageView').appendChild(this.get('iframe'));
         _pane.append();
         this.updateView(this.get('content'));
         this.set('isEnabledButton', NO);
@@ -87,6 +97,7 @@ Geniverse.notepadController = SC.ObjectController.create(
       this.updateView(this.get('content'));
     }
     var receiver = this.pane.remove();
+		this.get('currentPageView').removeChild(this.get('iframe'));
 //    console.log("this.pane.remove() returned receiver:", receiver);
     this.set('isEnabledButton', YES);
     
@@ -107,6 +118,7 @@ Geniverse.notepadController = SC.ObjectController.create(
     var wasCommitted = Geniverse.store.commitRecords();
     //console.log("Geniverse.store.commitRecords() returned this.wasCommitted:", this.wasCommitted);
     var receiver = this.pane.remove();
+		this.get('currentPageView').removeChild(this.get('iframe'));
     //console.log("this.pane.remove() returned receiver:", receiver);
     this.set('isEnabledButton', YES);
     

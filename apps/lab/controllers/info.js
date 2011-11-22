@@ -15,12 +15,18 @@ sc_require('views/info_button');
 */
 Lab.infoController = SC.ObjectController.create(
 /** @scope Lab.infoController.prototype */ {
-  pane: null,//Lab.InfoView,
-  //contentBinding: 'Lab.userController*content.note',
-  content: "",//<a href='#lab/caselog'><strong>Info</strong>rmation!</a>",
+  pane: null,
+  content: "",
   isVisible: NO,
   infoButton: null,
-
+	iframe: SC.WebView.create({								//This is an empty iFrame used to make sure the InfoView will be on top of applets
+		layoutBinding: 'Lab.InfoView.layout',
+		value: static_url('empty.html')}),
+	currentPageView: function(){
+		var pageType = Geniverse.activityController.get('pageType');
+		return Lab[pageType].mainPane.mainAppView;
+	}.property(),
+	
   /**
    * Makes the infoButton visible and sets the info view
    * content to the message input if it exists
@@ -45,15 +51,14 @@ Lab.infoController = SC.ObjectController.create(
   },
 
   showPane: function(callingView) {
-    //console.log("showPane called by:",callingView);
+//console.log("showPane called by:",callingView);
     //this.set('infoButton', callingView);
     var infoView = Lab.InfoView;//.create();
     this.set('pane',infoView);
     var _pane = this.get('pane');
     if (!_pane.get('isVisibleInWindow')){
-//      if(callingView){
-        _pane.append();
-//      }
+			_pane.append();
+			this.get('currentPageView').appendChild(this.get('iframe'));
       this.updateView(this.get('content'));
     }
   },
@@ -66,6 +71,7 @@ Lab.infoController = SC.ObjectController.create(
   removeView: function (callingView){
     if (!!this.get('pane')) {
       this.get('pane').remove();
+			this.get('currentPageView').removeChild(this.get('iframe'));
     }
   },
 
