@@ -39,16 +39,16 @@ Lab.identCodonPage = SC.Page.design({
       
 		  mwAppletView: SC.View.design({
 
-			  childViews: 'mwApplet DNAString setDNAButton startButton stopButton resetButton'.w(),
+			  childViews: 'mwApplet DNAString setDNAButton unfoldButton refoldButton'.w(),
 
 				mwApplet: CC.MwAppletView.design({
-			    cmlUrl: "http://mw2.concord.org/model/133c86ed444/transcribe-translate.cml",
-			    layout: { centerX: 0, centerY: -90, width: 554, height: 325 }
+			    cmlUrl: "http://mw2.concord.org/model/133ec51e63b/transcribe-translate.cml",
+			    layout: { centerX: 0, centerY: -90, width: 615, height: 348 }
 			  }),
 			
 				DNAString: SC.TextFieldView.design({
-					layout: { centerX: -60, centerY: 110, width: 400, height: 25},
-					value: "AGATTTGGGCTCATGCTAGCTATAGTAGTATAA",
+					layout: { centerX: -60, centerY: 115, width: 400, height: 25},
+					value: "AGATATGCGCTCATGCTAGCTATAGTAGTATAA",
 					leftAccessoryView: SC.LabelView.design({
 							layout: { left: 5, top: 3, width: 90, height: 25},
 							value: 'Coding Strand: ',
@@ -57,8 +57,8 @@ Lab.identCodonPage = SC.Page.design({
 				}),
 
 				setDNAButton: SC.ButtonView.design({
-					layout: { centerY: 111, centerX: 207, height: 25, width: 125},
-					title: "Set DNA Strand",
+					layout: { centerY: 116, centerX: 207, height: 25, width: 125},
+					title: "Set DNA / Reset",
 					appletBinding: "*parentView.mwApplet",
 					strandBinding: "*parentView.DNAString.value",
 					action: function() {
@@ -70,8 +70,8 @@ Lab.identCodonPage = SC.Page.design({
 					}
 				}),
 
-				startButton: SC.ButtonView.design({
-					layout: { centerY: 150, centerX: -85, height: 50, width: 80},
+/*				startButton: SC.ButtonView.design({
+					layout: { centerY: 150, centerX: -180, height: 50, width: 80},
 					title: "Start",
 					appletBinding: "*parentView.mwApplet",
 					action: function() {
@@ -83,7 +83,7 @@ Lab.identCodonPage = SC.Page.design({
 				}),
 
 				stopButton: SC.ButtonView.design({
-					layout: { centerY: 150, centerX: 0, height: 50, width: 80},
+					layout: { centerY: 150, centerX: -95, height: 50, width: 80},
 					title: "Stop",
 					appletBinding: "*parentView.mwApplet",
 					action: function() {
@@ -95,7 +95,7 @@ Lab.identCodonPage = SC.Page.design({
 				}),
 
 				resetButton: SC.ButtonView.design({
-					layout: { centerY: 150, centerX: 85, height: 50, width: 80},
+					layout: { centerY: 150, centerX: -10, height: 50, width: 80},
 					title: "Reset",
 					appletBinding: "*parentView.mwApplet",
 					strandBinding: "*parentView.DNAString.value",
@@ -105,6 +105,30 @@ Lab.identCodonPage = SC.Page.design({
 					appletAction: function(applet) {
 						applet.runMWScript("mw2d:1:reset;");
 						setTimeout(applet.runMwScript("mw2d:1:stop; select atom all; remove; set DNA "+this.get('strand')),500);
+					}
+				}),
+*/				
+				unfoldButton: SC.ButtonView.design({
+					layout: { centerY: 155, centerX: -60, height: 50, width: 80},
+					title: "Unfold",
+					appletBinding: "*parentView.mwApplet",
+					action: function() {
+						this.get('applet').run(this.appletAction);
+					},
+					appletAction: function(applet) {
+						applet.runMwScript("mw2d:1:set %startPos %width/2 - %number_of_atoms*3/2; set %i 0; while (%i < %number_of_atoms); set atom[%i].restraint 100; set atom[%i].restraint.x %startPos+%i*3; set atom[%i].restraint.y %height/2; %i++; endwhile;");
+					}
+				}),
+
+				refoldButton: SC.ButtonView.design({
+					layout: { centerY: 155, centerX: 25, height: 50, width: 80},
+					title: "Re-fold",
+					appletBinding: "*parentView.mwApplet",
+					action: function() {
+						this.get('applet').run(this.appletAction);
+					},
+					appletAction: function(applet) {
+						applet.runMwScript("mw2d:1:set %i 0; while (%i < %number_of_atoms); set atom[%i].restraint 0; %i++; endwhile;");
 					}
 				})
 			})
