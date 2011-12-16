@@ -58,7 +58,9 @@ Lab.infoController = SC.ObjectController.create(
     var _pane = this.get('pane');
     if (!_pane.get('isVisibleInWindow')){
 			_pane.append();
-			this.get('currentPageView').appendChild(this.get('iframe'));
+			if (_pane.get('isVisibleInWindow')) {
+				this.get('currentPageView').appendChild(this.get('iframe'));
+			}	
       this.updateView(this.get('content'));
     }
   },
@@ -69,9 +71,12 @@ Lab.infoController = SC.ObjectController.create(
   }.observes('content'),
 
   removeView: function (callingView){
+		var _pane = this.get('pane');
     if (!!this.get('pane')) {
+			if (_pane.get('isVisibleInWindow')) {
+				this.get('iframe').parentView.removeChild(this.get('iframe'));
+			}
       this.get('pane').remove();
-			this.get('currentPageView').removeChild(this.get('iframe'));
     }
   },
 

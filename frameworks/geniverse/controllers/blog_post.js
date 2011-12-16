@@ -74,7 +74,7 @@ Geniverse.blogPostController = SC.Controller.create(
     this.set('content2', '');
     this.set('content3', '');
     this.blogPostView.remove();
-		this.get('currentPageView').removeChild(this.get('iframe'));
+		this.get('iframe').parentView.removeChild(this.get('iframe'));
   },
   
   restoreBlogPost: function() {
