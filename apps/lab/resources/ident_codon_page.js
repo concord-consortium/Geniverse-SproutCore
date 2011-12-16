@@ -65,11 +65,11 @@ Lab.identCodonPage = SC.Page.design({
 						this.get('applet').run(this.appletAction,this);
 					},
 					appletAction: function(applet) {
-						applet.runMWScript("mw2d:1:reset;");
-						setTimeout(applet.runMwScript("mw2d:1:stop; select atom all; remove; set DNA "+this.get('strand')),500);
+						var strand = this.get('strand');
+						// FIX ME - should use better method of determining model has loaded instead of timed delay (need access to values inside model)
+						setTimeout(function(){applet.runMwScript("mw2d:1:stop; select atom all; remove; set DNA "+strand)},1000);
 					}
 				}),
-
 /*				startButton: SC.ButtonView.design({
 					layout: { centerY: 150, centerX: -180, height: 50, width: 80},
 					title: "Start",
