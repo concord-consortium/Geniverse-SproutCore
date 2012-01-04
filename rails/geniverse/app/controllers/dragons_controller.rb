@@ -2,19 +2,24 @@ class DragonsController < ApplicationController
   # GET /dragons
   # GET /dragons.xml
   def index
-    @dragons = Dragon.search(params)    
+    if (params[:user_id])
+      @dragons = Dragon.search(params)
+    else
+      @dragons = []     # for now, if there is no user in the params, do not return any dragons
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @dragons }
       format.json { render :json => custom_array_hash(@dragons) }
     end
   end
-  
+
   # GET /dragons/fathom
   def fathom
     @user = User.find(params[:id]) unless (params[:id] == "-1")
     @activity = Activity.find(params[:id2]) unless (params[:id2] == "-1")
-    
+
     if (@activity && @user)
       @dragons = Dragon.find(:all, :conditions => ['user_id = ? AND activity_id = ?', @user, @activity])
     elsif (@user)
@@ -22,17 +27,17 @@ class DragonsController < ApplicationController
     else
       @dragons = Dragon.find(:all)
     end
-    
+
     respond_to do |format|
       format.html { render :fathom => @dragons }
     end
   end
-  
+
   # GET /breedingRecords/:user/:activity
   def breedingRecords
     @user = User.find(params[:id]) unless (params[:id] == "-1")
     @activity = Activity.find(params[:id2]) unless (params[:id2] == "-1")
-    
+
     if (@activity && @user)
       @dragons = Dragon.find(:all, :conditions => ['breeder_id = ? AND activity_id = ?', @user, @activity])
     elsif (@user)
@@ -40,16 +45,16 @@ class DragonsController < ApplicationController
     else
       @dragons = Dragon.find(:all)
     end
-    
+
     respond_to do |format|
       format.html { render :breedingRecords => @dragons }
     end
   end
-  
+
   # GET /breedingRecordsShow/1
   def breedingRecordsShow
     @dragon = Dragon.find(params[:id])
-    
+
     respond_to do |format|
       format.html { render :breedingRecordsShow => @dragon }
     end
@@ -145,7 +150,7 @@ class DragonsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   def destroy_all
     Dragon.destroy_all
     redirect_to(dragons_url)
