@@ -1,11 +1,17 @@
-<p>
-  <b>ID:</b>
-  <%=h object.id %>
-</p>
+<table>
+<tr>
+  <th style="text-align: right; padding-right: 10px;">ID:</th>
+  <td style="vertical-align: top;">
+    <%=h object.id %>
+  </td>
+</tr>
 
 <% object.attributes.each do |att,val| %>
-  <p>
-    <b><%= att %>:</b>
-    <%=h val %>
-  </p>
+  <tr>
+    <th style="text-align: right; vertical-align: top; padding-right: 10px;"><%= att %>:</th>
+    <td style="vertical-align: top;">
+      <%=(h custom_string(val)).gsub(/\r(?:\n)?|\n/,"<br/>\n") %>
+    </td>
+  </tr>
 <% end %>
+</table>
