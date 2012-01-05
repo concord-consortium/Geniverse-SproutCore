@@ -181,38 +181,7 @@ Lab.ACTIVITY = SC.Responder.create(
     });
 
     /////////////////// Eggs
-    SC.Logger.log("LOAD: eggs");
-    // Geniverse.EGGS_QUERY = SC.Query.local('Geniverse.Dragon', {
-    //     conditions: 'bred = true AND isEgg = true AND user = {user} AND isInMarketplace = false AND activity = {activity}',
-    //     user: user,
-    //     activity: activity,
-    //     orderBy: 'storeKey',
-    //     restParams: Geniverse.makeRestParams({
-    //       bred: 'true',
-    //       isEgg: 'true',
-    //       isInMarketplace: 'false',
-    //       user: user,
-    //       activity: activity
-    //     })
-    // });
-    // var eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
      Geniverse.eggsController.set('content',[]);
-    
-    // sell any existing eggs on startup
-    // function eggsReady() {
-    //   eggs.forEach(function(egg){
-    //     egg.set('isEgg', false);
-    //     egg.set('isInMarketplace', true);
-    //   });
-    //   // eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
-    //   Geniverse.eggsController.set('content',eggs);
-    // }
-    // 
-    // if (eggs.get('status') & SC.Record.READY === SC.Record.READY) {
-    //   eggsReady();
-    // } else {
-    //   eggs.addObserver('status', eggsReady);
-    // }
     
     /////////////////// Chats
     SC.Logger.log("LOAD: chats");
@@ -401,14 +370,6 @@ Lab.ACTIVITY = SC.Responder.create(
     this.set('hasLoadedActivityData', NO);
     
     SC.RunLoop.begin();
-    // for (var i = 0; i < Geniverse.matchController.get('length'); i++){
-    //   var dragon = Geniverse.matchController.objectAt(i);
-    //   dragon.set('isInMarketplace', YES);
-    // }
-    // for (var i = 0; i < Geniverse.challengePoolController.get('length'); i++){
-    //   var dragon = Geniverse.challengePoolController.objectAt(i);
-    //   dragon.set('isInMarketplace', YES);
-    // }
     
     Geniverse.matchController.set('content', []);
     Geniverse.challengePoolController.set('content', []);
