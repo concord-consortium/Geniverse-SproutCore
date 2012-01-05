@@ -12,7 +12,7 @@
 ActiveRecord::Schema.define(:version => 20120105171627) do
 
   create_table "activities", :force => true do |t|
-    t.string   "initial_alleles"
+    t.text     "initial_alleles"
     t.string   "base_channel_name"
     t.integer  "max_users_in_room"
     t.boolean  "send_bred_dragons"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20120105171627) do
     t.string   "route"
     t.string   "pageType"
     t.text     "message"
-    t.string   "match_dragon_alleles"
+    t.text     "match_dragon_alleles"
     t.integer  "myCase_id"
     t.integer  "myCaseOrder"
     t.boolean  "is_argumentation_challenge", :default => false
