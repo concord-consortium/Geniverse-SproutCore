@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   validates_uniqueness_of(:username)
+
+  serialize :metadata
 end
 
 
@@ -19,5 +21,6 @@ end
 #  last_name     :string(255)
 #  note          :text
 #  class_name    :string(255)
+#  metadata      :text
 #
 

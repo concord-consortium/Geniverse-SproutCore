@@ -21,6 +21,7 @@ Geniverse.User = SC.Record.extend(
   groupId: SC.Record.attr(Number),
   memberId: SC.Record.attr(Number),
   note: SC.Record.attr(String),
+  metadata: SC.Record.attr(Object),
   className: SC.Record.attr(String)           // for now a student "owns" both group and class. Really they should belong to them...
 });
 
