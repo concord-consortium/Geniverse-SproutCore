@@ -13,6 +13,9 @@ Lab.defaultChallenge = Ki.State.extend({
   },
 
   exitState: function() {
+    // award the user 1 "star" for entering and exiting this challenge
+    var pageId = Geniverse.activityController.get('guid');
+    Geniverse.userController.setPageStars(pageId, 1);
   }
 
 });

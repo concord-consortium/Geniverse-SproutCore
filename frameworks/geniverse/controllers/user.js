@@ -76,5 +76,28 @@ Geniverse.userController = SC.ObjectController.create(
       }
     };
     self.findUser(username,nextMethod);
+  },
+
+  getUserMetadata: function() {
+    var meta = this.get('metadata');
+    if (!meta) {
+      meta = {};
+    }
+    return meta;
+  },
+
+  setUserMetadata: function(metadata) {
+    this.set('metadata', metadata);
+    this.get('content').commitRecord();
+  },
+
+  // this could get moved into its own controller, if we want
+  setPageStars: function(pageId, numStars) {
+    var meta = Geniverse.userController.getUserMetadata();
+    if (!meta.stars) {
+      meta.stars = {};
+    }
+    meta.stars[pageId] = numStars;
+    Geniverse.userController.setUserMetadata(meta);
   }
 }) ;
