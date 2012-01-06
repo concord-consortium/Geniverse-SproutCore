@@ -21,6 +21,10 @@ Lab.argumentationChallenge = Ki.State.extend({
   endChallenge: function() {
     this.challengeComplete = YES;
     this.statechart.getState('inActivity').blockNextNavButton(false);
+
+    // TODO Award the correct number of stars
+    var pageId = Geniverse.activityController.get('guid');
+    Geniverse.userController.setPageStars(pageId, 1);
   },
   
   didSendBlogPost: function() {
