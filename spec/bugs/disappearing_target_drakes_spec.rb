@@ -5,7 +5,7 @@ describe "Bugs" do
 describe "Disappearing Target Drakes" do
   before(:all) do
     start_testing_servers
-    @app = new_test {|app|
+    @app = new_test({:app_root_path => "/lab#heredity/apprentice/case04"}) {|app|
       app['isLoaded'] == true
 
       app.move_to 1, 1 
@@ -50,13 +50,14 @@ describe "Disappearing Target Drakes" do
   it "should not make target dragons disappear when dragging bred dragons into the stable" do
     # navigate to an activity
     # click case log
-    @app['topBar.caseLogButton', 'SC.ImageView'].click
+    # FIXME We can use the case log again, once it's no longer linked to the static html version
+    # @app['topBar.caseLogButton', 'SC.ImageView'].click
 
-    @app.reset_application_context
+    # @app.reset_application_context
     # click one of the cases
-    @app['caselog.mainPane.mainAppView.inheritance2right', 'SC.View'].click
-    @app['inheritance2.mainPane.mainAppView.training2', 'SC.View'].click
-    sleep 1
+    # @app['caselog.mainPane.mainAppView.inheritance2right', 'SC.View'].click
+    # @app['inheritance2.mainPane.mainAppView.training2', 'SC.View'].click
+    # sleep 1
 
     # close the info popup
     @app['InfoView.contentView.hideButton'].click
