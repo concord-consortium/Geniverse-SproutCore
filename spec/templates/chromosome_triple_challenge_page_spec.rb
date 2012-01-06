@@ -36,6 +36,10 @@ describe "Templates" do
       @chromosome_controller = @app['Geniverse.chromosomeController', 'SC.ObjectController']
       @match_controller = @app['Geniverse.matchController', 'SC.ArrayController']
 
+      @user_controller = @app['Geniverse.userController', 'SC.ObjectController']
+      @activity_controller = @app['Geniverse.activityController', 'SC.ObjectController']
+      @activity_guid = @activity_controller.guid.to_s
+
       sleep 5
       hide_info_pane
     end
@@ -237,6 +241,18 @@ describe "Templates" do
 
     def verify_challenge_complete
       verify_alert(:plain, "OK")
+
+      # Check that stars were awarded
+      # TODO Check that the correct number were awarded
+      expected_stars = 1
+
+      stars = @user_controller.metadata.stars
+      num_stars = stars[@activity_guid]
+
+      # for whatever reason, we can't use: num_stars.should == expected_stars
+      if num_stars != expected_stars
+        false.should be_true, "Number of stars should be #{expected_stars}, was: #{num_stars}"
+      end
     end
 
     def verify_images(phenotype_view, should_match)
