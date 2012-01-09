@@ -4,7 +4,7 @@ require "#{dir}/../support/spec_helper.rb"
 describe "Blog post" do
   before(:all) do
     start_testing_servers()
-    @app = new_test({:app_root_path => "/lab#case01/activity01"}) {|app|
+    @app = new_test({:app_root_path => "/lab#case01/activity02"}) {|app|
       app['isLoaded'] == true
 
       app.move_to 1, 1 
