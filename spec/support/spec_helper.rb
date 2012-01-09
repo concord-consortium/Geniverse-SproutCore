@@ -103,7 +103,7 @@ def start_command(name)
   else
     puts "WARNING: process  #{command[:name] || name} already started with #{command[:pid]}"
   end
-  sleep 2 # Hackish pause to spin up job.
+  # sleep 2 # Hackish pause to spin up job.
 end
 
 
@@ -179,7 +179,7 @@ def start_testing_servers(fake_authentication = true)
   end
 
   puts "Finished starting all backend servers"
-  sleep 10
+  sleep 3
 end
 
 def stop_testing_servers
