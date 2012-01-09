@@ -17,7 +17,20 @@ sh run_rails_tests.sh
 if [ -e /usr/sbin/logrotate ]; then
 # Can't call logrotate directly so I'm using /usr/sbin/logrotate
 # to avoid ever climbing disk space needs, rotate the logs
-  echo "${WORKSPACE}/rails/geniverse/log/test.log {
+  echo "
+${WORKSPACE}/spec/support/apache-access.log {
+  rotate 4
+  compress
+  notifempty
+  missingok
+}
+${WORKSPACE}/spec/support/apache-error.log {
+  rotate 4
+  compress
+  notifempty
+  missingok
+}
+${WORKSPACE}/rails/geniverse/log/test.log {
   rotate 4
   compress
   notifempty
