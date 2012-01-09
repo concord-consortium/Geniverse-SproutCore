@@ -6,7 +6,8 @@
   </td>
 </tr>
 
-<% object.attributes.each do |att,val| %>
+<% object.attributes.keys.sort.each do |att| %>
+  <% val = object.attributes[att] %>
   <tr>
     <th style="text-align: right; vertical-align: top; padding-right: 10px;"><%= att %>:</th>
     <td style="vertical-align: top;">
