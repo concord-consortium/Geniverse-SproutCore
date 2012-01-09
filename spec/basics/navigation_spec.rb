@@ -65,7 +65,9 @@ describe "Navigation" do
     
     it "should show be able to click back and go back to old activity" do
       @pageTitle.value.should eql "Case 1: Challenge 2"
+      sleep 3
       @back_button.click
+      sleep 3
       @pageTitle.value.should eql "Case 1: Challenge 1"
     end
 
