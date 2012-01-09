@@ -39,6 +39,8 @@ describe "Login" do
 
     logout
 
+    sleep 5
+
     @login_field.isVisibleInWindow.should be_true
   end
   
