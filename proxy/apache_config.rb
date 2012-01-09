@@ -59,8 +59,8 @@ class ApacheConfig
   end
 
   def x_proxy(mapping)
-    proxyPass "       #{mapping}"
-    proxyPassReverse "#{mapping}"
+    proxyPass "       #{mapping} retry=0"
+    proxyPassReverse "#{mapping} retry=0"
   end
   
   def x_instance_home(home)
