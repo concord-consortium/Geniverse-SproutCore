@@ -149,10 +149,10 @@ describe "Breeding Page" do
 
      pane = @app.key_pane Lebowski::Foundation::Panes::AlertPane
      pane.should_not be nil
-     pane.is_info?.should be true
+     pane.is_error?.should be true
      pane.button_count.should == 1
-     pane.has_button?('ok').should be true
-     pane.click_button 'ok'
+     pane.has_button?('Try again').should be true
+     pane.click_button 'Try again'
    end
 
    it 'should not highlight an incorrect dragon' do
