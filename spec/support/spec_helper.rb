@@ -179,7 +179,7 @@ def start_testing_servers(fake_authentication = true)
   end
 
   puts "Finished starting all backend servers"
-  sleep 3
+  sleep 6
 end
 
 def stop_testing_servers
