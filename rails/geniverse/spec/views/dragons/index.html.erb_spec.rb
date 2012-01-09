@@ -30,13 +30,16 @@ describe "/dragons/index.html.erb" do
 
   it "renders a list of dragons" do
     render
-    response.should have_tag("tr>td", "value for name".to_s, 2)
-    response.should have_tag("tr>td", 1.to_s, 2)
-    response.should have_tag("tr>td", "value for alleles".to_s, 2)
+    # html rendering of the dragons list is disabled for now
+    response.should have_tag("h1", "This page may not be viewed")
+    
+    #response.should have_tag("tr>td", "value for name".to_s, 2)
+    #response.should have_tag("tr>td", 1.to_s, 2)
+    #response.should have_tag("tr>td", "value for alleles".to_s, 2)
     # FIXME response.should have_tag("tr>td>img", "", 2)
-    response.should have_tag("tr>td", 1.to_s, 2)
-    response.should have_tag("tr>td", 1.to_s, 2)
-    response.should have_tag("tr>td", false.to_s, 2)
-    response.should have_tag("tr>td", 1.to_s, 2)
+    #response.should have_tag("tr>td", 1.to_s, 2)
+    #response.should have_tag("tr>td", 1.to_s, 2)
+    #response.should have_tag("tr>td", false.to_s, 2)
+    #response.should have_tag("tr>td", 1.to_s, 2)
   end
 end

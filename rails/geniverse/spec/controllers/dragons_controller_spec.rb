@@ -10,7 +10,8 @@ describe DragonsController do
     it "assigns all dragons as @dragons" do
       Dragon.stub(:find).with(:all, {:conditions=>{}}).and_return([mock_dragon])
       get :index
-      assigns[:dragons].should == [mock_dragon]
+      # you can no long load all dragons through the index page
+      assigns[:dragons].should == []
     end
   end
 
