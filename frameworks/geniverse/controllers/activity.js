@@ -189,7 +189,17 @@ Geniverse.activityController = SC.ObjectController.create(
     } else {
       return [];
     }
-  }
+  },
 
+  initStars: function() {
+    var twoStars = this.get('thresholdTwoStars');
+    var threeStars = this.get('thresholdThreeStars');
+    if (!!twoStars) {
+      Geniverse.scoringController.set('twoStarThreshold', twoStars);
+    }
+    if (!!threeStars) {
+      Geniverse.scoringController.set('threeStarThreshold', threeStars);
+    }
+  }.observes('*content')
 
 });

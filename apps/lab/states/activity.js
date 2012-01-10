@@ -377,6 +377,7 @@ Lab.ACTIVITY = SC.Responder.create(
     Geniverse.articleController.set('article', null);
     Geniverse.articleController.set('started', NO);
     Geniverse.scoringController.resetScore();
+    Geniverse.scoringController.resetChallengeScore();
     Geniverse.meiosisAnimationController.reset();
 
     Lab.infoController.removeView();  // be sure to hide any open info panes

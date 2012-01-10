@@ -34,6 +34,8 @@ describe "Templates" do
       @activity_controller = @app['Geniverse.activityController', 'SC.ObjectController']
       @activity_guid = @activity_controller.guid.to_s
 
+      @scoring_controller = @app['Geniverse.scoringController', 'SC.Controller']
+
       sleep 5
       hide_info_pane
       @first_dragon_id = @match_controller['currentDragon']['guid']
@@ -79,6 +81,15 @@ describe "Templates" do
       @score_view.scoreView['value'].should eq("Your moves: 0"), "Score should start at 0"
     end
 
+    it 'should correctly load the star scoring values' do
+      @scoring_controller.threeStarThreshold.should == 1
+      @scoring_controller.twoStarThreshold.should == 2
+      @scoring_controller.minimumScore.should == 0
+      @scoring_controller.numberOfTrials.should == 4
+      @scoring_controller.threeStarChallengeThreshold.should == 4
+      @scoring_controller.twoStarChallengeThreshold.should == 8
+    end
+
     it 'should increment the score by 1 whenever an allele is changed' do
       change_allele_value('a', 't')
 
@@ -97,6 +108,12 @@ describe "Templates" do
       @switch_sex_button.click
 
       @score_view.scoreView['value'].should eq("Your moves: 3"), "Score should be 3"
+      @scoring_controller.currentScore.should == 3
+      @scoring_controller.currentChallengeScore.should == 3
+    end
+
+    it 'should have achieved 2 stars' do
+      @scoring_controller.achievedStars.should == 1
     end
 
     it 'should match after changing alleles' do
@@ -105,25 +122,33 @@ describe "Templates" do
 
     it 'should reset the score after the match is correct' do
       @score_view.scoreView['value'].should eq("Your moves: 0"), "Score should reset to 0 after a match"
+      @scoring_controller.currentChallengeScore.should == 3
     end
 
     it 'should complete the challenge after all 4 are matched' do
       change_allele_value('a', 'hl')
       change_allele_value('b', 'hl')
+      @scoring_controller.achievedStars.should == 3
       verify_correct_match
+      @scoring_controller.currentChallengeScore.should == 4
 
       change_allele_value('a', 'h')
       change_allele_value('b', 'h')
+      @scoring_controller.achievedStars.should == 3
       verify_correct_match
+      @scoring_controller.currentChallengeScore.should == 5
 
       @switch_sex_button.click
       change_allele_value('a', 'w')
       change_allele_value('b', 'w')
       change_allele_value('a', 'fl')
       change_allele_value('b', 'fl')
+      @scoring_controller.achievedStars.should == 1
+      @scoring_controller.currentChallengeScore.should == 8
 
       sleep 3
 
+      @scoring_controller.achievedChallengeStars.should == 2
       verify_correct_match
       verify_challenge_complete
     end
@@ -134,6 +159,10 @@ describe "Templates" do
 
     it 'should not know that the first dragon was previously matched' do
       @match_controller['currentDragon']['hasBeenMatched'].should be_false, "Match dragon should not have been marked as matched"
+    end
+
+    it 'should reset the challenge score' do
+      @scoring_controller.currentChallengeScore.should == 0
     end
 
     def verify_incorrect_match
@@ -159,9 +188,8 @@ describe "Templates" do
     def verify_challenge_complete
       verify_alert(:plain, "OK")
 
-      # Check that stars were awarded
-      # TODO Check that the correct number were awarded
-      expected_stars = 1
+      # Check that the correct number of stars were awarded
+      expected_stars = 2
 
       stars = @user_controller.metadata.stars
       num_stars = stars[@activity_guid]

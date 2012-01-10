@@ -22,7 +22,7 @@ Lab.argumentationChallenge = Ki.State.extend({
     this.challengeComplete = YES;
     this.statechart.getState('inActivity').blockNextNavButton(false);
 
-    // TODO Award the correct number of stars
+    // Award a "star" for completion
     var pageId = Geniverse.activityController.get('guid');
     Geniverse.userController.setPageStars(pageId, 1);
   },

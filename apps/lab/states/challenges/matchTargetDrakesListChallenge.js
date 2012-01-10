@@ -21,15 +21,18 @@ Lab.matchTargetDrakesListChallenge = Ki.State.extend({
     this.statechart.getState('inActivity').blockNextNavButton(true);
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', NO);
     this.set('challengeComplete', NO);
+
+    Geniverse.scoringController.set('numberOfTrials', 1);
   },
   
   endChallenge: function() {
     this.challengeComplete = YES;
     this.statechart.getState('inActivity').blockNextNavButton(false);
 
-    // TODO Award the correct number of stars
+    // Award the stars
+    var stars = Geniverse.scoringController.get('achievedChallengeStars');
     var pageId = Geniverse.activityController.get('guid');
-    Geniverse.userController.setPageStars(pageId, 1);
+    Geniverse.userController.setPageStars(pageId, stars);
   },
   
   // Annoyingly, actions can only be called with a max of two arguments,
@@ -70,6 +73,8 @@ Lab.matchTargetDrakesListChallenge = Ki.State.extend({
     var numUnmatchedDrakes = Geniverse.matchController.filterProperty('hasBeenMatched', false).length;
     if (numUnmatchedDrakes === 0) {
       this._challengeComplete();
+      Geniverse.scoringController.resetScore();
+      Geniverse.scoringController.resetChallengeScore();
     }
   },
   

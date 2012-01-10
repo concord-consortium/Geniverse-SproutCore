@@ -441,6 +441,8 @@ activities << {:hidden_genes=>"{'all': 'm,c,a,b,d,hoxa1,rh'}",
   :static_genes=>"",
   :route=>"heredity/challenge/case01",
   :max_users_in_room=>nil,
+  :threshold_three_stars=>1,
+  :threshold_two_stars=>2,
   :initial_alleles=>%![[[
 {alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:rh,b:rh', sex: 1, name: 'Heterozygous Mother'}
 ]]];!,
@@ -459,6 +461,8 @@ activities << {:hidden_genes=>"{'all': 'm,c,a,b,d,hoxa1,rh'}",
   :send_bred_dragons=>nil,
   :static_genes=>"",
   :route=>"heredity/challenge/case02",
+  :threshold_three_stars=>8,
+  :threshold_two_stars=>10,
   :max_users_in_room=>nil,
   :initial_alleles=>%![[[
 {alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:rh,b:rh', sex: 1, name: 'Heterozygous Mother'}

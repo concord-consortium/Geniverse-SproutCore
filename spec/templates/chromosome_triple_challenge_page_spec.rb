@@ -242,9 +242,8 @@ describe "Templates" do
     def verify_challenge_complete
       verify_alert(:plain, "OK")
 
-      # Check that stars were awarded
-      # TODO Check that the correct number were awarded
-      expected_stars = 1
+      # Check that the correct number of stars were awarded
+      expected_stars = 3
 
       stars = @user_controller.metadata.stars
       num_stars = stars[@activity_guid]

@@ -20,15 +20,19 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
   startChallenge: function() {
     this.statechart.getState('inActivity').blockNextNavButton(true);
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', NO);
+
+    // This needs to happen after the match dragons are loaded into the controller....
+    Geniverse.matchController.addObserver('arrangedObjects.length', this._updateNumTrials);
   },
-  
+
   endChallenge: function() {
     this.challengeComplete = YES;
     this.statechart.getState('inActivity').blockNextNavButton(false);
 
-    // TODO Award the correct number of stars
+    // Award the stars
+    var stars = Geniverse.scoringController.get('achievedChallengeStars');
     var pageId = Geniverse.activityController.get('guid');
-    Geniverse.userController.setPageStars(pageId, 1);
+    Geniverse.userController.setPageStars(pageId, stars);
   },
   
   setTargetScore: function() {
@@ -96,6 +100,7 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
       Geniverse.scoringController.resetScore();
       if (Geniverse.matchController.isLastDragon()) {
         this._challengeComplete();
+        Geniverse.scoringController.resetChallengeScore();
       }
       Geniverse.matchController.nextDragon();
       this.successfulMatch = NO;
@@ -120,11 +125,16 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
       "",
       this
     );
-    
+
     this.endChallenge();
   },
-  
-  exitState: function() { 
+
+  _updateNumTrials: function() {
+    Geniverse.scoringController.set('numberOfTrials', Geniverse.matchController.getPath('arrangedObjects.length'));
+  },
+
+  exitState: function() {
+    Geniverse.matchController.removeObserver('arrangedObjects.length', this._updateNumTrials);
   }
-  
+
 });
