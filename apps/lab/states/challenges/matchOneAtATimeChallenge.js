@@ -40,7 +40,7 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
     
     if (!!inititalDragon && !!inititalDragon.get('characteristicMap') && 
         !!Geniverse.matchController.get("currentDragon") && !!Geniverse.matchController.get("currentDragon").get('characteristicMap')) {
-      Geniverse.scoringController.set('targetScore', Geniverse.matchController.numberOfMovesToReachCurrent(inititalDragon));
+      Geniverse.scoringController.set('minimumScore', Geniverse.matchController.numberOfMovesToReachCurrent(inititalDragon));
     }
   }.observes('Geniverse.matchController.currentDragon'),
   
