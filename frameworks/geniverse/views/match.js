@@ -32,7 +32,7 @@ Geniverse.MatchView = SC.View.extend(
     if (!!this.get('dragonView')) {
       this.get('dragonView').contentDidChange();
     }
-  }.observes('Geniverse.matchController.currentDragonIdx', 'Geniverse.matchController.arrangedObjects.[]'),
+  }.observes('Geniverse.matchController.currentDragonIdx', 'Geniverse.matchController.arrangedObjects.[]', 'Geniverse.matchController.currentDragon'),
 
   
   isVisible: function() {

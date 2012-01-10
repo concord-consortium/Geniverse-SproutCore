@@ -35,16 +35,21 @@ Geniverse.matchController = SC.ArrayController.create(
 
   // for one-at-a-time matching
   oneAtATime: NO,
-  currentDragonIdx: 0,
-  currentDragon: function() {
+  currentDragonIdx: -1,
+  currentDragon: null,
+  updateCurrentDragon: function() {
+    if (this.get('currentDragonIdx') === -1) {
+      this.set('currentDragonIdx', 0);
+    }
     var dragons = this.get('arrangedObjects');
     var dragon = Geniverse.NO_DRAGON;
     if (dragons && dragons.get('length') > 0) {
       dragon = dragons.objectAt(this.get('currentDragonIdx'));
     }
+    this.set("currentDragon", dragon);
     this.propertyDidChange('matchedCountLabel');
     return dragon;
-  }.property('currentDragonIdx', '*arrangedObjects.length'),
+  }.observes('currentDragonIdx', '*arrangedObjects.length'),
   // this will be obsolete once we use a graphic
   matchedCountLabel: function() {
     var numDragons = this.get('arrangedObjects').get('length');
@@ -71,6 +76,6 @@ Geniverse.matchController = SC.ArrayController.create(
   },
 
   doesMatchCurrent: function(received) {
-    return this.doesMatch(this.currentDragon(), received);
-  }
+    return this.doesMatch(this.get("currentDragon"), received);
+  },
 }) ;
