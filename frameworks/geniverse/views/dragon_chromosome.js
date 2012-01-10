@@ -27,7 +27,9 @@ Geniverse.DragonChromosomeView = SC.View.extend(
   side: 'A',
   showLines: NO,
   trackScore: NO,
-
+  
+  oldAlleles: [],
+  
   // sc_static is search/replaced via the build tools not by the runtime,
   // therefore we have to pre-calculate all of the possible images and urls here
   chromoImageUrls: {

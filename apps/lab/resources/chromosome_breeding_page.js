@@ -56,6 +56,7 @@ Lab.chromosomeBreedingPage = SC.Page.design({
 
         femaleGenomeView: Geniverse.DragonGenomeView.design({
           layout: {top: 40, left: 15, height: 500, width: 500 },
+          index: 1,
           generateDragonAtStart: NO,
           displayChallengeDragon: YES,
           showDragon: NO,
@@ -86,6 +87,7 @@ Lab.chromosomeBreedingPage = SC.Page.design({
 
         maleGenomeView: Geniverse.DragonGenomeView.design({
           layout: {top: 40, left: 515, height: 500, width: 500 },
+          index: 2,
           generateDragonAtStart: NO,
           displayChallengeDragon: YES,
           showDragon: NO,
