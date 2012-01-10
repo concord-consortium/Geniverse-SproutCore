@@ -31,6 +31,15 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
     Geniverse.userController.setPageStars(pageId, 1);
   },
   
+  setTargetScore: function() {
+    var inititalDragon = Geniverse.dragonGenomeController.get('firstDragon');
+    
+    if (!!inititalDragon && !!inititalDragon.get('characteristicMap') && 
+        !!Geniverse.matchController.get("currentDragon") && !!Geniverse.matchController.get("currentDragon").get('characteristicMap')) {
+      Geniverse.scoringController.set('targetScore', Geniverse.matchController.numberOfMovesToReachCurrent(inititalDragon));
+    }
+  }.observes('Geniverse.matchController.currentDragon'),
+  
   revealClicked: function(buttonView) {
     this.organismView = buttonView.get('parentView');
     this._revealImage();
