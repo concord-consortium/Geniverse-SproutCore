@@ -16,8 +16,12 @@ Geniverse.scoringController = SC.Controller.create(
   currentChallengeScore: 0,
   numberOfTrials: 1,
 
-  // TODO this should be set by the auto-calculation methods, if possible
+  // This should be set by the auto-calculation methods, if possible
   minimumScore: 0,
+  previousChallengeMinimumScore: 0,
+  challengeMinimumScore: function() {
+    return this.get('previousChallengeMinimumScore') + this.get('minimumScore');
+  }.property('previousChallengeMinimumScore','minimumScore').cacheable(),
 
   // set when the activity is loaded
   twoStarThreshold: 2,
@@ -35,6 +39,10 @@ Geniverse.scoringController = SC.Controller.create(
     return this.get('minimumScore') + this.get('threeStarThreshold');
   }.property('minimumScore','threeStarThreshold').cacheable(),
 
+  targetChallengeScore: function() {
+    return this.get('challengeMinimumScore') + this.get('threeStarChallengeThreshold');
+  }.property('challengeMinimumScore','threeStarThreshold','numberOfTrials').cacheable(),
+
   achievedStars: function() {
     var min = this.get('minimumScore');
     var threeStars = this.get('threeStarThreshold') + min;
@@ -45,13 +53,13 @@ Geniverse.scoringController = SC.Controller.create(
   }.property('minimumScore','currentScore','twoStarThreshold','threeStarThreshold').cacheable(),
 
   achievedChallengeStars: function() {
-    var min = this.get('minimumScore') * this.get('numberOfTrials');
+    var min = this.get('challengeMinimumScore');
     var threeStars = this.get('threeStarChallengeThreshold') + min;
     var twoStars = this.get('twoStarChallengeThreshold') + min;
 
     var score = this.get('currentChallengeScore');
     return this._stars(score, threeStars, twoStars);
-  }.property('minimumScore','currentChallengeScore','numberOfTrials','twoStarThreshold','threeStarThreshold').cacheable(),
+  }.property('challengeMinimumScore','currentChallengeScore','twoStarThreshold','threeStarThreshold').cacheable(),
 
   _stars: function(score, threeStars, twoStars) {
     if (score <= threeStars) {
@@ -68,17 +76,17 @@ Geniverse.scoringController = SC.Controller.create(
     this.set('currentChallengeScore', this.get('currentChallengeScore')+num);
   },
 
-  decrementScore: function(num) {
-    this.set('currentScore', this.get('currentScore')-num);
-    this.set('currentChallengeScore', this.get('currentChallengeScore')-num);
+  updateChallengeMinimumScore: function() {
   },
 
   resetScore: function() {
+    this.set('previousChallengeMinimumScore', this.get('previousChallengeMinimumScore')+this.get('minimumScore'));
     this.set('currentScore', 0);
   },
 
   resetChallengeScore: function() {
     this.set('currentChallengeScore', 0);
+    this.set('previousChallengeMinimumScore', 0);
   }
 
 }) ;

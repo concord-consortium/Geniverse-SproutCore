@@ -84,7 +84,7 @@ describe "Templates" do
     it 'should correctly load the star scoring values' do
       @scoring_controller.threeStarThreshold.should == 1
       @scoring_controller.twoStarThreshold.should == 2
-      @scoring_controller.minimumScore.should == 0
+      @scoring_controller.minimumScore.should == 1
       @scoring_controller.numberOfTrials.should == 4
       @scoring_controller.threeStarChallengeThreshold.should == 4
       @scoring_controller.twoStarChallengeThreshold.should == 8
@@ -113,7 +113,7 @@ describe "Templates" do
     end
 
     it 'should have achieved 2 stars' do
-      @scoring_controller.achievedStars.should == 1
+      @scoring_controller.achievedStars.should == 2
     end
 
     it 'should match after changing alleles' do
@@ -139,12 +139,17 @@ describe "Templates" do
       @scoring_controller.currentChallengeScore.should == 5
 
       @switch_sex_button.click
+      change_allele_value('a', 'Hl')
+      change_allele_value('b', 'Hl')
+      change_allele_value('a', 'hl')
+      change_allele_value('b', 'hl')
       change_allele_value('a', 'w')
       change_allele_value('b', 'w')
       change_allele_value('a', 'fl')
       change_allele_value('b', 'fl')
       @scoring_controller.achievedStars.should == 1
-      @scoring_controller.currentChallengeScore.should == 8
+      @scoring_controller.currentChallengeScore.should == 12
+      @scoring_controller.targetChallengeScore.should == 9
 
       sleep 3
 

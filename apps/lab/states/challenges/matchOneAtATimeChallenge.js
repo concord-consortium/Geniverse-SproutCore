@@ -97,11 +97,13 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
   
   alertPaneDidDismiss: function() {
     if (this.successfulMatch){
-      Geniverse.scoringController.resetScore();
       if (Geniverse.matchController.isLastDragon()) {
         this._challengeComplete();
         Geniverse.scoringController.resetChallengeScore();
       }
+      // reset score after we do any lastDragon stuff, so that challenge
+      // scores will be calculated correctly.
+      Geniverse.scoringController.resetScore();
       Geniverse.matchController.nextDragon();
       this.successfulMatch = NO;
     }
