@@ -194,15 +194,12 @@ describe "Templates" do
       verify_alert(:plain, "OK")
 
       # Check that the correct number of stars were awarded
-      expected_stars = 2
+      expected_stars = [2]
 
       stars = @user_controller.metadata.stars
       num_stars = stars[@activity_guid]
 
-      # for whatever reason, we can't use: num_stars.should == expected_stars
-      if num_stars != expected_stars
-        false.should be_true, "Number of stars should be #{expected_stars}, was: #{num_stars}"
-      end
+      num_stars.should eq(expected_stars), "Number of stars should be #{expected_stars.inspect}, was: #{num_stars.inspect}"
     end
 
     def verify_images(should_match)

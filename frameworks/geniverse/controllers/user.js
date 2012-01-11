@@ -97,7 +97,10 @@ Geniverse.userController = SC.ObjectController.create(
     if (!meta.stars) {
       meta.stars = {};
     }
-    meta.stars[pageId] = numStars;
+    if (!meta.stars[pageId]) {
+     meta.stars[pageId] = [];
+    }
+    meta.stars[pageId].push(numStars);
     Geniverse.userController.setUserMetadata(meta);
   }
 }) ;
