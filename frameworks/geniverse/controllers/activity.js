@@ -196,9 +196,14 @@ Geniverse.activityController = SC.ObjectController.create(
     var threeStars = this.get('thresholdThreeStars');
     if (!!twoStars) {
       Geniverse.scoringController.set('twoStarThreshold', twoStars);
+    } else {
+      Geniverse.scoringController.set('twoStarThreshold', 2);
     }
+
     if (!!threeStars) {
       Geniverse.scoringController.set('threeStarThreshold', threeStars);
+    } else {
+      Geniverse.scoringController.set('threeStarThreshold', 1);
     }
   }.observes('*content')
 
