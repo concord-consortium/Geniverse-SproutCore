@@ -205,6 +205,8 @@ Geniverse.activityController = SC.ObjectController.create(
     } else {
       Geniverse.scoringController.set('threeStarThreshold', 1);
     }
+
+    Geniverse.scoringController.set('minimumScore', 0);
   }.observes('*content')
 
 });
