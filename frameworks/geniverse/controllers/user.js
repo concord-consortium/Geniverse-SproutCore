@@ -87,6 +87,7 @@ Geniverse.userController = SC.ObjectController.create(
   },
 
   setUserMetadata: function(metadata) {
+    this.set('metadata', null);
     this.set('metadata', metadata);
     this.get('content').commitRecord();
   },
