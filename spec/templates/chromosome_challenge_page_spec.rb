@@ -114,6 +114,7 @@ describe "Templates" do
 
     it 'should have achieved 2 stars' do
       @scoring_controller.achievedStars.should == 2
+      @scoring_controller.targetChallengeScore.should == 5 # 1 move + (1*4) threshold
     end
 
     it 'should match after changing alleles' do
@@ -123,21 +124,27 @@ describe "Templates" do
     it 'should reset the score after the match is correct' do
       @score_view.scoreView['value'].should eq("Your moves: 0"), "Score should reset to 0 after a match"
       @scoring_controller.currentChallengeScore.should == 3
+      @scoring_controller.targetChallengeScore.should == 6 # 2 move + (1*4) threshold
     end
 
-    it 'should complete the challenge after all 4 are matched' do
+    it 'should correctly track things after the 2nd trial' do
       change_allele_value('a', 'hl')
       change_allele_value('b', 'hl')
       @scoring_controller.achievedStars.should == 3
       verify_correct_match
       @scoring_controller.currentChallengeScore.should == 4
+      @scoring_controller.targetChallengeScore.should == 7 # 3 move + (1*4) threshold
+    end
 
+    it 'should correctly track things after the 3rd trial' do
       change_allele_value('a', 'h')
       change_allele_value('b', 'h')
       @scoring_controller.achievedStars.should == 3
       verify_correct_match
       @scoring_controller.currentChallengeScore.should == 5
+    end
 
+    it 'should correctly track things after the 4th trial' do
       @switch_sex_button.click
       change_allele_value('a', 'Hl')
       change_allele_value('b', 'Hl')
@@ -149,11 +156,13 @@ describe "Templates" do
       change_allele_value('b', 'fl')
       @scoring_controller.achievedStars.should == 1
       @scoring_controller.currentChallengeScore.should == 12
-      @scoring_controller.targetChallengeScore.should == 9
+      @scoring_controller.targetChallengeScore.should == 10 # 6 move + (1*4) threshold
+      @scoring_controller.achievedChallengeStars.should == 2
+    end
 
+    it 'should complete the challenge after all 4 are matched' do
       sleep 3
 
-      @scoring_controller.achievedChallengeStars.should == 2
       verify_correct_match
       verify_challenge_complete
     end
