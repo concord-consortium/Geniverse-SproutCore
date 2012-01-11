@@ -22,7 +22,7 @@ Lab.breedingPageGroup = SC.Page.design({
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'],
-    childViews: 'backgroundView topBar bottomBar mainAppView'.w(),
+    childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
       backgroundView: SC.ImageView.design({
         value: static_url('lab_background.png'),
         classNames: ['transparent','scalingimage']

@@ -21,7 +21,7 @@ Lab.experiment2 = SC.Page.design({
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'],
-    childViews: 'backgroundView topBar mainAppView'.w(),
+    childViews: 'backgroundView mainAppView topBar'.w(),
     backgroundView: SC.ImageView.design({
       value: static_url('bg2'),
       classNames: ['transparent','scalingimage']
