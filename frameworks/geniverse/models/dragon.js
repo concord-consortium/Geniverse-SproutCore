@@ -169,8 +169,8 @@ Geniverse.Dragon.traitRules = {
     "No hindlimbs": [["hl", "hl"]]
   },
   "horns": {
-    "Horns": [["H", "H"], ["H", "h"]],
-    "Hornless": [["h", "h"]]
+    "Hornless": [["H", "H"], ["H", "h"]],
+    "Horns": [["h", "h"]]
   },
   "nose spike": {
     "Nose spike": [["Rh", "Rh"], ["Rh", "rh"]],
