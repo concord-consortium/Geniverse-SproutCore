@@ -24,3 +24,9 @@
   height:48px;
   background:no-repeat static_url('spinner.gif') left top;
 }
+
+.centered-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto
+}
