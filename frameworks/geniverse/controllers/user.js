@@ -87,9 +87,9 @@ Geniverse.userController = SC.ObjectController.create(
   },
 
   setUserMetadata: function(metadata) {
-    this.set('metadata', null);
-    this.set('metadata', metadata);
-    this.get('content').commitRecord();
+    var user = this.get('content');
+    user.set('metadata', metadata);
+    user.recordDidChange();
   },
 
   // this could get moved into its own controller, if we want
