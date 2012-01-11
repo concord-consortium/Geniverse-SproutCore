@@ -129,6 +129,7 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
     var moveOnMessage = (!!Geniverse.activityController.getNextActivity()) ? 
       "Move on to the next challenge using the green arrow below." :
       "Go back to the case log using the button at the top left to go to a new case.";
+      
     SC.AlertPane.extend({
       layout: {top: 0, centerX: 0, width: 350, height: 100 },
       displayDescription: function() {
