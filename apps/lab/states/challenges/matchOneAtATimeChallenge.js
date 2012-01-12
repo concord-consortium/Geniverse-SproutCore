@@ -37,16 +37,26 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
     Geniverse.userController.setPageStars(pageId, stars);
     this.starsEarned = stars;
   },
-  
+
   setTargetScore: function() {
-    var inititalDragon = Geniverse.dragonGenomeController.get('firstDragon');
-    
-    if (!!inititalDragon && !!inititalDragon.get('characteristicMap') && 
-        !!Geniverse.matchController.get("currentDragon") && !!Geniverse.matchController.get("currentDragon").get('characteristicMap')) {
-      Geniverse.scoringController.set('minimumScore', Geniverse.matchController.numberOfMovesToReachCurrent(inititalDragon));
+    var setMinMoves = function() {
+      var initialDragon = Geniverse.dragonGenomeController.get('firstDragon');
+      if (!!initialDragon && !!initialDragon.get('characteristicMap') &&
+          !!Geniverse.matchController.get("currentDragon") && !!Geniverse.matchController.get("currentDragon").get('characteristicMap')) {
+        Geniverse.scoringController.set('minimumScore', Geniverse.matchController.numberOfMovesToReachCurrent(initialDragon));
+      }
+      if (!!initialDragon && !!initialDragon.get('characteristicMap')) {
+        Geniverse.dragonGenomeController.removeObserver('firstDragon.characteristicsMap', setMinMoves);
+      }
+    };
+
+    if (!!Geniverse.dragonGenomeController.get('firstDragon')) {
+      setMinMoves();
+    } else {
+      Geniverse.dragonGenomeController.addObserver('firstDragon.characteristicsMap', setMinMoves);
     }
   }.observes('Geniverse.matchController.currentDragon'),
-  
+
   revealClicked: function(buttonView) {
     this.organismView = buttonView.get('parentView');
     this._revealImage();
