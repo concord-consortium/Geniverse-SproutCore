@@ -18,10 +18,10 @@ Geniverse.scoringController = SC.Controller.create(
 
   // This should be set by the auto-calculation methods, if possible
   minimumScore: 0,
-  previousChallengeMinimumScore: 0,
+  cumulativeChallengeMinimumScores: 0,
   challengeMinimumScore: function() {
-    return this.get('previousChallengeMinimumScore') + this.get('minimumScore');
-  }.property('previousChallengeMinimumScore','minimumScore').cacheable(),
+    return this.get('cumulativeChallengeMinimumScores') + this.get('minimumScore');
+  }.property('cumulativeChallengeMinimumScores','minimumScore').cacheable(),
 
   // set when the activity is loaded
   twoStarThreshold: 2,
@@ -80,13 +80,13 @@ Geniverse.scoringController = SC.Controller.create(
   },
 
   resetScore: function() {
-    this.set('previousChallengeMinimumScore', this.get('previousChallengeMinimumScore')+this.get('minimumScore'));
+    this.set('cumulativeChallengeMinimumScores', this.get('cumulativeChallengeMinimumScores')+this.get('minimumScore'));
     this.set('currentScore', 0);
   },
 
   resetChallengeScore: function() {
     this.set('currentChallengeScore', 0);
-    this.set('previousChallengeMinimumScore', 0);
+    this.set('cumulativeChallengeMinimumScores', 0);
   }
 
 }) ;
