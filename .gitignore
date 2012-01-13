@@ -20,3 +20,4 @@ bundled_gems
 .bundle/
 "/
 gems/
+bin/
