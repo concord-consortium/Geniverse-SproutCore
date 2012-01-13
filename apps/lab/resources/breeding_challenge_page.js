@@ -68,7 +68,7 @@ Lab.breedingChallengePage = SC.Page.design({
       }),
 
       scoreView: Geniverse.ScoreView.design({
-        layout: { left: 250, top: 445, height: 40, width: 150 },
+        layout: { left: 250, top: 455, height: 40, width: 150 },
         showTargetScore: YES
       }),
 
