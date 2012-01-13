@@ -49,6 +49,13 @@ Geniverse.breedDragonController = SC.Controller.create(
     this.set('breedCount', 0);
     this.set('isBreeding', NO);
   },
+  
+  // this is the equivalent of setting "trackScore: YES" and then breeding, but useful for
+  // buttons that just call an action, as we can't set the property on the view
+  breedAndIncrementScore: function () {
+    this.breed();
+    Geniverse.scoringController.incrementScore(1);
+  },
 
   breed: function () {
     if (this.get('mother').characteristicValue('Liveliness').indexOf('Alive') < 0 ||
