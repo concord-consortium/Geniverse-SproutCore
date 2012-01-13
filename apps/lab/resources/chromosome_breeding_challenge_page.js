@@ -36,7 +36,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
 
     mainAppView: SC.View.design({
 
-      childViews: 'genomePanel breedingPenView matchView'.w(),
+      childViews: 'genomePanel breedingPenView scoreView matchView'.w(),
 
       genomePanel: SC.View.design({
         layout: {top: 40, height: 450, left: 15, width: 1005 },
@@ -59,6 +59,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
           index: 1,
           generateDragonAtStart: NO,
           displayChallengeDragon: YES,
+          trackScore: YES,
           showDragon: NO,
           sex: 1,
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
@@ -90,6 +91,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
           index: 2,
           generateDragonAtStart: NO,
           displayChallengeDragon: YES,
+          trackScore: YES,
           showDragon: NO,
           sex: 0,
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
@@ -114,7 +116,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
         breedButton: SC.ButtonView.design({
           layout: { top: 170, left: 450, width: 100, height: 24 },
           target: 'Geniverse.breedDragonController',
-          action: "breed",
+          action: "breedAndIncrementScore",
           isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
           hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
           isEnabled: function() {
@@ -133,9 +135,15 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
         layout: { left: 329, top: 245, width: 380, height: 350 }
       }),
 
+      scoreView: Geniverse.ScoreView.design({
+        layout: { left: 155, top: 495, height: 150, width: 150 },
+        showTargetScore: YES
+      }),
+
       matchView: Geniverse.MatchView.design({
         layout: { left: 713, top: 495, height: 150, width: 150 },
         onlyOne: YES,
+        trackScore: YES,
         dragonSize: 150
       })
 
