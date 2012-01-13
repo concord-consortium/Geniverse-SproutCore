@@ -21,6 +21,11 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
     // This needs to happen after the match dragons are loaded into the controller....
     Geniverse.matchController.addObserver('arrangedObjects.length', this._updateNumTrials);
   },
+
+  exitState: function() {
+    sc_super();
+    Geniverse.matchController.removeObserver('arrangedObjects.length', this._updateNumTrials);
+  },
   
   matchDragonChanged: function() {
     this.setTargetScore();
