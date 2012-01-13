@@ -4,19 +4,31 @@
 // ==========================================================================
 /*globals Lab Geniverse CcChat window Ki YES NO SC static_url*/
 
+/**
+ This is a generic top-level challenge state, and is intended to be extended by the
+ actual challenge states.
+**/ 
 Lab.challenge = Ki.State.extend({
   
   challengeComplete: NO,
   
+  challengePreviouslyCompleted: NO,
+  
   starsEarned: 0,
   
-  enterState: function() { 
+  enterState: function() {
+    var metadata = Geniverse.userController.getUserMetadata()
+        activityId = Geniverse.activityController.get("guid");
+
+    if (metadata.stars && metadata.stars[activityId]) {
+      this.challengePreviouslyCompleted = YES;
+    }
     this.startChallenge();
   },
   
   startChallenge: function() {
-    console.log("starting challenge! wooooo!!!!")
-    this.statechart.getState('inActivity').blockNextNavButton(true);
+    // these should be actions
+    this.statechart.getState('inActivity').blockNextNavButton(!this.challengePreviouslyCompleted);
   },
 
   endChallenge: function() {

@@ -16,7 +16,6 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
   
   startChallenge: function() {
     sc_super();
-    console.log("wawawa!!!")
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', NO);
 
     // This needs to happen after the match dragons are loaded into the controller....
