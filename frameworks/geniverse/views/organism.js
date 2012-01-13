@@ -26,6 +26,8 @@ Geniverse.OrganismView = SC.View.extend(
   hideDragon: NO, // hides the dragon
   useRevealButton: NO,  // hides dragon and show a reveal button
   revealButtonEnabled: YES,
+  
+  trackScore: NO, // whether this view will increment scoring controller when dragged into
 
 	imageView: SC.ImageView.design({
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
@@ -260,6 +262,10 @@ Geniverse.OrganismView = SC.View.extend(
       SC.RunLoop.begin();
         this.set('content', dragon);
       SC.RunLoop.end();
+    }
+    
+    if (this.get('trackScore')){
+      Geniverse.scoringController.incrementScore(1);
     }
     
     this._setClassNames();
