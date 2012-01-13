@@ -57,7 +57,7 @@ Geniverse.matchController = SC.ArrayController.create(
       Lab.statechart.sendAction('matchDragonChanged');
     }
     
-  }.observes('*arrangedObjects.length'),
+  }.observes('currentDragonIdx', '*arrangedObjects.length'),
   // this will be obsolete once we use a graphic
   matchedCountLabel: function() {
     var numDragons = this.get('arrangedObjects').get('length');
