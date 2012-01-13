@@ -31,7 +31,7 @@ Geniverse.ScoreView = SC.View.extend(
     fontWeight: SC.BOLD_WEIGHT,
     targetScoreBinding: 'Geniverse.scoringController.targetScore',
     value: function() {
-      return "Goal is " + this.get('targetScore') + " moves";
+      return "Goal is " + this.get('targetScore') + " move" + (this.get('targetScore') == 1 ? "" : "s");
     }.property('isVisible', 'targetScore').cacheable()
   }),
 
