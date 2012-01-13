@@ -27,12 +27,15 @@ Geniverse.BreedDragonView = SC.View.extend(
   hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
 
   showChildView: YES,
-  trackScoreBinding: 'Geniverse.breedDragonController.trackScore',
+  trackScore: NO,
 
   breedButtonView: SC.ButtonView.design({
     layout: { top: 0, left: 10, width: 100, height: 24 },
     target: 'Geniverse.breedDragonController',
-    action: "breed",
+    trackScoreBinding: '*parentView.trackScore',
+    action: function() {
+      return this.get('trackScore') ? "breedAndIncrementScore" : "breed";
+    }.property('trackScore'),
     isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
     hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
     isEnabled: function() {
@@ -53,7 +56,8 @@ Geniverse.BreedDragonView = SC.View.extend(
     label: "mother",
     showLabel: true,
     sex: 1,
-    isDropTarget: YES
+    isDropTarget: YES,
+    trackScoreBinding: "*parentView.trackScore"
   }),
 
   fatherView: Geniverse.OrganismView.design({
@@ -64,7 +68,8 @@ Geniverse.BreedDragonView = SC.View.extend(
     label: "father",
     showLabel: true,
     sex: 0,
-    isDropTarget: YES
+    isDropTarget: YES,
+    trackScoreBinding: "*parentView.trackScore"
   }),
 
 
