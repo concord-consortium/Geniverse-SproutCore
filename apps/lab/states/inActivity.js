@@ -15,6 +15,7 @@ Lab.inActivity = Ki.State.extend({
     matchOneAtATimeChallenge: Ki.State.plugin('Lab.matchOneAtATimeChallenge'),
     matchThreeToOneChallenge: Ki.State.plugin('Lab.matchThreeToOneChallenge'),
     matchTargetDrakesListChallenge: Ki.State.plugin('Lab.matchTargetDrakesListChallenge'),
+    matchTargetDrakesOneAtATimeChallenge: Ki.State.plugin('Lab.matchTargetDrakesOneAtATimeChallenge'),
     defaultChallenge: Ki.State.plugin('Lab.defaultChallenge'),
     initialChallenge: Ki.State.plugin('Lab.initialChallenge'),
 
