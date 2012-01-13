@@ -234,7 +234,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
       scoreLabel: Geniverse.ScoreView.design({
         layout: { left: 873, top: 40, height: 36, width: 150 },
         showScore: YES,
-        showTargetScore: NO
+        showTargetScore: YES
       }),
 
       targetDrakes: Geniverse.MatchView.design({
