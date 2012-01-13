@@ -2,7 +2,7 @@
 // Project:   Geniverse.matchController
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Geniverse */
+/*globals Geniverse Lab*/
 
 /** @class
 
@@ -38,6 +38,10 @@ Geniverse.matchController = SC.ArrayController.create(
   currentDragonIdx: -1,
   currentDragon: null,
   updateCurrentDragon: function() {
+    if (!Geniverse.activityController.get('content')) {
+      return;
+    }
+    
     if (this.get('currentDragonIdx') === -1) {
       this.set('currentDragonIdx', 0);
     }
@@ -46,10 +50,14 @@ Geniverse.matchController = SC.ArrayController.create(
     if (dragons && dragons.get('length') > 0) {
       dragon = dragons.objectAt(this.get('currentDragonIdx'));
     }
-    this.set("currentDragon", dragon);
-    this.propertyDidChange('matchedCountLabel');
-    return dragon;
-  }.observes('currentDragonIdx', '*arrangedObjects.length'),
+    
+    if (this.get('currentDragon') !== dragon) {
+      this.set("currentDragon", dragon);
+      this.propertyDidChange('matchedCountLabel');
+      Lab.statechart.sendAction('matchDragonChanged');
+    }
+    
+  }.observes('*arrangedObjects.length'),
   // this will be obsolete once we use a graphic
   matchedCountLabel: function() {
     var numDragons = this.get('arrangedObjects').get('length');
@@ -90,7 +98,7 @@ Geniverse.matchController = SC.ArrayController.create(
         currentchars = current.get('characteristicMap'),
         traitRules = Geniverse.Dragon.traitRules;
 
-    moves = this.numberOfAlleleChangesToReachPhenotype(dragonChars, currentchars, dragon.get('alleles'), traitRules)
+    moves = this.numberOfAlleleChangesToReachPhenotype(dragonChars, currentchars, dragon.get('alleles'), traitRules);
     if (dragon.get("sex") != current.get("sex")){
       moves++;
     }
@@ -99,7 +107,7 @@ Geniverse.matchController = SC.ArrayController.create(
   },
 
   numberOfAlleleChangesToReachPhenotype: function(originalCharacteristics, targetCharacteristics, originalAlleles, traitRules){
-    var alleles = originalAlleles.split(",").map(function(a) { return a.split(":")[1] }),   // creates array of orig alleles from string
+    var alleles = originalAlleles.split(",").map(function(a) { return a.split(":")[1]; }),   // creates array of orig alleles from string
         moves   = 0;
 
     for (var trait in traitRules) {

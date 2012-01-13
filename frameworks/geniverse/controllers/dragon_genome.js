@@ -2,7 +2,7 @@
 // Project:   Geniverse.dragonGenomeController
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Geniverse */
+/*globals Geniverse Lab*/
 
 /** @class
 
@@ -145,6 +145,7 @@ Geniverse.dragonGenomeController = SC.Object.create({
   _setDragon: function (index, dragon) {
     if (dragon.get('alleles') !== this.dragonAllelesMap[index]) {
       this.set(this.dragonIndexMap[index], dragon);
+      Lab.statechart.sendAction("chromosomeDragonChanged");
     }
   }
    

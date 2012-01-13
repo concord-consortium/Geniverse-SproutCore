@@ -14,6 +14,8 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
   
   starsEarned: 0,
   
+  firstChromosomeDragonLoaded: NO,
+  
   enterState: function() { 
     // for now, we assume that there are match dragons
     this.startChallenge();
@@ -37,25 +39,25 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
     Geniverse.userController.setPageStars(pageId, stars);
     this.starsEarned = stars;
   },
+  
+  matchDragonChanged: function() {
+    this.setTargetScore();
+  },
+  
+  chromosomeDragonChanged: function() {
+    if (!this.firstChromosomeDragonLoaded) {
+      this.firstChromosomeDragonLoaded = YES;
+      this.setTargetScore();
+    }
+  },
 
   setTargetScore: function() {
-    var setMinMoves = function() {
-      var initialDragon = Geniverse.dragonGenomeController.get('firstDragon');
-      if (!!initialDragon && !!initialDragon.get('characteristicMap') &&
-          !!Geniverse.matchController.get("currentDragon") && !!Geniverse.matchController.get("currentDragon").get('characteristicMap')) {
-        Geniverse.scoringController.set('minimumScore', Geniverse.matchController.numberOfMovesToReachCurrent(initialDragon));
-      }
-      if (!!initialDragon && !!initialDragon.get('characteristicMap')) {
-        Geniverse.dragonGenomeController.removeObserver('firstDragon.characteristicsMap', setMinMoves);
-      }
-    };
-
-    if (!!Geniverse.dragonGenomeController.get('firstDragon')) {
-      setMinMoves();
-    } else {
-      Geniverse.dragonGenomeController.addObserver('firstDragon.characteristicsMap', setMinMoves);
+    var initialDragon = Geniverse.dragonGenomeController.get('firstDragon');
+    if (!!initialDragon && !!initialDragon.get('characteristicMap') &&
+        !!Geniverse.matchController.get("currentDragon") && !!Geniverse.matchController.get("currentDragon").get('characteristicMap')) {
+      Geniverse.scoringController.set('minimumScore', Geniverse.matchController.numberOfMovesToReachCurrent(initialDragon));
     }
-  }.observes('Geniverse.matchController.currentDragon'),
+  },
 
   revealClicked: function(buttonView) {
     this.organismView = buttonView.get('parentView');
