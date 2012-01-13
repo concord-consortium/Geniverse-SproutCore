@@ -54,6 +54,8 @@ Geniverse.AnimationView = SC.View.extend(
 
   completedAnimationCalled: NO,
   
+  trackScoreOnPlayButton: NO,
+  
   dragon: null,
   dragonDidChange: function() {
     var dragon = this.get('dragon');
@@ -138,6 +140,22 @@ Geniverse.AnimationView = SC.View.extend(
     }
   },
   
+  playButtonPressed: function() {
+    if (this.get('trackScoreOnPlayButton')){
+      SC.RunLoop.begin();
+        Geniverse.scoringController.incrementScore(1);
+      SC.RunLoop.end();
+    }
+  },
+  
+  endButtonPressed: function(alreadyPlaying) {
+    if (!alreadyPlaying && this.get('trackScoreOnPlayButton')){
+      SC.RunLoop.begin();
+        Geniverse.scoringController.incrementScore(1);
+      SC.RunLoop.end();
+    }
+  },
+  
   gameteJson: null,
   gameteSelected: function(data) {
     SC.Logger.dir(data);
@@ -199,7 +217,9 @@ Geniverse.AnimationView = SC.View.extend(
       context: this,
       loaded: this.animationLoaded,
       animationComplete: this.animationComplete,
-      gameteSelected: this.gameteSelected
+      gameteSelected: this.gameteSelected,
+      playButtonPressed: this.playButtonPressed,
+      endButtonPressed: this.endButtonPressed
     };
     
     if (geniverseAnimation.length > 0){
