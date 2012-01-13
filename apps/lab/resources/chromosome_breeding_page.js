@@ -36,7 +36,7 @@ Lab.chromosomeBreedingPage = SC.Page.design({
 
     mainAppView: SC.View.design({
       
-      childViews: 'genomePanel breedingPenView matchView'.w(),
+      childViews: 'genomePanel breedingPenView matchView scoreView'.w(),
       
       genomePanel: SC.View.design({
         layout: {top: 40, height: 450, left: 15, width: 1005 },
@@ -65,6 +65,7 @@ Lab.chromosomeBreedingPage = SC.Page.design({
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO,
           showFromLabels: NO,
+          trackScore: YES,
           updateBreedDragon: function() {
             if (this.get('isVisibleInWindow')){
               Geniverse.breedDragonController.set('mother', this.get('dragon'));
@@ -97,6 +98,7 @@ Lab.chromosomeBreedingPage = SC.Page.design({
           showIsEditableCheck: NO,
           showFromLabels: NO,
           dragonOnRight: YES,
+          trackScore: YES,
           updateBreedDragon: function() {
             if (this.get('isVisibleInWindow')){
               Geniverse.breedDragonController.set('father', this.get('dragon'));
@@ -114,7 +116,7 @@ Lab.chromosomeBreedingPage = SC.Page.design({
         breedButton: SC.ButtonView.design({
           layout: { top: 170, left: 450, width: 100, height: 24 },
           target: 'Geniverse.breedDragonController',
-          action: "breed",
+          action: "breedAndIncrementScore",
           isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
           hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
           isEnabled: function() {
@@ -135,6 +137,12 @@ Lab.chromosomeBreedingPage = SC.Page.design({
       
       matchView: Geniverse.MatchView.design({
         layout: { left: 713, top: 495, height: 95, width: 320 }
+      }),
+      
+      scoreView: Geniverse.ScoreView.design({
+        layout: { left: 850, top: 50, height: 36, width: 150 },
+        showScore: YES,
+        showTargetScore: YES
       })
       
   	})
