@@ -50,17 +50,17 @@ Lab.inActivity = Ki.State.extend({
     var pageType = Geniverse.activityController.get('pageType');
     var challengeType = Lab[pageType].get('challengeType');
     
-    if (!!Geniverse.activityController.get('isArgumentationChallenge')) {
+    if (Geniverse.activityController.get('isArgumentationChallenge')) {
       this.get('challengeState').gotoState('argumentationChallenge');
-    } else if (!!challengeType) {
+    } else if (challengeType) {
       this.get('challengeState').gotoState(challengeType);
-    } else if (!!Geniverse.activityController.get('matchDragonAlleles')) {
+    } else if (Geniverse.activityController.get('matchDragonAlleles')) {
       this.get('challengeState').gotoState('matchTargetDrakesListChallenge');
     } else {
       this.get('challengeState').gotoState('defaultChallenge');
     }
     
-    if (!!Geniverse.activityController.get('myCase')) {
+    if (Geniverse.activityController.get('myCase')) {
       if (Geniverse.activityController.get('myCase').get('status') & SC.Record.READY == SC.Record.READY) {
         this.caseLoaded();
       } else {
@@ -87,7 +87,7 @@ Lab.inActivity = Ki.State.extend({
     var myCase = Geniverse.activityController.get('myCase');
     if (Geniverse.activityController.get('myCaseOrder') === 1) {
       var imageUrl = myCase.get('introImageUrl');
-      if (!!imageUrl) {
+      if (imageUrl) {
         if (imageUrl.length > 5) {
           this.get('showingIntroScreen').gotoState('showingIntroScreenPanel');
         }
@@ -122,7 +122,7 @@ Lab.inActivity = Ki.State.extend({
   gotoNextActivity: function() {
     this.get('statechart').sendAction('unblockNextNavButton');
     var next = Geniverse.activityController.getNextActivity();
-    if (!!next){
+    if (next){
       SC.routes.set('location', next.get('route'));
     }
   },
@@ -130,7 +130,7 @@ Lab.inActivity = Ki.State.extend({
   gotoPreviousActivity: function() {
     this.get('statechart').sendAction('unblockNextNavButton');
     var previous = Geniverse.activityController.getPreviousActivity();
-    if (!!previous){
+    if (previous){
       SC.routes.set('location', previous.get('route'));
     }
   },

@@ -118,7 +118,7 @@ Lab.loginController = SC.ObjectController.create(
         user.set('firstName',first);
         user.set('lastName',last);
         var classWords = response.get('body').class_words;
-        if (!!classWords && classWords.length > 0){
+        if (classWords && classWords.length > 0){
           user.set('className', classWords[0]);           // for now, we assume student is only in one class on portal
         } else {
           user.set('className', "no_class");

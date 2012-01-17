@@ -53,7 +53,7 @@ Lab.challenge = Ki.State.extend({
           this.starsEarned === 2 ? static_url('two-star.png') : static_url('one-star.png');
     var starsMessage = "<img src='"+starImageUrl+"' class='centered-block'/>\n"+
                        "You earned "+this.starsEarned+" star" + (this.starsEarned === 1 ? "" : "s") + "!\n\n";
-    var moveOnMessage = (!!Geniverse.activityController.getNextActivity()) ? 
+    var moveOnMessage = Geniverse.activityController.getNextActivity() ? 
       "Move on to the next challenge using the green arrow below." :
       "Go back to the case log using the button at the top left to go to a new case.";
       

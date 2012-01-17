@@ -40,8 +40,8 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
 
   setTargetScore: function() {
     var initialDragon = Geniverse.dragonGenomeController.get('firstDragon');
-    if (!!initialDragon && !!initialDragon.get('characteristicMap') &&
-        !!Geniverse.matchController.get("currentDragon") && !!Geniverse.matchController.get("currentDragon").get('characteristicMap')) {
+    if (initialDragon && initialDragon.get('characteristicMap') &&
+        Geniverse.matchController.get("currentDragon") && Geniverse.matchController.get("currentDragon").get('characteristicMap')) {
       Geniverse.scoringController.set('minimumScore', Geniverse.matchController.numberOfMovesToReachCurrent(initialDragon));
     }
   },

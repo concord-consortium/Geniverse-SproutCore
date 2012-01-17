@@ -341,7 +341,7 @@ Lab.ACTIVITY = SC.Responder.create(
     var organismConfigurations = this.getOrganismConfigurations(isMatchDragons);
     SC.Logger.info("Found " + organismConfigurations.length + " defaults");
     
-    var dragonsRequired = !!count ? count : organismConfigurations.length;
+    var dragonsRequired = count ? count : organismConfigurations.length;
     for (var i = 0; i < dragonsRequired; i++) {
       var conf = organismConfigurations[i];
       var name = (typeof conf.name != "undefined") ? conf.name : ('Starter'+i);

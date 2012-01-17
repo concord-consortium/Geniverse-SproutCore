@@ -80,7 +80,7 @@ Lab.breedingPage = SC.Page.design({
         acceptDragOperation: function(drag, op) {
           function sellDragon(dragon){
             SC.RunLoop.begin();
-            if (!!dragon && dragon.get('bred')){
+            if (dragon && dragon.get('bred')){
               dragon.set('isInMarketplace', YES);
               Geniverse.eggsController.removeObject(dragon);
             }
