@@ -2,7 +2,8 @@
 
 set +e
 
-source run_set_environment.sh
+DIR=$(dirname $0)
+source $DIR/run_set_environment.sh
 setTestingEnv
 
 rm -r $REPORTS_DIR

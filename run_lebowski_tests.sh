@@ -3,7 +3,8 @@
 # set bash to not abort when a process returns with an error status code
 set +e
 
-source run_set_environment.sh
+DIR=$(dirname $0)
+source $DIR/run_set_environment.sh
 setTestingEnv
 
 rm -f rerun.txt

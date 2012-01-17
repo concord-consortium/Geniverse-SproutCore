@@ -4,7 +4,8 @@
 set +e
 
 # if you need to change things like your rvm ruby or gemset, edit the run_set_environment.sh file
-source run_set_environment.sh
+DIR=$(dirname $0)
+source $DIR/run_set_environment.sh
 setTestingEnv
 
 rm -f rerun.txt
