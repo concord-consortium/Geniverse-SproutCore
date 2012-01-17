@@ -1,4 +1,8 @@
 namespace :app do
+  def homozygous_alleles(alleles = [])
+    alleles.map{|a| ["a:#{a}","b:#{a}"]}.flatten.join(",")
+  end
+
   desc "Setup the default geniverse cases and activities"
   task :setup => :environment do
     
@@ -72,6 +76,25 @@ activities << {:hidden_genes=>"",
   :initial_alleles=>"[ [ [ {alleles:'a:H,b:H,a:m,b:m,a:d,b:d,a:B,b:B,a:C,b:C,a:a,b:a,a:W,b:w,a:Fl,b:fl,a:Hl,b:Hl,a:T,b:T', sex: 1, name: 'Match Female 1'}, {alleles:'a:H,b:H,a:m,b:m,a:d,b:d,a:B,b:B,a:C,b:C,a:a,b:a,a:w,b:w,a:Fl,b:Fl,a:Hl,b:hl,a:T,b:t', sex: 1, name: 'Match Female 2'}, {alleles:'a:H,b:H,a:m,b:m,a:d,b:d,a:B,b:B,a:C,b:C,a:a,b:a,a:W,b:w,a:Fl,b:fl,a:Hl,b:hl,a:T', sex: 0, name: 'Match Male 1'},{alleles:'a:H,b:H,a:m,b:m,a:d,b:d,a:B,b:B,a:C,b:C,a:a,b:a,a:w,b:w,a:Fl,b:fl,a:hl,b:hl,a:t', sex: 0, name: 'Match Male 2'} ] ] ];",
   :pageType=>"breedingPage",
   :match_dragon_alleles=>"[ [ [ {alleles:'a:H,b:H,a:m,b:m,a:d,b:d,a:B,b:B,a:C,b:C,a:a,b:a,a:W,b:w,a:Fl,b:fl,a:Hl,b:Hl,a:T,b:T', sex: 1, name: 'Match Female 1'}, {alleles:'a:H,b:H,a:m,b:m,a:d,b:d,a:B,b:B,a:C,b:C,a:a,b:a,a:w,b:w,a:Fl,b:Fl,a:Hl,b:hl,a:T,b:t', sex: 1, name: 'Match Female 2'}, {alleles:'a:H,b:H,a:m,b:m,a:d,b:d,a:B,b:B,a:C,b:C,a:a,b:a,a:W,b:w,a:Fl,b:fl,a:Hl,b:hl,a:T', sex: 0, name: 'Match Male 1'},{alleles:'a:H,b:H,a:m,b:m,a:d,b:d,a:B,b:B,a:C,b:C,a:a,b:a,a:w,b:w,a:Fl,b:fl,a:hl,b:hl,a:t', sex: 0, name: 'Match Male 2'} ] ] ];"}
+activities << {:hidden_genes=>"",
+  :crossover_when_breeding=>nil,
+  :title=>"Template: breedingChallengePage",
+  :base_channel_name=>"pageType_breedingChallengePage",
+  :message=>"This is an example of the pageType called breedingChallengePage.",
+  :send_bred_dragons=>nil,
+  :static_genes=>"",
+  :route=>"pagetype/reference/breedingChallengePage",
+  :max_users_in_room=>nil,
+  :initial_alleles=>"[ [ [
+    {alleles:'#{homozygous_alleles(%w{T M W H C Fl Hl A1 B D rh})}', sex: 1, name: 'Starter Female 1'},
+    {alleles:'#{homozygous_alleles(%w{T M W H C Fl Hl A1 B D rh})}', sex: 0, name: 'Starter Male 1'}
+  ] ] ];",
+  :pageType=>"breedingChallengePage",
+  :match_dragon_alleles=>"[ [ [
+    {alleles:'#{homozygous_alleles(%w{T M W H C Fl Hl A1 B D rh})}', sex: 1, name: 'Match Female 1'},
+    {alleles:'#{homozygous_alleles(%w{T M W H C Fl Hl A1 B D rh})}', sex: 0, name: 'Match Male 1'},
+    {alleles:'#{homozygous_alleles(%w{T M W H C Fl Hl A1 B D rh})}', sex: 1, name: 'Match Female 2'}
+  ] ] ];"}
 activities << {:hidden_genes=>"",
   :crossover_when_breeding=>nil,
   :title=>"Template: breedingPageMatch",

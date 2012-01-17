@@ -59,7 +59,19 @@ module Helpers
   end
 
   def match_organism_views(match_view)
-    match_view.dragons_view.content_view.child_views
+    (return match_view.dragons_view.content_view.child_views) rescue NoMethodError
+    return [match_view.dragon_view].compact  # in case of one-at-a-time matching
+  end
+
+  def get_matching_org_view(org_views, org, want_match)
+    org_views.count.times do |i|
+      puts "comparing:\n#{org_views[i].content['imageURL']}\n#{org.content['imageURL']}"
+      if ((org_views[i].content['imageURL'] == org.content['imageURL']) == want_match)
+        puts "matched expected: #{want_match}"
+        return org_views[i]
+      end
+    end
+    return nil
   end
 
   def hide_info_pane
