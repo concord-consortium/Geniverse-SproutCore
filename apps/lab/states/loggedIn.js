@@ -18,10 +18,10 @@ Lab.loggedIn = Ki.State.extend({
     startPage: null,
     
     enterState: function() { 
-      if (Lab.statechart.getState('atLocation').startPage === "home"){
-        Lab.statechart.getState('atLocation').gotoState('inHomePage');
+      if (this.startPage === "home") {
+        this.gotoState('inHomePage');
       } else {
-        Lab.statechart.getState('atLocation').gotoState('inActivity');
+        this.gotoState('inActivity');
       }
     }
   }),
