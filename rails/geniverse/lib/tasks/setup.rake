@@ -65,6 +65,25 @@ activities << {:hidden_genes=>"",
   :pageType=>"chromosomeBreedingPage",
   :match_dragon_alleles=>""}
 activities << {:hidden_genes=>"",
+  :crossover_when_breeding=>true,
+  :title=>"Template: chromosomeBreedingChallengePage",
+  :base_channel_name=>"pageType_chromosomeBreedingChallengePage",
+  :message=>"This is an example of the pageType called chromosomeBreedingChallengePage.\t",
+  :send_bred_dragons=>false,
+  :static_genes=>"",
+  :route=>"pagetype/reference/chromosomeBreedingChallengePage",
+  :max_users_in_room=>nil,
+  :initial_alleles=>"[ [ [
+    {alleles:'#{homozygous_alleles(%w{T M W H C Fl Hl A1 B D rh})}', sex: 1, name: 'Starter Female 1'},
+    {alleles:'#{homozygous_alleles(%w{T M W H C Fl Hl A1 B D rh})}', sex: 0, name: 'Starter Male 1'}
+  ] ] ];",
+  :pageType=>"chromosomeBreedingChallengePage",
+  :match_dragon_alleles=>"[ [ [
+    {alleles:'#{homozygous_alleles(%w{T M w H C Fl Hl A1 B D rh})}', sex: 1, name: 'Match Female 1'},
+    {alleles:'#{homozygous_alleles(%w{T M w h C Fl Hl A1 B D rh})}', sex: 0, name: 'Match Male 1'},
+    {alleles:'#{homozygous_alleles(%w{T M w h C fl Hl A1 B D rh})}', sex: 1, name: 'Match Female 2'}
+  ] ] ];"}
+activities << {:hidden_genes=>"",
   :crossover_when_breeding=>nil,
   :title=>"Template: breedingPage",
   :base_channel_name=>"pageType_breedingPage",
