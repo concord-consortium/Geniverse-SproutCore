@@ -69,11 +69,20 @@ Lab.inActivity = Ki.State.extend({
     }
   },
   
-  caseLoaded: function(){
+  caseLoaded: function() {
     Geniverse.activityController.removeObserver('myCase', this.caseLoaded);
     
-    this.enablePreviousNavButton((!!Geniverse.activityController.getPreviousActivity()));
-    this.enableNextNavButton((!!Geniverse.activityController.getNextActivity()));
+    if (Geniverse.activityController.getPreviousActivity()) {
+      this.get('statechart').sendAction('enablePreviousNavButton');
+    } else {
+      this.get('statechart').sendAction('disablePreviousNavButton');
+    }
+    
+    if (Geniverse.activityController.getNextActivity()) {
+      this.get('statechart').sendAction('enableNextNavButton');
+    } else {
+      this.get('statechart').sendAction('disableNextNavButton');
+    }
 
     var myCase = Geniverse.activityController.get('myCase');
     if (Geniverse.activityController.get('myCaseOrder') === 1) {
@@ -86,12 +95,20 @@ Lab.inActivity = Ki.State.extend({
     }
   },
   
-  enablePreviousNavButton: function(enable) {
-    Lab.navigationController.set('showPreviousButton', enable);
+  enablePreviousNavButton: function() {
+    Lab.navigationController.set('showPreviousButton', true);
   },
   
-  enableNextNavButton: function(enable) {
-    Lab.navigationController.set('showNextButton', enable);
+  enableNextNavButton: function() {
+    Lab.navigationController.set('showNextButton', true);
+  },
+  
+  disablePreviousNavButton: function() {
+    Lab.navigationController.set('showPreviousButton', false);
+  },
+  
+  disableNextNavButton: function() {
+    Lab.navigationController.set('showNextButton', false);
   },
   
   blockNextNavButton: function(block) {
