@@ -17,7 +17,7 @@ Lab.challenge = Ki.State.extend({
   starsEarned: 0,
   
   enterState: function() {
-    var metadata = Geniverse.userController.getUserMetadata()
+    var metadata   = Geniverse.userController.getUserMetadata(),
         activityId = Geniverse.activityController.get("guid");
 
     if (metadata.stars && metadata.stars[activityId]) {
