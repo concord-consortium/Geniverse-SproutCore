@@ -27,13 +27,16 @@ Lab.challenge = Ki.State.extend({
   },
   
   startChallenge: function() {
-    // these should be actions
-    this.statechart.getState('inActivity').blockNextNavButton(!this.challengePreviouslyCompleted);
+    if (this.challengePreviouslyCompleted) {
+      this.get('statechart').sendAction('unblockNextNavButton');
+    } else {
+      this.get('statechart').sendAction('blockNextNavButton');
+    }
   },
 
   endChallenge: function() {
     this.challengeComplete = YES;
-    this.statechart.getState('inActivity').blockNextNavButton(false);
+    this.get('statechart').sendAction('unblockNextNavButton');
 
     // Award the stars
     var stars = Geniverse.scoringController.get('achievedChallengeStars');

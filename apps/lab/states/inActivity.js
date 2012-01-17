@@ -111,12 +111,16 @@ Lab.inActivity = Ki.State.extend({
     Lab.navigationController.set('showNextButton', false);
   },
   
-  blockNextNavButton: function(block) {
-    Lab.navigationController.set('blockNextButton', block);
+  blockNextNavButton: function() {
+    Lab.navigationController.set('blockNextButton', true);
+  },
+  
+  unblockNextNavButton: function() {
+    Lab.navigationController.set('blockNextButton', false);
   },
   
   gotoNextActivity: function() {
-    this.blockNextNavButton(false);
+    this.get('statechart').sendAction('unblockNextNavButton');
     var next = Geniverse.activityController.getNextActivity();
     if (!!next){
       SC.routes.set('location', next.get('route'));
@@ -124,7 +128,7 @@ Lab.inActivity = Ki.State.extend({
   },
   
   gotoPreviousActivity: function() {
-    this.blockNextNavButton(false);
+    this.get('statechart').sendAction('unblockNextNavButton');
     var previous = Geniverse.activityController.getPreviousActivity();
     if (!!previous){
       SC.routes.set('location', previous.get('route'));

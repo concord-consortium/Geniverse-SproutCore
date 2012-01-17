@@ -9,7 +9,7 @@ Lab.defaultChallenge = Ki.State.extend({
   challengeComplete: YES,
 
   enterState: function() {
-    this.statechart.getState('inActivity').blockNextNavButton(false);
+    this.get('statechart').sendAction('unblockNextNavButton');
   },
 
   exitState: function() {

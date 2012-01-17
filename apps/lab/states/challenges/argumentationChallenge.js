@@ -13,14 +13,14 @@ Lab.argumentationChallenge = Ki.State.extend({
   },
   
   startChallenge: function() {
-    this.statechart.getState('inActivity').blockNextNavButton(true);
+    this.get('statechart').sendAction('blockNextNavButton');
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', YES);
     this.set('challengeComplete', NO);
   },
   
   endChallenge: function() {
     this.challengeComplete = YES;
-    this.statechart.getState('inActivity').blockNextNavButton(false);
+    this.get('statechart').sendAction('unblockNextNavButton');
 
     // Award a "star" for completion
     var pageId = Geniverse.activityController.get('guid');

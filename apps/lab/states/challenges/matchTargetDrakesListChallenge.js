@@ -20,7 +20,7 @@ Lab.matchTargetDrakesListChallenge = Ki.State.extend({
   },
   
   startChallenge: function() {
-    this.statechart.getState('inActivity').blockNextNavButton(true);
+    this.get('statechart').sendAction('blockNextNavButton');
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', NO);
     this.set('challengeComplete', NO);
 
@@ -29,7 +29,7 @@ Lab.matchTargetDrakesListChallenge = Ki.State.extend({
   
   endChallenge: function() {
     this.challengeComplete = YES;
-    this.statechart.getState('inActivity').blockNextNavButton(false);
+    this.get('statechart').sendAction('unblockNextNavButton');
 
     // Award the stars
     var stars = Geniverse.scoringController.get('achievedChallengeStars');
