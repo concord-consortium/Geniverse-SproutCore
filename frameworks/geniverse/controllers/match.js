@@ -59,10 +59,11 @@ Geniverse.matchController = SC.ArrayController.create(
     
   }.observes('currentDragonIdx', '*arrangedObjects.length'),
   // this will be obsolete once we use a graphic
-  matchedCountLabel: function() {
+  matchedCountLabel: "",
+  matchedCountShouldChange: function() {
     var numDragons = this.get('arrangedObjects').get('length');
-    return "Trial " + (this.get('currentDragonIdx')+1) + " of " + numDragons;
-  }.property('currentDragonIdx', 'arrangedObjects.length'),
+    this.set(matchedCountLabel, "Trial " + (this.get('currentDragonIdx')+1) + " of " + numDragons);
+  }.observes('currentDragonIdx', 'arrangedObjects.length'),
 
   nextDragon: function() {
     SC.RunLoop.begin();
