@@ -63,7 +63,7 @@ Geniverse.matchController = SC.ArrayController.create(
   matchedCountShouldChange: function() {
     var numDragons = this.get('arrangedObjects').get('length');
     this.set('matchedCountLabel', "Trial " + (this.get('currentDragonIdx')+1) + " of " + numDragons);
-  }.observes('currentDragonIdx', 'arrangedObjects.length'),
+  }.observes('currentDragonIdx', '*arrangedObjects.length'),
 
   nextDragon: function() {
     SC.RunLoop.begin();
