@@ -64,7 +64,7 @@ Lab.showingBlogButton =  Ki.State.extend({
         post_tags: tags
       };
       
-      SC.Request.postUrl("/portal/blog/post_blog").json().notify(this, '_showConfirmation').send(data);
+      SC.Request.postUrl("/portal/blog/post_blog").json().notify(this, 'didSendBlogPost').send(data);
     },
     
     _waitDialog: null,
@@ -122,33 +122,24 @@ Lab.showingBlogButton =  Ki.State.extend({
     alertPaneDidDismiss: function() {
       Lab.statechart.getState('showingBlogButton').gotoState('showingBlogPostPanel');
     },
-    
-    _showConfirmation: function(response){
+  
+    didSendBlogPost: function(response) {
+      var match, postId, className, postURL;
+      
       this._waitDialog.dismiss();
       this.get('_failureTimer').invalidate();
       
       if (SC.ok(response)) {
-        var match = response.rawRequest.responseText.match(/<int>(.*)<\/int>/);
+        
+        match = response.rawRequest.responseText.match(/<int>(.*)<\/int>/);
         if (match.length > 0) {
-          var postId = match[1];
-          var className = Geniverse.userController.get('className');
-          var postURL = Lab.journalController.get('journalBaseURL') + className + "/?p=" + postId;
-          SC.AlertPane.extend({
-            layout: {top: 0, centerX: 0, width: 360, height: 100 },
-            displayDescription: function() {
-              var desc = this.get('description');
-              if (!desc || desc.length === 0) {return desc;} 
-              return '<p class="description">' + desc.split('\n').join('</p><p class="description">') + '</p>';
-            }.property('description').cacheable()
-          }).plain(
-            "Journal post successfully created", 
-            "Your latest post can be found <a target='_blank' href='"+postURL+"'>here</a>.<br/>(Link will open in a new tab) ",
-            "",
-            "OK",
-            {
-              alertPaneDidDismiss: function() { Lab.statechart.sendAction('didSendBlogPost'); }
-            }
-          );
+          postId    = match[1];
+          className = Geniverse.userController.get('className');
+          postURL   = Lab.journalController.get('journalBaseURL') + className + "/?p=" + postId;
+          
+          Lab.statechart.sendAction('didSendBlogPost');
+          
+          Lab.feedbackController.didSendBlogPost(this.get('description'), postURL);
         }
       }
     }
