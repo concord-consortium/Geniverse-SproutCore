@@ -136,7 +136,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
       }),
 
       scoreView: Geniverse.ScoreView.design({
-        layout: { left: 155, top: 495, height: 150, width: 150 },
+        layout: { left: 165, top: 495, height: 40, width: 150 },
         showTargetScore: YES
       }),
 
