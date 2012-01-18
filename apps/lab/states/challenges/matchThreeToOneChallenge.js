@@ -82,6 +82,7 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
           );
         } else {
           this.successfulMatch = NO;
+          Geniverse.scoringController.incrementScore(1);
           this._resetTargetMatchedState();
 
           // if we only have matches and duplicates, display the message about duplicates.
