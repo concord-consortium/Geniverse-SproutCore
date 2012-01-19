@@ -27,8 +27,6 @@ Geniverse.MatchView = SC.View.extend(
   dragonsView: null,
   dragonView: null,
 
-  trackScore: NO,
-
   updateCurrentDragon: function() {
     this.setPath('dragonView.content', Geniverse.matchController.get('currentDragon'));
     if (!!this.get('dragonView')) {
@@ -58,10 +56,8 @@ Geniverse.MatchView = SC.View.extend(
     var childViews = [];
 
     if (this.get('onlyOne')) {
-      SC.Logger.log("Only one!");
       this.dragonView = this.createChildView(this.get('dragonExampleView').extend({
         layout: { left: 0, top: 20, width: this.get('dragonSize'), height: this.get('dragonSize')},
-        trackScore: this.get('trackScore'),
         content: Geniverse.NO_DRAGON
       }));
       childViews.push(this.dragonView);
@@ -84,9 +80,7 @@ Geniverse.MatchView = SC.View.extend(
             rowHeight: this.get('dragonSize'),
             columnWidth: this.get('dragonSize'),
             canEditContent: NO,
-            exampleView: this.get('dragonExampleView').extend({
-              trackScore: this.get('trackScore')
-            }),
+            exampleView: this.get('dragonExampleView'),
             isSelectable: NO,
             dragDataTypes: ['dragon']
           }),

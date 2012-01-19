@@ -75,7 +75,6 @@ Lab.breedingChallengePage = SC.Page.design({
       matchView: Geniverse.MatchView.design({
         layout: { left: 40, top: 400, height: 170, width: 170 },
         onlyOne: YES,
-        trackScore: YES,
         dragonSize: 150
       }),
 
