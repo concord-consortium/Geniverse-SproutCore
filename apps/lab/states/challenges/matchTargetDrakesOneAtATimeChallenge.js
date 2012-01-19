@@ -24,6 +24,8 @@ Lab.matchTargetDrakesOneAtATimeChallenge = Lab.challenge.extend({
   // @param view      the view to be updated
   checkMatchDragon: function(dragons, view) {
     if (Geniverse.matchController.doesMatch(dragons[0], dragons[1])) {
+      view.setPath('content.hasBeenMatched', YES);
+      view._setClassNames();
       this.successfulMatch = YES;
       SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
         "Good work!", 
