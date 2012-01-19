@@ -257,6 +257,12 @@ Geniverse.OrganismView = SC.View.extend(
       SC.RunLoop.begin();
         this.get('parentView').set(this.get('parent'), dragon);
         this.get('parentView').set('child', null);   //Geniverse.NO_DRAGON);
+        if (dragon.get('isEgg')){
+          // move dragon from eggs controller to stable
+          dragon.set('isEgg',NO);
+          var oldEggs = Geniverse.eggsController.get('content');
+          Geniverse.eggsController.set('content', oldEggs.without(dragon));
+        }
       SC.RunLoop.end();
     } else {
       SC.RunLoop.begin();
@@ -301,17 +307,6 @@ Geniverse.OrganismView = SC.View.extend(
       var sex = dragon.get('sex');
       if (sex !== requiredSex){
         return NO;
-      }
-    }
-    
-    var parentType = this.get('parent');
-    if (!!parentType){
-      if (dragon.get('isEgg')){
-        //HACK: We used to prevent eggs from becomming parents
-        //HACK: now we turn the eggs into parents without complaint.
-        //return NO;
-        dragon.set('isEgg',NO);
-        Geniverse.store.commitRecords();
       }
     }
     
