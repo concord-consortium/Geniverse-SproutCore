@@ -9,7 +9,7 @@ describe "Templates" do
       @app = new_test({:app_root_path => "/lab#heredity/challenge/case01"}) {|app|
         app['isLoaded'] == true
 
-        app.move_to 1, 1 
+        app.move_to 1, 1
         app.resize_to 1024, 768
 
         define_common_paths(app)
@@ -78,7 +78,7 @@ describe "Templates" do
     end
 
     it 'should track how many changes it takes to get a match' do
-      @score_view.scoreView['value'].should eq("Your moves: 0"), "Score should start at 0"
+      @score_view.scoreView['value'].should eq("Your moves: 0"), "Score should start at 0: was #{@score_view.scoreView['value'].inspect}"
     end
 
     it 'should correctly load the star scoring values' do
@@ -93,13 +93,13 @@ describe "Templates" do
     it 'should increment the score by 1 whenever an allele is changed' do
       change_allele_value('a', 't')
 
-      @score_view.scoreView['value'].should eq("Your moves: 1"), "Score should show 1"
+      @score_view.scoreView['value'].should eq("Your moves: 1"), "Score should show 1: was #{@score_view.scoreView['value'].inspect}"
     end
 
     it 'should not increment the score if the allele value does not change' do
       change_allele_value('b', 't')
 
-      @score_view.scoreView['value'].should eq("Your moves: 1"), "Score should still show 1"
+      @score_view.scoreView['value'].should eq("Your moves: 1"), "Score should still show 1: was #{@score_view.scoreView['value'].inspect}"
     end
 
     it 'should increment the score by 1 whenever the sex is changed' do
@@ -107,13 +107,13 @@ describe "Templates" do
       sleep 1
       @switch_sex_button.click
 
-      @score_view.scoreView['value'].should eq("Your moves: 3"), "Score should be 3"
+      @score_view.scoreView['value'].should eq("Your moves: 3"), "Score should be 3: was #{@score_view.scoreView['value'].inspect}"
       @scoring_controller.currentScore.should == 3
       @scoring_controller.currentChallengeScore.should == 3
     end
 
-    it 'should have achieved 2 stars' do
-      @scoring_controller.achievedStars.should == 2
+    it 'should have achieved 1 stars' do
+      @scoring_controller.achievedStars.should == 1
       @scoring_controller.targetChallengeScore.should == 5 # 1 move + (1*4) threshold
     end
 
@@ -123,7 +123,7 @@ describe "Templates" do
 
     it 'should reset the score after the match is correct' do
       @score_view.scoreView['value'].should eq("Your moves: 0"), "Score should reset to 0 after a match"
-      @scoring_controller.currentChallengeScore.should == 3
+      @scoring_controller.currentChallengeScore.should == 4
       @scoring_controller.targetChallengeScore.should == 6 # 2 move + (1*4) threshold
     end
 
@@ -132,7 +132,7 @@ describe "Templates" do
       change_allele_value('b', 'hl')
       @scoring_controller.achievedStars.should == 3
       verify_correct_match
-      @scoring_controller.currentChallengeScore.should == 4
+      @scoring_controller.currentChallengeScore.should == 5
       @scoring_controller.targetChallengeScore.should == 7 # 3 move + (1*4) threshold
     end
 
@@ -141,7 +141,7 @@ describe "Templates" do
       change_allele_value('b', 'h')
       @scoring_controller.achievedStars.should == 3
       verify_correct_match
-      @scoring_controller.currentChallengeScore.should == 5
+      @scoring_controller.currentChallengeScore.should == 6
     end
 
     it 'should correctly track things after the 4th trial' do
@@ -155,7 +155,7 @@ describe "Templates" do
       change_allele_value('a', 'fl')
       change_allele_value('b', 'fl')
       @scoring_controller.achievedStars.should == 1
-      @scoring_controller.currentChallengeScore.should == 12
+      @scoring_controller.currentChallengeScore.should == 13
       @scoring_controller.targetChallengeScore.should == 10 # 6 move + (1*4) threshold
       @scoring_controller.achievedChallengeStars.should == 2
     end

@@ -2,14 +2,14 @@ dir = File.expand_path(File.dirname(__FILE__))
 require "#{dir}/../support/spec_helper.rb"
 
 describe "Templates" do
-describe "Breeding Page" do
+describe "Challenge Breeding Page" do
 
   before(:all) do
     start_testing_servers
     @app = new_test({:app_root_path => "/lab#pagetype/reference/breedingChallengePage"}) {|app|
       app['isLoaded'] == true
 
-      app.move_to 1, 1 
+      app.move_to 1, 1
       app.resize_to 1024, 768
 
       define_common_paths(app)
@@ -169,7 +169,7 @@ describe "Breeding Page" do
 
      verify_alert(:plain, "OK")
      # Check that the correct number of stars were awarded
-     expected_stars = [1]
+     expected_stars = [2]
 
      stars = @user_controller.metadata.stars
      num_stars = stars[@activity_guid]

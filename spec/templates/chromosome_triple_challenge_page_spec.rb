@@ -9,7 +9,7 @@ describe "Templates" do
       @app = new_test({:app_root_path => "/lab#heredity/challenge/case02"}) {|app|
         app['isLoaded'] == true
 
-        app.move_to 1, 1 
+        app.move_to 1, 1
         app.resize_to 1024, 768
 
         define_common_paths(app)
@@ -243,7 +243,7 @@ describe "Templates" do
       verify_alert(:plain, "OK")
 
       # Check that the correct number of stars were awarded
-      expected_stars = [3]
+      expected_stars = [2]
 
       stars = @user_controller.metadata.stars
       num_stars = stars[@activity_guid]
