@@ -112,8 +112,8 @@ describe "Templates" do
       @switch_sex_button.click
 
       @score_view.scoreView['value'].should eq("Your moves: 4"), "Score should be 4: was #{@score_view.scoreView['value'].inspect}"
-      @scoring_controller.currentScore.should == 3
-      @scoring_controller.currentChallengeScore.should == 3
+      @scoring_controller.currentScore.should == 4
+      @scoring_controller.currentChallengeScore.should == 4
     end
 
     it 'should have achieved 1 stars' do
