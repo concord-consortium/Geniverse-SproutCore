@@ -73,12 +73,16 @@ describe "Templates" do
 #      @reveal_button.isEnabled.should be_true, "Reveal button should be enabled when all alleles are specified"
 #    end
 
+    it 'should track how many changes it takes to get a match' do
+      @score_view.scoreView['value'].should eq("Your moves: 0"), "Score should start at 0: was #{@score_view.scoreView['value'].inspect}"
+    end
+
     it 'should give an error message when the wrong alleles are selected' do
       verify_incorrect_match
     end
 
-    it 'should track how many changes it takes to get a match' do
-      @score_view.scoreView['value'].should eq("Your moves: 0"), "Score should start at 0: was #{@score_view.scoreView['value'].inspect}"
+    it 'should increment moves when wrong alleles are selected' do
+      @score_view.scoreView['value'].should eq("Your moves: 1"), "Score should start at 1: was #{@score_view.scoreView['value'].inspect}"
     end
 
     it 'should correctly load the star scoring values' do
@@ -93,13 +97,13 @@ describe "Templates" do
     it 'should increment the score by 1 whenever an allele is changed' do
       change_allele_value('a', 't')
 
-      @score_view.scoreView['value'].should eq("Your moves: 1"), "Score should show 1: was #{@score_view.scoreView['value'].inspect}"
+      @score_view.scoreView['value'].should eq("Your moves: 2"), "Score should show 2: was #{@score_view.scoreView['value'].inspect}"
     end
 
     it 'should not increment the score if the allele value does not change' do
       change_allele_value('b', 't')
 
-      @score_view.scoreView['value'].should eq("Your moves: 1"), "Score should still show 1: was #{@score_view.scoreView['value'].inspect}"
+      @score_view.scoreView['value'].should eq("Your moves: 2"), "Score should still show 2: was #{@score_view.scoreView['value'].inspect}"
     end
 
     it 'should increment the score by 1 whenever the sex is changed' do
@@ -107,7 +111,7 @@ describe "Templates" do
       sleep 1
       @switch_sex_button.click
 
-      @score_view.scoreView['value'].should eq("Your moves: 3"), "Score should be 3: was #{@score_view.scoreView['value'].inspect}"
+      @score_view.scoreView['value'].should eq("Your moves: 4"), "Score should be 4: was #{@score_view.scoreView['value'].inspect}"
       @scoring_controller.currentScore.should == 3
       @scoring_controller.currentChallengeScore.should == 3
     end
