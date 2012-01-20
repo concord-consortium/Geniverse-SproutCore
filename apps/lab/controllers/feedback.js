@@ -27,7 +27,7 @@ Lab.feedbackController = SC.Object.create({
 
   // NOTE!
   //
-  // The unusually formatted and intentionally somewhat redundant logic below is first cut at a "truth table"-like
+  // The unusually formatted and (optionally) somewhat redundant logic below is first cut at a "truth table"-like
   // format that should be used consistently in event handlers in this controller, so that one can quickly get a global
   // picture of the feedback messages and logic by glancing over this file (once you understand how it's formatted
   // and why.)
@@ -44,22 +44,19 @@ Lab.feedbackController = SC.Object.create({
         isLastChallenge = !Geniverse.activityController.getNextActivity();
 
 
-    if (        ! argumentationChallengeStateIsCurrent) {
-
-      this._notifyPostedToBlog(description, postURL);
-    }
-
-    else if (     argumentationChallengeStateIsCurrent
-             &&   argumentationChallengeWasAlreadyComplete ) {
-
-        this._notifyPostedToBlog(description, postURL);
-    }
-
-    else if (     argumentationChallengeStateIsCurrent
-             && ! argumentationChallengeWasAlreadyComplete
-             &&   argumentationChallengeIsNowComplete ) {
+    if (      argumentationChallengeStateIsCurrent
+         &&   argumentationChallengeIsNowComplete 
+         && ! argumentationChallengeWasAlreadyComplete) {
 
         this._notifyPostedToBlogAndCompletedChallenge(description, postURL, isLastChallenge);
+    }
+    else {
+      
+      //    ! argumentationChallengeStateIsCurrent
+      // || ! argumentationChallengeIsNowComplete
+      // ||   argumentationChallengeWasAlreadyComplete
+      
+      this._notifyPostedToBlog(description, postURL);
     }
   },
 
@@ -92,7 +89,7 @@ Lab.feedbackController = SC.Object.create({
     this._notify(
       "Journal post successfully created",
 
-      "Your post can be found <a target=\"_blank' href=\"" + postURL+"\">here</a>. (Link will open in a new tab.)"
+      "Your post can be found <a target=\"_blank\" href=\"" + postURL + "\">here</a>. (Link will open in a new tab.)"
     );
   },
 
