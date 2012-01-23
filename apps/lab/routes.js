@@ -75,17 +75,18 @@ Lab.routes = SC.Object.create({
   /**
     Navigate to the specified route
     
-    @param {Object} routeParams route parameters are set as properties of this
-      object. The parameters are specified when registering the route using 
-      SC.routes.add() in main.js.
+    @param {SC.Object} pageOwner The object (Lab or Geniverse, generally) which has the page routeParams.pageName
+    
+    @param {Object} routeParams route parameters are set as properties of thisobject. The parameters are specified 
+      when registering the route using SC.routes.add() in main.js.
   */
-  gotoRoute: function(_class, routeParams) {
+  gotoRoute: function(pageOwner, routeParams) {
     var pageName = routeParams.pageName || 'mainPage',
         paneName = routeParams.paneName || 'mainPane',
-        page     = _class[pageName],
+        page     = pageOwner[pageName],
         pane     = page.get(paneName);
 
-    console.log("BEGIN Lab.routes.gotoRoute(_class, routeParams)");
+    console.log("BEGIN Lab.routes.gotoRoute(pageOwner, routeParams)");
     
     // If there is a current pane, remove it from the screen.
     if (this._currentPagePane !== null) {
@@ -93,7 +94,7 @@ Lab.routes = SC.Object.create({
     }
 
     // Be sure to hide any open info panes.
-    Lab.infoController.removeView();  
+    Lab.infoController.removeView();
 
     // Show the specified pane...
     pane.set('pageName', pageName);  // This must be set so the help button works!
@@ -104,7 +105,7 @@ Lab.routes = SC.Object.create({
     
     // Don't bother with SC.logger.log(). console.log() logs an inspectable object instead of forcibly converting
     // all its arguments to strings.
-    console.log("  _class: %s", _class && _class.toString(), _class);
+    console.log("  pageOwner: %s", pageOwner && pageOwner.toString(), pageOwner);
     console.log("  routeParams: %s", routeParams && routeParams.toString(), routeParams);
     console.log("  pageName: %s", pageName);
     console.log("  paneName: %s", paneName);
