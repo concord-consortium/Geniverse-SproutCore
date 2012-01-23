@@ -27,6 +27,7 @@ Lab.main = function main() {
   // add routes to catch urls of the form #lab/chromosomeTrainingPage, and #lab/chromosomeTrainingPage/mainPane
   SC.routes.add('lab/:pageName/:paneName', Lab.routes, 'gotoLabRoute');
   SC.routes.add('lab/:pageName', Lab.routes, 'gotoLabRoute');
+  SC.routes.add('caselog', Lab.routes, 'gotoCaselog');
   
   // urls of the form #fixtures/labs/... will load Geniverse Fixtures
   SC.routes.add('fixtures/lab/:pageName', Lab.routes, 'gotoLabRouteWithFixtures');

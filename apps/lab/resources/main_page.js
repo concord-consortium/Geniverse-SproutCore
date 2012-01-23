@@ -38,7 +38,7 @@ Lab.mainPage = SC.Page.design({
         alt: 'Go to the Case Log',
         toolTip: 'Go to the Case Log',
         target: 'Lab.routes',
-        action: 'gotoCaseLogPage',
+        action: 'openCaselogRoute',
         value: static_url('mainscreen-caselog-highlighted')
       }),
 
