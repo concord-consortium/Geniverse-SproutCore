@@ -99,8 +99,12 @@ Geniverse.dragonGenomeController = SC.Object.create({
       }
     }
     
-    Geniverse.challengePoolController.addObserver('firstFemale', challengeDragonsLoaded);
-    Geniverse.challengePoolController.addObserver('firstMale', challengeDragonsLoaded);
+    if (Geniverse.challengePoolController.get("firstFemale") || Geniverse.challengePoolController.get("firstMale")) {
+      challengeDragonsLoaded();
+    } else {
+      Geniverse.challengePoolController.addObserver('firstFemale', challengeDragonsLoaded);
+      Geniverse.challengePoolController.addObserver('firstMale', challengeDragonsLoaded);
+    }
   },
   
   _generateRandomDragon: function(sex, index) {

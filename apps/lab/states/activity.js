@@ -105,6 +105,7 @@ Lab.ACTIVITY = SC.Responder.create(
           found = last;
         }
         Geniverse.activityController.set('content', found);
+        Geniverse.activityController.propertyDidChange('content');
         activities.removeObserver('status', setActivity);
         
         Lab.ACTIVITY.initChatChannels();
@@ -151,6 +152,7 @@ Lab.ACTIVITY = SC.Responder.create(
     Geniverse.stableOrganismsController.set('content', []);
     Geniverse.eggsController.set('content',[]);
     Geniverse.challengePoolController.set('content', []);
+    Geniverse.dragonGenomeController.set('content', []);
     
     /////////////////// Stable
     SC.Logger.log("LOAD: stable");

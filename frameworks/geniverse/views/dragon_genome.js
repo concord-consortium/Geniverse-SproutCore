@@ -81,7 +81,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
     // kick off the creation of the dragon in the controller
     Geniverse.dragonGenomeController.initDragonForView(this.get('index'), this.get('sex'), this.get('displayChallengeDragon'));
     
-  }.observes('activity'),
+  }.observes('activity', 'Geniverse.activityController.content'),
   
   // gets called by changes to the alleles views (below)
   updateDragon: function (){
