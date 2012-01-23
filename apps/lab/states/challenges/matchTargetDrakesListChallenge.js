@@ -4,38 +4,17 @@
 // ==========================================================================
 /*globals Lab Geniverse CcChat window Ki YES NO SC*/
 
-Lab.matchTargetDrakesListChallenge = Ki.State.extend({
+Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
   
   successfulMatch: NO,
-
-  challengeComplete: NO,
   
   organismView: null,
   
-  starsEarned: 0,
-  
-  enterState: function() { 
-    // for now, we assume that there are match dragons
-    this.startChallenge();
-  },
-  
   startChallenge: function() {
-    this.get('statechart').sendAction('blockNextNavButton');
+    sc_super();
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', NO);
-    this.set('challengeComplete', NO);
 
     Geniverse.scoringController.set('numberOfTrials', 1);
-  },
-  
-  endChallenge: function() {
-    this.challengeComplete = YES;
-    this.get('statechart').sendAction('unblockNextNavButton');
-
-    // Award the stars
-    var stars = Geniverse.scoringController.get('achievedChallengeStars');
-    var pageId = Geniverse.activityController.get('guid');
-    Geniverse.userController.setPageStars(pageId, stars);
-    this.starsEarned = stars;
   },
   
   // Annoyingly, actions can only be called with a max of two arguments,
@@ -80,37 +59,6 @@ Lab.matchTargetDrakesListChallenge = Ki.State.extend({
       Geniverse.scoringController.resetScore();
       Geniverse.scoringController.resetChallengeScore();
     }
-  },
-  
-  _challengeComplete: function() {
-    this.endChallenge();
-    
-    // Notify the user that they're done
-    var starImageUrl = this.starsEarned === 3 ? static_url('three-star.png') : 
-          this.starsEarned === 2 ? static_url('two-star.png') : static_url('one-star.png');
-    var starsMessage = "<img src='"+starImageUrl+"' class='centered-block'/>\n"+
-                       "You earned "+this.starsEarned+" star" + (this.starsEarned === 1 ? "" : "s") + "!\n\n";
-    var moveOnMessage = Geniverse.activityController.getNextActivity() ? 
-      "Move on to the next challenge using the green arrow below." :
-      "Go back to the case log using the button at the top left to go to a new case.";
-      
-    SC.AlertPane.extend({
-      layout: {top: 0, centerX: 0, width: 350, height: 100 },
-      displayDescription: function() {
-        var desc = this.get('description');
-        if (!desc || desc.length === 0) {return desc;} 
-        return '<p class="description">' + desc.split('\n').join('</p><p class="description">') + '</p>';
-      }.property('description').cacheable()}).plain(
-      "Good work!", 
-      "You've completed all the trials in this challenge!\n"+starsMessage+moveOnMessage,
-      "",
-      "OK",
-      "",
-      this
-    );
-  },
-  
-  exitState: function() { 
   }
   
 });
