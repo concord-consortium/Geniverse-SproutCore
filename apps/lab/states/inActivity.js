@@ -135,6 +135,10 @@ Lab.inActivity = Ki.State.extend({
     }
   },
   
+  repeatChallenge: function() {
+   this.gotoActivity();
+  },
+  
   gotoHomePage: function() {
     Lab.statechart.getState('atLocation').startPage = "home";
     this.gotoState('inHomePage');

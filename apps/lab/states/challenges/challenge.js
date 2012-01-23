@@ -52,14 +52,15 @@ Lab.challenge = Ki.State.extend({
   _challengeComplete: function() {
     this.endChallenge();
     
+    var next = Geniverse.activityController.getNextActivity();
+    
     // Notify the user that they're done
     var starImageUrl = this.starsEarned === 3 ? static_url('three-star.png') : 
           this.starsEarned === 2 ? static_url('two-star.png') : static_url('one-star.png');
     var starsMessage = "<img src='"+starImageUrl+"' class='centered-block'/>\n"+
                        "You earned "+this.starsEarned+" star" + (this.starsEarned === 1 ? "" : "s") + "!\n\n";
-    var moveOnMessage = Geniverse.activityController.getNextActivity() ? 
-      "Move on to the next challenge using the green arrow below." :
-      "Go back to the case log using the button at the top left to go to a new case.";
+    var nextMessage = "If you want to retry this challenge, click the 'Retry' button."+
+                      " Otherwise click the 'Go on' button to " + (next ? "go to the next activity" : "go back to the case log.");
       
     SC.AlertPane.extend({
       layout: {top: 0, centerX: 0, width: 350, height: 100 },
@@ -69,11 +70,23 @@ Lab.challenge = Ki.State.extend({
         return '<p class="description">' + desc.split('\n').join('</p><p class="description">') + '</p>';
       }.property('description').cacheable()}).plain(
       "Good work!", 
-      "You've completed all the trials in this challenge!\n"+starsMessage+moveOnMessage,
+      "You've completed all the trials in this challenge!\n"+starsMessage+nextMessage,
       "",
-      "OK",
-      "",
-      this
+      (next ? "Go on to the next activity" : "Go back to the case log"),
+      "Retry this activity",
+      {
+        alertPaneDidDismiss: function(pane, status) { 
+          if (status === SC.BUTTON1_STATUS) {
+            if (next) {
+              Lab.statechart.sendAction('gotoNextActivity');
+            } else {
+              Lab.routes.gotoCaseLogPage2();
+            }
+          } else {
+            Lab.statechart.sendAction('repeatChallenge');
+          }
+        }
+      }
     );
   },
   
