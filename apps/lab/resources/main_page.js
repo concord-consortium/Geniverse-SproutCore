@@ -2,7 +2,7 @@
 // Project:   Lab - mainPage
 // Copyright: 2010 Concord Consortium
 // ==========================================================================
-/*globals Lab */
+/*globals Lab Geniverse*/
 
 // This page describes the main user interface for your application.
 Lab.mainPage = SC.Page.design({
@@ -37,8 +37,8 @@ Lab.mainPage = SC.Page.design({
         layout: { top: 438, left: 467, width: 372, height: 158 },
         alt: 'Go to the Case Log',
         toolTip: 'Go to the Case Log',
-        target: 'Lab.mainPage',
-        action: 'goCaseLog2',  // use caselog2 to go to external page
+        target: 'Lab.routes',
+        action: 'gotoCaseLogPage',
         value: static_url('mainscreen-caselog-highlighted')
       }),
 

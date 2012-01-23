@@ -78,7 +78,7 @@ Lab.routes = SC.Object.create({
     @param {Object} routeParams route parameters are set as properties of this
       object. The parameters are specified when registering the route using 
       SC.routes.add() in main.js.
-    */
+  */
   gotoRoute: function(_class, routeParams) {
     var pageName = routeParams.pageName || 'mainPage',
         paneName = routeParams.paneName || 'mainPane',
@@ -114,11 +114,10 @@ Lab.routes = SC.Object.create({
   },
 
   gotoCaseLogPage: function() {
-    SC.routes.set('location', 'lab/caselog');
-  },
+    // what we want:
+    // SC.routes.set('location', 'lab/caselog');
 
-// hack for showing external case log
-  gotoCaseLogPage2: function() {
+    // hack for showing external case log
     window.location.href = 'http://geniverse.concord.org/caselog/';
   }
 
