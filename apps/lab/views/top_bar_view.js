@@ -2,7 +2,7 @@
 // Project:   Lab - TopBarView
 // Copyright: 2010 Concord Consortium
 // ==========================================================================
-/*globals Lab */
+/*globals Lab Geniverse */
 
 /**
  * Top toolbar with labels and logout button.
@@ -127,7 +127,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         alt: 'Case Log',
         toolTip: "Click to go to the Lab's Case Log page",
         target: 'Lab.routes',
-        action: 'gotoCaseLogPage'
+        action: 'openCaselogRoute'
       })
     );
     childViews.push(this.caselogButton);

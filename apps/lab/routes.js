@@ -112,11 +112,12 @@ Lab.routes = SC.Object.create({
     console.log("  pane: %s", pane && pane.toString(), pane);
     console.log("END Lab.routes.gotoRoute()");
   },
+  
+  openCaselogRoute: function () {
+    SC.routes.set('location', 'caselog');
+  },
 
-  gotoCaseLogPage: function() {
-    // what we want:
-    // SC.routes.set('location', 'lab/caselog');
-
+  gotoCaselog: function() {
     // hack for showing external case log
     window.location.href = 'http://geniverse.concord.org/caselog/';
   }
