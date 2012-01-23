@@ -127,7 +127,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         alt: 'Case Log',
         toolTip: "Click to go to the Lab's Case Log page",
         target: 'Lab.routes',
-        action: 'gotoCaseLogPage2' // use gotoCaseLogPage2 to use iframe version of new caselog
+        action: 'gotoCaseLogPage'
       })
     );
     childViews.push(this.caselogButton);
