@@ -79,10 +79,10 @@ Lab.routes = SC.Object.create({
       object. The parameters are specified when registering the route using 
       SC.routes.add() in main.js.
     */
-  gotoRoute: function(clazz, routeParams) {
-    SC.Logger.log("Lab.routes.gotoRoute: function(clazz, routeParams) called.");
-    SC.Logger.log("clazz:",clazz);
-    SC.Logger.log("routeParams:",routeParams);
+  gotoRoute: function(_class, routeParams) {
+    SC.Logger.log("Lab.routes.gotoRoute: function(_class, routeParams) called.");
+    SC.Logger.log("_class:", _class);
+    SC.Logger.log("routeParams:", routeParams);
 
     // Default to mainPage
     var pageName = routeParams.pageName;
@@ -108,7 +108,7 @@ Lab.routes = SC.Object.create({
     Lab.infoController.removeView();  // be sure to hide any open info panes
 
     // Show the specified pane
-    var page = clazz[pageName];
+    var page = _class[pageName];
     
     SC.Logger.log("Page: ", page); 
 
