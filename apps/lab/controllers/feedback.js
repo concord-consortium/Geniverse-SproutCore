@@ -76,7 +76,9 @@ Lab.feedbackController = SC.Object.create({
     this._notify(
       "Good work!",
 
-      "You have successfully completed the challenge by <a target=\"_blank\" href=\"" + postURL +
+      "<img src=\"" + static_url('quill1-on.png') + "\" style=\"float: left; margin: 1em 1em 0.2em 1em;\"/>\n" +
+      "You earned a quill! " +
+      "You successfully completed the challenge by <a target=\"_blank\" href=\"" + postURL +
       "\">posting to the journal</a>.\n" +
       "You can continue to work on this challenge if you like, or you can " + (
         isLastChallenge ?
