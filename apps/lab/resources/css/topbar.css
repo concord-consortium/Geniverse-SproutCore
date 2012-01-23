@@ -7,7 +7,7 @@ img#homeButton:hover {
     background-repeat: none;
 }
 
-img#caseLogButton:hover {
+img#caselogButton:hover {
     background-image: static_url('log-active.png');
     background-repeat: none;
 }
