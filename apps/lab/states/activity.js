@@ -63,7 +63,8 @@ Lab.ACTIVITY = SC.Responder.create(
     SC.Logger.log("ACTIVITY initActivity");
     
     this.clearData();
-    
+
+    var self = this;
     var activityQuery = Geniverse.ACTIVITIES_QUERY;
     var activities = Geniverse.store.find(activityQuery);
 
@@ -109,8 +110,8 @@ Lab.ACTIVITY = SC.Responder.create(
         }
         Geniverse.activityController.set('content', found);
         Geniverse.activityController.propertyDidChange('content');
-        activities.removeObserver('status', setActivity);
-
+        activities.removeObserver('status', self, setActivity);
+        
         Lab.ACTIVITY.initChatChannels();
         Lab.ACTIVITY.reloadData();
         Lab.ACTIVITY.gotoActivityRoute();
