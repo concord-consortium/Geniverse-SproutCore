@@ -58,15 +58,6 @@ Lab.mainPage = SC.Page.design({
         SC.$('title').text(this.get('title'));
       }
     })
-  }),
-
-  goCaseLog: function() {
-    SC.routes.set('location', 'lab/caselog');  //use caselog2 to go to an iframe containing the case log
-  },
-
-//hack for getting new case log to show up
-  goCaseLog2: function() {
-    window.location.href = 'http://geniverse.concord.org/caselog/';
-  }
+  })
 
 });
