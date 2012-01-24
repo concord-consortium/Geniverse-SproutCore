@@ -43,7 +43,7 @@ Lab.inActivity = Ki.State.extend({
   },
   
   activityLoaded: function(){
-    Geniverse.activityController.removeObserver('content', this.activityLoaded);
+    Geniverse.activityController.removeObserver('content', this, this.activityLoaded);
     
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', YES);     // set this here, it may get overrided by a challenge
     
@@ -70,7 +70,7 @@ Lab.inActivity = Ki.State.extend({
   },
   
   caseLoaded: function() {
-    Geniverse.activityController.removeObserver('myCase', this.caseLoaded);
+    Geniverse.activityController.get('myCase').removeObserver('status', this, this.caseLoaded);
     
     if (Geniverse.activityController.getPreviousActivity()) {
       this.get('statechart').sendAction('enablePreviousNavButton');
@@ -144,7 +144,14 @@ Lab.inActivity = Ki.State.extend({
     this.gotoState('inHomePage');
   },
   
-  exitState: function() { 
+  exitState: function() {
+    // Make sure any observers we might have added during in state are removed.
+
+    // TODO implement methods to remember which observers we have added to which objects, and to remove them later.
+    // (called perhaps this.pushObserver, this.cancelObserver, and this.cancelAllObservers)
+    // These would be useful for managing observer lifecycle within any Ki.State.
+    Geniverse.activityController.removeObserver('content', this, this.activityLoaded);
+    Geniverse.activityController.get('myCase').removeObserver('status', this, this.caseLoaded);
   }
   
 });
