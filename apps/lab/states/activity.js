@@ -234,7 +234,7 @@ Lab.ACTIVITY = SC.Responder.create(
         user: user,
         activity: activity
       }),
-      LOCAL_SEARCH_ONLY: !Lab.ACTIVITY.get("LOAD_CHALLENGE_DRAKES")
+      LOCAL_SEARCH_ONLY: NO//!Lab.ACTIVITY.get("LOAD_CHALLENGE_DRAKES")
     });
     
     var challengeDragons = Geniverse.store.find(challengePoolQuery);
@@ -271,7 +271,7 @@ Lab.ACTIVITY = SC.Responder.create(
           isInMarketplace: 'false',
           activity: activity
         }),
-        LOCAL_SEARCH_ONLY: Geniverse.NEVER_SAVE_MATCH_DRAGONS
+        LOCAL_SEARCH_ONLY: NO //Geniverse.NEVER_SAVE_MATCH_DRAGONS
       });
 
       var matchDragons = Geniverse.store.find(matchPoolQuery);
