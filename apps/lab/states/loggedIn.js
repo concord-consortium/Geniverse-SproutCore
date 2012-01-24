@@ -14,14 +14,23 @@ Lab.loggedIn = Ki.State.extend({
     
     inHomePage: Ki.State.plugin('Lab.inHomePage'),
     inActivity: Ki.State.plugin('Lab.inActivity'),
+    inCaselog:  Ki.State.plugin('Lab.inCaselog'),
 
     startPage: null,
     
-    enterState: function() { 
-      if (this.startPage === "home") {
-        this.gotoState('inHomePage');
-      } else {
-        this.gotoState('inActivity');
+    enterState: function() {
+      switch (this.startPage) {
+        case 'home':
+          this.gotoState('inHomePage');
+          break;
+        case 'activity':
+          this.gotoState('inActivity');
+          break;
+        case 'caselog':
+          this.gotoState('inCaselog');
+          break;
+        default:
+          throw new Error("Lab.loggedIn.atLocation.startPage was set to an unexpected value, '%@'".fmt(this.startPage));
       }
     }
   }),
