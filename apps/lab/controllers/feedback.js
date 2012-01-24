@@ -78,18 +78,18 @@ Lab.feedbackController = SC.Object.create({
 
       "<img src=\"" + static_url('quill1-on.png') + "\" style=\"float: left; margin: 1em 1em 0.2em 1em;\"/>\n" +
       "You earned a quill! " +
-      "You successfully completed the challenge by <a target=\"_blank\" href=\"" + postURL +
-      "\">posting to the journal</a>.\n" +
+      "You completed the challenge by posting to the journal. Find your post <a target=\"_blank\" href=\"" + postURL +
+      "\">here</a>.\n" +
       "You can continue to work on this challenge if you like, or you can " + (
         isLastChallenge ?
-          "go back to the case log to go to a new case." :
+          "go back to the <a href=\"#caselog/\">case log</a> to go to a new case." :
           "move on to the next challenge using the green arrow below.")
     );
   },
 
   _notifyPostedToBlog: function(description, postURL) {
     this._notify(
-      "Journal post successfully created",
+      "Journal post successfully created!",
 
       "Your post can be found <a target=\"_blank\" href=\"" + postURL + "\">here</a>. (Link will open in a new tab.)"
     );
