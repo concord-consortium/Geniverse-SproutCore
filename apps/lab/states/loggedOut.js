@@ -17,6 +17,10 @@ Lab.loggedOut =  Ki.State.extend({
   gotoHomePage: function() {
     Lab.statechart.getState('atLocation').startPage = 'home';
   },
+  
+  gotoCaselog: function() {
+    Lab.statechart.getState('atLocation').startPage = 'caselog';
+  },
 
   gotoActivity: function() {
     Lab.statechart.getState('atLocation').startPage = 'activity';

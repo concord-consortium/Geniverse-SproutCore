@@ -40,6 +40,8 @@ Lab.inActivity = Ki.State.extend({
       Lab.makeFirstResponder(Lab.ACTIVITY);
       Lab.ACTIVITY.gotoActivity();
     }
+    // Indicate that we handled 'gotoActivity' action so that our parent state (atLocation) doesn't try to handle it.
+    return YES;
   },
   
   activityLoaded: function(){
@@ -143,7 +145,7 @@ Lab.inActivity = Ki.State.extend({
     Lab.statechart.getState('atLocation').startPage = "home";
     this.gotoState('inHomePage');
   },
-  
+
   exitState: function() {
     // Make sure any observers we might have added during in state are removed.
 
