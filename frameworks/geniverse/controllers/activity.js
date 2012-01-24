@@ -15,10 +15,12 @@ Geniverse.activityController = SC.ObjectController.create(
   activity: null,
   activityTitle: null, // HACK: use the activity who's title matches this...o
   startActivity: function() {
-    var chatroom = CcChat.chatRoomController.get('channel');
-		
-    if (this.get('sendBredDragons')){
-      CcChat.chatController.subscribeToChannel(chatroom+'/org', this.receiveDragon);
+    if (Geniverse.ENABLE_CHAT) {
+      var chatroom = CcChat.chatRoomController.get('channel');
+
+      if (this.get('sendBredDragons')){
+        CcChat.chatController.subscribeToChannel(chatroom+'/org', this.receiveDragon);
+      }
     }
   },
   

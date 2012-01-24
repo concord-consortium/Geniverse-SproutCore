@@ -2,7 +2,7 @@
 // Project:   Lab
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Lab SC*/
+/*globals Lab SC NO*/
 
 // This is the function that will start your app running.  The default
 // implementation will load any fixtures you have created then instantiate
@@ -43,6 +43,9 @@ Lab.main = function main() {
   SC.routes.add(':', Lab.routes, 'gotoHomePage');
   
   // *** End routes setup ***
+  
+  // *** Settings ***
+  Lab.ENABLE_CHAT = NO;
   
   
 

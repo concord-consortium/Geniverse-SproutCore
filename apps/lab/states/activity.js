@@ -125,19 +125,20 @@ Lab.ACTIVITY = SC.Responder.create(
   },
   
   initChatChannels: function() {
+    if (Lab.ENABLE_CHAT) {
+      var user = Geniverse.userController.get('content');
+      var username = user.get('username');
+      var activity = Geniverse.activityController.get('content');
     
-    var user = Geniverse.userController.get('content');
-    var username = user.get('username');
-    var activity = Geniverse.activityController.get('content');
+      var activityChannel = Geniverse.activityController.get('baseChannelName');
+      var className = user.get('className');
+      var groupChannel = activityChannel+"-"+className+"-"+user.get('groupId');
     
-    var activityChannel = Geniverse.activityController.get('baseChannelName');
-    var className = user.get('className');
-    var groupChannel = activityChannel+"-"+className+"-"+user.get('groupId');
+      CcChat.chatController.set('username', username);
+      CcChat.chatController.initChat(groupChannel);
     
-    CcChat.chatController.set('username', username);
-    CcChat.chatController.initChat(groupChannel);
-    
-    SC.Logger.info("logged into %s",groupChannel);
+      SC.Logger.info("logged into %s",groupChannel);
+    }
   },
   
   loadData: function() {
@@ -186,12 +187,14 @@ Lab.ACTIVITY = SC.Responder.create(
      Geniverse.eggsController.set('content',[]);
     
     /////////////////// Chats
-    SC.Logger.log("LOAD: chats");
-    var chatQuery = SC.Query.local(CcChat.ChatMessage, {
-        orderBy: 'time'
-    });
-    var chats = CcChat.store.find(chatQuery);
-    Geniverse.chatListController.set('content', chats);
+    if (Lab.ENABLE_CHAT) {
+      SC.Logger.log("LOAD: chats");
+      var chatQuery = SC.Query.local(CcChat.ChatMessage, {
+          orderBy: 'time'
+      });
+      var chats = CcChat.store.find(chatQuery);
+      Geniverse.chatListController.set('content', chats);
+    }
 
     /////////////////// Articles
     SC.Logger.log("LOAD: articles");
