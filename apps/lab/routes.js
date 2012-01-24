@@ -18,8 +18,11 @@ Lab.routes = SC.Object.create({
   _currentPagePane: null,
   _firstHomePane: null,
   
-  gotoHomePage: function(routeParams) {
+  openHomePageRoute: function() {
     SC.routes.set('location', '');
+  },
+      
+  gotoHomePage: function(routeParams) {
     Lab.statechart.sendAction('gotoHomePage');
   },
   

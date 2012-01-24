@@ -114,7 +114,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         alt: 'Home',
         toolTip: "Click to go to the Lab's Home page",
         target: 'Lab.routes',
-        action: 'gotoHomePage'
+        action: 'openHomePageRoute'
       })
     );
     childViews.push(this.homeButton);
