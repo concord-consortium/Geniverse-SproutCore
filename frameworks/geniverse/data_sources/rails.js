@@ -44,6 +44,10 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
   // QUERY SUPPORT
   //
   fetch: function(store, query) {
+    if (query.LOCAL_SEARCH_ONLY) {
+      // this.didFetchRecords([], store, query);
+      return NO;
+    }
     var recordType = query.recordType;
     if (Geniverse.railsBackedTypes.indexOf(recordType.modelName) != -1) {
       var paramString = query.restParams ? query.restParams : "";
