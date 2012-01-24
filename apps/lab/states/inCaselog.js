@@ -8,6 +8,7 @@ Lab.inCaselog = Ki.State.extend({
   
   enterState: function() { 
     console.log("Entering caselog state");
+    Lab.routes.gotoLabRoute({ pageName: 'caselogPage' });
   },
   
   exitState: function() { 

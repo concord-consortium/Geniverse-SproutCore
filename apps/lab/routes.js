@@ -34,9 +34,6 @@ Lab.routes = SC.Object.create({
     var level = routeParams.level;  // empty ('') or 'training', 'apprentice', 'journeyman', 'master', 'meiosis', 'dna'
     
     Lab.statechart.sendAction('gotoCaselog');
-    
-    // hack for showing external case log
-    //window.location.href = 'http://geniverse.concord.org/caselog/';
   },
   
   gotoActivity: function(routeParams) { 

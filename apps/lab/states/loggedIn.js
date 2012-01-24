@@ -32,7 +32,9 @@ Lab.loggedIn = Ki.State.extend({
       // http://frozencanuck.wordpress.com/2011/02/22/ki-concurrent-states-and-the-pivot-state-error-what-to-do/
       // (The complaint here is that there's no reason to think the incantation 'this.gotoState('inHomePage')' should
       // have any effect at all on the substates that are *concurrent* to 'this', which is the 'atLocation' state. One
-      // would think it leaves them alone, and just switches *atLocations*'s current substate.)
+      // would think it leaves them alone, and just switches *atLocations*'s current substate. The "pivot state" should
+      // be 'atLocation'--you'd be switching from loggedIn.atLocation.inActivity to loggedIn.atLocation.atHomePage--and
+      // 'atLocation' does NOT have concurrent substates.
       
       // And, by the way, this.get('substates') won't return *any* state that is 'current' if the inActivity substate
       // has been entered! Only *substates* of 'inActivity' are normally current, and the only way to find
@@ -58,7 +60,8 @@ Lab.loggedIn = Ki.State.extend({
           startState.gotoState('inActivity');
           break;          
         default:
-          throw new Error("Lab.loggedIn.atLocation.startPage was set to an unexpected value, '%@'".fmt(this.startPage));
+          throw new Error(
+            "Lab.statechart.loggedIn.atLocation.startPage was set to an unexpected value, '%@'".fmt(this.startPage));
       }
     },
     
