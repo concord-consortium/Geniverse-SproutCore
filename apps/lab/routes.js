@@ -26,6 +26,19 @@ Lab.routes = SC.Object.create({
     Lab.statechart.sendAction('gotoHomePage');
   },
   
+  openCaselogRoute: function() {
+    SC.routes.set('location', 'caselog/');
+  },
+
+  gotoCaselog: function(routeParams) {
+    var level = routeParams.level;  // empty ('') or 'training', 'apprentice', 'journeyman', 'master', 'meiosis', 'dna'
+    
+    Lab.statechart.sendAction('gotoCaselog');
+    
+    // hack for showing external case log
+    //window.location.href = 'http://geniverse.concord.org/caselog/';
+  },
+  
   gotoActivity: function(routeParams) { 
     Lab.ACTIVITY.set('strand', routeParams.strand);                // heredity, ...
     Lab.ACTIVITY.set('level', routeParams.level);                  // apprentice, journeyman, master
@@ -80,7 +93,7 @@ Lab.routes = SC.Object.create({
     
     @param {SC.Object} pageOwner The object (Lab or Geniverse, generally) which has the page routeParams.pageName
     
-    @param {Object} routeParams route parameters are set as properties of thisobject. The parameters are specified 
+    @param {Object} routeParams route parameters are set as properties of this object. The parameters are specified 
       when registering the route using SC.routes.add() in main.js.
   */
   gotoRoute: function(pageOwner, routeParams) {
@@ -115,15 +128,6 @@ Lab.routes = SC.Object.create({
     console.log("  page: %s", page && page.toString(), page);
     console.log("  pane: %s", pane && pane.toString(), pane);
     console.log("END Lab.routes.gotoRoute()");
-  },
-  
-  openCaselogRoute: function () {
-    SC.routes.set('location', 'caselog');
-  },
-
-  gotoCaselog: function() {
-    // hack for showing external case log
-    window.location.href = 'http://geniverse.concord.org/caselog/';
   }
 
 });
