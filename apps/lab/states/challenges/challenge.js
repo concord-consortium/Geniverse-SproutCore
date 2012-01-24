@@ -19,9 +19,10 @@ Lab.challenge = Ki.State.extend({
   enterState: function() {
     var metadata   = Geniverse.userController.getUserMetadata(),
         activityId = Geniverse.activityController.get("guid");
-
     if (metadata.stars && metadata.stars[activityId]) {
       this.challengePreviouslyCompleted = YES;
+    } else {
+      this.challengePreviouslyCompleted = NO;
     }
     this.startChallenge();
   },
