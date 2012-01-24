@@ -2,7 +2,7 @@
 // Project:   Lab.ACTIVITY
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Lab Geniverse CcChat window*/
+/*globals Lab Geniverse CcChat window YES NO*/
 
 /** @class
 
@@ -233,17 +233,21 @@ Lab.ACTIVITY = SC.Responder.create(
         isMatchDragon: 'false',
         user: user,
         activity: activity
-      })
+      }),
+      LOCAL_SEARCH_ONLY: !Lab.ACTIVITY.get("LOAD_CHALLENGE_DRAKES")
     });
     
     var challengeDragons = Geniverse.store.find(challengePoolQuery);
     var self = this;
-    
     function challengeDragonsReady() {
       self.initDragons(challengeDragons, this, false, self);
     }
     
-    if ((challengeDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
+    if (!Lab.ACTIVITY.get("LOAD_CHALLENGE_DRAKES")) {
+      Geniverse.challengePoolController.set('content', challengeDragons);
+      var dragonsRequired = this.getOrganismConfigurations(false).length;
+      this.initDragonsFromJson(false, dragonsRequired);
+    } else if ((challengeDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
       challengeDragonsReady();
     } else {
       challengeDragons.addObserver('status', challengeDragonsReady);
@@ -266,7 +270,8 @@ Lab.ACTIVITY = SC.Responder.create(
           isMatchDragon: 'true',
           isInMarketplace: 'false',
           activity: activity
-        })
+        }),
+        LOCAL_SEARCH_ONLY: Geniverse.NEVER_SAVE_MATCH_DRAGONS
       });
 
       var matchDragons = Geniverse.store.find(matchPoolQuery);
@@ -275,7 +280,11 @@ Lab.ACTIVITY = SC.Responder.create(
         self.initDragons(matchDragons, this, true, self);
       }
       
-      if ((matchDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
+      if (Geniverse.NEVER_SAVE_MATCH_DRAGONS) {
+        Geniverse.matchController.set('content', matchDragons);
+        var dragonsRequired = this.getOrganismConfigurations(true).length;
+        this.initDragonsFromJson(true, dragonsRequired);
+      } else if ((matchDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
         matchDragonsReady();
       } else {
         matchDragons.addObserver('status', matchDragonsReady);
