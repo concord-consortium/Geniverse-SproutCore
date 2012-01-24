@@ -112,6 +112,10 @@ Geniverse.dragonGenomeController = SC.Object.create({
   },
   
   _initFixedDragon: function(sex, fixedAlleles, index) {
+    if (!fixedAlleles) {
+      return;
+    }
+
     var self = this;
     var currentDragon = this.get(this.dragonIndexMap[index]);
     if (sex === 1 && !!currentDragon && currentDragon.get('sex') === 0 && !!this.secondXAllelesMap[index]) {
