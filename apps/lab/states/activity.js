@@ -61,6 +61,9 @@ Lab.ACTIVITY = SC.Responder.create(
 
   initActivity: function() {
     SC.Logger.log("ACTIVITY initActivity");
+    
+    this.clearData();
+    
     var activityQuery = Geniverse.ACTIVITIES_QUERY;
     var activities = Geniverse.store.find(activityQuery);
 
@@ -381,6 +384,19 @@ Lab.ACTIVITY = SC.Responder.create(
     var member = user.get('memberId')- 1;
     return Geniverse.activityController.getConfigurationForRoomMember(group,member, isMatchDragons);
   },
+  
+  clearData: function() {
+    Geniverse.matchController.set('content', []);
+    Geniverse.challengePoolController.set('content', []);
+    Geniverse.challengePoolController.firstFemale = null;
+    Geniverse.challengePoolController.firstMale = null;
+    Geniverse.breedDragonController.reset();
+    Geniverse.articleController.set('article', null);
+    Geniverse.articleController.set('started', NO);
+    Geniverse.scoringController.resetScore();
+    Geniverse.scoringController.resetChallengeScore();
+    Geniverse.meiosisAnimationController.reset();
+  },
 
   reloadData: function() {
     SC.Logger.log("Lab.Activity.reloadData");
@@ -389,14 +405,7 @@ Lab.ACTIVITY = SC.Responder.create(
 
     SC.RunLoop.begin();
 
-    Geniverse.matchController.set('content', []);
-    Geniverse.challengePoolController.set('content', []);
-    Geniverse.breedDragonController.reset();
-    Geniverse.articleController.set('article', null);
-    Geniverse.articleController.set('started', NO);
-    Geniverse.scoringController.resetScore();
-    Geniverse.scoringController.resetChallengeScore();
-    Geniverse.meiosisAnimationController.reset();
+    this.clearData();
 
     Lab.infoController.removeView();  // be sure to hide any open info panes
 
