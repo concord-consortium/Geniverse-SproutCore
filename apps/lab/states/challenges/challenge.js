@@ -72,7 +72,7 @@ Lab.challenge = Ki.State.extend({
       "You've completed all the trials in this challenge!\n"+starsMessage,
       "",
       (next ? "Go on to the next challenge" : "Go back to the case log"),
-      "Retry this activity",
+      "Try again",
       {
         alertPaneDidDismiss: function(pane, status) { 
           if (status === SC.BUTTON1_STATUS) {
