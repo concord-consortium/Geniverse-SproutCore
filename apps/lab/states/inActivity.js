@@ -10,6 +10,7 @@ Lab.inActivity = Ki.State.extend({
   
   challengeState: Ki.State.design({
     substatesAreConcurrent: NO,
+    
     initialSubstate: 'initialChallenge',
     argumentationChallenge: Ki.State.plugin('Lab.argumentationChallenge'),
     matchOneAtATimeChallenge: Ki.State.plugin('Lab.matchOneAtATimeChallenge'),
@@ -36,7 +37,16 @@ Lab.inActivity = Ki.State.extend({
     var t = new Date().getTime();
     if ((t - this.lastNavigation) > 2000) {
       this.lastNavigation = t;
-      Geniverse.activityController.addObserver('content', this, this.activityLoaded);
+
+      if (Geniverse.activityController.get('status') & SC.Record.READY) {
+        // Due to Ki issues, the 'activityLoaded' method must execute AFTER enterState (which calls this method)
+        // exits. Until enterState() exits, inActivity is not considered a "current" state and therefore the gotoState
+        // calls in 'activityLoaded' will not find the correct pivot state and will fail.
+        this.invokeLast(this.activityLoaded);
+      } else {
+        Geniverse.activityController.addObserver('content', this, this.activityLoaded);
+      }
+
       Lab.makeFirstResponder(Lab.ACTIVITY);
       Lab.ACTIVITY.gotoActivity();
     }
@@ -44,7 +54,7 @@ Lab.inActivity = Ki.State.extend({
     return YES;
   },
   
-  activityLoaded: function(){
+  activityLoaded: function() {
     Geniverse.activityController.removeObserver('content', this, this.activityLoaded);
     
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', YES);     // set this here, it may get overrided by a challenge
@@ -63,7 +73,7 @@ Lab.inActivity = Ki.State.extend({
     }
     
     if (Geniverse.activityController.get('myCase')) {
-      if (Geniverse.activityController.get('myCase').get('status') & SC.Record.READY == SC.Record.READY) {
+      if (Geniverse.activityController.getPath('myCase.status') & SC.Record.READY) {
         this.caseLoaded();
       } else {
         Geniverse.activityController.get('myCase').addObserver('status', this, this.caseLoaded);
