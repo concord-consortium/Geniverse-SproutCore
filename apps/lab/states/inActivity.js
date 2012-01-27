@@ -53,14 +53,13 @@ Lab.inActivity = Ki.State.extend({
     if ((t - this.lastNavigation) > 2000) {
       this.lastNavigation = t;
 
+      Lab.ACTIVITY.gotoActivity();
+      
       if (Geniverse.activityController.get('status') & SC.Record.READY) {
         this._activityLoaded();
       } else {
         Geniverse.activityController.addObserver('content', this, this._activityLoaded);
       }
-
-      Lab.makeFirstResponder(Lab.ACTIVITY);
-      Lab.ACTIVITY.gotoActivity();
     }
     // Indicate that we handled 'gotoActivity' action so that our parent state (atLocation) doesn't try to handle it.
     return YES;
