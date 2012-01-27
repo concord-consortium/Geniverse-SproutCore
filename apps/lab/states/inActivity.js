@@ -45,6 +45,7 @@ Lab.inActivity = Ki.State.extend({
   
   lastNavigation: 0,
 
+  // A statechart action
   gotoActivity: function() {
     // FIXME This is a hack to get around the fact that when you navigate using the bottom_bar arrows,
     // it triggers gotoActivity *twice*.
@@ -53,12 +54,9 @@ Lab.inActivity = Ki.State.extend({
       this.lastNavigation = t;
 
       if (Geniverse.activityController.get('status') & SC.Record.READY) {
-        // Due to Ki issues, the 'activityLoaded' method must execute AFTER enterState (which calls this method)
-        // exits. Until enterState() exits, inActivity is not considered a "current" state and therefore the gotoState
-        // calls in 'activityLoaded' will not find the correct pivot state and will fail.
-        this.invokeLast(this.activityLoaded);
+        this._activityLoaded();
       } else {
-        Geniverse.activityController.addObserver('content', this, this.activityLoaded);
+        Geniverse.activityController.addObserver('content', this, this._activityLoaded);
       }
 
       Lab.makeFirstResponder(Lab.ACTIVITY);
@@ -67,9 +65,10 @@ Lab.inActivity = Ki.State.extend({
     // Indicate that we handled 'gotoActivity' action so that our parent state (atLocation) doesn't try to handle it.
     return YES;
   },
-  
-  activityLoaded: function() {
-    Geniverse.activityController.removeObserver('content', this, this.activityLoaded);
+
+  // Not a statechart action.
+  _activityLoaded: function() {
+    Geniverse.activityController.removeObserver('content', this, this._activityLoaded);
     
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', YES);     // set this here, it may get overrided by a challenge
     
@@ -88,15 +87,16 @@ Lab.inActivity = Ki.State.extend({
     
     if (Geniverse.activityController.get('myCase')) {
       if (Geniverse.activityController.getPath('myCase.status') & SC.Record.READY) {
-        this.caseLoaded();
+        this._caseLoaded();
       } else {
-        Geniverse.activityController.get('myCase').addObserver('status', this, this.caseLoaded);
+        Geniverse.activityController.get('myCase').addObserver('status', this, this._caseLoaded);
       }
     }
   },
   
-  caseLoaded: function() {
-    Geniverse.activityController.get('myCase').removeObserver('status', this, this.caseLoaded);
+  // Not a statechart action.
+  _caseLoaded: function() {
+    Geniverse.activityController.get('myCase').removeObserver('status', this, this._caseLoaded);
     
     if (Geniverse.activityController.getPreviousActivity()) {
       this.get('statechart').sendAction('enablePreviousNavButton');
@@ -176,8 +176,8 @@ Lab.inActivity = Ki.State.extend({
     // TODO implement methods to remember which observers we have added to which objects, and to remove them later.
     // (called perhaps this.pushObserver, this.cancelObserver, and this.cancelAllObservers)
     // These would be useful for managing observer lifecycle within any Ki.State.
-    Geniverse.activityController.removeObserver('content', this, this.activityLoaded);
-    Geniverse.activityController.get('myCase').removeObserver('status', this, this.caseLoaded);
+    Geniverse.activityController.removeObserver('content', this, this._activityLoaded);
+    Geniverse.activityController.get('myCase').removeObserver('status', this, this._caseLoaded);
   }
   
 });
