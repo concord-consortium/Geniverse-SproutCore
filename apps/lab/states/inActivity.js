@@ -25,8 +25,21 @@ Lab.inActivity = Ki.State.extend({
 
   showingIntroScreen: Ki.State.plugin('Lab.showingIntroScreen'),
   
-  enterState: function() { 
-    this.gotoActivity();
+  enterState: function() {
+    // gotoActivity needs to be invoked here via sendAction, not as a direct method call.
+
+    // That's because this state isn't fully transitioned to until some time after this enterState method completes.  
+    // gotoState actions (which occur during the body of gotoActivity, when we revisit an already-loaded activity) have 
+    // unexpected behavior if called *during* enterState (i.e. when the state transition that resulted in enterState
+    // execution is still in progress.) 
+    
+    // In particular, calling gotoState(..) to one of our substates will not work here because *this state* is not
+    // yet considered "current". Because the incorrect pivot state "loggedIn" has concurrent substates, the pivot state
+    // will be thrown and the gotoState won't occur correctly (meaning we'll be in the wrong challenge state.)
+    
+    // Sending the statechart event 'gotoActivity' is perfectly valid here, though. It will *queue* the gotoActivity
+    // action for completion when the current state transition completes.
+    this.get('statechart').sendAction('gotoActivity');
   },
   
   lastNavigation: 0,
