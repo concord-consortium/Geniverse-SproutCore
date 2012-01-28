@@ -66,11 +66,20 @@ Lab.chromosomeBreedingPage = SC.Page.design({
           showIsEditableCheck: NO,
           showFromLabels: NO,
           trackScore: YES,
-          updateBreedDragon: function() {
-            if (this.get('isVisibleInWindow')){
+          
+          dragonDidChange: function() {
+            this.possiblyUpdateBreedDragon();
+          }.observes('dragon'),
+          
+          domStatusDidChange: function() {
+            this.possiblyUpdateBreedDragon();
+          }.observes('.pane.isPaneAttached'),
+          
+          possiblyUpdateBreedDragon: function() {
+            if (this.getPath('pane.isPaneAttached')) {
               Geniverse.breedDragonController.set('mother', this.get('dragon'));
             }
-          }.observes('dragon')
+          }
         }),
 
         femalePhenotypeView: Geniverse.OrganismView.design({
@@ -99,11 +108,20 @@ Lab.chromosomeBreedingPage = SC.Page.design({
           showFromLabels: NO,
           dragonOnRight: YES,
           trackScore: YES,
-          updateBreedDragon: function() {
-            if (this.get('isVisibleInWindow')){
+          
+          dragonDidChange: function() {
+            this.invokeOnce(this.possiblyUpdateBreedDragon);
+          }.observes('dragon'),
+          
+          domStatusDidChange: function() {
+            this.invokeOnce(this.possiblyUpdateBreedDragon);
+          }.observes('.pane.isPaneAttached'),
+          
+          possiblyUpdateBreedDragon: function() {
+            if (this.getPath('pane.isPaneAttached')) {
               Geniverse.breedDragonController.set('father', this.get('dragon'));
             }
-          }.observes('dragon')
+          }
         }),
 
         malePhenotypeView: Geniverse.OrganismView.design({
