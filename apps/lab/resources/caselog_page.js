@@ -30,11 +30,17 @@ Lab.caselogPage = SC.Page.design({
     mainAppView: SC.View.design({
       layout: { top: 25, bottom: 0, left: 10, right: 0 },
       
-      childViews: ['labelView'],
+      childViews: ['label1View', 'label2View'],
       
-      labelView: SC.LabelView.design({
-        layout: { width: 400, height: 20, centerX: 0, centerY: 0 },
+      label1View: SC.LabelView.design({
+        layout: { width: 400, height: 20, centerX: 0, centerY: -10 },
         value: "Hello from the caselog! Try <a href=\"#case4/argumentation\">Case 4\'s argumentation challenge.</a>",
+        escapeHTML: false
+      }),
+      
+      label2View: SC.LabelView.design({
+        layout: { width: 400, height: 20, centerX: 0, centerY: 10 },
+        value: "Alternatively, try <a href=\"#demos/challenge1\">This demo challenge</a>",
         escapeHTML: false
       })
     })
