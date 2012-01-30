@@ -107,11 +107,11 @@ Geniverse.matchController = SC.ArrayController.create(
     return moves;
   },
   
-  numberOfChromoBreedingMovesToReachCurrent: function(dragon1, dragon2, changeableAlleles1, changeableAlleles2) {
-    return this.numberOfChromoBreedingMovesToReachDrake(dragon1, dragon2, changeableAlleles1, changeableAlleles2, this.get("currentDragon"));
+  numberOfBreedingMovesToReachCurrent: function(dragon1, dragon2, changeableAlleles1, changeableAlleles2) {
+    return this.numberOfBreedingMovesToReachDrake(dragon1, dragon2, changeableAlleles1, changeableAlleles2, this.get("currentDragon"));
   },
   
-  numberOfChromoBreedingMovesToReachDrake: function(dragon1, dragon2, changeableAlleles1, changeableAlleles2, targetDragon) {
+  numberOfBreedingMovesToReachDrake: function(dragon1, dragon2, changeableAlleles1, changeableAlleles2, targetDragon) {
     var moves = 0,
         dragon1Alleles = dragon1.get('alleles').split(",").map(function(a) { return a.split(":")[1]; }),
         dragon2Alleles = dragon2.get('alleles').split(",").map(function(a) { return a.split(":")[1]; }),

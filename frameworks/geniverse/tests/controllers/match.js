@@ -2,7 +2,7 @@
 // Project:   Geniverse.matchController Unit Test
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Geniverse module test ok equals same stop start HashMap Drake NumberOfMoves NumberOfChromoBreedMoves*/
+/*globals Geniverse module test ok equals same stop start HashMap Drake NumberOfMoves NumberOfBreedMoves*/
 
 module("Geniverse.matchController");
 
@@ -32,8 +32,8 @@ NumberOfMoves = function(initDrake, targetDrake) {
     Geniverse.Dragon.traitRules);
 };
 
-NumberOfChromoBreedMoves = function(initMother, initFather, targetDrake) {
-  return Geniverse.matchController.numberOfChromoBreedingMovesToReachCurrent(
+NumberOfBreedMoves = function(initMother, initFather, targetDrake) {
+  return Geniverse.matchController.numberOfBreedingMovesToReachDrake(
     initMother,
     initFather,
     initMother.changeableAlleles,
@@ -174,7 +174,7 @@ test("NumberOfMoves should combine and add up multiple trait differences", funct
 });
 
 
-test("NumberOfChromoBreedMoves should work in the simplest case", function() {
+test("NumberOfBreedMoves should work in the simplest case", function() {
   var initMother = new Drake(
     {
       tail: "Long tail"
@@ -191,7 +191,7 @@ test("NumberOfChromoBreedMoves should work in the simplest case", function() {
     {
       tail: "Short tail"
     }); 
-  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 1, "Should take 1 moves to just breed");
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 1, "Should take 1 moves to just breed");
   
   initMother = new Drake(
     {
@@ -209,7 +209,7 @@ test("NumberOfChromoBreedMoves should work in the simplest case", function() {
     {
       tail: "Short tail"
     }); 
-  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 2, "Should take 2 moves");
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 2, "Should take 2 moves");
   
   initMother = new Drake(
     {
@@ -227,7 +227,7 @@ test("NumberOfChromoBreedMoves should work in the simplest case", function() {
     {
       tail: "Short tail"
     }); 
-  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 2, "Should take 2 moves");
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 2, "Should take 2 moves");
   
   initMother = new Drake(
     {
@@ -245,7 +245,7 @@ test("NumberOfChromoBreedMoves should work in the simplest case", function() {
     {
       tail: "Short tail"
     }); 
-  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 2, "Should take 2 moves");
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 2, "Should take 2 moves");
   
   initMother = new Drake(
     {
@@ -263,11 +263,11 @@ test("NumberOfChromoBreedMoves should work in the simplest case", function() {
     {
       tail: "Short tail"
     }); 
-  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
   
 });
 
-test("NumberOfChromoBreedMoves should be infinity in an impossible case", function() {
+test("NumberOfBreedMoves should be infinity in an impossible case", function() {
   var initMother = new Drake(
     {
       tail: "Long tail"
@@ -284,10 +284,10 @@ test("NumberOfChromoBreedMoves should be infinity in an impossible case", functi
     {
       tail: "Short tail"
     }); 
-  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), Infinity, "Can't change drake2, so should be Infinity");
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), Infinity, "Can't change drake2, so should be Infinity");
 });
 
-test("NumberOfChromoBreedMoves work in two trait cases", function() {
+test("NumberOfBreedMoves work in two trait cases", function() {
   var initMother = new Drake(
     {
       tail: "Long tail",
@@ -307,7 +307,7 @@ test("NumberOfChromoBreedMoves work in two trait cases", function() {
       tail: "Short tail",
       horns: "Hornless"
     }); 
-  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
   
   initMother = new Drake(
     {
@@ -328,7 +328,7 @@ test("NumberOfChromoBreedMoves work in two trait cases", function() {
       tail: "Short tail",
       horns: "Horns"
     }); 
-  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 1, "Should take 1 moves");
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 1, "Should take 1 moves");
   
   initMother = new Drake(
     {
@@ -349,10 +349,10 @@ test("NumberOfChromoBreedMoves work in two trait cases", function() {
       tail: "Short tail",
       horns: "Horns"
     }); 
-  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 5, "Should take 5 moves");
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 5, "Should take 5 moves");
 });
 
-test("NumberOfChromoBreedMoves work in multi-gene cases", function() {
+test("NumberOfBreedMoves work in multi-gene cases", function() {
   var initMother = new Drake(
     {
       color: "Steel"
@@ -369,7 +369,7 @@ test("NumberOfChromoBreedMoves work in multi-gene cases", function() {
     {
       color: "Copper"
     }); 
-  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
   
   initMother = new Drake(
     {
@@ -387,7 +387,7 @@ test("NumberOfChromoBreedMoves work in multi-gene cases", function() {
     {
       color: "Sand"
     }); 
-  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 7, "Should take 7 moves");
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 7, "Should take 7 moves");
   
   initMother = new Drake(
     {
@@ -405,7 +405,7 @@ test("NumberOfChromoBreedMoves work in multi-gene cases", function() {
     {
       color: "Steel"
     }); 
-  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 4, "Should take 4 moves");
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 4, "Should take 4 moves");
   
   initMother = new Drake(
     {
@@ -423,5 +423,5 @@ test("NumberOfChromoBreedMoves work in multi-gene cases", function() {
     {
       color: "Sand"
     }); 
-  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
 });
