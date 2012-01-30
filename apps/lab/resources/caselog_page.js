@@ -15,34 +15,19 @@ Lab.caselogPage = SC.Page.design({
   
   mainPane: SC.MainPane.design({
     
-    classNames: ['brown'],
+    childViews: ['caselogView'],
     
-    childViews: ['topBar', 'bottomBar', 'mainAppView'],
-
-    topBar: Lab.TopBarView.design({
-      classNames: ['brown']
-    }),
-    
-    bottomBar: Lab.BottomBarView.design({
-      classNames: ['brown']
-    }),
-    
-    mainAppView: SC.View.design({
-      layout: { top: 25, bottom: 0, left: 10, right: 0 },
-      
-      childViews: ['label1View', 'label2View'],
-      
-      label1View: SC.LabelView.design({
-        layout: { width: 400, height: 20, centerX: 0, centerY: -10 },
-        value: "Hello from the caselog! Try <a href=\"#case4/argumentation\">Case 4\'s argumentation challenge.</a>",
-        escapeHTML: false
-      }),
-      
-      label2View: SC.LabelView.design({
-        layout: { width: 400, height: 20, centerX: 0, centerY: 10 },
-        value: "Alternatively, try <a href=\"#demos/challenge1\">This demo challenge</a>",
-        escapeHTML: false
-      })
+    caselogView: SC.View.design({
+      render: function (context, isFirstTime) {
+        if (isFirstTime) {
+          
+          context.push("<div>\n" +
+           "<p>Try <a href=\"#case4/argumentation\">Case 4\'s argumentation challenge.</a></p>\n" + 
+           "<p>Alternatively, try <a href=\"#demos/challenge1\">This demo challenge</a></p>\n" + 
+           "</div>");
+        }
+        return context;
+      }
     })
   })
   
