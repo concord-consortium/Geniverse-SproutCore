@@ -1,0 +1,183 @@
+/* GENIVERSE CASE LOG STYLE SHEET */
+
+/* STYLE RESET
+---------------------------------------------------------------------*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; } /* HTML5 display-role reset for older browsers */
+body { line-height: 1; }
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+table { border-collapse: collapse; border-spacing: 0; }
+
+/* BASIC STYLES
+---------------------------------------------------------------------*/
+body {
+	background: #492222;
+	color: #e5c59e;
+	height: 100%;
+	font: 11px/1.4 Georgia, 'times new roman', times, serif;
+	}
+	
+.caselog-view {
+ 	background: #492222;
+	color: #e5c59e; 	
+ 	font: 11px/1.4 Georgia, 'times new roman', times, serif;
+  }
+
+#caselog-wrap {
+	background: #733230 url(/static/lab/en/current/resources/caselog/caselog-bg.png) center top no-repeat;
+	margin: 0;
+	}
+
+/* CASE LOG
+---------------------------------------------------------------------*/
+#caselog {
+	background: url(/static/lab/en/current/resources/caselog/caselog.png) no-repeat;
+	color: #492222;
+	height: 600px;
+	margin: 0 auto;
+	width: 960px;
+	}
+	#caselog h1 {
+		color: #111111;
+		font-size: 48px;
+		font-weight: normal;
+		text-align: center;
+		}
+	#caselog h2 {
+		color: #492222;		
+		font-size: 32px;
+		text-align: center;
+		}
+	#caselog h3 {
+		font-weight: bold;
+		font-size: 18px;
+		}
+	#caselog #col1, #caselog #col2 {
+		float: left;
+		padding-top: 90px;
+		width: 50%;
+		}
+	#caselog .case {
+		background: #fff;
+		height: 110px;
+		opacity: .5;
+		padding: 5px 10px;
+		/* CSS3 */
+		-moz-border-radius: 20px;
+		-webkit-border-radius: 20px;
+		border-radius: 20px;
+		}
+		#caselog .case ul {
+			list-style: none;
+			margin-top: 0;
+			}
+		#caselog .case li {
+			background: url(/static/lab/en/current/resources/caselog/no-star.png) no-repeat;
+			font-size: 1em;
+			line-height: 160%;
+			padding-left: 47px;
+			}
+		#caselog .case li.one-star {
+			background: url(/static/lab/en/current/resources/caselog/one-star.png) no-repeat;
+			}
+		#caselog .case li.two-star {
+			background: url(/static/lab/en/current/resources/caselog/two-star.png) no-repeat;
+			}
+		#caselog .case li.three-star {
+			background: url(/static/lab/en/current/resources/caselog/three-star.png) no-repeat;
+			}
+	#caselog .case.active, #caselog .case.complete {
+		opacity: .8;
+		}
+	#caselog .case.complete {
+		background: #fff url(/static/lab/en/current/resources/caselog/check.png) no-repeat right top;
+		}
+	#caselog #col1 .case {
+		margin: 0 55px 10px 100px; 
+		}
+	#caselog #col2 .case {
+		margin: 0 105px 10px 50px; 
+		}
+	#caselog .case:hover, #caselog .case:focus {
+		opacity: .8;
+		}
+	#caselog .case a {
+		color: #492222;
+		display: block;
+		text-decoration: none;
+		}
+	#caselog #title {
+		height: 110px;
+		margin-bottom: 10px;
+		padding: 5px 10px;
+		}
+		
+/* NAVIGATION
+---------------------------------------------------------------------*/
+#nav {
+	background: #492222;
+	}
+	#nav ul {
+		margin: 20px auto;
+		width: 960px;
+		}
+		#nav ul li {
+			background: url(/static/lab/en/current/resources/caselog/book.png) no-repeat center top;
+			float: left;
+			font-size: 12px;
+			font-weight: bold;
+			height: auto;
+			list-style: none;
+			margin: 0 10px;
+			min-height: 190px;
+			opacity: .5;
+			padding: 0;
+			text-align: center;
+			width: 140px;
+			}
+		#nav ul li.active {
+			opacity: 1;
+			}
+		#nav ul li:hover, #nav ul li:focus {
+			opacity: 1;
+			}
+		#nav ul li a {
+			color: #e5c59e;
+			display: block;
+			height: auto;
+			min-height: 140px;
+			padding: 50px 10px 0 14px;
+			text-decoration: none;
+			width: 116px;
+			}
+		#nav ul li#training a {
+			background: url(/static/lab/en/current/resources/caselog/training.png) no-repeat center 80px;
+			}
+		#nav ul li#apprentice a {
+			background: url(/static/lab/en/current/resources/caselog/apprentice.png) no-repeat center 80px;
+			}
+		#nav ul li#journeyman a {
+			background: url(/static/lab/en/current/resources/caselog/journeyman.png) no-repeat center 80px;
+			}
+		#nav ul li#master a {
+			background: url(/static/lab/en/current/resources/caselog/master.png) no-repeat center 80px;
+			}
+		#nav ul li#meiosis a {
+			background: url(/static/lab/en/current/resources/caselog/meiosis.png) no-repeat center 80px;
+			}
+		#nav ul li#dna a {
+			background: url(/static/lab/en/current/resources/caselog/dna.png) no-repeat center 80px;
+			}
