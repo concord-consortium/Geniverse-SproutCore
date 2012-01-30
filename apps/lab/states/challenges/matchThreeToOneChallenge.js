@@ -27,7 +27,17 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
   },
   
   revealClicked: function(buttonView) {
-    var parent = buttonView.get('parentView');
+    this.buttonView = buttonView;
+    if (!Geniverse.gwtController.get("drakesArePending")) {
+      this.checkAnswer(buttonView);
+    } else {
+      Geniverse.gwtController.addObserver("drakesArePending", this, "checkAnswer");
+    }
+  },
+  
+  checkAnswer: function() {
+    Geniverse.gwtController.removeObserver("drakesArePending", this, "checkAnswer");
+    var parent = this.buttonView.get('parentView');
     this.organismViews = parent.get('organismViews');
     this._revealImages();
 
