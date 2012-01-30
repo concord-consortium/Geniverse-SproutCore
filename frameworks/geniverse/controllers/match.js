@@ -2,7 +2,7 @@
 // Project:   Geniverse.matchController
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Geniverse Lab*/
+/*globals Geniverse Lab SC NO YES sc_require*/
 
 /** @class
 
@@ -104,6 +104,66 @@ Geniverse.matchController = SC.ArrayController.create(
       moves++;
     }
 
+    return moves;
+  },
+  
+  numberOfChromoBreedingMovesToReachCurrent: function(dragon1, dragon2, changeableAlleles1, changeableAlleles2) {
+    return this.numberOfChromoBreedingMovesToReachDrake(dragon1, dragon2, changeableAlleles1, changeableAlleles2, this.get("currentDragon"));
+  },
+  
+  numberOfChromoBreedingMovesToReachDrake: function(dragon1, dragon2, changeableAlleles1, changeableAlleles2, targetDragon) {
+    var moves = 0,
+        dragon1Alleles = dragon1.get('alleles').split(",").map(function(a) { return a.split(":")[1]; }),
+        dragon2Alleles = dragon2.get('alleles').split(",").map(function(a) { return a.split(":")[1]; }),
+        current = targetDragon,
+        targetchars = current.get('characteristicMap'),
+        traitRules = Geniverse.Dragon.traitRules;
+        
+    for (var trait in traitRules) {
+      if (traitRules.hasOwnProperty(trait)) {
+        var possibleSolutions = traitRules[trait][targetchars.get(trait)],
+            shortestPath = Infinity;
+        if (possibleSolutions && possibleSolutions.length) {
+          for (var i = 0, ii = possibleSolutions.length; i<ii; i++) {
+            var solution = possibleSolutions[i],
+                movesForSolution1 = 0,
+                movesForSolution2 = 0;
+            for (var j = 0, jj = solution.length; j<jj; j++) {
+              var allele1 = solution[j],
+                  allele2 = j%2 === 0 ? solution[j+1] : solution[j-1],
+                  solutionMoves = 0;
+              if (dragon1Alleles.indexOf(allele1) === -1) {
+                if (changeableAlleles1.indexOf(allele1.toLowerCase()) > -1) {
+                  solutionMoves++;
+                } else {
+                  solutionMoves = Infinity;
+                }
+              }
+
+              if (dragon2Alleles.indexOf(allele2) === -1) {
+                if (changeableAlleles2.indexOf(allele2.toLowerCase()) > -1) {
+                  solutionMoves++;
+                } else {
+                  solutionMoves = Infinity;
+                }
+              }
+
+              if (j%2 === 0) {
+                movesForSolution1 += solutionMoves;
+              } else {
+                movesForSolution2 += solutionMoves;
+              }
+            }
+            shortestPath = Math.min(shortestPath, Math.min(movesForSolution1, movesForSolution2));
+          }
+          moves += shortestPath;
+        }
+      }
+    }
+    
+    // chromo breeding must use exactly one breed
+    moves += 1;
+    
     return moves;
   },
 

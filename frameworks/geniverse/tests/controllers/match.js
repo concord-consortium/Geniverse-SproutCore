@@ -2,7 +2,7 @@
 // Project:   Geniverse.matchController Unit Test
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Geniverse module test ok equals same stop start HashMap Drake NumberOfMoves*/
+/*globals Geniverse module test ok equals same stop start HashMap Drake NumberOfMoves NumberOfChromoBreedMoves*/
 
 module("Geniverse.matchController");
 
@@ -14,17 +14,31 @@ HashMap.prototype.get = function(key) {
   return this.hash[key];
 };
 
-Drake = function(characteristics, alleles) {
-  this.characteristics = new HashMap(characteristics);
+Drake = function(characteristics, alleles, changeableAlleles) {
+  this.characteristicMap = new HashMap(characteristics);
   this.alleles = alleles;
+  this.changeableAlleles = changeableAlleles;
+};
+
+Drake.prototype.get = function(key) {
+  return this[key];
 };
 
 NumberOfMoves = function(initDrake, targetDrake) {
   return Geniverse.matchController.numberOfAlleleChangesToReachPhenotype(
-    initDrake.characteristics,
-    targetDrake.characteristics,
+    initDrake.characteristicMap,
+    targetDrake.characteristicMap,
     initDrake.alleles,
     Geniverse.Dragon.traitRules);
+};
+
+NumberOfChromoBreedMoves = function(initMother, initFather, targetDrake) {
+  return Geniverse.matchController.numberOfChromoBreedingMovesToReachCurrent(
+    initMother,
+    initFather,
+    initMother.changeableAlleles,
+    initFather.changeableAlleles,
+    targetDrake);
 };
 
 
@@ -157,4 +171,257 @@ test("NumberOfMoves should combine and add up multiple trait differences", funct
     }); 
   equals(NumberOfMoves(initDrake, targetDrake), 5, "Should take 5 moves");
   
+});
+
+
+test("NumberOfChromoBreedMoves should work in the simplest case", function() {
+  var initMother = new Drake(
+    {
+      tail: "Long tail"
+    },
+    "a:T,b:t",
+    ["t"]);
+  var initFather = new Drake(
+    {
+      tail: "Short tail"
+    },
+    "a:T,b:t",
+    []);
+  var targetDrake = new Drake(
+    {
+      tail: "Short tail"
+    }); 
+  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 1, "Should take 1 moves to just breed");
+  
+  initMother = new Drake(
+    {
+      tail: "Long tail"
+    },
+    "a:T,b:T",
+    ["t"]);
+  initFather = new Drake(
+    {
+      tail: "Short tail"
+    },
+    "a:t,b:t",
+    []);
+  targetDrake = new Drake(
+    {
+      tail: "Short tail"
+    }); 
+  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 2, "Should take 2 moves");
+  
+  initMother = new Drake(
+    {
+      tail: "Long tail"
+    },
+    "a:T,b:T",
+    ["t"]);
+  initFather = new Drake(
+    {
+      tail: "Long tail"
+    },
+    "a:T,b:t",
+    []);
+  targetDrake = new Drake(
+    {
+      tail: "Short tail"
+    }); 
+  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 2, "Should take 2 moves");
+  
+  initMother = new Drake(
+    {
+      tail: "Long tail"
+    },
+    "a:t,b:T",
+    ["t"]);
+  initFather = new Drake(
+    {
+      tail: "Long tail"
+    },
+    "a:T,b:T",
+    ["t"]);
+  targetDrake = new Drake(
+    {
+      tail: "Short tail"
+    }); 
+  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 2, "Should take 2 moves");
+  
+  initMother = new Drake(
+    {
+      tail: "Long tail"
+    },
+    "a:T,b:T",
+    ["t"]);
+  initFather = new Drake(
+    {
+      tail: "Long tail"
+    },
+    "a:T,b:T",
+    ["t"]);
+  targetDrake = new Drake(
+    {
+      tail: "Short tail"
+    }); 
+  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
+  
+});
+
+test("NumberOfChromoBreedMoves should be infinity in an impossible case", function() {
+  var initMother = new Drake(
+    {
+      tail: "Long tail"
+    },
+    "a:T,b:T",
+    ["t"]);
+  var initFather = new Drake(
+    {
+      tail: "Short tail"
+    },
+    "a:T,b:T",
+    []);
+  var targetDrake = new Drake(
+    {
+      tail: "Short tail"
+    }); 
+  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), Infinity, "Can't change drake2, so should be Infinity");
+});
+
+test("NumberOfChromoBreedMoves work in two trait cases", function() {
+  var initMother = new Drake(
+    {
+      tail: "Long tail",
+      horns: "Horns"
+    },
+    "a:T,b:T,a:h,b:h",
+    ["t","h"]);
+  var initFather = new Drake(
+    {
+      tail: "Short tail",
+      horns: "Horns"
+    },
+    "a:t,b:t,a:h,b:h",
+    []);
+  var targetDrake = new Drake(
+    {
+      tail: "Short tail",
+      horns: "Hornless"
+    }); 
+  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
+  
+  initMother = new Drake(
+    {
+      tail: "Long tail",
+      horns: "Hornless"
+    },
+    "a:t,b:T,a:h,b:H",
+    ["t","h"]);
+  initFather = new Drake(
+    {
+      tail: "Short tail",
+      horns: "Horns"
+    },
+    "a:t,b:t,a:h,b:h",
+    []);
+  targetDrake = new Drake(
+    {
+      tail: "Short tail",
+      horns: "Horns"
+    }); 
+  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 1, "Should take 1 moves");
+  
+  initMother = new Drake(
+    {
+      tail: "Long tail",
+      horns: "Hornless"
+    },
+    "a:T,b:T,a:H,b:H",
+    ["t","h"]);
+  initFather = new Drake(
+    {
+      tail: "Short tail",
+      horns: "Horns"
+    },
+    "a:T,b:T,a:H,b:H",
+    ["t", "h"]);
+  targetDrake = new Drake(
+    {
+      tail: "Short tail",
+      horns: "Horns"
+    }); 
+  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 5, "Should take 5 moves");
+});
+
+test("NumberOfChromoBreedMoves work in multi-gene cases", function() {
+  var initMother = new Drake(
+    {
+      color: "Steel"
+    },
+    "a:M,b:M,a:B,b:B,a:D,b:D",
+    ["m","b","d"]);
+  var initFather = new Drake(
+    {
+      color: "Steel"
+    },
+    "a:M,b:M,a:B,b:B,a:D,b:D",
+    ["m","b","d"]);
+  var targetDrake = new Drake(
+    {
+      color: "Copper"
+    }); 
+  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
+  
+  initMother = new Drake(
+    {
+      color: "Steel"
+    },
+    "a:M,b:M,a:B,b:B,a:D,b:D",
+    ["m","b","d"]);
+  initFather = new Drake(
+    {
+      color: "Steel"
+    },
+    "a:M,b:M,a:B,b:B,a:D,b:D",
+    ["m","b","d"]);
+  targetDrake = new Drake(
+    {
+      color: "Sand"
+    }); 
+  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 7, "Should take 7 moves");
+  
+  initMother = new Drake(
+    {
+      color: "Sand"
+    },
+    "a:m,b:m,a:b,b:b,a:d,b:d",
+    ["m","b","d"]);
+  initFather = new Drake(
+    {
+      color: "Sand"
+    },
+    "a:m,b:m,a:b,b:b,a:d,b:d",
+    ["m","b","d"]);
+  targetDrake = new Drake(
+    {
+      color: "Steel"
+    }); 
+  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 4, "Should take 4 moves");
+  
+  initMother = new Drake(
+    {
+      color: "Sand"
+    },
+    "a:m,b:m,a:B,b:B,a:d,b:d",
+    ["m","b","d"]);
+  initFather = new Drake(
+    {
+      color: "Sand"
+    },
+    "a:M,b:M,a:b,b:b,a:d,b:d",
+    ["m","b","d"]);
+  targetDrake = new Drake(
+    {
+      color: "Sand"
+    }); 
+  equals(NumberOfChromoBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
 });
