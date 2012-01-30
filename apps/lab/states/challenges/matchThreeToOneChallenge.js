@@ -2,7 +2,7 @@
 // Project:   Lab
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Lab Geniverse CcChat window Ki YES NO SC*/
+/*globals Lab Geniverse CcChat window Ki YES NO SC sc_super*/
 
 Lab.matchThreeToOneChallenge = Lab.challenge.extend({
   
@@ -12,6 +12,8 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
   matchedOrganismViews: [],
   duplicateOrganismViews: [],
   incorrectOrganismViews: [],
+  
+  buttonView: null,
   
   startChallenge: function() {
     sc_super();
@@ -28,15 +30,11 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
   
   revealClicked: function(buttonView) {
     this.buttonView = buttonView;
-    if (!Geniverse.gwtController.get("drakesArePending")) {
-      this.checkAnswer(buttonView);
-    } else {
-      Geniverse.gwtController.addObserver("drakesArePending", this, "checkAnswer");
-    }
+    this.get('statechart').sendAction("checkAnswerIfDrakesReady");
   },
   
   checkAnswer: function() {
-    Geniverse.gwtController.removeObserver("drakesArePending", this, "checkAnswer");
+    sc_super();
     var parent = this.buttonView.get('parentView');
     this.organismViews = parent.get('organismViews');
     this._revealImages();

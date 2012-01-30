@@ -49,6 +49,30 @@ Lab.challenge = Ki.State.extend({
     
     this.starsEarned = stars;
   },
+  
+  checkAnswerIfDrakesReady: function() {
+    if (!Geniverse.gwtController.get("drakesArePending")) {
+      this.checkAnswer();
+    } else {
+      this.spinnerPanel = SC.PanelPane.create({
+        layout: { width: 100, height: 100, centerX: 0, centerY: 0 },
+        classNames: ['frameless'],
+        contentView: SC.ImageView.extend({
+          value: static_url('spinner.gif')
+        })
+      }).append();
+      Geniverse.gwtController.addObserver("drakesArePending", this, "checkAnswer");
+    }
+  },
+  
+  // to be overwritten by challenge implementations
+  checkAnswer: function() {
+    if (this.spinnerPanel) {
+      Geniverse.gwtController.removeObserver("drakesArePending", this, "checkAnswer");
+      this.spinnerPanel.remove();
+      this.spinnerPanel = null;
+    }
+  },
 
   _challengeComplete: function() {
     this.endChallenge();

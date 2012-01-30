@@ -2,7 +2,7 @@
 // Project:   Lab
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Lab Geniverse CcChat window Ki YES NO SC static_url*/
+/*globals Lab Geniverse CcChat window Ki YES NO SC static_url sc_super*/
 
 Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
   
@@ -13,6 +13,8 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
   starsEarned: 0,
   
   firstChromosomeDragonLoaded: NO,
+  
+  buttonView: null,
   
   startChallenge: function() {
     sc_super();
@@ -45,9 +47,15 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
       Geniverse.scoringController.set('minimumScore', Geniverse.matchController.numberOfMovesToReachCurrent(initialDragon));
     }
   },
-
+  
   revealClicked: function(buttonView) {
-    this.organismView = buttonView.get('parentView');
+    this.buttonView = buttonView;
+    this.get('statechart').sendAction("checkAnswerIfDrakesReady");
+  },
+  
+  checkAnswer: function() {
+    sc_super();
+    this.organismView = this.buttonView.get('parentView');
     this._revealImage();
     
     SC.Timer.schedule({
