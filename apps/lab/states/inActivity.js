@@ -8,6 +8,8 @@ Lab.inActivity = Ki.State.extend({
 
   substatesAreConcurrent: YES,
 
+  myCase: null,
+
   challengeState: Ki.State.design({
     substatesAreConcurrent: NO,
 
@@ -88,14 +90,17 @@ Lab.inActivity = Ki.State.extend({
       if (Geniverse.activityController.getPath('myCase.status') & SC.Record.READY) {
         this._caseLoaded();
       } else {
-        Geniverse.activityController.get('myCase').addObserver('status', this, this._caseLoaded);
+        this.myCase = Geniverse.activityController.get('myCase');
+        this.myCase.addObserver('status', this, this._caseLoaded);
       }
     }
   },
 
   // Not a statechart action.
   _caseLoaded: function() {
-    Geniverse.activityController.get('myCase').removeObserver('status', this, this._caseLoaded);
+    if (this.myCase) {
+      this.myCase.removeObserver('status', this, this._caseLoaded);
+    }
 
     if (Geniverse.activityController.getPreviousActivity()) {
       this.get('statechart').sendAction('enablePreviousNavButton');
@@ -176,7 +181,10 @@ Lab.inActivity = Ki.State.extend({
     // (called perhaps this.pushObserver, this.cancelObserver, and this.cancelAllObservers)
     // These would be useful for managing observer lifecycle within any Ki.State.
     Geniverse.activityController.removeObserver('content', this, this._activityLoaded);
-    Geniverse.activityController.get('myCase').removeObserver('status', this, this._caseLoaded);
+    if (this.myCase) {
+      this.myCase.removeObserver('status', this, this._caseLoaded);
+      this.myCase = null;
+    }
   }
 
 });
