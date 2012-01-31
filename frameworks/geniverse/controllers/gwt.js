@@ -59,7 +59,9 @@ Geniverse.gwtController = SC.Object.create(
 
   removePendingDrake: function(id) {
     this.pendingOrganisms.removeObject(id);
-    this.propertyDidChange("drakesArePending");
+    if (this.pendingOrganisms.length === 0) {
+      this.propertyDidChange("drakesArePending");
+    }
   },
 
   breedOrganism: function(mother, father, handleChildFunction) {
