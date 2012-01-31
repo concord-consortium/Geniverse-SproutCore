@@ -41,7 +41,7 @@ Lab.chromosomeBreedingOneAtATimeChallenge = Lab.matchTargetDrakesOneAtATimeChall
           changeableAlleles1 = this._removeObjectsIgnoreCase(allAlleles.copy(), hiddenGenes1.concat(staticGenes1)),
           changeableAlleles2 = this._removeObjectsIgnoreCase(allAlleles.copy(), hiddenGenes2.concat(staticGenes2));
 
-      var moves = Geniverse.matchController.numberOfChromoBreedingMovesToReachCurrent(initialDragon1, initialDragon2, changeableAlleles1, changeableAlleles2);
+      var moves = Geniverse.matchController.numberOfBreedingMovesToReachCurrent(initialDragon1, initialDragon2, changeableAlleles1, changeableAlleles2);
 
       Geniverse.scoringController.set('minimumScore', moves);
     }
