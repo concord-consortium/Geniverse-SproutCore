@@ -63,12 +63,12 @@ Lab.caselogPage = SC.Page.design({
         
         context.push('<div id="nav">');
         context.push('<ul>');
-        context.push('<li id="training" class="tk-scrivano active"><a href="#caselog/training/">Training</a></li>');
-        context.push('<li id="apprentice" class="tk-scrivano"><a href="#caselog/apprentice/">Apprentice</a></li>');
-        context.push('<li id="journeyman" class="tk-scrivano"><a href="#caselog/journeyman/">Journeyman</a></li>');
-        context.push('<li id="master" class="tk-scrivano"><a href="#caselog/master/">Master</a></li>');
-        context.push('<li id="meiosis" class="tk-scrivano"><a href="#caselog/">Meiosis</a></li>');
-        context.push('<li id="dna" class="tk-scrivano"><a href="#caselog/">DNA to<br>Trait</a></li>');
+        context.push('<li id="training" class="tk-scrivano active"><a href="#caselog/training">Training</a></li>');
+        context.push('<li id="apprentice" class="tk-scrivano"><a href="#caselog/apprentice">Apprentice</a></li>');
+        context.push('<li id="journeyman" class="tk-scrivano"><a href="#caselog/journeyman">Journeyman</a></li>');
+        context.push('<li id="master" class="tk-scrivano"><a href="#caselog/master">Master</a></li>');
+        context.push('<li id="meiosis" class="tk-scrivano"><a href="#caselog">Meiosis</a></li>');
+        context.push('<li id="dna" class="tk-scrivano"><a href="#caselog">DNA to<br>Trait</a></li>');
         context.push('</ul>');
         context.push('</div>');
         

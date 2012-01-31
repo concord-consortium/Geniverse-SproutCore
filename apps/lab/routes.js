@@ -27,7 +27,7 @@ Lab.routes = SC.Object.create({
   },
   
   openCaselogRoute: function() {
-    SC.routes.set('location', 'caselog/');
+    SC.routes.set('location', 'caselog');
   },
 
   gotoCaselog: function(routeParams) {
