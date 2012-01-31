@@ -43,10 +43,10 @@ Lab.caselogController = SC.Object.create({
   
   userMetadataBinding: 'Geniverse.userController.metadata',  
   
-  // Lab.caselogController.levels[Lab.LEVEL_TRAINING].cases[0].title               == "Case 1: Enter the Drake"
-  // Lab.caselogController.levels[Lab.LEVEL_TRAINING].cases[0].challenges[0].title == "Playground"
-  // Lab.caselogController.levels[Lab.LEVEL_TRAINING].cases[0].challenges[0].href  == "#case1/playground"
-  // Lab.caselogController.levels[Lab.LEVEL_TRAINING].cases[0].challenges[0].stars == (number of stars)
+  // Lab.caselogController.levels[Lab.LEVEL_TRAINING].cases[0].title                  == "Case 1: Enter the Drake"
+  // Lab.caselogController.levels[Lab.LEVEL_TRAINING].cases[0].challenges[0].title    == "Playground"
+  // Lab.caselogController.levels[Lab.LEVEL_TRAINING].cases[0].challenges[0].href     == "#case1/playground"
+  // Lab.caselogController.levels[Lab.LEVEL_TRAINING].cases[0].challenges[0].starInfo == { stars: 1, useQuill: false }
   
   levels: function() {
     var ret    = Lab.caselogData.copy(),
@@ -60,7 +60,7 @@ Lab.caselogController = SC.Object.create({
           challenges = cases[j].challenges;
           
           for (k = 0, max_k = challenges.length; k < max_k; k++) {
-            challenges[k].stars = this._getStarsForRoute(challenges[k].href);
+            challenges[k].starInfo = this._getStarInfoForRoute(challenges[k].href);
           }
         }
       }
@@ -69,7 +69,7 @@ Lab.caselogController = SC.Object.create({
     return ret;
   }.property('routes', 'userMetadata').cacheable(),
 
-  _getStarsForRoute: function(route) {
+  _getStarInfoForRoute: function(route) {
     route = route.slice(route.lastIndexOf('#') + 1);
 
     var userMetadata = this.get('userMetadata') || {},
@@ -77,9 +77,13 @@ Lab.caselogController = SC.Object.create({
         activities   = this.get('activities'),
         activity     = activities.filterProperty('route', route)[0],
         activityId   = activity && activity.get('id'),
+        useQuill     = activity && activity.get('isArgumentationChallenge'),
         activityStarsList = stars[activityId] || [];
     
-    return activityStarsList.lastObject() || 0;
+    return {
+      stars:    activityStarsList.lastObject() || 0,
+      useQuill: !!useQuill     // want this coerced to a Boolean
+    };
   }
 
 });

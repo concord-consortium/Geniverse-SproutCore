@@ -65,8 +65,12 @@ Lab.caselogPage = SC.Page.design({
         context.push('</div>');
 
 
-        starClassFor = function(stars) {
-          switch (stars) {
+        starClassFor = function(starInfo) {
+          if (starInfo.useQuill) {
+            return starInfo.stars > 0 ? 'quill-on' : 'quill-off';
+          }
+          
+          switch (starInfo.stars) {
             case 1:
               return 'one-star';
             case 2:
@@ -84,7 +88,7 @@ Lab.caselogPage = SC.Page.design({
 
           challenges = cases[i].challenges;
           for (j = 0, max_j = challenges.length; j < max_j; j++) {
-            context.push('<li class="' + starClassFor(challenges[j].stars) + '"><a href="' + challenges[j].href + '">' + challenges[j].title + '</a></li>');
+            context.push('<li class="' + starClassFor(challenges[j].starInfo) + '"><a href="' + challenges[j].href + '">' + challenges[j].title + '</a></li>');
           }
           context.push('</ul>');
           context.push('</div>');
