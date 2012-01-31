@@ -43,34 +43,34 @@ body {
 
 /* CASE LOG
 ---------------------------------------------------------------------*/
-#caselog {
+#caselog-book {
 	background: url(/static/lab/en/current/resources/caselog/caselog.png) no-repeat;
 	color: #492222;
 	height: 600px;
 	margin: 0 auto;
 	width: 960px;
 	}
-	#caselog h1 {
+	#caselog-book h1 {
 		color: #111111;
 		font-size: 48px;
 		font-weight: normal;
 		text-align: center;
 		}
-	#caselog h2 {
+	#caselog-book h2 {
 		color: #492222;		
 		font-size: 32px;
 		text-align: center;
 		}
-	#caselog h3 {
+	#caselog-book h3 {
 		font-weight: bold;
 		font-size: 18px;
 		}
-	#caselog #col1, #caselog #col2 {
+	#caselog-book #col1, #caselog-book #col2 {
 		float: left;
 		padding-top: 90px;
 		width: 50%;
 		}
-	#caselog .case {
+	#caselog-book .case {
 		background: #fff;
 		height: 110px;
 		opacity: .5;
@@ -80,46 +80,46 @@ body {
 		-webkit-border-radius: 20px;
 		border-radius: 20px;
 		}
-		#caselog .case ul {
+		#caselog-book .case ul {
 			list-style: none;
 			margin-top: 0;
 			}
-		#caselog .case li {
+		#caselog-book .case li {
 			background: url(/static/lab/en/current/resources/caselog/no-star.png) no-repeat;
 			font-size: 1em;
 			line-height: 160%;
 			padding-left: 47px;
 			}
-		#caselog .case li.one-star {
+		#caselog-book .case li.one-star {
 			background: url(/static/lab/en/current/resources/caselog/one-star.png) no-repeat;
 			}
-		#caselog .case li.two-star {
+		#caselog-book .case li.two-star {
 			background: url(/static/lab/en/current/resources/caselog/two-star.png) no-repeat;
 			}
-		#caselog .case li.three-star {
+		#caselog-book .case li.three-star {
 			background: url(/static/lab/en/current/resources/caselog/three-star.png) no-repeat;
 			}
-	#caselog .case.active, #caselog .case.complete {
+	#caselog-book .case.active, #caselog-book .case.complete {
 		opacity: .8;
 		}
-	#caselog .case.complete {
+	#caselog-book .case.complete {
 		background: #fff url(/static/lab/en/current/resources/caselog/check.png) no-repeat right top;
 		}
-	#caselog #col1 .case {
+	#caselog-book #col1 .case {
 		margin: 0 55px 10px 100px; 
 		}
-	#caselog #col2 .case {
+	#caselog-book #col2 .case {
 		margin: 0 105px 10px 50px; 
 		}
-	#caselog .case:hover, #caselog .case:focus {
+	#caselog-book .case:hover, #caselog-book .case:focus {
 		opacity: .8;
 		}
-	#caselog .case a {
+	#caselog-book .case a {
 		color: #492222;
 		display: block;
 		text-decoration: none;
 		}
-	#caselog #title {
+	#caselog-book #title {
 		height: 110px;
 		margin-bottom: 10px;
 		padding: 5px 10px;
