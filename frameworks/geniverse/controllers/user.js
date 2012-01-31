@@ -33,7 +33,13 @@ Geniverse.userController = SC.ObjectController.create(
   
   findUser: function (username, callback) {
     var self = this;
-    var query = SC.Query.local(Geniverse.User, {conditions: 'username = "' + username + '"'});
+    var query = SC.Query.local(Geniverse.User, 
+      {
+        conditions: 'username = "' + username + '"',
+        restParams: Geniverse.makeRestParams({
+          username: username
+        })
+    });
     var users = Geniverse.store.find(query);
     var sendFoundUser = function() {
         var user = users.firstObject();
