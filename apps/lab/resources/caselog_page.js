@@ -82,7 +82,7 @@ Lab.caselogPage = SC.Page.design({
         };
         
         for (i = 0, max_i = cases.length; i < max_i; i++) {
-          context.push('<div class="case active">');
+          context.push('<div class="case caselog-active">');
           context.push('<h3 class="tk-scrivano">' + cases[i].title + '</h3>');
           context.push('<ul>');
 
@@ -104,7 +104,7 @@ Lab.caselogPage = SC.Page.design({
         context.push('</div>');     // #caselog
         context.push('</div>');     // #caselog-wrap
 
-        context.push('<div id="nav">');
+        context.push('<div id="caselog-nav">');
         context.push('<ul>');
 
         levelNames  = Lab.caselogController.levelNames;
@@ -112,7 +112,7 @@ Lab.caselogPage = SC.Page.design({
         levelTitles[Lab.LEVEL_DNA] = "DNA to<br>Trait";  // special-case level name of "dna" to "DNA To Trait"
 
         for (i = 0, max_i = levelNames.length; i < max_i; i++) {
-          extraClassNames = i <= currentLevel ? ' active' : '';
+          extraClassNames = i <= currentLevel ? ' caselog-active' : '';
           context.push('<li id="' + levelNames[i] + '" class="tk-scrivano' + extraClassNames + '"><a href="#caselog/' + levelNames[i] + '">' + levelTitles[i] + '</a></li>');
         }
 

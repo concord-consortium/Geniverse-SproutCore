@@ -33,6 +33,7 @@
 	#caselog-book h2 {
 		color: #492222;		
 		font-size: 32px;
+		font-weight: normal;		
 		text-align: center;
 		}
 	#caselog-book h3 {
@@ -56,7 +57,7 @@
 		}
 		#caselog-book .case ul {
 			list-style: none;
-			margin-top: 0;
+			margin: 0;
 			}
 		#caselog-book .case li {
 			background: static_url('caselog-no-star.png') no-repeat;
@@ -79,7 +80,7 @@
 		#caselog-book .case li.quill-off {
 			background: static_url('quill-off-15x15.png') no-repeat;
 			}
-	#caselog-book .case.active, #caselog-book .case.complete {
+	#caselog-book .case.caselog-active, #caselog-book .case.complete {
 		opacity: .8;
 		}
 	#caselog-book .case.complete {
@@ -107,14 +108,14 @@
 		
 /* NAVIGATION
 ---------------------------------------------------------------------*/
-#nav {
+#caselog-nav {
 	background: #492222;
 	}
-	#nav ul {
+	#caselog-nav ul {
 		margin: 20px auto;
 		width: 960px;
 		}
-		#nav ul li {
+		#caselog-nav ul li {
 			background: static_url('book.png') no-repeat center top;
 			float: left;
 			font-size: 12px;
@@ -128,13 +129,13 @@
 			text-align: center;
 			width: 140px;
 			}
-		#nav ul li.active {
+		#caselog-nav ul li.caselog-active {
 			opacity: 1;
 			}
-		#nav ul li:hover, #nav ul li:focus {
+		#caselog-nav ul li:hover, #caselog-nav ul li:focus {
 			opacity: 1;
 			}
-		#nav ul li a {
+		#caselog-nav ul li a {
 			color: #e5c59e;
 			display: block;
 			height: auto;
@@ -143,21 +144,21 @@
 			text-decoration: none;
 			width: 116px;
 			}
-		#nav ul li#training a {
+		#caselog-nav ul li#training a {
 			background: static_url('training.png') no-repeat center 80px;
 			}
-		#nav ul li#apprentice a {
+		#caselog-nav ul li#apprentice a {
 			background: static_url('apprentice.png') no-repeat center 80px;
 			}
-		#nav ul li#journeyman a {
+		#caselog-nav ul li#journeyman a {
 			background: static_url('journeyman.png') no-repeat center 80px;
 			}
-		#nav ul li#master a {
+		#caselog-nav ul li#master a {
 			background: static_url('master.png') no-repeat center 80px;
 			}
-		#nav ul li#meiosis a {
+		#caselog-nav ul li#meiosis a {
 			background: static_url('meiosis.png') no-repeat center 80px;
 			}
-		#nav ul li#dna a {
+		#caselog-nav ul li#dna a {
 			background: static_url('dna.png') no-repeat center 80px;
 			}
