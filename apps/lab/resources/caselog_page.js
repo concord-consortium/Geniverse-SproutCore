@@ -23,15 +23,19 @@ Lab.caselogPage = SC.Page.design({
 
       currentLevelBinding:     'Lab.caselogController.currentLevel',
       currentLevelNameBinding: 'Lab.caselogController.currentLevelName',
+      levelsBinding:           'Lab.caselogController.levels',
 
-      displayProperties: ['currentLevel'],
+      displayProperties: ['currentLevel', 'levels'],
 
       render: function (context, isFirstTime) {
+        
         var currentLevel     = this.get('currentLevel'),
             currentLevelName = this.get('currentLevelName'),
+            levels           = this.get('levels'),
             cases, i, max_i,
             challenges, j, max_j,
-            levelNames, levelTitles, extraClassName;
+            starClassFor,
+            levelNames, levelTitles, extraClassNames;
 
         // Note that if you go to the caselog route on the initial app load, then currentLevel is undefined
         // because the binding hasn't had time to sync. If so, schedule a render for the next runloop, when the binding
@@ -41,14 +45,14 @@ Lab.caselogPage = SC.Page.design({
         // render from scratch instead of trying to modify the view's DOM to match the required output. In order to
         // do that and not confuse SC.View, schedule a render for the next runloop.
 
-        if ( !isFirstTime || typeof currentLevel === 'undefined' || typeof currentLevelName === 'undefined') {
+        if ( !isFirstTime || typeof levels === 'undefined' || typeof currentLevel === 'undefined' || typeof currentLevelName === 'undefined') {
           this.invokeLast(this.replaceLayer);
           return;
         }
-
+        
         // Okay, render up some fresh HTML.
-
-        cases = Lab.caselogController.levels[currentLevel].cases;
+        
+        cases = levels[currentLevel].cases;
 
         context.push('<div id="caselog-wrap">');
         context.push('<div id="caselog-book">');
@@ -60,15 +64,27 @@ Lab.caselogPage = SC.Page.design({
         context.push('<h2 class="tk-scrivano">' + currentLevelName.capitalize() + '</h2>');
         context.push('</div>');
 
+
+        starClassFor = function(stars) {
+          switch (stars) {
+            case 1:
+              return 'one-star';
+            case 2:
+              return 'two-star';
+            case 3:
+              return 'three-star';
+          }
+          return 'no-star';
+        };
+        
         for (i = 0, max_i = cases.length; i < max_i; i++) {
           context.push('<div class="case active">');
           context.push('<h3 class="tk-scrivano">' + cases[i].title + '</h3>');
           context.push('<ul>');
 
           challenges = cases[i].challenges;
-
           for (j = 0, max_j = challenges.length; j < max_j; j++) {
-            context.push('<li><a href="' + challenges[j].href + '">' + challenges[j].title + '</a></li>');
+            context.push('<li class="' + starClassFor(challenges[j].stars) + '"><a href="' + challenges[j].href + '">' + challenges[j].title + '</a></li>');
           }
           context.push('</ul>');
           context.push('</div>');
@@ -92,8 +108,8 @@ Lab.caselogPage = SC.Page.design({
         levelTitles[Lab.LEVEL_DNA] = "DNA to<br>Trait";  // special-case level name of "dna" to "DNA To Trait"
 
         for (i = 0, max_i = levelNames.length; i < max_i; i++) {
-          extraClassName = i <= currentLevel ? ' active' : '';
-          context.push('<li id="' + levelNames[i] + '" class="tk-scrivano' + extraClassName + '"><a href="#caselog/' + levelNames[i] + '">' + levelTitles[i] + '</a></li>');
+          extraClassNames = i <= currentLevel ? ' active' : '';
+          context.push('<li id="' + levelNames[i] + '" class="tk-scrivano' + extraClassNames + '"><a href="#caselog/' + levelNames[i] + '">' + levelTitles[i] + '</a></li>');
         }
 
         context.push('</ul>');
