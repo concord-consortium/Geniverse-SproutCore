@@ -51,7 +51,7 @@ Lab.caselogPage = SC.Page.design({
         cases = Lab.caselogController.levels[currentLevel].cases;
 
         context.push('<div id="caselog-wrap">');
-        context.push('<div id="caselog">');
+        context.push('<div id="caselog-book">');
 
         context.push('<div id="col1">');
 
