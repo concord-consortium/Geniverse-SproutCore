@@ -73,6 +73,12 @@
 		#caselog-book .case li.three-star {
 			background: url(/static/lab/en/current/resources/caselog/three-star.png) no-repeat;
 			}
+		#caselog-book .case li.quill-on {
+			background: url(/static/lab/en/current/resources/caselog/quill-on-15x15.png) no-repeat;
+			}
+		#caselog-book .case li.quill-off {
+			background: url(/static/lab/en/current/resources/caselog/quill-off-15x15.png) no-repeat;
+			}
 	#caselog-book .case.active, #caselog-book .case.complete {
 		opacity: .8;
 		}
