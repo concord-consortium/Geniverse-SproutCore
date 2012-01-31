@@ -33,6 +33,7 @@ Lab.routes = SC.Object.create({
   gotoCaselog: function(routeParams) {
     var level = routeParams.level;  // empty ('') or 'training', 'apprentice', 'journeyman', 'master', 'meiosis', 'dna'
     
+    if (level) Lab.caselogController.set('currentLevelName', level);
     Lab.statechart.sendAction('gotoCaselog');
   },
   
