@@ -200,6 +200,12 @@
           ]
         }
       ]
+    }, {
+      level: "meiosis",
+      cases: []
+    }, {
+      level: "dna",
+      cases: []
     }
   ];
 
