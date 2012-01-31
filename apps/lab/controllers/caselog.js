@@ -81,7 +81,7 @@ Lab.caselogController = SC.Object.create({
         activityStarsList = stars[activityId] || [];
     
     return {
-      stars:    activityStarsList.lastObject() || 0,
+      stars:    Math.max.apply([], [0].concat(activityStarsList)),
       useQuill: !!useQuill     // want this coerced to a Boolean
     };
   }
