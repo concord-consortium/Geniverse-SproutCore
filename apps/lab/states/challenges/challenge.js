@@ -33,6 +33,10 @@ Lab.challenge = Ki.State.extend({
     } else {
       this.get('statechart').sendAction('blockNextNavButton');
     }
+     
+    // preload spinner icon -- no point in a spinner for slow connections if we have to wait for the spinner
+    var img = new Image();
+    img.src = static_url('spinner-large.gif');
   },
 
   endChallenge: function() {
@@ -58,7 +62,7 @@ Lab.challenge = Ki.State.extend({
         layout: { width: 100, height: 100, centerX: 0, centerY: 0 },
         classNames: ['frameless'],
         contentView: SC.ImageView.extend({
-          value: static_url('spinner.gif')
+          value: static_url('spinner-large.gif')
         })
       }).append();
       Geniverse.gwtController.addObserver("drakesArePending", this, "checkAnswer");
