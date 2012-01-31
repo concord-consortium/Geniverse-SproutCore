@@ -26,6 +26,8 @@ Geniverse.dragonGenomeController = SC.Object.create({
   
   secondXAllelesMap: {},
   
+  waitingForMap: {},        // for each view, which drake we're expecting to receive. Allows us to ignore obsolete requests
+  
   // creates a dragon for a view, given a sex and whether the dragon should be pulled from
   // the challenge list or be generated randomly
   initDragonForView: function(index, sex, isChallengeDragon) {
@@ -70,10 +72,13 @@ Geniverse.dragonGenomeController = SC.Object.create({
       return;       // don't create new dragon if alleles are the same
     }
     this.dragonAllelesMap[index] = outStr;
+    
     var self = this;
+    var waitingFor;
+    waitingFor = this.waitingForMap[index] = Math.floor(Math.random() * 1000);
     Geniverse.gwtController.generateDragonWithAlleles(outStr, sex, name, function(dragon) {
      SC.run(function() {
-       self._setDragon(index, dragon);
+       self._setDragon(index, dragon, waitingFor);
         // self.set(self.dragonIndexMap[index], dragon);
      });
     });
@@ -150,7 +155,10 @@ Geniverse.dragonGenomeController = SC.Object.create({
   
   },
   
-  _setDragon: function (index, dragon) {
+  _setDragon: function (index, dragon, waitingFor) {
+    if (!!this.waitingForMap[index] && this.waitingForMap[index] !== waitingFor){
+      return;             // stale drake returned
+    }
     if (dragon.get('alleles') !== this.dragonAllelesMap[index]) {
       this.set(this.dragonIndexMap[index], dragon);
       Lab.statechart.sendAction("chromosomeDragonChanged");
