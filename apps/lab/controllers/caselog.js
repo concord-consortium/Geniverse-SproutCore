@@ -4,7 +4,7 @@
 // ==========================================================================
 /*globals Lab Geniverse Ki */
 
-sc_require('resources/caselog/cases');
+sc_require('cases');
 
 Lab.LEVEL_TRAINING   = 0;
 Lab.LEVEL_APPRENTICE = 1;
