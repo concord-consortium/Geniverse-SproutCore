@@ -1,0 +1,210 @@
+Current story:
+  For argumentation cases, students should see a single feedback message with a quill and saying they have successfully
+  posted and have complete the challenge.
+
+Sam is doing:
+  Feedback on finishing a target challenge gives you a choice of retry or move on
+  (hhis will just send "retry" and "continue" actions that the statechart can handle)
+
+Other stories along the same lines:
+
+  Feedback on finishing a trial should also include which trial you just finished (eg. trial 1 of 3)
+
+  Eliminate redundant feedback boxes
+
+    (This happens not only in argumentation challenges, above, but also in matchTargetDrakesListChallenge where an alertPaneDidDismiss callback is responsible for possibly calling _challengeComplete(), which issues the "you successfully completed the challenge" message)
+
+  Feedback on finishing an argumentation challenge offers two options 
+
+		Feedback box should do the following:
+		1. confirm that you have completed a post and earned a quill.
+		2. give option to return to challenge
+		3. give option to move to next challenge, or if it is that last challenge in Case, return to Case Log.
+
+---
+
+TODO:
+
+1. Replace direct calls of methods in states with sendAction
+
+  ✓ enablePreviousNavButton 
+  ✓ enableNextNavButton
+  ✓ blockNextNavButton
+
+2. General cleanup
+
+  ✓ delint challenge.js
+  ✓ replace !!s
+
+
+3. Global rethink of end-of-challenge alerts
+
+step 1. find all the alerts
+
+  argumentationChallenge.didSendBlogPost
+
+	  "Good work!", 
+	  "You have posted to the journal.\nYou can continue to work on this challenge if you like, or you can"
+	  +moveOnMessage
+	
+	challenge._challengeComplete
+
+		"Good work!", 
+	  "You've completed all the trials in this challenge!\n"
+	  +starsMessage+moveOnMessage
+	
+	
+	matchOneAtATimeChallenge.revealClicked
+	  
+	  *** ON A TIMER! (500 ms delay)
+
+		"Good work!", 
+	  "The drake you have created matches the target drake."
+
+ 		OR
+
+    "That's not the drake!", 
+    "The drake you have created doesn't match the target drake. Please try again."
+
+
+  matchTargetDrakesListChallenge.checkMatchDragon
+
+    "Good work!", 
+    "The drake you have created matches the target drake."
+
+    OR
+
+    "That's not the drake!", 
+    "The drake you have created doesn't match the target drake. Please try again."
+
+
+	matchTargetDrakesListChallenge._challengeComplete
+  
+    "Good work!", 
+    "You've completed all the trials in this challenge!\n"
+     +starsMessage+moveOnMessage
+
+
+  matchTargetDrakesOneAtATimeChallenge.checkMatchDragon
+
+    "Good work!", 
+    "The drake you have created matches the target drake."
+
+    OR
+
+    "That's not the drake!", 
+    "The drake you have created doesn't match the target drake. Please try again."
+
+	
+	matchThreeToOneChallenge._showAlert
+
+  	*** ON A TIMER! (500 ms delay)
+  
+	  "Good work!", 
+    "All of the drakes you have created match the target drake."
+		
+		OR
+
+    "You didn't get all of them."
+    (plus some message)
+
+    OR 
+		"You have some duplicates.",
+    "Some of your drakes are exactly the same! All of your drakes need to have different alleles."
+
+
+	showingBlogButton._showWaitDialog
+	
+	  "",
+    "Posting to the journal..."
+
+  showingBlogButton._showFailureMessage
+
+	  "Error posting to the journal", 
+	  "Your post doesn't seem to have reached the journal. Please check your internet connection and try again."
+
+	showingBlogButton._showConfirmation
+	
+    "Journal post successfully created", 
+    "Your latest post can be found <a target='_blank' href='"+postURL+"'>here</a>.<br/>(Link will open in a new tab) "
+
+  + 2 from stable view, not related to challenges
+
+
+  SUMMARY OF SC.AlertPane usage in Lab:
+
+		  Challenge._challengeComplete()
+		    (message includes stars)
+		
+				* matchOneAtATimeChallenge.revealClicked()                extends Lab.Challenge
+			      (message is match or no match)
+		
+				  matchTargetDrakesOneAtATimeChallenge.checkMatchDragon() extends Lab.Challenge
+			      (message is match or no match)
+		
+				* matchThreeToOneChallenge._showAlert()			              extends Lab.Challenge
+			      (complex message: all match, none match, has duplicate dragons, matches some but not all, etc)
+		
+		  * = shown by a timer callback	
+		
+		  matchTargetDrakesListChallenge.checkMatchDragon()
+		    (message is match or no match)		
+		
+		  matchTargetDrakesListChallenge._challengeComplete()
+		    (message includes stars)
+
+		  argumentationChallenge.didSendBlogPost()
+         (message is you have posted & can move on)
+
+		  showingBlogButton._showConfirmation()
+		    (message is post created; here is the link)
+		
+		    - sends didSendBlogPost action in its alertPaneDidDismiss callback
+	      - key point: this message is *always* shown regardless of challenge type; 
+	        current challenge may ignore didSendBlogPost
+
+		
+		also (less relevant to refactoring of post-challenge notifications):
+
+		  showingBlogButton._showWaitDialog()
+		  showingBlogButton._showFailureMessage()
+		  
+		  StableView.stable.acceptDragOperation()
+
+
+step 2. What states are the alerts in?
+
+This is answerable by reading the class names, above. (They are the names of the states.) However, note that the showingBlogButton state is concurrent with the challenge states. The challenge states are mutually exclusive, but don't forget that many states above extend the Challenge base class, which is also represented above.
+
+
+
+step 3. What alerts do we want to add?
+
+  Doesn't look as if we actually want to add alerts. However, we want to add star feedback to alerts, plus trial number.
+
+ 
+step 4. What states do those alerts go into?
+
+  N/A
+
+
+step 5. Evaluate whether a single alertbox controller could be signalled at the right time to send a single, "combined" alert.
+
+  TODO
+
+step 6. Evaluate whether that single alertbox controller needs to combine several different feedback messages that it might or might not receive in the course of "building" a combined alert, and how to do that without endowing the controller with special knowledge about alert text.
+
+  TODO
+
+
+Why are some on a timer?
+
+  for a real UI purpose, not because of a technical problem
+ 
+what dimensions do the alert panes use?
+
+
+why does matchTargetDrakesListChallenge not extend Lab.Challenge?
+why so many "Didn't match the target drake" messages?
+
+

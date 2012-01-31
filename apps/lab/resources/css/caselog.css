@@ -11,14 +11,14 @@
   }
 
 #caselog-wrap {
-	background: #733230 url(/static/lab/en/current/resources/caselog/caselog-bg.png) center top no-repeat;
+	background: #733230 static_url('caselog-bg.png') center top no-repeat;
 	margin: 0;
 	}
 
 /* CASE LOG
 ---------------------------------------------------------------------*/
 #caselog-book {
-	background: url(/static/lab/en/current/resources/caselog/caselog.png) no-repeat;
+	background: static_url('caselog.png') no-repeat;
 	color: #492222;
 	height: 600px;
 	margin: 0 auto;
@@ -59,31 +59,31 @@
 			margin-top: 0;
 			}
 		#caselog-book .case li {
-			background: url(/static/lab/en/current/resources/caselog/no-star.png) no-repeat;
+			background: static_url('caselog-no-star.png') no-repeat;
 			font-size: 1em;
 			line-height: 160%;
 			padding-left: 47px;
 			}
 		#caselog-book .case li.one-star {
-			background: url(/static/lab/en/current/resources/caselog/one-star.png) no-repeat;
+			background: static_url('caselog-one-star.png') no-repeat;
 			}
 		#caselog-book .case li.two-star {
-			background: url(/static/lab/en/current/resources/caselog/two-star.png) no-repeat;
+			background: static_url('caselog-two-star.png') no-repeat;
 			}
 		#caselog-book .case li.three-star {
-			background: url(/static/lab/en/current/resources/caselog/three-star.png) no-repeat;
+			background: static_url('caselog-three-star.png') no-repeat;
 			}
 		#caselog-book .case li.quill-on {
-			background: url(/static/lab/en/current/resources/caselog/quill-on-15x15.png) no-repeat;
+			background: static_url('quill-on-15x15.png') no-repeat;
 			}
 		#caselog-book .case li.quill-off {
-			background: url(/static/lab/en/current/resources/caselog/quill-off-15x15.png) no-repeat;
+			background: static_url('quill-off-15x15.png') no-repeat;
 			}
 	#caselog-book .case.active, #caselog-book .case.complete {
 		opacity: .8;
 		}
 	#caselog-book .case.complete {
-		background: #fff url(/static/lab/en/current/resources/caselog/check.png) no-repeat right top;
+		background: #fff static_url('check.png') no-repeat right top;
 		}
 	#caselog-book #col1 .case {
 		margin: 0 55px 10px 100px; 
@@ -115,7 +115,7 @@
 		width: 960px;
 		}
 		#nav ul li {
-			background: url(/static/lab/en/current/resources/caselog/book.png) no-repeat center top;
+			background: static_url('book.png') no-repeat center top;
 			float: left;
 			font-size: 12px;
 			font-weight: bold;
@@ -144,20 +144,20 @@
 			width: 116px;
 			}
 		#nav ul li#training a {
-			background: url(/static/lab/en/current/resources/caselog/training.png) no-repeat center 80px;
+			background: static_url('training.png') no-repeat center 80px;
 			}
 		#nav ul li#apprentice a {
-			background: url(/static/lab/en/current/resources/caselog/apprentice.png) no-repeat center 80px;
+			background: static_url('apprentice.png') no-repeat center 80px;
 			}
 		#nav ul li#journeyman a {
-			background: url(/static/lab/en/current/resources/caselog/journeyman.png) no-repeat center 80px;
+			background: static_url('journeyman.png') no-repeat center 80px;
 			}
 		#nav ul li#master a {
-			background: url(/static/lab/en/current/resources/caselog/master.png) no-repeat center 80px;
+			background: static_url('master.png') no-repeat center 80px;
 			}
 		#nav ul li#meiosis a {
-			background: url(/static/lab/en/current/resources/caselog/meiosis.png) no-repeat center 80px;
+			background: static_url('meiosis.png') no-repeat center 80px;
 			}
 		#nav ul li#dna a {
-			background: url(/static/lab/en/current/resources/caselog/dna.png) no-repeat center 80px;
+			background: static_url('dna.png') no-repeat center 80px;
 			}
