@@ -99,8 +99,6 @@ Lab.ACTIVITY = SC.Responder.create(
           if (matches) {
             SC.Logger.info("Using activity named: %s, with route: %s", title, route);
             return YES;
-          } else {
-            SC.Logger.info("found non-matching activitiy named: %s, with route: %s ", title, route);
           }
           return NO;
         });
