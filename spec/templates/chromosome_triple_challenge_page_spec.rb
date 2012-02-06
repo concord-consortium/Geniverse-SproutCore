@@ -240,8 +240,6 @@ describe "Templates" do
     end
 
     def verify_challenge_complete
-      verify_alert(:plain, "OK")
-
       # Check that the correct number of stars were awarded
       expected_stars = [2]
 
@@ -249,6 +247,8 @@ describe "Templates" do
       num_stars = stars[@activity_guid]
 
       num_stars.should eq(expected_stars), "Number of stars should be #{expected_stars.inspect}, was: #{num_stars.inspect}"
+
+      verify_alert(:plain, ["Go back to the case log", "Try again"]) # the challenge alert
     end
 
     def verify_images(phenotype_view, should_match)

@@ -9,7 +9,7 @@ describe "Templates" do
       @app = new_test({:app_root_path => "/lab#pagetype/reference/chromosomeBreedingChallengePage"}) {|app|
         app['isLoaded'] == true
 
-        app.move_to 1, 1 
+        app.move_to 1, 1
         app.resize_to 1024, 768
 
         define_common_paths(app)
@@ -137,7 +137,6 @@ describe "Templates" do
       sleep 3
 
       verify_match(true)
-      verify_alert(:plain, "OK") # the challenge alert
 
       # Check that the correct number of stars were awarded
       expected_stars = [1]
@@ -146,6 +145,8 @@ describe "Templates" do
       num_stars = stars[@activity_guid]
 
       num_stars.should eq(expected_stars), "Number of stars should be #{expected_stars.inspect}, was: #{num_stars.inspect}"
+
+      verify_alert(:plain, ["Go back to the case log", "Try again"]) # the challenge alert
     end
 
   end
