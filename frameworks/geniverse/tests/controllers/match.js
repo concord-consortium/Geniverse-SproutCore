@@ -287,6 +287,62 @@ test("NumberOfBreedMoves should be infinity in an impossible case", function() {
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), Infinity, "Can't change drake2, so should be Infinity");
 });
 
+test("NumberOfBreedMoves should work in Tk or A5 case", function() {
+  var initMother = new Drake(
+    {
+      tail: "Long tail"
+    },
+    "a:T,b:T",
+    ["t", "Tk"]);
+  var initFather = new Drake(
+    {
+      tail: "Short tail"
+    },
+    "a:t,b:t",
+    []);
+  var targetDrake = new Drake(
+    {
+      tail: "Kinked tail"
+    }); 
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 2, "Should take 2 moves");
+  
+  initMother = new Drake(
+    {
+      tail: "Long tail"
+    },
+    "a:T,b:T",
+    ["t", "Tk"]);
+  initFather = new Drake(
+    {
+      tail: "Kinked tail"
+    },
+    "a:Tk,b:Tk",
+    ["t", "Tk"]);
+  targetDrake = new Drake(
+    {
+      tail: "Short tail"
+    }); 
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
+  
+  initMother = new Drake(
+    {
+      armor: "Five armor"
+    },
+    "a:A1,b:A1",
+    ["A1", "A2", "a"]);
+  initFather = new Drake(
+    {
+      armor: "No armor"
+    },
+    "a:a,b:a",
+    ["A1", "A2", "a"]);
+  targetDrake = new Drake(
+    {
+      armor: "Five armor"
+    }); 
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 2, "Should take 2 moves");
+});
+
 test("NumberOfBreedMoves work in two trait cases", function() {
   var initMother = new Drake(
     {

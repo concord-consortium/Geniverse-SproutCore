@@ -133,7 +133,8 @@ Geniverse.matchController = SC.ArrayController.create(
                   allele2 = j%2 === 0 ? solution[j+1] : solution[j-1],
                   solutionMoves = 0;
               if (dragon1Alleles.indexOf(allele1) === -1) {
-                if (changeableAlleles1.indexOf(allele1.toLowerCase()) > -1) {
+                if (changeableAlleles1.indexOf(allele1) > -1 ||
+                    changeableAlleles1.indexOf(allele1.toLowerCase()) > -1) {
                   solutionMoves++;
                 } else {
                   solutionMoves = Infinity;
@@ -141,7 +142,8 @@ Geniverse.matchController = SC.ArrayController.create(
               }
 
               if (dragon2Alleles.indexOf(allele2) === -1) {
-                if (changeableAlleles2.indexOf(allele2.toLowerCase()) > -1) {
+                if (changeableAlleles2.indexOf(allele2) > -1 ||
+                      changeableAlleles2.indexOf(allele2.toLowerCase()) > -1) {
                   solutionMoves++;
                 } else {
                   solutionMoves = Infinity;
