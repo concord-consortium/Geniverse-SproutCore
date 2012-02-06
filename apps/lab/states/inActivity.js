@@ -55,6 +55,10 @@ Lab.inActivity = Ki.State.extend({
     if ((t - this.lastNavigation) > 2000) {
       this.lastNavigation = t;
 
+      SC.RunLoop.begin();
+      Geniverse.activityController.set('content', null);
+      SC.RunLoop.end();
+
       if (Geniverse.activityController.get('status') & SC.Record.READY) {
         this._activityLoaded();
       } else {
