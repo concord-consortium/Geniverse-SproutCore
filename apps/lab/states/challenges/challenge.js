@@ -107,7 +107,7 @@ Lab.challenge = Ki.State.extend({
             if (next) {
               Lab.statechart.sendAction('gotoNextActivity');
             } else {
-              Lab.routes.gotoCaseLogPage2();
+              Lab.routes.openCaselogRoute();
             }
           } else {
             Lab.statechart.sendAction('repeatChallenge');
