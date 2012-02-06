@@ -31,6 +31,7 @@ Geniverse.dragonGenomeController = SC.Object.create({
   // creates a dragon for a view, given a sex and whether the dragon should be pulled from
   // the challenge list or be generated randomly
   initDragonForView: function(index, sex, isChallengeDragon) {
+    this.waitingForMap[index] = null;
     if (isChallengeDragon) {
       this._generateChallengeDragon(sex, index);
     } else {
@@ -129,6 +130,9 @@ Geniverse.dragonGenomeController = SC.Object.create({
       this.secondXAllelesMap[index] = null;
     }
     
+    var waitingFor;
+    waitingFor = this.waitingForMap[index] = Math.floor(Math.random() * 1000);
+    
     function updateDragon(dragon) {
       if (sex === 0 && !!currentDragon && currentDragon.get('sex') === 1) {
         // we're switching from female to male, store the current alleles of the second X chromosome
@@ -139,10 +143,10 @@ Geniverse.dragonGenomeController = SC.Object.create({
         self.secondXAllelesMap[index] = save.join(",");
       }
       SC.run(function() {
-        self._setDragon(index, dragon);
+        self._setDragon(index, dragon, waitingFor);
       });
     }
-
+    
     if (sex !== undefined && sex !== null && fixedAlleles !== undefined && fixedAlleles !== null){
       Geniverse.gwtController.generateDragonWithAlleles(fixedAlleles, sex, "", updateDragon);
     } else if (sex !== undefined && sex !== null) {
