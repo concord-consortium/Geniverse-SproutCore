@@ -66,6 +66,8 @@ Lab.caselogPage = SC.Page.design({
 
 
         starClassFor = function(starInfo) {
+          starInfo = starInfo || {};
+          
           if (starInfo.useQuill) {
             return starInfo.stars > 0 ? 'quill-on' : 'quill-off';
           }
