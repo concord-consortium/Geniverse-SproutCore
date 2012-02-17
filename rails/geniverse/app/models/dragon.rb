@@ -21,7 +21,8 @@ class Dragon < ActiveRecord::Base
       :isMatchDragon => /^(true|false)$/,
       :bred => /^(true|false)$/,
       :isEgg => /^(true|false)$/,
-      :breedTime => /^(\d+|null)$/
+      :breedTime => /^(\d+|null)$/,
+      :isMatchDragon => /^(true|false)$/
     }
   end
 
