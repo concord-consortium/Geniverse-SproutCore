@@ -33,3 +33,7 @@
 
 .sc-pane.sc-panel.frameless { z-index: auto; }
 .sc-pane.sc-panel.frameless img { background-color: transparent; }
+
+.black-text {
+  color: #000000;
+}
