@@ -7,15 +7,22 @@
 Lab.defaultChallenge = Ki.State.extend({
 
   challengeComplete: YES,
+  
+  _pageId: null,
 
   enterState: function() {
     this.get('statechart').sendAction('unblockNextNavButton');
+    this._pageId = Geniverse.activityController.get('guid');
   },
 
   exitState: function() {
-    // award the user 1 "star" for entering and exiting this challenge
-    var pageId = Geniverse.activityController.get('guid');
-    Geniverse.userController.setPageStars(pageId, 1);
+    // use previously-saved pageId, because exitState is usually called after the page has
+    // already changed, so it's too late to get the pageId at that point.
+    var pageId = this._pageId || Geniverse.activityController.get('guid');
+    
+    // award the user 3 stars for entering and exiting this challenge
+    Geniverse.userController.setPageStars(pageId, 3);
+    Geniverse.store.commitRecords();
   }
 
 });

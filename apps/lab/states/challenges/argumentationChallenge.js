@@ -28,6 +28,7 @@ Lab.argumentationChallenge = Ki.State.extend({
     // Award a "star" for completion
     var pageId = Geniverse.activityController.get('guid');
     Geniverse.userController.setPageStars(pageId, 1);
+    Geniverse.store.commitRecords();
   },
   
   didSendBlogPost: function() {
