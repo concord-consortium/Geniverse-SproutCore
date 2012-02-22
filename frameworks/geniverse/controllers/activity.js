@@ -209,6 +209,10 @@ Geniverse.activityController = SC.ObjectController.create(
     }
 
     Geniverse.scoringController.set('minimumScore', 0);
-  }.observes('*content')
+  }.observes('*content'),
+  
+  startNewSession: function() {
+    this.set('currentSession', Math.floor(Math.random() * 100000));
+  }
 
 });

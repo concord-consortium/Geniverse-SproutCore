@@ -55,6 +55,7 @@ Geniverse.Dragon = SC.Record.extend(
   metaInfo: null,
   characteristicMap: null,
   hasBeenMatched: NO,
+  session: null,
   
   gOrganismDefined: function() {
     var gOrg = this.get('gOrganism');

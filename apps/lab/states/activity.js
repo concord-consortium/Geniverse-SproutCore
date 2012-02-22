@@ -145,6 +145,7 @@ Lab.ACTIVITY = SC.Responder.create(
 
   loadData: function() {
     SC.Logger.log("ACTIVITY loadData");
+    Geniverse.activityController.startNewSession();
 
     this.set('hasLoadedActivityData', NO);
 
@@ -221,12 +222,13 @@ Lab.ACTIVITY = SC.Responder.create(
     /////////////////// Challenge dragons
     SC.Logger.log("LOAD: challenge dragons");
     var challengePoolQuery = SC.Query.local('Geniverse.Dragon', {
-      conditions: 'bred = false AND isInMarketplace = false AND isMatchDragon = false AND user = {user} AND activity = {activity} AND mother = {mother} AND father = {father}',
+      conditions: 'bred = false AND isInMarketplace = false AND isMatchDragon = false AND user = {user} AND activity = {activity} AND mother = {mother} AND father = {father} AND session = {session}',
       user: user,
       activity: activity,
       mother: null,
       father: null,
       orderBy: 'name, storeKey',
+      session: Geniverse.activityController.get('currentSession'),
       restParams: Geniverse.makeRestParams({
         mother_id: 'null',
         father_id: 'null',
@@ -258,12 +260,13 @@ Lab.ACTIVITY = SC.Responder.create(
      /////////////////// Match dragons
       SC.Logger.log("LOAD: match dragons");
       var matchPoolQuery = SC.Query.local('Geniverse.Dragon', {
-        conditions: 'bred = false AND isMatchDragon = true AND user = {user} AND activity = {activity} AND isInMarketplace = false AND mother = {mother} AND father = {father}',
+        conditions: 'bred = false AND isMatchDragon = true AND user = {user} AND activity = {activity} AND isInMarketplace = false AND mother = {mother} AND father = {father} AND session = {session}',
         user: user,
         activity: activity,
         mother: null,
         father: null,
         orderBy: 'name, storeKey',
+        session: Geniverse.activityController.get('currentSession'),
         restParams: Geniverse.makeRestParams({
           mother_id: 'null',
           father_id: 'null',
@@ -330,19 +333,20 @@ Lab.ACTIVITY = SC.Responder.create(
   initDragonsFromJson: function(isMatchDragons, count) {
     function handleDragon(dragon) {
       SC.RunLoop.begin();
+      dragon.set('session', Geniverse.activityController.get('currentSession'));
       if (isMatchDragons){
         dragon.set('isMatchDragon', YES);     //prevent it from showing up in other controllers
         dragon.set('isInMarketplace', NO);
       } else {
         dragon.set('isInMarketplace', NO);
       }
-      SC.Logger.info("created dragon");
+      SC.Logger.info("created dragon for "+(isMatchDragons ? "match dragons" : "challenge dragons"));
       SC.Logger.dir(dragon.attributes());
       SC.RunLoop.end();
     }
     SC.Logger.info("Creating defaults");
     var organismConfigurations = this.getOrganismConfigurations(isMatchDragons);
-    SC.Logger.info("Found " + organismConfigurations.length + " defaults");
+    SC.Logger.info("Found " + organismConfigurations.length + " defaults for "+(isMatchDragons ? "match dragons" : "challenge dragons"));
 
     var dragonsRequired = count ? count : organismConfigurations.length;
     for (var i = 0; i < dragonsRequired; i++) {

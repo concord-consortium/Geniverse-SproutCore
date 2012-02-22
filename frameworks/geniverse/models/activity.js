@@ -45,7 +45,9 @@ Geniverse.Activity = SC.Record.extend(
   isArgumentationChallenge: SC.Record.attr(Boolean, {defaultValue: NO}),    // whether chal. is solved by a blog post 
   
   myCase: SC.Record.toOne('Geniverse.Case'),
-  myCaseOrder: SC.Record.attr(Number, { defaultValue: 1 })
+  myCaseOrder: SC.Record.attr(Number, { defaultValue: 1 }),
+  
+  currentSession: null
 });
 
 Geniverse.Activity.modelName = "activity";
