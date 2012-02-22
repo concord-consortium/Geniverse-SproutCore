@@ -71,14 +71,28 @@ Geniverse.Dragon = SC.Record.extend(
     var self = this;
     this.invokeLast(function() {
       if (self.get('gOrganismDefined') == NO) {
-        Geniverse.gwtController.generateGOrganismWithAlleles(self.get('alleles'), self.get('sex'), function(gOrg) {
-          self.set('gOrganism', gOrg);
-        });
+        if (self.get('status') && SC.Record.READY) {
+          self.createGOrganism();
+        } else {
+          self.addObserver('status', self.createGOrganism);
+        }
       }// else {
         // SC.Logger.info('gOrganism already defined. must be a session-generated dragon.');
         // SC.Logger.dir(self);
       // }
     });
+  },
+  
+  createGOrganism: function() {
+    if (this.get('status') & SC.Record.READY) {
+      this.removeObserver('status', this);
+      if (!this.get("alleles")) debugger
+      var self = this;
+      Geniverse.gwtController.generateGOrganismWithAlleles(this.get('alleles'), this.get('sex'), function(gOrg) {
+        console.log("setting gOrganism")
+        self.set('gOrganism', gOrg);
+      });
+    }
   },
   
   setAttributes: function() {
