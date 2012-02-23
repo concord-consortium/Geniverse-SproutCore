@@ -77,7 +77,9 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
         var numMatched = this.matchedOrganismViews.length;
         var numDupes = this.duplicateOrganismViews.length;
         var numIncorrect = this.incorrectOrganismViews.length;
-
+        
+        Geniverse.scoringController.incrementScore(1);
+        
         if (numMatched === 3){
           this.successfulMatch = YES;
           SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).plain(
@@ -90,7 +92,6 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
           );
         } else {
           this.successfulMatch = NO;
-          Geniverse.scoringController.incrementScore(1);
           this._resetTargetMatchedState();
 
           // if we only have matches and duplicates, display the message about duplicates.

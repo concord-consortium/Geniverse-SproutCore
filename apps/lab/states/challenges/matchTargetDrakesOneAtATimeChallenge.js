@@ -23,6 +23,8 @@ Lab.matchTargetDrakesOneAtATimeChallenge = Lab.challenge.extend({
   // @param dragons   an array [dragon1, dragon2]
   // @param view      the view to be updated
   checkMatchDragon: function(dragons, view) {
+    Geniverse.scoringController.incrementScore(1);
+    
     if (Geniverse.matchController.doesMatch(dragons[0], dragons[1])) {
       view.setPath('content.hasBeenMatched', YES);
       view._setClassNames();
@@ -37,7 +39,6 @@ Lab.matchTargetDrakesOneAtATimeChallenge = Lab.challenge.extend({
       );
     } else {
       this.successfulMatch = NO;
-      Geniverse.scoringController.incrementScore(1);
       SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).error(
         "That's not the drake!", 
         "The drake you have created doesn't match the target drake. Please try again.",

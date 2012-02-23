@@ -44,7 +44,7 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
     var initialDragon = Geniverse.dragonGenomeController.get('firstDragon');
     if (initialDragon && initialDragon.get('characteristicMap') &&
         Geniverse.matchController.get("currentDragon") && Geniverse.matchController.get("currentDragon").get('characteristicMap')) {
-      Geniverse.scoringController.set('minimumScore', Geniverse.matchController.numberOfMovesToReachCurrent(initialDragon));
+      Geniverse.scoringController.set('minimumScore', (Geniverse.matchController.numberOfMovesToReachCurrent(initialDragon) + 1));
     }
   },
   
@@ -57,6 +57,7 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
     sc_super();
     this.organismView = this.buttonView.get('parentView');
     this._revealImage();
+    Geniverse.scoringController.incrementScore(1);
     
     SC.Timer.schedule({
       target: this,
@@ -73,7 +74,6 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
           );
         } else {
           this.successfulMatch = NO;
-          Geniverse.scoringController.incrementScore(1);
           SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).error(
             "That's not the drake!", 
             "The drake you have created doesn't match the target drake. Please try again.",
