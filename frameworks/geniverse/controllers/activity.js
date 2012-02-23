@@ -199,13 +199,13 @@ Geniverse.activityController = SC.ObjectController.create(
     if (typeof twoStars == 'number') {
       Geniverse.scoringController.set('twoStarThreshold', twoStars);
     } else {
-      Geniverse.scoringController.set('twoStarThreshold', 2);
+      Geniverse.scoringController.set('twoStarThreshold', 1);
     }
 
     if (typeof threeStars == 'number') {
       Geniverse.scoringController.set('threeStarThreshold', threeStars);
     } else {
-      Geniverse.scoringController.set('threeStarThreshold', 1);
+      Geniverse.scoringController.set('threeStarThreshold', 0);
     }
 
     Geniverse.scoringController.set('minimumScore', 0);
