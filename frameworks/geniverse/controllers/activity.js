@@ -33,7 +33,7 @@ Geniverse.activityController = SC.ObjectController.create(
           SC.Logger.info("Setting intro screen url: ", myCase.get('introImageUrl'));
           Geniverse.introScreenController.set('imageUrl', myCase.get('introImageUrl'));
         };
-        if (myCase.get('status') & SC.READY) {
+        if (myCase.get('status') & SC.Record.READY) {
           setIntroImageUrl();
         } else {
           myCase.addObserver('status', this, setIntroImageUrl);
