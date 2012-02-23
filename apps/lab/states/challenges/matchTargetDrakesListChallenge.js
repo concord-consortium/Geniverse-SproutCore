@@ -49,10 +49,6 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
   },
   
   alertPaneDidDismiss: function() {
-    if (this.get('challengeComplete')){
-      return;
-    }
-    
     var numUnmatchedDrakes = Geniverse.matchController.filterProperty('hasBeenMatched', false).length;
     if (numUnmatchedDrakes === 0) {
       this._challengeComplete();
