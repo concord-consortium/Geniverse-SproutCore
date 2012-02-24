@@ -100,8 +100,10 @@ Geniverse.AnimationView = SC.View.extend(
 				if (mother !== null){
 					this.set('jsonData',mother);
 				} else {
-					if (father != null) {
+					if (father !== null) {
 	        	this.set('jsonData',father);						
+					} else {
+						this.set('jsonData',null);
 					}
     		}
 //				this.set('jsonData',null);
