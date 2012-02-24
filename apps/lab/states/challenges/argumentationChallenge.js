@@ -29,6 +29,9 @@ Lab.argumentationChallenge = Ki.State.extend({
     var pageId = Geniverse.activityController.get('guid');
     Geniverse.userController.setPageStars(pageId, 1);
     Geniverse.store.commitRecords();
+
+    // why can't bindings in SC work as advertised?
+    Lab.caselogController.propertyDidChange("userMetadata");
   },
   
   didSendBlogPost: function() {

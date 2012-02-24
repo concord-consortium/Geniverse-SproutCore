@@ -23,6 +23,8 @@ Lab.defaultChallenge = Ki.State.extend({
     // award the user 3 stars for entering and exiting this challenge
     Geniverse.userController.setPageStars(pageId, 3);
     Geniverse.store.commitRecords();
+
+    Lab.caselogController.propertyDidChange("userMetadata")
   }
 
 });

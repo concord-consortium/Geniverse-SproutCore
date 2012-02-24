@@ -47,6 +47,9 @@ Lab.challenge = Ki.State.extend({
     var stars = Geniverse.scoringController.get('achievedChallengeStars');
     var pageId = Geniverse.activityController.get('guid');
     Geniverse.userController.setPageStars(pageId, stars);
+
+    // why can't bindings in SC work as advertised?
+    Lab.caselogController.propertyDidChange("userMetadata");
     
     // save stars to the backend imediately, so we don't lose this data if the user hard quits
     Geniverse.store.commitRecords();
