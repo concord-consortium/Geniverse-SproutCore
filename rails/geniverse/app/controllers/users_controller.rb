@@ -2,7 +2,16 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.xml
   def index
-    @users = User.all
+    if params[:username]
+      user = User.find_by_username(params[:username])
+      @users = [user] if user
+
+      # raise ActiveRecord::RecordNotFound, "Couldn't find user with username #{params[:username]}" unless @users
+      @users = User.all unless @users
+    else
+       @users = User.all
+    end
+
 
     respond_to do |format|
       format.html # index.html.erb
@@ -18,7 +27,7 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     else
        @user = User.find_by_username(params[:username])
-       raise ActiveRecord::RecordNotFound, "Couldn't find user with username #{params[:username]}" unless @user 
+       raise ActiveRecord::RecordNotFound, "Couldn't find user with username #{params[:username]}" unless @user
     end
 
     respond_to do |format|
@@ -50,7 +59,7 @@ class UsersController < ApplicationController
     user_params = paramify_json(params[:user])
     user_params[:password_hash] = user_params[:passwordHash] if user_params.has_key? :passwordHash
     user_params.delete(:passwordHash)
-    
+
     @user = User.new(user_params)
 
     respond_to do |format|
@@ -93,5 +102,5 @@ class UsersController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
 end

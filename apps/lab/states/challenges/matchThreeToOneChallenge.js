@@ -2,36 +2,40 @@
 // Project:   Lab
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Lab Geniverse CcChat window Ki YES NO SC*/
+/*globals Lab Geniverse CcChat window Ki YES NO SC sc_super*/
 
-Lab.matchThreeToOneChallenge = Ki.State.extend({
+Lab.matchThreeToOneChallenge = Lab.challenge.extend({
   
   successfulMatch: NO,
-
-  challengeComplete: NO,
   
   organismViews: [],
   matchedOrganismViews: [],
   duplicateOrganismViews: [],
   incorrectOrganismViews: [],
   
-  enterState: function() { 
-    // for now, we assume that there are match dragons
-    this.startChallenge();
-  },
+  buttonView: null,
   
   startChallenge: function() {
-    this.statechart.getState('inActivity').blockNextNavButton(true);
+    sc_super();
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', NO);
+
+    // This needs to happen after the match dragons are loaded into the controller....
+    Geniverse.matchController.addObserver('arrangedObjects.length', this._updateNumTrials);
   },
-  
-  endChallenge: function() {
-    this.challengeComplete = YES;
-    this.statechart.getState('inActivity').blockNextNavButton(false);
+
+  exitState: function() {
+    sc_super();
+    Geniverse.matchController.removeObserver('arrangedObjects.length', this._updateNumTrials);
   },
   
   revealClicked: function(buttonView) {
-    var parent = buttonView.get('parentView');
+    this.buttonView = buttonView;
+    this.get('statechart').sendAction("checkAnswerIfDrakesReady");
+  },
+  
+  checkAnswer: function() {
+    sc_super();
+    var parent = this.buttonView.get('parentView');
     this.organismViews = parent.get('organismViews');
     this._revealImages();
 
@@ -73,7 +77,9 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
         var numMatched = this.matchedOrganismViews.length;
         var numDupes = this.duplicateOrganismViews.length;
         var numIncorrect = this.incorrectOrganismViews.length;
-
+        
+        Geniverse.scoringController.incrementScore(1);
+        
         if (numMatched === 3){
           this.successfulMatch = YES;
           SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).plain(
@@ -165,6 +171,7 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
       Geniverse.scoringController.resetScore();
       if (Geniverse.matchController.isLastDragon()) {
         this._challengeComplete();
+        Geniverse.scoringController.resetChallengeScore();
       }
       Geniverse.matchController.nextDragon();
     }
@@ -178,27 +185,6 @@ Lab.matchThreeToOneChallenge = Ki.State.extend({
   
   _resetTargetMatchedState: function() {
     Geniverse.matchController.setPath('currentDragon.hasBeenMatched', NO);
-  },
-
-  _challengeComplete: function() {
-    // Notify the user that they're done
-    var moveOnMessage = (!!Geniverse.activityController.getNextActivity()) ? 
-      "Move on to the next challenge using the green arrow below." :
-      "Go back to the case log using the button at the top left to go to a new case.";
-      
-    SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 350, height: 100 }}).plain(
-      "Good work!", 
-      "You've completed all the trials in this challenge!\n" + moveOnMessage,
-      "",
-      "OK",
-      "",
-      this
-    );
-    
-    this.endChallenge();
-  },
-  
-  exitState: function() { 
   }
   
 });

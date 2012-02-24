@@ -96,6 +96,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
 
           genomeView: Geniverse.DragonGenomeView.design({
             layout: {top: 155, left: 5, height: 500, width: 300 },
+            index: 1,
             generateDragonAtStart: NO,
             sex: 1,
             showDragon: NO,
@@ -151,6 +152,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
 
           genomeView: Geniverse.DragonGenomeView.design({
             layout: {top: 155, left: 5, height: 500, width: 300 },
+            index: 2,
             generateDragonAtStart: NO,
             sex: 1,
             showDragon: NO,
@@ -206,6 +208,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
 
           genomeView: Geniverse.DragonGenomeView.design({
             layout: {top: 155, left: 5, height: 500, width: 300 },
+            index: 3,
             generateDragonAtStart: NO,
             sex: 1,
             showDragon: NO,
@@ -231,7 +234,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
       scoreLabel: Geniverse.ScoreView.design({
         layout: { left: 873, top: 40, height: 36, width: 150 },
         showScore: YES,
-        showTargetScore: NO
+        showTargetScore: YES
       }),
 
       targetDrakes: Geniverse.MatchView.design({

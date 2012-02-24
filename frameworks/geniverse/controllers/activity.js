@@ -15,10 +15,12 @@ Geniverse.activityController = SC.ObjectController.create(
   activity: null,
   activityTitle: null, // HACK: use the activity who's title matches this...o
   startActivity: function() {
-    var chatroom = CcChat.chatRoomController.get('channel');
-		
-    if (this.get('sendBredDragons')){
-      CcChat.chatController.subscribeToChannel(chatroom+'/org', this.receiveDragon);
+    if (Geniverse.ENABLE_CHAT) {
+      var chatroom = CcChat.chatRoomController.get('channel');
+
+      if (this.get('sendBredDragons')){
+        CcChat.chatController.subscribeToChannel(chatroom+'/org', this.receiveDragon);
+      }
     }
   },
   
@@ -31,7 +33,7 @@ Geniverse.activityController = SC.ObjectController.create(
           SC.Logger.info("Setting intro screen url: ", myCase.get('introImageUrl'));
           Geniverse.introScreenController.set('imageUrl', myCase.get('introImageUrl'));
         };
-        if (myCase.get('status') & SC.READY) {
+        if (myCase.get('status') & SC.Record.READY) {
           setIntroImageUrl();
         } else {
           myCase.addObserver('status', this, setIntroImageUrl);
@@ -189,7 +191,28 @@ Geniverse.activityController = SC.ObjectController.create(
     } else {
       return [];
     }
-  }
+  },
 
+  initStars: function() {
+    var twoStars = this.get('thresholdTwoStars');
+    var threeStars = this.get('thresholdThreeStars');
+    if (typeof twoStars == 'number') {
+      Geniverse.scoringController.set('twoStarThreshold', twoStars);
+    } else {
+      Geniverse.scoringController.set('twoStarThreshold', 1);
+    }
+
+    if (typeof threeStars == 'number') {
+      Geniverse.scoringController.set('threeStarThreshold', threeStars);
+    } else {
+      Geniverse.scoringController.set('threeStarThreshold', 0);
+    }
+
+    Geniverse.scoringController.set('minimumScore', 0);
+  }.observes('*content'),
+  
+  startNewSession: function() {
+    this.set('currentSession', Math.floor(Math.random() * 100000));
+  }
 
 });

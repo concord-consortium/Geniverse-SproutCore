@@ -46,12 +46,12 @@ SELENIUM_TEST_SETTINGS = {
 }
 
 $commands = {
-  :sproutcore => {
+  "0sproutcore" => {
     :path => "bundle exec sc-server --port #{SC_SERVER_PORT}",
     :name => "sproutcore server",
     :pid => nil
   },
-  :rails => {
+  "1rails" => {
     :path => "cd rails/geniverse; unset BUNDLE_GEMFILE; exec bundle exec passenger start -e test -p #{RAILS_PORT} --log-file /dev/null",
     # :path => "mongrel_rails start -c rails/geniverse -e production -n 5 -p #{RAILS_PORT}",
     # :path => "rails/geniverse/script/server -p #{RAILS_PORT}",
@@ -59,7 +59,7 @@ $commands = {
     :pid => nil,
     # :signal => 'KILL'
   },
-  :lebowski => {
+  "9lebowski" => {
     # this basically does what lebowski-start-server does, but we want to be able to override the selenium-server jar with a newer one tha supports chrome on os x
     :path => "java -jar #{dir}/selenium-server.jar -userExtensions #{dir}/user-extensions.js -port #{SELENIUM_PORT} -Djava.net.preferIPv4Stack=true",
     :name => "lebowski",
@@ -85,7 +85,7 @@ def new_selenium_test
 end
 
 def start_command(name)
-  command = $commands[name.to_sym]
+  command = $commands[name.to_s]
   unless command[:pid]
     command[:pid] = fork do
       puts "Starting process  #{command[:name] || name} with #{command[:path]} #{command[:args]}"
@@ -108,7 +108,7 @@ end
 
 
 def stop_command(name)
-  command = $commands[name.to_sym]
+  command = $commands[name.to_s]
   if command && command[:pid]
     signal = command[:signal] || 'TERM'
     begin
@@ -168,8 +168,9 @@ def stop_apache
 end
 
 def start_testing_servers(fake_authentication = true)
+  start_apache(fake_authentication)
   begin
-    $commands.keys.each do |command|
+    $commands.keys.sort.each do |command|
       start_command(command)
     end
   rescue => e
@@ -177,8 +178,8 @@ def start_testing_servers(fake_authentication = true)
     raise "Couldn't start all servers!\n#{e.message}\n#{e.backtrace.join("\n")}"
   end
 
-  sleep 10
-  start_apache(fake_authentication)
+  puts "Finished starting all backend servers"
+  sleep 6
 end
 
 def stop_testing_servers

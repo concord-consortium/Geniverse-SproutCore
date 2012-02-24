@@ -33,7 +33,13 @@ Geniverse.userController = SC.ObjectController.create(
   
   findUser: function (username, callback) {
     var self = this;
-    var query = SC.Query.local(Geniverse.User, {conditions: 'username = "' + username + '"'});
+    var query = SC.Query.local(Geniverse.User, 
+      {
+        conditions: 'username = "' + username + '"',
+        restParams: Geniverse.makeRestParams({
+          username: username
+        })
+    });
     var users = Geniverse.store.find(query);
     var sendFoundUser = function() {
         var user = users.firstObject();
@@ -76,5 +82,32 @@ Geniverse.userController = SC.ObjectController.create(
       }
     };
     self.findUser(username,nextMethod);
+  },
+
+  getUserMetadata: function() {
+    var meta = this.get('metadata');
+    if (!meta) {
+      meta = {};
+    }
+    return meta;
+  },
+
+  setUserMetadata: function(metadata) {
+    var user = this.get('content');
+    user.set('metadata', metadata);
+    user.recordDidChange();
+  },
+
+  // this could get moved into its own controller, if we want
+  setPageStars: function(pageId, numStars) {
+    var meta = Geniverse.userController.getUserMetadata();
+    if (!meta.stars) {
+      meta.stars = {};
+    }
+    if (!meta.stars[pageId]) {
+     meta.stars[pageId] = [];
+    }
+    meta.stars[pageId].push(numStars);
+    Geniverse.userController.setUserMetadata(meta);
   }
 }) ;

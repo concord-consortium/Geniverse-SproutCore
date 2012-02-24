@@ -2,7 +2,7 @@
 // Project:   Lab - mainPage
 // Copyright: 2010 Concord Consortium
 // ==========================================================================
-/*globals Lab */
+/*globals Lab Geniverse*/
 
 // This page describes the main user interface for your application.
 Lab.mainPage = SC.Page.design({
@@ -16,7 +16,7 @@ Lab.mainPage = SC.Page.design({
   mainPane: SC.MainPane.design({
     title: "Welcome to the Geniverse Labs",
     classNames: ['brown'],
-    childViews: 'topBar mainAppView'.w(),
+    childViews: 'mainAppView topBar'.w(),
     topBar: Lab.TopBarView.design({
       titlePath: 'Lab.mainPage.mainPane.title'
     }),
@@ -37,8 +37,8 @@ Lab.mainPage = SC.Page.design({
         layout: { top: 438, left: 467, width: 372, height: 158 },
         alt: 'Go to the Case Log',
         toolTip: 'Go to the Case Log',
-        target: 'Lab.mainPage',
-        action: 'goCaseLog2',  // use caselog2 to go to external page
+        target: 'Lab.routes',
+        action: 'openCaselogRoute',
         value: static_url('mainscreen-caselog-highlighted')
       }),
 
@@ -58,15 +58,6 @@ Lab.mainPage = SC.Page.design({
         SC.$('title').text(this.get('title'));
       }
     })
-  }),
-
-  goCaseLog: function() {
-    SC.routes.set('location', 'lab/caselog');  //use caselog2 to go to an iframe containing the case log
-  },
-
-//hack for getting new case log to show up
-  goCaseLog2: function() {
-    window.location.href = 'http://geniverse.concord.org/caselog/';
-  }
+  })
 
 });

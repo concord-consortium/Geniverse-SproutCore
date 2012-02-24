@@ -9,7 +9,7 @@ describe "Templates" do
       @app = new_test({:app_root_path => "/lab#heredity/challenge/case02"}) {|app|
         app['isLoaded'] == true
 
-        app.move_to 1, 1 
+        app.move_to 1, 1
         app.resize_to 1024, 768
 
         define_common_paths(app)
@@ -35,6 +35,10 @@ describe "Templates" do
 
       @chromosome_controller = @app['Geniverse.chromosomeController', 'SC.ObjectController']
       @match_controller = @app['Geniverse.matchController', 'SC.ArrayController']
+
+      @user_controller = @app['Geniverse.userController', 'SC.ObjectController']
+      @activity_controller = @app['Geniverse.activityController', 'SC.ObjectController']
+      @activity_guid = @activity_controller.guid.to_s
 
       sleep 5
       hide_info_pane
@@ -236,7 +240,15 @@ describe "Templates" do
     end
 
     def verify_challenge_complete
-      verify_alert(:plain, "OK")
+      # Check that the correct number of stars were awarded
+      expected_stars = [2]
+
+      stars = @user_controller.metadata.stars
+      num_stars = stars[@activity_guid]
+
+      num_stars.should eq(expected_stars), "Number of stars should be #{expected_stars.inspect}, was: #{num_stars.inspect}"
+
+      verify_alert(:plain, ["Go back to the case log", "Try again"]) # the challenge alert
     end
 
     def verify_images(phenotype_view, should_match)

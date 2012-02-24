@@ -77,7 +77,7 @@ Lab.helpController = SC.ObjectController.create(
   }.observes('content'),
 
   removeView: function (callingView){
-    if (!!this.get('pane')) {
+    if (this.get('pane')) {
       this.get('pane').remove();
 			this.get('iframe').parentView.removeChild(this.get('iframe'));
     }

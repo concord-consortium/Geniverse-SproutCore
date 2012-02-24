@@ -7,35 +7,38 @@
 Lab.argumentationChallenge = Ki.State.extend({
   
   challengeComplete: NO,
+  challengeWasAlreadyComplete: NO,
   
   enterState: function() { 
     this.startChallenge();
   },
   
   startChallenge: function() {
-    this.statechart.getState('inActivity').blockNextNavButton(true);
-    Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', YES);
     this.set('challengeComplete', NO);
+    this.set('challengeWasAlreadyComplete', NO);
+    
+    this.get('statechart').sendAction('blockNextNavButton');
+    Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', YES);
   },
   
   endChallenge: function() {
-    this.challengeComplete = YES;
-    this.statechart.getState('inActivity').blockNextNavButton(false);
+    this.set('challengeComplete', YES);
+    this.get('statechart').sendAction('unblockNextNavButton');
+
+    // Award a "star" for completion
+    var pageId = Geniverse.activityController.get('guid');
+    Geniverse.userController.setPageStars(pageId, 1);
+    Geniverse.store.commitRecords();
+
+    // why can't bindings in SC work as advertised?
+    Lab.caselogController.propertyDidChange("userMetadata");
   },
   
   didSendBlogPost: function() {
-    if (!this.challengeComplete){
+    if (this.get('challengeComplete')) {
+      this.set('challengeWasAlreadyComplete', YES);
+    } else {
       this.endChallenge();
-      var moveOnMessage = (!!Geniverse.activityController.getNextActivity()) ? 
-        "move on to the next challenge using the green arrow below." :
-        "go back to the case log to go to a new case.";
-      SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 350, height: 100 }}).plain(
-        "Good work!", 
-        "You have posted to the journal.\nYou can continue to work on this challenge if you like, or you can "+moveOnMessage,
-        "",
-        "OK",
-        ""
-      );
     }
   },
   

@@ -4,6 +4,8 @@ require "#{dir}/../support/spec_helper.rb"
 describe "Bugs" do
 describe "Navigating pages resets controllers" do
   before(:all) do
+    next
+
     start_testing_servers
     @app = new_test {|app|
       app['isLoaded'] == true
@@ -81,10 +83,11 @@ describe "Navigating pages resets controllers" do
   end
 
   after(:all) do
+    next
     stop_testing_servers
   end
 
-  it "will reset the challenge dragons controller after changing pages" do
+  xit "will reset the challenge dragons controller after changing pages" do
     @page2dragons.each do |d2|
       @page1dragons.each do |d1|
         d2.should_not eql d1
@@ -92,7 +95,7 @@ describe "Navigating pages resets controllers" do
     end
   end
 
-  it "will reset the breed dragons controller after changing pages" do
+  xit "will reset the breed dragons controller after changing pages" do
     @page2father.should be_nil
     @page2mother.should be_nil
   end

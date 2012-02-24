@@ -5,12 +5,14 @@
 
 <% textfield_names = ["initial_alleles", "match_dragon_alleles", "message"] %>
 <% checkbox_names = ["is_argumentation_challenge", "crossover_when_breeding", "send_bred_dragons"] %>
-<% object.attributes.each do |att,val| %>
+<% relacements = {"threshold_three_stars" => "Threshold three stars (0 if empty)",
+                    "threshold_two_stars" => "Threshold two stars (1 if empty)"}%>
+<% object.attributes.keys.sort.each do |att| %>
   <% next if att == "id" %>
   <% next if att == "created_at" %>
   <% next if att == "updated_at" %>
   <p>
-    <%= f.label att.to_sym %><br />
+    <%= f.label relacements[att] || att.to_sym %><br />
     <% if (textfield_names.grep(att.to_s).size > 0) %>
       <%= f.text_area att.to_sym %>
     <% elsif (checkbox_names.grep(att.to_s).size > 0) %>

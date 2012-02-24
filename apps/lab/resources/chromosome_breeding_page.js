@@ -10,6 +10,7 @@ sc_require('views/challenge_pool_view');
 sc_require('views/breeding_pen_view');
 sc_require('views/stable_view');
 sc_require('views/bottom_bar_view');
+sc_require('views/dragon_breeding_genome_view');
 
 Lab.chromosomeBreedingPage = SC.Page.design({
   
@@ -36,7 +37,7 @@ Lab.chromosomeBreedingPage = SC.Page.design({
 
     mainAppView: SC.View.design({
       
-      childViews: 'genomePanel breedingPenView matchView'.w(),
+      childViews: 'genomePanel breedingPenView matchView scoreView'.w(),
       
       genomePanel: SC.View.design({
         layout: {top: 40, height: 450, left: 15, width: 1005 },
@@ -54,21 +55,10 @@ Lab.chromosomeBreedingPage = SC.Page.design({
           value: "Female Drake"
         }),
 
-        femaleGenomeView: Geniverse.DragonGenomeView.design({
+        femaleGenomeView: Lab.DragonBreedingGenomeView.design({
           layout: {top: 40, left: 15, height: 500, width: 500 },
-          generateDragonAtStart: NO,
-          displayChallengeDragon: YES,
-          showDragon: NO,
           sex: 1,
-//        fixedAlleles: "a:A,a:A,a:B,b:B",
-          showGenerateNewDragon: NO,
-          showIsEditableCheck: NO,
-          showFromLabels: NO,
-          updateBreedDragon: function() {
-            if (this.get('isVisibleInWindow')){
-              Geniverse.breedDragonController.set('mother', this.get('dragon'));
-            }
-          }.observes('dragon')
+          index: 1
         }),
 
         femalePhenotypeView: Geniverse.OrganismView.design({
@@ -84,22 +74,11 @@ Lab.chromosomeBreedingPage = SC.Page.design({
           value: "Male Drake"
         }),
 
-        maleGenomeView: Geniverse.DragonGenomeView.design({
+        maleGenomeView: Lab.DragonBreedingGenomeView.design({
           layout: {top: 40, left: 515, height: 500, width: 500 },
-          generateDragonAtStart: NO,
-          displayChallengeDragon: YES,
-          showDragon: NO,
           sex: 0,
-//        fixedAlleles: "a:A,a:A,a:B,b:B",
-          showGenerateNewDragon: NO,
-          showIsEditableCheck: NO,
-          showFromLabels: NO,
-          dragonOnRight: YES,
-          updateBreedDragon: function() {
-            if (this.get('isVisibleInWindow')){
-              Geniverse.breedDragonController.set('father', this.get('dragon'));
-            }
-          }.observes('dragon')
+          index: 2,
+          dragonOnRight: YES
         }),
 
         malePhenotypeView: Geniverse.OrganismView.design({
@@ -112,7 +91,7 @@ Lab.chromosomeBreedingPage = SC.Page.design({
         breedButton: SC.ButtonView.design({
           layout: { top: 170, left: 450, width: 100, height: 24 },
           target: 'Geniverse.breedDragonController',
-          action: "breed",
+          action: "breedAndIncrementScore",
           isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
           hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
           isEnabled: function() {
@@ -133,6 +112,12 @@ Lab.chromosomeBreedingPage = SC.Page.design({
       
       matchView: Geniverse.MatchView.design({
         layout: { left: 713, top: 495, height: 95, width: 320 }
+      }),
+      
+      scoreView: Geniverse.ScoreView.design({
+        layout: { left: 850, top: 50, height: 36, width: 150 },
+        showScore: YES,
+        showTargetScore: YES
       })
       
   	})

@@ -16,7 +16,9 @@ sc_require('views/organism');
 Geniverse.DragonGenomeView = SC.View.extend(
 /** @scope Geniverse.DragonGenomeView.prototype */ {
   
-  dragon: null,
+  index: 1,
+  
+  // dragonBinding: // created in init()
 
   childViews: 'motherLabel fatherLabel chromosomeA1View chromosomeA2View chromosomeAXView chromosomeB1View chromosomeB2View chromosomeBXView generateNewDragonButton isEditableCheck allelesOutputTitle allelesOutput dragonView'.w(),
               
@@ -63,6 +65,59 @@ Geniverse.DragonGenomeView = SC.View.extend(
   
   activityBinding: 'Geniverse.activityController.content',
   
+  init: function() {
+    sc_super();
+  },
+  
+  initializeView: function() {
+    if (this.get('resetDragonOnInit')) {
+      return;
+    }
+    
+    // bind 'dragon' to the appropriate property in the controller
+    var dragonPath = "Geniverse.dragonGenomeController." + Geniverse.dragonGenomeController.get('dragonIndexMap')[this.get('index')];
+    this.bind("dragon", dragonPath);
+    
+  }.observes('activity', 'Geniverse.activityController.content'),
+  
+  // gets called by changes to the alleles views (below)
+  updateDragon: function (){
+    if (this.get('resetDragonOnInit')) {
+      return;
+    }
+    
+    var index       = this.get("index"),
+        alleles     = this.get('alleles'),
+        currentSex  = this.getPath('dragon.sex'),
+        currentName = this.getPath('dragon.name'),
+        hiddenGenes = this.get('hiddenGenes');
+    
+    // note, this gets called several times as the allele view initialize, but the controller
+    // will reject calls with the same alleles, so we won't be generating extra dragons
+    Geniverse.dragonGenomeController.updateDragon(index, alleles, currentSex, currentName, hiddenGenes);
+  },
+  
+  // gets called when the dragon is updated externally
+  _processAlleleString: function() {
+      SC.RunLoop.begin();
+      var dragon = this.get('dragon');
+
+      if (dragon === null || typeof(dragon) == "undefined") {
+        this.set('alleles', []);
+        return;
+      }
+
+      var alleleString = dragon.get('alleles');
+      var alleles = Geniverse.chromosomeController.processAlleleString(alleleString);
+      if (this.get('alleles') != alleles) {
+        this.set('alleles', alleles);
+      }
+      
+      this.set('sex', dragon.get('sex'));
+      
+      SC.RunLoop.end();
+  }.observes('dragon'),
+  
   hiddenGenes: function() {
     return Geniverse.activityController.getHiddenOrStaticGenes('hiddenGenes', this.get('sex'));
   }.property('activity').cacheable(),
@@ -70,17 +125,6 @@ Geniverse.DragonGenomeView = SC.View.extend(
   staticGenes: function() {
     return Geniverse.activityController.getHiddenOrStaticGenes('staticGenes', this.get('sex'));
   }.property('activity').cacheable(),
-	
-  init: function() {
-    sc_super();
-    if (this.get('resetDragonOnInit')) {
-      var oldIgnoreUpdate = this.get('ignoreUpdate');
-      this.set('ignoreUpdate', NO);
-      this._processAlleleString();
-      this.set('ignoreUpdate', oldIgnoreUpdate);
-      this.set('layerNeedsUpdate', YES);
-    }
-  },
     
   dragonImageLeft: function() {
     var dragonOnRight = this.get('dragonOnRight');
@@ -105,54 +149,6 @@ Geniverse.DragonGenomeView = SC.View.extend(
     sc_super();
   },
 
-  gwtReadyBinding: 'Geniverse.gwtController.isReady',
-  
-  generateDragonWhenGWTReady: function() {
-    var self = this;
-    
-    // if displayChallengeDragon, first we have to wait for challengePoolController
-    // to be ready, and then we have to wait for the length of it to be larger
-    // than the idex we have specified
-    
-    function loadChallengeDragonWhenDragonsLoaded() {
-      Geniverse.challengePoolController.addObserver('firstFemale', self, self._loadChallengeDragon);
-      Geniverse.challengePoolController.addObserver('firstMale', self, self._loadChallengeDragon);
-      
-      Geniverse.challengePoolController.removeObserver('status', loadChallengeDragonWhenDragonsLoaded);
-      self._loadChallengeDragon();
-    }
-    
-    if (this.get('displayChallengeDragon')) {
-      if (Geniverse.challengePoolController.get('status') & SC.Record.READY) {
-        loadChallengeDragonWhenDragonsLoaded();
-      } else {
-        Geniverse.challengePoolController.addObserver('status', loadChallengeDragonWhenDragonsLoaded);
-      }
-    } else if (this.get('generateDragonAtStart')){
-      this.initRandomDragon();
-    }
-  }.observes('gwtReady'),
-  
-  _loadChallengeDragon: function() {
-    var dragon = (this.get('sex') === 1) ? Geniverse.challengePoolController.get('firstFemale') : Geniverse.challengePoolController.get('firstMale');
-
-    if (!dragon && !Geniverse.challengePoolController.configContains(this.get('sex'))) {
-      // if we didn't find any drakes of the expected sex, see if we can find one of the other sex and
-      // then later we'll switch the sex of this genome panel.
-      dragon = (this.get('sex') === 0) ? Geniverse.challengePoolController.get('firstFemale') : Geniverse.challengePoolController.get('firstMale');
-    }
-    
-    // dragon may be null -- that's ok
-    var self = this;
-    SC.run(function() {
-      self.set('ignoreUpdate', NO);
-      if (!!dragon)
-        self.set('sex', dragon.get('sex'));
-      self.set('dragon', dragon);
-      self.set('ignoreUpdate', YES);
-    });
-  },
-  
   a1Alleles: function() {
     return this.getAllelesFor(1,'A');
   }.property('alleles'),
@@ -217,7 +213,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 
   switchSex: function() {
       this.set('sex', (this.get('sex') + 1) % 2);
-      this._initDragon(this.get('sex'), this.getPath('dragon.alleles'));
+      Geniverse.dragonGenomeController._initFixedDragon(this.get('sex'), this.getPath('dragon.alleles'), this.get('index'));
       if (this.get('trackScore')) {
         Geniverse.scoringController.incrementScore(1);
       }
@@ -253,6 +249,12 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	  
     // allelesBinding: SC.Binding.oneWay('*parentView.a1Alleles'),
 	  updateDragon: function(){
+	    var alleles = this.get('alleles'),
+	        oldAlleles = this.get('oldAlleles');
+	    if (alleles.compareArrays(oldAlleles)) {
+	      return;
+	    }
+	    this.set('oldAlleles', alleles);
       if (!!this.get('parentView')) {
         this.get('parentView').updateDragon();
       }
@@ -277,6 +279,12 @@ Geniverse.DragonGenomeView = SC.View.extend(
 		  return {top: 25, left: this.getPath('parentView.chromosomeLeft') + 145};
 		}.property(),
 	  updateDragon: function(){
+	    var alleles = this.get('alleles'),
+	        oldAlleles = this.get('oldAlleles');
+	    if (alleles.compareArrays(oldAlleles)) {
+	      return;
+	    }
+	    this.set('oldAlleles', alleles);
       if (!!this.get('parentView')) {
 	      this.get('parentView').updateDragon();
       }
@@ -301,6 +309,12 @@ Geniverse.DragonGenomeView = SC.View.extend(
 		  return {top: 170, left: this.getPath('parentView.chromosomeLeft')};
 		}.property(),
 	  updateDragon: function(){
+	    var alleles = this.get('alleles'),
+	        oldAlleles = this.get('oldAlleles');
+	    if (alleles.compareArrays(oldAlleles)) {
+	      return;
+	    }
+	    this.set('oldAlleles', alleles);
       if (!!this.get('parentView')) {
 	      this.get('parentView').updateDragon();
       }
@@ -325,6 +339,12 @@ Geniverse.DragonGenomeView = SC.View.extend(
 		  return {top: 170, left: this.getPath('parentView.chromosomeLeft') + 145};
 		}.property(),
 	  updateDragon: function(){
+	    var alleles = this.get('alleles'),
+	        oldAlleles = this.get('oldAlleles');
+	    if (alleles.compareArrays(oldAlleles)) {
+	      return;
+	    }
+	    this.set('oldAlleles', alleles);
       if (!!this.get('parentView')) {
 	      this.get('parentView').updateDragon();
       }
@@ -349,6 +369,12 @@ Geniverse.DragonGenomeView = SC.View.extend(
 		  return {top: 315, left: this.getPath('parentView.chromosomeLeft')};
 		}.property(),
 	  updateDragon: function(){
+	    var alleles = this.get('alleles'),
+	        oldAlleles = this.get('oldAlleles');
+	    if (alleles.compareArrays(oldAlleles)) {
+	      return;
+	    }
+	    this.set('oldAlleles', alleles);
       if (!!this.get('parentView')) {
 	      this.get('parentView').updateDragon();
       }
@@ -379,6 +405,12 @@ Geniverse.DragonGenomeView = SC.View.extend(
     startWithEmptyOptionBinding: '*parentView.startWithEmptyOptions',
     trackScoreBinding: '*parentView.trackScore',
 	  updateDragon: function(){
+	    var alleles = this.get('alleles'),
+	        oldAlleles = this.get('oldAlleles');
+	    if (alleles.compareArrays(oldAlleles)) {
+	      return;
+	    }
+	    this.set('oldAlleles', alleles);
       if (!!this.get('parentView')) {
 	      this.get('parentView').updateDragon();
       }
@@ -439,108 +471,6 @@ Geniverse.DragonGenomeView = SC.View.extend(
     }
     return alleles[chromosome][side];
   },
-  
-  _processAlleleString: function() {
-    if (this.get('ignoreUpdate') == NO) {
-      SC.RunLoop.begin();
-      var dragon = this.get('dragon');
 
-      if (dragon === null || typeof(dragon) == "undefined") {
-        this.set('alleles', []);
-        return;
-      }
-
-      var alleleString = dragon.get('alleles');
-      var alleles = Geniverse.chromosomeController.processAlleleString(alleleString);
-      
-      this.set('alleles', alleles);
-      SC.RunLoop.end();
-    }
-  }.observes('dragon'),
-  
-  updateDragon: function (){
-    if (this.get('ignoreUpdate')) {
-      var outStr = "";
-      var alleles = this.get('alleles');
-      if (!alleles || !alleles[1]){
-        return;
-      }
-    
-      // because our array doesn't just have numerical indices, we can't
-      // iterate through it with normal methods, and forEach() returns too much.
-      for(var i = 1; i < 4; i++){
-        if (i === 3){
-          i = 'X';
-        }
-        if (!!alleles[i] && !!alleles[i].A){
-          for (var j = 0; j < alleles[i].A.length; j++){
-            outStr += !!alleles[i].A[j] ? "a:" + alleles[i].A[j] + "," : "";
-            outStr += (!!alleles[i].B && !!alleles[i].B[j]) ? "b:" + alleles[i].B[j] + "," : "";
-          }
-        }
-      }
-    
-      // rm last comma
-      outStr = outStr.substring(0,outStr.length-1);
-      
-      var outStrIgnoredGenesRemoved = outStr.replace(/.: ,/g,"");      // rm genes set to blank by author
-      var hiddenGenes = this.get('hiddenGenes').join();
-      var rmHidden = new RegExp(".:["+hiddenGenes+"],","ig");         // rm hidden genes
-      outStrIgnoredGenesRemoved = outStrIgnoredGenesRemoved.replace(rmHidden,"");
-      this.set("authoredAlleleString", outStrIgnoredGenesRemoved);
-      
-      var self = this;
-      Geniverse.gwtController.generateDragonWithAlleles(outStr, this.getPath('dragon.sex'), this.getPath('dragon.name'), function(dragon) {
-  	    SC.run(function() {
-  		    self.set('dragon', dragon);
-  	    });
-  	  });
-	  }
-  },
-  
-  initRandomDragon: function () {
-    
-		if (typeof(generateDragonWithCallback) != "undefined") {
-		  var sex = this.get('sex');
-		  var fixedAlleles = this.get('fixedAlleles');
-      this._initDragon(sex, fixedAlleles);
-		}
-  },
-
-  secondXAlleles: null,
-  _initDragon: function(sex, fixedAlleles) {
-    var self = this;
-    var currentDragon = this.get('dragon');
-    if (sex === 1 && !!currentDragon && currentDragon.get('sex') === 0 && !!this.get('secondXAlleles')) {
-      // going from male to female. Restore second X chromosome alleles
-      fixedAlleles = fixedAlleles + "," + this.get('secondXAlleles');
-      this.secondXAlleles = null;
-    }
-    function updateDragon(dragon) {
-      if (sex === 0 && !!currentDragon && currentDragon.get('sex') === 1) {
-        // we're switching from female to male, store the current alleles of the second X chromosome
-        // so that we can restore them if we switch back to female again
-        var oldAlleles = currentDragon.get('alleles').split(",");
-        var newAlleles = dragon.get('alleles').split(",");
-        var save = oldAlleles.filter(function(allele) { return newAlleles.indexOf(allele) === -1; });
-        self.set('secondXAlleles', save.join(","));
-      }
-      SC.run(function() {
-        self.set('ignoreUpdate', NO);
-        self.set('dragon', dragon);
-        self.set('ignoreUpdate', YES);
-      });
-    }
-
-    if (sex !== undefined && sex !== null && fixedAlleles !== undefined && fixedAlleles !== null){
-      Geniverse.gwtController.generateDragonWithAlleles(fixedAlleles, sex, "", updateDragon);
-    } else if (sex !== undefined && sex !== null) {
-      Geniverse.gwtController.generateDragon(sex, "", updateDragon);
-    } else if (fixedAlleles !== undefined && fixedAlleles !== null) {
-      Geniverse.gwtController.generateDragonWithAlleles(fixedAlleles, -1, "", updateDragon);
-    } else {
-      Geniverse.gwtController.generateRandomDragon(updateDragon);
-    }
-  
-  }
+  secondXAlleles: null
 });

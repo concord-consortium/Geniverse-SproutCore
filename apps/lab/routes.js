@@ -18,9 +18,23 @@ Lab.routes = SC.Object.create({
   _currentPagePane: null,
   _firstHomePane: null,
   
-  gotoHomePage: function(routeParams) {
+  openHomePageRoute: function() {
     SC.routes.set('location', '');
+  },
+      
+  gotoHomePage: function(routeParams) {
     Lab.statechart.sendAction('gotoHomePage');
+  },
+  
+  openCaselogRoute: function() {
+    SC.routes.set('location', 'caselog');
+  },
+
+  gotoCaselog: function(routeParams) {
+    var level = routeParams.level;  // empty ('') or 'training', 'apprentice', 'journeyman', 'master', 'meiosis', 'dna'
+    
+    if (level) Lab.caselogController.set('currentLevelName', level);
+    Lab.statechart.sendAction('gotoCaselog');
   },
   
   gotoActivity: function(routeParams) { 
@@ -75,80 +89,43 @@ Lab.routes = SC.Object.create({
   /**
     Navigate to the specified route
     
-    @param {Object} routeParams route parameters are set as properties of this
-      object. The parameters are specified when registering the route using 
-      SC.routes.add() in main.js.
-    */
-  gotoRoute: function(clazz, routeParams) {
-    SC.Logger.log("Lab.routes.gotoRoute: function(clazz, routeParams) called.");
-    SC.Logger.log("clazz:",clazz);
-    SC.Logger.log("routeParams:",routeParams);
+    @param {SC.Object} pageOwner The object (Lab or Geniverse, generally) which has the page routeParams.pageName
+    
+    @param {Object} routeParams route parameters are set as properties of this object. The parameters are specified 
+      when registering the route using SC.routes.add() in main.js.
+  */
+  gotoRoute: function(pageOwner, routeParams) {
+    var pageName = routeParams.pageName || 'mainPage',
+        paneName = routeParams.paneName || 'mainPane',
+        page     = pageOwner[pageName],
+        pane     = page.get(paneName);
 
-    // Default to mainPage
-    var pageName = routeParams.pageName;
-    if (!pageName) {
-      pageName = 'mainPage';
-    }
-    SC.Logger.log("page name: ", pageName);
-
-    // Default to mainPane
-    var paneName = routeParams.paneName;
-    if (!paneName) {
-      paneName = 'mainPane';
-    }
-    SC.Logger.log("pane name: ", paneName);
-
-    // If there is a current pane, remove it from the screen
+    console.log("BEGIN Lab.routes.gotoRoute(pageOwner, routeParams)");
+    
+    // If there is a current pane, remove it from the screen.
     if (this._currentPagePane !== null) {
       this._currentPagePane.remove();
-      // var oldPane = this._currentPagePane;
-      // oldPane.destroy();
     }
 
-    Lab.infoController.removeView();  // be sure to hide any open info panes
+    // Be sure to hide any open info panes.
+    Lab.infoController.removeView();
 
-    // Show the specified pane
-    var page = clazz[pageName];
-    
-    SC.Logger.log("Page: ", page); 
-
-    var pane = page.get(paneName);
-    
-    // if (this._firstHomePane === null && page.get('pagePath') == "Lab.mainPage"){
-    //   this._firstHomePane = pane;
-    // }
-    SC.Logger.log("Pane: ", pane);
-    // try {
-      // pane = pane.create();
-    // } catch(err) {
-      // FIXME This shows up consistently when going back to mainPage.mainPane.
-      // It turns out that unlike the other pages, the created instance of mainPage.mainPane
-      // ends up replacing the designed mainPane... so the second time through, it's already been
-      // created. This messes up the links within the page, too.
-    //  SC.Logger.error("Couldn't call 'create' on pane");
-    //  SC.Logger.dir(pane);
-      
-      // HACK: The version of the home page mainPane that is created after the first time
-      // is no longer a SC.mainPane but is instead an object with a type SC.mainPane and
-      // no create method. The temporarily fix this, we save the first version of the mainPane
-      // that is created and call create on that.
-    //  pane = this._firstHomePane.create();
-    // }
-    pane.set('pageName',pageName);  // must be set so the help button works!
-    // SC.Logger.log("Created Pane: ", pane); 
+    // Show the specified pane...
+    pane.set('pageName', pageName);  // This must be set so the help button works!
     pane.append();
-
-    // Save the current pane so we can remove it when process the next route
+    
+    // ...and save the current pane so we can remove it when process the next route.
     this._currentPagePane = pane;
-  },
-
-  gotoCaseLogPage: function() {
-    SC.routes.set('location', 'lab/caselog');
-  },
-
-// hack for showing external case log
-  gotoCaseLogPage2: function() {
-    window.location.href = 'http://geniverse.concord.org/caselog/';
+    
+    // Don't bother with SC.logger.log(). console.log() logs an inspectable object instead of forcibly converting
+    // all its arguments to strings.
+    console.log("  pageOwner: %s", pageOwner && pageOwner.toString(), pageOwner);
+    console.log("  routeParams: %s", routeParams && routeParams.toString(), routeParams);
+    console.log("  pageName: %s", pageName);
+    console.log("  paneName: %s", paneName);
+    console.log("  page: %s", page && page.toString(), page);
+    console.log("  pane: %s", pane && pane.toString(), pane);
+    console.log("END Lab.routes.gotoRoute()");
   }
 
 });

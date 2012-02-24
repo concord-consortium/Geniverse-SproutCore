@@ -9,10 +9,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110926152856) do
+ActiveRecord::Schema.define(:version => 20120109215041) do
 
   create_table "activities", :force => true do |t|
-    t.string   "initial_alleles"
+    t.text     "initial_alleles"
     t.string   "base_channel_name"
     t.integer  "max_users_in_room"
     t.boolean  "send_bred_dragons"
@@ -25,10 +25,12 @@ ActiveRecord::Schema.define(:version => 20110926152856) do
     t.string   "route"
     t.string   "pageType"
     t.text     "message"
-    t.string   "match_dragon_alleles"
+    t.text     "match_dragon_alleles"
     t.integer  "myCase_id"
     t.integer  "myCaseOrder"
     t.boolean  "is_argumentation_challenge", :default => false
+    t.integer  "threshold_three_stars"
+    t.integer  "threshold_two_stars"
   end
 
   create_table "articles", :force => true do |t|
@@ -94,6 +96,7 @@ ActiveRecord::Schema.define(:version => 20110926152856) do
     t.string   "last_name"
     t.text     "note"
     t.string   "class_name"
+    t.text     "metadata",      :limit => 16777215
   end
 
   add_index "users", ["username", "password_hash"], :name => "index_users_on_username_and_password_hash"

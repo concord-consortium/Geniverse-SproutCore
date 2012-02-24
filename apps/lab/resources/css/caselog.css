@@ -1,248 +1,164 @@
-/* STYLE RESET
-----------------------------------------------------*/
-html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, font, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td {margin: 0;padding: 0;border: 0;outline: 0;font-size: 100%;vertical-align: baseline;background: transparent;}
-body {line-height: 1;}
-ol, ul {list-style: none;}
-blockquote, q {quotes: none;}
-blockquote:before, blockquote:after,
-q:before, q:after {content: '';content: none;}
-:focus {outline: 0;}
-ins {text-decoration: none;}
-del {text-decoration: line-through;}
-table {border-collapse: collapse;border-spacing: 0;}
+/* GENIVERSE CASE LOG STYLE SHEET */
+
 
 /* BASIC STYLES
-----------------------------------------------------*/
-a:link {
-	background: transparent;
-	color: #681818;
-	}
-a:visited{
-	background: transparent;
-	color: #681818;
-	}
-a:hover {
-	background: transparent;
-	color: #ac1818;
-	}
-a:active {
-	background: transparent;
-	color: #681818;
-	}
-body {
-	background: #a36a4a url(../images/bg2.png) repeat-x left top;
-	color: #340404;
-	font: 90% georgia, times, 'times new roman', serif;
-	}
-#caselogcontent{
-	height: 600px;
-	margin: 0 auto;
-	position: relative;
-	width: 960px;
-}
+---------------------------------------------------------------------*/
 	
-#inheritance2content {
-	height: 600px;
-	margin: 0 auto;
-	position: relative;
-	width: 960px;
-}
-	
-#meiosiscontent {
-	height: 600px;
-	margin: 0 auto;
-	position: relative;
-	width: 960px;
-}
-	
-.black-text {
-  color: #000000;
-}
+.caselog-view {
+ 	background: #492222;
+	color: #e5c59e; 	
+ 	font: 11px/1.4 Georgia, 'times new roman', times, serif;
+  }
 
-/* CASE LOG LINKS
-----------------------------------------------------*/
-#content.intro-completed {
-	background: static_url('caselog-bg-intro-completed.png') no-repeat;
-	}
-a#inheritance:hover {
-    background-image: static_url('inheritance-hover.png');
-    background-repeat: none;
-	}
-a#inheritance2left:hover {
-    background-image: static_url('inheritance2-left-hover.png');
-    background-repeat: none;
-	}
-a#inheritance2right:hover {
-    background-image: static_url('inheritance2-right-hover.png');
-    background-repeat: none;
-	}
-a#meiosis:hover {
-    background-image: static_url('meiosis-hover.png');
-    background-repeat: none;
-	}
-a#training {
-	background: transparent;
-	border: none;
-	height: 70px;
-	left: 91px;
-	position: absolute;
-	top: 304px;
-	width: 341px;
-	}
-a#i1-training:hover {
-    cursor: pointer;
-    cursor: hand;
-    background-image: static_url('caselog-training-highlighted.png');
-    background-repeat: none;
-	}
-a#training.completed:hover {
-	background: url(../images/caselog-training-completed-highlighted.png) no-repeat;
-	}
-a#experiment {
-	background: transparent;
-	border: none;
-	height: 70px;
-	left: 91px;
-	position: absolute;
-	top: 399px;
-	width: 341px;
-	}
-a#i1-experiment:hover {
-    cursor: pointer;
-    cursor: hand;
-    background-image: static_url('caselog-experiment-highlighted.png');
-    background-repeat: none;
-	}
-a#experiment.completed:hover {
-	background: url(../images/caselog-experiment-completed-highlighted.png) no-repeat;
-	}
-a#individual {
-	background: transparent;
-	border: none;
-	height: 70px;
-	left: 522px;
-	position: absolute;
-	top: 100px;
-	width: 341px;
-	}
-a#i1-individual:hover {
-    cursor: pointer;
-    cursor: hand;
-    background-image: static_url('caselog-individual-highlighted.png');
-    background-repeat: none;
-	}
-a#individual.completed:hover {
-	background: url(../images/caselog-individual-completed-highlighted.png) no-repeat;
-	}
-a#group {
-	background: transparent;
-	border: none;
-	height: 70px;
-	left: 522px;
-	position: absolute;
-	top: 195px;
-	width: 341px;
-	}
-a#i1-group:hover {
-    cursor: pointer;
-    cursor: hand;
-    background-image: static_url('caselog-group-highlighted.png');
-    background-repeat: none;
-	}
-a#group.completed:hover {
-	background: url(../images/caselog-group-copmpleted-highlighted.png) no-repeat;
+#caselog-wrap {
+	background: #733230 static_url('caselog-bg.png') center top no-repeat;
+	margin: 0;
 	}
 
-/* DESCRIPTION PAGE STYLES
-----------------------------------------------------*/
-body.training1 #content {
-	background: url(../images/training-bg1.jpg) no-repeat;
+/* CASE LOG
+---------------------------------------------------------------------*/
+#caselog-book {
+	background: static_url('caselog.png') no-repeat;
+	color: #492222;
+	height: 600px;
+	margin: 0 auto;
+	width: 960px;
 	}
-body.experiment1 #content {
-	background: url(../images/experiment-bg1.jpg) no-repeat;
+	#caselog-book h1 {
+		color: #111111;
+		font-size: 48px;
+		font-weight: normal;
+		text-align: center;
+		}
+	#caselog-book h2 {
+		color: #492222;		
+		font-size: 32px;
+		font-weight: normal;		
+		text-align: center;
+		}
+	#caselog-book h3 {
+		font-weight: bold;
+		font-size: 18px;
+		}
+	#caselog-book #col1, #caselog-book #col2 {
+		float: left;
+		padding-top: 90px;
+		width: 50%;
+		}
+	#caselog-book .case {
+		background: #fff;
+		height: 110px;
+		opacity: .5;
+		padding: 5px 10px;
+		/* CSS3 */
+		-moz-border-radius: 20px;
+		-webkit-border-radius: 20px;
+		border-radius: 20px;
+		}
+		#caselog-book .case ul {
+			list-style: none;
+			margin: 0;
+			}
+		#caselog-book .case li {
+			background: static_url('caselog-no-star.png') no-repeat;
+			font-size: 1em;
+			line-height: 160%;
+			padding-left: 47px;
+			}
+		#caselog-book .case li.one-star {
+			background: static_url('caselog-one-star.png') no-repeat;
+			}
+		#caselog-book .case li.two-star {
+			background: static_url('caselog-two-star.png') no-repeat;
+			}
+		#caselog-book .case li.three-star {
+			background: static_url('caselog-three-star.png') no-repeat;
+			}
+		#caselog-book .case li.quill-on {
+			background: static_url('quill-on-15x15.png') no-repeat;
+			}
+		#caselog-book .case li.quill-off {
+			background: static_url('quill-off-15x15.png') no-repeat;
+			}
+	#caselog-book .case.caselog-active, #caselog-book .case.complete {
+		opacity: .8;
+		}
+	#caselog-book .case.complete {
+		background: #fff static_url('check.png') no-repeat right top;
+		}
+	#caselog-book #col1 .case {
+		margin: 0 55px 10px 100px; 
+		}
+	#caselog-book #col2 .case {
+		margin: 0 105px 10px 50px; 
+		}
+	#caselog-book .case:hover, #caselog-book .case:focus {
+		opacity: .8;
+		}
+	#caselog-book .case a {
+		color: #492222;
+		display: block;
+		text-decoration: none;
+		}
+	#caselog-book #title {
+		height: 110px;
+		margin-bottom: 10px;
+		padding: 5px 10px;
+		}
+		
+/* NAVIGATION
+---------------------------------------------------------------------*/
+#caselog-nav {
+	background: #492222;
 	}
-body.individual1 #content {
-	background: url(../images/individual-bg1.jpg) no-repeat;
-	}
-body.group1 #content {
-	background: url(../images/group-bg1.jpg) no-repeat;
-	}
-body.training2 #content {
-	background: url(../images/training-bg2.jpg) no-repeat;
-	}
-body.experiment2 #content {
-	background: url(../images/experiment-bg2.jpg) no-repeat;
-	}
-body.individual2 #content {
-	background: url(../images/individual-bg2.jpg) no-repeat;
-	}
-#content h1 {
-	font-size: 1.5em;
-	margin-bottom: 20px;
-	text-align: center;
-	}
-#content p {
-	line-height: 130%;
-	margin-bottom: 2em;
-	}
-#col1 {
-	left: 95px;
-	padding: 20px;
-	position: absolute;
-	top: 100px;
-	width: 292px;
-	}
-#col2 {
-	left: 525px;
-	padding: 20px;
-	position: absolute;
-	top: 100px;
-	width: 292px;
-	}
-#content p#links {
-	margin: 3em auto 0;
-	text-align: center;
-	width: 75%;
-	}
-/* a.forward {
-	background: url(../images/forward.png) right center no-repeat;
-	clear: both;
-	display: block;
-	height: 25px;
-	margin-bottom: 1.1em;
-	padding-right: 55px;
-	text-align: right;
-	text-decoration: none;
-	}
-a.backward {
-	background: url(../images/backward.png) left center no-repeat;
-	clear: both;
-	display: block;
-	height: 25px;
-	padding-left: 55px;
-	text-align: left;
-	text-decoration: none;
-	} */
-a.forward {
-	bottom: 115px;
-	clear: both;
-	display: block;
-	height: 35px;
-	position: absolute;
-	right: 95px;
-	text-align: right;
-	text-decoration: none;
-	width: 130px;
-	}
-a.backward {
-	background: transparent;
-	bottom: 115px;
-	clear: both;
-	display: block;
-	height: 35px;
-	left: 85px;
-	position: absolute;
-	text-align: right;
-	text-decoration: none;
-	width: 130px;
-	}
+	#caselog-nav ul {
+		margin: 20px auto;
+		width: 960px;
+		}
+		#caselog-nav ul li {
+			background: static_url('book.png') no-repeat center top;
+			float: left;
+			font-size: 12px;
+			font-weight: bold;
+			height: auto;
+			list-style: none;
+			margin: 0 10px;
+			min-height: 190px;
+			opacity: .5;
+			padding: 0;
+			text-align: center;
+			width: 140px;
+			}
+		#caselog-nav ul li.caselog-active {
+			opacity: 1;
+			}
+		#caselog-nav ul li:hover, #caselog-nav ul li:focus {
+			opacity: 1;
+			}
+		#caselog-nav ul li a {
+			color: #e5c59e;
+			display: block;
+			height: auto;
+			min-height: 140px;
+			padding: 50px 10px 0 14px;
+			text-decoration: none;
+			width: 116px;
+			}
+		#caselog-nav ul li#training a {
+			background: static_url('training.png') no-repeat center 80px;
+			}
+		#caselog-nav ul li#apprentice a {
+			background: static_url('apprentice.png') no-repeat center 80px;
+			}
+		#caselog-nav ul li#journeyman a {
+			background: static_url('journeyman.png') no-repeat center 80px;
+			}
+		#caselog-nav ul li#master a {
+			background: static_url('master.png') no-repeat center 80px;
+			}
+		#caselog-nav ul li#meiosis a {
+			background: static_url('meiosis.png') no-repeat center 80px;
+			}
+		#caselog-nav ul li#dna a {
+			background: static_url('dna.png') no-repeat center 80px;
+			}

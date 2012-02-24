@@ -2,34 +2,62 @@
 // Project:   Lab
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Lab Geniverse CcChat window Ki YES NO SC*/
+/*globals Lab Geniverse CcChat window Ki YES NO SC static_url sc_super*/
 
-Lab.matchOneAtATimeChallenge = Ki.State.extend({
+Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
   
   successfulMatch: NO,
-
-  challengeComplete: NO,
   
   organismView: null,
   
-  enterState: function() { 
-    // for now, we assume that there are match dragons
-    this.startChallenge();
-  },
+  starsEarned: 0,
+  
+  firstChromosomeDragonLoaded: NO,
+  
+  buttonView: null,
   
   startChallenge: function() {
-    this.statechart.getState('inActivity').blockNextNavButton(true);
+    sc_super();
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', NO);
+
+    // This needs to happen after the match dragons are loaded into the controller....
+    Geniverse.matchController.addObserver('arrangedObjects.length', this._updateNumTrials);
+  },
+
+  exitState: function() {
+    sc_super();
+    Geniverse.matchController.removeObserver('arrangedObjects.length', this._updateNumTrials);
   },
   
-  endChallenge: function() {
-    this.challengeComplete = YES;
-    this.statechart.getState('inActivity').blockNextNavButton(false);
+  matchDragonChanged: function() {
+    this.setTargetScore();
+  },
+  
+  chromosomeDragonChanged: function() {
+    if (!this.firstChromosomeDragonLoaded) {
+      this.firstChromosomeDragonLoaded = YES;
+      this.setTargetScore();
+    }
+  },
+
+  setTargetScore: function() {
+    var initialDragon = Geniverse.dragonGenomeController.get('firstDragon');
+    if (initialDragon && initialDragon.get('characteristicMap') &&
+        Geniverse.matchController.get("currentDragon") && Geniverse.matchController.get("currentDragon").get('characteristicMap')) {
+      Geniverse.scoringController.set('minimumScore', (Geniverse.matchController.numberOfMovesToReachCurrent(initialDragon) + 1));
+    }
   },
   
   revealClicked: function(buttonView) {
-    this.organismView = buttonView.get('parentView');
+    this.buttonView = buttonView;
+    this.get('statechart').sendAction("checkAnswerIfDrakesReady");
+  },
+  
+  checkAnswer: function() {
+    sc_super();
+    this.organismView = this.buttonView.get('parentView');
     this._revealImage();
+    Geniverse.scoringController.incrementScore(1);
     
     SC.Timer.schedule({
       target: this,
@@ -80,10 +108,13 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
   
   alertPaneDidDismiss: function() {
     if (this.successfulMatch){
-      Geniverse.scoringController.resetScore();
       if (Geniverse.matchController.isLastDragon()) {
         this._challengeComplete();
+        Geniverse.scoringController.resetChallengeScore();
       }
+      // reset score after we do any lastDragon stuff, so that challenge
+      // scores will be calculated correctly.
+      Geniverse.scoringController.resetScore();
       Geniverse.matchController.nextDragon();
       this.successfulMatch = NO;
     }
@@ -92,26 +123,6 @@ Lab.matchOneAtATimeChallenge = Ki.State.extend({
   
   _drakesMatch: function(dragon) {
     return Geniverse.matchController.doesMatchCurrent(dragon);
-  },
-
-  _challengeComplete: function() {
-    // Notify the user that they're done
-    var moveOnMessage = (!!Geniverse.activityController.getNextActivity()) ? 
-      "Move on to the next challenge using the green arrow below." :
-      "Go back to the case log using the button at the top left to go to a new case.";
-    SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 350, height: 100 }}).plain(
-      "Good work!", 
-      "You've completed all the trials in this challenge!\n"+moveOnMessage,
-      "",
-      "OK",
-      "",
-      this
-    );
-    
-    this.endChallenge();
-  },
-  
-  exitState: function() { 
   }
-  
+
 });

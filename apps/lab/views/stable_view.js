@@ -118,7 +118,7 @@ Lab.StableView = SC.View.extend(
             if (count > 0){
               var lastDragon = allStableDragons.objectAt(count-1);
               var lastStableOrder = lastDragon.get('stableOrder');
-              if (!!lastStableOrder && lastStableOrder > count){
+              if (lastStableOrder && lastStableOrder > count){
                 dragonNum = lastStableOrder + 1;
               } else {
                 dragonNum = count + 1;

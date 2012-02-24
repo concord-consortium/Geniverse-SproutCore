@@ -19,3 +19,5 @@ logrotate.conf
 bundled_gems
 .bundle/
 "/
+gems/
+bin/

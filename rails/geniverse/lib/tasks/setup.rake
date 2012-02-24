@@ -1,4 +1,8 @@
 namespace :app do
+  def homozygous_alleles(alleles = [])
+    alleles.map{|a| ["a:#{a}","b:#{a}"]}.flatten.join(",")
+  end
+
   desc "Setup the default geniverse cases and activities"
   task :setup => :environment do
     
@@ -61,6 +65,25 @@ activities << {:hidden_genes=>"",
   :pageType=>"chromosomeBreedingPage",
   :match_dragon_alleles=>""}
 activities << {:hidden_genes=>"",
+  :crossover_when_breeding=>true,
+  :title=>"Template: chromosomeBreedingChallengePage",
+  :base_channel_name=>"pageType_chromosomeBreedingChallengePage",
+  :message=>"This is an example of the pageType called chromosomeBreedingChallengePage.\t",
+  :send_bred_dragons=>false,
+  :static_genes=>"",
+  :route=>"pagetype/reference/chromosomeBreedingChallengePage",
+  :max_users_in_room=>nil,
+  :initial_alleles=>"[ [ [
+    {alleles:'#{homozygous_alleles(%w{T M W H C Fl Hl A1 B D rh})}', sex: 1, name: 'Starter Female 1'},
+    {alleles:'#{homozygous_alleles(%w{T M W H C Fl Hl A1 B D rh})}', sex: 0, name: 'Starter Male 1'}
+  ] ] ];",
+  :pageType=>"chromosomeBreedingChallengePage",
+  :match_dragon_alleles=>"[ [ [
+    {alleles:'#{homozygous_alleles(%w{T M w H C Fl Hl A1 B D rh})}', sex: 1, name: 'Match Female 1'},
+    {alleles:'#{homozygous_alleles(%w{T M w h C Fl Hl A1 B D rh})}', sex: 0, name: 'Match Male 1'},
+    {alleles:'#{homozygous_alleles(%w{T M w h C fl Hl A1 B D rh})}', sex: 1, name: 'Match Female 2'}
+  ] ] ];"}
+activities << {:hidden_genes=>"",
   :crossover_when_breeding=>nil,
   :title=>"Template: breedingPage",
   :base_channel_name=>"pageType_breedingPage",
@@ -72,6 +95,25 @@ activities << {:hidden_genes=>"",
   :initial_alleles=>"[ [ [ {alleles:'a:H,b:H,a:m,b:m,a:d,b:d,a:B,b:B,a:C,b:C,a:a,b:a,a:W,b:w,a:Fl,b:fl,a:Hl,b:Hl,a:T,b:T', sex: 1, name: 'Match Female 1'}, {alleles:'a:H,b:H,a:m,b:m,a:d,b:d,a:B,b:B,a:C,b:C,a:a,b:a,a:w,b:w,a:Fl,b:Fl,a:Hl,b:hl,a:T,b:t', sex: 1, name: 'Match Female 2'}, {alleles:'a:H,b:H,a:m,b:m,a:d,b:d,a:B,b:B,a:C,b:C,a:a,b:a,a:W,b:w,a:Fl,b:fl,a:Hl,b:hl,a:T', sex: 0, name: 'Match Male 1'},{alleles:'a:H,b:H,a:m,b:m,a:d,b:d,a:B,b:B,a:C,b:C,a:a,b:a,a:w,b:w,a:Fl,b:fl,a:hl,b:hl,a:t', sex: 0, name: 'Match Male 2'} ] ] ];",
   :pageType=>"breedingPage",
   :match_dragon_alleles=>"[ [ [ {alleles:'a:H,b:H,a:m,b:m,a:d,b:d,a:B,b:B,a:C,b:C,a:a,b:a,a:W,b:w,a:Fl,b:fl,a:Hl,b:Hl,a:T,b:T', sex: 1, name: 'Match Female 1'}, {alleles:'a:H,b:H,a:m,b:m,a:d,b:d,a:B,b:B,a:C,b:C,a:a,b:a,a:w,b:w,a:Fl,b:Fl,a:Hl,b:hl,a:T,b:t', sex: 1, name: 'Match Female 2'}, {alleles:'a:H,b:H,a:m,b:m,a:d,b:d,a:B,b:B,a:C,b:C,a:a,b:a,a:W,b:w,a:Fl,b:fl,a:Hl,b:hl,a:T', sex: 0, name: 'Match Male 1'},{alleles:'a:H,b:H,a:m,b:m,a:d,b:d,a:B,b:B,a:C,b:C,a:a,b:a,a:w,b:w,a:Fl,b:fl,a:hl,b:hl,a:t', sex: 0, name: 'Match Male 2'} ] ] ];"}
+activities << {:hidden_genes=>"",
+  :crossover_when_breeding=>nil,
+  :title=>"Template: breedingChallengePage",
+  :base_channel_name=>"pageType_breedingChallengePage",
+  :message=>"This is an example of the pageType called breedingChallengePage.",
+  :send_bred_dragons=>nil,
+  :static_genes=>"",
+  :route=>"pagetype/reference/breedingChallengePage",
+  :max_users_in_room=>nil,
+  :initial_alleles=>"[ [ [
+    {alleles:'#{homozygous_alleles(%w{T M W H C Fl Hl A1 B D rh})}', sex: 1, name: 'Starter Female 1'},
+    {alleles:'#{homozygous_alleles(%w{T M W H C Fl Hl A1 B D rh})}', sex: 0, name: 'Starter Male 1'}
+  ] ] ];",
+  :pageType=>"breedingChallengePage",
+  :match_dragon_alleles=>"[ [ [
+    {alleles:'#{homozygous_alleles(%w{T M W H C Fl Hl A1 B D rh})}', sex: 1, name: 'Match Female 1'},
+    {alleles:'#{homozygous_alleles(%w{T M W H C Fl Hl A1 B D rh})}', sex: 0, name: 'Match Male 1'},
+    {alleles:'#{homozygous_alleles(%w{T M W H C Fl Hl A1 B D rh})}', sex: 1, name: 'Match Female 2'}
+  ] ] ];"}
 activities << {:hidden_genes=>"",
   :crossover_when_breeding=>nil,
   :title=>"Template: breedingPageMatch",
@@ -441,15 +483,17 @@ activities << {:hidden_genes=>"{'all': 'm,c,a,b,d,hoxa1,rh'}",
   :static_genes=>"",
   :route=>"heredity/challenge/case01",
   :max_users_in_room=>nil,
+  :threshold_three_stars=>1,
+  :threshold_two_stars=>2,
   :initial_alleles=>%![[[
-{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Heterozygous Mother'}
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:rh,b:rh', sex: 1, name: 'Heterozygous Mother'}
 ]]];!,
   :pageType=>"chromosomeChallengePage",
   :match_dragon_alleles=>%![ [ [
-{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:H,b:H,a:Fl,b:Fl,a:Hl,b:hl,a:t,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Match-Female-one trait recessive'},
-{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:H,b:H,a:Fl,b:Fl,a:hl,b:hl,a:t,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Match Female-two traits recessive'},
-{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:h,b:h,a:Fl,b:Fl,a:hl,b:hl,a:t,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Match Female-three traits recessive'},
-{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:w,b:w,a:h,b:h,a:fl,b:fl,a:hl,b:hl,a:t,b:t,a:Hoxa1,b:Hoxa1', sex: 0, name: 'Match Male-all (varying) traits recessive'}
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:H,b:H,a:Fl,b:Fl,a:Hl,b:hl,a:t,b:t,a:rh,b:rh', sex: 1, name: 'Match-Female-one trait recessive'},
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:H,b:H,a:Fl,b:Fl,a:hl,b:hl,a:t,b:t,a:rh,b:rh', sex: 1, name: 'Match Female-two traits recessive'},
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:h,b:h,a:Fl,b:Fl,a:hl,b:hl,a:t,b:t,a:rh,b:rh', sex: 1, name: 'Match Female-three traits recessive'},
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:w,b:w,a:h,b:h,a:fl,b:fl,a:hl,b:hl,a:t,b:t,a:rh,b:rh', sex: 0, name: 'Match Male-all (varying) traits recessive'}
 ] ] ];!}
 activities << {:hidden_genes=>"{'all': 'm,c,a,b,d,hoxa1,rh'}",
   :crossover_when_breeding=>true,
@@ -459,16 +503,18 @@ activities << {:hidden_genes=>"{'all': 'm,c,a,b,d,hoxa1,rh'}",
   :send_bred_dragons=>nil,
   :static_genes=>"",
   :route=>"heredity/challenge/case02",
+  :threshold_three_stars=>8,
+  :threshold_two_stars=>10,
   :max_users_in_room=>nil,
   :initial_alleles=>%![[[
-{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Heterozygous Mother'}
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:w,a:H,b:h,a:Fl,b:fl,a:Hl,b:hl,a:T,b:t,a:rh,b:rh', sex: 1, name: 'Heterozygous Mother'}
 ]]];!,
   :pageType=>"chromosomeTripleChallengePage",
   :match_dragon_alleles=>%![ [ [
-{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:H,b:H,a:Fl,b:Fl,a:Hl,b:hl,a:t,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Match-Female-one trait recessive'},
-{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:H,b:H,a:Fl,b:Fl,a:hl,b:hl,a:t,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Match Female-two traits recessive'},
-{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:h,b:h,a:Fl,b:Fl,a:hl,b:hl,a:t,b:t,a:Hoxa1,b:Hoxa1', sex: 1, name: 'Match Female-three traits recessive'},
-{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:w,b:w,a:h,b:h,a:fl,b:fl,a:Hl,b:Hl,a:t,b:t,a:Hoxa1,b:Hoxa1', sex: 0, name: 'Match Male-all (varying) traits recessive'}
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:H,b:H,a:Fl,b:Fl,a:Hl,b:hl,a:t,b:t,a:rh,b:rh', sex: 1, name: 'Match-Female-one trait recessive'},
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:H,b:H,a:Fl,b:Fl,a:hl,b:hl,a:t,b:t,a:rh,b:rh', sex: 1, name: 'Match Female-two traits recessive'},
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:W,b:W,a:h,b:h,a:Fl,b:Fl,a:hl,b:hl,a:t,b:t,a:rh,b:rh', sex: 1, name: 'Match Female-three traits recessive'},
+{alleles: 'a:m,b:m,a:C,b:C,a:A1,b:A1,a:B,b:B,a:D,b:D,a:w,b:w,a:h,b:h,a:fl,b:fl,a:Hl,b:Hl,a:t,b:t,a:rh,b:rh', sex: 0, name: 'Match Male-all (varying) traits recessive'}
 ] ] ];!}
 activities << { :myCase_id=>1,
   :myCaseOrder=>1,

@@ -55,6 +55,7 @@ Geniverse.Dragon = SC.Record.extend(
   metaInfo: null,
   characteristicMap: null,
   hasBeenMatched: NO,
+  session: null,
   
   gOrganismDefined: function() {
     var gOrg = this.get('gOrganism');
@@ -70,14 +71,27 @@ Geniverse.Dragon = SC.Record.extend(
     var self = this;
     this.invokeLast(function() {
       if (self.get('gOrganismDefined') == NO) {
-        Geniverse.gwtController.generateGOrganismWithAlleles(self.get('alleles'), self.get('sex'), function(gOrg) {
-          self.set('gOrganism', gOrg);
-        });
+        if (self.get('status') && SC.Record.READY) {
+          self.createGOrganism();
+        } else {
+          self.addObserver('status', self.createGOrganism);
+        }
       }// else {
         // SC.Logger.info('gOrganism already defined. must be a session-generated dragon.');
         // SC.Logger.dir(self);
       // }
     });
+  },
+  
+  createGOrganism: function() {
+    if (this.get('status') & SC.Record.READY) {
+      this.removeObserver('status', this);
+      var self = this;
+      Geniverse.gwtController.generateGOrganismWithAlleles(this.get('alleles'), this.get('sex'), function(gOrg) {
+        console.log("setting gOrganism")
+        self.set('gOrganism', gOrg);
+      });
+    }
   },
   
   setAttributes: function() {
@@ -147,4 +161,54 @@ Geniverse.Dragon = SC.Record.extend(
 Geniverse.Dragon.modelName = "dragon";
 Geniverse.Dragon.modelsName = "dragons";
 Geniverse.railsBackedTypes.push(Geniverse.Dragon.modelName);
+
+Geniverse.Dragon.traitRules = {
+  "armor": {
+    "Five armor": [["A1", "A1"], ["A1", "A2"]],
+    "Three armor": [["A1", "a"], ["A2", "A2"]],
+    "One armor": [["A2", "a"]],
+    "No armor": [["a", "a"]]
+  },
+  "tail": {
+    "Long tail": [["T", "T"], ["T", "Tk"], ["T", "t"]],
+    "Kinked tail": [["Tk", "Tk"], ["Tk", "t"]],
+    "Short tail": [["t", "t"]]
+  },
+  "forelimbs": {
+    "Forelimbs": [["Fl", "Fl"], ["Fl", "fl"]],
+    "No forelimbs": [["fl", "fl"]]
+  },
+  "hindlimbs": {
+    "Hindlimbs": [["Hl", "Hl"], ["Hl", "hl"]],
+    "No hindlimbs": [["hl", "hl"]]
+  },
+  "horns": {
+    "Hornless": [["H", "H"], ["H", "h"]],
+    "Horns": [["h", "h"]]
+  },
+  "nose spike": {
+    "Nose spike": [["Rh", "Rh"], ["Rh", "rh"]],
+    "No nose spike": [["rh", "rh"]]
+  },
+  "wings": {
+    "Wings": [["W", "W"], ["W", "w"]],
+    "No wings": [["w", "w"]]
+  },
+  "color": {
+    "Steel":    [["M", "M", "B", "B", "D", "D"], ["M", "m", "B", "B", "D", "D"],
+                 ["M", "M", "B", "b", "D", "D"], ["M", "M", "B", "B", "D", "d"],
+                 ["M", "m", "B", "b", "D", "D"], ["M", "m", "B", "B", "D", "d"],
+                 ["M", "M", "B", "b", "D", "d"], ["M", "m", "B", "b", "D", "d"]],
+    "Copper":   [["M", "M", "b", "b", "D", "D"], ["M", "m", "b", "b", "D", "D"],
+                 ["M", "M", "b", "b", "D", "d"], ["M", "m", "b", "b", "D", "d"]],
+    "Argent":   [["M", "M", "B", "B", "d", "d"], ["M", "m", "B", "B", "d", "d"],
+                 ["M", "M", "B", "b", "d", "d"], ["M", "m", "B", "b", "d", "d"]],
+    "Gold":     [["M", "M", "b", "b", "d", "d"], ["M", "m", "b", "b", "d", "d"]],
+    "Charcoal": [["m", "m", "B", "B", "D", "D"], ["m", "m", "B", "b", "D", "D"],
+                 ["m", "m", "B", "B", "D", "d"], ["m", "m", "B", "b", "D", "d"]],
+    "Earth":    [["m", "m", "b", "b", "D", "D"], ["m", "m", "b", "b", "D", "d"]],
+    "Dust":     [["m", "m", "B", "B", "d", "d"], ["m", "m", "B", "b", "d", "d"]],
+    "Sand":     [["m", "m", "b", "b", "d", "d"]]
+  }
+};
 

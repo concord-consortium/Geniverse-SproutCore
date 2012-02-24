@@ -10,23 +10,25 @@
 
   @extends SC.Object
 */
-Geniverse.gwtController = SC.Controller.create(
+Geniverse.gwtController = SC.Object.create(
 /** @scope Geniverse.gwtController.prototype */
 {
   bredOrganisms: [],
-  
+
   isReady: NO,
-  
+
   loadTimer: null,
-  
+
+  pendingOrganisms: [],
+
   setupTimer: function() {
 	  if (this.get('loadTimer') !== null) {
 	    this.get('loadTimer').invalidate();
     }
-    
+
     this.set('loadTimer', SC.Timer.schedule({
       target: this,
-      action: function() { 
+      action: function() {
         if (typeof(GenGWT) != "undefined" && GenGWT.isLoaded()) {
           this.set('isReady', YES);
           this.get('loadTimer').invalidate();
@@ -36,42 +38,59 @@ Geniverse.gwtController = SC.Controller.create(
       repeats: YES
     }));
 	},
-	
+
   init: function() {
 		sc_super();
-		
+
 		if (typeof(GenGWT) == "undefined" || ! GenGWT.isLoaded()) {
 		  this.setupTimer();
 		}
 	},
+
+	drakesArePending: function() {
+    return this.pendingOrganisms.length > 0;
+  }.property('*pendingOrganisms.[]'),
+
+  addPendingDrake: function() {
+    var id = Math.floor(Math.random() * 100000);
+    this.pendingOrganisms.push(id);
+    return id;
+  },
+
+  removePendingDrake: function(id) {
+    this.pendingOrganisms.removeObject(id);
+    if (this.pendingOrganisms.length === 0) {
+      this.propertyDidChange("drakesArePending");
+    }
+  },
 
   breedOrganism: function(mother, father, handleChildFunction) {
     var self = this;
     if (mother !== null && mother.get('gOrganism') !== null && father !== null && father.get('gOrganism') !== null) {
       var onSuccess = function(organism) {
         var child = Geniverse.store.createRecord(Geniverse.Dragon, {
-					bred: YES, mother: mother.get("id"), father: father.get("id"), activity: Geniverse.activityController.getPath('content.id'), 
+					bred: YES, mother: mother.get("id"), father: father.get("id"), activity: Geniverse.activityController.getPath('content.id'),
 					user: Geniverse.userController.get('content').get('id'), isInMarketplace: NO, isEgg: YES
 				});
 				child.set('user', Geniverse.userController.get('content'));
         child.set('gOrganism', organism);
-      
+
         handleChildFunction(child);
         Geniverse.store.commitRecords();
       };
       GenGWT.breedDragon(mother.get('gOrganism'), father.get('gOrganism'), onSuccess);
     }
   },
-  
+
   breedOrganisms: function(number, mother, father, handleChildFunction) {
     var self = this;
     SC.Logger.info("Breeding " + number + " dragons");
-    
+
     var crossover = false;
     if (!!Geniverse.activityController.get('content')){
       crossover = Geniverse.activityController.get('crossoverWhenBreeding');
     }
-    
+
     if (mother !== null && mother.get('gOrganism') !== null && father !== null && father.get('gOrganism') !== null) {
       var onSuccess = function(organisms) {
         window.DragonSet = organisms;
@@ -80,12 +99,12 @@ Geniverse.gwtController = SC.Controller.create(
         for (var i = 0; i < number; i++) {
           organism = orgs[i];
           var child = Geniverse.store.createRecord(Geniverse.Dragon, {
-  					bred: YES, mother: mother.get("id"), father: father.get("id"), activity: Geniverse.activityController.getPath('content.id'), 
+  					bred: YES, mother: mother.get("id"), father: father.get("id"), activity: Geniverse.activityController.getPath('content.id'),
   					user: Geniverse.userController.get('content').get('id'), breeder: Geniverse.userController.get('content').get('id'),
   					isInMarketplace: NO, isEgg: YES
   				});
           child.set('gOrganism', organism);
-      
+
           handleChildFunction(child);
         }
         Geniverse.store.commitRecords();
@@ -93,7 +112,7 @@ Geniverse.gwtController = SC.Controller.create(
       GenGWT.breedDragons(number, mother.get('gOrganism'), father.get('gOrganism'), crossover, onSuccess);
     }
   },
-  
+
   generateRandomDragon: function(callback) {
     // alert('generating dragon');
     var self = this;
@@ -122,12 +141,13 @@ Geniverse.gwtController = SC.Controller.create(
     };
     GenGWT.generateDragonWithSex(sex, handleGOrg);
   },
-  
+
   generateDragonWithAlleles: function(alleles, sex, name, callback, mustBeAlive) {
     // SC.Logger.log("Generating dragon with "+alleles);
     // alert('generating dragon');
     var count = 0;
     var self = this;
+    var id = this.addPendingDrake();
     var handleGOrg = function(gOrg) {
       if (!!mustBeAlive){
         if (gOrg.characteristicMap.stringMap[':liveliness'].indexOf('Dead') > -1){
@@ -147,10 +167,11 @@ Geniverse.gwtController = SC.Controller.create(
       org.set('gOrganism', gOrg);
       callback(org);
       Geniverse.store.commitRecords();
+      self.removePendingDrake(id);
     };
     GenGWT.generateDragonWithAlleleStringAndSex(alleles, sex, handleGOrg);
   },
-  
+
   generateGOrganismWithAlleles: function(alleles, sex, callback) {
     // SC.Logger.log("Generating gOrg with "+alleles);
     GenGWT.generateDragonWithAlleleStringAndSex(alleles, sex, callback);

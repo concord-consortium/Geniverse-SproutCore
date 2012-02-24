@@ -9,7 +9,7 @@ describe "Templates" do
       @app = new_test({:app_root_path => "/lab#heredity/challenge/case01"}) {|app|
         app['isLoaded'] == true
 
-        app.move_to 1, 1 
+        app.move_to 1, 1
         app.resize_to 1024, 768
 
         define_common_paths(app)
@@ -29,6 +29,12 @@ describe "Templates" do
 
       @chromosome_controller = @app['Geniverse.chromosomeController', 'SC.ObjectController']
       @match_controller = @app['Geniverse.matchController', 'SC.ArrayController']
+
+      @user_controller = @app['Geniverse.userController', 'SC.ObjectController']
+      @activity_controller = @app['Geniverse.activityController', 'SC.ObjectController']
+      @activity_guid = @activity_controller.guid.to_s
+
+      @scoring_controller = @app['Geniverse.scoringController', 'SC.Controller']
 
       sleep 5
       hide_info_pane
@@ -67,24 +73,37 @@ describe "Templates" do
 #      @reveal_button.isEnabled.should be_true, "Reveal button should be enabled when all alleles are specified"
 #    end
 
+    it 'should track how many changes it takes to get a match' do
+      @score_view.scoreView['value'].should eq("Your moves: 0"), "Score should start at 0: was #{@score_view.scoreView['value'].inspect}"
+    end
+
     it 'should give an error message when the wrong alleles are selected' do
       verify_incorrect_match
     end
 
-    it 'should track how many changes it takes to get a match' do
-      @score_view.scoreView['value'].should eq("Your moves: 0"), "Score should start at 0"
+    it 'should increment moves when wrong alleles are selected' do
+      @score_view.scoreView['value'].should eq("Your moves: 1"), "Score should start at 1: was #{@score_view.scoreView['value'].inspect}"
+    end
+
+    it 'should correctly load the star scoring values' do
+      @scoring_controller.threeStarThreshold.should == 1
+      @scoring_controller.twoStarThreshold.should == 2
+      @scoring_controller.minimumScore.should == 1
+      @scoring_controller.numberOfTrials.should == 4
+      @scoring_controller.threeStarChallengeThreshold.should == 4
+      @scoring_controller.twoStarChallengeThreshold.should == 8
     end
 
     it 'should increment the score by 1 whenever an allele is changed' do
       change_allele_value('a', 't')
 
-      @score_view.scoreView['value'].should eq("Your moves: 1"), "Score should show 1"
+      @score_view.scoreView['value'].should eq("Your moves: 2"), "Score should show 2: was #{@score_view.scoreView['value'].inspect}"
     end
 
     it 'should not increment the score if the allele value does not change' do
       change_allele_value('b', 't')
 
-      @score_view.scoreView['value'].should eq("Your moves: 1"), "Score should still show 1"
+      @score_view.scoreView['value'].should eq("Your moves: 2"), "Score should still show 2: was #{@score_view.scoreView['value'].inspect}"
     end
 
     it 'should increment the score by 1 whenever the sex is changed' do
@@ -92,7 +111,14 @@ describe "Templates" do
       sleep 1
       @switch_sex_button.click
 
-      @score_view.scoreView['value'].should eq("Your moves: 3"), "Score should be 3"
+      @score_view.scoreView['value'].should eq("Your moves: 4"), "Score should be 4: was #{@score_view.scoreView['value'].inspect}"
+      @scoring_controller.currentScore.should == 4
+      @scoring_controller.currentChallengeScore.should == 4
+    end
+
+    it 'should have achieved 1 stars' do
+      @scoring_controller.achievedStars.should == 1
+      @scoring_controller.targetChallengeScore.should == 5 # 1 move + (1*4) threshold
     end
 
     it 'should match after changing alleles' do
@@ -101,23 +127,44 @@ describe "Templates" do
 
     it 'should reset the score after the match is correct' do
       @score_view.scoreView['value'].should eq("Your moves: 0"), "Score should reset to 0 after a match"
+      @scoring_controller.currentChallengeScore.should == 4
+      @scoring_controller.targetChallengeScore.should == 6 # 2 move + (1*4) threshold
     end
 
-    it 'should complete the challenge after all 4 are matched' do
+    it 'should correctly track things after the 2nd trial' do
       change_allele_value('a', 'hl')
       change_allele_value('b', 'hl')
+      @scoring_controller.achievedStars.should == 3
       verify_correct_match
+      @scoring_controller.currentChallengeScore.should == 5
+      @scoring_controller.targetChallengeScore.should == 7 # 3 move + (1*4) threshold
+    end
 
+    it 'should correctly track things after the 3rd trial' do
       change_allele_value('a', 'h')
       change_allele_value('b', 'h')
+      @scoring_controller.achievedStars.should == 3
       verify_correct_match
+      @scoring_controller.currentChallengeScore.should == 6
+    end
 
+    it 'should correctly track things after the 4th trial' do
       @switch_sex_button.click
+      change_allele_value('a', 'Hl')
+      change_allele_value('b', 'Hl')
+      change_allele_value('a', 'hl')
+      change_allele_value('b', 'hl')
       change_allele_value('a', 'w')
       change_allele_value('b', 'w')
       change_allele_value('a', 'fl')
       change_allele_value('b', 'fl')
+      @scoring_controller.achievedStars.should == 1
+      @scoring_controller.currentChallengeScore.should == 13
+      @scoring_controller.targetChallengeScore.should == 10 # 6 move + (1*4) threshold
+      @scoring_controller.achievedChallengeStars.should == 2
+    end
 
+    it 'should complete the challenge after all 4 are matched' do
       sleep 3
 
       verify_correct_match
@@ -130,6 +177,10 @@ describe "Templates" do
 
     it 'should not know that the first dragon was previously matched' do
       @match_controller['currentDragon']['hasBeenMatched'].should be_false, "Match dragon should not have been marked as matched"
+    end
+
+    it 'should reset the challenge score' do
+      @scoring_controller.currentChallengeScore.should == 0
     end
 
     def verify_incorrect_match
@@ -153,7 +204,15 @@ describe "Templates" do
     end
 
     def verify_challenge_complete
-      verify_alert(:plain, "OK")
+      # Check that the correct number of stars were awarded
+      expected_stars = [2]
+
+      stars = @user_controller.metadata.stars
+      num_stars = stars[@activity_guid]
+
+      num_stars.should eq(expected_stars), "Number of stars should be #{expected_stars.inspect}, was: #{num_stars.inspect}"
+
+      verify_alert(:plain, ["Go back to the case log", "Try again"]) # the challenge alert
     end
 
     def verify_images(should_match)

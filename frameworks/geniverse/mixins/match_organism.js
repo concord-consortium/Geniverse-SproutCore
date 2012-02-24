@@ -30,6 +30,10 @@ Geniverse.MatchOrganism = {
     //   SC.AlertPane.info("", "Those dragons don't look exactly the same!");
     // }
 
+    if (this.get('trackScore')){
+      Geniverse.scoringController.incrementScore(1);
+    }
+
     return NO ;
   },
 

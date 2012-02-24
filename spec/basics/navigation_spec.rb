@@ -28,6 +28,7 @@ describe "Navigation" do
       @forward_button_blocked = @app['mainPane.bottomBar.navBarRightArrowRed', 'SC.ImageView']
       
       @pageTitle = @app['mainPane.topBar.geniverseLabelView', 'SC.LabelView']
+      @introScreenView = @app['#introScreenView', 'Geniverse.IntroScreenView']
     end
 
     after(:all) do
@@ -36,6 +37,7 @@ describe "Navigation" do
 
     it "should show back disabled and forward enabled" do
       sleep 3
+      @introScreenView.contentView.hideButton.click
 
       @back_button_disabled.isVisibleInWindow.should be_true
       # NB: desabled buttons always remain on screen, but may be hidden under other button
@@ -65,7 +67,9 @@ describe "Navigation" do
     
     it "should show be able to click back and go back to old activity" do
       @pageTitle.value.should eql "Case 1: Challenge 2"
+      sleep 3
       @back_button.click
+      sleep 3
       @pageTitle.value.should eql "Case 1: Challenge 1"
     end
 

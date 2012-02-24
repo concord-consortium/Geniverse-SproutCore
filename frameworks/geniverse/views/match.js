@@ -32,7 +32,7 @@ Geniverse.MatchView = SC.View.extend(
     if (!!this.get('dragonView')) {
       this.get('dragonView').contentDidChange();
     }
-  }.observes('Geniverse.matchController.currentDragonIdx', 'Geniverse.matchController.arrangedObjects.[]'),
+  }.observes('Geniverse.matchController.currentDragonIdx', 'Geniverse.matchController.arrangedObjects.[]', 'Geniverse.matchController.currentDragon'),
 
   
   isVisible: function() {
@@ -56,7 +56,6 @@ Geniverse.MatchView = SC.View.extend(
     var childViews = [];
 
     if (this.get('onlyOne')) {
-      SC.Logger.log("Only one!");
       this.dragonView = this.createChildView(this.get('dragonExampleView').extend({
         layout: { left: 0, top: 20, width: this.get('dragonSize'), height: this.get('dragonSize')},
         content: Geniverse.NO_DRAGON

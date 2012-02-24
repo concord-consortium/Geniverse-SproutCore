@@ -46,6 +46,8 @@ Geniverse.main = function main() {
       // Will do nothing because uncaught exception will show in console
       // for developers
     };
+    
+    Geniverse.ENABLE_CHAT = NO;
  
     //
     // HACK to support load activity using its title as DB Key: 

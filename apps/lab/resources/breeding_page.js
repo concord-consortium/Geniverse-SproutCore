@@ -23,7 +23,7 @@ Lab.breedingPage = SC.Page.design({
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'],
-    childViews: 'backgroundView topBar bottomBar mainAppView'.w(),
+    childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
       backgroundView: SC.ImageView.design({
         value: static_url('lab_background.png'),
         classNames: ['transparent','scalingimage']
@@ -40,7 +40,7 @@ Lab.breedingPage = SC.Page.design({
       
       layout: { top: 25, bottom: 0, left: 10, right: 0 },
       
-      childViews: 'breedView challengePoolView challengeChromosomeToolView breedingPenView stableView marketplaceView matchView'.w(),
+      childViews: 'breedView challengePoolView challengeChromosomeToolView breedingPenView stableView marketplaceView matchView scoreView'.w(),
      
       // challenge pool to hold initial, system-created dragons
       challengePoolView: Lab.ChallengePoolView.design({
@@ -53,7 +53,8 @@ Lab.breedingPage = SC.Page.design({
       
       breedView: Geniverse.BreedDragonView.design({
         layout: { top: 20 , left: 90, height: 330, width: 150 },
-        showChildView: NO // child as in baby dragon
+        showChildView: NO, // child as in baby dragon
+        trackScore: YES
       }),
       
       // Breeding pen with eggs
@@ -79,7 +80,7 @@ Lab.breedingPage = SC.Page.design({
         acceptDragOperation: function(drag, op) {
           function sellDragon(dragon){
             SC.RunLoop.begin();
-            if (!!dragon && dragon.get('bred')){
+            if (dragon && dragon.get('bred')){
               dragon.set('isInMarketplace', YES);
               Geniverse.eggsController.removeObject(dragon);
             }
@@ -113,6 +114,12 @@ Lab.breedingPage = SC.Page.design({
         dragExited: function(drag, evt) {
           this.$().removeClass('drop-target') ;
         }
+      }),
+      
+      scoreView: Geniverse.ScoreView.design({
+        layout: { left: 0, top: 455, height: 36, width: 150 },
+        showScore: YES,
+        showTargetScore: YES
       })
     })
   })

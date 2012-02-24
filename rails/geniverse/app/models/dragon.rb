@@ -1,15 +1,15 @@
 class Dragon < ActiveRecord::Base
   has_many :children, :class_name => "Dragon", :finder_sql => 'SELECT * FROM dragons WHERE mother_id = #{id} OR father_id = #{id}'
   has_many :siblings, :class_name => "Dragon", :finder_sql => 'SELECT * FROM dragons WHERE (mother_id = #{mother_id} OR father_id = #{father_id}) AND breeder_id = #{breeder_id} AND breedTime = #{breedTime} AND id != #{id}'
-  
+
   belongs_to :father, :class_name => "Dragon"
   belongs_to :mother, :class_name => "Dragon"
-  
+
   belongs_to :activity
-  
+
   belongs_to :user
   belongs_to :breeder, :class_name => "User", :foreign_key => "breeder_id"
-  
+
   def self.searchFields
     return {
       :user_id => /^(\d+|null)$/,
@@ -18,9 +18,11 @@ class Dragon < ActiveRecord::Base
       :mother_id => /^(\d+|null)$/,
       :father_id => /^(\d+|null)$/,
       :isInMarketplace => /^(true|false)$/,
+      :isMatchDragon => /^(true|false)$/,
       :bred => /^(true|false)$/,
       :isEgg => /^(true|false)$/,
-      :breedTime => /^(\d+|null)$/
+      :breedTime => /^(\d+|null)$/,
+      :isMatchDragon => /^(true|false)$/
     }
   end
 

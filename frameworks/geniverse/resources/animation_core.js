@@ -16,6 +16,8 @@ sc_require('lib/burst-core');
       loaded          : $.noop,
       animationComplete: $.noop,
       gameteSelected  : $.noop,
+      playButtonPressed: $.noop,
+      endButtonPressed: $.noop,
       zoom            : 2,
       width           : 310,
       height          : 320,
@@ -2007,6 +2009,7 @@ sc_require('lib/burst-core');
       	burst.load('geniverseTimeline_'+owner);
       	burst.play();
 				playing = true;
+				defaultOpts.playButtonPressed.call(defaultOpts.context);
 			}
     });
     self.find('.stop').click(function(){
@@ -2057,6 +2060,7 @@ sc_require('lib/burst-core');
     // Jump to the end to allow gamete selection
       var endButton = self.find('.end').click(function(){
 				if ((mode === 'parent') || ((mode === 'offspring') && (mother && father))){
+  				defaultOpts.endButtonPressed.call(defaultOpts.context, playing);
 					burst.timelines['geniverseTimeline_'+owner].play(79);
 					burst.timelines['geniverseTimeline_'+owner].play(80);
 					frame = 80;

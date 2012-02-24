@@ -23,7 +23,7 @@ Lab.breedingPageMatch = SC.Page.design({
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'],
-    childViews: 'backgroundView topBar bottomBar mainAppView'.w(),
+    childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
       backgroundView: SC.ImageView.design({
         value: static_url('lab_background.png'),
         classNames: ['transparent','scalingimage']
@@ -74,7 +74,7 @@ Lab.breedingPageMatch = SC.Page.design({
         acceptDragOperation: function(drag, op) {
           function sellDragon(dragon){
             SC.RunLoop.begin();
-            if (!!dragon && dragon.get('bred')){
+            if (dragon && dragon.get('bred')){
               dragon.set('isInMarketplace', YES);
               Geniverse.eggsController.removeObject(dragon);
             }

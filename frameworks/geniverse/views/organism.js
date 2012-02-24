@@ -26,6 +26,8 @@ Geniverse.OrganismView = SC.View.extend(
   hideDragon: NO, // hides the dragon
   useRevealButton: NO,  // hides dragon and show a reveal button
   revealButtonEnabled: YES,
+  
+  trackScore: NO, // whether this view will increment scoring controller when dragged into
 
 	imageView: SC.ImageView.design({
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
@@ -255,11 +257,21 @@ Geniverse.OrganismView = SC.View.extend(
       SC.RunLoop.begin();
         this.get('parentView').set(this.get('parent'), dragon);
         this.get('parentView').set('child', null);   //Geniverse.NO_DRAGON);
+        if (dragon.get('isEgg')){
+          // move dragon from eggs controller to stable
+          dragon.set('isEgg',NO);
+          var oldEggs = Geniverse.eggsController.get('content');
+          Geniverse.eggsController.set('content', oldEggs.without(dragon));
+        }
       SC.RunLoop.end();
     } else {
       SC.RunLoop.begin();
         this.set('content', dragon);
       SC.RunLoop.end();
+    }
+    
+    if (this.get('trackScore')){
+      Geniverse.scoringController.incrementScore(1);
     }
     
     this._setClassNames();
@@ -295,17 +307,6 @@ Geniverse.OrganismView = SC.View.extend(
       var sex = dragon.get('sex');
       if (sex !== requiredSex){
         return NO;
-      }
-    }
-    
-    var parentType = this.get('parent');
-    if (!!parentType){
-      if (dragon.get('isEgg')){
-        //HACK: We used to prevent eggs from becomming parents
-        //HACK: now we turn the eggs into parents without complaint.
-        //return NO;
-        dragon.set('isEgg',NO);
-        Geniverse.store.commitRecords();
       }
     }
     

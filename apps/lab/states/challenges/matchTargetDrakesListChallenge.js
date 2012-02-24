@@ -4,28 +4,17 @@
 // ==========================================================================
 /*globals Lab Geniverse CcChat window Ki YES NO SC*/
 
-Lab.matchTargetDrakesListChallenge = Ki.State.extend({
+Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
   
   successfulMatch: NO,
-
-  challengeComplete: NO,
   
   organismView: null,
   
-  enterState: function() { 
-    // for now, we assume that there are match dragons
-    this.startChallenge();
-  },
-  
   startChallenge: function() {
-    this.statechart.getState('inActivity').blockNextNavButton(true);
+    sc_super();
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', NO);
-    this.set('challengeComplete', NO);
-  },
-  
-  endChallenge: function() {
-    this.challengeComplete = YES;
-    this.statechart.getState('inActivity').blockNextNavButton(false);
+
+    Geniverse.scoringController.set('numberOfTrials', 1);
   },
   
   // Annoyingly, actions can only be called with a max of two arguments,
@@ -35,6 +24,8 @@ Lab.matchTargetDrakesListChallenge = Ki.State.extend({
   // @param dragons   an array [dragon1, dragon2]
   // @param view      the view to be updated
   checkMatchDragon: function(dragons, view) {
+    Geniverse.scoringController.incrementScore(1);
+    
     if (Geniverse.matchController.doesMatch(dragons[0], dragons[1])) {
       view.setPath('content.hasBeenMatched', YES);
       view._setClassNames();
@@ -59,34 +50,12 @@ Lab.matchTargetDrakesListChallenge = Ki.State.extend({
   },
   
   alertPaneDidDismiss: function() {
-    if (this.get('challengeComplete')){
-      return;
-    }
-    
     var numUnmatchedDrakes = Geniverse.matchController.filterProperty('hasBeenMatched', false).length;
     if (numUnmatchedDrakes === 0) {
       this._challengeComplete();
+      Geniverse.scoringController.resetScore();
+      Geniverse.scoringController.resetChallengeScore();
     }
-  },
-  
-  _challengeComplete: function() {
-    // Notify the user that they're done
-    var moveOnMessage = (!!Geniverse.activityController.getNextActivity()) ? 
-      "Move on to the next challenge using the green arrow below." :
-      "Go back to the case log using the button at the top left to go to a new case.";
-    SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 400, height: 100 }}).plain(
-      "You've completed all the trials in this challenge!", 
-      moveOnMessage,
-      "",
-      "OK",
-      "",
-      this
-    );
-    
-    this.endChallenge();
-  },
-  
-  exitState: function() { 
   }
   
 });

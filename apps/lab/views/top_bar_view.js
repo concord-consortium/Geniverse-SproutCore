@@ -2,7 +2,7 @@
 // Project:   Lab - TopBarView
 // Copyright: 2010 Concord Consortium
 // ==========================================================================
-/*globals Lab */
+/*globals Lab Geniverse */
 
 /**
  * Top toolbar with labels and logout button.
@@ -27,7 +27,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
   // childViews
   navBarLeft: null,
   homeButton: null,
-  caseLogButton: null,
+  caselogButton: null,
   infoButton: null,
   geniverseLabelView: null,
   welcomeLabelView: null,
@@ -114,23 +114,23 @@ Lab.TopBarView = SC.ToolbarView.extend(
         alt: 'Home',
         toolTip: "Click to go to the Lab's Home page",
         target: 'Lab.routes',
-        action: 'gotoHomePage'
+        action: 'openHomePageRoute'
       })
     );
     childViews.push(this.homeButton);
 
-    this.caseLogButton = this.createChildView(
+    this.caselogButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, left: 41, width: 27, height: 26 },
-        layerId: 'caseLogButton',
+        layerId: 'caselogButton',
         hasHover: YES,
         alt: 'Case Log',
         toolTip: "Click to go to the Lab's Case Log page",
         target: 'Lab.routes',
-        action: 'gotoCaseLogPage2' // use gotoCaseLogPage2 to use iframe version of new caselog
+        action: 'openCaselogRoute'
       })
     );
-    childViews.push(this.caseLogButton);
+    childViews.push(this.caselogButton);
 
     this.geniverseLabelView = this.createChildView(
       SC.LabelView.design({

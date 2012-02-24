@@ -1,0 +1,112 @@
+http://geniverse.local.concord.org/lab/#case4/argumentation
+
+	firstDragon:
+	Geniverse.Dragon({bred: false , activity: /rails/activities/100 , user: /rails/users/228 , name: 00 - Starting Mother , sex: 1 , alleles: b:T,a:T,b:M,a:m,b:w,a:w,b:h,a:h,b:C,a:C,b:Fl,a:fl,b:hl,a:hl,b:A1,a:A1,b:B,a:B,b:D,a:D,b:rh,a:rh , imageURL: http://geniverse.local.concord.org/resources/drakes/images/st_f_noWing_fore_a5_flair_horn_noRostral_healthy.png}) READY_CLEAN
+
+	secondDragon:
+	Geniverse.Dragon({bred: false , activity: /rails/activities/100 , user: /rails/users/228 , name: 01 - Starting Father , sex: 0 , alleles: b:T,a:T,b:m,a:m,b:w,a:w,b:h,a:h,b:C,a:C,b:fl,a:fl,b:Hl,a:hl,b:A1,a:A1,a:B,a:D,a:rh , imageURL: http://geniverse.local.concord.org/resources/drakes/images/ch_m_noWing_hind_a5_flair_horn_noRostral_healthy.png}) READY_CLEAN
+
+	thirdDragon:
+	(null)
+
+
+
+http://geniverse.local.concord.org/lab/#caselog/
+
+  firstDragon:
+	Geniverse.Dragon({bred: false , activity: /rails/activities/100 , user: /rails/users/228 , name: 00 - Starting Mother , sex: 1 , alleles: b:T,a:T,b:M,a:m,b:w,a:w,b:h,a:h,b:C,a:C,b:Fl,a:fl,b:hl,a:hl,b:A1,a:A1,b:B,a:B,b:D,a:D,b:rh,a:rh , imageURL: http://geniverse.local.concord.org/resources/drakes/images/st_f_noWing_fore_a5_flair_horn_noRostral_healthy.png}) READY_CLEAN
+
+	secondDragon:
+	Geniverse.Dragon({bred: false , activity: /rails/activities/100 , user: /rails/users/228 , name: 01 - Starting Father , sex: 0 , alleles: b:T,a:T,b:m,a:m,b:w,a:w,b:h,a:h,b:C,a:C,b:fl,a:fl,b:Hl,a:hl,b:A1,a:A1,a:B,a:D,a:rh , imageURL: http://geniverse.local.concord.org/resources/drakes/images/ch_m_noWing_hind_a5_flair_horn_noRostral_healthy.png}) READY_CLEAN
+
+	thirdDragon:
+	(null)
+	
+
+http://geniverse.local.concord.org/lab/#demos/challenge1
+
+	firstDragon:
+	Geniverse.Dragon({bred: false , activity: /rails/activities/129 , user: /rails/users/228 , name: 00 - Starting Mother , sex: 1 , alleles: b:T,a:T,b:m,a:m,b:w,a:W,b:h,a:h,b:C,a:C,b:Fl,a:fl,b:Hl,a:hl,b:A1,a:A1,b:B,a:B,b:D,a:D,b:rh,a:rh , imageURL: http://geniverse.local.concord.org/resources/drakes/images/ch_f_wing_allLimb_a5_flair_horn_noRostral_healthy.png}) READY_CLEAN
+
+	secondDragon:
+	Geniverse.Dragon({bred: false , activity: /rails/activities/129 , user: /rails/users/228 , name: 00 - Starting Mother , sex: 1 , alleles: b:T,a:T,b:m,a:m,b:w,a:W,b:h,a:h,b:C,a:C,b:Fl,a:fl,b:Hl,a:hl,b:A1,a:A1,b:B,a:B,b:D,a:D,b:rh,a:rh , imageURL: http://geniverse.local.concord.org/resources/drakes/images/ch_f_wing_allLimb_a5_flair_horn_noRostral_healthy.png}) READY_CLEAN
+
+	thirdDragon:
+	(null)
+
+
+http://geniverse.local.concord.org/lab/#caselog/
+
+	firstDragon:
+	Geniverse.Dragon({bred: false , activity: /rails/activities/129 , user: /rails/users/228 , name: 00 - Starting Mother , sex: 1 , alleles: b:T,a:T,b:m,a:m,b:w,a:W,b:h,a:h,b:C,a:C,b:Fl,a:fl,b:Hl,a:hl,b:A1,a:A1,b:B,a:B,b:D,a:D,b:rh,a:rh , imageURL: http://geniverse.local.concord.org/resources/drakes/images/ch_f_wing_allLimb_a5_flair_horn_noRostral_healthy.png}) READY_CLEAN
+
+	secondDragon:
+	Geniverse.Dragon({bred: false , activity: /rails/activities/129 , user: /rails/users/228 , name: 00 - Starting Mother , sex: 1 , alleles: b:T,a:T,b:m,a:m,b:w,a:W,b:h,a:h,b:C,a:C,b:Fl,a:fl,b:Hl,a:hl,b:A1,a:A1,b:B,a:B,b:D,a:D,b:rh,a:rh , imageURL: http://geniverse.local.concord.org/resources/drakes/images/ch_f_wing_allLimb_a5_flair_horn_noRostral_healthy.png}) READY_CLEAN
+
+	thirdDragon:
+	(null)
+
+
+http://geniverse.local.concord.org/lab/#case4/argumentation
+
+	firstDragon:
+	Geniverse.Dragon({bred: false , activity: /rails/activities/100 , user: /rails/users/228 , name: 00 - Starting Mother , sex: 1 , alleles: b:T,a:T,b:M,a:m,b:w,a:w,b:h,a:h,b:C,a:C,b:Fl,a:fl,b:hl,a:hl,b:A1,a:A1,b:B,a:B,b:D,a:D,b:rh,a:rh , imageURL: http://geniverse.local.concord.org/resources/drakes/images/st_f_noWing_fore_a5_flair_horn_noRostral_healthy.png}) READY_CLEAN
+
+	secondDragon:
+	Geniverse.Dragon({bred: false , activity: /rails/activities/100 , user: /rails/users/228 , name: 00 - Starting Mother , sex: 1 , alleles: b:T,a:T,b:M,a:m,b:w,a:w,b:h,a:h,b:C,a:C,b:Fl,a:fl,b:hl,a:hl,b:A1,a:A1,b:B,a:B,b:D,a:D,b:rh,a:rh , imageURL: http://geniverse.local.concord.org/resources/drakes/images/st_f_noWing_fore_a5_flair_horn_noRostral_healthy.png}) READY_CLEAN
+
+	thirdDragon:
+	(null)
+
+
+
+----
+
+
+Geniverse.dragonGenomeController._generateChallengeDragon is being called with (sex = 0, index = 2) by
+
+Geniverse.DragonGenomeView.initializeView   (via Geniverse.dragonGenomeController.initializeDragonForView)
+
+  * which is part of the previous challenge
+  * which observes Geniverse.activityController.content
+  * fires when the new challenge is loaded via Lab.ACTIVITY.initActivity (in its setActivity() helper), 
+  * because Geniverse.activityController.content is set to be the new challenge
+  * _generateChallengeDragon actually fires many times as the challenge loads
+
+
+LATER....
+
+
+Geniverse.dragonGenomeController's observer on Geniverse.challengePoolController.firstFemale (the 
+challengeDragonsLoaded() helper) fires 
+
+	* this observer fires when the challengePoolController's content is correctly set to be an array containing the
+	    dragon used by the new challenge
+  * this instance of the helper function is a closure with sex=0, index=2 (created by the DragonGenomeView from the old
+      challenge, as described above)
+  * (this closure must have been created in one of the above calls to _generateChallengeDragons())
+  * the helper does remove the observer
+
+  * the value of 'sex' is 0, so the helper looks for the 'firstMale' 
+  * because Geniverse.challengePoolController.firstMale is null, the if claues executes:
+
+		  if (!dragon && !Geniverse.challengePoolController.configContains(sex)) {
+		    // if we didn't find any drakes of the expected sex, see if we can find one of the other sex and
+		    // then later the sex of this genome panel will switch automatically.
+		    dragon = (sex === 0) ? Geniverse.challengePoolController.get('firstFemale') : Geniverse.challengePoolController.get('firstMale');
+		  } 
+		
+  * now it calls Geniverse.dragonGenomeController._setDragon(index=2, dragon = (the first female))
+
+
+
+
+
+
+
+
+
+
+
+
+

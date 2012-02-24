@@ -14,16 +14,46 @@ Lab.loggedIn = Ki.State.extend({
     
     inHomePage: Ki.State.plugin('Lab.inHomePage'),
     inActivity: Ki.State.plugin('Lab.inActivity'),
+    inCaselog:  Ki.State.plugin('Lab.inCaselog'),
 
     startPage: null,
     
-    enterState: function() { 
-      if (Lab.statechart.getState('atLocation').startPage === "home"){
-        Lab.statechart.getState('atLocation').gotoState('inHomePage');
-      } else {
-        Lab.statechart.getState('atLocation').gotoState('inActivity');
+    enterState: function() {
+      this.get('statechart').sendAction('gotoRequestedPage');
+    },
+    
+    gotoHomePage: function() {
+      this.startPage = 'home';
+      this.get('statechart').sendAction('gotoRequestedPage');
+    },
+    
+    gotoCaselog: function() {
+      this.startPage = 'caselog';
+      this.get('statechart').sendAction('gotoRequestedPage');
+    },
+    
+    gotoActivity: function() {
+      this.startPage = 'activity';
+      this.get('statechart').sendAction('gotoRequestedPage');
+    },
+    
+    gotoRequestedPage: function() {
+      switch (this.startPage) {
+        case 'home':
+          this.gotoState('inHomePage');
+          break;
+        case 'caselog':
+          this.gotoState('inCaselog');
+          break;
+        case 'activity':
+          this.gotoState('inActivity');
+          break;          
+        default:
+          throw new Error(
+            "Lab.statechart.loggedIn.atLocation.startPage was set to an unexpected value, '%@'".fmt(this.startPage));
       }
     }
+
   }),
   
   showingBlogButton: Ki.State.plugin('Lab.showingBlogButton'),

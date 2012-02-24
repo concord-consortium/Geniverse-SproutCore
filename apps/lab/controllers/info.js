@@ -72,7 +72,7 @@ Lab.infoController = SC.ObjectController.create(
 
   removeView: function (callingView){
 		var _pane = this.get('pane');
-    if (!!this.get('pane')) {
+    if (this.get('pane')) {
 			if (_pane.get('isVisibleInWindow')) {
 				this.get('iframe').parentView.removeChild(this.get('iframe'));
 			}
@@ -81,7 +81,7 @@ Lab.infoController = SC.ObjectController.create(
   },
 
   updateView: function (newValue) {
-    if (!!this.get('pane')) {
+    if (this.get('pane')) {
       this.pane.contentView.infoView.set('value', newValue);
     }
   }

@@ -38,7 +38,7 @@ Lab.meiosisPage = SC.Page.design({
 
     mainAppView: SC.View.design({
       
-      childViews: 'genomePanel'.w(),
+      childViews: 'genomePanel scoreView'.w(),
       
       genomePanel: SC.View.design({
         layout: {top: 40, bottom: 10, left: 10, right: 10 },
@@ -64,11 +64,12 @@ Lab.meiosisPage = SC.Page.design({
           value: "Female Drake"
         }),
 
-		femaleView: Geniverse.OrganismView.design({
-		  layout: {top: 157, left: 138, height: 100, width: 100 },
-		  contentBinding: 'Geniverse.meiosisAnimationController.mother',
-		  isDropTarget: YES,
-		  sex: 1
+        femaleView: Geniverse.OrganismView.design({
+          layout: {top: 157, left: 138, height: 100, width: 100 },
+          contentBinding: 'Geniverse.meiosisAnimationController.mother',
+          isDropTarget: YES,
+          sex: 1,
+          trackScore: YES
         }),
         
         offspringTitle: SC.LabelView.design({
@@ -93,7 +94,8 @@ Lab.meiosisPage = SC.Page.design({
           layout: {top: 163, right: 108, height: 100, width: 100 },
           contentBinding: 'Geniverse.meiosisAnimationController.father',
           isDropTarget: YES,
-          sex: 0
+          sex: 0,
+          trackScore: YES
         }),
 
         // geneMap can be json object or url to file containing json object - dan
@@ -111,7 +113,8 @@ Lab.meiosisPage = SC.Page.design({
           mode: 'offspring',
           meiosisOwner: 'offspring',
           motherJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson',
-          fatherJsonBinding: 'Geniverse.meiosisAnimationController.fatherGameteJson'
+          fatherJsonBinding: 'Geniverse.meiosisAnimationController.fatherGameteJson',
+          trackScoreOnPlayButton: YES
         }),
         
         fatherMeiosis: Geniverse.AnimationView.design({
@@ -128,6 +131,12 @@ Lab.meiosisPage = SC.Page.design({
           layout: { left: 530, top: 10, height: 120, width: 400 },
           dragonSize: 100
         })
+      }),
+      
+      scoreView: Geniverse.ScoreView.design({
+        layout: { left: 950, top: 50, height: 36, width: 150 },
+        showScore: YES,
+        showTargetScore: YES
       })
       
   	})
