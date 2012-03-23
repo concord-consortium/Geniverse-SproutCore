@@ -20,28 +20,30 @@ Geniverse.MatchOrganism = {
 
   acceptDragOperation: function(drag, op) {
     var dragon = this._getSourceDragon(drag);
-    
-    Lab.statechart.sendAction('checkMatchDragon', [this.get('content'), dragon], this);
-    
-    // if (Geniverse.matchController.doesMatch(this.get('content'), dragon)) {
-    //   this.setPath('content.hasBeenMatched', YES);
-    //   this._setClassNames();
-    // } else {
-    //   SC.AlertPane.info("", "Those dragons don't look exactly the same!");
-    // }
+    if (this._canDrag(dragon)){
+      Lab.statechart.sendAction('checkMatchDragon', [this.get('content'), dragon], this);
+      
+      // if (Geniverse.matchController.doesMatch(this.get('content'), dragon)) {
+      //   this.setPath('content.hasBeenMatched', YES);
+      //   this._setClassNames();
+      // } else {
+      //   SC.AlertPane.info("", "Those dragons don't look exactly the same!");
+      // }
 
-    if (this.get('trackScore')){
-      Geniverse.scoringController.incrementScore(1);
+      if (this.get('trackScore')){
+        Geniverse.scoringController.incrementScore(1);
+      }
     }
-
     return NO ;
   },
 
   dragEntered: function(drag, evt) {
+    if (this._canDrag(this._getSourceDragon(drag))){
       SC.RunLoop.begin();
       this.set('isSelected', YES);
       SC.RunLoop.end();
       this._setClassNames();
+    }
   },
   
   _setClassNames: function(){
@@ -54,6 +56,11 @@ Geniverse.MatchOrganism = {
       imageView.set('classNames', ['empty']);
     }
     imageView.displayDidChange();
+  },
+
+  _canDrag: function(dragon) {
+    var drg = dragon.get('bred');
+    return dragon.get('bred');
   }
 
 };

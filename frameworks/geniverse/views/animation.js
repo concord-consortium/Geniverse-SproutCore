@@ -133,6 +133,9 @@ Geniverse.AnimationView = SC.View.extend(
       var callback = function(dragon) {
         SC.Logger.info("Created offspring dragon", dragon);
         Geniverse.meiosisAnimationController.set('offspring', dragon);
+        dragon.bred = true;
+        dragon.mother = Geniverse.meiosisAnimationController.get('mother');
+        dragon.father = Geniverse.meiosisAnimationController.get('father');
       };
       SC.Logger.info("Animation completed.", this.get('jsonData'));
       // get the jsonData and create a new organism from that
