@@ -84,6 +84,15 @@ Geniverse.AnimationView = SC.View.extend(
 	    SC.RunLoop.end();
 		}
 	}.observes('Geniverse.meiosisAnimationController.retryFather'),
+
+  // Needed because code that clears the meiosis container is called by state change, 
+  // but view is not visible at that time leaving chromosomes in the contianer after
+  // a round trip visit to the caselog.
+  clearOnVisibliity: function () {
+    if ((this.get('isVisibleInWindow') && (this.get('dragon') === null)) && (this.get('jsondataurl') === null)) {
+      this.drawAnimationOnceAppended();
+    }
+  }.observes('isVisibleInWindow'),
   
   motherJson: null,
   
@@ -133,6 +142,9 @@ Geniverse.AnimationView = SC.View.extend(
       var callback = function(dragon) {
         SC.Logger.info("Created offspring dragon", dragon);
         Geniverse.meiosisAnimationController.set('offspring', dragon);
+        dragon.bred = true;
+        dragon.mother = Geniverse.meiosisAnimationController.get('mother');
+        dragon.father = Geniverse.meiosisAnimationController.get('father');
       };
       SC.Logger.info("Animation completed.", this.get('jsonData'));
       // get the jsonData and create a new organism from that

@@ -23,6 +23,7 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
   //
   // @param dragons   an array [dragon1, dragon2]
   // @param view      the view to be updated
+  // Needs to be DRY'd up - see match TargetDrakesListChallenge.js
   checkMatchDragon: function(dragons, view) {
     Geniverse.scoringController.incrementScore(1);
     
