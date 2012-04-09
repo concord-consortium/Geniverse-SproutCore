@@ -18,13 +18,14 @@ Geniverse.MatchView = SC.View.extend(
 /** @scope Geniverse.MatchingView.prototype */ {
 
   dragonsBinding: 'Geniverse.matchController.arrangedObjects',
-  dragonSize: 200,
+  dragonSize: 75,
   dragonExampleView: Geniverse.OrganismView.extend(Geniverse.MatchOrganism, Geniverse.ShiftedOrganism),
 
   onlyOneBinding: 'Geniverse.matchController.oneAtATime',
 
   dragonsView: null,
   dragonView: null,
+  titleView: null,
 
   updateCurrentDragon: function() {
     this.setPath('dragonView.content', Geniverse.matchController.get('currentDragon'));
@@ -89,6 +90,19 @@ Geniverse.MatchView = SC.View.extend(
         })
       );
       childViews.push(this.dragonsView);
+
+      var titleLayout = { top:0, height: 20, left: 0, right: 0, minWidth: 130 };
+      this.titleView = this.createChildView(
+       SC.LabelView.design({
+       classNames: 'container_label'.w(),
+       layout: titleLayout,
+       controlSize: "bity",
+       textAlign: SC.ALIGN_CENTER,
+       fontWeight: SC.BOLD_WEIGHT,
+       value: "Target Drake" + (this.get('onlyOne') ? "" : "s")
+       })
+      );
+      childViews.push(this.titleView);
     }
 
     this.set('childViews', childViews);
