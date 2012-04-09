@@ -2,14 +2,6 @@
 	border: yellow solid 2px;
 }
 
-.sc-theme .female {
-	background-color: #F5EFC6;
-}
-
-.sc-theme .male {
-	background-color: #F5EFC6;
-}
-
 .sc-theme .organism-view .female-selected {
 	background-color: #F5DF51;
 }

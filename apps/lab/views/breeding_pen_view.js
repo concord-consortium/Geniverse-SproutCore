@@ -88,7 +88,7 @@ Lab.BreedingPenView = SC.View.extend(
     
     this.recordLink = this.createChildView(
       Geniverse.RecordLinkView.design({
-        layout: { left: 0, bottom: 0, height: 25}
+        layout: { left: 0, bottom: 5, height: 25}
       })
     );
     

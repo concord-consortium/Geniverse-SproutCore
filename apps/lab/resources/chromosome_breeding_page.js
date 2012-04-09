@@ -37,10 +37,12 @@ Lab.chromosomeBreedingPage = SC.Page.design({
 
     mainAppView: SC.View.design({
       
+      layout: { centerX: 0, top: 10, width: 1080, height: 670 },
+
       childViews: 'genomePanel breedingPenView matchView scoreView'.w(),
       
       genomePanel: SC.View.design({
-        layout: {top: 40, height: 450, left: 15, width: 1005 },
+        layout: {top: 35, height: 450, left: 15, width: 1005 },
         childViews: 'background femaleTitle femaleGenomeView femalePhenotypeView maleTitle maleGenomeView malePhenotypeView breedButton'.w(),
 
         // separate parallel background so we don't make the rest of the childViews see-through
@@ -107,11 +109,11 @@ Lab.chromosomeBreedingPage = SC.Page.design({
       
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { left: 329, top: 245, width: 380, height: 350 }
+        layout: { left: 329, top: 240, width: 380, height: 350 }
       }),
       
       matchView: Geniverse.MatchView.design({
-        layout: { left: 713, top: 495, height: 95, width: 320 }
+        layout: { centerX: -10, top: 578, height: 95, width: 320 }
       }),
       
       scoreView: Geniverse.ScoreView.design({
