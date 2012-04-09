@@ -55,7 +55,8 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
   
   checkAnswer: function() {
     sc_super();
-    this.organismView = this.buttonView.get('parentView');
+    this.organismView = this.buttonView.getPath('parentView.genomeView.dragonView');
+    console.log(this.organismView)
     this._revealImage();
     Geniverse.scoringController.incrementScore(1);
     
@@ -92,7 +93,7 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
   
   _revealImage: function(){
     SC.RunLoop.begin();
-      this.organismView.set('useRevealButton', NO);
+      this.organismView.set('hideDragon', NO);
     SC.RunLoop.end();
     
     this.organismView.get('imageView').notifyPropertyChange('valueNeedsRecalculated');
@@ -100,7 +101,7 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
   
   _hideImage: function(){
     SC.RunLoop.begin();
-      this.organismView.set('useRevealButton', YES);
+      this.organismView.set('hideDragon', YES);
     SC.RunLoop.end();
     
     this.organismView.get('imageView').notifyPropertyChange('valueNeedsRecalculated');

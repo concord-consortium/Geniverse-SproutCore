@@ -18,12 +18,11 @@ Geniverse.MatchView = SC.View.extend(
 /** @scope Geniverse.MatchingView.prototype */ {
 
   dragonsBinding: 'Geniverse.matchController.arrangedObjects',
-  dragonSize: 75,
+  dragonSize: 200,
   dragonExampleView: Geniverse.OrganismView.extend(Geniverse.MatchOrganism, Geniverse.ShiftedOrganism),
 
   onlyOneBinding: 'Geniverse.matchController.oneAtATime',
 
-  titleView: null,
   dragonsView: null,
   dragonView: null,
 
@@ -64,7 +63,9 @@ Geniverse.MatchView = SC.View.extend(
       
       // we will probably make this a graphic later
       this.labelView = this.createChildView(SC.LabelView.design({
-        layout: { bottom: 0, enterX: 0, height: 24, cwidth: 400 },
+        layout: { bottom: 0, left: 0, height: 24, right: 0 },
+        fontWeight: SC.BOLD_WEIGHT,
+        textAlign: SC.ALIGN_CENTER,
         valueBinding: 'Geniverse.matchController.matchedCountLabel'
       }));
       childViews.push(this.labelView);
@@ -89,22 +90,6 @@ Geniverse.MatchView = SC.View.extend(
       );
       childViews.push(this.dragonsView);
     }
-
-    var titleLayout = { top:0, height: 20, left: 0, right: 0, minWidth: 130 };
-    if (this.get('onlyOne')) {
-      titleLayout = { top: 0, height: 20, left: 0, width: this.get('dragonSize'), minWidth: this.get('dragonSize') };
-    }
-    this.titleView = this.createChildView(
-      SC.LabelView.design({
-        classNames: 'container_label'.w(),
-        layout: titleLayout,
-        controlSize: "bity",
-        textAlign: SC.ALIGN_CENTER,
-        fontWeight: SC.BOLD_WEIGHT,
-        value: "Target Drake" + (this.get('onlyOne') ? "" : "s")
-      })
-    );
-    childViews.push(this.titleView);
 
     this.set('childViews', childViews);
   }

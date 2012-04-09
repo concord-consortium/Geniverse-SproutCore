@@ -50,6 +50,8 @@ Geniverse.DragonGenomeView = SC.View.extend(
   
   useRevealButton: NO,          // hide drake image and show reveal button
 
+  hideDragon: NO,               // just hide the dragon, no reveal button
+
   revealButtonEnabled: YES,
   
   sex: null,        // used when generating new dragons
@@ -182,6 +184,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
     isVisibleBinding: "*parentView.showDragon",
     useRevealButtonBinding: "*parentView.useRevealButton",
     revealButtonEnabledBinding: "*parentView.revealButtonEnabled",
+    hideDragonBinding: "*parentView.hideDragon",
     showBackground: NO
 	}),
 	

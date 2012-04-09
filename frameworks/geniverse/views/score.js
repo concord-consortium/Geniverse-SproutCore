@@ -26,9 +26,10 @@ Geniverse.ScoreView = SC.View.extend(
   }),
 
   targetScoreView: SC.LabelView.design({
-    layout: {left: 5, right: 0, top: 0, height: 14 },
+    layout: {left: 0, right: 0, top: 0, height: 14 },
     isVisibleBinding: '*parentView.showTargetScore',
     fontWeight: SC.BOLD_WEIGHT,
+    textAlign: SC.ALIGN_CENTER,
     targetScoreBinding: 'Geniverse.scoringController.targetScore',
     value: function() {
       return "Goal is " + this.get('targetScore') + " move" + (this.get('targetScore') == 1 ? "" : "s");
@@ -39,6 +40,7 @@ Geniverse.ScoreView = SC.View.extend(
     layout: {left: 5, right: 0, top: 16, height: 14 },
     isVisibleBinding: '*parentView.showScore',
     fontWeight: SC.BOLD_WEIGHT,
+    textAlign: SC.ALIGN_CENTER,
     scoreBinding: 'Geniverse.scoringController.currentScore',
     value: function() {
       return "Your moves: " + this.get('score');

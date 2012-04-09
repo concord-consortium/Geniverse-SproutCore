@@ -12,17 +12,17 @@ sc_require('views/stable_view');
 sc_require('views/bottom_bar_view');
 
 Lab.chromosomeChallengePage = SC.Page.design({
-  
+
   pagePath: 'Lab.chromosomeChallengePage',
   title: 'Chromosome Challenge Page',
   challengeType: 'matchOneAtATimeChallenge',
-  
+
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page 
+  // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    classNames: ['brown'], 
+    classNames: ['brown'],
     childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
     backgroundView: SC.ImageView.design({
       value: static_url('lab_background.png'),
@@ -36,28 +36,25 @@ Lab.chromosomeChallengePage = SC.Page.design({
     }),
 
     mainAppView: SC.View.design({
-      
-      childViews: 'genomePanel scoreLabel targetDrakes'.w(),
-      
+
+      childViews: 'background genomePanel scoreLabel targetDrakes targetTitle line'.w(),
+
+      layout: { centerX: 0, top: 40, width: 850, height: 550 },
+
+      // separate parallel background so we don't make the rest of the childViews see-through
+      background: SC.View.design({
+        layout: {top: 0, left: 0, right: 0, bottom: 0},
+        classNames: ['genome-view-intro']
+      }),
+
+      line: SC.View.design({
+        layout: {top: 80, left: 300, width: 2, bottom: 110},
+        classNames: ['genome-view-intro']
+      }),
+
       genomePanel: SC.View.design({
-        layout: {top: 50, height: 550, left: 15, width: 500 },
-        childViews: 'background switchSexButton title genomeView'.w(),
-
-        // separate parallel background so we don't make the rest of the childViews see-through
-        background: SC.View.design({
-          layout: {top: 0, left: 0, right: 0, bottom: 0},
-          classNames: ['genome-view-intro']
-        }),
-
-        title: SC.LabelView.design({
-          layout: {top: 20, height: 25, left: 75, width: 200 },
-          controlSize: SC.LARGE_CONTROL_SIZE,
-          fontWeight: SC.BOLD_WEIGHT,
-          sexBinding: '*parentView.genomeView.sex',
-          value: function() {
-            return (this.get('sex') === 0 ? "Male " : "Female ") + "Drake";
-          }.property('sex')
-        }),
+        layout: {top: 0, height: 550, right: 50, width: 500 },
+        childViews: 'switchSexButton genomeView revealButton'.w(),
 
         switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
           layout: { top: 32, right: 90, width: 100, height: 43 },
@@ -84,12 +81,13 @@ Lab.chromosomeChallengePage = SC.Page.design({
 
         genomeView: Geniverse.DragonGenomeView.design({
           layout: {top: 80, left: 15, height: 500, width: 500 },
+          dragonOnRight: YES,
           generateDragonAtStart: NO,
           sex: 1,
           displayChallengeDragon: YES,
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO,
-          useRevealButton: YES,
+          hideDragon: YES,
           trackScore: YES,
           revealButtonNeedsEnabled: function() {
             this.set('revealButtonEnabled', this.get('allAllelesSelected'));
@@ -97,19 +95,33 @@ Lab.chromosomeChallengePage = SC.Page.design({
           showEmptyOptions: NO,
           showFromLabels: NO,
           startWithEmptyOptions: NO
+        }),
+
+        revealButton: SC.ButtonView.design({
+          layout: { height: 24, bottom: 10, width: 200, right: 23 },
+          title: "Reveal",
+          action: "revealClicked",
+          target: "Lab.statechart"
         })
       }),
 
       scoreLabel: Geniverse.ScoreView.design({
-        layout: { left: 530, top: 200, height: 36, width: 150 },
+        layout: { left: 70, top: 360, height: 36, width: 150 },
         showScore: YES,
         showTargetScore: YES
       }),
 
       targetDrakes: Geniverse.MatchView.design({
-        layout: { left: 530, top: 240, height: 170, width: 170 },
+        layout: { left: 50, top: 60, height: 250, width: 210 },
         onlyOne: YES,
-        dragonSize: 150
+        dragonSize: 200
+      }),
+
+      targetTitle: SC.LabelView.design({
+        layout: {top: 40, height: 25, left: 75, width: 200 },
+        controlSize: SC.LARGE_CONTROL_SIZE,
+        fontWeight: SC.BOLD_WEIGHT,
+        value: "Target Drake"
       })
     })
   })
