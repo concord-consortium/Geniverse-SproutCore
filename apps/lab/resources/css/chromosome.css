@@ -1,9 +1,15 @@
 img.switchsex {
-    background-image: static_url('change-sex.png');
+    background-image: static_url('change-sex-buttons.png');
     background-repeat: none;
+    width: 100px;
+    height: 43px;
 }
 
-img.switchsex:hover {
-    background-image: static_url('change-sex-active.png');
-    background-repeat: none;
+img.switchsex.switch-female {
+    background-position:0px -43px
 }
+
+img.switchsex.switch-male {
+    background-position:0px 0px
+}
+

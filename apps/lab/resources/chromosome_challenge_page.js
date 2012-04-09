@@ -60,15 +60,26 @@ Lab.chromosomeChallengePage = SC.Page.design({
         }),
 
         switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
-          layout: { top: 18, left: 20, width: 50, height: 28 },
+          layout: { top: 32, right: 90, width: 100, height: 43 },
           isEnabled: YES,
           hasHover: YES,
-          classNames: "switchsex".w(),
+          classNames: "switchsex switch-female".w(),
           alt: 'Switch Sex',
           title: 'Switch Sex',
+          sexBinding: '*parentView.genomeView.sex',
           toolTip: 'Click to switch the sex of the drake',
           target: 'parentView.genomeView',
-          action: 'switchSex'
+          action: 'switchSex',
+          _setClassNames: function(){
+            classNames = this.get('classNames');
+            classNames.removeObject("switch-female");
+            classNames.removeObject("switch-male");
+
+            classNames.push( this.getPath('parentView.genomeView.sex') === 0 ? "switch-male" : "switch-female");
+            this.set('classNames', classNames);
+            this.displayDidChange();
+          }.observes('sex')
+
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({
