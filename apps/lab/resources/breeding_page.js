@@ -38,9 +38,9 @@ Lab.breedingPage = SC.Page.design({
     
     mainAppView: SC.View.design({
       
-      layout: { centerX: 0, top: 30, width: 850, height: 610 },
+      layout: { centerX: 0, top: 40, width: 900, height: 610 },
       
-      childViews: 'background breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView matchView scoreView'.w(),
+      childViews: 'background breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView scoreView'.w(),
      
       // separate parallel background so we don't make the rest of the childViews see-through
       background: SC.View.design({
@@ -120,11 +120,6 @@ Lab.breedingPage = SC.Page.design({
 
       stableView: Lab.StableView.design({
         layout: { centerX: 0, top: 500, width: 520, height: 100 }
-      }),
-      
-      matchView: Geniverse.MatchView.design({
-        layout: { left: 250, top: 455, height: 170, width: 620 },
-        dragonSize: 150
       }),
       
       marketplaceView: SC.ImageView.design({
