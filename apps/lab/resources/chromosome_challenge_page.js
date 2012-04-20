@@ -54,10 +54,10 @@ Lab.chromosomeChallengePage = SC.Page.design({
 
       genomePanel: SC.View.design({
         layout: {top: 40, height: 530, right: 50, width: 530 },
-        childViews: 'switchSexButton genomeView revealButton'.w(),
+        childViews: 'genomeView switchSexButton revealButton'.w(),
 
         switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
-          layout: { top: 295, left: 60, width: 100, height: 43 },
+          layout: { top: 268, left: 60, width: 100, height: 43 },
           isEnabled: YES,
           hasHover: YES,
           classNames: "switchsex switch-female".w(),
@@ -81,6 +81,17 @@ Lab.chromosomeChallengePage = SC.Page.design({
 
         genomeView: Geniverse.DragonGenomeView.design({
           layout: {top: 35, left: 15, height: 500, width: 550 },
+          dragonView: Geniverse.OrganismView.design({
+        		layout: {top: 7, left: 0, width: 200, height: 215},
+        	  contentBinding: "*parentView.dragon",
+        	  allowDrop: YES,
+            isVisibleBinding: "*parentView.showDragon",
+            useRevealButtonBinding: "*parentView.useRevealButton",
+            revealButtonEnabledBinding: "*parentView.revealButtonEnabled",
+            hideDragonBinding: "*parentView.hideDragon",
+            showBackground: NO,
+            glow: YES
+        	}),
           dragonOnRight: YES,
           generateDragonAtStart: NO,
           sex: 1,
