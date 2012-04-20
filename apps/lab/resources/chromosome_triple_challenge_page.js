@@ -65,13 +65,13 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
       }),
 
       scoreLabel: Geniverse.ScoreView.design({
-        layout: { left: 17, top: 340, height: 36, width: 150 },
+        layout: { left: 17, top: 340, height: 49, width: 160 },
         showScore: YES,
         showTargetScore: YES
       }),
 
       revealButton: SC.ButtonView.design({
-        layout: { top: 410, height: 24, left: 34, width: 100 },
+        layout: { top: 410, height: 24, left: 40, width: 100 },
         title: "Reveal All",
         isEnabledBinding: '*parentView.allAllelesSelected',
         action: "revealClicked",
@@ -101,7 +101,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
       }),
 
       genomePanels: SC.View.design({
-        layout: {top: 30, height: 600, left: 200, width: 950 },
+        layout: {top: 0, height: 600, left: 200, width: 950 },
         childViews: 'genome1Panel genome2Panel genome3Panel'.w(),
 
         genome1Panel: SC.View.design({
@@ -109,7 +109,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           childViews: 'genomeView phenotypeView switchSexButton'.w(),
 
           phenotypeView: Geniverse.OrganismView.design({
-            layout: {top: -30, left: 50, width: 180, height: 180},
+            layout: {top: 0, left: 50, width: 180, height: 180},
             contentBinding: "*parentView.genomeView.dragon",
             allowDrop: NO,
             showBackground: NO,
@@ -117,7 +117,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           }),
 
           switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
-            layout: { top: 133, left: 95, width: 100, height: 43 },
+            layout: { top: 163, left: 95, width: 100, height: 43 },
             isEnabled: YES,
             hasHover: YES,
             classNames: "switchsex switch-female".w(),
@@ -140,7 +140,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           }),
 
           genomeView: Geniverse.DragonGenomeView.design({
-            layout: {top: 155, left: 5, height: 500, width: 300 },
+            layout: {top: 185, left: 5, height: 500, width: 300 },
             index: 1,
             generateDragonAtStart: NO,
             sex: 1,
@@ -160,7 +160,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           childViews: 'genomeView phenotypeView switchSexButton'.w(),
 
           phenotypeView: Geniverse.OrganismView.design({
-            layout: {top: -30, left: 50, width: 180, height: 180},
+            layout: {top: 0, left: 50, width: 180, height: 180},
             contentBinding: "*parentView.genomeView.dragon",
             allowDrop: NO,
             showBackground: NO,
@@ -168,7 +168,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           }),
 
           switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
-            layout: { top: 133, left: 95, width: 100, height: 43 },
+            layout: { top: 163, left: 95, width: 100, height: 43 },
             isEnabled: YES,
             hasHover: YES,
             classNames: "switchsex switch-female".w(),
@@ -191,7 +191,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           }),
 
           genomeView: Geniverse.DragonGenomeView.design({
-            layout: {top: 155, left: 5, height: 500, width: 300 },
+            layout: {top: 185, left: 5, height: 500, width: 300 },
             index: 2,
             generateDragonAtStart: NO,
             sex: 1,
@@ -211,7 +211,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           childViews: 'genomeView phenotypeView switchSexButton'.w(),
 
           phenotypeView: Geniverse.OrganismView.design({
-            layout: {top: -30, left: 50, width: 180, height: 180},
+            layout: {top: 0, left: 50, width: 180, height: 180},
             contentBinding: "*parentView.genomeView.dragon",
             allowDrop: NO,
             showBackground: NO,
@@ -219,7 +219,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           }),
 
           switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
-            layout: { top: 133, left: 95, width: 100, height: 43 },
+            layout: { top: 163, left: 95, width: 100, height: 43 },
             isEnabled: YES,
             hasHover: YES,
             classNames: "switchsex switch-female".w(),
@@ -242,7 +242,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           }),
 
           genomeView: Geniverse.DragonGenomeView.design({
-            layout: {top: 155, left: 5, height: 500, width: 300 },
+            layout: {top: 185, left: 5, height: 500, width: 300 },
             index: 3,
             generateDragonAtStart: NO,
             sex: 1,
