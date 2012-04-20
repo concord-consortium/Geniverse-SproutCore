@@ -28,6 +28,8 @@ Geniverse.OrganismView = SC.View.extend(
   revealButtonEnabled: YES,
   
   trackScore: NO, // whether this view will increment scoring controller when dragged into
+  
+  glow: NO, // whether to show a glow behind drake
 
 	imageView: SC.ImageView.design({
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
@@ -104,6 +106,15 @@ Geniverse.OrganismView = SC.View.extend(
 	  this.invokeLast(function() {
 	    this._checkForNullDragon();
 	  });
+    
+    if (this.get('glow')) {
+      var classNames = this.get('classNames')
+      if (!~classNames.indexOf('glow')){
+        classNames.push('glow')
+        this.set('classNames', classNames);
+      }
+    }
+    
 	  sc_super();
 	},
 
@@ -182,7 +193,7 @@ Geniverse.OrganismView = SC.View.extend(
   
   _setClassNames: function(){
     var classNames = [];
-
+    
     if (this.get('showBackground')) {
       if (this.get('isSelected')){
         classNames.push((this.getPath('content.sex') === 0) ? 'male-selected' : 'female-selected');

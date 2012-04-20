@@ -58,7 +58,8 @@ Geniverse.MatchView = SC.View.extend(
     if (this.get('onlyOne')) {
       this.dragonView = this.createChildView(this.get('dragonExampleView').extend({
         layout: { left: 0, top: 20, width: this.get('dragonSize'), height: this.get('dragonSize')},
-        content: Geniverse.NO_DRAGON
+        content: Geniverse.NO_DRAGON,
+        glow: YES
       }));
       childViews.push(this.dragonView);
       

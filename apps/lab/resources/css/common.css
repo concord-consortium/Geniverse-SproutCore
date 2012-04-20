@@ -37,3 +37,7 @@
 .black-text {
   color: #000000;
 }
+
+.glow {
+  background:no-repeat static_url('glow.png') left top;
+}

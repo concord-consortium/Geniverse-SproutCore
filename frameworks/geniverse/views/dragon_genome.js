@@ -127,7 +127,8 @@ Geniverse.DragonGenomeView = SC.View.extend(
   staticGenes: function() {
     return Geniverse.activityController.getHiddenOrStaticGenes('staticGenes', this.get('sex'));
   }.property('activity').cacheable(),
-    
+  
+  // WARNING: this is backwards.......
   dragonImageLeft: function() {
     var dragonOnRight = this.get('dragonOnRight');
     if (dragonOnRight){
@@ -185,7 +186,8 @@ Geniverse.DragonGenomeView = SC.View.extend(
     useRevealButtonBinding: "*parentView.useRevealButton",
     revealButtonEnabledBinding: "*parentView.revealButtonEnabled",
     hideDragonBinding: "*parentView.hideDragon",
-    showBackground: NO
+    showBackground: NO,
+    glow: YES
 	}),
 	
 	generateNewDragonButton: SC.ButtonView.extend({
