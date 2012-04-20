@@ -39,7 +39,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
 
       childViews: 'background genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle line'.w(),
 
-      layout: { centerX: 0, top: 40, width: 850, height: 580 },
+      layout: { centerX: 0, top: 40, width: 850, height: 560 },
 
       // separate parallel background so we don't make the rest of the childViews see-through
       background: SC.View.design({
@@ -53,11 +53,11 @@ Lab.chromosomeChallengePage = SC.Page.design({
       }),
 
       genomePanel: SC.View.design({
-        layout: {top: 40, height: 550, right: 50, width: 530 },
+        layout: {top: 40, height: 530, right: 50, width: 530 },
         childViews: 'switchSexButton genomeView revealButton'.w(),
 
         switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
-          layout: { top: 32, right: 100, width: 100, height: 43 },
+          layout: { top: 295, left: 60, width: 100, height: 43 },
           isEnabled: YES,
           hasHover: YES,
           classNames: "switchsex switch-female".w(),
@@ -80,7 +80,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({
-          layout: {top: 60, left: 15, height: 500, width: 550 },
+          layout: {top: 35, left: 15, height: 500, width: 550 },
           dragonOnRight: YES,
           generateDragonAtStart: NO,
           sex: 1,
@@ -132,7 +132,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
       }),
       
       chromoTitle: SC.LabelView.design({
-        layout: {top: 40, height: 25, left: 550, width: 200 },
+        layout: {top: 40, height: 25, left: 545, width: 200 },
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         value: "Chromosome Control"
