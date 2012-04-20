@@ -37,9 +37,9 @@ Lab.chromosomeChallengePage = SC.Page.design({
 
     mainAppView: SC.View.design({
 
-      childViews: 'background genomePanel scoreLabel targetDrakes targetTitle line'.w(),
+      childViews: 'background genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle line'.w(),
 
-      layout: { centerX: 0, top: 40, width: 850, height: 550 },
+      layout: { centerX: 0, top: 40, width: 850, height: 580 },
 
       // separate parallel background so we don't make the rest of the childViews see-through
       background: SC.View.design({
@@ -48,16 +48,16 @@ Lab.chromosomeChallengePage = SC.Page.design({
       }),
 
       line: SC.View.design({
-        layout: {top: 80, left: 300, width: 2, bottom: 110},
+        layout: {top: 80, left: 280, width: 2, bottom: 110},
         classNames: ['genome-view-intro']
       }),
 
       genomePanel: SC.View.design({
-        layout: {top: 0, height: 550, right: 50, width: 500 },
+        layout: {top: 40, height: 550, right: 50, width: 530 },
         childViews: 'switchSexButton genomeView revealButton'.w(),
 
         switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
-          layout: { top: 32, right: 90, width: 100, height: 43 },
+          layout: { top: 32, right: 100, width: 100, height: 43 },
           isEnabled: YES,
           hasHover: YES,
           classNames: "switchsex switch-female".w(),
@@ -80,7 +80,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({
-          layout: {top: 80, left: 15, height: 500, width: 500 },
+          layout: {top: 60, left: 15, height: 500, width: 550 },
           dragonOnRight: YES,
           generateDragonAtStart: NO,
           sex: 1,
@@ -98,21 +98,21 @@ Lab.chromosomeChallengePage = SC.Page.design({
         }),
 
         revealButton: SC.ButtonView.design({
-          layout: { height: 24, bottom: 10, width: 200, right: 23 },
-          title: "Reveal",
+          layout: { height: 24, bottom: 30, width: 120, right: 100 },
+          title: "Enter",
           action: "revealClicked",
           target: "Lab.statechart"
         })
       }),
 
       scoreLabel: Geniverse.ScoreView.design({
-        layout: { left: 70, top: 360, height: 36, width: 150 },
+        layout: { left: 53, top: 370, height: 49, width: 184 },
         showScore: YES,
         showTargetScore: YES
       }),
 
       targetDrakes: Geniverse.MatchView.design({
-        layout: { left: 50, top: 60, height: 250, width: 210 },
+        layout: { left: 40, top: 60, height: 280, width: 210 },
         onlyOne: YES,
         dragonSize: 200
       }),
@@ -122,7 +122,22 @@ Lab.chromosomeChallengePage = SC.Page.design({
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         value: "Target Drake"
+      }),
+      
+      yourTitle: SC.LabelView.design({
+        layout: {top: 40, height: 25, left: 330, width: 200 },
+        controlSize: SC.LARGE_CONTROL_SIZE,
+        fontWeight: SC.BOLD_WEIGHT,
+        value: "Your Drake"
+      }),
+      
+      chromoTitle: SC.LabelView.design({
+        layout: {top: 40, height: 25, left: 550, width: 200 },
+        controlSize: SC.LARGE_CONTROL_SIZE,
+        fontWeight: SC.BOLD_WEIGHT,
+        value: "Chromosome Control"
       })
+      
     })
   })
 });
