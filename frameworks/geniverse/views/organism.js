@@ -14,7 +14,6 @@ Geniverse.OrganismView = SC.View.extend(
 /** @scope Geniverse.OrganismView.prototype */ {
 	label: 'Organism',
   showLabel: false,
-	classNames: ['organism-view opaque'],
 	content: null,  //Geniverse.NO_DRAGON,
 	childViews: 'labelView imageView revealButtonView'.w(),
   parent: '',       // If set, drag-and-drop will replace parentView's [parent] field
@@ -108,11 +107,11 @@ Geniverse.OrganismView = SC.View.extend(
 	  });
     
     if (this.get('glow')) {
-      var classNames = this.get('classNames')
-      if (!~classNames.indexOf('glow')){
-        classNames.push('glow')
-        this.set('classNames', classNames);
-      }
+      var width = this.get('layout').width,
+          glow = width >= 200 ? 'glow' : width >= 170 ? 'glow-180' : 'glow-82';
+      this.set('classNames', ['sc-view organism-view opaque '+glow]);
+    } else {
+      this.set('classNames', ['sc-view organism-view opaque']);
     }
     
 	  sc_super();
