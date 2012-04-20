@@ -18,8 +18,8 @@ Geniverse.MatchView = SC.View.extend(
 /** @scope Geniverse.MatchingView.prototype */ {
 
   dragonsBinding: 'Geniverse.matchController.arrangedObjects',
-  dragonSize: 75,
-  dragonExampleView: Geniverse.OrganismView.extend(Geniverse.MatchOrganism, Geniverse.ShiftedOrganism),
+  dragonSize: 83,
+  dragonExampleView: Geniverse.OrganismView.extend(Geniverse.MatchOrganism, Geniverse.ShiftedOrganism, {glow: YES}),
 
   onlyOneBinding: 'Geniverse.matchController.oneAtATime',
 
@@ -86,41 +86,45 @@ Geniverse.MatchView = SC.View.extend(
       childViews.push(this.labelView);
       
     } else {
-      this.dragonsView = this.createChildView(
-        CC.AutoScrollView.design({
-          hasHorizontalScroller: NO,
-          layout: { left: 0, top: 20, right: 0, bottom: 0},
-          contentView: SC.GridView.design({
-            classNames: ['dragon-grid'],
-            contentBinding: 'Geniverse.matchController.arrangedObjects',
-            selectionBinding: 'Geniverse.matchController.selection',
-            rowHeight: this.get('dragonSize'),
-            columnWidth: this.get('dragonSize'),
-            canEditContent: NO,
-            exampleView: this.get('dragonExampleView'),
-            isSelectable: NO,
-            dragDataTypes: ['dragon']
-          }),
-          autoScrollTriggerBinding: 'Geniverse.matchController.length'
-        })
-      );
-      childViews.push(this.dragonsView);
-
-      var titleLayout = { top:0, height: 20, left: 0, right: 0, minWidth: 130 };
+      var titleLayout = { top:0, height: 21, left: 0, right: 0, minWidth: 130 };
       this.titleView = this.createChildView(
        SC.LabelView.design({
-       classNames: 'container_label'.w(),
        layout: titleLayout,
-       controlSize: "bity",
+       controlSize: SC.REGULAR_CONTROL_SIZE,
        textAlign: SC.ALIGN_CENTER,
        fontWeight: SC.BOLD_WEIGHT,
        value: "Target Drake" + (this.get('onlyOne') ? "" : "s")
        })
       );
       childViews.push(this.titleView);
+      
+      this.dragonsView = this.createChildView(
+        SC.GridView.design({
+          layout: { centerX: 0, top: 22, bottom: 0, width: 0},
+          classNames: ['trans-grid'],
+          contentBinding: 'Geniverse.matchController.arrangedObjects',
+          selectionBinding: 'Geniverse.matchController.selection',
+          rowHeight: this.get('dragonSize'),
+          columnWidth: this.get('dragonSize'),
+          canEditContent: NO,
+          exampleView: this.get('dragonExampleView'),
+          isSelectable: NO,
+          dragDataTypes: ['dragon']
+        })
+      );
+      childViews.push(this.dragonsView);
     }
 
     this.set('childViews', childViews);
-  }
+  },
+  
+  updateWidth: function() {
+    if (!this.get('onlyOne') && this.get('dragonsView') && this.get('dragonsView').get('isVisibleInWindow')) {
+      var size = Geniverse.matchController.get('length'),
+          width = (size * (this.get('dragonSize') + 2)) + 16
+      this.get('dragonsView').set('layout', { centerX: 0, top: 22, bottom: 0, width: width});
+      this.get('dragonsView').displayDidChange();
+    }
+  }.observes('Geniverse.matchController.length')
 
 });
