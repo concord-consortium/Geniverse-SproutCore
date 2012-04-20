@@ -63,14 +63,28 @@ Geniverse.MatchView = SC.View.extend(
       }));
       childViews.push(this.dragonView);
       
-      // we will probably make this a graphic later
+      this.backgroundView = this.createChildView(SC.View.design({
+        layout: {height: 42, left: 13, right: 13, bottom: 0},
+        classNames: ['genome-view-intro']
+      }));
+      childViews.push(this.backgroundView);
+      
+      this.labelViewTitle = this.createChildView(SC.LabelView.design({
+        layout: { bottom: 19, left: 10, height: 23, right: 10 },
+        fontWeight: SC.BOLD_WEIGHT,
+        textAlign: SC.ALIGN_CENTER,
+        value: 'TRIAL'
+      }));
+      childViews.push(this.labelViewTitle);
+      
       this.labelView = this.createChildView(SC.LabelView.design({
-        layout: { bottom: 0, left: 0, height: 24, right: 0 },
+        layout: { bottom: 0, left: 0, height: 23, right: 0 },
         fontWeight: SC.BOLD_WEIGHT,
         textAlign: SC.ALIGN_CENTER,
         valueBinding: 'Geniverse.matchController.matchedCountLabel'
       }));
       childViews.push(this.labelView);
+      
     } else {
       this.dragonsView = this.createChildView(
         CC.AutoScrollView.design({
