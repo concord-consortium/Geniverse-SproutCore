@@ -16,6 +16,7 @@ Geniverse.ChromosomeToolView = SC.ButtonView.extend(
   title: "",
   icon: sc_static('magnifying-glass.png'),
   classNames: 'chromosome-tool',
+  toolTip: "Use this to view parent, offspring, and stabled drake chromosomes.",
   
   selectionBinding: 'Geniverse.allSelectedDragonsController.selection',
 
