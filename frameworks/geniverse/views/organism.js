@@ -77,9 +77,8 @@ Geniverse.OrganismView = SC.View.extend(
     isVisibleBinding: '*parentView.showLabel',
     layout: { height: 20, left: 0, top:0, right: 0 },
     valueBinding: '*parentView.label',
-    // fontWeight: SC.BOLD_WEIGHT,
-    textAlign: SC.ALIGN_CENTER,
-    classNames: "dragon_label extra-transparent".w()
+    fontWeight: SC.BOLD_WEIGHT,
+    textAlign: SC.ALIGN_CENTER
   }),
   
   revealButtonView: SC.ButtonView.design({
