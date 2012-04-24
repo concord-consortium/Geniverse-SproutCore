@@ -112,6 +112,7 @@ Geniverse.breedDragonController = SC.Controller.create(
         if (nEggs == self.get('numberOfOffspring')) {
           SC.RunLoop.begin();
           self.set('isBreeding', NO);
+          Lab.statechart.sendAction('didBreed');
           SC.RunLoop.end();
         }
         else if (nEggs > self.get('numberOfOffspring')) {

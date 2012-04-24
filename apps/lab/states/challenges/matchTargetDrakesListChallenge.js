@@ -10,6 +10,9 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
   
   organismView: null,
   
+  _hasBred: NO,
+  _hasBredMeiosis: NO,
+  
   startChallenge: function() {
     sc_super();
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', NO);
@@ -56,6 +59,30 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
       this._challengeComplete();
       Geniverse.scoringController.resetScore();
       Geniverse.scoringController.resetChallengeScore();
+    }
+  },
+  
+  didBreed: function() {
+    if (!this._hasBred) {
+      setTimeout(function() {
+        SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).plain(
+          "", 
+          "To match a target, drag an offspring to it.",
+          "",
+          "OK",
+          "",
+          this
+        );
+      }, 800);      // delay a little
+      this._hasBred = true;
+    }
+  },
+  
+  didBreedMeiosis: function() {
+    if (!this._hasBredMeiosis) {
+      this._hasBred = false;
+      this.didBreed();
+      this._hasBredMeiosis = true;
     }
   }
   
