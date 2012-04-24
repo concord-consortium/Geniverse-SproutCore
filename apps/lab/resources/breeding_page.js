@@ -38,7 +38,7 @@ Lab.breedingPage = SC.Page.design({
     
     mainAppView: SC.View.design({
       
-      layout: { centerX: 0, top: 40, width: 900, height: 610 },
+      layout: { centerX: 0, top: 40, width: 840, height: 545 },
       
       childViews: 'background breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView scoreView'.w(),
      
@@ -50,12 +50,12 @@ Lab.breedingPage = SC.Page.design({
      
       // challenge pool to hold initial, system-created dragons
       mothersPoolView: Lab.ChallengePoolView.design({
-        layout: { left: 20, top: 50, width:85, height: 320 },
+        layout: { left: 20, top: 50, width:165, height: 173 },
         sex: "female"
       }),
 
       fathersPoolView: Lab.ChallengePoolView.design({
-        layout: { right: 20, top: 50, width:85, height: 320 },
+        layout: { right: 20, top: 50, width:165, height: 173 },
         sex: "male"
       }),
 
@@ -64,32 +64,34 @@ Lab.breedingPage = SC.Page.design({
       }),
       
       breedView: Geniverse.BreedDragonView.design({
-        layout: { top: 20 , left: 110, height: 330, right: 110 },
+        layout: { top: 20 , left: 30, height: 430, right: 30 },
         showChildView: NO, // child as in baby dragon
         trackScore: YES,
         
         motherView: Geniverse.OrganismView.design({
-          layout: {top: 30, left: 0, width: 150, height: 150},
+          layout: {top: 203, left: 0, width: 180, height: 180},
           classNames: "sc-theme motherView opaque".w(),
           contentBinding: "*parentView.mother",
           parent: "mother",
-          label: "mother",
+          label: "Mother",
           showLabel: true,
           sex: 1,
           isDropTarget: YES,
+          glow: YES,
           trackScoreBinding: "*parentView.trackScore"
         }),
         
         
         fatherView: Geniverse.OrganismView.design({
-          layout: {top: 30, right: 0, width: 150, height: 150},
+          layout: {top: 203, right: 0, width: 180, height: 180},
           classNames: "fatherView opaque".w(),
           contentBinding: "*parentView.father",
           parent: "father",
-          label: "father",
+          label: "Father",
           showLabel: true,
           sex: 0,
           isDropTarget: YES,
+          glow: YES,
           trackScoreBinding: "*parentView.trackScore"
         }),
         
@@ -115,15 +117,15 @@ Lab.breedingPage = SC.Page.design({
 
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { centerX: 0, top: 88, width: 325, height: 426 }
+        layout: { centerX: 0, top: 66, width: 406, height: 347 }
       }),
 
       stableView: Lab.StableView.design({
-        layout: { centerX: 0, top: 500, width: 520, height: 100 }
+        layout: { centerX: 0, top: 432, width: 520, height: 100 }
       }),
       
       marketplaceView: SC.ImageView.design({
-        layout: { right: 10, bottom: 10, height: 90, width: 90 },
+        layout: { right: 35, top: 432, height: 90, width: 90 },
         value: sc_static('sell-to-market.jpg'),
         canLoadInBackground: NO,
         useImageCache: NO,
@@ -168,7 +170,7 @@ Lab.breedingPage = SC.Page.design({
       }),
       
       scoreView: Geniverse.ScoreView.design({
-        layout: { left: 20, top: 455, height: 36, width: 150 },
+        layout: { left: 20, top: 380, height: 49, width: 184 },
         showScore: YES,
         showTargetScore: YES
       })
