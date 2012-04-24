@@ -17,7 +17,7 @@
 
 Lab.BreedingPenView = SC.View.extend(
 /** @scope Lab.BreedingPenView.prototype */ {
-  classNames: ('transparent').w(),
+  classNames: ('transparent overflowVis').w(),
 
   // childViews
   titleView: null,
@@ -88,7 +88,7 @@ Lab.BreedingPenView = SC.View.extend(
     
     this.recordLink = this.createChildView(
       Geniverse.RecordLinkView.design({
-        layout: { left: 0, bottom: 5, height: 25}
+        layout: { right: -180, bottom: 5, height: 25, width: 160}
       })
     );
     
