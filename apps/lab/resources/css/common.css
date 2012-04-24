@@ -50,6 +50,10 @@
   background:no-repeat static_url('glow-82.png') 12px 10px;
 }
 
+.glow-82.matched {
+  background:no-repeat static_url('glow-82-green.png') 12px 10px;
+}
+
 .sc-theme .sc-list-view.trans-grid {
   background: none;
 }
