@@ -48,7 +48,7 @@ Geniverse.OrganismView = SC.View.extend(
       }
       
       if (this.get('hideImage')){
-        return '/resources/icons/question_mark.png';
+        return sc_static('question_mark.png');
       }
       
       var imageURL = this.get('content').get('imageURL');
