@@ -93,7 +93,7 @@ Lab.meiosisPage = SC.Page.design({
           contentBinding: 'Geniverse.meiosisAnimationController.father',
           label: "father",
           showLabel: true,
-          sex: 1,
+          sex: 0,
           isDropTarget: YES,
           trackScore: YES
         }),
