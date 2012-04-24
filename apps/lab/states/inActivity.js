@@ -84,7 +84,7 @@ Lab.inActivity = Ki.State.extend({
       this.get('challengeState').gotoState('argumentationChallenge');
     } else if (challengeType) {
       this.get('challengeState').gotoState(challengeType);
-    } else if (Geniverse.activityController.get('matchDragonAlleles')) {
+    } else if (eval(Geniverse.activityController.get('matchDragonAlleles'))) {
       this.get('challengeState').gotoState('matchTargetDrakesListChallenge');
     } else {
       this.get('challengeState').gotoState('defaultChallenge');
