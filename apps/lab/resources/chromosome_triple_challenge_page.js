@@ -61,7 +61,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
       targetDrake: Geniverse.MatchView.design({
         layout: { left: 2, top: 50, height: 250, width: 193 },
         onlyOne: YES,
-        dragonSize: 188
+        dragonSize: 178
       }),
 
       scoreLabel: Geniverse.ScoreView.design({
@@ -109,11 +109,12 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           childViews: 'genomeView phenotypeView switchSexButton'.w(),
 
           phenotypeView: Geniverse.OrganismView.design({
-            layout: {top: 0, left: 50, width: 180, height: 180},
+            layout: {top: 0, left: 50, width: 190, height: 170},
             contentBinding: "*parentView.genomeView.dragon",
             allowDrop: NO,
             showBackground: NO,
-            hideDragon: YES
+            hideDragon: YES,
+            glow: YES
           }),
 
           switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -160,11 +161,12 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           childViews: 'genomeView phenotypeView switchSexButton'.w(),
 
           phenotypeView: Geniverse.OrganismView.design({
-            layout: {top: 0, left: 50, width: 180, height: 180},
+            layout: {top: 0, left: 50, width: 190, height: 170},
             contentBinding: "*parentView.genomeView.dragon",
             allowDrop: NO,
             showBackground: NO,
-            hideDragon: YES
+            hideDragon: YES,
+            glow: YES
           }),
 
           switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -211,11 +213,12 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           childViews: 'genomeView phenotypeView switchSexButton'.w(),
 
           phenotypeView: Geniverse.OrganismView.design({
-            layout: {top: 0, left: 50, width: 180, height: 180},
+            layout: {top: 0, left: 50, width: 190, height: 170},
             contentBinding: "*parentView.genomeView.dragon",
             allowDrop: NO,
             showBackground: NO,
-            hideDragon: YES
+            hideDragon: YES,
+            glow: YES
           }),
 
           switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
