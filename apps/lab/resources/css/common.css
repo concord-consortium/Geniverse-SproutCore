@@ -47,7 +47,7 @@
 }
 
 .glow-82 {
-  background:no-repeat static_url('glow-82.png') left top;
+  background:no-repeat static_url('glow-82.png') 12px 10px;
 }
 
 .sc-theme .sc-list-view.trans-grid {
