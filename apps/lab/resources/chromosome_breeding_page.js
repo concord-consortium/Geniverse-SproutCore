@@ -115,8 +115,8 @@ Lab.chromosomeBreedingPage = SC.Page.design({
       }),
       
       matchView: Geniverse.MatchView.design({
-        layout: { centerX: 0, top: 40, height: 120, width: 300 },
-        dragonSize: 100
+        layout: { centerX: 0, top: 40, height: 125, width: 350 },
+        dragonSize: 105
       }),
       
       scoreView: Geniverse.ScoreView.design({
