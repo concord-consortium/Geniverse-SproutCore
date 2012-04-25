@@ -50,12 +50,12 @@ Lab.breedingPage = SC.Page.design({
      
       // challenge pool to hold initial, system-created dragons
       mothersPoolView: Lab.ChallengePoolView.design({
-        layout: { left: 20, top: 50, width:165, height: 173 },
+        layout: { left: 20, top: 21, width:165, height: 173 },
         sex: "female"
       }),
 
       fathersPoolView: Lab.ChallengePoolView.design({
-        layout: { right: 20, top: 50, width:165, height: 173 },
+        layout: { right: 20, top: 21, width:165, height: 173 },
         sex: "male"
       }),
 
@@ -69,7 +69,7 @@ Lab.breedingPage = SC.Page.design({
         trackScore: YES,
         
         motherView: Geniverse.OrganismView.design({
-          layout: {top: 203, left: 0, width: 180, height: 180},
+          layout: {top: 184, left: 0, width: 180, height: 180},
           classNames: "sc-theme motherView opaque".w(),
           contentBinding: "*parentView.mother",
           parent: "mother",
@@ -83,7 +83,7 @@ Lab.breedingPage = SC.Page.design({
         
         
         fatherView: Geniverse.OrganismView.design({
-          layout: {top: 203, right: 0, width: 180, height: 180},
+          layout: {top: 184, right: 0, width: 180, height: 180},
           classNames: "fatherView opaque".w(),
           contentBinding: "*parentView.father",
           parent: "father",
@@ -121,11 +121,11 @@ Lab.breedingPage = SC.Page.design({
       }),
 
       stableView: Lab.StableView.design({
-        layout: { centerX: 0, top: 432, width: 520, height: 100 }
+        layout: { centerX: 0, top: 428, width: 520, height: 100 }
       }),
       
       marketplaceView: SC.ImageView.design({
-        layout: { right: 35, top: 432, height: 90, width: 90 },
+        layout: { right: 35, top: 428, height: 90, width: 90 },
         value: sc_static('sell-to-market.jpg'),
         canLoadInBackground: NO,
         useImageCache: NO,
@@ -170,7 +170,7 @@ Lab.breedingPage = SC.Page.design({
       }),
       
       scoreView: Geniverse.ScoreView.design({
-        layout: { left: 20, top: 380, height: 49, width: 184 },
+        layout: { left: 20, top: 376, height: 49, width: 184 },
         showScore: YES,
         showTargetScore: YES
       })
