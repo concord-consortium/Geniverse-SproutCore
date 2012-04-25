@@ -61,17 +61,17 @@ Lab.meiosisPage = SC.Page.design({
         
         // challenge pool to hold initial, system-created dragons
         mothersPoolView: Lab.ChallengePoolView.design({
-          layout: { left: 12, top: 11, width:300, height: 97 },
+          layout: { left: 12, top: 16, width:300, height: 97 },
           sex: "female"
         }),
 
         fathersPoolView: Lab.ChallengePoolView.design({
-          layout: { right: 12, top: 11, width:300, height: 97 },
+          layout: { right: 12, top: 16, width:300, height: 97 },
           sex: "male"
         }),
         
         femaleView: Geniverse.OrganismView.design({
-          layout: {top: 109, left: 115, height: 100, width: 100 },
+          layout: {top: 131, left: 115, height: 100, width: 100 },
           classNames: "sc-theme motherView opaque".w(),
           contentBinding: 'Geniverse.meiosisAnimationController.mother',
           label: "Mother",
@@ -83,19 +83,19 @@ Lab.meiosisPage = SC.Page.design({
         }),
         
         offspringTitle: SC.LabelView.design({
-          layout: {top: 131, centerX: 16, height: 25, width: 140 },
+          layout: {top: 131, centerX: 107, height: 25, width: 140 },
           fontWeight: SC.BOLD_WEIGHT,
           value: "Offspring Drake"
         }),
 
         offspringView: Geniverse.OrganismView.design({
-          layout: {top: 148, centerX: 0, height: 100, width: 100 },
+          layout: {top: 138, centerX: 85, height: 100, width: 100 },
           contentBinding: 'Geniverse.meiosisAnimationController.offspring',
           canDrag: YES
         }),
         
         maleView: Geniverse.OrganismView.design({
-          layout: {top: 109, right: 115, height: 100, width: 100 },
+          layout: {top: 131, right: 115, height: 100, width: 100 },
           classNames: "sc-theme fatherView opaque".w(),
           contentBinding: 'Geniverse.meiosisAnimationController.father',
           label: "Father",
@@ -108,7 +108,7 @@ Lab.meiosisPage = SC.Page.design({
 
         // geneMap can be json object or url to file containing json object - dan
         motherMeiosis: Geniverse.AnimationView.design({
-          layout: {top: 210, left: 17, height: 360, width: 325 },
+          layout: {top: 246, left: 17, height: 360, width: 325 },
           mode: 'parent',
 					swapping: false,
           meiosisOwner: 'mother',
@@ -126,7 +126,7 @@ Lab.meiosisPage = SC.Page.design({
         }),
         
         fatherMeiosis: Geniverse.AnimationView.design({
-          layout: {top: 210, right: 17, height: 360, width: 325 },
+          layout: {top: 246, right: 17, height: 360, width: 325 },
           mode: 'parent',
 					swapping: false,
           meiosisOwner: 'father',
@@ -135,30 +135,9 @@ Lab.meiosisPage = SC.Page.design({
         }),
         
         scoreView: Geniverse.ScoreView.design({
-          layout: { left: 17, bottom: 21, height: 41, width: 175 },
+          layout: { top: 148, centerX: -78, height: 46, width: 165 },
           showScore: YES,
-          showTargetScore: YES,
-          targetScoreView: SC.LabelView.design({
-            layout: {left: 0, right: 0, top: 3, height: 14 },
-            isVisibleBinding: '*parentView.showTargetScore',
-            fontWeight: SC.BOLD_WEIGHT,
-            textAlign: SC.ALIGN_CENTER,
-            targetScoreBinding: 'Geniverse.scoringController.targetScore',
-            value: function() {
-              return "GOAL is " + this.get('targetScore') + " MOVE" + (this.get('targetScore') == 1 ? "" : "S");
-            }.property('isVisible', 'targetScore').cacheable()
-          }),
-
-          scoreView: SC.LabelView.design({
-            layout: {left: 5, right: 0, top: 17, height: 14 },
-            isVisibleBinding: '*parentView.showScore',
-            fontWeight: SC.BOLD_WEIGHT,
-            textAlign: SC.ALIGN_CENTER,
-            scoreBinding: 'Geniverse.scoringController.currentScore',
-            value: function() {
-              return "Your moves: " + this.get('score');
-            }.property('isVisible', 'score').cacheable()
-          })
+          showTargetScore: YES
         })
         
       })
