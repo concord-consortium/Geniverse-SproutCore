@@ -60,7 +60,7 @@ Lab.breedingPage = SC.Page.design({
       }),
 
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { left: 45, top: 20, width: 35, height: 30 }
+        layout: { centerX: -51, top: 30, width: 35, height: 30 }
       }),
       
       breedView: Geniverse.BreedDragonView.design({
@@ -96,7 +96,7 @@ Lab.breedingPage = SC.Page.design({
         }),
         
         breedButtonView: SC.ButtonView.design({
-          layout: { top: 10, centerX: 0, width: 100, height: 24 },
+          layout: { top: 10, centerX: 20, width: 100, height: 24 },
           target: 'Geniverse.breedDragonController',
           trackScoreBinding: '*parentView.trackScore',
           action: function() {

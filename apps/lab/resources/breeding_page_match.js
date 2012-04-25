@@ -50,17 +50,17 @@ Lab.breedingPageMatch = SC.Page.design({
      
       // challenge pool to hold initial, system-created dragons
       mothersPoolView: Lab.ChallengePoolView.design({
-        layout: { left: 20, top: 50, width:165, height: 173 },
+        layout: { left: 20, top: 40, width:165, height: 173 },
         sex: "female"
       }),
 
       fathersPoolView: Lab.ChallengePoolView.design({
-        layout: { right: 20, top: 50, width:165, height: 173 },
+        layout: { right: 20, top: 40, width:165, height: 173 },
         sex: "male"
       }),
 
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { left: 45, top: 20, width: 35, height: 30 }
+        layout: { centerX: -51, top: 130, width: 35, height: 30 }
       }),
 
       matchView: Geniverse.MatchView.design({
@@ -74,7 +74,7 @@ Lab.breedingPageMatch = SC.Page.design({
         trackScore: YES,
         
         motherView: Geniverse.OrganismView.design({
-          layout: {top: 108, left: 0, width: 180, height: 180},
+          layout: {top: 100, left: 0, width: 180, height: 180},
           classNames: "sc-theme motherView opaque".w(),
           contentBinding: "*parentView.mother",
           parent: "mother",
@@ -88,7 +88,7 @@ Lab.breedingPageMatch = SC.Page.design({
         
         
         fatherView: Geniverse.OrganismView.design({
-          layout: {top: 108, right: 0, width: 180, height: 180},
+          layout: {top: 100, right: 0, width: 180, height: 180},
           classNames: "fatherView opaque".w(),
           contentBinding: "*parentView.father",
           parent: "father",
@@ -101,7 +101,7 @@ Lab.breedingPageMatch = SC.Page.design({
         }),
         
         breedButtonView: SC.ButtonView.design({
-          layout: { top: 10, centerX: 0, width: 100, height: 24 },
+          layout: { top: 10, centerX: 20, width: 100, height: 24 },
           target: 'Geniverse.breedDragonController',
           trackScoreBinding: '*parentView.trackScore',
           action: function() {
