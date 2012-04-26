@@ -24,7 +24,7 @@ Geniverse.blogPostController = SC.Controller.create(
   content3: "",
   
   content: function() {
-    var content = 
+    var content =
       "<b>Evidence</b>" +
       "<p>" +
       "${evidence}</br>" +
@@ -49,7 +49,7 @@ Geniverse.blogPostController = SC.Controller.create(
 
 	currentPageView: function(){
 		var pageType = Geniverse.activityController.get('pageType');
-		return Lab[pageType].mainPane.mainAppView;
+		return Lab[pageType].mainPane;
 	}.property(),
 
   

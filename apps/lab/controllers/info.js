@@ -24,7 +24,7 @@ Lab.infoController = SC.ObjectController.create(
 		value: static_url('empty.html')}),
 	currentPageView: function(){
 		var pageType = Geniverse.activityController.get('pageType');
-		return Lab[pageType].mainPane.mainAppView;
+		return Lab[pageType].mainPane;
 	}.property(),
 	
   /**
@@ -60,7 +60,7 @@ Lab.infoController = SC.ObjectController.create(
 			_pane.append();
 			if (_pane.get('isVisibleInWindow')) {
 				this.get('currentPageView').appendChild(this.get('iframe'));
-			}	
+			}
       this.updateView(this.get('content'));
     }
   },

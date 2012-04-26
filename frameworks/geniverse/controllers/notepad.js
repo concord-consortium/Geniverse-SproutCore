@@ -21,7 +21,7 @@ Geniverse.notepadController = SC.ObjectController.create(
 	iframe: null,
 	currentPageView: function(){
 		var pageType = Geniverse.activityController.get('pageType');
-		return Lab[pageType].mainPane.mainAppView;
+		return Lab[pageType].mainPane;
 	}.property(),
 	notepadView: null,
 

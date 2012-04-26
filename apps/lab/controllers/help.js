@@ -23,7 +23,7 @@ Lab.helpController = SC.ObjectController.create(
 		value: static_url('empty.html')}),
 	currentPageView: function(){
 		var pageType = Geniverse.activityController.get('pageType');
-		return Lab[pageType].mainPane.mainAppView;
+		return Lab[pageType].mainPane;
 	}.property(),
 
   showPane: function(callingView) {
