@@ -46,19 +46,15 @@ Geniverse.blogPostController = SC.Controller.create(
   blogPostView: null,
 
 	iframe: null,
-
-	currentPageView: function(){
-		var pageType = Geniverse.activityController.get('pageType');
-		return Lab[pageType].mainPane;
-	}.property(),
-
   
   showBlogPane: function() {
     this.blogPostView = Geniverse.BlogPostView.create();
 		this.set('iframe',SC.WebView.create({								//This is an empty iFrame used to make sure the InfoView will be on top of applets
 			layoutBinding: 'Geniverse.blogPostController.blogPostView.layout',
 			value: static_url('empty.html')}));
-		this.get('currentPageView').appendChild(this.get('iframe'));
+    if (Geniverse.activityController.get('pageContainsApplet')){
+      Geniverse.activityController.get('iframeLayerToAppend').appendChild(this.get('iframe'));
+    }
     this.blogPostView.append();
   },
   
