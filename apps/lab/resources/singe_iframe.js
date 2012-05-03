@@ -16,11 +16,11 @@ Lab.singleIframePage = SC.Page.design({
   // challengeType: 'matchOneAtATimeChallenge',
   
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page 
+  // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    classNames: ['brown'], 
+    classNames: ['brown'],
     childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
     backgroundView: SC.ImageView.design({
       value: static_url('lab_background.png'),
@@ -37,13 +37,14 @@ Lab.singleIframePage = SC.Page.design({
       
       childViews: 'mwView'.w(),
       
-		  mwView: SC.WebView.design({
-      	layout: { top: 100, centerX: 0, width: 800, height: 430 },
+      mwView: SC.WebView.design({
+      layout: { top: 100, centerX: 0, width: 565, height: 400 },
 //				value: 'http://geniverse.concord.org/mw/transcript-translate/transcriptTranslate.html',
-				value: static_url('transcript-translate/transcriptTranslate.html'),
+//        value: static_url('transcript-translate/transcriptTranslate.html'),
+        value: static_url('transcribeFlash/playTranscribe.html'),
 				shouldAutoResize: YES
 			})
     })
-  })      
+  })
 });
 
