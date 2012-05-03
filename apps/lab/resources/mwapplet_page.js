@@ -44,8 +44,8 @@ Lab.mwAppletPage = SC.Page.design({
             mwApplet: CC.MwAppletView.design({
               cmlUrl: "http://mw2.concord.org/model/1371060f321/transcribe-translate2.cml",
               width: 825,
-              height: 600,
-              layout: { centerX: 0, centerY: 0, width: 825, height: 600 }
+              height: 500,
+              layout: { centerX: 0, centerY: -25, width: 825, height: 500 }
             })
         })
     })
