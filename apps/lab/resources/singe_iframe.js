@@ -38,7 +38,7 @@ Lab.singleIframePage = SC.Page.design({
       childViews: 'mwView'.w(),
       
       mwView: SC.WebView.design({
-      layout: { top: 100, centerX: 0, width: 565, height: 400 },
+      layout: { centerY: -20, centerX: 0, width: 706, height: 500 },
 //				value: 'http://geniverse.concord.org/mw/transcript-translate/transcriptTranslate.html',
 //        value: static_url('transcript-translate/transcriptTranslate.html'),
         value: static_url('transcribeFlash/playTranscribe.html'),
