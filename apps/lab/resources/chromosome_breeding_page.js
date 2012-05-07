@@ -111,7 +111,8 @@ Lab.chromosomeBreedingPage = SC.Page.design({
       
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { left: 329, top: 240, width: 380, height: 350 }
+        layout: { left: 329, top: 240, width: 380, height: 350 },
+        breedingRecordRight: -20
       }),
       
       matchView: Geniverse.MatchView.design({
