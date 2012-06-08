@@ -116,7 +116,7 @@ Lab.chromosomeBreedingPage = SC.Page.design({
       }),
       
       matchView: Geniverse.MatchView.design({
-        layout: { centerX: 0, top: 40, height: 125, width: 350 },
+        layout: { centerX: 0, top: 40, height: 125, width: 410 },
         dragonSize: 105
       }),
       
@@ -126,6 +126,6 @@ Lab.chromosomeBreedingPage = SC.Page.design({
         showTargetScore: YES
       })
       
-  	})
-	})
+    })
+  })
 });
