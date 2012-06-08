@@ -23,6 +23,8 @@ Geniverse.MatchView = SC.View.extend(
 
   onlyOneBinding: 'Geniverse.matchController.oneAtATime',
 
+  labelPosition: "bottom",
+
   dragonsView: null,
   dragonView: null,
   titleView: null,
@@ -63,28 +65,36 @@ Geniverse.MatchView = SC.View.extend(
       }));
       childViews.push(this.dragonView);
       
+      var labelPos = this.get('labelPosition');
+      var bgLayout, countTitleLayout, countLayout;
+      if (labelPos == "right") {
+        // set it up to the right
+        bgLayout = {height: 42, width: 90, right: 0, centerY: 0};
+      } else {
+        // labelPos == "bottom" and everything else
+        bgLayout = {height: 42, left: 13, right: 13, bottom: 0};
+      }
       this.backgroundView = this.createChildView(SC.View.design({
-        layout: {height: 42, left: 13, right: 13, bottom: 0},
-        classNames: ['genome-view-intro']
+        layout: bgLayout,
+        classNames: ['genome-view-intro'],
+        childViews: 'title count'.w(),
+
+        title: SC.LabelView.design({
+          layout: {top: 0, left: 0, right: 0, height: 23},
+          fontWeight: SC.BOLD_WEIGHT,
+          textAlign: SC.ALIGN_CENTER,
+          value: 'TRIAL'
+        }),
+
+        count: SC.LabelView.design({
+          layout: {bottom: 0, left: 0, right: 0, height: 23},
+          fontWeight: SC.BOLD_WEIGHT,
+          textAlign: SC.ALIGN_CENTER,
+          valueBinding: 'Geniverse.matchController.matchedCountLabel'
+        })
       }));
       childViews.push(this.backgroundView);
-      
-      this.labelViewTitle = this.createChildView(SC.LabelView.design({
-        layout: { bottom: 19, left: 10, height: 23, right: 10 },
-        fontWeight: SC.BOLD_WEIGHT,
-        textAlign: SC.ALIGN_CENTER,
-        value: 'TRIAL'
-      }));
-      childViews.push(this.labelViewTitle);
-      
-      this.labelView = this.createChildView(SC.LabelView.design({
-        layout: { bottom: 0, left: 0, height: 23, right: 0 },
-        fontWeight: SC.BOLD_WEIGHT,
-        textAlign: SC.ALIGN_CENTER,
-        valueBinding: 'Geniverse.matchController.matchedCountLabel'
-      }));
-      childViews.push(this.labelView);
-      
+
     } else {
       var titleLayout = { top:0, height: 21, left: 0, right: 0, minWidth: 130 };
       this.titleView = this.createChildView(
@@ -121,7 +131,7 @@ Geniverse.MatchView = SC.View.extend(
   updateWidth: function() {
     if (!this.get('onlyOne') && this.get('dragonsView') && this.get('dragonsView').get('isVisibleInWindow')) {
       var size = Geniverse.matchController.get('length'),
-          width = (size * (this.get('dragonSize') + 2)) + 16
+          width = (size * (this.get('dragonSize') + 2)) + 16;
       this.get('dragonsView').set('layout', { centerX: 0, top: 22, bottom: 0, width: width});
       this.get('dragonsView').displayDidChange();
     }
