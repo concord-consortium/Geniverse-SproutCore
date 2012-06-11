@@ -28,7 +28,7 @@
   background:no-repeat static_url('glow.png') left top;
 }
 
-.glow.matched {
+.glow .matched {
   background:no-repeat static_url('glow-green.png') left top;
 }
 
@@ -36,7 +36,7 @@
   background:no-repeat static_url('glow-180.png') left top;
 }
 
-.glow-180.matched {
+.glow-180 .matched {
   background:no-repeat static_url('glow-180-green.png') left top;
 }
 
@@ -44,7 +44,7 @@
   background:no-repeat static_url('glow-82.png') 12px 10px;
 }
 
-.glow-82.matched {
+.glow-82 .matched {
   background:no-repeat static_url('glow-82-green.png') 12px 10px;
 }
 
