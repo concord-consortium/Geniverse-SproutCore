@@ -22,3 +22,31 @@
   background: none repeat scroll 0 0 #936942;
 }
 
+.glow {
+  background:no-repeat static_url('glow.png') left top;
+}
+
+.glow.matched {
+  background:no-repeat static_url('glow-green.png') left top;
+}
+
+.glow-180 {
+  background:no-repeat static_url('glow-180.png') left top;
+}
+
+.glow-180.matched {
+  background:no-repeat static_url('glow-180-green.png') left top;
+}
+
+.glow-82 {
+  background:no-repeat static_url('glow-82.png') 12px 10px;
+}
+
+.glow-82.matched {
+  background:no-repeat static_url('glow-82-green.png') 12px 10px;
+}
+
+.sc-theme .sc-list-view.trans-grid {
+  background: none;
+}
+
