@@ -41,7 +41,7 @@ Lab.breedingChallengePage = SC.Page.design({
 
       layout: { centerX: 0, top: 32, width: 840, height: 600 },
 
-      childViews: 'background breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView matchView scoreView'.w(),
+      childViews: 'background matchView breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView scoreView'.w(),
 
       // separate parallel background so we don't make the rest of the childViews see-through
       background: SC.View.design({
@@ -51,28 +51,28 @@ Lab.breedingChallengePage = SC.Page.design({
      
       // challenge pool to hold initial, system-created dragons
       mothersPoolView: Lab.ChallengePoolView.design({
-        layout: { left: 20, top: 40, width:165, height: 173 },
+        layout: { left: 20, top: 60, width:165, height: 173 },
         sex: "female"
       }),
 
       fathersPoolView: Lab.ChallengePoolView.design({
-        layout: { right: 20, top: 40, width:165, height: 173 },
+        layout: { right: 20, top: 60, width:165, height: 173 },
         sex: "male"
       }),
 
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { centerX: -51, top: 130, width: 35, height: 30 }
+        layout: { centerX: -51, top: 150, width: 35, height: 30 }
       }),
 
       matchView: Geniverse.MatchView.design({
-        layout: { centerX: 0, top: -20, height: 170, width: 250 },
+        layout: { centerX: 0, top: -20, height: 190, width: 270 },
         onlyOne: YES,
         labelPosition: "right",
-        dragonSize: 150
+        dragonSize: 170
       }),
 
       breedView: Geniverse.BreedDragonView.design({
-        layout: { top: 120 , left: 30, height: 330, right: 30 },
+        layout: { top: 140 , left: 30, height: 330, right: 30 },
         showChildView: NO, // child as in baby dragon
         trackScore: YES,
 
@@ -123,7 +123,7 @@ Lab.breedingChallengePage = SC.Page.design({
 
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { centerX: 0, top: 159, width: 406, height: 347 }
+        layout: { centerX: 0, top: 179, width: 406, height: 347 }
       }),
 
       stableView: Lab.StableView.design({
