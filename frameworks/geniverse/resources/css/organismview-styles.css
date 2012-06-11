@@ -1,17 +1,19 @@
 .sc-theme .organism-view .isSelected {
-	border: yellow solid 2px;
 }
 
 .sc-theme .organism-view .female-selected {
-	background-color: #F5DF51;
+  background:no-repeat static_url('glow-selected.png') left top;
+  background-size: 100% 100%;
 }
 
 .sc-theme .organism-view .male-selected {
-	background-color: #F5DF51;
+  background:no-repeat static_url('glow-selected.png') left top;
+  background-size: 100% 100%;
 }
 
 .sc-theme .drop-target {
-	background-color: #F5DF51;
+  background:no-repeat static_url('glow-selected.png') left top;
+  background-size: 100% 100%;
 }
 
 .sc-theme .sc-list-view.dragon-grid {
