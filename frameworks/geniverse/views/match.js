@@ -108,33 +108,43 @@ Geniverse.MatchView = SC.View.extend(
       );
       childViews.push(this.titleView);
       
-      this.dragonsView = this.createChildView(
-        SC.GridView.design({
-          layout: { centerX: 0, top: 22, bottom: 0, width: 0},
-          classNames: ['trans-grid'],
-          contentBinding: 'Geniverse.matchController.arrangedObjects',
-          selectionBinding: 'Geniverse.matchController.selection',
-          rowHeight: this.get('dragonSize'),
-          columnWidth: this.get('dragonSize'),
-          canEditContent: NO,
-          exampleView: this.get('dragonExampleView'),
-          isSelectable: NO,
-          dragDataTypes: ['dragon']
-        })
-      );
+      this.dragonsView = this.createChildView(this._getDragonsViewDesign({ centerX: 0, top: 22, bottom: 0, width: 100}));
       childViews.push(this.dragonsView);
     }
 
     this.set('childViews', childViews);
   },
-  
+
+  // the GridView doesn't respond well to being resized, so just replace it entirely with a new GridView
   updateWidth: function() {
     if (!this.get('onlyOne') && this.get('dragonsView') && this.get('dragonsView').get('isVisibleInWindow')) {
       var size = Geniverse.matchController.get('length'),
-          width = (size * (this.get('dragonSize') + 2)) + 16;
-      this.get('dragonsView').set('layout', { centerX: 0, top: 22, bottom: 0, width: width});
-      this.get('dragonsView').displayDidChange();
+          width = (size * (this.get('dragonSize') + 4)) + 16,
+          design = this.createChildView(this._getDragonsViewDesign({ centerX: 0, top: 22, bottom: 0, width: width}));
+
+      this.get('dragonsView').destroy();
+      this.set('dragonsView', design);
+      this.appendChild(design);
+      this.displayDidChange();
     }
-  }.observes('Geniverse.matchController.length')
+  }.observes('Geniverse.matchController.length'),
+
+  _getDragonsViewDesign: function(layout) {
+    dragonSize = this.get('dragonSize');
+    exampleView = this.get('dragonExampleView');
+    return SC.GridView.design({
+      layout: layout,
+      classNames: ['trans-grid'],
+      contentBinding: 'Geniverse.matchController.arrangedObjects',
+      selectionBinding: 'Geniverse.matchController.selection',
+      rowHeight: dragonSize,
+      columnWidth: dragonSize,
+      canEditContent: NO,
+      exampleView: exampleView,
+      isSelectable: NO,
+      useFastPath: NO,
+      dragDataTypes: ['dragon']
+    });
+  }
 
 });
