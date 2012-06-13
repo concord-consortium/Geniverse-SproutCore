@@ -147,6 +147,6 @@ Lab.meiosisPage = SC.Page.design({
       })
       
       
-  	})
+    })
 	})
 });

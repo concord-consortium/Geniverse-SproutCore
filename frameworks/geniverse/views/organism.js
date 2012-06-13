@@ -101,9 +101,9 @@ Geniverse.OrganismView = SC.View.extend(
   // })
 	
   init: function() {
-	  this.invokeLast(function() {
-	    this._checkForNullDragon();
-	  });
+    this.invokeLast(function() {
+      this._checkForNullDragon();
+    });
     
     if (this.get('glow')) {
       var width = this.get('layout').width,
@@ -113,7 +113,7 @@ Geniverse.OrganismView = SC.View.extend(
       this.set('classNames', ['sc-view organism-view opaque']);
     }
     
-	  sc_super();
+    sc_super();
 	},
 
   isAddedToParent: NO,
@@ -146,9 +146,9 @@ Geniverse.OrganismView = SC.View.extend(
 
 	contentDidChange: function() {
     SC.RunLoop.begin();
-	  this._checkForNullDragon();
+    this._checkForNullDragon();
     this._setClassNames();
-		this.setPath('imageView.layerNeedsUpdate', YES);
+    this.setPath('imageView.layerNeedsUpdate', YES);
     SC.RunLoop.end();
 	}.observes('*content'),
 	
@@ -169,7 +169,7 @@ Geniverse.OrganismView = SC.View.extend(
   // TODO: This could probably be done cleaner with child views...
   render: function(context, firstTime) {
 			this._setClassNames();
-	    sc_super();
+      sc_super();
   },
   
   _isNull: function(object) {
