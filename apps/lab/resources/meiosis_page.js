@@ -88,10 +88,14 @@ Lab.meiosisPage = SC.Page.design({
           value: "Offspring Drake"
         }),
 
-        offspringView: Geniverse.OrganismView.design({
+        offspringView: SC.View.design({
           layout: {top: 138, centerX: 85, height: 100, width: 100 },
-          contentBinding: 'Geniverse.meiosisAnimationController.offspring',
-          canDrag: YES
+          childViews: 'org'.w(),
+          org: Geniverse.OrganismView.design({
+            layout: {left: 0, right: 0, top: 0, bottom: 0},
+            contentBinding: 'Geniverse.meiosisAnimationController.offspring',
+            canDrag: YES
+          })
         }),
         
         maleView: Geniverse.OrganismView.design({
@@ -143,6 +147,6 @@ Lab.meiosisPage = SC.Page.design({
       })
       
       
-  	})
+    })
 	})
 });
