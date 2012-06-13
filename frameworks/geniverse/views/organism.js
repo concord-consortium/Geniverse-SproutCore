@@ -208,7 +208,7 @@ Geniverse.OrganismView = SC.View.extend(
   },
 	
   // // drag methods:
-  
+  mouseDownEvent: null,
   mouseDown: function(evt) {
     if (!!this.get('parentView') && ""+this.get('parentView').constructor === 'SC.GridView'){
       // we are in a grid view, don't need to do anything
@@ -219,20 +219,25 @@ Geniverse.OrganismView = SC.View.extend(
     selection.addObject(this.get('content'));
     Geniverse.allSelectedDragonsController.set('selection', selection);
     
+    this.set('mouseDownEvent', evt);
     return YES;
   },
   
   isDragging: NO,
   
+  dragDidEnd: function(drag, loc, op) {
+    this.set('isDragging', NO);
+  },
+
   mouseDragged: function(evt) {
     if (this.get('canDrag') && !this.get('isDragging')){
       var x = SC.Drag.start({
-        event: evt,
+        event: this.get('mouseDownEvent'),
         source: this,
         dragView: this,
         ghost: NO,
         slideBack: YES,
-        ghostActsLikeCursor: YES
+        ghostActsLikeCursor: NO
       });
       // debugger
       // console.log("x.get('ghostView') = "+x.get('ghostView'));
