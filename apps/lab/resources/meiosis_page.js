@@ -24,11 +24,7 @@ Lab.meiosisPage = SC.Page.design({
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'],
-    childViews: 'backgroundView mainAppView'.w(),
-    backgroundView: SC.ImageView.design({
-      value: static_url('lab_background.png'),
-      classNames: ['transparent','scalingimage']
-    }),
+    childViews: 'mainAppView'.w(),
 
     mainAppView: SC.View.design({
 
