@@ -39,7 +39,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
       childViews: 'drakeGenomePanel'.w(),
       
       drakeGenomePanel: SC.View.design({
-        layout: {top: 50, height: 550, left: 15, width: 500 },
+        layout: {top: 50, height: 550, centerX: 0, width: 500 },
         childViews: 'background title genomeView switchSexButton nextButton'.w(),
 
         // separate parallel background so we don't make the rest of the childViews see-through
@@ -49,7 +49,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
         }),
 
         title: SC.LabelView.design({
-          layout: {top: 20, height: 25, left: 75, width: 200 },
+          layout: {top: 20, height: 25, left: 125, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
           sexBinding: '*parentView.genomeView.sex',
@@ -59,15 +59,25 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
         }),
 
         switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
-          layout: { top: 18, left: 20, width: 50, height: 28 },
+          layout: { top: 18, left: 20, width: 100, height: 43 },
           isEnabled: YES,
           hasHover: YES,
-          classNames: "switchsex".w(),
+          classNames: "switchsex switch-female".w(),
           alt: 'Switch Sex',
           title: 'Switch Sex',
           toolTip: 'Click to switch the sex of the drake',
+          sexBinding: '*parentView.genomeView.sex',
           target: 'parentView.genomeView',
-          action: 'switchSex'
+          action: 'switchSex',
+          _setClassNames: function(){
+            classNames = this.get('classNames');
+            classNames.removeObject("switch-female");
+            classNames.removeObject("switch-male");
+
+            classNames.push( this.getPath('parentView.genomeView.sex') === 0 ? "switch-male" : "switch-female");
+            this.set('classNames', classNames);
+            this.displayDidChange();
+          }.observes('sex')
         }),
 
         nextButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -79,7 +89,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           title: 'Bring it on!',
           toolTip: 'Click when ready for the challenge.',
           target: 'Lab.statechart',
-          action: 'gotoNextActivity',
+          action: 'gotoNextActivity'
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({

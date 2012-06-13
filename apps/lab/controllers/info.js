@@ -22,10 +22,6 @@ Lab.infoController = SC.ObjectController.create(
 	iframe: SC.WebView.create({								//This is an empty iFrame used to make sure the InfoView will be on top of applets
 		layoutBinding: 'Lab.InfoView.layout',
 		value: static_url('empty.html')}),
-	currentPageView: function(){
-		var pageType = Geniverse.activityController.get('pageType');
-		return Lab[pageType].mainPane.mainAppView;
-	}.property(),
 	
   /**
    * Makes the infoButton visible and sets the info view
@@ -58,9 +54,9 @@ Lab.infoController = SC.ObjectController.create(
     var _pane = this.get('pane');
     if (!_pane.get('isVisibleInWindow')){
 			_pane.append();
-			if (_pane.get('isVisibleInWindow')) {
-				this.get('currentPageView').appendChild(this.get('iframe'));
-			}	
+			if (_pane.get('isVisibleInWindow') && Geniverse.activityController.get('pageContainsApplet')) {
+				Geniverse.activityController.get('iframeLayerToAppend').appendChild(this.get('iframe'));
+			}
       this.updateView(this.get('content'));
     }
   },
@@ -73,7 +69,7 @@ Lab.infoController = SC.ObjectController.create(
   removeView: function (callingView){
 		var _pane = this.get('pane');
     if (this.get('pane')) {
-			if (_pane.get('isVisibleInWindow')) {
+			if (_pane.get('isVisibleInWindow') && Geniverse.activityController.get('pageContainsApplet')) {
 				this.get('iframe').parentView.removeChild(this.get('iframe'));
 			}
       this.get('pane').remove();

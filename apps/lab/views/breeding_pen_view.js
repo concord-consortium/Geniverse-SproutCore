@@ -17,11 +17,13 @@
 
 Lab.BreedingPenView = SC.View.extend(
 /** @scope Lab.BreedingPenView.prototype */ {
-  classNames: ('transparent').w(),
+  classNames: ('transparent overflowVis').w(),
 
   // childViews
   titleView: null,
   penView: null,
+  
+  breedingRecordRight: -180,
 
   /**
    * Necessary configuration xPath elements to set up binding inside the composite view instances
@@ -88,7 +90,7 @@ Lab.BreedingPenView = SC.View.extend(
     
     this.recordLink = this.createChildView(
       Geniverse.RecordLinkView.design({
-        layout: { left: 0, bottom: 0, height: 25}
+        layout: { right: this.get('breedingRecordRight'), bottom: 5, height: 25, width: 160}
       })
     );
     

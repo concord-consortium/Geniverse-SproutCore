@@ -18,7 +18,7 @@
 Lab.StableView = SC.View.extend(
 /** @scope Lab.StableView.prototype */ {
   // default layout -- should be overridden at view creation time!
-  layout: { left: 680, top: 70, height: 300, width: 240 },
+  layout: { left: 680, top: 70, height: 90, width: 240 },
 
   // childViews
   title: null,
@@ -38,6 +38,8 @@ Lab.StableView = SC.View.extend(
   stableOrganismsControllerPath: 'Geniverse.stableOrganismsController',
 
   dragonSize: 75,
+
+  stableSize: 6,
 
   /**
    * Overwritten createChildView where you set up all
@@ -61,7 +63,7 @@ Lab.StableView = SC.View.extend(
         }.observes("Geniverse.stableOrganismsController.arrangedObjects.[]"),
         value:  function() {
           var numDragons = Geniverse.stableOrganismsController.get('length');
-          var spaces = 25 - numDragons;
+          var spaces = this.getPath("parentView.stableSize") - numDragons;
           // SC.Logger.log("recalculating");
           return "Your Stable      -   " + spaces + " spaces remaining";
         }.property('Geniverse.stableOrganismsController.arrangedObjects.[]'),
@@ -97,7 +99,8 @@ Lab.StableView = SC.View.extend(
 
         dragonNum: 0,
         acceptDragOperation: function(drag, op) {
-          var self = this;
+          var self = this,
+          stableSize = this.getPath("parentView.stableSize");
           //
           // can we accept this dragon?
           function acceptDragon(dragon){
@@ -110,7 +113,7 @@ Lab.StableView = SC.View.extend(
             // TODO: set these stableOrganismsController-based properties
             var allStableDragons = Geniverse.stableOrganismsController.get('arrangedObjects');
             var count = Geniverse.stableOrganismsController.get('length');
-            if (count >= 25){
+            if (count >= stableSize){
               SC.AlertPane.error("Can't move dragon", 
                 "Your stable is full. If you want to save more dragons, sell some to the marketplace");
               return;
@@ -161,7 +164,7 @@ Lab.StableView = SC.View.extend(
             // By keeping the RunLoop outside the loop, moving drakes is much faster. 
             // stableOrganismsController's length doesn't change until the RunLoop ends,
             // though, so we have to check the length first here.
-            var spacesRemaining = 25 - Geniverse.stableOrganismsController.get('length');
+            var spacesRemaining = stableSize - Geniverse.stableOrganismsController.get('length');
             var drakesToBeMoved = Math.min(spacesRemaining, selection.get('length'));
             for (var i = 0; i < drakesToBeMoved; i++){
               acceptDragon(selection.firstObject());

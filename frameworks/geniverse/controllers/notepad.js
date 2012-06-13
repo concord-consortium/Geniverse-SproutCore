@@ -19,11 +19,6 @@ Geniverse.notepadController = SC.ObjectController.create(
   contentBinding: 'Geniverse.userController*content.note',
   isEnabledButton: YES,
 	iframe: null,
-	currentPageView: function(){
-		var pageType = Geniverse.activityController.get('pageType');
-		return Lab[pageType].mainPane.mainAppView;
-	}.property(),
-	notepadView: null,
 
   /**
    *
@@ -46,7 +41,9 @@ Geniverse.notepadController = SC.ObjectController.create(
 				this.set('iframe',SC.WebView.create({								//This is an empty iFrame used to make sure the InfoView will be on top of applets
 					layoutBinding: 'Geniverse.notepadController.pane.layout',
 					value: static_url('empty.html')}));
-					this.get('currentPageView').appendChild(this.get('iframe'));
+        if (Geniverse.activityController.get('pageContainsApplet')){
+          Geniverse.activityController.get('iframeLayerToAppend').appendChild(this.get('iframe'));
+        }
         _pane.append();
         this.updateView(this.get('content'));
         this.set('isEnabledButton', NO);

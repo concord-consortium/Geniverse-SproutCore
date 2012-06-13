@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+<language>UTF-8</language>
+<page_title>From DNA to Proteins: Translation</page_title>
+<bg_color><Red>244</Red><Green>245</Green><Blue>239</Blue></bg_color>
+<text> </text>
+<section start="0" end="2">
+<paragraph start="0" end="2">
+<Alignment>1</Alignment>
+<content start="0" end="1">
+<component><class>org.concord.mw2d.activity.AtomContainer</class>
+<resource>mW-with-js-buttons$0.mml</resource><menubar>false</menubar><recorderless>true</recorderless>
+<dna>ATGCCAGGCGGCGAGAGCTTGCTAATTGGCTTATAG</dna><dna_dt1>200</dna_dt1><dna_dt2>1000</dna_dt2><dna_context>false</dna_context></component></content>
+
+</paragraph>
+</section>
+</document>

@@ -14,7 +14,6 @@ Geniverse.OrganismView = SC.View.extend(
 /** @scope Geniverse.OrganismView.prototype */ {
 	label: 'Organism',
   showLabel: false,
-	classNames: ['organism-view opaque'],
 	content: null,  //Geniverse.NO_DRAGON,
 	childViews: 'labelView imageView revealButtonView'.w(),
   parent: '',       // If set, drag-and-drop will replace parentView's [parent] field
@@ -28,6 +27,8 @@ Geniverse.OrganismView = SC.View.extend(
   revealButtonEnabled: YES,
   
   trackScore: NO, // whether this view will increment scoring controller when dragged into
+  
+  glow: NO, // whether to show a glow behind drake
 
 	imageView: SC.ImageView.design({
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
@@ -47,7 +48,7 @@ Geniverse.OrganismView = SC.View.extend(
       }
       
       if (this.get('hideImage')){
-        return '/resources/icons/question_mark.png';
+        return sc_static('question_mark.png');
       }
       
       var imageURL = this.get('content').get('imageURL');
@@ -76,9 +77,8 @@ Geniverse.OrganismView = SC.View.extend(
     isVisibleBinding: '*parentView.showLabel',
     layout: { height: 20, left: 0, top:0, right: 0 },
     valueBinding: '*parentView.label',
-    // fontWeight: SC.BOLD_WEIGHT,
-    textAlign: SC.ALIGN_CENTER,
-    classNames: "dragon_label extra-transparent".w()
+    fontWeight: SC.BOLD_WEIGHT,
+    textAlign: SC.ALIGN_CENTER
   }),
   
   revealButtonView: SC.ButtonView.design({
@@ -104,6 +104,15 @@ Geniverse.OrganismView = SC.View.extend(
 	  this.invokeLast(function() {
 	    this._checkForNullDragon();
 	  });
+    
+    if (this.get('glow')) {
+      var width = this.get('layout').width,
+          glow = width >= 200 ? 'glow' : width >= 170 ? 'glow-180' : 'glow-82';
+      this.set('classNames', ['sc-view organism-view opaque '+glow]);
+    } else {
+      this.set('classNames', ['sc-view organism-view opaque']);
+    }
+    
 	  sc_super();
 	},
 
@@ -182,7 +191,7 @@ Geniverse.OrganismView = SC.View.extend(
   
   _setClassNames: function(){
     var classNames = [];
-
+    
     if (this.get('showBackground')) {
       if (this.get('isSelected')){
         classNames.push((this.getPath('content.sex') === 0) ? 'male-selected' : 'female-selected');

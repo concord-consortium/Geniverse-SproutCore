@@ -144,7 +144,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.welcomeLabelView = this.createChildView(
       SC.LabelView.design({
-        layout: { top: 5,  height: 24, right: 340, width: 345},
+        layout: { top: 5,  height: 24, right: 300, width: 345},
         textAlign: SC.ALIGN_RIGHT,
         valueBinding: this.get('welcomePath'),
         isVisibleBinding: this.get('welcomeIsVisiblePath')
@@ -154,7 +154,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.changeGroupButton = this.createChildView(
       Lab.LinkView.design({
-        layout: { centerY: 0,  height: 24, right: 300, width: 40 },
+        layout: { centerY: 0,  height: 24, right: 250, width: 40 },
         layerId: 'changeGroup',
         title:  "Change",
         target: this.get('changeGroupButtonTargetPath'),

@@ -37,10 +37,12 @@ Lab.chromosomeBreedingPage = SC.Page.design({
 
     mainAppView: SC.View.design({
       
+      layout: { centerX: 0, top: 10, width: 1080, height: 880 },
+
       childViews: 'genomePanel breedingPenView matchView scoreView'.w(),
       
       genomePanel: SC.View.design({
-        layout: {top: 40, height: 450, left: 15, width: 1005 },
+        layout: {top: 35, height: 585, left: 15, width: 1005 },
         childViews: 'background femaleTitle femaleGenomeView femalePhenotypeView maleTitle maleGenomeView malePhenotypeView breedButton'.w(),
 
         // separate parallel background so we don't make the rest of the childViews see-through
@@ -50,46 +52,48 @@ Lab.chromosomeBreedingPage = SC.Page.design({
         }),
 
         femaleTitle: SC.LabelView.design({
-          layout: {top: 10, height: 25, left: 325, width: 200 },
+          layout: {top: 10, height: 25, left: 70, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           value: "Female Drake"
         }),
 
+        femalePhenotypeView: Geniverse.OrganismView.design({
+          layout: {top: 0, left: 30, width: 200, height: 200},
+          contentBinding: "*parentView.femaleGenomeView.dragon",
+          allowDrop: NO,
+          showBackground: NO,
+          glow: YES
+        }),
+
         femaleGenomeView: Lab.DragonBreedingGenomeView.design({
-          layout: {top: 40, left: 15, height: 500, width: 500 },
+          layout: {top: 170, left: 15, height: 500, width: 500 },
           sex: 1,
           index: 1
         }),
 
-        femalePhenotypeView: Geniverse.OrganismView.design({
-          layout: {top: 0, left: 300, width: 200, height: 200},
-          contentBinding: "*parentView.femaleGenomeView.dragon",
-          allowDrop: NO,
-          showBackground: NO
-        }),
-
         maleTitle: SC.LabelView.design({
-          layout: {top: 10, height: 25, left: 530, width: 200 },
+          layout: {top: 10, height: 25, right: 35, width: 170 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           value: "Male Drake"
         }),
 
+        malePhenotypeView: Geniverse.OrganismView.design({
+          layout: {top: 0, right: 60, width: 200, height: 200},
+          contentBinding: "*parentView.maleGenomeView.dragon",
+          allowDrop: NO,
+          showBackground: NO,
+          glow: YES
+        }),
+
         maleGenomeView: Lab.DragonBreedingGenomeView.design({
-          layout: {top: 40, left: 515, height: 500, width: 500 },
+          layout: {top: 170, right: 0, height: 500, width: 500 },
           sex: 0,
           index: 2,
           dragonOnRight: YES
         }),
 
-        malePhenotypeView: Geniverse.OrganismView.design({
-          layout: {top: 0, left: 515, width: 200, height: 200},
-          contentBinding: "*parentView.maleGenomeView.dragon",
-          allowDrop: NO,
-          showBackground: NO
-        }),
-
         breedButton: SC.ButtonView.design({
-          layout: { top: 170, left: 450, width: 100, height: 24 },
+          layout: { top: 150, centerX: -60, width: 100, height: 24 },
           target: 'Geniverse.breedDragonController',
           action: "breedAndIncrementScore",
           isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
@@ -107,19 +111,21 @@ Lab.chromosomeBreedingPage = SC.Page.design({
       
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { left: 329, top: 245, width: 380, height: 350 }
+        layout: { left: 329, top: 240, width: 380, height: 350 },
+        breedingRecordRight: -20
       }),
       
       matchView: Geniverse.MatchView.design({
-        layout: { left: 713, top: 495, height: 95, width: 320 }
+        layout: { centerX: 0, top: 40, height: 125, width: 410 },
+        dragonSize: 105
       }),
       
       scoreView: Geniverse.ScoreView.design({
-        layout: { left: 850, top: 50, height: 36, width: 150 },
+        layout: { top: 175, centerX: 60, width: 150, height: 46 },
         showScore: YES,
         showTargetScore: YES
       })
       
-  	})
-	})
+    })
+  })
 });

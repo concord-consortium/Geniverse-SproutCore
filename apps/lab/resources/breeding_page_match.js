@@ -14,7 +14,7 @@ sc_require('views/bottom_bar_view');
 Lab.breedingPageMatch = SC.Page.design({
   
   // used for the index page
-  pagePath: 'Lab.breedingPage',
+  pagePath: 'Lab.breedingPageMatch',
   title: 'Breeding Page',
   
   // The main pane is made visible on screen as soon as your app is loaded.
@@ -38,35 +38,99 @@ Lab.breedingPageMatch = SC.Page.design({
     
     mainAppView: SC.View.design({
       
-      layout: { top: 25, bottom: 0, left: 10, right: 0 },
+      layout: { centerX: 0, top: 32, width: 840, height: 600 },
       
-      childViews: 'breedView challengePoolView challengeChromosomeToolView breedingPenView stableView marketplaceView matchView'.w(),
+      childViews: 'background breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView matchView scoreView'.w(),
+     
+      // separate parallel background so we don't make the rest of the childViews see-through
+      background: SC.View.design({
+        layout: {top: 0, left: 0, right: 0, bottom: 0},
+        classNames: ['genome-view-intro']
+      }),
      
       // challenge pool to hold initial, system-created dragons
-      challengePoolView: Lab.ChallengePoolView.design({
-        layout: { left: 20, top: 50, width:70, height: 300 }
+      mothersPoolView: Lab.ChallengePoolView.design({
+        layout: { left: 20, top: 40, width:165, height: 173 },
+        sex: "female"
       }),
-      
+
+      fathersPoolView: Lab.ChallengePoolView.design({
+        layout: { right: 20, top: 40, width:165, height: 173 },
+        sex: "male"
+      }),
+
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { left:55, top: 20, width: 35, height: 30 }
+        layout: { centerX: -51, top: 130, width: 35, height: 30 }
+      }),
+
+      matchView: Geniverse.MatchView.design({
+        layout: { centerX: 0, top: 9, width: 410, height: 117 },
+        dragonSize: 96
       }),
       
       breedView: Geniverse.BreedDragonView.design({
-        layout: { top: 20 , left: 100, height: 330, width: 150 },
-        showChildView: NO // child as in baby dragon
+        layout: { top: 120 , left: 30, height: 330, right: 30 },
+        showChildView: NO, // child as in baby dragon
+        trackScore: YES,
+        
+        motherView: Geniverse.OrganismView.design({
+          layout: {top: 100, left: 0, width: 180, height: 180},
+          classNames: "sc-theme motherView opaque".w(),
+          contentBinding: "*parentView.mother",
+          parent: "mother",
+          label: "Mother",
+          showLabel: true,
+          sex: 1,
+          isDropTarget: YES,
+          glow: YES,
+          trackScoreBinding: "*parentView.trackScore"
+        }),
+        
+        
+        fatherView: Geniverse.OrganismView.design({
+          layout: {top: 100, right: 0, width: 180, height: 180},
+          classNames: "fatherView opaque".w(),
+          contentBinding: "*parentView.father",
+          parent: "father",
+          label: "Father",
+          showLabel: true,
+          sex: 0,
+          isDropTarget: YES,
+          glow: YES,
+          trackScoreBinding: "*parentView.trackScore"
+        }),
+        
+        breedButtonView: SC.ButtonView.design({
+          layout: { top: 10, centerX: 20, width: 100, height: 24 },
+          target: 'Geniverse.breedDragonController',
+          trackScoreBinding: '*parentView.trackScore',
+          action: function() {
+            return this.get('trackScore') ? "breedAndIncrementScore" : "breed";
+          }.property('trackScore'),
+          isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
+          hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
+          isEnabled: function() {
+            return (this.get('hasParents') && !this.get('isBreeding'));
+          }.property('hasParents', 'isBreeding').cacheable(),
+
+          title: function () {
+            return this.get('isBreeding') ? 'Breeding...' :  'Breed';
+          }.property('isBreeding').cacheable()
+        })
+        
       }),
-      
+
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { left: 265, top: 28, width: 300, height: 353 }
+        layout: { centerX: 0, top: 159, width: 406, height: 347 }
       }),
 
       stableView: Lab.StableView.design({
-        layout: { left: 580, top: 28, height: 322, width: 300 }
+        layout: { centerX: 0, top: 501, width: 520, height: 97 }
       }),
       
       marketplaceView: SC.ImageView.design({
-        layout: { left: 895, top: 260, height: 90, width: 90 },
+        layout: { right: 35, top: 507, height: 90, width: 90 },
         value: sc_static('sell-to-market.jpg'),
         canLoadInBackground: NO,
         useImageCache: NO,
@@ -110,10 +174,11 @@ Lab.breedingPageMatch = SC.Page.design({
         }
       }),
       
-      matchView: Geniverse.MatchView.design({
-        layout: { left: 150, top: 370, height: 100, width: 400 }
+      scoreView: Geniverse.ScoreView.design({
+        layout: { left: 20, top: 445, height: 49, width: 184 },
+        showScore: YES,
+        showTargetScore: YES
       })
-      
     })
   })
   

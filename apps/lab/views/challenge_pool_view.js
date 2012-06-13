@@ -24,6 +24,8 @@ Lab.ChallengePoolView = SC.View.extend(
   dragonsView: null,
   dragonSize: 75,
   dragonExampleView: Geniverse.OrganismView.extend(Geniverse.ShiftedOrganism),
+  
+  sex: null,
 
   /**
    * Necessary configuration xPath elements to set up binding inside the composite view instances
@@ -44,7 +46,19 @@ Lab.ChallengePoolView = SC.View.extend(
    * going to use the Binding Paths
    */
   createChildViews: function() {
-    var childViews = [];
+    var childViews = [],
+        controller = "Geniverse.challengePoolController",
+        title = "Parent Pool";
+    
+    if (this.get("sex") === 'female') {
+      controller = "Geniverse.challengePoolFemalesController";
+      title = "Mothers Pool";
+    } else if (this.get("sex") === 'male') {
+      controller = "Geniverse.challengePoolMalesController";
+      title = "Fathers Pool";
+    }
+    
+    this.set("challengePoolControllerPath", controller);
 
     this.dragonsView = this.createChildView(
       CC.AutoScrollView.design({
@@ -70,7 +84,7 @@ Lab.ChallengePoolView = SC.View.extend(
       SC.LabelView.design({
         layout: { height: 20, left: 0, top:0, right: 0 },
         //valueBinding: this.get('titlePath'),
-        value: 'Parent Pool',
+        value: title,
         controlSize: "bity",
         fontWeight: SC.BOLD_WEIGHT,
         textAlign: SC.ALIGN_CENTER,

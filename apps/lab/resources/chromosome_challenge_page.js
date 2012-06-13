@@ -12,17 +12,17 @@ sc_require('views/stable_view');
 sc_require('views/bottom_bar_view');
 
 Lab.chromosomeChallengePage = SC.Page.design({
-  
+
   pagePath: 'Lab.chromosomeChallengePage',
   title: 'Chromosome Challenge Page',
   challengeType: 'matchOneAtATimeChallenge',
-  
+
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page 
+  // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    classNames: ['brown'], 
+    classNames: ['brown'],
     childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
     backgroundView: SC.ImageView.design({
       value: static_url('lab_background.png'),
@@ -36,49 +36,70 @@ Lab.chromosomeChallengePage = SC.Page.design({
     }),
 
     mainAppView: SC.View.design({
-      
-      childViews: 'genomePanel scoreLabel targetDrakes'.w(),
-      
+
+      childViews: 'background genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle line'.w(),
+
+      layout: { centerX: 0, top: 40, width: 850, height: 560 },
+
+      // separate parallel background so we don't make the rest of the childViews see-through
+      background: SC.View.design({
+        layout: {top: 0, left: 0, right: 0, bottom: 0},
+        classNames: ['genome-view-intro']
+      }),
+
+      line: SC.View.design({
+        layout: {top: 80, left: 280, width: 2, bottom: 110},
+        classNames: ['genome-view-intro']
+      }),
+
       genomePanel: SC.View.design({
-        layout: {top: 50, height: 550, left: 15, width: 500 },
-        childViews: 'background switchSexButton title genomeView'.w(),
-
-        // separate parallel background so we don't make the rest of the childViews see-through
-        background: SC.View.design({
-          layout: {top: 0, left: 0, right: 0, bottom: 0},
-          classNames: ['genome-view-intro']
-        }),
-
-        title: SC.LabelView.design({
-          layout: {top: 20, height: 25, left: 75, width: 200 },
-          controlSize: SC.LARGE_CONTROL_SIZE,
-          fontWeight: SC.BOLD_WEIGHT,
-          sexBinding: '*parentView.genomeView.sex',
-          value: function() {
-            return (this.get('sex') === 0 ? "Male " : "Female ") + "Drake";
-          }.property('sex')
-        }),
+        layout: {top: 40, height: 530, right: 0, width: 580 },
+        childViews: 'genomeView switchSexButton revealButton'.w(),
 
         switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
-          layout: { top: 18, left: 20, width: 50, height: 28 },
+          layout: { top: 268, left: 85, width: 100, height: 43 },
           isEnabled: YES,
           hasHover: YES,
-          classNames: "switchsex".w(),
+          classNames: "switchsex switch-female".w(),
           alt: 'Switch Sex',
           title: 'Switch Sex',
+          sexBinding: '*parentView.genomeView.sex',
           toolTip: 'Click to switch the sex of the drake',
           target: 'parentView.genomeView',
-          action: 'switchSex'
+          action: 'switchSex',
+          _setClassNames: function(){
+            classNames = this.get('classNames');
+            classNames.removeObject("switch-female");
+            classNames.removeObject("switch-male");
+
+            classNames.push( this.getPath('parentView.genomeView.sex') === 0 ? "switch-male" : "switch-female");
+            this.set('classNames', classNames);
+            this.displayDidChange();
+          }.observes('sex')
+
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({
-          layout: {top: 80, left: 15, height: 500, width: 500 },
+          layout: {top: 35, right: -120, height: 500, width: 630 },
+          classNames: ['overflowVis'],
+          dragonView: Geniverse.OrganismView.design({
+        		layout: {top: 0, left: -35, width: 200, height: 215},
+        	  contentBinding: "*parentView.dragon",
+        	  allowDrop: YES,
+            isVisibleBinding: "*parentView.showDragon",
+            useRevealButtonBinding: "*parentView.useRevealButton",
+            revealButtonEnabledBinding: "*parentView.revealButtonEnabled",
+            hideDragonBinding: "*parentView.hideDragon",
+            showBackground: NO,
+            glow: YES
+        	}),
+          dragonOnRight: YES,
           generateDragonAtStart: NO,
           sex: 1,
           displayChallengeDragon: YES,
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO,
-          useRevealButton: YES,
+          hideDragon: YES,
           trackScore: YES,
           revealButtonNeedsEnabled: function() {
             this.set('revealButtonEnabled', this.get('allAllelesSelected'));
@@ -86,20 +107,49 @@ Lab.chromosomeChallengePage = SC.Page.design({
           showEmptyOptions: NO,
           showFromLabels: NO,
           startWithEmptyOptions: NO
+        }),
+
+        revealButton: SC.ButtonView.design({
+          layout: { height: 24, bottom: 30, width: 120, right: 100 },
+          title: "Enter",
+          action: "revealClicked",
+          target: "Lab.statechart"
         })
       }),
 
       scoreLabel: Geniverse.ScoreView.design({
-        layout: { left: 530, top: 200, height: 36, width: 150 },
+        layout: { left: 53, top: 370, height: 49, width: 184 },
         showScore: YES,
         showTargetScore: YES
       }),
 
       targetDrakes: Geniverse.MatchView.design({
-        layout: { left: 530, top: 240, height: 170, width: 170 },
+        layout: { left: 40, top: 60, height: 280, width: 210 },
         onlyOne: YES,
-        dragonSize: 150
+        dragonSize: 200
+      }),
+
+      targetTitle: SC.LabelView.design({
+        layout: {top: 40, height: 25, left: 75, width: 200 },
+        controlSize: SC.LARGE_CONTROL_SIZE,
+        fontWeight: SC.BOLD_WEIGHT,
+        value: "Target Drake"
+      }),
+      
+      yourTitle: SC.LabelView.design({
+        layout: {top: 40, height: 25, left: 345, width: 200 },
+        controlSize: SC.LARGE_CONTROL_SIZE,
+        fontWeight: SC.BOLD_WEIGHT,
+        value: "Your Drake"
+      }),
+      
+      chromoTitle: SC.LabelView.design({
+        layout: {top: 40, height: 25, left: 545, width: 200 },
+        controlSize: SC.LARGE_CONTROL_SIZE,
+        fontWeight: SC.BOLD_WEIGHT,
+        value: "Chromosome Control"
       })
+      
     })
   })
 });

@@ -28,8 +28,8 @@
 /* BE CAREFUL WITH OPACITY! ONCE YOU MAKE A PARENT TRANSPARENT,
  * ALL CHILDREN WILL BE TRANSPARENT, TOO! */
 .sc-theme .genome-view-intro {
-  background-color: #70594e;
-  opacity: 0.75;
+  background-color: #877871;
+  opacity: 0.8;
 	border: 1px solid black;
 }
 

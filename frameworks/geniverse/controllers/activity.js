@@ -213,6 +213,15 @@ Geniverse.activityController = SC.ObjectController.create(
   
   startNewSession: function() {
     this.set('currentSession', Math.floor(Math.random() * 100000));
-  }
+  },
+
+  pageContainsApplet: function(){
+    return $("applet").length > 0;
+  }.property(),
+
+  iframeLayerToAppend: function(){
+    var pageType = this.get('pageType');
+    return Lab[pageType].mainPane.mainAppView;
+  }.property()
 
 });

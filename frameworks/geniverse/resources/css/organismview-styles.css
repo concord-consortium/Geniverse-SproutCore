@@ -1,33 +1,19 @@
 .sc-theme .organism-view .isSelected {
-	border: yellow solid 2px;
-}
-
-.sc-theme .female {
-	background-color: #F5EFC6;
-}
-
-.sc-theme .male {
-	background-color: #F5EFC6;
 }
 
 .sc-theme .organism-view .female-selected {
-	background-color: #F5DF51;
+  background:no-repeat static_url('glow-selected.png') left top;
+  background-size: 100% 100%;
 }
 
 .sc-theme .organism-view .male-selected {
-	background-color: #F5DF51;
-}
-
-.sc-theme .organism-view .matched {
-	background-color: #0cff00;
+  background:no-repeat static_url('glow-selected.png') left top;
+  background-size: 100% 100%;
 }
 
 .sc-theme .drop-target {
-	background-color: #F5DF51;
-}
-
-.sc-theme .empty {
-	background-color: #936942;
+  background:no-repeat static_url('glow-selected.png') left top;
+  background-size: 100% 100%;
 }
 
 .sc-theme .sc-list-view.dragon-grid {
@@ -36,5 +22,33 @@
 
 .sc-theme .sc-pane.sc-panel.popup-chromosome-view > .sc-view {
   background: none repeat scroll 0 0 #936942;
+}
+
+.glow {
+  background:no-repeat static_url('glow.png') left top;
+}
+
+.glow .matched {
+  background:no-repeat static_url('glow-green.png') left top;
+}
+
+.glow-180 {
+  background:no-repeat static_url('glow-180.png') left top;
+}
+
+.glow-180 .matched {
+  background:no-repeat static_url('glow-180-green.png') left top;
+}
+
+.glow-82 {
+  background:no-repeat static_url('glow-82.png') 12px 10px;
+}
+
+.glow-82 .matched {
+  background:no-repeat static_url('glow-82-green.png') 12px 10px;
+}
+
+.sc-theme .sc-list-view.trans-grid {
+  background: none;
 }
 

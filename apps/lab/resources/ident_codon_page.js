@@ -16,11 +16,11 @@ Lab.identCodonPage = SC.Page.design({
   // challengeType: 'matchOneAtATimeChallenge',
   
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page 
+  // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    classNames: ['brown'], 
+    classNames: ['brown'],
     childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
     backgroundView: SC.ImageView.design({
       value: static_url('lab_background.png'),
@@ -37,14 +37,14 @@ Lab.identCodonPage = SC.Page.design({
       
       childViews: 'mwAppletView'.w(),
       
-		  mwAppletView: SC.View.design({
+      mwAppletView: SC.View.design({
 
-			  childViews: 'mwApplet DNAString setDNAButton unfoldButton refoldButton'.w(),
+        childViews: 'mwApplet DNAString setDNAButton unfoldButton refoldButton'.w(),
 
 				mwApplet: CC.MwAppletView.design({
-			    cmlUrl: "http://mw2.concord.org/model/133ec51e63b/transcribe-translate.cml",
-			    layout: { centerX: 0, centerY: -90, width: 615, height: 348 }
-			  }),
+          cmlUrl: "http://mw2.concord.org/model/133ec51e63b/transcribe-translate.cml",
+          layout: { centerX: 0, centerY: -90, width: 615, height: 348 }
+        }),
 			
 				DNAString: SC.TextFieldView.design({
 					layout: { centerX: -60, centerY: 115, width: 400, height: 25},
@@ -67,7 +67,7 @@ Lab.identCodonPage = SC.Page.design({
 					appletAction: function(applet) {
 						var strand = this.get('strand');
 						// FIX ME - should use better method of determining model has loaded instead of timed delay (need access to values inside model)
-						setTimeout(function(){applet.runMwScript("mw2d:1:stop; select atom all; remove; set DNA "+strand)},1000);
+						setTimeout(function(){applet.runMwScript("mw2d:1:stop; select atom all; remove; set DNA "+strand);},1000);
 					}
 				}),
 /*				startButton: SC.ButtonView.design({
@@ -107,7 +107,7 @@ Lab.identCodonPage = SC.Page.design({
 						setTimeout(applet.runMwScript("mw2d:1:stop; select atom all; remove; set DNA "+this.get('strand')),500);
 					}
 				}),
-*/				
+*/
 				unfoldButton: SC.ButtonView.design({
 					layout: { centerY: 155, centerX: -60, height: 50, width: 80},
 					title: "Unfold",
@@ -133,6 +133,6 @@ Lab.identCodonPage = SC.Page.design({
 				})
 			})
 		})
-  })      
+  })
 });
 
