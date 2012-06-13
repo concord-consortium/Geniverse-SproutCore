@@ -10,34 +10,28 @@ sc_require('views/challenge_pool_view');
 sc_require('views/bottom_bar_view');
 
 Lab.singleMeiosisPage = SC.Page.design({
-  
+
   pagePath: 'Lab.singleMeiosisPage',
   title: 'Simple Meiosis Page',
-  
+
   // challengeType: 'matchOneAtATimeChallenge',
-  
+
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page 
+  // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    classNames: ['brown'], 
-    childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
+    classNames: ['brown'],
+    childViews: 'backgroundView mainAppView'.w(),
     backgroundView: SC.ImageView.design({
       value: static_url('lab_background.png'),
       classNames: ['transparent','scalingimage']
     }),
-    topBar: Lab.TopBarView.design({
-      classNames: ['brown']
-    }),
-    bottomBar: Lab.BottomBarView.design({
-      classNames: ['brown']
-    }),
 
     mainAppView: SC.View.design({
-      
+
       childViews: 'genomePanel'.w(),
-      
+
       genomePanel: SC.View.design({
         layout: {top: 40, bottom: 10, left: 10, right: 10 },
         childViews: 'background challengePoolView parentTitle drakeParentView meiosisView nextButton'.w(),
@@ -88,7 +82,7 @@ Lab.singleMeiosisPage = SC.Page.design({
           target: 'Lab.statechart',
           action: 'gotoNextActivity'
         })
-      })      
+      })
   	})
 	})
 });

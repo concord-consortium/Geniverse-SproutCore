@@ -9,34 +9,28 @@ sc_require('views/top_bar_view');
 sc_require('views/bottom_bar_view');
 
 Lab.identCodonPage = SC.Page.design({
-  
+
   pagePath: 'Lab.identCodonPage',
   title: 'Identify the Connection Between DNA and Amino Acids',
-  
+
   // challengeType: 'matchOneAtATimeChallenge',
-  
+
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'],
-    childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
+    childViews: 'backgroundView mainAppView'.w(),
     backgroundView: SC.ImageView.design({
       value: static_url('lab_background.png'),
       classNames: ['transparent','scalingimage']
     }),
-    topBar: Lab.TopBarView.design({
-      classNames: ['brown']
-    }),
-    bottomBar: Lab.BottomBarView.design({
-      classNames: ['brown']
-    }),
 
     mainAppView: SC.View.design({
-      
+
       childViews: 'mwAppletView'.w(),
-      
+
       mwAppletView: SC.View.design({
 
         childViews: 'mwApplet DNAString setDNAButton unfoldButton refoldButton'.w(),
@@ -45,7 +39,7 @@ Lab.identCodonPage = SC.Page.design({
           cmlUrl: "http://mw2.concord.org/model/133ec51e63b/transcribe-translate.cml",
           layout: { centerX: 0, centerY: -90, width: 615, height: 348 }
         }),
-			
+
 				DNAString: SC.TextFieldView.design({
 					layout: { centerX: -60, centerY: 115, width: 400, height: 25},
 					value: "AGATATGCGCTCATGCTAGCTATAGTAGTATAA",

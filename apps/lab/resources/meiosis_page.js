@@ -12,36 +12,30 @@ sc_require('views/stable_view');
 sc_require('views/bottom_bar_view');
 
 Lab.meiosisPage = SC.Page.design({
-  
+
   pagePath: 'Lab.meiosisPage',
   title: 'Meiosis Page',
-  
+
   // challengeType: 'matchOneAtATimeChallenge',
-  
+
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page 
+  // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    classNames: ['brown'], 
-    childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
+    classNames: ['brown'],
+    childViews: 'backgroundView mainAppView'.w(),
     backgroundView: SC.ImageView.design({
       value: static_url('lab_background.png'),
       classNames: ['transparent','scalingimage']
     }),
-    topBar: Lab.TopBarView.design({
-      classNames: ['brown']
-    }),
-    bottomBar: Lab.BottomBarView.design({
-      classNames: ['brown']
-    }),
 
     mainAppView: SC.View.design({
-      
+
       childViews: 'genomePanel'.w(),
-      
+
       layout: { centerX: 0, top: 40, width: 1050, height: 640 },
-      
+
       genomePanel: SC.View.design({
         layout: {top: 0, bottom: 10, left: 5, right: 5 },
         childViews: 'background mothersPoolView fathersPoolView femaleView motherMeiosis offspringTitle offspringView maleView fatherMeiosis fertilization matchView scoreView'.w(),
@@ -52,13 +46,13 @@ Lab.meiosisPage = SC.Page.design({
           layout: {top: 0, left: 0, right: 0, bottom: 0},
           classNames: ['genome-view-intro']
         }),
-        
+
 
         matchView: Geniverse.MatchView.design({
           layout: { centerX: 0, top: 5, height: 120, width: 400 },
           dragonSize: 100
         }),
-        
+
         // challenge pool to hold initial, system-created dragons
         mothersPoolView: Lab.ChallengePoolView.design({
           layout: { left: 12, top: 16, width:300, height: 97 },
@@ -69,7 +63,7 @@ Lab.meiosisPage = SC.Page.design({
           layout: { right: 12, top: 16, width:300, height: 97 },
           sex: "male"
         }),
-        
+
         femaleView: Geniverse.OrganismView.design({
           layout: {top: 131, left: 115, height: 100, width: 100 },
           classNames: "sc-theme motherView opaque".w(),
@@ -81,7 +75,7 @@ Lab.meiosisPage = SC.Page.design({
           trackScore: YES,
           glow: YES
         }),
-        
+
         offspringTitle: SC.LabelView.design({
           layout: {top: 131, centerX: 107, height: 25, width: 140 },
           fontWeight: SC.BOLD_WEIGHT,
@@ -93,7 +87,7 @@ Lab.meiosisPage = SC.Page.design({
           contentBinding: 'Geniverse.meiosisAnimationController.offspring',
           canDrag: YES
         }),
-        
+
         maleView: Geniverse.OrganismView.design({
           layout: {top: 131, right: 115, height: 100, width: 100 },
           classNames: "sc-theme fatherView opaque".w(),
@@ -124,7 +118,7 @@ Lab.meiosisPage = SC.Page.design({
           fatherJsonBinding: 'Geniverse.meiosisAnimationController.fatherGameteJson',
           trackScoreOnPlayButton: YES
         }),
-        
+
         fatherMeiosis: Geniverse.AnimationView.design({
           layout: {top: 246, right: 17, height: 360, width: 325 },
           mode: 'parent',
@@ -133,16 +127,16 @@ Lab.meiosisPage = SC.Page.design({
           dragonBinding: 'Geniverse.meiosisAnimationController.father',
           gameteJsonBinding: 'Geniverse.meiosisAnimationController.fatherGameteJson'
         }),
-        
+
         scoreView: Geniverse.ScoreView.design({
           layout: { top: 148, centerX: -78, height: 46, width: 165 },
           showScore: YES,
           showTargetScore: YES
         })
-        
+
       })
-      
-      
+
+
   	})
 	})
 });

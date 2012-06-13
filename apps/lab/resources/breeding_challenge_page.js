@@ -24,18 +24,11 @@ Lab.breedingChallengePage = SC.Page.design({
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'],
-    childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
+    childViews: 'backgroundView mainAppView'.w(),
       backgroundView: SC.ImageView.design({
         value: static_url('lab_background.png'),
         classNames: ['transparent','scalingimage']
       }),
-
-    topBar: Lab.TopBarView.design({
-      classNames: ['brown']
-    }),
-    bottomBar: Lab.BottomBarView.design({
-      classNames: ['brown']
-    }),
 
     mainAppView: SC.View.design({
 
@@ -48,7 +41,7 @@ Lab.breedingChallengePage = SC.Page.design({
         layout: {top: 0, left: 0, right: 0, bottom: 0},
         classNames: ['genome-view-intro']
       }),
-     
+
       // challenge pool to hold initial, system-created dragons
       mothersPoolView: Lab.ChallengePoolView.design({
         layout: { left: 20, top: 60, width:165, height: 173 },

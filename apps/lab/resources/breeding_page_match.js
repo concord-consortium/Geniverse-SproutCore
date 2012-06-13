@@ -12,42 +12,35 @@ sc_require('views/stable_view');
 sc_require('views/bottom_bar_view');
 
 Lab.breedingPageMatch = SC.Page.design({
-  
+
   // used for the index page
   pagePath: 'Lab.breedingPageMatch',
   title: 'Breeding Page',
-  
+
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page 
+  // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'],
-    childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
+    childViews: 'backgroundView mainAppView'.w(),
       backgroundView: SC.ImageView.design({
         value: static_url('lab_background.png'),
         classNames: ['transparent','scalingimage']
       }),
 
-    topBar: Lab.TopBarView.design({
-      classNames: ['brown']
-    }),
-    bottomBar: Lab.BottomBarView.design({
-      classNames: ['brown']
-    }),
-    
     mainAppView: SC.View.design({
-      
+
       layout: { centerX: 0, top: 32, width: 840, height: 600 },
-      
+
       childViews: 'background breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView matchView scoreView'.w(),
-     
+
       // separate parallel background so we don't make the rest of the childViews see-through
       background: SC.View.design({
         layout: {top: 0, left: 0, right: 0, bottom: 0},
         classNames: ['genome-view-intro']
       }),
-     
+
       // challenge pool to hold initial, system-created dragons
       mothersPoolView: Lab.ChallengePoolView.design({
         layout: { left: 20, top: 40, width:165, height: 173 },
@@ -67,12 +60,12 @@ Lab.breedingPageMatch = SC.Page.design({
         layout: { centerX: 0, top: 9, width: 410, height: 117 },
         dragonSize: 96
       }),
-      
+
       breedView: Geniverse.BreedDragonView.design({
         layout: { top: 120 , left: 30, height: 330, right: 30 },
         showChildView: NO, // child as in baby dragon
         trackScore: YES,
-        
+
         motherView: Geniverse.OrganismView.design({
           layout: {top: 100, left: 0, width: 180, height: 180},
           classNames: "sc-theme motherView opaque".w(),
@@ -85,8 +78,8 @@ Lab.breedingPageMatch = SC.Page.design({
           glow: YES,
           trackScoreBinding: "*parentView.trackScore"
         }),
-        
-        
+
+
         fatherView: Geniverse.OrganismView.design({
           layout: {top: 100, right: 0, width: 180, height: 180},
           classNames: "fatherView opaque".w(),
@@ -99,7 +92,7 @@ Lab.breedingPageMatch = SC.Page.design({
           glow: YES,
           trackScoreBinding: "*parentView.trackScore"
         }),
-        
+
         breedButtonView: SC.ButtonView.design({
           layout: { top: 10, centerX: 20, width: 100, height: 24 },
           target: 'Geniverse.breedDragonController',
@@ -117,7 +110,7 @@ Lab.breedingPageMatch = SC.Page.design({
             return this.get('isBreeding') ? 'Breeding...' :  'Breed';
           }.property('isBreeding').cacheable()
         })
-        
+
       }),
 
       // Breeding pen with eggs
@@ -128,7 +121,7 @@ Lab.breedingPageMatch = SC.Page.design({
       stableView: Lab.StableView.design({
         layout: { centerX: 0, top: 501, width: 520, height: 97 }
       }),
-      
+
       marketplaceView: SC.ImageView.design({
         layout: { right: 35, top: 507, height: 90, width: 90 },
         value: sc_static('sell-to-market.jpg'),
@@ -144,7 +137,7 @@ Lab.breedingPageMatch = SC.Page.design({
             }
             SC.RunLoop.end();
           }
-          
+
           if ((""+drag.get('source').constructor === 'Geniverse.OrganismView')){
             var dragon = drag.get('source').get('content');
             sellDragon(dragon);
@@ -173,7 +166,7 @@ Lab.breedingPageMatch = SC.Page.design({
           this.$().removeClass('drop-target') ;
         }
       }),
-      
+
       scoreView: Geniverse.ScoreView.design({
         layout: { left: 20, top: 445, height: 49, width: 184 },
         showScore: YES,
@@ -181,5 +174,5 @@ Lab.breedingPageMatch = SC.Page.design({
       })
     })
   })
-  
+
 });
