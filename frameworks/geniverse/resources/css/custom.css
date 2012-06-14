@@ -66,13 +66,6 @@
   color: black;
 }
 
-.sc-view .parchment {
-	background-image:static_url('parchment.jpg');
-	background-size: 100%;
-	border: 0;
-	background-color: transparent;
-}
-
 .info-title {
   font-size: 16px;
 	color: #8a6331;

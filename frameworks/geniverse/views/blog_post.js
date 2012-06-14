@@ -13,14 +13,13 @@ sc_require('mixins/simple_button');
 Geniverse.BlogPostView = SC.PalettePane.design({
   layout: { width: 440, height: 505, centerX: 0, centerY: 0 },
   isModal:NO,
-  
-  
+
+
   defaultResponder: 'Lab.statechart',
-  
-  
+
+
   contentView: SC.View.extend({
     childViews: 'titleView blogTitleView blogPostView1 blogPostView2 blogPostView3 cancelButton postButton'.w(),
-		classNames: 'parchment'.w(),
 
     titleView: SC.LabelView.design({
       layout: { centerY: 0, height: 24, left: 0, top:5, width: 440 },
@@ -51,7 +50,7 @@ Geniverse.BlogPostView = SC.PalettePane.design({
       title: "Post",
       action: "post"
     }),
-    
+
     blogTitleView: SC.TextFieldView.design({
       layout: { left: 10, top: 29, width: 420, height: 35 },
       hint: "Type your CLAIM here",
@@ -61,7 +60,7 @@ Geniverse.BlogPostView = SC.PalettePane.design({
       valueBinding: "Geniverse.blogPostController.title"
     }),
 
-    // TODO: Solve Firefox bug: titleView lacks dark background, making title hard to read 
+    // TODO: Solve Firefox bug: titleView lacks dark background, making title hard to read
     blogPostView1: SC.TextFieldView.design({
       layout: { left: 10, top: 69, width: 420, height: 174 },
       hint: "Type your EVIDENCE here",
@@ -69,7 +68,7 @@ Geniverse.BlogPostView = SC.PalettePane.design({
       isTextArea: YES,
       valueBinding: "Geniverse.blogPostController.content1"
     }),
-    
+
     blogPostView2: SC.TextFieldView.design({
       layout: { left: 10, top: 244, width: 420, height: 28 },
       hint: "Evidence URL",
@@ -77,7 +76,7 @@ Geniverse.BlogPostView = SC.PalettePane.design({
       isTextArea: NO,
       valueBinding: "Geniverse.blogPostController.content2"
     }),
-    
+
     blogPostView3: SC.TextFieldView.design({
       layout: { left: 10, top: 279, width: 420, height: 190 },
       hint: "Type your REASONING here",
