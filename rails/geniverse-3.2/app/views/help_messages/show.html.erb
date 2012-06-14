@@ -1,0 +1,13 @@
+<p>
+  <b>Page name:</b>
+  <%=h @help_message.page_name %>
+</p>
+
+<p>
+  <b>Message:</b>
+  <%=h @help_message.message %>
+</p>
+
+
+<%= link_to 'Edit', edit_help_message_path(@help_message) %> |
+<%= link_to 'Back', help_messages_path %>

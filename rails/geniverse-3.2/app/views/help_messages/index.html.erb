@@ -1,0 +1,22 @@
+<h1>Listing help_messages</h1>
+
+<table>
+  <tr>
+    <th>Page name</th>
+    <th>Message</th>
+  </tr>
+
+<% @help_messages.each do |help_message| %>
+  <tr>
+    <td><%=h help_message.page_name %></td>
+    <td><%=h help_message.message %></td>
+    <td><%= link_to 'Show', help_message %></td>
+    <td><%= link_to 'Edit', edit_help_message_path(help_message) %></td>
+    <td><%= link_to 'Destroy', help_message, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New help_message', new_help_message_path %>

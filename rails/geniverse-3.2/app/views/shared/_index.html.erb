@@ -1,0 +1,38 @@
+<% specials ||= {}; extra_links ||= [] %>
+
+<table>
+  <tr>
+    <% if (objects.size > 0) %>
+      <% objects[0].attributes.keys.sort.each do |attr| %>
+        <th>
+          <% if specials[attr] && specials[attr][:header] %>
+            <%=h specials[attr][:header] %>
+          <% else %>
+            <%=h attr.humanize %>
+          <% end %>
+        </th>
+      <% end %>
+    <% end %>
+  </tr>
+
+<% objects.each do |object| %>
+  <tr>
+    <% object.attributes.keys.sort.each do |attr| %>
+      <td>
+        <% if specials[attr] && specials[attr][:content] %>
+          <%= specials[attr][:content].call(object) %>
+        <% else %>
+          <%=h object.attributes[attr] %>
+        <% end %>
+      </td>
+    <% end %>
+    <% extra_links.each do |l| %>
+      <td><%= l.call(object) %></td>
+    <% end %>
+    <td><%= link_to 'Show', object %></td>
+    <td><%= link_to 'Edit', edit_polymorphic_path(object) %></td>
+    <td><%= link_to 'Destroy', object, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+
+</table>

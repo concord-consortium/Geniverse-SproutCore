@@ -1,0 +1,17 @@
+<h1>Listing activities</h1>
+
+<%= link_to "Destroy ALL dragons", 'destroy_all_dragons' %>
+<%= render :partial => 'shared/index', :locals => { :objects => @activities, 
+  :extra_links => [
+    lambda {
+      |activity| return link_to 'Run', "/lab##{activity.route}" 
+    },
+    lambda {
+      |activity| return link_to 'delete dragons', url_for(:action => :destroy_dragons, :id => activity.id)
+    }
+  ]
+} %>
+
+<br />
+
+<%= link_to 'New activity', new_activity_path %>

@@ -1,0 +1,18 @@
+<table>
+<tr>
+  <th style="text-align: right; padding-right: 10px;">ID:</th>
+  <td style="vertical-align: top;">
+    <%=h object.id %>
+  </td>
+</tr>
+
+<% object.attributes.keys.sort.each do |att| %>
+  <% val = object.attributes[att] %>
+  <tr>
+    <th style="text-align: right; vertical-align: top; padding-right: 10px;"><%= att %>:</th>
+    <td style="vertical-align: top;">
+      <%=(h custom_string(val)).gsub(/\r(?:\n)?|\n/,"<br/>\n").html_safe %>
+    </td>
+  </tr>
+<% end %>
+</table>
