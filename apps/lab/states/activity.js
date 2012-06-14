@@ -61,7 +61,7 @@ Lab.ACTIVITY = SC.Responder.create(
 
   initActivity: function() {
     SC.Logger.log("ACTIVITY initActivity");
-    
+
     this.clearData();
 
     var self = this;
@@ -109,7 +109,7 @@ Lab.ACTIVITY = SC.Responder.create(
         Geniverse.activityController.set('content', found);
         Geniverse.activityController.propertyDidChange('content');
         activities.removeObserver('status', self, setActivity);
-        
+
         Lab.ACTIVITY.initChatChannels();
         Lab.ACTIVITY.reloadData();
         Lab.ACTIVITY.gotoActivityRoute();
@@ -161,17 +161,10 @@ Lab.ACTIVITY = SC.Responder.create(
     /////////////////// Stable
     SC.Logger.log("LOAD: stable");
     var stableQuery = SC.Query.local(Geniverse.Dragon, {
-        conditions: 'bred = true AND isEgg = false AND user = {user} AND isInMarketplace = false AND activity = {activity}',
-        user: user,
+        conditions: 'bred = true AND isEgg = false AND isInMarketplace = false AND activity = {activity}',
         activity: activity,
         orderBy: 'stableOrder',
-        restParams: Geniverse.makeRestParams({
-          bred: 'true',
-          isEgg: 'false',
-          isInMarketplace: 'false',
-          user: user,
-          activity: activity
-        })
+        LOCAL_SEARCH_ONLY: YES
     });
     var stableOrganisms = Geniverse.store.find(stableQuery);
     // FIXME For some unknown reason, loading the stable organisms immediately sometimes
@@ -199,45 +192,15 @@ Lab.ACTIVITY = SC.Responder.create(
       Geniverse.chatListController.set('content', chats);
     }
 
-    /////////////////// Articles
-    SC.Logger.log("LOAD: articles");
-    var articlesQuery = SC.Query.local(Geniverse.Article, {
-      conditions: 'activity = {activity} AND accepted = true',
-      activity: activity,
-      orderBy: 'time'
-    });
-    var articles = Geniverse.store.find(articlesQuery);
-    Geniverse.publishedArticlesController.set('content', articles);
-
-    var myArticlesQuery = SC.Query.local(Geniverse.Article, {
-      conditions: 'group = {group} AND activity = {activity} AND submitted = false AND accepted = false',
-      group: user.get('groupId'),
-      activity: activity,
-      orderBy: 'time'
-    });
-    var myArticles = Geniverse.store.find(myArticlesQuery);
-
-    Geniverse.articleController.set('content', myArticles);
-
     /////////////////// Challenge dragons
     SC.Logger.log("LOAD: challenge dragons");
     var challengePoolQuery = SC.Query.local('Geniverse.Dragon', {
-      conditions: 'bred = false AND isInMarketplace = false AND isMatchDragon = false AND user = {user} AND activity = {activity} AND mother = {mother} AND father = {father} AND session = {session}',
-      user: user,
+      conditions: 'bred = false AND isInMarketplace = false AND isMatchDragon = false AND activity = {activity} AND mother = {mother} AND father = {father} AND session = {session}',
       activity: activity,
       mother: null,
       father: null,
       orderBy: 'name, storeKey',
       session: Geniverse.activityController.get('currentSession'),
-      restParams: Geniverse.makeRestParams({
-        mother_id: 'null',
-        father_id: 'null',
-        bred: 'false',
-        isInMarketplace: 'false',
-        isMatchDragon: 'false',
-        user: user,
-        activity: activity
-      }),
       LOCAL_SEARCH_ONLY: !Lab.ACTIVITY.get("LOAD_CHALLENGE_DRAKES")
     });
 
@@ -260,22 +223,12 @@ Lab.ACTIVITY = SC.Responder.create(
      /////////////////// Match dragons
       SC.Logger.log("LOAD: match dragons");
       var matchPoolQuery = SC.Query.local('Geniverse.Dragon', {
-        conditions: 'bred = false AND isMatchDragon = true AND user = {user} AND activity = {activity} AND isInMarketplace = false AND mother = {mother} AND father = {father} AND session = {session}',
-        user: user,
+        conditions: 'bred = false AND isMatchDragon = true AND activity = {activity} AND isInMarketplace = false AND mother = {mother} AND father = {father} AND session = {session}',
         activity: activity,
         mother: null,
         father: null,
         orderBy: 'name, storeKey',
         session: Geniverse.activityController.get('currentSession'),
-        restParams: Geniverse.makeRestParams({
-          mother_id: 'null',
-          father_id: 'null',
-          bred: 'false',
-          user: user,
-          isMatchDragon: 'true',
-          isInMarketplace: 'false',
-          activity: activity
-        }),
         LOCAL_SEARCH_ONLY: Geniverse.NEVER_SAVE_MATCH_DRAGONS
       });
 
@@ -387,7 +340,7 @@ Lab.ACTIVITY = SC.Responder.create(
     var member = user.get('memberId')- 1;
     return Geniverse.activityController.getConfigurationForRoomMember(group,member, isMatchDragons);
   },
-  
+
   clearData: function() {
     Geniverse.matchController.set('content', []);
     Geniverse.challengePoolController.set('content', []);
