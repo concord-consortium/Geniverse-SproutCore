@@ -1,0 +1,9 @@
+<%= form_for(myCase) do |f| %>
+  <%= error_messages(myCase) %>
+
+  <%= render :partial => 'shared/form', :locals => {:object => myCase, :f => f } %>
+  
+  <p>
+    <%= f.submit 'Submit' %>
+  </p>
+<% end %>

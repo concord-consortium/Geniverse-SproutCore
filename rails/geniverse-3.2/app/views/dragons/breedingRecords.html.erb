@@ -1,0 +1,84 @@
+<h1>Listing Breeding Records</h1>
+
+<table>
+  <tr>
+    <% if (@dragons.size > 0) %>
+      <th>
+          Mother
+      </th>
+      <th>
+          Father
+      </th>
+      <th>
+          Offspring
+      </th>
+      <th>
+          Time
+      </th>
+    <% end %>
+  </tr>
+
+<% @dragons.each do |dragon| %>
+
+<% 
+
+  siblings = dragon.siblings
+  
+  alreadyShown = false
+  siblings.each do |sib|
+    if (sib.id < dragon.id)
+      alreadyShown = true
+    end
+  end
+  
+  siblings.unshift(dragon)
+    
+%>
+
+<% if (!alreadyShown) %>
+
+  <tr>
+    <td style="padding: 10px">
+      <% if dragon.mother != nil %>
+        <img src='<%=h dragon.mother.imageURL %>' style='width: 120; height: 120;'/>
+      <% else %>
+        ?
+      <% end %>
+    </td>
+    <td style="padding: 10px">
+      <% if dragon.father != nil %>
+        <img src='<%=h dragon.father.imageURL %>' style='width: 120; height: 120;'/>
+      <% else %>
+        ?
+      <% end %>
+    </td>
+    <td>
+      <table>
+        <tr>
+          <% (0..(siblings.length/2)-1).each do |i|
+            sib = siblings[i]%>
+            <td>
+              <img src='<%=h sib.imageURL %>' style='width: 60; height: 60;'/>
+            </td>
+          <% end %>
+        </tr>
+        <tr>
+          <% ((siblings.length/2)..siblings.length-1).each do |i|
+            sib = siblings[i]%>
+            <td>
+              <img src='<%=h sib.imageURL %>' style='width: 60; height: 60;'/>
+            </td>
+          <% end %>
+        </tr>
+      </table>
+    </td>
+    <td><%=h Time.at(dragon.breedTime.to_i/1000.0).strftime("Bred at %H:%M on %h %d, %Y") %></td>
+    <td><%= link_to 'Show', :action => 'breedingRecordsShow', :id => dragon.id %></td>
+  </tr>
+  
+<% end %>
+<% end %>
+
+</table>
+
+<br />
