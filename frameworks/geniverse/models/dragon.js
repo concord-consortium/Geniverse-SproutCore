@@ -158,10 +158,6 @@ Geniverse.Dragon = SC.Record.extend(
 
 });
 
-Geniverse.Dragon.modelName = "dragon";
-Geniverse.Dragon.modelsName = "dragons";
-Geniverse.railsBackedTypes.push(Geniverse.Dragon.modelName);
-
 Geniverse.Dragon.traitRules = {
   "armor": {
     "Five armor": [["A1", "A1"], ["A1", "A2"]],

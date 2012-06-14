@@ -19,7 +19,7 @@ Lab.ACTIVITY = SC.Responder.create(
   activityType: null,
   activityIndex: null,
 
-  LOAD_CHALLENGE_DRAKES: YES,
+  LOAD_CHALLENGE_DRAKES: NO,
 
   /**
     The next state to check if this state does not implement the action.
