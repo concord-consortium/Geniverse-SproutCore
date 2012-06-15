@@ -45,17 +45,17 @@ Lab.feedbackController = SC.Object.create({
 
 
     if (      argumentationChallengeStateIsCurrent
-         &&   argumentationChallengeIsNowComplete 
+         &&   argumentationChallengeIsNowComplete
          && ! argumentationChallengeWasAlreadyComplete) {
 
         this._notifyPostedToBlogAndCompletedChallenge(description, postURL, isLastChallenge);
     }
     else {
-      
+
       //    ! argumentationChallengeStateIsCurrent
       // || ! argumentationChallengeIsNowComplete
       // ||   argumentationChallengeWasAlreadyComplete
-      
+
       this._notifyPostedToBlog(description, postURL);
     }
   },
@@ -76,8 +76,7 @@ Lab.feedbackController = SC.Object.create({
     this._notify(
       "Good work!",
 
-      "<img src=\"" + static_url('quill-on-45x45.png') + "\" style=\"float: left; margin: 0.4em 1.0em;\"/>\n" +
-      "You earned a quill! " +
+      "<img src=\"" + static_url('two-star.png') + "\" style=\"float: left; margin: 0.4em 1.0em;\"/>\n" +
       "You completed the challenge by posting to the journal. Find your post <a target=\"_blank\" href=\"" + postURL +
       "\">here</a>.\n" +
       "You can continue to work on this challenge if you like, or you can " + (
