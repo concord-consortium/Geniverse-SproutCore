@@ -1,0 +1,254 @@
+<h1>Listing dragons</h1>
+
+<table>
+  <tr>
+    <% if (@dragons.size > 0) %>
+      <th>
+          Dragon ID
+      </th>
+      <th>
+          Sex
+      </th>
+      <th>
+          Mother ID
+      </th>
+      <th>
+          Father ID
+      </th>
+      <% (0..9).each do |i| %>
+        <th>
+            <%=h 'A ' + (i+1).to_s %>
+        </th>
+        <th>
+            <%=h 'B ' + (i+1).to_s %>
+        </th>
+        <th>
+            <%=h 'Trait' + (i+1).to_s %>
+        </th>
+      <% end %>
+      <% (0..9).each do |i| %>
+        <th>
+            <%=h 'Mother A ' + (i+1).to_s %>
+        </th>
+        <th>
+            <%=h 'Mother B ' + (i+1).to_s %>
+        </th>
+        <th>
+            <%=h 'Mother Trait' + (i+1).to_s %>
+        </th>
+      <% end %>
+      <% (0..9).each do |i| %>
+        <th>
+            <%=h 'Father A ' + (i+1).to_s %>
+        </th>
+        <th>
+            <%=h 'Father B ' + (i+1).to_s %>
+        </th>
+        <th>
+            <%=h 'Father Trait' + (i+1).to_s %>
+        </th>
+      <% end %>
+    <% end %>
+  </tr>
+
+<% @dragons.each do |dragon| %>
+
+<% 
+  alleleNames = {
+      'M'=> 'Metallic',
+      'm'=> 'Nonmetallic',
+      'MT'=> 'Tawny',
+      'W'=> 'Wings',
+      'w'=> 'No wings',
+      'H'=> 'No horns',
+      'h'=> 'Horns',
+      'C'=> 'Colored',
+      'c'=> 'Colorless',
+      'Fl'=> 'Forelimbs',
+      'fl'=> 'No forelimbs',
+      'Hl'=> 'Hindlimbs',
+      'hl'=> 'No hindlimbs',
+      'A1'=> 'A1 armor',
+      'A2'=> 'A2 armor',
+      'a'=> 'No armor',
+      'B'=> 'Black',
+      'b'=> 'Brown',
+      'D'=> 'Full color',
+      'd'=> 'Dilute color',
+      'dl'=> 'dl',
+      'T'=> 'Flared tail',
+      't'=> 'Short tail'
+  }
+  
+  # Extract chromosomes into arrays
+  info = {"dragon" => {}, "mother" => {}, "father" => {}}
+  info.each do |key, value|
+    thisDragon = nil
+    if (key == "dragon")
+      thisDragon = dragon
+    else 
+      if (key == "mother")
+        thisDragon = dragon.mother
+      else
+        thisDragon = dragon.father
+      end
+    end
+    
+    if (!thisDragon.nil?)
+    
+      value["chromosomes"] = {"A" => [], "B" => []}
+    
+      alleles = thisDragon.alleles
+      aPattern = /a:([^,]+)(,|\z)/
+      bPattern = /b:([^,]+)(,|\z)/
+      allAs = alleles.scan(aPattern)
+      allBs = alleles.scan(bPattern)
+
+      allAs.each do |allele|
+        alleleVal = allele[0]
+        if (alleleNames[alleleVal])
+          alleleVal = alleleNames[alleleVal]
+        else
+          alleleVal = "little" + alleleVal if alleleVal.upcase != alleleVal
+          alleleVal = "big" + alleleVal if alleleVal.upcase == alleleVal
+        end
+        value["chromosomes"]['A'] << alleleVal
+      end
+      allBs.each do |allele|
+        alleleVal = allele[0]
+        if (alleleNames[alleleVal])
+          alleleVal = alleleNames[alleleVal]
+        else
+          alleleVal = "little" + alleleVal if alleleVal.upcase != alleleVal
+          alleleVal = "big" + alleleVal if alleleVal.upcase == alleleVal
+        end
+        value["chromosomes"]['B'] << alleleVal
+      end
+
+      # Extract traits into arrays
+      value["traits"] = []
+      imagePath = thisDragon.attributes['imageURL'].split('/')
+      imageName = imagePath[imagePath.length-1]
+      imageTraits = imageName.split('.')[0].split('_')
+      
+      colorNames = {
+        'fr' => 'Frost',
+        'ta' => 'Tawny',
+        'st' => 'Steel',
+        'co' => 'Copper',
+        'ar' => 'Argent',
+        'go' => 'Gold',
+        'ch' => 'Charcoal',
+        'ea' => 'Earth',
+        'du' => 'Dust',
+        'sa' => 'Sand'
+      }
+      wingNames = {
+        'wing' => 'Wings',
+        'noWing' => 'No wings'
+      }
+      forelimbNames = {
+        'noLimbs' => 'No forelimbs',
+        'fore' => 'Forelimbs',
+        'hind' => 'No forelimbs',
+        'allLimb' => 'Forelimbs'
+      }
+      hindlimbNames = {
+        'noLimbs' => 'No hindlimbs',
+        'fore' => 'No hindlimbs',
+        'hind' => 'Hindlimbs',
+        'allLimb' => 'Hindlimbs'
+      }
+      armorNames = {
+        'a0' => 'No armor',
+        'a1' => 'One plate',
+        'a3' => 'Three plates',
+        'a5' => 'Five plates'
+      }
+      tailNames = {
+        'fl' => 'Flared tail',
+        'sh' => 'Short tail'
+      }
+      hornNames = {
+        'horn' => 'Horns',
+        'noHorn' => 'No horns'
+      }
+      
+      value["traits"] = [
+        colorNames[imageTraits[0]],
+        wingNames[imageTraits[2]],
+        hornNames[imageTraits[6]],
+        colorNames[imageTraits[0]],
+        forelimbNames[imageTraits[3]],
+        hindlimbNames[imageTraits[3]],
+        armorNames[imageTraits[4]],
+        colorNames[imageTraits[0]],
+        colorNames[imageTraits[0]],
+        tailNames[imageTraits[5]]
+      ]
+    end
+  end
+
+  
+%>
+
+  <tr>
+    <td>
+      <%=h dragon.id %>
+    </td>
+    <td>
+      <%=h x = ""
+          if (dragon.sex == 0)
+            x = "male"
+          else
+            x = "female"
+          end
+      %>
+    </td>
+    <td>
+      <%=h dragon.attributes['mother_id'] %>
+    </td>
+    <td>
+      <%=h dragon.attributes['father_id'] %>
+    </td>
+    <% (0..9).each do |i| %>
+      <td>
+        <%=h info["dragon"]["chromosomes"]['A'][i] %>
+      </td>
+      <td>
+        <%=h info["dragon"]["chromosomes"]['B'][i] %>
+      </td>
+      <td>
+        <%=h info["dragon"]["traits"][i] %>
+      </td>
+    <% end %>
+    <% (0..9).each do |i| %>
+      <td>
+        <%=h info["mother"]["chromosomes"]['A'][i] if info["mother"]["chromosomes"] %>
+      </td>
+      <td>
+        <%=h info["mother"]["chromosomes"]['B'][i] if info["mother"]["chromosomes"] %>
+      </td>
+      <td>
+        <%=h info["mother"]["traits"][i] if info["mother"]["chromosomes"] %>
+      </td>
+    <% end %>
+    <% (0..9).each do |i| %>
+      <td>
+        <%=h info["father"]["chromosomes"]['A'][i] if info["mother"]["chromosomes"] %>
+      </td>
+      <td>
+        <%=h info["father"]["chromosomes"]['B'][i] if info["mother"]["chromosomes"] %>
+      </td>
+      <td>
+        <%=h info["father"]["traits"][i] if info["mother"]["chromosomes"] %>
+      </td>
+    <% end %>
+    
+    <td><%= link_to 'Show', dragon %></td>
+  </tr>
+<% end %>
+
+</table>
+
+<br />

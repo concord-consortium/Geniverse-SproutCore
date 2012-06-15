@@ -1,0 +1,32 @@
+<h1>Listing articles</h1>
+
+<table>
+  <tr>
+    <th>Group</th>
+    <th>Activity</th>
+    <th>Text</th>
+    <th>Time</th>
+    <th>Submitted</th>
+    <th>Teacher comment</th>
+    <th>Accepted</th>
+  </tr>
+
+<% @articles.each do |article| %>
+  <tr>
+    <td><%=h article.group %></td>
+    <td><%=h article.activity_id %></td>
+    <td><%=h article.text %></td>
+    <td><%=h article.time %></td>
+    <td><%=h article.submitted %></td>
+    <td><%=h article.teacherComment %></td>
+    <td><%=h article.accepted %></td>
+    <td><%= link_to 'Show', article %></td>
+    <td><%= link_to 'Edit', edit_article_path(article) %></td>
+    <td><%= link_to 'Destroy', article, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New article', new_article_path %>
