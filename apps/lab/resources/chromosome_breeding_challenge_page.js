@@ -37,10 +37,12 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
 
     mainAppView: SC.View.design({
 
-      childViews: 'genomePanel breedingPenView scoreView matchView'.w(),
+      layout: { centerX: 0, top: 10, width: 1080, height: 880 },
+
+      childViews: 'genomePanel breedingPenView matchView scoreView'.w(),
 
       genomePanel: SC.View.design({
-        layout: {top: 40, height: 450, left: 15, width: 1005 },
+        layout: {top: 35, height: 585, left: 15, width: 1005 },
         childViews: 'background femaleTitle femaleGenomeView femalePhenotypeView maleTitle maleGenomeView malePhenotypeView breedButton'.w(),
 
         // separate parallel background so we don't make the rest of the childViews see-through
@@ -50,46 +52,48 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
         }),
 
         femaleTitle: SC.LabelView.design({
-          layout: {top: 10, height: 25, left: 325, width: 200 },
+          layout: {top: 10, height: 25, left: 70, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           value: "Female Drake"
         }),
 
-        femaleGenomeView: Lab.DragonBreedingGenomeView.design({
-          layout: {top: 40, left: 15, height: 500, width: 500 },
-          index: 1,
-          sex: 1
-        }),
-
         femalePhenotypeView: Geniverse.OrganismView.design({
-          layout: {top: 0, left: 300, width: 200, height: 200},
+          layout: {top: 0, left: 30, width: 200, height: 200},
           contentBinding: "*parentView.femaleGenomeView.dragon",
           allowDrop: NO,
-          showBackground: NO
+          showBackground: NO,
+          glow: YES
+        }),
+
+        femaleGenomeView: Lab.DragonBreedingGenomeView.design({
+          layout: {top: 170, left: 15, height: 500, width: 500 },
+          sex: 1,
+          index: 1
         }),
 
         maleTitle: SC.LabelView.design({
-          layout: {top: 10, height: 25, left: 530, width: 200 },
+          layout: {top: 10, height: 25, right: 35, width: 170 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           value: "Male Drake"
         }),
 
+        malePhenotypeView: Geniverse.OrganismView.design({
+          layout: {top: 0, right: 60, width: 200, height: 200},
+          contentBinding: "*parentView.maleGenomeView.dragon",
+          allowDrop: NO,
+          showBackground: NO,
+          glow: YES
+        }),
+
         maleGenomeView: Lab.DragonBreedingGenomeView.design({
-          layout: {top: 40, left: 515, height: 500, width: 500 },
-          index: 2,
+          layout: {top: 170, right: 0, height: 500, width: 500 },
           sex: 0,
+          index: 2,
           dragonOnRight: YES
         }),
 
-        malePhenotypeView: Geniverse.OrganismView.design({
-          layout: {top: 0, left: 515, width: 200, height: 200},
-          contentBinding: "*parentView.maleGenomeView.dragon",
-          allowDrop: NO,
-          showBackground: NO
-        }),
-
         breedButton: SC.ButtonView.design({
-          layout: { top: 170, left: 450, width: 100, height: 24 },
+          layout: { top: 150, centerX: -60, width: 100, height: 24 },
           target: 'Geniverse.breedDragonController',
           action: "breedAndIncrementScore",
           isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
@@ -107,18 +111,21 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
 
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { left: 329, top: 245, width: 380, height: 350 }
-      }),
-
-      scoreView: Geniverse.ScoreView.design({
-        layout: { left: 165, top: 495, height: 40, width: 150 },
-        showTargetScore: YES
+        layout: { left: 329, top: 240, width: 380, height: 350 },
+        breedingRecordRight: -20
       }),
 
       matchView: Geniverse.MatchView.design({
-        layout: { left: 713, top: 495, height: 150, width: 150 },
+        layout: { centerX: 0, top: -10, height: 190, width: 270 },
         onlyOne: YES,
-        dragonSize: 150
+        labelPosition: "right",
+        dragonSize: 170
+      }),
+
+      scoreView: Geniverse.ScoreView.design({
+        layout: { top: 175, centerX: 60, width: 150, height: 46 },
+        showScore: YES,
+        showTargetScore: YES
       })
 
     })
