@@ -65,13 +65,26 @@ Lab.ACTIVITY = SC.Responder.create(
     this.clearData();
 
     var self = this;
-    var activityQuery = Geniverse.ACTIVITIES_QUERY;
-    var activities = Geniverse.store.find(activityQuery);
 
     var strand = this.get('strand');
     var level = this.get('level');
     var activityType = this.get('activityType');
     var activityIndex = this.get('activityIndex');
+
+    var routeStr = strand;
+    var parts = [level,activityType,activityIndex];
+    for (var i = 0; i < 3; i++) {
+      var part = parts[i];
+      if (typeof(part) != "undefined") {
+        routeStr += "/" + part;
+      }
+    }
+
+    var activityQuery = SC.Query.local(Geniverse.Activity, {
+      orderBy: 'id',
+      restParams: Geniverse.makeRestParams({ route: routeStr })
+    });
+    var activities = Geniverse.store.find(activityQuery);
 
     function setActivity() {
       if (activities.get('status') === SC.Record.READY_CLEAN) {
