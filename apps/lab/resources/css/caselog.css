@@ -3,10 +3,10 @@
 
 /* BASIC STYLES
 ---------------------------------------------------------------------*/
-	
+
 .caselog-view {
  	background: #492222;
-	color: #e5c59e; 	
+	color: #e5c59e;
  	font: 11px/1.4 Georgia, 'times new roman', times, serif;
   }
 
@@ -31,9 +31,9 @@
 		text-align: center;
 		}
 	#caselog-book h2 {
-		color: #492222;		
+		color: #492222;
 		font-size: 32px;
-		font-weight: normal;		
+		font-weight: normal;
 		text-align: center;
 		}
 	#caselog-book h3 {
@@ -60,7 +60,6 @@
 			margin: 0;
 			}
 		#caselog-book .case li {
-			background: static_url('caselog-no-star.png') no-repeat;
 			font-size: 1em;
 			line-height: 160%;
 			padding-left: 47px;
@@ -75,10 +74,9 @@
 			background: static_url('caselog-three-star.png') no-repeat;
 			}
 		#caselog-book .case li.quill-on {
-			background: static_url('quill-on-15x15.png') no-repeat;
+			background: static_url('caselog-two-star.png') no-repeat;
 			}
 		#caselog-book .case li.quill-off {
-			background: static_url('quill-off-15x15.png') no-repeat;
 			}
 	#caselog-book .case.caselog-active, #caselog-book .case.complete {
 		opacity: .8;
@@ -87,10 +85,10 @@
 		background: #fff static_url('check.png') no-repeat right top;
 		}
 	#caselog-book #col1 .case {
-		margin: 0 55px 10px 100px; 
+		margin: 0 55px 10px 100px;
 		}
 	#caselog-book #col2 .case {
-		margin: 0 105px 10px 50px; 
+		margin: 0 105px 10px 50px;
 		}
 	#caselog-book .case:hover, #caselog-book .case:focus {
 		opacity: .8;
@@ -105,7 +103,7 @@
 		margin-bottom: 10px;
 		padding: 5px 10px;
 		}
-		
+
 /* NAVIGATION
 ---------------------------------------------------------------------*/
 #caselog-nav {
