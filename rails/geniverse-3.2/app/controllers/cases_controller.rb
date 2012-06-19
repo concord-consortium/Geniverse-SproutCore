@@ -7,7 +7,7 @@ class CasesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @cases }
-      format.json #{ render :json => custom_array_hash(@cases) }
+      format.json { render :json => custom_array_hash(@cases) }
     end
   end
 
@@ -19,7 +19,7 @@ class CasesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @case }
-      format.json #{ render :json => custom_item_hash(@case) }
+      format.json { render :json => custom_item_hash(@case) }
     end
   end
 
@@ -49,7 +49,7 @@ class CasesController < ApplicationController
         flash[:notice] = 'Case was successfully created.'
         format.html { redirect_to(@case) }
         format.xml  { render :xml => @case, :status => :created, :location => @case }
-        format.json #{ render :json => custom_item_hash(@case), :status => :created, :location => @case }
+        format.json { render :json => custom_item_hash(@case), :status => :created, :location => @case }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @case.errors, :status => :unprocessable_entity }

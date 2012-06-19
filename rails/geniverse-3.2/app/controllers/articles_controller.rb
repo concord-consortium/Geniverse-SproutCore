@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @articles }
-      format.json #{ render :json => custom_array_hash(@articles) }
+      format.json { render :json => custom_array_hash(@articles) }
     end
   end
 
@@ -19,7 +19,7 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @article }
-      format.json #{ render :json => custom_item_hash(@articles) }
+      format.json { render :json => custom_item_hash(@articles) }
     end
   end
 
