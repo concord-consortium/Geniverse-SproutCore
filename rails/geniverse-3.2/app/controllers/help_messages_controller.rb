@@ -7,7 +7,7 @@ class HelpMessagesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @help_messages }
-      format.json #{ render :json => custom_array_hash(@help_messages) }
+      format.json { render :json => custom_array_hash(@help_messages) }
     end
   end
 
@@ -19,7 +19,7 @@ class HelpMessagesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @help_message }
-      format.json #{ render :json => custom_item_hash(@help_message) }
+      format.json { render :json => custom_item_hash(@help_message) }
     end
   end
 
