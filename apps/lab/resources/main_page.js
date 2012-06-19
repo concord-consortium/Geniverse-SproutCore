@@ -16,10 +16,7 @@ Lab.mainPage = SC.Page.design({
   mainPane: SC.MainPane.design({
     title: "Welcome to the Geniverse Labs",
     classNames: ['brown'],
-    childViews: 'mainAppView topBar'.w(),
-    topBar: Lab.TopBarView.design({
-      titlePath: 'Lab.mainPage.mainPane.title'
-    }),
+    childViews: 'mainAppView'.w(),
 
     mainAppView: SC.View.design({
       layout: { top: 42, centerX: 0, width: 960},
