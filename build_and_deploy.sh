@@ -25,7 +25,7 @@ case "$1" in
     export REMOTE_USER="deploy"
     ;;
   baseline)
-    export SERVER=ungamed.genigames.concord.org
+    export SERVER=baseline.genigames.concord.org
     export SERVER_PATH="/web/static/static"
     export LABEL_PATH="/web/static"
     export REMOTE_USER="deploy"
