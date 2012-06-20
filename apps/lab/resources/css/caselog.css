@@ -65,13 +65,13 @@
 			padding-left: 47px;
 			}
 		#caselog-book .case li.one-star {
-			background: static_url('caselog-one-star.png') no-repeat;
+			background: static_url('caselog-two-star.png') no-repeat;
 			}
 		#caselog-book .case li.two-star {
 			background: static_url('caselog-two-star.png') no-repeat;
 			}
 		#caselog-book .case li.three-star {
-			background: static_url('caselog-three-star.png') no-repeat;
+			background: static_url('caselog-two-star.png') no-repeat;
 			}
 		#caselog-book .case li.quill-on {
 			background: static_url('caselog-two-star.png') no-repeat;
