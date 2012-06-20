@@ -87,10 +87,8 @@ Lab.challenge = Ki.State.extend({
     var next = Geniverse.activityController.getNextActivity();
 
     // Notify the user that they're done
-    var starImageUrl = this.starsEarned === 3 ? static_url('three-star.png') :
-          this.starsEarned === 2 ? static_url('two-star.png') : static_url('one-star.png');
-    var starsMessage = "<img src='"+starImageUrl+"' class='centered-block'/>\n"+
-                       "You earned a check" + (this.starsEarned === 1 ? "-minus." : this.starsEarned === 2 ? "." : "-plus.") + "\n\n";
+    var starImageUrl = static_url('two-star.png');
+    var starsMessage = "<img src='"+starImageUrl+"' class='centered-block'/>\n\n";
 
     SC.AlertPane.extend({
       layout: {top: 0, centerX: 0, width: 350, height: 100 },
@@ -103,7 +101,7 @@ Lab.challenge = Ki.State.extend({
       "You've completed all the trials in this challenge!\n"+starsMessage,
       "",
       (next ? "Go on to the next challenge" : "Go back to the case log"),
-      "Try again",
+      "Repeat activity",
       {
         alertPaneDidDismiss: function(pane, status) {
           if (status === SC.BUTTON1_STATUS) {
