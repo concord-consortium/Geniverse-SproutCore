@@ -33,3 +33,7 @@ a#journal:hover {
     background-image: static_url('mainscreen-journal-highlighted.png');
     background-repeat: none;
 }
+
+.sc-label-view.loading-text {
+    font-size: 2.5em;
+}
