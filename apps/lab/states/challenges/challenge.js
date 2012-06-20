@@ -18,7 +18,7 @@ Lab.challenge = Ki.State.extend({
 
   enterState: function() {
     var metadata   = Geniverse.userController.getUserMetadata(),
-        activityId = Geniverse.activityController.get("guid");
+        activityId = Geniverse.activityController.get("route");
     if (metadata.stars && metadata.stars[activityId]) {
       this.challengePreviouslyCompleted = YES;
     } else {
@@ -45,7 +45,7 @@ Lab.challenge = Ki.State.extend({
 
     // Award the stars
     var stars = Geniverse.scoringController.get('achievedChallengeStars');
-    var pageId = Geniverse.activityController.get('guid');
+    var pageId = Geniverse.activityController.get('route');
     Geniverse.userController.setPageStars(pageId, stars);
 
     // why can't bindings in SC work as advertised?

@@ -54,7 +54,8 @@
           challenges: [
             {
               title: "Challenge 1: Settle the Argument",
-              href: "#case4/argumentation"
+              href: "#case4/argumentation",
+              useQuill: true
             }
           ]
         }, {
@@ -62,7 +63,8 @@
           challenges: [
             {
               title: "Training Level Certification Exam",
-              href: "#case5/certification1"
+              href: "#case5/certification1",
+              useQuill: true
             }
           ]
         }
@@ -75,7 +77,8 @@
           challenges: [
             {
               title: "Challenge 1: Tamora's Show 'n' Tell",
-              href: "#case6/argumentation"
+              href: "#case6/argumentation",
+              useQuill: true
             }
           ]
         }, {
@@ -94,13 +97,15 @@
           challenges: [
             {
               title: "Playground",
-              href: "#case8/playground"
+              href: "#case8/playground",
+              useQuill: true
             }, {
               title: "Challenge 1: Once, Twice, Three Times a Tail",
               href: "#case8/challenge1"
             }, {
               title: "Challenge 2: High Tail it...",
-              href: "#case8/challenge2"
+              href: "#case8/challenge2",
+              useQuill: true
             }
           ]
         }, {
@@ -146,7 +151,8 @@
           challenges: [
             {
               title: "Challenge 1: More than Skin Deep",
-              href: "#case12/challenge1"
+              href: "#case12/challenge1",
+              useQuill: true
             }
           ]
         }, {
@@ -195,7 +201,8 @@
           challenges: [
             {
               title: "Challenge 1: Protect and Serve",
-              href: "#case16/challenge1"
+              href: "#case16/challenge1",
+              useQuill: true
             }
           ]
         }
