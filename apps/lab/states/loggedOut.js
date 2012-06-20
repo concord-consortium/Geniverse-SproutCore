@@ -10,7 +10,7 @@ Lab.loggedOut =  Ki.State.extend({
   // may be moved into here later
   enterState: function() {
     Lab.routes.gotoLabRoute('loginPage');
-    Lab.loginController.autoLogin("User", "User", "user");
+    Lab.loginController.showCheckPanel();
   },
   
   // this and gotoActivity just set this property for later
