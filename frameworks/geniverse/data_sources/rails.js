@@ -4,11 +4,6 @@
 // ==========================================================================
 /*globals Geniverse */
 
-sc_require('models/activity');
-Geniverse.ACTIVITIES_QUERY = SC.Query.local(Geniverse.Activity, {
-  orderBy: 'id'
-});
-
 // TODO: improve this query
 sc_require('models/dragon');
 Geniverse.DRAGONS_QUERY = SC.Query.local(Geniverse.Dragon, {
@@ -23,18 +18,18 @@ Geniverse.DRAGONS_QUERY = SC.Query.local(Geniverse.Dragon, {
 */
 Geniverse.RailsDataSource = SC.DataSource.extend(
 /** @scope Geniverse.RailsDataSource.prototype */ {
-  
+
   _jsonGet: function(url, callback, params){
     // replace the url with 'this'
     // so we can pass the params to notify
     params = SC.A(arguments).slice(1);
     params.unshift(this);
-    
+
     var request = SC.Request.getUrl(url).header({
       'Accept': 'application/json'
     }).json();
     request.notify.apply(request, params);
-    
+
     // SC.Logger.log('request.address: %s', request.address);
     // SC.Logger.log('request: ', request);
     request.send();
@@ -55,11 +50,11 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
       this._jsonGet(endpoint, 'didFetchRecords', store, query);
       return YES;
     }
-    
+
     // if (query === Geniverse.ACTIVITIES_QUERY) {
     //   SC.Logger.log('query === Geniverse.ACTIVITIES_QUERY', query);
     //   this._jsonGet('/rails/activities', 'didFetchActivities', store, query);
-    //   
+    //
     //   SC.Logger.groupEnd();
     //   return YES;
     // }
@@ -96,12 +91,12 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
     // SC.Logger.log('Geniverse.RailsDataSource.retrieveRecord');
     // guid will be rails url e.g. /rails/questions/1
     var guid = store.idFor(storeKey);
-    
+
     this._jsonGet('%@.json'.fmt(guid), 'didRetrieveRecord', store, storeKey);
-    
+
     return YES; // return YES if you handled the storeKey
   },
-  
+
   didRetrieveRecord: function(response, store, storeKey) {
     // SC.Logger.group('Geniverse.RailsDataSource.didRetrieveRecord()');
 
@@ -121,7 +116,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
     // SC.Logger.groupEnd();
   },
 
-  
+
   createRecord: function(store, storeKey) {
     var recordType = store.recordTypeFor(storeKey);
     if (Geniverse.railsBackedTypes.indexOf(recordType.modelName) != -1) {
@@ -140,7 +135,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
     }
     return NO;
   },
-  
+
   didCreateRecord: function(response, store, storeKey) {
     if (SC.ok(response)) {
       // Adapted from parseUri 1.2.2
@@ -155,8 +150,8 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
   updateRecord: function(store, storeKey) {
     return NO;
   },
-  
-  // 
+
+  //
   didUpdateRecord: function(response, store, storeKey) {
     if (SC.ok(response)) {
       var url = store.idFor(storeKey);
@@ -169,7 +164,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
   },
 
   destroyRecord: function(store, storeKey) {
-    
+
     // TODO: Add handlers to destroy records on the data source.
     // call store.dataSourceDidDestroy(storeKey) when done
     // FIXME Right now we're relying on the fact that we're not sending destroy event to the rails backend
@@ -180,5 +175,5 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
     },2);
     return YES ; // return YES if you handled the storeKey
   }
-  
+
 }) ;
