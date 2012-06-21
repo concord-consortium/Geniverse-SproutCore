@@ -29,7 +29,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
       childViews: 'drakeGenomePanel'.w(),
 
       drakeGenomePanel: SC.View.design({
-        layout: {top: 50, height: 550, centerX: 0, width: 500 },
+        layout: {top: 0, height: 550, centerX: 0, width: 500 },
         childViews: 'background title genomeView switchSexButton nextButton'.w(),
 
         // separate parallel background so we don't make the rest of the childViews see-through

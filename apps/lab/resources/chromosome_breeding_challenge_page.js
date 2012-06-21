@@ -27,7 +27,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
 
     mainAppView: SC.View.design({
 
-      layout: { centerX: 0, top: 10, width: 1080, height: 880 },
+      layout: { centerX: 0, top: 0, width: 1080, height: 880 },
 
       childViews: 'genomePanel breedingPenView matchView scoreView'.w(),
 

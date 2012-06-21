@@ -30,7 +30,7 @@ Lab.meiosisPage = SC.Page.design({
 
       childViews: 'genomePanel'.w(),
 
-      layout: { centerX: 0, top: 40, width: 1050, height: 640 },
+      layout: { centerX: 0, top: 0, width: 1050, height: 640 },
 
       genomePanel: SC.View.design({
         layout: {top: 0, bottom: 10, left: 5, right: 5 },

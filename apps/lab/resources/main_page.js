@@ -19,11 +19,11 @@ Lab.mainPage = SC.Page.design({
     childViews: 'mainAppView'.w(),
 
     mainAppView: SC.View.design({
-      layout: { top: 42, centerX: 0, width: 960},
+      layout: { top: 0, centerX: 0, width: 960},
       childViews: 'loadingView'.w(),
 
       loadingView: SC.LabelView.design({
-        layout: { centerY: 0, centerX: 0, width: 300, height: 200 },
+        layout: { centerY: 0, centerX: 0, width: 300, height: 100 },
         classNames: ['loading-text'],
         value: "Loading..."
       }),

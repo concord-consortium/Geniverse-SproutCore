@@ -27,7 +27,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
 
     mainAppView: SC.View.design({
 
-      layout: { centerX: 0, top: 35, width: 1080, height: 605 },
+      layout: { centerX: 0, top: 0, width: 1080, height: 605 },
 
       childViews: 'background targetDrake targetTitle genomePanels revealButton scoreLabel line1 line2 line3'.w(),
 
