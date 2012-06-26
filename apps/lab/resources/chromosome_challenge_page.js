@@ -22,20 +22,13 @@ Lab.chromosomeChallengePage = SC.Page.design({
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    classNames: ['brown'],
     childViews: 'mainAppView'.w(),
 
     mainAppView: SC.View.design({
 
-      childViews: 'background genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle line'.w(),
+      childViews: 'genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle line'.w(),
 
       layout: { centerX: 0, top: 0, width: 850, height: 560 },
-
-      // separate parallel background so we don't make the rest of the childViews see-through
-      background: SC.View.design({
-        layout: {top: 0, left: 0, right: 0, bottom: 0},
-        classNames: ['genome-view-intro']
-      }),
 
       line: SC.View.design({
         layout: {top: 80, left: 280, width: 2, bottom: 110},

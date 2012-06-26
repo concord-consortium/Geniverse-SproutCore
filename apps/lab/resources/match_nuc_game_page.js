@@ -20,7 +20,6 @@ Lab.matchNucleotidesGame = SC.Page.design({
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    classNames: ['brown'],
     childViews: 'mainAppView'.w(),
 
     mainAppView: SC.View.design({

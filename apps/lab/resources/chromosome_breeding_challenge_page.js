@@ -22,7 +22,6 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    classNames: ['brown'],
     childViews: 'mainAppView'.w(),
 
     mainAppView: SC.View.design({
@@ -33,13 +32,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
 
       genomePanel: SC.View.design({
         layout: {top: 5, height: 585, left: 15, width: 1005 },
-        childViews: 'background femaleTitle femaleGenomeView femalePhenotypeView maleTitle maleGenomeView malePhenotypeView breedButton'.w(),
-
-        // separate parallel background so we don't make the rest of the childViews see-through
-        background: SC.View.design({
-          layout: {top: 0, left: 0, right: 0, bottom: 0},
-          classNames: ['genome-view-intro']
-        }),
+        childViews: 'femaleTitle femaleGenomeView femalePhenotypeView maleTitle maleGenomeView malePhenotypeView breedButton'.w(),
 
         femaleTitle: SC.LabelView.design({
           layout: {top: 10, height: 25, left: 70, width: 200 },

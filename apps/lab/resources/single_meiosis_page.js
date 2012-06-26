@@ -21,7 +21,6 @@ Lab.singleMeiosisPage = SC.Page.design({
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    classNames: ['brown'],
     childViews: 'mainAppView'.w(),
 
     mainAppView: SC.View.design({
@@ -30,13 +29,8 @@ Lab.singleMeiosisPage = SC.Page.design({
 
       genomePanel: SC.View.design({
         layout: {top: 0, bottom: 10, left: 10, right: 10 },
-        childViews: 'background challengePoolView parentTitle drakeParentView meiosisView nextButton'.w(),
+        childViews: 'challengePoolView parentTitle drakeParentView meiosisView nextButton'.w(),
 
-        // separate parallel background so we don't make the rest of the childViews see-through
-        background: SC.View.design({
-          layout: {top: 0, left: 0, right: 0, bottom: 0},
-          classNames: ['genome-view-intro']
-        }),
 		  // using horizontal Challenge Pool at top with 120-px drakes inside
 		  // this will necessitate moving everything down ~130px
 		  // In actuality, moving them down about 6px more to avoid cutting off label

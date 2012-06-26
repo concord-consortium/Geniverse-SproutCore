@@ -23,7 +23,6 @@ Lab.meiosisPage = SC.Page.design({
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    classNames: ['brown'],
     childViews: 'mainAppView'.w(),
 
     mainAppView: SC.View.design({
@@ -34,15 +33,8 @@ Lab.meiosisPage = SC.Page.design({
 
       genomePanel: SC.View.design({
         layout: {top: 0, bottom: 10, left: 5, right: 5 },
-        childViews: 'background mothersPoolView fathersPoolView femaleView motherMeiosis offspringTitle offspringView maleView fatherMeiosis fertilization matchView scoreView'.w(),
+        childViews: 'mothersPoolView fathersPoolView femaleView motherMeiosis offspringTitle offspringView maleView fatherMeiosis fertilization matchView scoreView'.w(),
         // childViews: 'femaleTitle femaleView offspringTitle offspringView maleTitle maleView'.w(),
-
-        // separate parallel background so we don't make the rest of the childViews see-through
-        background: SC.View.design({
-          layout: {top: 0, left: 0, right: 0, bottom: 0},
-          classNames: ['genome-view-intro']
-        }),
-
 
         matchView: Geniverse.MatchView.design({
           layout: { centerX: 0, top: 5, height: 120, width: 400 },

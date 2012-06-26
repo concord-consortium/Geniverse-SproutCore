@@ -21,7 +21,6 @@ Lab.chromosomeTrainingPage = SC.Page.design({
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    classNames: ['brown'],
     childViews: 'mainAppView'.w(),
 
     mainAppView: SC.View.design({
@@ -30,13 +29,7 @@ Lab.chromosomeTrainingPage = SC.Page.design({
 
       femaleGenomePanel: SC.View.design({
         layout: {top: 0, height: 550, left: 15, width: 500 },
-        childViews: 'background title genomeView'.w(),
-
-        // separate parallel background so we don't make the rest of the childViews see-through
-        background: SC.View.design({
-          layout: {top: 0, left: 0, right: 0, bottom: 0},
-          classNames: ['genome-view-intro']
-        }),
+        childViews: 'title genomeView'.w(),
 
         title: SC.LabelView.design({
           layout: {top: 20, height: 25, left: 20, width: 200 },

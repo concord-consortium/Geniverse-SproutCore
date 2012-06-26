@@ -22,20 +22,13 @@ Lab.breedingPageMatch = SC.Page.design({
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    classNames: ['brown'],
     childViews: 'mainAppView'.w(),
 
     mainAppView: SC.View.design({
 
       layout: { centerX: 0, top: 0, width: 840, height: 600 },
 
-      childViews: 'background breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView matchView scoreView'.w(),
-
-      // separate parallel background so we don't make the rest of the childViews see-through
-      background: SC.View.design({
-        layout: {top: 0, left: 0, right: 0, bottom: 0},
-        classNames: ['genome-view-intro']
-      }),
+      childViews: 'breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView matchView scoreView'.w(),
 
       // challenge pool to hold initial, system-created dragons
       mothersPoolView: Lab.ChallengePoolView.design({
