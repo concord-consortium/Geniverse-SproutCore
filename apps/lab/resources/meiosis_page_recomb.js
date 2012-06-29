@@ -11,7 +11,7 @@ sc_require('views/breeding_pen_view');
 sc_require('views/stable_view');
 sc_require('views/bottom_bar_view');
 
-Lab.meiosisPage = SC.Page.design({
+Lab.meiosisPageRecomb = SC.Page.design({
   
   pagePath: 'Lab.meiosisPage',
   title: 'Meiosis Page',
