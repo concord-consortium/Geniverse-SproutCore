@@ -70,22 +70,22 @@ Geniverse.AnimationView = SC.View.extend(
 	resetMother: function () {
 		if (this.get('meiosisOwner') === 'mother') {
 			this.dragonDidChange();
-	    SC.RunLoop.begin();
+      SC.RunLoop.begin();
 			this.set('gameteJson',null);
-	    SC.RunLoop.end();
+      SC.RunLoop.end();
 		}
 	}.observes('Geniverse.meiosisAnimationController.retryMother'),
 
 	resetFather: function () {
 		if (this.get('meiosisOwner') === 'father') {
 			this.dragonDidChange();
-	    SC.RunLoop.begin();
-			this.set('gameteJson',null);
-	    SC.RunLoop.end();
+      SC.RunLoop.begin();
+      this.set('gameteJson',null);
+      SC.RunLoop.end();
 		}
 	}.observes('Geniverse.meiosisAnimationController.retryFather'),
 
-  // Needed because code that clears the meiosis container is called by state change, 
+  // Needed because code that clears the meiosis container is called by state change,
   // but view is not visible at that time leaving chromosomes in the contianer after
   // a round trip visit to the caselog.
   clearOnVisibliity: function () {
@@ -110,14 +110,14 @@ Geniverse.AnimationView = SC.View.extend(
 					this.set('jsonData',mother);
 				} else {
 					if (father !== null) {
-	        	this.set('jsonData',father);						
+            this.set('jsonData',father);
 					} else {
 						this.set('jsonData',null);
 					}
-    		}
+        }
 //				this.set('jsonData',null);
-    	}
-			this.set('completedAnimationCalled', NO);			
+      }
+			this.set('completedAnimationCalled', NO);
 		}
  }.observes('motherJson', 'fatherJson'),
   
@@ -224,8 +224,8 @@ Geniverse.AnimationView = SC.View.extend(
     var options = {
       mode: this.get('mode'),
       owner: this.get('meiosisOwner'),
-			mother: (this.get('motherJson') != null),
-			father: (this.get('fatherJson') != null),
+			mother: (this.get('motherJson') !== null),
+			father: (this.get('fatherJson') !== null),
       segMoveSpeed: 5,
       width: 320, // FIXME
       height: 320, // FIXME
@@ -259,12 +259,12 @@ Geniverse.AnimationView = SC.View.extend(
 		out += '<button class="play" title="Play"><img src="' + sc_static('images/meiosis_play_small.png') + '" /></button>';
 		out += '<button class="end" title="End"><img src="' + sc_static('images/meiosis_end_small.png') + '" /></button>';
 		if ((this.get('mode') === 'parent') && this.get('swapping')) {
-		  out += '<button class="swap" title="Swap Genes"><img src="' + sc_static('images/meiosis_exchange_16x16_monochrome.png') + '" /></button>';
-	  }
+      out += '<button class="swap" title="Swap Genes"><img src="' + sc_static('images/meiosis_exchange_16x16_monochrome.png') + '" /></button>';
+    }
 		if (this.get('mode') === 'parent') {
 			out += '<button class="retry" title="Retry"><img src="' + sc_static('images/meiosis_retry_monochrome.png') + '" /></button>';
 		}
-		out += '<div class="scrub"></div>';			
+		out += '<div class="scrub"></div>';
 //		out += '<div class="frame"><input type="text" value="0"></div>';
     
     out += '</div>';
@@ -274,7 +274,7 @@ Geniverse.AnimationView = SC.View.extend(
   
   render: function(context, firstTime) {
       context.push('<div id="' + this.get('meiosisOwner') + '" class="meiosis ui-state-default ui-corner-all">');
-		  context.push(this.get('initialHtml'));
+      context.push(this.get('initialHtml'));
 			context.push('</div>');
   }
 
