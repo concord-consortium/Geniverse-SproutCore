@@ -697,7 +697,7 @@ sc_require('lib/burst-core');
 			this.segLength = defaultOpts.segLength;
 			this.rightLabelOffsetX = 17;
 			this.labelOffsetY = -4.5;
-			this.labelWidth = Geniverse.chromosomeController.alleleLabelMap[this.gene].length*7;
+			this.labelWidth = Geniverse.chromosomeController.alleleLabelMap[this.gene].length*9;
 			this.leftLabelOffsetX = -1 * (this.labelWidth + this.rightLabelOffsetX);
 
 			this.genPath();
@@ -720,7 +720,7 @@ sc_require('lib/burst-core');
 			});
       
       this.geneText = this.paper.text(this.x, this.y, Geniverse.chromosomeController.alleleLabelMap[this.gene]).attr( {
-        'font'        : '14px Helvetica, Arial',
+        'font'        : '14px monospace',
         'stroke'      : 'none',
         'fill'        : '#000',
         'text-anchor' : 'start'
@@ -819,11 +819,13 @@ sc_require('lib/burst-core');
       var offsetX = this.parent.offsetX,
           offsetY = this.parent.offsetY,
           x = this.segs[0].x + offsetX,
-          y = this.segs[0].y + offsetY;
-      
-    this.labelLink.attr({ path: "M"+ x +","+ y+" L"+ ((x > this.paper.width/2) ? x+this.leftLabelOffsetX : x+this.rightLabelOffsetX) +","+ (y+this.labelOffsetY)}).toFront();
-    this.geneFrame.attr({ 'x':((x > this.paper.width/2) ? x+this.leftLabelOffsetX : x+this.rightLabelOffsetX), 'y': (y+this.labelOffsetY)}).toFront();
-      this.geneText.attr({ 'x': ((x > this.paper.width/2) ? x+this.leftLabelOffsetX : x+this.rightLabelOffsetX)+2, 'y': y}).toFront();
+          y = this.segs[0].y + offsetY,
+          labelX = this.segs[1].x + offsetX,
+          labelY = this.segs[1].y + offsetY;
+
+      this.labelLink.attr({ path: "M"+ labelX +","+ labelY+this.labelOffsetY +" L"+ ((labelX > this.paper.width/2) ? labelX+this.leftLabelOffsetX+this.labelWidth : labelX+this.rightLabelOffsetX) +","+ (labelY+this.labelOffsetY)}).toFront();
+      this.geneFrame.attr({ 'x':((labelX > this.paper.width/2) ? labelX+this.leftLabelOffsetX : labelX+this.rightLabelOffsetX), 'y': (labelY+(this.labelOffsetY)*2)}).toFront();
+      this.geneText.attr({ 'x': ((labelX > this.paper.width/2) ? labelX+this.leftLabelOffsetX : labelX+this.rightLabelOffsetX)+2, 'y': (labelY+this.labelOffsetY)}).toFront();
       
       if(!this.jqObj) {
           this.jqObj = $(this.genekey);
