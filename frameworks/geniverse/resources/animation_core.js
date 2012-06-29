@@ -21,7 +21,7 @@ sc_require('lib/burst-core');
       zoom            : 2,
       width           : 310,
       height          : 320,
-      swap            : 'none', // was 'user' but this causes pause at frame 30
+      swap            : 'user', // was 'user' but this causes pause at frame 30
       alleleCount     : 12,
       segLength       : 10,
       segCount        : 3,
@@ -90,7 +90,7 @@ sc_require('lib/burst-core');
         cos        = Math.cos,
 				atan2      = Math.atan2,
 				random     = function( amt ){ return Math.random() * amt; },
-				gvRand	   = function (center,variation){ return center + random( variation ) - variation/2; },
+				gvRand     = function (center,variation){ return center + random( variation ) - variation/2; },
 				centerX    = defaultOpts.width / 2,
         centerY    = defaultOpts.height / 2,
         mouseX     = 0,
@@ -126,14 +126,14 @@ sc_require('lib/burst-core');
 
       arg = $.isPlainObject(arg) ? JSON.stringify(arg) : arg;
       return ( new RegExp('^("(\\\\.|[^"\\\\\\n\\r])*?"|[,:{}\\[\\]0-9.\\-+Eaeflnr-u \\n\\r\\t])+?$') ).test(arg);
-    };
+    }
 
     // Constrain a value within bounds, used to stop chromosomes leaving the viewport
     function constrain( aNumber, aMin, aMax ){
       return Math.min( Math.max( aNumber, aMin ), aMax );
-    };
+    }
 
-    // Find the distance between two points 
+    // Find the distance between two points
     var dist = function dist(x1, y1, x2, y2){
       return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     };
@@ -189,11 +189,11 @@ sc_require('lib/burst-core');
             chromosomes[ 0].swapList = [ chromosomes[ 2], chromosomes[ 3] ];
             chromosomes[ 1].swapList = [ chromosomes[ 2], chromosomes[ 3] ];
             chromosomes[ 2].swapList = [ chromosomes[ 0], chromosomes[ 1] ];
-            chromosomes[ 3].swapList = [ chromosomes[ 0], chromosomes[ 1] ];          
+            chromosomes[ 3].swapList = [ chromosomes[ 0], chromosomes[ 1] ];
             chromosomes[ 4].swapList = [ chromosomes[ 6], chromosomes[ 7] ];
-            chromosomes[ 5].swapList = [ chromosomes[ 6], chromosomes[ 7] ];                                        
+            chromosomes[ 5].swapList = [ chromosomes[ 6], chromosomes[ 7] ];
             chromosomes[ 6].swapList = [ chromosomes[ 4], chromosomes[ 5] ];
-            chromosomes[ 7].swapList = [ chromosomes[ 4], chromosomes[ 5] ];          
+            chromosomes[ 7].swapList = [ chromosomes[ 4], chromosomes[ 5] ];
             chromosomes[ 8].swapList = [ chromosomes[10], chromosomes[11] ];
             chromosomes[ 9].swapList = [ chromosomes[10], chromosomes[11] ];
             chromosomes[10].swapList = [ chromosomes[ 8], chromosomes[ 9] ];
@@ -216,8 +216,8 @@ sc_require('lib/burst-core');
           defaultOpts.loaded.call(defaultOpts.context);
         }
         
-      };
-	  var geneInfo;
+      }
+    var geneInfo;
       
 		if( isJson( input ) ){
 			geneInfo = $.isPlainObject( input ) ? input : JSON.parse( input );
@@ -233,10 +233,10 @@ sc_require('lib/burst-core');
 				}
 			});
 		}
-	  
-	 loadData(geneInfo);
-	  
-    };
+
+    loadData(geneInfo);
+
+    }
 
     // Swap Two Genes Between Two Chromosomes
     function swap( alleleA, alleleB ){
@@ -245,18 +245,17 @@ sc_require('lib/burst-core');
       alleleB.gene = alleleA.gene;
       alleleA.gene = geneB;
       alleleB.sex = alleleA.sex;
-      alleleA.sex = sexB;      
+      alleleA.sex = sexB;
       alleleA.style.call(alleleA,alleleA.SVG_outer,'outer');
       alleleA.style.call(alleleA,alleleA.SVG_inner,'inner');
       alleleB.style.call(alleleB,alleleB.SVG_outer,'outer');
       alleleB.style.call(alleleB,alleleB.SVG_inner,'inner');
       alleleB.geneText.attr({ text:alleleB.gene });
       alleleA.geneText.attr({ text:alleleA.gene });
-    };
+    }
 
     // Remove hover/click events when not in pairing mode
     function unbindPairEvents(){
-
       for(var i=0, l=chromosomes.length; i< l; i++){
         for(var j=0, l2=chromosomes[i].alleles.length; j< l2; j++){
 
@@ -271,20 +270,17 @@ sc_require('lib/burst-core');
               ){
                 event.unbind();
               }
-              
             }
           }
-
         }
       }
-      
-    };
+    }
 
     function swapMulti( alleles1, alleles2 ){
       for( var i in alleles1 ){
         swap( alleles1[i], alleles2[i] );
       }
-    };
+    }
 
     function recombinationBindEvents(){
 
@@ -293,20 +289,20 @@ sc_require('lib/burst-core');
         else if ( i > 3 && i < 8 ){ return 2; }
         else if ( i > 7 )         { return 3; }
         else                      { return 0; }
-      };
+      }
 
       var click = function gvclick(){
-        
+        var allele;
         if( !inRecombSelection ){
           for(var i=this.index, l=this.parent.alleles.length; i< l; i++){
-            var allele = this.parent.alleles[i];
+            allele = this.parent.alleles[i];
             allele.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
             allele.SVG_outer.attr({ 'stroke': defaultOpts.color.hover });
             var swap1 = allele.parent.swapList[0],
                 swap2 = allele.parent.swapList[1];
             swap1.alleles[i].SVG_outer.attr({ 'stroke': defaultOpts.color.recomb_outer_hover });
             swap2.alleles[i].SVG_outer.attr({ 'stroke': defaultOpts.color.recomb_outer_hover });
-            swap1.alleles[i].SVG_inner.attr({ 'stroke': defaultOpts.color.recomb_inner_hover });            
+            swap1.alleles[i].SVG_inner.attr({ 'stroke': defaultOpts.color.recomb_inner_hover });
             swap2.alleles[i].SVG_inner.attr({ 'stroke': defaultOpts.color.recomb_inner_hover });
             swap1.alleles[i].recombOption = true;
             swap2.alleles[i].recombOption = true;
@@ -316,26 +312,26 @@ sc_require('lib/burst-core');
           }
         }else{
           if( inRecombChromeIndex != this.parent.index ){
-            // Collect selected alleles for swapping
-            var alleles1 = [], alleles2 = [];
-            for( var i in this.parent.alleles ){
-              if( this.parent.alleles[i].recombOption ){
-                alleles1.push( this.parent.alleles[i] );
-              }
+          // Collect selected alleles for swapping
+          var alleles1 = [], alleles2 = [];
+          for( var i2 in this.parent.alleles ){
+            if( this.parent.alleles[i2].recombOption ){
+              alleles1.push( this.parent.alleles[i2] );
             }
-            var alleles = chromosomes[inRecombChromeIndex].alleles;
-            for( i=0, l=alleles.length; i< l; i++){
-              if( this.parent.alleles[i].recombOption ){
-                alleles2.push( alleles[i] );
-              }
+          }
+          var alleles = chromosomes[inRecombChromeIndex].alleles;
+          for( var i3=0, l2=alleles.length; i3< l2; i3++){
+            if( this.parent.alleles[i3].recombOption ){
+              alleles2.push( alleles[i3] );
             }
-            // Initiate multi-swap
-            swapMulti(alleles1, alleles2);
+          }
+          // Initiate multi-swap
+          swapMulti(alleles1, alleles2);
           }
           // Reset colors of previously selected Alleles
-          for(var i=0, l=chromosomes.length; i< l; i++){
-            for(var j=0, k=chromosomes[i].alleles.length; j< k; j++){
-              var allele = chromosomes[i].alleles[j];
+          for(var i4=0, l3=chromosomes.length; i4< l3; i4++){
+            for(var j=0, k=chromosomes[i4].alleles.length; j< k; j++){
+              allele = chromosomes[i4].alleles[j];
               allele.SVG_inner.attr({ 'stroke': defaultOpts.color[allele.sex+'_inner'], opacity: 1 });
               allele.SVG_outer.attr({ 'stroke': defaultOpts.color[allele.sex+'_outer'], opacity: 1 });
               allele.recombOption = false;
@@ -343,7 +339,7 @@ sc_require('lib/burst-core');
             }
             inRecombChromeIndex = null;
           }
-          inRecombSelection = 0;          
+          inRecombSelection = 0;
         }
       };
 
@@ -355,13 +351,13 @@ sc_require('lib/burst-core');
             allele.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
             allele.SVG_outer.attr({ 'stroke': defaultOpts.color.hover });
           }
-        } 
+        }
       };
-      
+    
       var hoverOut = function gvout(){
         for(var i=0, l=this.parent.alleles.length; i< l; i++){
           var allele = this.parent.alleles[i];
-          if( allele.recombSelected == true ){
+          if( allele.recombSelected === true ){
           }else{
             if( !allele.recombOption ){
               allele.SVG_inner.attr({ 'stroke': defaultOpts.color[allele.sex+'_inner'] });
@@ -374,32 +370,31 @@ sc_require('lib/burst-core');
             }
           }
         }
-        this.hovering = false;        
+        this.hovering = false;
       };
 
       for(var i=0, l=chromosomes.length; i< l; i++){
         for(var j=0, k=chromosomes[i].alleles.length; j< k; j++){
-
+  
           var allele = chromosomes[i].alleles[j];
-
+  
           (function( al ){
-
+  
             allele.SVG_outer.hover( function gvhover(){
               hoverOver.call( al );
             },function gvhout(){
               hoverOut.call( al );
             });
-
+  
             allele.SVG_outer.click( function gvclick(){
               click.call( al );
             });
-
+  
           })( allele );
-
+  
         }
       }
-      
-    };
+    }
 
     // Recurse across Chromosome, applying physics by segment
     function recurse( startSeg, direction ){
@@ -428,15 +423,15 @@ sc_require('lib/burst-core');
         recurse( nextSeg, direction );
       }
 
-    };    
+    }
 
     // Allele segments, repel/restore to angles defined by folding factor
     function segRestorate( seg, nextSeg, direction, nx, ny ){
       var parent = seg.parent.parent,
           distance = dist( seg.x, seg.y, nextSeg.x, nextSeg.y ),
-          angle = seg.angle*parent.foldFactor+nextSeg.angle*parent.foldFactor/2+parent.rotation,
-          nx = seg.x + sin(angle)*defaultOpts.segLength,
-          ny = seg.y + cos(angle)*defaultOpts.segLength,
+          angle = seg.angle*parent.foldFactor+nextSeg.angle*parent.foldFactor/2+parent.rotation;
+          nx = seg.x + sin(angle)*defaultOpts.segLength;
+          ny = seg.y + cos(angle)*defaultOpts.segLength;
 					scaleFactor = 1;
 			if (!playing){
 				var segRot = Math.atan2( nextSeg.x-seg.x, nextSeg.y-seg.y );
@@ -448,7 +443,7 @@ sc_require('lib/burst-core');
       seg.y += ((ny-seg.y) / (defaultOpts.segMoveSpeed*seg.parent.parent.overDragMultiplier)/2*direction)*scaleFactor;
       seg.x = constrain( seg.x, 0, defaultOpts.width );
       seg.y = constrain( seg.y, 0, defaultOpts.height );
-    };
+    }
 
     // Allele segments, magnetic-type attractor to allow realistic "pulling"
     function segAttractor( seg, nextSeg, minDist, speed, bindSeg, nx, ny ){
@@ -456,30 +451,30 @@ sc_require('lib/burst-core');
         seg.x = nextSeg.x;
         seg.y = nextSeg.y;
       }else{
-        var distance = dist( seg.x, seg.y, nextSeg.x, nextSeg.y );
+        var distance = dist( seg.x, seg.y, nextSeg.x, nextSeg.y ), angle, rnd;
         if( distance > minDist*2 ){
-          var angle = Math.atan2( nextSeg.x-seg.x, nextSeg.y-seg.y ),
-              rnd = random( defaultOpts.foldDamp ) - ( defaultOpts.foldDamp / 2 );
+          angle = Math.atan2( nextSeg.x-seg.x, nextSeg.y-seg.y );
+          rnd = random( defaultOpts.foldDamp ) - ( defaultOpts.foldDamp / 2 );
           nx = seg.x + sin(angle+rnd)*(distance/2);
           ny = seg.y + cos(angle+rnd)*(distance/2);
           seg.x += (nx-seg.x) / 1;
           seg.y += (ny-seg.y) / 1;
         } else {
 					if (distance > minDist){
-          	var angle = Math.atan2( nextSeg.x-seg.x, nextSeg.y-seg.y ),
-              	rnd = random( defaultOpts.foldDamp ) - ( defaultOpts.foldDamp / 2 );
-          			nx = seg.x + sin(angle+rnd)*(defaultOpts.segLength*overDragMultiplierC);
-          			ny = seg.y + cos(angle+rnd)*(defaultOpts.segLength*overDragMultiplierC);
-          			seg.x += (nx-seg.x) / 1;
-          			seg.y += (ny-seg.y) / 1;
+                angle = Math.atan2( nextSeg.x-seg.x, nextSeg.y-seg.y );
+                rnd = random( defaultOpts.foldDamp ) - ( defaultOpts.foldDamp / 2 );
+                nx = seg.x + sin(angle+rnd)*(defaultOpts.segLength*overDragMultiplierC);
+                ny = seg.y + cos(angle+rnd)*(defaultOpts.segLength*overDragMultiplierC);
+                seg.x += (nx-seg.x) / 1;
+                seg.y += (ny-seg.y) / 1;
 							}
 					}
       }
       seg.x = constrain( seg.x, 0, defaultOpts.width );
-      seg.y = constrain( seg.y, 0, defaultOpts.height );      
-    };
+      seg.y = constrain( seg.y, 0, defaultOpts.height );
+    }
 
-    // Clear offsets from when the use has dragged a chromosome  
+    // Clear offsets from when the use has dragged a chromosome
     function clearOffsets(){
       for(var i in chromosomes){
         if(chromosomes.hasOwnProperty(i)){
@@ -490,7 +485,7 @@ sc_require('lib/burst-core');
           i_chrome.offsetOriginY = 0;
         }
       }
-    };
+    }
 
     var frameCount = 0;
 
@@ -501,14 +496,14 @@ sc_require('lib/burst-core');
     
       for(var i in chromosomes){
         if(chromosomes.hasOwnProperty(i)){
-          var i_chrome = chromosomes[i];          
-          i_chrome.physics();          
+          var i_chrome = chromosomes[i];
+          i_chrome.physics();
           for(var j in i_chrome.alleles ){
             if(i_chrome.alleles.hasOwnProperty(j)){
               var j_allele = i_chrome.alleles[j];
               j_allele.updatePath();
               j_allele.swapPathAttrs();
-              if( j_allele.recombOption == true ){
+              if( j_allele.recombOption === true ){
                 j_allele.SVG_inner.attr({ opacity: 0.75+sin(frameCount/2)*0.5 });
                 j_allele.SVG_outer.attr({ opacity: 0.75+sin(frameCount/4)*0.5 });
               }
@@ -534,7 +529,7 @@ sc_require('lib/burst-core');
         mouseSpeed = 0;
       }
       
-    };
+    }
     // ^^ GENERAL PROGRAM FUNCTIONS.
     
 
@@ -551,11 +546,11 @@ sc_require('lib/burst-core');
       this.SVG.hover(
         function(){ // only change color if not selected -Dan
           if((frame===80 && mode==='parent') && (this.attr("fill") === defaultOpts.color.cell_fill)){
-            this.attr({ fill:defaultOpts.color.cell_fill_hover, stroke:defaultOpts.color.cell_stroke_hover })
+            this.attr({ fill:defaultOpts.color.cell_fill_hover, stroke:defaultOpts.color.cell_stroke_hover });
              document.body.style.cursor='pointer';
           }
         },function(){ // only change color if not already hover color -Dan
-	          if((frame===80 && mode==='parent') && (this.attr("fill") === defaultOpts.color.cell_fill_hover)){
+            if((frame===80 && mode==='parent') && (this.attr("fill") === defaultOpts.color.cell_fill_hover)){
             this.attr({ fill:defaultOpts.color.cell_fill, stroke:defaultOpts.color.cell_stroke });
              document.body.style.cursor='auto';
           }
@@ -581,17 +576,17 @@ sc_require('lib/burst-core');
             
             //$(document).trigger('gamete-clicked', data);
             defaultOpts.gameteSelected.call(defaultOpts.context, data);
-			// change all membranes to unselected color then select the currently clicked gamete
-			for (var i=0; i<4; i++) {
-				membranes[i].SVG.attr({ fill:defaultOpts.color.cell_fill, stroke:defaultOpts.color.cell_stroke });
-			}
-			this.attr({ fill:defaultOpts.color.cell_selected, stroke:defaultOpts.color.cell_stroke });
+            // change all membranes to unselected color then select the currently clicked gamete
+            for (var i2=0; i2<4; i2++) {
+              membranes[i2].SVG.attr({ fill:defaultOpts.color.cell_fill, stroke:defaultOpts.color.cell_stroke });
+            }
+            this.attr({ fill:defaultOpts.color.cell_selected, stroke:defaultOpts.color.cell_stroke });
           }
         }
       });
 
       return this;
-    };
+    }
     
     Membrane.prototype.genSVG = function(){
       if( this.hidden ){
@@ -601,8 +596,8 @@ sc_require('lib/burst-core');
       var shape;
       
       if( this.isSperm ){
-        this.stretch = 1;        
-        var edge_r = this.radius*1.125
+        this.stretch = 1;
+        var edge_r = this.radius*1.125;
         shape = paper.ellipse( this.x, this.y, edge_r, this.radius*0.75 );
         this.tail = paper.path(
           ' M' + (this.x+edge_r) + ',' + this.y         +
@@ -674,7 +669,7 @@ sc_require('lib/burst-core');
     // attempt to move on to last seg in previous allele (this.parent.prev()).
     // If attempt fails, return false.
     Segment.prototype.prev = function() {
-      this.index = this.parent.segs.indexOf(this);  
+      this.index = this.parent.segs.indexOf(this);
       this.prevSeg = typeof(this.parent.segs[this.index - 1]) !== 'undefined' ? this.parent.segs[this.index - 1] : false;
       if(!this.prevSeg && this.parent.prev()) {
         this.prevSeg = this.parent.prevAllele.segs.length > 0 ? this.parent.prevAllele.segs[this.parent.prevAllele.segs.length-1] : false;
@@ -713,9 +708,9 @@ sc_require('lib/burst-core');
 			this.style(this.SVG_outer, 'outer');
 
 			this.labelLink = this.paper.path("M"+(this.x)+","+(this.y)+" L"+(this.x+this.labelOffsetX)+","+(this.y+this.labelOfsetY)).attr( {
-				'stroke'	  : '#000',
+				'stroke'      : '#000',
 				'stroke-width': '0.5px'
-			})
+			});
 
 			// make geneFrame variable widths by looking at length of string -Dan
 			this.geneFrame = this.paper.rect(this.x-6, this.y-7, this.labelWidth, 14, 1).attr({
@@ -737,12 +732,12 @@ sc_require('lib/burst-core');
 	
 			if (this.gene == "Y" && !this.parent.hidden){
 				this.labelLink.show();
-				this.geneText.show(); 
-				this.geneFrame.show();	
+				this.geneText.show();
+				this.geneFrame.show();
 			} else {
 				this.labelLink.hide();
-				this.geneText.hide(); 
-				this.geneFrame.hide(); 
+				this.geneText.hide();
+				this.geneFrame.hide();
 			}
       
       this.SVG_outer.drag(this.dragmove_mouse, this.dragstart_mouse, this.dragstop_mouse);
@@ -753,11 +748,11 @@ sc_require('lib/burst-core');
 				if(!this.parent.parent.hidden){
 					for(var i=0; i < this.parent.parent.alleleCount; i++){
 						if(this.parent.hiddenGenes.indexOf(this.parent.parent.alleles[i].gene.toLowerCase()) == -1){
-							if (this.parent.parent.alleles[i].gene != "") {
-								this.parent.parent.alleles[i].labelLink.show(); 
+							if (this.parent.parent.alleles[i].gene !== "") {
+								this.parent.parent.alleles[i].labelLink.show();
 							}
-							this.parent.parent.alleles[i].geneText.show(); 
-							this.parent.parent.alleles[i].geneFrame.show(); 
+							this.parent.parent.alleles[i].geneText.show();
+							this.parent.parent.alleles[i].geneFrame.show();
 						}
 					}
 					document.body.style.cursor='pointer';
@@ -765,10 +760,10 @@ sc_require('lib/burst-core');
 			},function(){
 				if(!this.parent.parent.hidden){
 					for(var i=0; i < this.parent.parent.alleleCount; i++){
-						if ((this.parent.hiddenGenes.indexOf(this.parent.parent.alleles[i].gene.toLowerCase()) == -1) && this.parent.parent.alleles[i].gene != "Y") { 
-							this.parent.parent.alleles[i].labelLink.hide(); 
-							this.parent.parent.alleles[i].geneText.hide(); 
-							this.parent.parent.alleles[i].geneFrame.hide(); 
+						if ((this.parent.hiddenGenes.indexOf(this.parent.parent.alleles[i].gene.toLowerCase()) == -1) && this.parent.parent.alleles[i].gene != "Y") {
+							this.parent.parent.alleles[i].labelLink.hide();
+							this.parent.parent.alleles[i].geneText.hide();
+							this.parent.parent.alleles[i].geneFrame.hide();
 						}
 					}
 					document.body.style.cursor='auto';
@@ -776,14 +771,14 @@ sc_require('lib/burst-core');
 			});
             
       return this;
-    };
+    }
     
     Allele.prototype.hide = function(){
       this.SVG_inner.attr({stroke:"rgba(0,0,0,0)"});
       this.SVG_outer.attr({stroke:"rgba(0,0,0,0)"});
       this.geneFrame.attr({opacity:0});
       this.geneText.attr({opacity:0});
-	  this.labelLink.attr({opacity:0});
+      this.labelLink.attr({opacity:0});
     };
 
     Allele.prototype.show = function(){
@@ -791,7 +786,7 @@ sc_require('lib/burst-core');
       this.style(this.SVG_outer, 'outer');
       this.geneFrame.attr({opacity:1});
       this.geneText.attr({opacity:1});
-	  this.labelLink.attr({opacity:1});
+      this.labelLink.attr({opacity:1});
     };
 
     // Return next allele object in this.alleles, if none exists, return false
@@ -826,8 +821,8 @@ sc_require('lib/burst-core');
           x = this.segs[0].x + offsetX,
           y = this.segs[0].y + offsetY;
       
-	  this.labelLink.attr({ path: "M"+ x +","+ y+" L"+ ((x > this.paper.width/2) ? x+this.leftLabelOffsetX : x+this.rightLabelOffsetX) +","+ (y+this.labelOffsetY)}).toFront();
-	  this.geneFrame.attr({ 'x':((x > this.paper.width/2) ? x+this.leftLabelOffsetX : x+this.rightLabelOffsetX), 'y': (y+this.labelOffsetY)}).toFront();
+    this.labelLink.attr({ path: "M"+ x +","+ y+" L"+ ((x > this.paper.width/2) ? x+this.leftLabelOffsetX : x+this.rightLabelOffsetX) +","+ (y+this.labelOffsetY)}).toFront();
+    this.geneFrame.attr({ 'x':((x > this.paper.width/2) ? x+this.leftLabelOffsetX : x+this.rightLabelOffsetX), 'y': (y+this.labelOffsetY)}).toFront();
       this.geneText.attr({ 'x': ((x > this.paper.width/2) ? x+this.leftLabelOffsetX : x+this.rightLabelOffsetX)+2, 'y': y}).toFront();
       
       if(!this.jqObj) {
@@ -925,7 +920,7 @@ sc_require('lib/burst-core');
           this.parent.selectedJoin = this.parent.parent.alleles[this.parent.index-1].segs[defaultOpts.segCount-1];
         }
       }
-    };    
+    };
 
     
     Allele.prototype.dragmove = function(x, y){
@@ -966,7 +961,7 @@ sc_require('lib/burst-core');
           this.parent.selectedJoin.parent.swapPathAttrs();
         }
 
-      };
+      }
 
       
       // Override mouse position when dragged by Burst timeline
@@ -1020,7 +1015,7 @@ sc_require('lib/burst-core');
       this.dragY = this.y;
       this.originX = this.x;
       this.originY = this.y;
-	  	this.hidden = this.startHidden;
+      this.hidden = this.startHidden;
       
       this.foldFactor = 1;
 
@@ -1039,8 +1034,8 @@ sc_require('lib/burst-core');
       // Loop through alleles array
 // Use this to see randomization ---> var alleleColor = "rgba("+random(255)+","+random(255)+","+random(255)+",1)";
       for(var i=0; i < this.alleleCount; i++){
-        // Creatye and store a new Allele 
-		var thisGene = ((i == 0 && this.data.alleles[i].gene == "")? "Y" : this.data.alleles[i].gene);
+        // Creatye and store a new Allele
+		var thisGene = ((i === 0 && this.data.alleles[i].gene === "")? "Y" : this.data.alleles[i].gene);
         this.alleles[i] = new Allele({
           paper   : this.paper,
           x       : x,
@@ -1063,12 +1058,12 @@ sc_require('lib/burst-core');
       }
       
       this.lastSelected = this.alleles[window.parseInt(random(this.alleles.length), 10)].segs[window.parseInt(random(this.alleles[0].segs.length), 10)];
-    };
+    }
 
     Chromosome.prototype.hide = function(){
       for(var i=0; i < this.alleleCount; i++){
-        if (this.alleles[i].gene != 'Y') { 
-			this.alleles[i].hide(); 
+        if (this.alleles[i].gene != 'Y') {
+			this.alleles[i].hide();
 		}
       }
       this.hidden = true;
@@ -1078,9 +1073,9 @@ sc_require('lib/burst-core');
       for(var i=0; i < this.alleleCount; i++){
         this.alleles[i].show();
 		if (this.alleles[i].gene == "Y"){
-			this.alleles[i].labelLink.show(); 
-			this.alleles[i].geneText.show(); 
-			this.alleles[i].geneFrame.show(); 
+			this.alleles[i].labelLink.show();
+			this.alleles[i].geneText.show();
+			this.alleles[i].geneFrame.show();
 		}
       }
       this.hidden = false;
@@ -1167,11 +1162,11 @@ sc_require('lib/burst-core');
         case "c":
           swapui.attr({x:centerX,y:215,width:100,height:105});
           break;
-      };
-    };
+      }
+    }
 
     // Initiate the load function that generates the scene
-    load( json_file );    
+    load( json_file );
 
     // Full JSON generation function
     self.data("get-json", function(){
@@ -1199,18 +1194,18 @@ sc_require('lib/burst-core');
     // B U R S T - T I M E L I N E - G E N E R A T I O N
     ////////////////////////////////////////////////////////////////////////////
 
-    function generateTimeline( mode ){    
-	  var endDx = 40;
-	  var endDy = 10;
-	  var checkShowHide = function (e){
-	    if(this.startHidden){
+    function generateTimeline( mode ){
+    var endDx = 40;
+    var endDy = 10;
+    var checkShowHide = function (e){
+      if(this.startHidden){
           if(e.frame>11){
             this.show();
           }else{
             this.hide();
           }
 				}
-  	  }
+      };
 
       switch( mode ){
         
@@ -1226,7 +1221,7 @@ sc_require('lib/burst-core');
           : 10-30  : Random to Pairing, chromosomes align                      :
           : 33     : Pairing screen                                            :
           :--------:-----------------------------------------------------------:
-          */          
+          */
           
           var dragByAllele = function(e){
             var allele = this.alleles[defaultOpts.grabAllele];
@@ -1235,7 +1230,7 @@ sc_require('lib/burst-core');
           };
 
 					if (mother && father){
-          	timeline = burst.timeline( 'geniverseTimeline_' + owner, 1, 23, 0.25, false )
+            timeline = burst.timeline( 'geniverseTimeline_' + owner, 1, 23, 0.25, false )
 
             ////////////////////////////////////////////////////////////////////
             // MEMBRANES
@@ -1280,118 +1275,118 @@ sc_require('lib/burst-core');
               .track('dragX')
                 .key(0,chromosomes[0].originX,'inOutQuad')
 								.key(23,gvRand(centerX,endDx))
-			  .track('dragY')
-	            .key(0,chromosomes[0].originY)
+        .track('dragY')
+              .key(0,chromosomes[0].originY)
 							.key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
-                .always(function(e){dragByAllele.call(this,e)})
+                .always(function(e){dragByAllele.call(this,e);})
             .obj('m2_'+owner,chromosomes[1])
               .track('dragX')
                 .key(0,chromosomes[1].originX,'inOutQuad')
 								.key(23,gvRand(centerX,endDx))
- 			  .track('dragY')
-	            .key(0,chromosomes[1].originY)
-	            .key(23,gvRand(centerY - chromosomes[1].yLenOffset,endDy))
-                .always(function(e){dragByAllele.call(this,e)})
+        .track('dragY')
+              .key(0,chromosomes[1].originY)
+              .key(23,gvRand(centerY - chromosomes[1].yLenOffset,endDy))
+                .always(function(e){dragByAllele.call(this,e);})
             .obj('m3_'+owner,chromosomes[2])
               .track('dragX')
                 .key(0,chromosomes[2].originX,'inOutQuad')
 								.key(23,gvRand(centerX,endDx))
-			  .track('dragY')
-	            .key(0,chromosomes[2].originY)
-	            .key(23,gvRand(centerY - chromosomes[2].yLenOffset,endDy))
-                .always(function(e){dragByAllele.call(this,e)})
+        .track('dragY')
+              .key(0,chromosomes[2].originY)
+              .key(23,gvRand(centerY - chromosomes[2].yLenOffset,endDy))
+                .always(function(e){dragByAllele.call(this,e);})
             .obj('f1_'+owner,chromosomes[3])
               .track('dragX')
                 .key(0,chromosomes[3].originX,'inOutQuad')
 								.key(23,gvRand(centerX,endDx))
-			  .track('dragY')
-	            .key(0,chromosomes[3].originY)
-	            .key(23,gvRand(centerY - chromosomes[3].yLenOffset,endDy))
-                .always(function(e){dragByAllele.call(this,e)})
+        .track('dragY')
+              .key(0,chromosomes[3].originY)
+              .key(23,gvRand(centerY - chromosomes[3].yLenOffset,endDy))
+                .always(function(e){dragByAllele.call(this,e);})
             .obj('f2_'+owner,chromosomes[4])
               .track('dragX')
                 .key(0,chromosomes[4].originX,'inOutQuad')
 								.key(23,gvRand(centerX,endDx))
-			  .track('dragY')
-	            .key(0,chromosomes[4].originY)
-	            .key(23,gvRand(centerY - chromosomes[4].yLenOffset,endDy))
-                .always(function(e){dragByAllele.call(this,e)})
+        .track('dragY')
+              .key(0,chromosomes[4].originY)
+              .key(23,gvRand(centerY - chromosomes[4].yLenOffset,endDy))
+                .always(function(e){dragByAllele.call(this,e);})
             .obj('f3_'+owner,chromosomes[5])
               .track('dragX')
                 .key(0,chromosomes[5].originX,'inOutQuad')
 								.key(23,gvRand(centerX,endDx))
-			  .track('dragY')
-	            .key(0,chromosomes[5].originY)
-	            .key(23,gvRand(centerY - chromosomes[5].yLenOffset,endDy))
-                .always(function(e){dragByAllele.call(this,e)})
+        .track('dragY')
+              .key(0,chromosomes[5].originY)
+              .key(23,gvRand(centerY - chromosomes[5].yLenOffset,endDy))
+                .always(function(e){dragByAllele.call(this,e);})
           ;
 				} else {
-		          	timeline = burst.timeline( 'geniverseTimeline_' + owner, 1, 23, 0.25, false )
+                timeline = burst.timeline( 'geniverseTimeline_' + owner, 1, 23, 0.25, false )
 
-		            ////////////////////////////////////////////////////////////////////
-		            // MEMBRANES
+                ////////////////////////////////////////////////////////////////////
+                // MEMBRANES
 
-		            .obj('memb1_'+owner,membranes[0])
-		              .track('radius')
-		                .key(0,membranes[0].radius,'inOutQuad')
-		                .key(23,centerX/1.5)
-		              .track('x')
-		                .key(0,membranes[0].x,'inOutQuad')
-		                .key(23,centerX)
-		                .always(function(e){
-		                  frame = ~~e.frame;
-		                  scrub.slider('value',e.frame*100);
-		                  frameInput.val(~~e.frame);
-		                  this.updateSVG();
-		                  if(frame >= 23 && mode === 'offspring'){
-		                    burst.stop();
-												playing = false;
-		                    defaultOpts.animationComplete.call(defaultOpts.context);
-		                  }
-		                })
+                .obj('memb1_'+owner,membranes[0])
+                  .track('radius')
+                    .key(0,membranes[0].radius,'inOutQuad')
+                    .key(23,centerX/1.5)
+                  .track('x')
+                    .key(0,membranes[0].x,'inOutQuad')
+                    .key(23,centerX)
+                    .always(function(e){
+                      frame = ~~e.frame;
+                      scrub.slider('value',e.frame*100);
+                      frameInput.val(~~e.frame);
+                      this.updateSVG();
+                      if(frame >= 23 && mode === 'offspring'){
+                        burst.stop();
+                        playing = false;
+                        defaultOpts.animationComplete.call(defaultOpts.context);
+                      }
+                    })
 
-		            .obj('memb2_'+owner,membranes[1])
-		              .track('radius')
-		                .key(0,membranes[1].radius,'inOutQuad')
-		                .key(23,membranes[1].radius*1.5)
-		              .track('opacity')
-		                .key(0,membranes[1].opacity,'inOutQuad')
-		                .key(23,0)
-		              .track('x')
-		                .key(0,membranes[1].x,'inOutQuad')
-		                .key(23,centerX-centerX/6)
-		                .always(function(e){
-		                  this.updateSVG();
-		                })
+                .obj('memb2_'+owner,membranes[1])
+                  .track('radius')
+                    .key(0,membranes[1].radius,'inOutQuad')
+                    .key(23,membranes[1].radius*1.5)
+                  .track('opacity')
+                    .key(0,membranes[1].opacity,'inOutQuad')
+                    .key(23,0)
+                  .track('x')
+                    .key(0,membranes[1].x,'inOutQuad')
+                    .key(23,centerX-centerX/6)
+                    .always(function(e){
+                      this.updateSVG();
+                    })
 
 
-		            ////////////////////////////////////////////////////////////////////
-		            // Move Chromosomes
-		            .obj('m1_'+owner,chromosomes[0])
-		              .track('dragX')
-		                .key(0,chromosomes[0].originX,'inOutQuad')
-										.key(23,gvRand(centerX,endDx))
-					  .track('dragY')
-			            .key(0,chromosomes[0].originY)
-									.key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
-		                .always(function(e){dragByAllele.call(this,e)})
-		            .obj('m2_'+owner,chromosomes[1])
-		              .track('dragX')
-		                .key(0,chromosomes[1].originX,'inOutQuad')
-										.key(23,gvRand(centerX,endDx))
-		 			  .track('dragY')
-			            .key(0,chromosomes[1].originY)
-			            .key(23,gvRand(centerY - chromosomes[1].yLenOffset,endDy))
-		                .always(function(e){dragByAllele.call(this,e)})
-		            .obj('m3_'+owner,chromosomes[2])
-		              .track('dragX')
-		                .key(0,chromosomes[2].originX,'inOutQuad')
-										.key(23,gvRand(centerX,endDx))
-					  .track('dragY')
-			            .key(0,chromosomes[2].originY)
-			            .key(23,gvRand(centerY - chromosomes[2].yLenOffset,endDy))
-		                .always(function(e){dragByAllele.call(this,e)})
-		          ;
+                ////////////////////////////////////////////////////////////////////
+                // Move Chromosomes
+                .obj('m1_'+owner,chromosomes[0])
+                  .track('dragX')
+                    .key(0,chromosomes[0].originX,'inOutQuad')
+                    .key(23,gvRand(centerX,endDx))
+            .track('dragY')
+                  .key(0,chromosomes[0].originY)
+                  .key(23,gvRand(centerY - chromosomes[0].yLenOffset,endDy))
+                    .always(function(e){dragByAllele.call(this,e);})
+                .obj('m2_'+owner,chromosomes[1])
+                  .track('dragX')
+                    .key(0,chromosomes[1].originX,'inOutQuad')
+                    .key(23,gvRand(centerX,endDx))
+            .track('dragY')
+                  .key(0,chromosomes[1].originY)
+                  .key(23,gvRand(centerY - chromosomes[1].yLenOffset,endDy))
+                    .always(function(e){dragByAllele.call(this,e);})
+                .obj('m3_'+owner,chromosomes[2])
+                  .track('dragX')
+                    .key(0,chromosomes[2].originX,'inOutQuad')
+                    .key(23,gvRand(centerX,endDx))
+            .track('dragY')
+                  .key(0,chromosomes[2].originY)
+                  .key(23,gvRand(centerY - chromosomes[2].yLenOffset,endDy))
+                    .always(function(e){dragByAllele.call(this,e);})
+              ;
 					}
 
           break;
@@ -1414,23 +1409,23 @@ sc_require('lib/burst-core');
           : 80-90  : Cell membranes devide, 2-4                                :
           : 90-100 : Chromosomes filding factor goes back to normal            :
           :--------:-----------------------------------------------------------:
-          */    
-      	
-		  var pairOffset = 10;
-		  var randomize = function() {return 0.5 - Math.random();}
-		  var chromNums = [[[0,1].sort(randomize),[2,3].sort(randomize)].sort(randomize),[[4,5].sort(randomize),[6,7].sort(randomize)].sort(randomize),[[8,9].sort(randomize),[10,11].sort(randomize)].sort(randomize)].sort(randomize);
-		  var ca1a = chromNums[0][0][0];
-		  var ca1b = chromNums[0][0][1];
-		  var ca2a = chromNums[0][1][0];
-		  var ca2b = chromNums[0][1][1];
-		  var cb1a = chromNums[1][0][0];
-		  var cb1b = chromNums[1][0][1];
-		  var cb2a = chromNums[1][1][0];
-		  var cb2b = chromNums[1][1][1];
-		  var cc1a = chromNums[2][0][0];
-		  var cc1b = chromNums[2][0][1];
-		  var cc2a = chromNums[2][1][0];
-		  var cc2b = chromNums[2][1][1];
+          */
+
+      var pairOffset = 10;
+      var randomize = function() {return 0.5 - Math.random();};
+      var chromNums = [[[0,1].sort(randomize),[2,3].sort(randomize)].sort(randomize),[[4,5].sort(randomize),[6,7].sort(randomize)].sort(randomize),[[8,9].sort(randomize),[10,11].sort(randomize)].sort(randomize)].sort(randomize);
+      var ca1a = chromNums[0][0][0];
+      var ca1b = chromNums[0][0][1];
+      var ca2a = chromNums[0][1][0];
+      var ca2b = chromNums[0][1][1];
+      var cb1a = chromNums[1][0][0];
+      var cb1b = chromNums[1][0][1];
+      var cb2a = chromNums[1][1][0];
+      var cb2b = chromNums[1][1][1];
+      var cc1a = chromNums[2][0][0];
+      var cc1b = chromNums[2][0][1];
+      var cc2a = chromNums[2][1][0];
+      var cc2b = chromNums[2][1][1];
 
          timeline = burst.timeline( 'geniverseTimeline_' + owner, 1, 80, 0.5, false )
 
@@ -1469,8 +1464,8 @@ sc_require('lib/burst-core');
                 .key(60,centerY)
                 .key(80,centerY-centerY/2)
               .track('opacity')
-              	.key(0,0)
-              	.key(21,0)
+                .key(0,0)
+                .key(21,0)
                 .key(35,maxMembraneOpacity*0.66)
                 .key(50,maxMembraneOpacity)
               .track('radius')
@@ -1488,16 +1483,16 @@ sc_require('lib/burst-core');
               .track('x')
                 .key(0,centerX+centerX/2)
               .track('y')
-              	.key(0,centerY)
-              	.key(60,centerY)
+                .key(0,centerY)
+                .key(60,centerY)
                 .key(80,centerY+centerY/2)
               .track('opacity')
-              	.key(0,0)
-              	.key(50,0)
+                .key(0,0)
+                .key(50,0)
                 .key(80,maxMembraneOpacity)
               .track('radius')
-              	.key(0,centerY/1.5)
-              	.key(60,centerY/1.5)
+                .key(0,centerY/1.5)
+                .key(60,centerY/1.5)
                 .key(80,centerY/2.5)
                 .always(function(e){
                   this.updateSVG.call(this);
@@ -1507,16 +1502,16 @@ sc_require('lib/burst-core');
               .track('x')
                 .key(0,centerX-centerX/2)
               .track('y')
-              	.key(0,centerY)
-              	.key(60,centerY)
+                .key(0,centerY)
+                .key(60,centerY)
                 .key(80,centerY+centerY/2)
               .track('opacity')
-              	.key(0,0)
-              	.key(50,0)
+                .key(0,0)
+                .key(50,0)
                 .key(80,maxMembraneOpacity)
               .track('radius')
-              	.key(0,centerY/1.5)
-              	.key(60,centerY/1.5)
+                .key(0,centerY/1.5)
+                .key(60,centerY/1.5)
                 .key(80,centerY/2.5)
                 .always(function(e){
                   this.updateSVG.call(this);
@@ -1554,7 +1549,7 @@ sc_require('lib/burst-core');
                 .key(60,centerY)
                 .key(80,gvRand(centerY + centerY/2 - chromosomes[ca1a].yLenOffset,endDy/2))
                 .always(function(e){
-			      checkShowHide.call(this,e);
+                  checkShowHide.call(this,e);
                   
                   // Set the global frame property so geniverse.js knows when
                   // you are in either pairing or final selection mode.
@@ -1571,7 +1566,7 @@ sc_require('lib/burst-core');
 										pairingMode = true;
                     if(swapui){swapui.attr({opacity:1});}
                     burst.stop();
-                    recombinationBindEvents();              
+                    recombinationBindEvents();
                     draw();
                     burst.stop();
 										playing = false;
@@ -1579,7 +1574,7 @@ sc_require('lib/burst-core');
                     for(var i=0, l=chromosomes.length; i< l; i++){
                       for(var j=0, k=chromosomes[i].alleles.length; j< k; j++){
                         if(Math.random()>0.654321){
-                          swap( 
+                          swap(
                             chromosomes[i].alleles[j],
                             chromosomes[i].swapList[~~Math.random()].alleles[j]
                           );
@@ -1587,7 +1582,7 @@ sc_require('lib/burst-core');
                       }
                     }
                   }else{
-                    if(pairingMode = true){
+                    if(pairingMode === true){
                       pairingMode = false;
                       if(swapui){swapui.attr({opacity:0});}
                       unbindPairEvents();
@@ -1605,7 +1600,7 @@ sc_require('lib/burst-core');
                   
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
-                  allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);                  
+                  allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
                   
                 })
 
@@ -1636,7 +1631,7 @@ sc_require('lib/burst-core');
                 .key(60,centerY)
                 .key(80,gvRand(centerY - centerY/2 - chromosomes[ca1b].yLenOffset,endDy/2))
                 .always(function(e){
-			      checkShowHide.call(this,e);
+            checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
@@ -1670,7 +1665,7 @@ sc_require('lib/burst-core');
                 .key(60,centerY)
                 .key(80,gvRand(centerY - centerY/2 - chromosomes[ca2a].yLenOffset,endDy/2))
                 .always(function(e){
-			      checkShowHide.call(this,e);
+            checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
@@ -1704,7 +1699,7 @@ sc_require('lib/burst-core');
                 .key(60,centerY)
                 .key(80,gvRand(centerY + centerY/2 - chromosomes[ca2b].yLenOffset,endDy/2))
                 .always(function(e){
-			      checkShowHide.call(this,e);
+            checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
@@ -1741,7 +1736,7 @@ sc_require('lib/burst-core');
                 .key(60,centerY)
                 .key(80,gvRand(centerY - centerY/2 - chromosomes[cb1a].yLenOffset,endDy/2))
                 .always(function(e){
-			      checkShowHide.call(this,e);
+            checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
@@ -1774,7 +1769,7 @@ sc_require('lib/burst-core');
                 .key(60,centerY)
                 .key(80,gvRand(centerY + centerY/2 - chromosomes[cb1b].yLenOffset,endDy/2))
                 .always(function(e){
-			      checkShowHide.call(this,e);
+            checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
@@ -1808,7 +1803,7 @@ sc_require('lib/burst-core');
                 .key(60,centerY)
                 .key(80,gvRand(centerY - centerY/2 - chromosomes[cb2a].yLenOffset,endDy/2))
                 .always(function(e){
-			      checkShowHide.call(this,e);
+            checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
@@ -1833,7 +1828,7 @@ sc_require('lib/burst-core');
                 .key(50,centerX+centerX/2+30 + pairOffset)
                 .key(70,centerX+centerX/2+30 + pairOffset)
                 .key(80,centerX+centerX/2)
-//                .key(80,gvRand(centerX+centerX/2,endDx))         
+//                .key(80,gvRand(centerX+centerX/2,endDx))
               .track('dragY')
                 .key(0,chromosomes[cb2b].originY)
                 .key(30,centerY-25)
@@ -1842,7 +1837,7 @@ sc_require('lib/burst-core');
                 .key(60,centerY)
                 .key(80,gvRand(centerY + centerY/2 - chromosomes[cb2b].yLenOffset,endDy/2))
                 .always(function(e){
-			      checkShowHide.call(this,e);
+            checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
@@ -1879,7 +1874,7 @@ sc_require('lib/burst-core');
                 .key(60,centerY)
                 .key(80,gvRand(centerY - centerY/2 - chromosomes[cc1a].yLenOffset,endDy/2))
                 .always(function(e){
-			      checkShowHide.call(this,e);
+            checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
@@ -1910,9 +1905,9 @@ sc_require('lib/burst-core');
                 .key(35,centerY+80)
                 .key(50,centerY)
                 .key(60,centerY)
-                .key(80,gvRand(centerY + centerY/2 - chromosomes[cc1b].yLenOffset,endDy/2))            
+                .key(80,gvRand(centerY + centerY/2 - chromosomes[cc1b].yLenOffset,endDy/2))
                 .always(function(e){
-			      checkShowHide.call(this,e);
+            checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
@@ -1946,7 +1941,7 @@ sc_require('lib/burst-core');
                 .key(60,centerY)
                 .key(80,gvRand(centerY + centerY/2 - chromosomes[cc2a].yLenOffset,endDy/2))
                 .always(function(e){
-			      checkShowHide.call(this,e);
+            checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
@@ -1980,7 +1975,7 @@ sc_require('lib/burst-core');
                 .key(60,centerY)
                 .key(80,gvRand(centerY - centerY/2 - chromosomes[cc2b].yLenOffset,endDy/2))
                 .always(function(e){
-			      checkShowHide.call(this,e);
+            checkShowHide.call(this,e);
                   var allele = this.alleles[defaultOpts.grabAllele];
                   allele.dragstart.call(allele.SVG_outer, true);
                   allele.dragmove.call(allele.SVG_outer,null,null,null,null,null, true,this.dragX,this.dragY);
@@ -1991,11 +1986,11 @@ sc_require('lib/burst-core');
           break;
         }
             
-    };
+    }
     // ^^ Burst Timeline Generation
     
     // Generate the timeline based on the mode (parent/offspring)
-	    generateTimeline( mode );      			
+      generateTimeline( mode );
     
     
     // Bind DOM UI to Burst
@@ -2003,10 +1998,10 @@ sc_require('lib/burst-core');
 
     self.find('.play').click(function(){
 			if ((mode === 'parent') || ((mode === 'offspring') && (mother && father))){
-      	clearOffsets();
-      	burst.loaded = {};
-      	burst.load('geniverseTimeline_'+owner);
-      	burst.play();
+        clearOffsets();
+        burst.loaded = {};
+        burst.load('geniverseTimeline_'+owner);
+        burst.play();
 				playing = true;
 				defaultOpts.playButtonPressed.call(defaultOpts.context);
 			}
@@ -2017,14 +2012,14 @@ sc_require('lib/burst-core');
     });
     self.find('.retry').click(function(){
 			if (owner === 'mother') {
-				Geniverse.meiosisAnimationController.set('retryMother',true);			
+				Geniverse.meiosisAnimationController.set('retryMother',true);
 			} else {
 				Geniverse.meiosisAnimationController.set('retryFather',true);
 			}
     });
     
     var frameInput = self.find('.frame input').change(function(e){
-      frame = parseInt(this.value);
+      frame = parseInt(this.value, 10);
       burst.frame(frame);
       scrub.slider('value',frame*100);
       if(frame === 30){
@@ -2053,13 +2048,13 @@ sc_require('lib/burst-core');
         burst.stop();
         playing = false;
         return this;
-      });      
+      });
     }
 
     // Jump to the end to allow gamete selection
       var endButton = self.find('.end').click(function(){
 				if ((mode === 'parent') || ((mode === 'offspring') && (mother && father))){
-  				defaultOpts.endButtonPressed.call(defaultOpts.context, playing);
+          defaultOpts.endButtonPressed.call(defaultOpts.context, playing);
 					burst.timelines['geniverseTimeline_'+owner].play(79);
 					burst.timelines['geniverseTimeline_'+owner].play(80);
 					frame = 80;
@@ -2070,7 +2065,7 @@ sc_require('lib/burst-core');
 					playing = false;
 					return this;
 				}
-      });      
+      });
 
     // Update the animation when the slider is sliden
     var scrub = self.find('.scrub');
@@ -2096,8 +2091,8 @@ sc_require('lib/burst-core');
       stop: function(event, ui){
         playing = false;
         burst.stop();
-        frame=parseInt(ui.value/100);
-        if(frame>80){frame=80};
+        frame=parseInt(ui.value/100, 10);
+        if(frame>80){frame=80;}
         clearOffsets();
         burst.frame(frame);
       }
@@ -2110,4 +2105,4 @@ sc_require('lib/burst-core');
 
   };
   
-})(this, this.document, this.jQuery, this.Raphael, Burst); 
+})(this, this.document, this.jQuery, this.Raphael, Burst);
