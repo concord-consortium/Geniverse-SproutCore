@@ -1137,9 +1137,8 @@ sc_require('lib/burst-core');
       lmouseY = mouseY;
       var scrollX = (window.scrollX !== null && typeof window.scrollX !== 'undefined') ? window.scrollX : window.pageXOffset;
       var scrollY = (window.scrollY !== null && typeof window.scrollY !== 'undefined') ? window.scrollY : window.pageYOffset;
-      mouseX = e.clientX - paper_container.offsetLeft + scrollX;
-      mouseY = e.clientY - paper_container.offsetTop + scrollY;
-      mouseSpeed = dist(lmouseX, lmouseY, mouseX, mouseY);
+      mouseX = e.clientX - paper_container.offsetParent.offsetLeft - paper_container.offsetParent.offsetParent.offsetLeft + scrollX;
+      mouseY = e.clientY - paper_container.offsetParent.offsetTop - paper_container.offsetParent.offsetParent.offsetTop + scrollY;
       if( pairingMode ){
         if(mouseY < 110){
           swapPair = "a";
