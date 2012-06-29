@@ -911,11 +911,12 @@ sc_require('lib/burst-core');
       }
     
       this.parent.selectedJoin = null;
-      if( this.parent.selected.index === i ){
-        if(this.parent.index !== this.parent.parent.alleleCount-1){
-          this.parent.selectedJoin = this.parent.parent.alleles[this.parent.index+1].segs[0];
-        }
-      }else if(this.parent.selected.index === 0){
+//      if( this.parent.selected.index === i ){
+//        if(this.parent.index !== this.parent.parent.alleleCount-1){
+//          this.parent.selectedJoin = this.parent.parent.alleles[this.parent.index+1].segs[0];
+//        }
+//      }else
+      if(this.parent.selected.index === 0){
         if( this.parent.index > 0 ){
           this.parent.selectedJoin = this.parent.parent.alleles[this.parent.index-1].segs[defaultOpts.segCount-1];
         }
