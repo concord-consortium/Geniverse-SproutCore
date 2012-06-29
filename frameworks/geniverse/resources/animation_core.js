@@ -21,7 +21,7 @@ sc_require('lib/burst-core');
       zoom            : 2,
       width           : 310,
       height          : 320,
-      swap            : 'user', // was 'user' but this causes pause at frame 30
+      swap            : 'none', // was 'user' but this causes pause at frame 30
       alleleCount     : 12,
       segLength       : 10,
       segCount        : 3,
@@ -46,7 +46,7 @@ sc_require('lib/burst-core');
         female_outer_hover : "rgba(255,0,255,.1)",
 
         recomb_inner_hover : "rgba(0,128,0,0.85)",
-        recomb_outer_hover : "rgba(0,255,0,0.333)",
+        recomb_outer_hover : "rgba(248,241,36,0.333)",
 
         swapUI_fill        : "#EEEEEE",
         swapUI_stroke      : "#BBBBBB",
@@ -241,6 +241,8 @@ sc_require('lib/burst-core');
     // Swap Two Genes Between Two Chromosomes
     function swap( alleleA, alleleB ){
       var geneB = alleleB.gene,
+          labelWidthB = alleleB.labelWidth,
+          leftLabelOffsetXB = alleleB.leftLabelOffsetX,
           sexB = alleleB.sex;
       alleleB.gene = alleleA.gene;
       alleleA.gene = geneB;
@@ -250,8 +252,14 @@ sc_require('lib/burst-core');
       alleleA.style.call(alleleA,alleleA.SVG_inner,'inner');
       alleleB.style.call(alleleB,alleleB.SVG_outer,'outer');
       alleleB.style.call(alleleB,alleleB.SVG_inner,'inner');
-      alleleB.geneText.attr({ text:alleleB.gene });
-      alleleA.geneText.attr({ text:alleleA.gene });
+      alleleB.geneText.attr({ text:Geniverse.chromosomeController.alleleLabelMap[alleleB.gene] });
+      alleleA.geneText.attr({ text:Geniverse.chromosomeController.alleleLabelMap[alleleA.gene] });
+      alleleB.labelWidth = alleleA.labelWidth;
+      alleleA.labelWidth = labelWidthB;
+      alleleB.leftLabelOffsetX = alleleA.leftLabelOffsetX;
+      alleleA.leftLabelOffsetX = leftLabelOffsetXB;
+      alleleB.geneFrame.attr({ width:alleleB.labelWidth });
+      alleleA.geneFrame.attr({ width:alleleA.labelWidth });
     }
 
     // Remove hover/click events when not in pairing mode
@@ -277,13 +285,12 @@ sc_require('lib/burst-core');
     }
 
     function swapMulti( alleles1, alleles2 ){
-      for( var i in alleles1 ){
+      for( var i = 0; i < alleles1.length; i++ ){
         swap( alleles1[i], alleles2[i] );
       }
     }
 
     function recombinationBindEvents(){
-
       function whichPair( i ){
         if      ( i < 4 )         { return 1; }
         else if ( i > 3 && i < 8 ){ return 2; }
@@ -302,8 +309,8 @@ sc_require('lib/burst-core');
                 swap2 = allele.parent.swapList[1];
             swap1.alleles[i].SVG_outer.attr({ 'stroke': defaultOpts.color.recomb_outer_hover });
             swap2.alleles[i].SVG_outer.attr({ 'stroke': defaultOpts.color.recomb_outer_hover });
-            swap1.alleles[i].SVG_inner.attr({ 'stroke': defaultOpts.color.recomb_inner_hover });
-            swap2.alleles[i].SVG_inner.attr({ 'stroke': defaultOpts.color.recomb_inner_hover });
+//            swap1.alleles[i].SVG_inner.attr({ 'stroke': defaultOpts.color.recomb_inner_hover });
+//            swap2.alleles[i].SVG_inner.attr({ 'stroke': defaultOpts.color.recomb_inner_hover });
             swap1.alleles[i].recombOption = true;
             swap2.alleles[i].recombOption = true;
             allele.recombSelected = true;
@@ -362,12 +369,13 @@ sc_require('lib/burst-core');
             if( !allele.recombOption ){
               allele.SVG_inner.attr({ 'stroke': defaultOpts.color[allele.sex+'_inner'] });
               allele.SVG_outer.attr({ 'stroke': defaultOpts.color[allele.sex+'_outer'] });
-            }else{
-              allele.SVG_outer.attr({ 'stroke': '#0F0' });
-              allele.SVG_inner.attr({ 'stroke': '#0F0' });
-              allele.parent.copy.alleles[allele.index].SVG_outer.attr({ 'stroke': '#0F0' });
-              allele.parent.copy.alleles[allele.index].SVG_inner.attr({ 'stroke': '#0A0' });
             }
+//            else{
+//              allele.SVG_outer.attr({ 'stroke': '#0F0' });
+//              allele.SVG_inner.attr({ 'stroke': '#0F0' });
+//              allele.parent.copy.alleles[allele.index].SVG_outer.attr({ 'stroke': '#0F0' });
+//              allele.parent.copy.alleles[allele.index].SVG_inner.attr({ 'stroke': '#0A0' });
+//            }
           }
         }
         this.hovering = false;
@@ -522,13 +530,6 @@ sc_require('lib/burst-core');
           swapui.attr({fill: defaultOpts.color.swapUI_fill , stroke: defaultOpts.color.swapUI_stroke });
         }
       }
-      
-      if(mouseSpeed>0){
-        mouseSpeed-=mouseDeg;
-      }else{
-        mouseSpeed = 0;
-      }
-      
     }
     // ^^ GENERAL PROGRAM FUNCTIONS.
     
@@ -1135,8 +1136,8 @@ sc_require('lib/burst-core');
       lmouseY = mouseY;
       var scrollX = (window.scrollX !== null && typeof window.scrollX !== 'undefined') ? window.scrollX : window.pageXOffset;
       var scrollY = (window.scrollY !== null && typeof window.scrollY !== 'undefined') ? window.scrollY : window.pageYOffset;
-      mouseX = e.clientX - paper_container.offsetParent.offsetLeft - paper_container.offsetParent.offsetParent.offsetLeft + scrollX;
-      mouseY = e.clientY - paper_container.offsetParent.offsetTop - paper_container.offsetParent.offsetParent.offsetTop + scrollY;
+      mouseX = e.clientX - paper_container.offsetParent.offsetLeft - paper_container.offsetParent.offsetParent.offsetLeft - paper_container.offsetParent.offsetParent.offsetParent.offsetLeft + scrollX;
+      mouseY = e.clientY - paper_container.offsetParent.offsetTop - paper_container.offsetParent.offsetParent.offsetTop - paper_container.offsetParent.offsetParent.offsetParent.offsetTop + scrollY;
       if( pairingMode ){
         if(mouseY < 110){
           swapPair = "a";
@@ -1565,11 +1566,12 @@ sc_require('lib/burst-core');
                   }
                   
                   if(e.frame==30 && defaultOpts.swap == "user"){
-// need to look at this to prevent pause - Dan
-										pairingMode = true;
                     if(swapui){swapui.attr({opacity:1});}
                     burst.stop();
-                    recombinationBindEvents();
+                    if (pairingMode !== true){
+                      recombinationBindEvents();
+                    }
+                    pairingMode = true;
                     draw();
                     burst.stop();
 										playing = false;
