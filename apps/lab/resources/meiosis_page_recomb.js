@@ -110,11 +110,10 @@ Lab.meiosisPageRecomb = SC.Page.design({
           glow: YES
         }),
 
-        // geneMap can be json object or url to file containing json object - dan
         motherMeiosis: Geniverse.AnimationView.design({
           layout: {top: 246, left: 17, height: 360, width: 325 },
           mode: 'parent',
-          swap: 'user',
+          swapping: 'user',
           meiosisOwner: 'mother',
           dragonBinding: 'Geniverse.meiosisAnimationController.mother',
           gameteJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson'
@@ -132,7 +131,7 @@ Lab.meiosisPageRecomb = SC.Page.design({
         fatherMeiosis: Geniverse.AnimationView.design({
           layout: {top: 246, right: 17, height: 360, width: 325 },
           mode: 'parent',
-          swap: 'user',
+          swapping: 'user',
           meiosisOwner: 'father',
           dragonBinding: 'Geniverse.meiosisAnimationController.father',
           gameteJsonBinding: 'Geniverse.meiosisAnimationController.fatherGameteJson'

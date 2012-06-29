@@ -43,7 +43,7 @@ Geniverse.AnimationView = SC.View.extend(
    * The default value is 'offspring'.
    */
   mode: 'offspring',
-  swaping: false,
+  swapping: 'none',
 
   /**
    * A unique id for each dragon entity in which the chromosomes are contained.
@@ -223,6 +223,7 @@ Geniverse.AnimationView = SC.View.extend(
     SC.Logger.log('found jQuery selector geniverseAnimation:',geniverseAnimation);
     var options = {
       mode: this.get('mode'),
+      swap: this.get('swapping'),
       owner: this.get('meiosisOwner'),
 			mother: (this.get('motherJson') !== null),
 			father: (this.get('fatherJson') !== null),
