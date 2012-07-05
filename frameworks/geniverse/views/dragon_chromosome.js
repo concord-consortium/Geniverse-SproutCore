@@ -153,6 +153,9 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     },
 
     allelesDidChange: function() {
+      if (!Geniverse.activityController.get('content')) {
+        return;
+      }
       this.set('ignoreChanges', YES);
       this.set('autoChangingPulldowns', YES);
       var alleles = this.get('alleles');
