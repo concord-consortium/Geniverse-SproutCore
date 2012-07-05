@@ -102,7 +102,7 @@ Lab.challenge = Ki.State.extend({
       "Good work!",
       "You've completed all the trials in this challenge!\n"+starsMessage,
       "",
-      (next ? "Go on to the next challenge" : "Go back to the case log"),
+      (next ? "Go on to the next challenge" : "Go back to the Case Log"),
       "Try again",
       {
         alertPaneDidDismiss: function(pane, status) {

@@ -45,17 +45,17 @@ Lab.feedbackController = SC.Object.create({
 
 
     if (      argumentationChallengeStateIsCurrent
-         &&   argumentationChallengeIsNowComplete 
+         &&   argumentationChallengeIsNowComplete
          && ! argumentationChallengeWasAlreadyComplete) {
 
         this._notifyPostedToBlogAndCompletedChallenge(description, postURL, isLastChallenge);
     }
     else {
-      
+
       //    ! argumentationChallengeStateIsCurrent
       // || ! argumentationChallengeIsNowComplete
       // ||   argumentationChallengeWasAlreadyComplete
-      
+
       this._notifyPostedToBlog(description, postURL);
     }
   },
@@ -82,7 +82,7 @@ Lab.feedbackController = SC.Object.create({
       "\">here</a>.\n" +
       "You can continue to work on this challenge if you like, or you can " + (
         isLastChallenge ?
-          "go back to the <a href=\"#caselog\">case log</a> to go to a new case." :
+          "go back to the <a href=\"#caselog\">Case Log</a> to go to a new case." :
           "move on to the next challenge using the green arrow below.")
     );
   },
