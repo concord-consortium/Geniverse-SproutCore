@@ -61,7 +61,7 @@ Lab.ACTIVITY = SC.Responder.create(
 
   initActivity: function() {
     SC.Logger.log("ACTIVITY initActivity");
-    
+
     this.clearData();
 
     var self = this;
@@ -122,7 +122,7 @@ Lab.ACTIVITY = SC.Responder.create(
         Geniverse.activityController.set('content', found);
         Geniverse.activityController.propertyDidChange('content');
         activities.removeObserver('status', self, setActivity);
-        
+
         Lab.ACTIVITY.initChatChannels();
         Lab.ACTIVITY.reloadData();
         Lab.ACTIVITY.gotoActivityRoute();
@@ -400,7 +400,7 @@ Lab.ACTIVITY = SC.Responder.create(
     var member = user.get('memberId')- 1;
     return Geniverse.activityController.getConfigurationForRoomMember(group,member, isMatchDragons);
   },
-  
+
   clearData: function() {
     Geniverse.matchController.set('content', []);
     Geniverse.challengePoolController.set('content', []);

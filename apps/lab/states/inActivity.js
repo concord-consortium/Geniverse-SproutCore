@@ -64,7 +64,7 @@ Lab.inActivity = Ki.State.extend({
       } else {
         Geniverse.activityController.addObserver('content', this, this._activityLoaded);
       }
-      
+
       Lab.ACTIVITY.gotoActivity();
     }
     // Indicate that we handled 'gotoActivity' action so that our parent state (atLocation) doesn't try to handle it.
@@ -89,9 +89,9 @@ Lab.inActivity = Ki.State.extend({
     } else {
       this.get('challengeState').gotoState('defaultChallenge');
     }
-    
+
     this._setupGenomeDragons(pageType);
-    
+
     if (Geniverse.activityController.get('myCase')) {
       if (Geniverse.activityController.getPath('myCase.status') & SC.Record.READY) {
         this._caseLoaded();
@@ -101,7 +101,7 @@ Lab.inActivity = Ki.State.extend({
       }
     }
   },
-  
+
   _setupGenomeDragons: function(pageType) {
     switch (pageType) {
       case 'chromosomeChallengePage':
@@ -121,7 +121,7 @@ Lab.inActivity = Ki.State.extend({
         break;
     }
   },
-  
+
   // Not a statechart action.
   _caseLoaded: function() {
     if (this.myCase) {
