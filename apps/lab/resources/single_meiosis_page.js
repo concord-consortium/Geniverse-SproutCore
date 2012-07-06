@@ -17,11 +17,11 @@ Lab.singleMeiosisPage = SC.Page.design({
   // challengeType: 'matchOneAtATimeChallenge',
   
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page 
+  // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    classNames: ['brown'], 
+    classNames: ['brown'],
     childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
     backgroundView: SC.ImageView.design({
       value: static_url('lab_background.png'),
@@ -47,9 +47,9 @@ Lab.singleMeiosisPage = SC.Page.design({
           layout: {top: 0, left: 0, right: 0, bottom: 0},
           classNames: ['genome-view-intro']
         }),
-		  // using horizontal Challenge Pool at top with 120-px drakes inside
-		  // this will necessitate moving everything down ~130px
-		  // In actuality, moving them down about 6px more to avoid cutting off label
+      // using horizontal Challenge Pool at top with 120-px drakes inside
+      // this will necessitate moving everything down ~130px
+      // In actuality, moving them down about 6px more to avoid cutting off label
         challengePoolView: Lab.ChallengePoolView.design({
           layout: { left: 5, top: 10, width:410, height: 120 },
           dragonSize: 100
@@ -64,10 +64,9 @@ Lab.singleMeiosisPage = SC.Page.design({
 				drakeParentView: Geniverse.OrganismView.design({
 					layout: {top: 157, left: 160, height: 100, width: 100 },
 					contentBinding: 'Geniverse.meiosisAnimationController.mother',
-					isDropTarget: YES,
+					isDropTarget: YES
 					}),
 
-        // geneMap can be json object or url to file containing json object - dan
 				meiosisView: Geniverse.AnimationView.design({
 					layout: {top: 271, left: 55, height: 360, width: 325 },
 					mode: 'parent',
@@ -88,7 +87,7 @@ Lab.singleMeiosisPage = SC.Page.design({
           target: 'Lab.statechart',
           action: 'gotoNextActivity'
         })
-      })      
-  	})
+      })
+    })
 	})
 });
