@@ -95,7 +95,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
         breedButton: SC.ButtonView.design({
           layout: { top: 150, centerX: -60, width: 100, height: 24 },
           target: 'Geniverse.breedDragonController',
-          action: "breedAndIncrementScore",
+          action: "breed",
           isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
           hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
           isEnabled: function() {
