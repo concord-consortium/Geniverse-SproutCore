@@ -163,10 +163,8 @@ Geniverse.dragonGenomeController = SC.Object.create({
     if (!!this.waitingForMap[index] && this.waitingForMap[index] !== waitingFor){
       return;             // stale drake returned
     }
-    if (dragon.get('alleles') !== this.dragonAllelesMap[index]) {
       this.set(this.dragonIndexMap[index], dragon);
       Lab.statechart.sendAction("chromosomeDragonChanged");
-    }
   }
 
   // generateDragonWhenGWTReady: function() {

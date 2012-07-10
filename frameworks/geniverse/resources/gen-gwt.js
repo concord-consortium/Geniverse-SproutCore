@@ -1,19 +1,26 @@
+sc_require('resources/lib/biologica.min.js');
+
+var drake = BioLogica.Species.Drake;
+
 GenGWT = {
 
     // 'callback' should be a function that takes a dragon (GOrganism)
     generateDragon: function(callback) {
-        generateDragonWithCallback(this.wrapCallback(callback), this.failure);
+      org = BioLogica.Organism.createOrganism(drake);
+      callback(org);
     },
 
     generateDragonWithSex: function(sex, callback) {
-        generateDragonWithSex(sex, this.wrapCallback(callback), this.failure);
+      org = BioLogica.Organism.createOrganism(drake, "", sex);
+      callback(org);
     },
 
     generateDragonWithAlleleString: function(alleles, callback) {
       if (!alleles) {
         if (!!console) { console.error("Need to define alleles!"); } // console.trace(); }
       } else {
-        generateDragonWithAlleleString(alleles, this.wrapCallback(callback), this.failure);
+        org = BioLogica.Organism.createOrganism(drake, alleles);
+        callback(org);
       }
     },
 
@@ -21,16 +28,22 @@ GenGWT = {
       if (!alleles) {
         if (!!console) { console.error("Need to define alleles!"); } // console.trace(); }
       } else {
-        generateDragonWithAlleleStringAndSex(alleles, sex, this.wrapCallback(callback), this.failure);
+        org = BioLogica.Organism.createOrganism(drake, alleles, sex);
+        callback(org);
       }
     },
 
     breedDragon: function(mother, father, callback) {
-        breedDragon(mother, father, this.wrapCallback(callback), this.failure);
+      org = BioLogica.breed(mother, father, true);
+      callback(org);
     },
-    
+
     breedDragons: function(number, mother, father, crossover, callback) {
-        breedDragonsWithCrossover(number, mother, father, crossover, this.wrapCallback(callback), this.failure);
+      var organisms = {array: []};
+      while (number--) {
+        organisms.array.push(BioLogica.breed(mother, father, crossover));
+      }
+      callback(organisms);
     },
 
     isAlive: function(dragon) {

@@ -121,7 +121,7 @@ Geniverse.matchController = SC.ArrayController.create(
         
     for (var trait in traitRules) {
       if (traitRules.hasOwnProperty(trait)) {
-        var possibleSolutions = traitRules[trait][targetchars.get(trait)],
+        var possibleSolutions = traitRules[trait][targetchars[trait]],
             shortestPath = Infinity;
         if (possibleSolutions && possibleSolutions.length) {
           for (var i = 0, ii = possibleSolutions.length; i<ii; i++) {
@@ -175,7 +175,7 @@ Geniverse.matchController = SC.ArrayController.create(
 
     for (var trait in traitRules) {
       if (traitRules.hasOwnProperty(trait)) {
-        if (originalCharacteristics.get(trait) !== targetCharacteristics.get(trait)) {
+        if (originalCharacteristics[trait] !== targetCharacteristics[trait]) {
           // first we have to work out what alleles the original drake has that correspond to
           // their non-matching trait
           var possibleTraitAlleles = this._collectAllAllelesForTrait(trait, traitRules),
@@ -186,7 +186,7 @@ Geniverse.matchController = SC.ArrayController.create(
             }
           }
           // now work out the smallest number of steps to get from there to the desired characteristic
-          var possibleSolutions = traitRules[trait][targetCharacteristics.get(trait)],
+          var possibleSolutions = traitRules[trait][targetCharacteristics[trait]],
               shortestPathLength = Infinity;
           for (i = 0, ii = possibleSolutions.length; i < ii; i++) {
             var solution = possibleSolutions[i].copy(),

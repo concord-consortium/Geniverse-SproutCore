@@ -150,7 +150,7 @@ Geniverse.gwtController = SC.Object.create(
     var id = this.addPendingDrake();
     var handleGOrg = function(gOrg) {
       if (!!mustBeAlive){
-        if (gOrg.characteristicMap.stringMap[':liveliness'].indexOf('Dead') > -1){
+        if (gOrg.getCharacteristic('liveliness') == "Dead"){
           count++;
           if (count > 10){
             SC.Logger.log("Tried too many times to create this dragon, it insists on being dead");

@@ -257,7 +257,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	    var alleles = this.get('alleles'),
 	        oldAlleles = this.get('oldAlleles');
 	    if (alleles.compareArrays(oldAlleles)) {
-	      return;
+	      // return;
 	    }
 	    this.set('oldAlleles', alleles);
       if (!!this.get('parentView')) {
@@ -287,7 +287,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	    var alleles = this.get('alleles'),
 	        oldAlleles = this.get('oldAlleles');
 	    if (alleles.compareArrays(oldAlleles)) {
-	      return;
+	      // return;
 	    }
 	    this.set('oldAlleles', alleles);
       if (!!this.get('parentView')) {
@@ -317,7 +317,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	    var alleles = this.get('alleles'),
 	        oldAlleles = this.get('oldAlleles');
 	    if (alleles.compareArrays(oldAlleles)) {
-	      return;
+	      // return;
 	    }
 	    this.set('oldAlleles', alleles);
       if (!!this.get('parentView')) {
@@ -347,7 +347,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	    var alleles = this.get('alleles'),
 	        oldAlleles = this.get('oldAlleles');
 	    if (alleles.compareArrays(oldAlleles)) {
-	      return;
+	      // return;
 	    }
 	    this.set('oldAlleles', alleles);
       if (!!this.get('parentView')) {
@@ -413,7 +413,7 @@ Geniverse.DragonGenomeView = SC.View.extend(
 	    var alleles = this.get('alleles'),
 	        oldAlleles = this.get('oldAlleles');
 	    if (alleles.compareArrays(oldAlleles)) {
-	      return;
+	      // return;
 	    }
 	    this.set('oldAlleles', alleles);
       if (!!this.get('parentView')) {
