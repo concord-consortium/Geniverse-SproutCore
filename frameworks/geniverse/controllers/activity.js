@@ -2,7 +2,7 @@
 // Project:   Geniverse.activityController
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
-/*globals Geniverse CcChat GenGWT SC*/
+/*globals Geniverse CcChat SC*/
 
 /** @class
 
@@ -23,7 +23,7 @@ Geniverse.activityController = SC.ObjectController.create(
       }
     }
   },
-  
+
   // grab this from DB now, so it's around when we need it
   initCase: function() {
       var myCase = this.get('myCase');
@@ -42,19 +42,19 @@ Geniverse.activityController = SC.ObjectController.create(
         Geniverse.introScreenController.set('imageUrl', null);
       }
   }.observes('*content'),
-  
+
   // converts a string in the form "[{m: 'a:h,b:h', f: 'a:H,b:H'}, {...}]" into
   // an array of initial alleles for rooms
   getConfigurationAsArray: function(isMatchingDragons){
     // TODO rename this property in the model to configuration
     var initialAlleles = isMatchingDragons ? this.get('matchDragonAlleles') : this.get('initialAlleles');
-    
+
     // FIXME: JSON.parse(initialAlleles) doesn't work here. Don't know why.
     var initialAllelesAsArray = eval(initialAlleles);
-    
+
     return initialAllelesAsArray;
   },
-  
+
   getConfigurationForRoom: function (room, isMatchingDragons){
     var configurationArray = this.getConfigurationAsArray(isMatchingDragons);
     if (!configurationArray){
@@ -91,7 +91,7 @@ Geniverse.activityController = SC.ObjectController.create(
     var member_index = member % members.length;
     return members[member_index];
   },
-  
+
   getActivityList: function() {
     var myCase = this.get('myCase');
     if (myCase) {
@@ -100,13 +100,13 @@ Geniverse.activityController = SC.ObjectController.create(
       return [];
     }
   },
-  
+
   getNextActivity: function() {
     var activityList = this.getActivityList();
     if (activityList.get('length') < 2){
       return null;
     }
-    
+
     var length = activityList.get('length');
     for (var i = 0; i < (length - 1); i++){
       if (activityList.objectAt(i) == this.get('content')){
@@ -115,35 +115,35 @@ Geniverse.activityController = SC.ObjectController.create(
     }
     return null;
   },
-  
+
   getPreviousActivity: function() {
     var activityList = this.getActivityList();
     if (activityList.get('length') < 2){
       return null;
     }
-    
+
     var length = activityList.get('length');
     for (var i = 1; i < length; i++){
       if (activityList.objectAt(i) == this.get('content')){
         return activityList.objectAt(i-1);
       }
     }
-    
+
     return null;
   },
-  
+
   hiddenGenes: function() {
       return this.getHiddenOrStaticGenes('hiddenGenes');
   }.property('*content').cacheable(),
-  
+
   staticGenes: function() {
     return this.getHiddenOrStaticGenes('staticGenes');
   }.property('*content').cacheable(),
-  
+
   getHiddenOrStaticGenes: function(property, sex){
     var activity = this.get('content');
     if (!!activity) {
-      
+
       var genes = "";
       var rawGenes = activity.get(property);
       if (!!rawGenes){
@@ -153,19 +153,19 @@ Geniverse.activityController = SC.ObjectController.create(
         } else if (sex === 1){
           genes = genesHash.female;
         }
-        
+
         if (!genes){
           genes = genesHash.all;
         }
       }
-      
+
       if (!!genes){
         genes = genes.split(/,[ ]*/);
-        
+
         // now we have an array such as ['h', 'a', 'd'],
         // but this won't cover "sister" alleles, such as 'a3', 'a5'
         // we want to make the array ['h', 'a', 'a3', 'a5', 'd', 'dl']
-        
+
         // hard-code extras for now -- not DRY, but much more efficient than searching
         var extras = [];
         for (var i in genes){
@@ -177,13 +177,13 @@ Geniverse.activityController = SC.ObjectController.create(
             extras.push("mt");
           }
         }
-        
+
         for (var j in extras){
           if (SC.typeOf(extras[j]) === SC.T_STRING){
             genes.push(extras[j]);
           }
         }
-        
+
         return genes;
       } else {
         return [];
@@ -210,7 +210,7 @@ Geniverse.activityController = SC.ObjectController.create(
 
     Geniverse.scoringController.set('minimumScore', 0);
   }.observes('*content'),
-  
+
   startNewSession: function() {
     this.set('currentSession', Math.floor(Math.random() * 100000));
   },
