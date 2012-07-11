@@ -242,7 +242,6 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     },
 
     _setupPulldowns: function() {
-      console.log("  _setupPulldowns")
       var alls = this.get('alleles');
       var hidden = this.get('hiddenGenes');
       var staticGenes = this.get('staticGenes');
