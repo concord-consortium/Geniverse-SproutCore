@@ -39,6 +39,9 @@ Lab.showingBlogButton =  Ki.State.extend({
       if (!this._checkURL(content)) {
         return;
       }
+
+      this.closePanel();
+
       this._postToWPBlog(title, content, tags);
 
       this._showWaitDialog();
@@ -50,7 +53,6 @@ Lab.showingBlogButton =  Ki.State.extend({
 			  repeats: NO
 		  });
 
-      this.closePanel();
     },
 
     closePanel: function() {
@@ -117,6 +119,8 @@ Lab.showingBlogButton =  Ki.State.extend({
 
     _showFailureMessage: function() {
       this._waitDialog.dismiss();
+      this.get('_failureTimer').invalidate();
+
       SC.AlertPane.extend({
         layout: {top: 0, centerX: 0, width: 400, height: 100 }
       }).show(
