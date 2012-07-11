@@ -40,8 +40,6 @@ Lab.showingBlogButton =  Ki.State.extend({
         return;
       }
 
-      this.closePanel();
-
       this._postToWPBlog(title, content, tags);
 
       this._showWaitDialog();
@@ -53,6 +51,7 @@ Lab.showingBlogButton =  Ki.State.extend({
 			  repeats: NO
 		  });
 
+      this.closePanel();
     },
 
     closePanel: function() {
@@ -117,11 +116,18 @@ Lab.showingBlogButton =  Ki.State.extend({
 
     _failureTimer: null,
 
+    _failureDialog: null,
+
     _showFailureMessage: function() {
+      if (this._failureDialog) {
+        return;
+      }
       this._waitDialog.dismiss();
       this.get('_failureTimer').invalidate();
 
-      SC.AlertPane.extend({
+      Geniverse.blogPostController.restoreBlogPost();
+
+      this._failureDialog = SC.AlertPane.extend({
         layout: {top: 0, centerX: 0, width: 400, height: 100 }
       }).show(
         "Error posting to the journal",
@@ -130,12 +136,11 @@ Lab.showingBlogButton =  Ki.State.extend({
         "OK",
         this
       );
-
-      Geniverse.blogPostController.restoreBlogPost();
     },
 
     // delegate for _showFailureMessage alertPane
     alertPaneDidDismiss: function() {
+      this._failureDialog = null;
       Lab.statechart.getState('showingBlogButton').gotoState('showingBlogPostPanel');
     },
 
