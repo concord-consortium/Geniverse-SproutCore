@@ -133,6 +133,8 @@ Lab.showingBlogButton =  Ki.State.extend({
 
           Lab.feedbackController.didSendBlogPost(this.get('description'), postURL);
         }
+      } else {
+        this._showFailureMessage();
       }
     }
   })
