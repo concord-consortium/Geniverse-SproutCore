@@ -21,7 +21,7 @@ Geniverse.blogPostController = SC.Controller.create(
         challengeTitle = Geniverse.activityController.get('title'),
         d = new Date(), date = (d.getMonth() + 1) + "-" + d.getDay() + "-" + d.getFullYear();
     return userName + " - " + challengeTitle + " - " + date;
-  }.property('Geniverse.activityController.title').cacheable(),
+  }.property('Geniverse.activityController.title'),
 
   content1: "",
 
