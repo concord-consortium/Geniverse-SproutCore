@@ -36,6 +36,9 @@ Lab.showingBlogButton =  Ki.State.extend({
       var title = Geniverse.blogPostController.get('title');
       var content = Geniverse.blogPostController.get('content');
       var tags = this._get_blog_tags();
+      if (!this._checkURL(content)) {
+        return;
+      }
       this._postToWPBlog(title, content, tags);
 
       this._showWaitDialog();
@@ -52,6 +55,23 @@ Lab.showingBlogButton =  Ki.State.extend({
 
     closePanel: function() {
       this.gotoState('ready');
+    },
+
+    _checkURL: function() {
+      var url = Geniverse.blogPostController.get('content3');
+      if (url && !/^http:\/\//.exec(url)) {
+        SC.AlertPane.extend({
+          layout: {top: 0, centerX: 0, width: 400, height: 100 }
+        }).show(
+          "",
+          "Please make sure your evidence URL starts with http://",
+          "",
+          "OK"
+        );
+        return false;
+      } else {
+        return true;
+      }
     },
 
     _postToWPBlog: function(title, content, tags) {
