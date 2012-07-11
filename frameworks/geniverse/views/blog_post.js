@@ -11,15 +11,15 @@
 sc_require('mixins/simple_button');
 
 Geniverse.BlogPostView = SC.PalettePane.design({
-  layout: { width: 440, height: 505, centerX: 0, centerY: 0 },
+  layout: { width: 440, height: 547, centerX: 0, centerY: 0 },
   isModal:NO,
-  
-  
+
+
   defaultResponder: 'Lab.statechart',
-  
-  
+
+
   contentView: SC.View.extend({
-    childViews: 'titleView blogTitleView blogPostView1 blogPostView2 blogPostView3 cancelButton postButton'.w(),
+    childViews: 'titleView blogTitleView blogPostView1 blogPostView2 blogPostView3 blogPostView4 cancelButton postButton'.w(),
 		classNames: 'parchment'.w(),
 
     titleView: SC.LabelView.design({
@@ -30,6 +30,14 @@ Geniverse.BlogPostView = SC.PalettePane.design({
       fontWeight: SC.BOLD_WEIGHT,
       textAlign: SC.ALIGN_CENTER,
 //      classNames: "sc-pane sc-main sc-theme".w()
+    }),
+
+    blogTitleView: SC.LabelView.design({
+      layout: { left: 10, top: 29, width: 420, height: 42 },
+      controlSize: "info-title",
+      fontWeight: SC.BOLD_WEIGHT,
+      textAlign: SC.ALIGN_CENTER,
+      valueBinding: "Geniverse.blogPostController.title"
     }),
 
     cancelButton: SC.ImageView.extend(Geniverse.SimpleButton, {
@@ -51,39 +59,39 @@ Geniverse.BlogPostView = SC.PalettePane.design({
       title: "Post",
       action: "post"
     }),
-    
-    blogTitleView: SC.TextFieldView.design({
-      layout: { left: 10, top: 29, width: 420, height: 35 },
+
+    // TODO: Solve Firefox bug: titleView lacks dark background, making title hard to read
+    blogPostView1: SC.TextFieldView.design({
+      layout: { left: 10, top: 72, width: 420, height: 35 },
       hint: "Type your CLAIM here",
       fontWeight: SC.BOLD_WEIGHT,
       isEditable: YES,
       isTextArea: NO,
-      valueBinding: "Geniverse.blogPostController.title"
+      valueBinding: "Geniverse.blogPostController.content1"
     }),
 
-    // TODO: Solve Firefox bug: titleView lacks dark background, making title hard to read 
-    blogPostView1: SC.TextFieldView.design({
-      layout: { left: 10, top: 69, width: 420, height: 174 },
+    blogPostView2: SC.TextFieldView.design({
+      layout: { left: 10, top: 112, width: 420, height: 174 },
       hint: "Type your EVIDENCE here",
       isEditable: YES,
       isTextArea: YES,
-      valueBinding: "Geniverse.blogPostController.content1"
+      valueBinding: "Geniverse.blogPostController.content2"
     }),
-    
-    blogPostView2: SC.TextFieldView.design({
-      layout: { left: 10, top: 244, width: 420, height: 28 },
+
+    blogPostView3: SC.TextFieldView.design({
+      layout: { left: 10, top: 287, width: 420, height: 28 },
       hint: "Evidence URL",
       isEditable: YES,
       isTextArea: NO,
-      valueBinding: "Geniverse.blogPostController.content2"
+      valueBinding: "Geniverse.blogPostController.content3"
     }),
-    
-    blogPostView3: SC.TextFieldView.design({
-      layout: { left: 10, top: 279, width: 420, height: 190 },
+
+    blogPostView4: SC.TextFieldView.design({
+      layout: { left: 10, top: 322, width: 420, height: 190 },
       hint: "Type your REASONING here",
       isEditable: YES,
       isTextArea: YES,
-      valueBinding: "Geniverse.blogPostController.content3"
+      valueBinding: "Geniverse.blogPostController.content4"
     })
   })
 });

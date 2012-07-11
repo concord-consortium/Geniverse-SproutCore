@@ -79,6 +79,10 @@
 	text-shadow: 0px 2px 3px #f8eddf;
 }
 
+.info-title:nth-child(2) {
+  color: #774E1A;
+}
+
 .instTitle {
 	font-size: 24px;
 }
