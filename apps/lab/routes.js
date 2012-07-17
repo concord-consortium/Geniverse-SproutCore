@@ -70,11 +70,7 @@ Lab.routes = SC.Object.create({
       Lab.ACTIVITY.loadData();
     }
     
-    if (Geniverse.gwtController.get('isReady')){
-      loadFixtureData();
-    } else {
-      Geniverse.gwtController.addObserver('isReady', loadFixtureData);
-    }
+    loadFixtureData();
     this.gotoLabRoute(routeParams);
   },
   

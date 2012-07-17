@@ -118,10 +118,5 @@ GenGWT = {
         SC.Logger.error("failure on GWT callback");
         SC.Logger.error(errorMsg);
         SC.Logger.trace();
-    },
-
-    isLoaded: function() {
-      SC.Logger.log("Checking if loaded. Is:  " + (typeof(generateDragonWithCallback) != "undefined"));
-	    return (typeof(generateDragonWithCallback) != "undefined");
-		}
+    }
 };

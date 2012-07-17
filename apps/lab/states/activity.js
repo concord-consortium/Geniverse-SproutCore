@@ -51,11 +51,7 @@ Lab.ACTIVITY = SC.Responder.create(
     // this is hard-coded for now, but will; be switched with a system that looks up
     // the appropriate activity and goes to the route specified
 
-    if (Geniverse.gwtController.get('isReady')){
-      this.initActivity();
-    } else {
-      Geniverse.gwtController.addObserver('isReady', this, 'initActivity');
-    }
+    this.initActivity();
 
   },
 
