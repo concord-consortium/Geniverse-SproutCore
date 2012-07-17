@@ -91,7 +91,9 @@ Lab.feedbackController = SC.Object.create({
     this._notify(
       "Journal post successfully created!",
 
-      "Your post can be found <a target=\"_blank\" href=\"" + postURL + "\">here</a>. (Link will open in a new tab.)"
+      "Your post can be found and edited <a target=\"_blank\" href=\"" + postURL + "\">here</a>."+
+      "(Link will open in a new tab.)<br/><br/>"+
+      "When you are ready, move onto the next challenge."
     );
   },
 
