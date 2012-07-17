@@ -80,11 +80,14 @@ Lab.ACTIVITY = SC.Responder.create(
       orderBy: 'id',
       restParams: Geniverse.makeRestParams({ route: routeStr })
     });
+
+    this._startTimer();
+
     var activities = Geniverse.store.find(activityQuery);
 
     function setActivity() {
       if (activities.get('status') === SC.Record.READY_CLEAN) {
-
+        this._cancelTimer();
         //Try to find the activity matching our scType
         var last  = activities.lastObject();
         var found = activities.find(function(act) {
@@ -134,6 +137,37 @@ Lab.ACTIVITY = SC.Responder.create(
         activities.addObserver('status', this, setActivity);
     }
   },
+
+  _failureTimer: null,
+  _startTimer: function() {
+    this._failureTimer = SC.Timer.schedule({
+        target: this,
+        action: '_showFailureMessage',
+        interval: 10000,
+        repeats: NO
+      });
+  },
+
+  _cancelTimer: function() {
+    this.get('_failureTimer').invalidate();
+    if (this._failureDialog) {
+      this._failureDialog.dismiss();
+      this._failureDialog = null;
+    }
+  },
+
+  _showFailureMessage: function() {
+    this._cancelTimer();
+    this._failureDialog = SC.AlertPane.extend({
+      layout: {top: 0, centerX: 0, width: 400, height: 100 }
+    }).show(
+      "Error loading activity",
+      "The activity is taking a long time to load. Please check your internet connection and refresh the page.",
+      "",
+      "OK",
+      this
+    );
+    },
 
   initChatChannels: function() {
     if (Lab.ENABLE_CHAT) {
