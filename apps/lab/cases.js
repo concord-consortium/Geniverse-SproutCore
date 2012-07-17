@@ -17,11 +17,8 @@
               title: "Challenge 2: All Together Now!",
               href: "#case1/challenge2"
             }, {
-              title: "Challenge 3: Out on a Limb",
+              title: "Challenge 3: Shiny, Happy Drakes",
               href: "#case1/challenge3"
-            }, {
-              title: "Challenge 4: Shiny, Happy Drakes",
-              href: "#case1/challenge4"
             }
           ]
         }, {
