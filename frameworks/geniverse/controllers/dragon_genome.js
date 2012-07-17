@@ -44,7 +44,6 @@ Geniverse.dragonGenomeController = SC.Object.create({
     if (!alleles || !alleles[1]){
       return;
     }
-
     var outStr = "";
 
     // because our array doesn't just have numerical indices, we can't

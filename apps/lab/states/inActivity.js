@@ -20,6 +20,7 @@ Lab.inActivity = Ki.State.extend({
     matchTargetDrakesListChallenge: Ki.State.plugin('Lab.matchTargetDrakesListChallenge'),
     matchTargetDrakesOneAtATimeChallenge: Ki.State.plugin('Lab.matchTargetDrakesOneAtATimeChallenge'),
     chromosomeBreedingOneAtATimeChallenge: Ki.State.plugin('Lab.chromosomeBreedingOneAtATimeChallenge'),
+    invisibleGenotypeChallenge: Ki.State.plugin('Lab.invisibleGenotypeChallenge'),
     defaultChallenge: Ki.State.plugin('Lab.defaultChallenge'),
     initialChallenge: Ki.State.plugin('Lab.initialChallenge'),
 
@@ -111,6 +112,8 @@ Lab.inActivity = Ki.State.extend({
       case 'chromosomeBreedingPage':
       case 'chromosomeBreedingChallengePage':
       case 'chromosomeTrainingPage':
+      case 'invisibleMaleGenotypePage':
+      case 'invisibleFemaleGenotypePage':
         Geniverse.dragonGenomeController.initDragonForView(1, 1, true);
         Geniverse.dragonGenomeController.initDragonForView(2, 0, true);
         break;
