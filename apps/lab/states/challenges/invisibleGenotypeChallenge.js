@@ -18,6 +18,7 @@ Lab.invisibleGenotypeChallenge = Lab.challenge.extend({
   startChallenge: function() {
     this.set('challengeComplete', NO);
     this.set('challengeWasAlreadyComplete', NO);
+    this.set('solved', NO);
 
     this.get('statechart').sendAction('blockNextNavButton');
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', YES);
@@ -27,9 +28,8 @@ Lab.invisibleGenotypeChallenge = Lab.challenge.extend({
     this.set('challengeComplete', YES);
     this.get('statechart').sendAction('unblockNextNavButton');
 
-    // Award a "star" for completion
     var pageId = Geniverse.activityController.get('route');
-    Geniverse.userController.setPageStars(pageId, 1);
+    Geniverse.userController.setPageStars(pageId, this.get('starsEarned'));
     Geniverse.store.commitRecords();
 
     // why can't bindings in SC work as advertised?
@@ -77,7 +77,7 @@ Lab.invisibleGenotypeChallenge = Lab.challenge.extend({
   alertPaneDidDismiss: function() {
     Geniverse.invisibleGenomeController.hideGenomePane();
     if (this.solved) {
-      this._challengeComplete();
+      this._challengeComplete(" ");
     }
   },
 

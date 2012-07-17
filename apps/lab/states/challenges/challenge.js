@@ -81,8 +81,12 @@ Lab.challenge = Ki.State.extend({
     }
   },
 
-  _challengeComplete: function() {
+  _challengeComplete: function(message) {
     this.endChallenge();
+
+    if (!message) {
+      message = "You've completed all the trials in this challenge!\n";
+    }
 
     var next = Geniverse.activityController.getNextActivity();
 
@@ -100,7 +104,7 @@ Lab.challenge = Ki.State.extend({
         return '<p class="description">' + desc.split('\n').join('</p><p class="description">') + '</p>';
       }.property('description').cacheable()}).plain(
       "Good work!",
-      "You've completed all the trials in this challenge!\n"+starsMessage,
+      message+starsMessage,
       "",
       (next ? "Go on to the next challenge" : "Go back to the Case Log"),
       "Try again",
