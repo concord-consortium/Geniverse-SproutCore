@@ -46,7 +46,7 @@ sc_require('lib/burst-core');
         female_outer_hover : "rgba(255,0,255,.1)",
 
         recomb_inner_hover : "rgba(0,128,0,0.85)",
-        recomb_outer_hover : "rgba(248,241,36,0.333)",
+        recomb_outer_hover : "rgba(236,20,20,0.333)",
 
         swapUI_fill        : "#EEEEEE",
         swapUI_stroke      : "#BBBBBB",
@@ -512,7 +512,7 @@ sc_require('lib/burst-core');
               j_allele.updatePath();
               j_allele.swapPathAttrs();
               if( j_allele.recombOption === true ){
-                j_allele.SVG_inner.attr({ opacity: 0.75+sin(frameCount/2)*0.5 });
+//                j_allele.SVG_inner.attr({ opacity: 0.75+sin(frameCount/2)*0.5 });
                 j_allele.SVG_outer.attr({ opacity: 0.75+sin(frameCount/4)*0.5 });
               }
             }
