@@ -302,6 +302,9 @@ sc_require('lib/burst-core');
         var allele;
         if( !inRecombSelection ){
           for(var i=this.index, l=this.parent.alleles.length; i< l; i++){
+            if (i === 0) {
+              i++;  // prevent whole chromosome swapping
+            }
             allele = this.parent.alleles[i];
             allele.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
             allele.SVG_outer.attr({ 'stroke': defaultOpts.color.hover });
@@ -354,7 +357,7 @@ sc_require('lib/burst-core');
         this.hovering = true;
         for(var i=this.index, l=this.parent.alleles.length; i< l; i++){
           var allele = this.parent.alleles[i];
-          if( !allele.recombOption && !inRecombSelection ){
+          if (( !allele.recombOption && !inRecombSelection ) && (i !== 0)) {
             allele.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
             allele.SVG_outer.attr({ 'stroke': defaultOpts.color.hover });
           }
