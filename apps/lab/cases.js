@@ -60,8 +60,7 @@
           challenges: [
             {
               title: "Training Level Certification Exam",
-              href: "#case5/certification1",
-              useQuill: true
+              href: "#case5/certification1"
             }
           ]
         }
@@ -87,6 +86,12 @@
             }, {
               title: "Challenge 2: The Royal Duchess",
               href: "#case7/challenge2"
+            }, {
+              title: "Challenge 3: Something Fishy",
+              href: "#case7/challenge3"
+            }, {
+              title: "Challenge 4: Mix 'n' Match",
+              href: "#case7/challenge4"
             }
           ]
         }, {
@@ -123,8 +128,11 @@
           title: "Case 10: Certification",
           challenges: [
             {
-              title: "Apprentice Level Certification Exam",
-              href: "#case10/certification2"
+              title: "Apprentice Level Certification Exam I",
+              href: "#case10/certification2-1"
+            }, {
+              title: "Apprentice Level Certification Exam II",
+              href: "#case10/certification2-2"
             }
           ]
         }
@@ -133,13 +141,13 @@
       level: "journeyman",
       cases: [
         {
-          title: "Case 11: Match Maker, Match Maker",
+          title: "Case 11: Feelin' Hot, Hot, Hot",
           challenges: [
             {
-              title: "Challenge 1: One Drake at a Time",
+              title: "Challenge 1: Lava Mama",
               href: "#case11/challenge1"
             }, {
-              title: "Challenge 2: The Gang's All Here",
+              title: "Challenge 2: Shine On, Copper Drake!",
               href: "#case11/challenge2"
             }
           ]
@@ -167,17 +175,14 @@
           title: "Case 14: Color My Drake",
           challenges: [
             {
-              title: "Challenge 1: A New Color",
+              title: "Challenge 1: Lighter Shade of Pale",
               href: "#case14/challenge1"
             }, {
               title: "Challenge 2: A Drake in Shining Colors",
               href: "#case14/challenge2"
             }, {
-              title: "Challenge 3: Life's a Beach!",
+              title: "Challenge 3: Color Masterpiece",
               href: "#case14/challenge3"
-            }, {
-              title: "Challenge 4: Color Masterpiece",
-              href: "#case14/challenge4"
             }
           ]
         }, {
