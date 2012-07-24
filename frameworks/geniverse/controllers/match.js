@@ -163,9 +163,6 @@ Geniverse.matchController = SC.ArrayController.create(
       }
     }
 
-    // chromo breeding must use exactly one breed
-    moves += 1;
-
     return moves;
   },
 
