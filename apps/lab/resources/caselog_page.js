@@ -15,7 +15,7 @@ Lab.caselogPage = SC.Page.design({
 
   mainPane: SC.MainPane.design({
 
-    childViews: ['caselogView'],
+    childViews: ['caselogView', 'topBar'],
 
     caselogView: SC.View.design({
 
@@ -28,7 +28,7 @@ Lab.caselogPage = SC.Page.design({
       displayProperties: ['currentLevel', 'levels'],
 
       render: function (context, isFirstTime) {
-        
+
         var currentLevel     = this.get('currentLevel'),
             currentLevelName = this.get('currentLevelName'),
             levels           = this.get('levels'),
@@ -49,9 +49,9 @@ Lab.caselogPage = SC.Page.design({
           this.invokeLast(this.replaceLayer);
           return;
         }
-        
+
         // Okay, render up some fresh HTML.
-        
+
         cases = levels[currentLevel].cases;
 
         context.push('<div id="caselog-wrap">');
@@ -67,11 +67,11 @@ Lab.caselogPage = SC.Page.design({
 
         starClassFor = function(starInfo) {
           starInfo = starInfo || {};
-          
+
           if (starInfo.useQuill) {
             return starInfo.stars > 0 ? 'quill-on' : 'quill-off';
           }
-          
+
           switch (starInfo.stars) {
             case 1:
               return 'one-star';
@@ -82,7 +82,7 @@ Lab.caselogPage = SC.Page.design({
           }
           return 'no-star';
         };
-        
+
         for (i = 0, max_i = cases.length; i < max_i; i++) {
           context.push('<div class="case caselog-active">');
           context.push('<h3 class="tk-scrivano">' + cases[i].title + '</h3>');
@@ -123,7 +123,12 @@ Lab.caselogPage = SC.Page.design({
 
         return context;
       }
+    }),
+
+    topBar: Lab.TopBarView.design({
+      classNames: ['brown']
     })
+
   })
 
 });
