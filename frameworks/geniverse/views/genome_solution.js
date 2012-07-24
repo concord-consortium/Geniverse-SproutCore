@@ -134,7 +134,8 @@ Geniverse.GenomeSolutionView = SC.PanelPane.design({
       }
 
       var allAlleleOptions2 = allAlleleOptions.slice(0);
-      
+
+      var correctOption = null;
       for (var i=0, ii=allAlleleOptions.length; i<ii; i++) {
         for (var j=i; j<ii; j++) {
           var allele1Name = Geniverse.chromosomeController.titleForAllele(allAlleleOptions[i])
@@ -144,7 +145,7 @@ Geniverse.GenomeSolutionView = SC.PanelPane.design({
               (allAlleleOptions2[j] == val && (!valB || allAlleleOptions[i] == valB))) {
             correctOption = optionStr;
           }
-          var option = SC.Object.create({ value: optionStr, title: optionStr, index: index, correctOption: correctOption});
+          var option = SC.Object.create({ value: optionStr, title: optionStr, index: index});
           pulldownOptions.push(option);
           if (!valB) break;
         }
@@ -170,7 +171,6 @@ Geniverse.GenomeSolutionView = SC.PanelPane.design({
 
           updater: function(){
             var isCorrect = this.get('value') === this.get('correctOption');
-            console.log("isCorrect: "+isCorrect);
             Geniverse.invisibleGenomeController.setFieldCorrect(val, isCorrect);
           }.observes('value')
       });
