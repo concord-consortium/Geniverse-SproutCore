@@ -820,11 +820,30 @@ sc_require('lib/burst-core');
           x = this.segs[0].x + offsetX,
           y = this.segs[0].y + offsetY,
           labelX = this.segs[1].x + offsetX,
-          labelY = this.segs[1].y + offsetY;
+          labelY = this.segs[1].y + offsetY,
+          geneFrameX, labelLinkX;
 
-      this.labelLink.attr({ path: "M"+ labelX +","+ labelY+this.labelOffsetY +" L"+ ((labelX > this.paper.width/2) ? labelX+this.leftLabelOffsetX+this.labelWidth : labelX+this.rightLabelOffsetX) +","+ (labelY+this.labelOffsetY)}).toFront();
-      this.geneFrame.attr({ 'x':((labelX > this.paper.width/2) ? labelX+this.leftLabelOffsetX : labelX+this.rightLabelOffsetX), 'y': (labelY+(this.labelOffsetY)*2)}).toFront();
-      this.geneText.attr({ 'x': ((labelX > this.paper.width/2) ? labelX+this.leftLabelOffsetX : labelX+this.rightLabelOffsetX)+2, 'y': (labelY+this.labelOffsetY)}).toFront();
+          if (labelX > this.paper.width/2) {
+            if (pairingMode){
+              geneFrameX = labelX+this.rightLabelOffsetX;
+              labelLinkX = labelX+this.rightLabelOffsetX;
+            } else {
+              geneFrameX = labelX+this.leftLabelOffsetX;
+              labelLinkX = labelX+this.leftLabelOffsetX+this.labelWidth;
+            }
+          } else {
+             if (pairingMode){
+              geneFrameX = labelX+this.leftLabelOffsetX;
+              labelLinkX = labelX+this.leftLabelOffsetX+this.labelWidth;
+           } else {
+              geneFrameX = labelX+this.rightLabelOffsetX;
+              labelLinkX = labelX+this.rightLabelOffsetX;
+            }
+          }
+
+      this.labelLink.attr({ path: "M"+ labelX +","+ labelY+this.labelOffsetY +" L"+ labelLinkX +","+ (labelY+this.labelOffsetY)}).toFront();
+      this.geneFrame.attr({ 'x': geneFrameX, 'y': (labelY+(this.labelOffsetY)*2)}).toFront();
+      this.geneText.attr({ 'x': geneFrameX+2, 'y': (labelY+this.labelOffsetY)}).toFront();
       
       if(!this.jqObj) {
           this.jqObj = $(this.genekey);
