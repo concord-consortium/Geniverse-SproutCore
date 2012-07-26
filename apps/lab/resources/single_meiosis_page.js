@@ -51,24 +51,25 @@ Lab.singleMeiosisPage = SC.Page.design({
       // this will necessitate moving everything down ~130px
       // In actuality, moving them down about 6px more to avoid cutting off label
         challengePoolView: Lab.ChallengePoolView.design({
-          layout: { left: 5, top: 10, width:410, height: 120 },
+          layout: { centerX: 0, top: 10, width:410, height: 120 },
           dragonSize: 100
         }),
 
         parentTitle: SC.LabelView.design({
-          layout: {top: 133, left: 152, height: 25, width: 200 },
+          layout: {top: 133, centerX: 0, height: 25, width: 120 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           value: "Parent Drake"
         }),
 
 				drakeParentView: Geniverse.OrganismView.design({
-					layout: {top: 157, left: 160, height: 100, width: 100 },
+					layout: {top: 157, centerX: 0, height: 100, width: 100 },
 					contentBinding: 'Geniverse.meiosisAnimationController.mother',
-					isDropTarget: YES
+					isDropTarget: YES,
+          glow: YES
 					}),
 
 				meiosisView: Geniverse.AnimationView.design({
-					layout: {top: 271, left: 55, height: 360, width: 325 },
+					layout: {top: 271, centerX: 0, height: 360, width: 325 },
 					mode: 'parent',
 					swapping: false,
 					meiosisOwner: 'mother',
@@ -77,7 +78,7 @@ Lab.singleMeiosisPage = SC.Page.design({
         }),
 
         nextButton: SC.ImageView.design(Geniverse.SimpleButton, {
-          layout: {left: 435, top: 58, width: 118, height: 27},
+          layout: {centerX: 270, top: 58, width: 118, height: 27},
           isEnabled: YES,
           hasHover: YES,
           classNames: 'bringItButton'.w(),
