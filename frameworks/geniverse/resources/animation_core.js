@@ -272,10 +272,10 @@ sc_require('lib/burst-core');
           for(var n=0, l3=allele.SVG_outer.events.length; n< l3; n++){
             var event = allele.SVG_outer.events[n];
             if( event && event.f && event.f.name ){
-              if( event.f.name === "gvhover" ||
-                  event.f.name === "gvout"   ||
-                  event.f.name === "gvclick"
-              ){
+              if( event.f === this.hoverOver ||
+                  event.f === this.hoverOut   ||
+                 event.name === "click")
+              {
                 event.unbind();
               }
             }
@@ -388,15 +388,10 @@ sc_require('lib/burst-core');
         for(var j=0, k=chromosomes[i].alleles.length; j< k; j++){
   
           var allele = chromosomes[i].alleles[j];
-  
+          allele.SVG_outer.hover(hoverOver, hoverOut, allele, allele);
+
           (function( al ){
-  
-            allele.SVG_outer.hover( function gvhover(){
-              hoverOver.call( al );
-            },function gvhout(){
-              hoverOut.call( al );
-            });
-  
+
             allele.SVG_outer.click( function gvclick(){
               click.call( al );
             });
