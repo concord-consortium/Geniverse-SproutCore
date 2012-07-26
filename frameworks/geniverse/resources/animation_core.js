@@ -358,7 +358,7 @@ sc_require('lib/burst-core');
             inRecombChromeIndex = this.parent.index;
           }
         }else{
-          if( inRecombChromeIndex != this.parent.index ){
+          if(( inRecombChromeIndex != this.parent.index ) && (inRecombSelection == whichPair( this.parent.index))){
           // Collect selected alleles for swapping
           var alleles1 = [], alleles2 = [];
           for( var i2 in this.parent.alleles ){
