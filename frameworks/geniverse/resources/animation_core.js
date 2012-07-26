@@ -309,6 +309,20 @@ sc_require('lib/burst-core');
       }
     }
 
+    function resetAlleleColors(){
+      for(var i4=0, l3=chromosomes.length; i4< l3; i4++){
+        for(var j=0, k=chromosomes[i4].alleles.length; j< k; j++){
+          allele = chromosomes[i4].alleles[j];
+          allele.SVG_inner.attr({ 'stroke': defaultOpts.color[allele.sex+'_inner'], opacity: 1 });
+          allele.SVG_outer.attr({ 'stroke': defaultOpts.color[allele.sex+'_outer'], opacity: 1 });
+          allele.recombOption = false;
+          allele.recombSelected = false;
+        }
+        inRecombChromeIndex = null;
+      }
+      inRecombSelection = 0;
+    }
+
     function swapMulti( alleles1, alleles2 ){
       for( var i = 0; i < alleles1.length; i++ ){
         swap( alleles1[i], alleles2[i] );
@@ -337,8 +351,6 @@ sc_require('lib/burst-core');
                 swap2 = allele.parent.swapList[1];
             swap1.alleles[i].SVG_outer.attr({ 'stroke': defaultOpts.color.recomb_outer_hover });
             swap2.alleles[i].SVG_outer.attr({ 'stroke': defaultOpts.color.recomb_outer_hover });
-//            swap1.alleles[i].SVG_inner.attr({ 'stroke': defaultOpts.color.recomb_inner_hover });
-//            swap2.alleles[i].SVG_inner.attr({ 'stroke': defaultOpts.color.recomb_inner_hover });
             swap1.alleles[i].recombOption = true;
             swap2.alleles[i].recombOption = true;
             allele.recombSelected = true;
@@ -364,49 +376,8 @@ sc_require('lib/burst-core');
           swapMulti(alleles1, alleles2);
           }
           // Reset colors of previously selected Alleles
-          for(var i4=0, l3=chromosomes.length; i4< l3; i4++){
-            for(var j=0, k=chromosomes[i4].alleles.length; j< k; j++){
-              allele = chromosomes[i4].alleles[j];
-              allele.SVG_inner.attr({ 'stroke': defaultOpts.color[allele.sex+'_inner'], opacity: 1 });
-              allele.SVG_outer.attr({ 'stroke': defaultOpts.color[allele.sex+'_outer'], opacity: 1 });
-              allele.recombOption = false;
-              allele.recombSelected = false;
-            }
-            inRecombChromeIndex = null;
-          }
-          inRecombSelection = 0;
+          resetAlleleColors();
         }
-      };
-
-      var hoverOver = function gvhover(){
-        this.hovering = true;
-        for(var i=this.index, l=this.parent.alleles.length; i< l; i++){
-          var allele = this.parent.alleles[i];
-          if (( !allele.recombOption && !inRecombSelection ) && (i !== 0)) {
-            allele.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
-            allele.SVG_outer.attr({ 'stroke': defaultOpts.color.hover });
-          }
-        }
-      };
-    
-      var hoverOut = function gvout(){
-        for(var i=0, l=this.parent.alleles.length; i< l; i++){
-          var allele = this.parent.alleles[i];
-          if( allele.recombSelected === true ){
-          }else{
-            if( !allele.recombOption ){
-              allele.SVG_inner.attr({ 'stroke': defaultOpts.color[allele.sex+'_inner'] });
-              allele.SVG_outer.attr({ 'stroke': defaultOpts.color[allele.sex+'_outer'] });
-            }
-//            else{
-//              allele.SVG_outer.attr({ 'stroke': '#0F0' });
-//              allele.SVG_inner.attr({ 'stroke': '#0F0' });
-//              allele.parent.copy.alleles[allele.index].SVG_outer.attr({ 'stroke': '#0F0' });
-//              allele.parent.copy.alleles[allele.index].SVG_inner.attr({ 'stroke': '#0A0' });
-//            }
-          }
-        }
-        this.hovering = false;
       };
 
       for(var i=0, l=chromosomes.length; i< l; i++){
@@ -535,7 +506,6 @@ sc_require('lib/burst-core');
               j_allele.updatePath();
               j_allele.swapPathAttrs();
               if( j_allele.recombOption === true ){
-//                j_allele.SVG_inner.attr({ opacity: 0.75+sin(frameCount/2)*0.5 });
                 j_allele.SVG_outer.attr({ opacity: 0.75+sin(frameCount/4)*0.5 });
               }
             }
@@ -1633,6 +1603,7 @@ sc_require('lib/burst-core');
                       pairingMode = false;
                       if(swapui){swapui.attr({opacity:0});}
                       unbindPairEvents();
+                      resetAlleleColors();
                     }
                   }
 
