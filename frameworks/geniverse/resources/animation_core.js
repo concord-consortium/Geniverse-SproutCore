@@ -262,8 +262,33 @@ sc_require('lib/burst-core');
       alleleA.geneFrame.attr({ width:alleleA.labelWidth });
     }
 
-    // Remove hover/click events when not in pairing mode
-    function unbindPairEvents(){
+    var hoverOver = function gvhover(){
+      this.hovering = true;
+      for(var i=this.index, l=this.parent.alleles.length; i< l; i++){
+        var allele = this.parent.alleles[i];
+        if (( !allele.recombOption && !inRecombSelection ) && (i !== 0)) {
+          allele.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
+          allele.SVG_outer.attr({ 'stroke': defaultOpts.color.hover });
+        }
+      }
+    };
+    
+    var hoverOut = function gvout(){
+      for(var i=0, l=this.parent.alleles.length; i< l; i++){
+        var allele = this.parent.alleles[i];
+        if( allele.recombSelected === true ){
+        }else{
+          if( !allele.recombOption ){
+            allele.SVG_inner.attr({ 'stroke': defaultOpts.color[allele.sex+'_inner'] });
+            allele.SVG_outer.attr({ 'stroke': defaultOpts.color[allele.sex+'_outer'] });
+          }
+        }
+      }
+      this.hovering = false;
+    };
+
+  // Remove hover/click events when not in pairing mode
+      function unbindPairEvents(){
       for(var i=0, l=chromosomes.length; i< l; i++){
         for(var j=0, l2=chromosomes[i].alleles.length; j< l2; j++){
 
@@ -272,8 +297,8 @@ sc_require('lib/burst-core');
           for(var n=0, l3=allele.SVG_outer.events.length; n< l3; n++){
             var event = allele.SVG_outer.events[n];
             if( event && event.f && event.f.name ){
-              if( event.f === this.hoverOver ||
-                  event.f === this.hoverOut   ||
+              if( event.f === hoverOver ||
+                  event.f === hoverOut   ||
                  event.name === "click")
               {
                 event.unbind();
