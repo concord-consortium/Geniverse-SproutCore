@@ -18,6 +18,9 @@ sc_require('lib/burst-core');
       gameteSelected  : $.noop,
       playButtonPressed: $.noop,
       endButtonPressed: $.noop,
+      reachedRecombination: $.noop,
+      allelesSelected : $.noop,
+      swapCompleted   : $.noop,
       zoom            : 2,
       width           : 310,
       height          : 320,
@@ -327,6 +330,7 @@ sc_require('lib/burst-core');
       for( var i = 0; i < alleles1.length; i++ ){
         swap( alleles1[i], alleles2[i] );
       }
+      defaultOpts.swapCompleted.call(defaultOpts.context);
     }
 
     function recombinationBindEvents(){
@@ -340,6 +344,7 @@ sc_require('lib/burst-core');
       var click = function gvclick(){
         var allele;
         if( !inRecombSelection ){
+          defaultOpts.allelesSelected.call(defaultOpts.context);
           for(var i=this.index, l=this.parent.alleles.length; i< l; i++){
             if (i === 0) {
               i++;  // prevent whole chromosome swapping
@@ -1581,6 +1586,7 @@ sc_require('lib/burst-core');
                     if(swapui){swapui.attr({opacity:1});}
                     burst.stop();
                     if (pairingMode !== true){
+                      defaultOpts.reachedRecombination.call(defaultOpts.context);
                       recombinationBindEvents();
                     }
                     pairingMode = true;

@@ -24,6 +24,7 @@ Lab.inActivity = Ki.State.extend({
     selectParentsChallenge: Ki.State.plugin('Lab.selectParentsChallenge'),
     defaultChallenge: Ki.State.plugin('Lab.defaultChallenge'),
     initialChallenge: Ki.State.plugin('Lab.initialChallenge'),
+    firstMeiosisWithMatchTarget: Ki.State.plugin('Lab.firstMeiosisWithMatchTarget'),
 
     currentChallenge: null
   }),
