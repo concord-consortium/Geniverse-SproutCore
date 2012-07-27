@@ -170,6 +170,18 @@ Geniverse.AnimationView = SC.View.extend(
       SC.RunLoop.end();
     }
   },
+
+  reachedRecombination: function(){
+     Lab.statechart.sendAction('showInitialRecobinationMsg');
+  },
+
+  allelesSelected: function(){
+    Lab.statechart.sendAction('showSelectTargetnMsg');
+  },
+  
+  swapCompleted: function(){
+    Lab.statechart.sendAction('showTryMoreRecombinationMsg');
+  },
   
   gameteJson: null,
   gameteSelected: function(data) {
@@ -235,7 +247,10 @@ Geniverse.AnimationView = SC.View.extend(
       animationComplete: this.animationComplete,
       gameteSelected: this.gameteSelected,
       playButtonPressed: this.playButtonPressed,
-      endButtonPressed: this.endButtonPressed
+      endButtonPressed: this.endButtonPressed,
+      reachedRecombination: this.reachedRecombination,
+      allelesSelected: this.allelesSelected,
+      swapCompleted: this.swapCompleted
     };
     
     if (geniverseAnimation.length > 0){

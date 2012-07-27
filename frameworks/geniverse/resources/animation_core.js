@@ -18,6 +18,9 @@ sc_require('lib/burst-core');
       gameteSelected  : $.noop,
       playButtonPressed: $.noop,
       endButtonPressed: $.noop,
+      reachedRecombination: $.noop,
+      allelesSelected : $.noop,
+      swapCompleted   : $.noop,
       zoom            : 2,
       width           : 310,
       height          : 320,
@@ -46,7 +49,7 @@ sc_require('lib/burst-core');
         female_outer_hover : "rgba(255,0,255,.1)",
 
         recomb_inner_hover : "rgba(0,128,0,0.85)",
-        recomb_outer_hover : "rgba(248,241,36,0.333)",
+        recomb_outer_hover : "rgba(236,20,20,0.333)",
 
         swapUI_fill        : "#EEEEEE",
         swapUI_stroke      : "#BBBBBB",
@@ -262,8 +265,33 @@ sc_require('lib/burst-core');
       alleleA.geneFrame.attr({ width:alleleA.labelWidth });
     }
 
-    // Remove hover/click events when not in pairing mode
-    function unbindPairEvents(){
+    var hoverOver = function gvhover(){
+      this.hovering = true;
+      for(var i=this.index, l=this.parent.alleles.length; i< l; i++){
+        var allele = this.parent.alleles[i];
+        if (( !allele.recombOption && !inRecombSelection ) && (i !== 0)) {
+          allele.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
+          allele.SVG_outer.attr({ 'stroke': defaultOpts.color.hover });
+        }
+      }
+    };
+    
+    var hoverOut = function gvout(){
+      for(var i=0, l=this.parent.alleles.length; i< l; i++){
+        var allele = this.parent.alleles[i];
+        if( allele.recombSelected === true ){
+        }else{
+          if( !allele.recombOption ){
+            allele.SVG_inner.attr({ 'stroke': defaultOpts.color[allele.sex+'_inner'] });
+            allele.SVG_outer.attr({ 'stroke': defaultOpts.color[allele.sex+'_outer'] });
+          }
+        }
+      }
+      this.hovering = false;
+    };
+
+  // Remove hover/click events when not in pairing mode
+      function unbindPairEvents(){
       for(var i=0, l=chromosomes.length; i< l; i++){
         for(var j=0, l2=chromosomes[i].alleles.length; j< l2; j++){
 
@@ -272,10 +300,10 @@ sc_require('lib/burst-core');
           for(var n=0, l3=allele.SVG_outer.events.length; n< l3; n++){
             var event = allele.SVG_outer.events[n];
             if( event && event.f && event.f.name ){
-              if( event.f.name === "gvhover" ||
-                  event.f.name === "gvout"   ||
-                  event.f.name === "gvclick"
-              ){
+              if( event.f === hoverOver ||
+                  event.f === hoverOut   ||
+                 event.name === "click")
+              {
                 event.unbind();
               }
             }
@@ -284,10 +312,25 @@ sc_require('lib/burst-core');
       }
     }
 
+    function resetAlleleColors(){
+      for(var i4=0, l3=chromosomes.length; i4< l3; i4++){
+        for(var j=0, k=chromosomes[i4].alleles.length; j< k; j++){
+          allele = chromosomes[i4].alleles[j];
+          allele.SVG_inner.attr({ 'stroke': defaultOpts.color[allele.sex+'_inner'], opacity: 1 });
+          allele.SVG_outer.attr({ 'stroke': defaultOpts.color[allele.sex+'_outer'], opacity: 1 });
+          allele.recombOption = false;
+          allele.recombSelected = false;
+        }
+        inRecombChromeIndex = null;
+      }
+      inRecombSelection = 0;
+    }
+
     function swapMulti( alleles1, alleles2 ){
       for( var i = 0; i < alleles1.length; i++ ){
         swap( alleles1[i], alleles2[i] );
       }
+      defaultOpts.swapCompleted.call(defaultOpts.context);
     }
 
     function recombinationBindEvents(){
@@ -301,7 +344,11 @@ sc_require('lib/burst-core');
       var click = function gvclick(){
         var allele;
         if( !inRecombSelection ){
+          defaultOpts.allelesSelected.call(defaultOpts.context);
           for(var i=this.index, l=this.parent.alleles.length; i< l; i++){
+            if (i === 0) {
+              i++;  // prevent whole chromosome swapping
+            }
             allele = this.parent.alleles[i];
             allele.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
             allele.SVG_outer.attr({ 'stroke': defaultOpts.color.hover });
@@ -309,8 +356,6 @@ sc_require('lib/burst-core');
                 swap2 = allele.parent.swapList[1];
             swap1.alleles[i].SVG_outer.attr({ 'stroke': defaultOpts.color.recomb_outer_hover });
             swap2.alleles[i].SVG_outer.attr({ 'stroke': defaultOpts.color.recomb_outer_hover });
-//            swap1.alleles[i].SVG_inner.attr({ 'stroke': defaultOpts.color.recomb_inner_hover });
-//            swap2.alleles[i].SVG_inner.attr({ 'stroke': defaultOpts.color.recomb_inner_hover });
             swap1.alleles[i].recombOption = true;
             swap2.alleles[i].recombOption = true;
             allele.recombSelected = true;
@@ -318,7 +363,7 @@ sc_require('lib/burst-core');
             inRecombChromeIndex = this.parent.index;
           }
         }else{
-          if( inRecombChromeIndex != this.parent.index ){
+          if(( inRecombChromeIndex != this.parent.index ) && (inRecombSelection == whichPair( this.parent.index))){
           // Collect selected alleles for swapping
           var alleles1 = [], alleles2 = [];
           for( var i2 in this.parent.alleles ){
@@ -336,64 +381,18 @@ sc_require('lib/burst-core');
           swapMulti(alleles1, alleles2);
           }
           // Reset colors of previously selected Alleles
-          for(var i4=0, l3=chromosomes.length; i4< l3; i4++){
-            for(var j=0, k=chromosomes[i4].alleles.length; j< k; j++){
-              allele = chromosomes[i4].alleles[j];
-              allele.SVG_inner.attr({ 'stroke': defaultOpts.color[allele.sex+'_inner'], opacity: 1 });
-              allele.SVG_outer.attr({ 'stroke': defaultOpts.color[allele.sex+'_outer'], opacity: 1 });
-              allele.recombOption = false;
-              allele.recombSelected = false;
-            }
-            inRecombChromeIndex = null;
-          }
-          inRecombSelection = 0;
+          resetAlleleColors();
         }
-      };
-
-      var hoverOver = function gvhover(){
-        this.hovering = true;
-        for(var i=this.index, l=this.parent.alleles.length; i< l; i++){
-          var allele = this.parent.alleles[i];
-          if( !allele.recombOption && !inRecombSelection ){
-            allele.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
-            allele.SVG_outer.attr({ 'stroke': defaultOpts.color.hover });
-          }
-        }
-      };
-    
-      var hoverOut = function gvout(){
-        for(var i=0, l=this.parent.alleles.length; i< l; i++){
-          var allele = this.parent.alleles[i];
-          if( allele.recombSelected === true ){
-          }else{
-            if( !allele.recombOption ){
-              allele.SVG_inner.attr({ 'stroke': defaultOpts.color[allele.sex+'_inner'] });
-              allele.SVG_outer.attr({ 'stroke': defaultOpts.color[allele.sex+'_outer'] });
-            }
-//            else{
-//              allele.SVG_outer.attr({ 'stroke': '#0F0' });
-//              allele.SVG_inner.attr({ 'stroke': '#0F0' });
-//              allele.parent.copy.alleles[allele.index].SVG_outer.attr({ 'stroke': '#0F0' });
-//              allele.parent.copy.alleles[allele.index].SVG_inner.attr({ 'stroke': '#0A0' });
-//            }
-          }
-        }
-        this.hovering = false;
       };
 
       for(var i=0, l=chromosomes.length; i< l; i++){
         for(var j=0, k=chromosomes[i].alleles.length; j< k; j++){
   
           var allele = chromosomes[i].alleles[j];
-  
+          allele.SVG_outer.hover(hoverOver, hoverOut, allele, allele);
+
           (function( al ){
-  
-            allele.SVG_outer.hover( function gvhover(){
-              hoverOver.call( al );
-            },function gvhout(){
-              hoverOut.call( al );
-            });
-  
+
             allele.SVG_outer.click( function gvclick(){
               click.call( al );
             });
@@ -512,7 +511,6 @@ sc_require('lib/burst-core');
               j_allele.updatePath();
               j_allele.swapPathAttrs();
               if( j_allele.recombOption === true ){
-                j_allele.SVG_inner.attr({ opacity: 0.75+sin(frameCount/2)*0.5 });
                 j_allele.SVG_outer.attr({ opacity: 0.75+sin(frameCount/4)*0.5 });
               }
             }
@@ -822,11 +820,30 @@ sc_require('lib/burst-core');
           x = this.segs[0].x + offsetX,
           y = this.segs[0].y + offsetY,
           labelX = this.segs[1].x + offsetX,
-          labelY = this.segs[1].y + offsetY;
+          labelY = this.segs[1].y + offsetY,
+          geneFrameX, labelLinkX;
 
-      this.labelLink.attr({ path: "M"+ labelX +","+ labelY+this.labelOffsetY +" L"+ ((labelX > this.paper.width/2) ? labelX+this.leftLabelOffsetX+this.labelWidth : labelX+this.rightLabelOffsetX) +","+ (labelY+this.labelOffsetY)}).toFront();
-      this.geneFrame.attr({ 'x':((labelX > this.paper.width/2) ? labelX+this.leftLabelOffsetX : labelX+this.rightLabelOffsetX), 'y': (labelY+(this.labelOffsetY)*2)}).toFront();
-      this.geneText.attr({ 'x': ((labelX > this.paper.width/2) ? labelX+this.leftLabelOffsetX : labelX+this.rightLabelOffsetX)+2, 'y': (labelY+this.labelOffsetY)}).toFront();
+          if (labelX > this.paper.width/2) {
+            if (pairingMode){
+              geneFrameX = labelX+this.rightLabelOffsetX;
+              labelLinkX = labelX+this.rightLabelOffsetX;
+            } else {
+              geneFrameX = labelX+this.leftLabelOffsetX;
+              labelLinkX = labelX+this.leftLabelOffsetX+this.labelWidth;
+            }
+          } else {
+             if (pairingMode){
+              geneFrameX = labelX+this.leftLabelOffsetX;
+              labelLinkX = labelX+this.leftLabelOffsetX+this.labelWidth;
+           } else {
+              geneFrameX = labelX+this.rightLabelOffsetX;
+              labelLinkX = labelX+this.rightLabelOffsetX;
+            }
+          }
+
+      this.labelLink.attr({ path: "M"+ labelX +","+ labelY+this.labelOffsetY +" L"+ labelLinkX +","+ (labelY+this.labelOffsetY)}).toFront();
+      this.geneFrame.attr({ 'x': geneFrameX, 'y': (labelY+(this.labelOffsetY)*2)}).toFront();
+      this.geneText.attr({ 'x': geneFrameX+2, 'y': (labelY+this.labelOffsetY)}).toFront();
       
       if(!this.jqObj) {
           this.jqObj = $(this.genekey);
@@ -1569,6 +1586,7 @@ sc_require('lib/burst-core');
                     if(swapui){swapui.attr({opacity:1});}
                     burst.stop();
                     if (pairingMode !== true){
+                      defaultOpts.reachedRecombination.call(defaultOpts.context);
                       recombinationBindEvents();
                     }
                     pairingMode = true;
@@ -1591,6 +1609,7 @@ sc_require('lib/burst-core');
                       pairingMode = false;
                       if(swapui){swapui.attr({opacity:0});}
                       unbindPairEvents();
+                      resetAlleleColors();
                     }
                   }
 
