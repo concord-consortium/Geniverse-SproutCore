@@ -81,10 +81,10 @@
           title: "Case 7: What Are the Odds",
           challenges: [
             {
-              title: "Challenge 1: The Archduke's Order",
+              title: "Challenge 1: The Duchess Wants Drakes",
               href: "#case7/challenge1"
             }, {
-              title: "Challenge 2: The Royal Duchess",
+              title: "Challenge 2: The Archduke's Bragging Rights",
               href: "#case7/challenge2"
             }, {
               title: "Challenge 3: Something Fishy",
