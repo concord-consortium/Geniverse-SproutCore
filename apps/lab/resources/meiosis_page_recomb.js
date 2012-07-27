@@ -79,7 +79,8 @@ Lab.meiosisPageRecomb = SC.Page.design({
           sex: 1,
           isDropTarget: YES,
           trackScore: YES,
-          glow: YES
+          glow: YES,
+          acceptsOffspringDrop: NO
         }),
         
         offspringTitle: SC.LabelView.design({
@@ -107,7 +108,8 @@ Lab.meiosisPageRecomb = SC.Page.design({
           sex: 0,
           isDropTarget: YES,
           trackScore: YES,
-          glow: YES
+          glow: YES,
+          acceptsOffspringDrop: NO
         }),
 
         motherMeiosis: Geniverse.AnimationView.design({

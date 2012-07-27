@@ -19,11 +19,11 @@ Lab.meiosisPage = SC.Page.design({
   // challengeType: 'matchOneAtATimeChallenge',
   
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page 
+  // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    classNames: ['brown'], 
+    classNames: ['brown'],
     childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
     backgroundView: SC.ImageView.design({
       value: static_url('lab_background.png'),
@@ -79,7 +79,8 @@ Lab.meiosisPage = SC.Page.design({
           sex: 1,
           isDropTarget: YES,
           trackScore: YES,
-          glow: YES
+          glow: YES,
+          acceptsOffspringDrop: NO
         }),
         
         offspringTitle: SC.LabelView.design({
@@ -107,7 +108,8 @@ Lab.meiosisPage = SC.Page.design({
           sex: 0,
           isDropTarget: YES,
           trackScore: YES,
-          glow: YES
+          glow: YES,
+          acceptsOffspringDrop: NO
         }),
 
         // geneMap can be json object or url to file containing json object - dan

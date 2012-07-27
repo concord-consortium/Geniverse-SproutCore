@@ -20,7 +20,7 @@ Geniverse.OrganismView = SC.View.extend(
   sex: null,        // If set to 0 or 1, drag-and-drop will only work with males and females, respectively
   
   isDropTarget: NO, // whether this is replaceable by drag-and-drop
-  acceptsOffspringDrop: NO,    // set to YES if can be droptarget of offspring drake
+  acceptsOffspringDrop: YES,    // set to NO to prevent offspring from being dragged to the parent spot
   canDrag: NO,      // whether this can be dragged elsewhere
   showBackground: YES,
   hideDragon: NO, // hides the dragon
