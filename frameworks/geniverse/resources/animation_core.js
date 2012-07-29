@@ -363,23 +363,23 @@ sc_require('lib/burst-core');
             inRecombChromeIndex = this.parent.index;
           }
         }else{
-          if(( inRecombChromeIndex != this.parent.index ) && (inRecombSelection == whichPair( this.parent.index))){
+          if(this.recombOption){
           // Collect selected alleles for swapping
-          var alleles1 = [], alleles2 = [];
-          for( var i2 in this.parent.alleles ){
-            if( this.parent.alleles[i2].recombOption ){
-              alleles1.push( this.parent.alleles[i2] );
+            var alleles1 = [], alleles2 = [];
+            for( var i2 in this.parent.alleles ){
+              if( this.parent.alleles[i2].recombOption ){
+                alleles1.push( this.parent.alleles[i2] );
+              }
             }
-          }
-          var alleles = chromosomes[inRecombChromeIndex].alleles;
-          for( var i3=0, l2=alleles.length; i3< l2; i3++){
-            if( this.parent.alleles[i3].recombOption ){
-              alleles2.push( alleles[i3] );
+            var alleles = chromosomes[inRecombChromeIndex].alleles;
+            for( var i3=0, l2=alleles.length; i3< l2; i3++){
+              if( this.parent.alleles[i3].recombOption ){
+                alleles2.push( alleles[i3] );
+              }
             }
-          }
-          // Initiate multi-swap
-          swapMulti(alleles1, alleles2);
-          }
+            // Initiate multi-swap
+            swapMulti(alleles1, alleles2);
+            }
           // Reset colors of previously selected Alleles
           resetAlleleColors();
         }
