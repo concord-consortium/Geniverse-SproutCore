@@ -88,7 +88,8 @@
               href: "#case7/challenge2"
             }, {
               title: "Challenge 3: Something Fishy",
-              href: "#case7/challenge3"
+              href: "#case7/challenge3",
+              useQuill: true
             }, {
               title: "Challenge 4: Mix 'n' Match",
               href: "#case7/challenge4"
@@ -99,8 +100,7 @@
           challenges: [
             {
               title: "Playground",
-              href: "#case8/playground",
-              useQuill: true
+              href: "#case8/playground"
             }, {
               title: "Challenge 1: Once, Twice, Three Times a Tail",
               href: "#case8/challenge1"
@@ -115,13 +115,15 @@
           challenges: [
             {
               title: "Challenge 1: Like Father, Like Son?",
-              href: "#case9/challenge1"
+              href: "#case9/challenge1",
+              useQuill: true
             }, {
               title: "Challenge 2: No Business Like Nose Business",
               href: "#case9/challenge2"
             }, {
               title: "Challenge 3: Nosy Argument",
-              href: "#case9/challenge3"
+              href: "#case9/challenge3",
+              useQuill: true
             }
           ]
         }, {
@@ -145,10 +147,12 @@
           challenges: [
             {
               title: "Challenge 1: Lava Mama",
-              href: "#case11/challenge1"
+              href: "#case11/challenge1",
+              useQuill: true
             }, {
               title: "Challenge 2: Shine On, Copper Drake!",
-              href: "#case11/challenge2"
+              href: "#case11/challenge2",
+              useQuill: true
             }
           ]
         }, {
@@ -176,13 +180,16 @@
           challenges: [
             {
               title: "Challenge 1: Lighter Shade of Pale",
-              href: "#case14/challenge1"
+              href: "#case14/challenge1",
+              useQuill: true
             }, {
               title: "Challenge 2: A Drake in Shining Colors",
-              href: "#case14/challenge2"
+              href: "#case14/challenge2",
+              useQuill: true
             }, {
               title: "Challenge 3: Color Masterpiece",
-              href: "#case14/challenge3"
+              href: "#case14/challenge3",
+              useQuill: true
             }
           ]
         }, {
