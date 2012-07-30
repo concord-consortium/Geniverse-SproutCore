@@ -12,7 +12,7 @@ Lab.defaultChallenge = Ki.State.extend({
 
   enterState: function() {
     this.get('statechart').sendAction('unblockNextNavButton');
-    this._pageId = Geniverse.activityController.get('guid');
+    this._pageId = Geniverse.activityController.get('route');
   },
 
   exitState: function() {
