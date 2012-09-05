@@ -39,7 +39,7 @@ Lab.StableView = SC.View.extend(
 
   dragonSize: 75,
 
-  stableSize: 6,
+  stableSize: 10,
 
   /**
    * Overwritten createChildView where you set up all
