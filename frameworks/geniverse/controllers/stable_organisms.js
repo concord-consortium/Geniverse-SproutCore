@@ -14,6 +14,7 @@ Geniverse.stableOrganismsController = SC.ArrayController.create(
 	SC.CollectionViewDelegate,
 /** @scope Geniverse.stableOrganismsController.prototype */ {
   
+  maxSize: 10,
   
   selectionBinding: 'Geniverse.allSelectedDragonsController.selection',
   
