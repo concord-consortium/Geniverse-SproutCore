@@ -51,7 +51,7 @@ Lab.selectParentsChallenge = Lab.challenge.extend({
     this.timesAttempted = timesAttempted + 1;
    
     var allMatch = true;
-
+    var trait, characteristic;
     for (trait in targetCharacteristics) {
       if (!targetCharacteristics.hasOwnProperty(trait)) continue;
       characteristics = targetCharacteristics[trait];
@@ -101,23 +101,57 @@ Lab.selectParentsChallenge = Lab.challenge.extend({
         }),
         possibleConfigs = {},
         possibleChars = {};
-    for (var i = 0, ii=parent1aAlleles.length; i<ii; i++) {
+    var i,j,k;
+    for (i = 0, ii=parent1aAlleles.length; i<ii; i++) {
       a1 = parent1aAlleles[i];
       trait = this._getTraitOfAllele(a1);
-      possibleConfigs[trait] = [];
-      possibleConfigs[trait][0] = [a1, parent2aAlleles[i]];
-      possibleConfigs[trait][1] = [a1, parent2bAlleles[i]];
-      possibleConfigs[trait][2] = [parent1bAlleles[i], parent2aAlleles[i]];
-      possibleConfigs[trait][3] = [parent1bAlleles[i], parent2bAlleles[i]];
+      // first generate the combos for this allele
+      alleleCombos = [];
+      alleleCombos[0] = [a1, parent2aAlleles[i]];
+      alleleCombos[1] = [a1, parent2bAlleles[i]];
+      alleleCombos[2] = [parent1bAlleles[i], parent2aAlleles[i]];
+      alleleCombos[3] = [parent1bAlleles[i], parent2bAlleles[i]];
+
+      var existingPossibilities = possibleConfigs[trait];
+      var allPossibilities = [];
+      if (typeof(existingPossibilities) != 'undefined') {
+        // we already have possibilities for this trait,
+        // so multiply this alleles possibilities with the existing ones
+        // to get all the combinations (so far) for this trait
+        // ex: existing aA/aA: [[a,a],[a,A],[A,a],[A,A]]
+        //     new      BB/bB: [[B,b],[B,B],[B,b],[B,B]
+        //     result: the 16 combinations of the two sets
+        //
+        //     MAKE SURE TO USE ARRAY CLONES FOR THIS!!
+        var possible, combo;
+        for (j=0, jj=existingPossibilities.length; j<jj; j++){
+          possible = existingPossibilities[j];
+          for (k=0, kk=alleleCombos.length; k<kk; k++) {
+            combo = alleleCombos[k].slice(0);
+            currentCombo = possible.slice(0);
+            currentCombo.pushObjects(combo);
+            allPossibilities.push(currentCombo);
+
+          }
+        }
+      } else {
+        allPossibilities = alleleCombos;
+      }
+      possibleConfigs[trait] = allPossibilities;
     }
 
-    for (trait in possibleConfigs) {
+    for (var trait in possibleConfigs) {
       if (!possibleConfigs.hasOwnProperty(trait)) continue;
       possibleChars[trait] = {};
       configs = possibleConfigs[trait];
       for (i=0, ii=configs.length; i<ii; i++){
         config = configs[i];
-        alleleString = "a:"+config[0]+",b:"+config[1];
+        // config could be a long list of alleles, so concat by pairs
+        alleleString = "";
+        for (j=0, jj=config.length; j<jj; j += 2) {
+          alleleString += "a:"+config[j]+",b:"+config[j+1]+",";
+        }
+        alleleString = alleleString.slice(0,alleleString.length-1);
         org = new BioLogica.Organism.createOrganism(BioLogica.Species.Drake, alleleString);
         characteristic = org.getCharacteristic(trait);
         if (!possibleChars[trait][characteristic]) possibleChars[trait][characteristic] = 0;
@@ -128,7 +162,7 @@ Lab.selectParentsChallenge = Lab.challenge.extend({
   },
 
   _getTraitOfAllele: function(allele) {
-    var trait, traitName, _ref;
+    var trait, traitName, _ref, charName;
     _ref = BioLogica.Species.Drake.traitRules;
     for (traitName in _ref) {
       if (!_ref.hasOwnProperty(traitName)) continue;
