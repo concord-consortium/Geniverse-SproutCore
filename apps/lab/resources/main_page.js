@@ -23,7 +23,7 @@ Lab.mainPage = SC.Page.design({
 
     mainAppView: SC.View.design({
       layout: { top: 42, centerX: 0, width: 960},
-      childViews: 'backgroundView caselogButtonView journalButtonView'.w(),
+      childViews: 'backgroundView caselogButtonView'.w(),
 
       backgroundView: SC.ImageView.design({
         layout: { top:0, centerX: 0, width: 960},
