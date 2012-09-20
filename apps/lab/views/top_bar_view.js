@@ -258,6 +258,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         title:  "Log out",
         toolTip: "Click to log out",
         target: Lab.statechart,
+        isVisible: NO,
         action: 'logOut'
       })
     );
