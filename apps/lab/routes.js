@@ -115,12 +115,12 @@ Lab.routes = SC.Object.create({
     
     // Don't bother with SC.logger.log(). console.log() logs an inspectable object instead of forcibly converting
     // all its arguments to strings.
-    console.log("  pageOwner: %s", pageOwner && pageOwner.toString(), pageOwner);
-    console.log("  routeParams: %s", routeParams && routeParams.toString(), routeParams);
-    console.log("  pageName: %s", pageName);
-    console.log("  paneName: %s", paneName);
-    console.log("  page: %s", page && page.toString(), page);
-    console.log("  pane: %s", pane && pane.toString(), pane);
+    // console.log("  pageOwner: %s", pageOwner && pageOwner.toString(), pageOwner);
+    // console.log("  routeParams: %s", routeParams && routeParams.toString(), routeParams);
+    // console.log("  pageName: %s", pageName);
+    // console.log("  paneName: %s", paneName);
+    // console.log("  page: %s", page && page.toString(), page);
+    // console.log("  pane: %s", pane && pane.toString(), pane);
     console.log("END Lab.routes.gotoRoute()");
   }
 
