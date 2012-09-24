@@ -15,7 +15,7 @@ Geniverse.OrganismView = SC.View.extend(
 	label: 'Organism',
   showLabel: false,
 	content: null,  //Geniverse.NO_DRAGON,
-	childViews: 'labelView imageView revealButtonView'.w(),
+	childViews: 'labelView colorLabelView imageView revealButtonView'.w(),
   parent: '',       // If set, drag-and-drop will replace parentView's [parent] field
   sex: null,        // If set to 0 or 1, drag-and-drop will only work with males and females, respectively
   
@@ -30,6 +30,9 @@ Geniverse.OrganismView = SC.View.extend(
   trackScore: NO, // whether this view will increment scoring controller when dragged into
   
   glow: NO, // whether to show a glow behind drake
+
+  showColorLabelsBinding: 'Geniverse.activityController.showColorLabels',
+  colorLabelBinding: '*content.color',
 
 	imageView: SC.ImageView.design({
 		layout: {top: 0, bottom: 0, left: 0, right: 0},
@@ -78,6 +81,25 @@ Geniverse.OrganismView = SC.View.extend(
     isVisibleBinding: '*parentView.showLabel',
     layout: { height: 20, left: 0, top:0, right: 0 },
     valueBinding: '*parentView.label',
+    fontWeight: SC.BOLD_WEIGHT,
+    textAlign: SC.ALIGN_CENTER
+  }),
+  
+  colorLabelView: SC.LabelView.design({
+    isVisibleBinding: '*parentView.showColorLabels',
+    layout: function () {
+      var btm = 10;
+      var height = this.getPath('parentView.clippingFrame').height;
+      if (height <= 75) {
+        btm = -5;
+        this.set('classNames', ['sc-view','sc-label-view','small-color-label']);
+      } else {
+        this.set('classNames', ['sc-view','sc-label-view','normal-color-label']);
+      }
+
+      return { height: 20, left: 0, bottom: btm, right: 0 };
+    }.property('*parentView.clippingFrame').cacheable(),
+    valueBinding: '*parentView.colorLabel',
     fontWeight: SC.BOLD_WEIGHT,
     textAlign: SC.ALIGN_CENTER
   }),
