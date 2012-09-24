@@ -11,6 +11,43 @@ if [ -x $1 ]; then
   exit 1
 fi
 
+function build {
+  echo "Building application... "
+  rm -rf tmp/
+  $CMD_PREFIX sc-build
+}
+
+function sync {
+  echo "Sending files to the server... "
+  # If you don't have rsync, use scp instead
+  # scp -r tmp/build/static/* $REMOTE_USER@$SERVER:$SERVER_PATH/
+  rsync -rqlzP tmp/build/static/* $REMOTE_USER@$SERVER:$SERVER_PATH/
+}
+
+function label {
+  BUILD_NUM=$($CMD_PREFIX sc-build-number lab)
+  echo "Lab build hash: $BUILD_NUM"
+
+  read -p "What label should this be deployed with? " -e -r LABEL
+
+  ssh -t $REMOTE_USER@$SERVER "rm $LABEL_PATH/${LABEL}; ln -s $SERVER_PATH/lab/en/$BUILD_NUM $LABEL_PATH/${LABEL}"
+}
+
+function dbdownload {
+  echo "Download necessary database files... "
+  ./download_db_as_files.rb
+}
+
+function package {
+  echo "Packaging app... "
+  tar -C tmp/build -czf box.tar.gz .
+}
+
+function copyindex {
+  BUILD_NUM=$($CMD_PREFIX sc-build-number lab)
+  cp tmp/build/static/lab/en/$BUILD_NUM/index.html tmp/build/index.html
+}
+
 case "$1" in
   production)
     export SERVER=seymour.concord.org
@@ -36,26 +73,21 @@ case "$1" in
     export LABEL_PATH="/web/geniverse.dev.concord.org"
     export REMOTE_USER="geniverse"
     ;;
+  box)
+    build
+    dbdownload
+    copyindex
+    package
+    exit 0
+    ;;
   *)
     echo "Invalid server!"
     exit 1
     ;;
 esac
 
-echo "Building application... "
-rm -rf tmp/
-$CMD_PREFIX sc-build
-
-echo "Sending files to the server... "
-# If you don't have rsync, use scp instead
-# scp -r tmp/build/static/* $REMOTE_USER@$SERVER:$SERVER_PATH/
-rsync -rqlzP tmp/build/static/* $REMOTE_USER@$SERVER:$SERVER_PATH/
-
-BUILD_NUM=$($CMD_PREFIX sc-build-number lab)
-echo "Lab build hash: $BUILD_NUM"
-
-read -p "What label should this be deployed with? " -e -r LABEL
-
-ssh -t $REMOTE_USER@$SERVER "rm $LABEL_PATH/${LABEL}; ln -s $SERVER_PATH/lab/en/$BUILD_NUM $LABEL_PATH/${LABEL}"
+build
+sync
+label
 
 echo "All done!"
