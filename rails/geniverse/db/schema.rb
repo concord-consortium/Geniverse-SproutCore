@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120109215041) do
+ActiveRecord::Schema.define(:version => 20120924212812) do
 
   create_table "activities", :force => true do |t|
     t.text     "initial_alleles"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20120109215041) do
     t.boolean  "is_argumentation_challenge", :default => false
     t.integer  "threshold_three_stars"
     t.integer  "threshold_two_stars"
+    t.boolean  "show_color_labels"
   end
 
   create_table "articles", :force => true do |t|
