@@ -32,6 +32,9 @@ Geniverse.OrganismView = SC.View.extend(
   glow: NO, // whether to show a glow behind drake
 
   showColorLabelsBinding: 'Geniverse.activityController.showColorLabels',
+  colorLabelVisible: function() {
+    return this.get('showColorLabels') && !this.get('hideDragon');
+  }.property('hideDragon','showColorLabels'),
   colorLabelBinding: '*content.color',
 
 	imageView: SC.ImageView.design({
@@ -86,7 +89,7 @@ Geniverse.OrganismView = SC.View.extend(
   }),
   
   colorLabelView: SC.LabelView.design({
-    isVisibleBinding: '*parentView.showColorLabels',
+    isVisibleBinding: '*parentView.colorLabelVisible',
     layout: function () {
       var btm = 10;
       var height = this.getPath('parentView.clippingFrame').height;
