@@ -82,6 +82,7 @@ Lab.challenge = Ki.State.extend({
   },
 
   _challengeComplete: function(message) {
+    var self = this;
     this.endChallenge();
 
     if (!message) {
@@ -111,17 +112,33 @@ Lab.challenge = Ki.State.extend({
       {
         alertPaneDidDismiss: function(pane, status) {
           if (status === SC.BUTTON1_STATUS) {
-            if (next) {
-              Lab.statechart.sendAction('gotoNextActivity');
-            } else {
-              Lab.routes.openCaselogRoute();
-            }
+              self._showCongrats(next);
           } else {
             Lab.statechart.sendAction('repeatChallenge');
           }
         }
       }
     );
+  },
+
+  _showCongrats: function(next) {
+    var self = this;
+    var congrats = Geniverse.activityController.get('congratulations');
+    if (typeof(congrats) != 'undefined' && congrats !== null && congrats !== "") {
+      Lab.congratulationsController.display(congrats, function() {
+        self._moveOn(next);
+      });
+    } else {
+      self._moveOn(next);
+    }
+  },
+
+  _moveOn: function(next) {
+    if (next) {
+      Lab.statechart.sendAction('gotoNextActivity');
+    } else {
+      Lab.routes.openCaselogRoute();
+    }
   },
 
   _updateNumTrials: function() {
