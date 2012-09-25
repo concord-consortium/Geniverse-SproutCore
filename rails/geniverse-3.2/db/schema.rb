@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120924212812) do
+ActiveRecord::Schema.define(:version => 20120925153758) do
 
   create_table "activities", :force => true do |t|
     t.string   "initial_alleles"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20120924212812) do
     t.integer  "threshold_three_stars"
     t.integer  "threshold_two_stars"
     t.boolean  "show_color_labels"
+    t.text     "congratulations"
   end
 
   create_table "articles", :force => true do |t|
