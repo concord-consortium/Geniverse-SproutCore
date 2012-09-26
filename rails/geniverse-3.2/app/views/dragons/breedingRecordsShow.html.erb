@@ -74,33 +74,33 @@
         <table class="statsPadding">
           <tbody>
             <tr>
-              <th style="border: 0"></th>
-              <th colspan="3" style="border: 0; color:purple">current clutch</th>
-              <th style="border: 0"></th>
-              <th colspan="3" style="border: 0; color:purple">all clutches</th>
+              <th style="border: none;"></th>
+              <th colspan="3" style="border: none; color:purple">current clutch</th>
+              <th style="border: none;"></th>
+              <th colspan="3" style="border: none; color:purple">all clutches</th>
             </tr>
             <tr>
-              <th style="border: 0"></th>
-              <th>Total</th>
-              <th>F</th>
-              <th>M</th>
-              <th style="border: 0"></th>
-              <th>Total</th>
-              <th>F</th>
-              <th>M</th>
+              <th style="border: none;"></th>
+              <th style="border: 1px solid black;">Total</th>
+              <th style="border: 1px solid black;">F</th>
+              <th style="border: 1px solid black;">M</th>
+              <th style="border: none;"></th>
+              <th style="border: 1px solid black;">Total</th>
+              <th style="border: 1px solid black;">F</th>
+              <th style="border: 1px solid black;">M</th>
             </tr>
 
             <% @statistics[:current].each do |ch, current_vals| %>
               <% all_vals = @statistics[:all][ch] %>
               <tr>
-                <th><%= ch %></th>
-                <td style="text-align: left"><%= current_vals[:total] %> (<%= current_vals[:percent] %>%)</td>
-                <td><%= current_vals[:female] %></td>
-                <td><%= current_vals[:male] %></td>
-                <td style="border: 0; padding: 3px"></td>
-                <td style="text-align: left"><%= all_vals[:total] %> (<%= all_vals[:percent] %>%)</td>
-                <td><%= all_vals[:female] %></td>
-                <td><%= all_vals[:male] %></td>
+                <th style="border: 1px solid black;"><%= ch %></th>
+                <td style="text-align: left; border: 1px solid black;"><%= current_vals[:total] %> (<%= current_vals[:percent] %>%)</td>
+                <td style="border: 1px solid black;"><%= current_vals[:female] %></td>
+                <td style="border: 1px solid black;"><%= current_vals[:male] %></td>
+                <td style="border: none; padding: 3px"></td>
+                <td style="text-align: left; border: 1px solid black;"><%= all_vals[:total] %> (<%= all_vals[:percent] %>%)</td>
+                <td style="border: 1px solid black;"><%= all_vals[:female] %></td>
+                <td style="border: 1px solid black;"><%= all_vals[:male] %></td>
               </tr>
             <% end %>
           </tbody>
