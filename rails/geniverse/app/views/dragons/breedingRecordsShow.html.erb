@@ -66,6 +66,49 @@
     <td><%=h Time.at(@dragon.breedTime.to_i/1000.0).strftime("Bred at %H:%M on %h %d, %Y") %></td>
   </tr>
   
+  <% if @trait && @statistics %>
+    <tr>
+      <td><b>Trait:</b></td>
+      <td><%= @trait %></td>
+      <td>
+        <table class="statsPadding">
+          <tbody>
+            <tr>
+              <th style="border: 0"></th>
+              <th colspan="3" style="border: 0; color:purple">current clutch</th>
+              <th style="border: 0"></th>
+              <th colspan="3" style="border: 0; color:purple">all clutches</th>
+            </tr>
+            <tr>
+              <th style="border: 0"></th>
+              <th>Total</th>
+              <th>F</th>
+              <th>M</th>
+              <th style="border: 0"></th>
+              <th>Total</th>
+              <th>F</th>
+              <th>M</th>
+            </tr>
+
+            <% @statistics[:current].each do |ch, current_vals| %>
+              <% all_vals = @statistics[:all][ch] %>
+              <tr>
+                <th><%= ch %></th>
+                <td style="text-align: left"><%= current_vals[:total] %> (<%= current_vals[:percent] %>%)</td>
+                <td><%= current_vals[:female] %></td>
+                <td><%= current_vals[:male] %></td>
+                <td style="border: 0; padding: 3px"></td>
+                <td style="text-align: left"><%= all_vals[:total] %> (<%= all_vals[:percent] %>%)</td>
+                <td><%= all_vals[:female] %></td>
+                <td><%= all_vals[:male] %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </td>
+      <td>&nbsp;</td>
+    </tr>
+  <% end %>
 
 </table>
 
