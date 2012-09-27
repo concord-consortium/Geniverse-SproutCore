@@ -1,9 +1,12 @@
+sc_require('resources/lib/biologica.min.js');
+
 // ==========================================================================
 // Project:   Geniverse.Dragon
 // Copyright: ©2010 Concord Consortium
 // ==========================================================================
 /*globals SC Geniverse GenGWT YES NO*/
 
+var imageUrlStart = "/resources/drakes/images/";
 /** @class
 
   (Document your Model here)
@@ -102,22 +105,22 @@ Geniverse.Dragon = SC.Record.extend(
     if (this.get('gOrganismDefined')) {
       // this.set('name', gOrg.name);  // GWT doesn't create meaningful names, so no sense in overriding an existing name
       this.set('sex', gOrg.sex);
-      this.set('alleles', gOrg.alleles);
-      this.set('imageURL', gOrg.imageURL);
-      if (gOrg.characteristics !== null){
-        this.set('characteristics', gOrg.characteristics.array);
-      } else {
-        var self = this;
-        GenGWT.getCharacteristics(gOrg, function(characteristics){
-          gOrg.characteristics = characteristics;
-          self.set('characteristics', gOrg.characteristics.array);
-        });
+      this.set('alleles', gOrg.genetics.genotype.getAlleleString());
+      this.set('imageURL', imageUrlStart + gOrg.getImageName());
+
+      characteristicMap = gOrg.phenotype.characteristics;
+      characteristicsArray = [];
+
+      for (trait in characteristicMap) {
+        if (!characteristicMap.hasOwnProperty(trait)) continue;
+        characteristicsArray.push(characteristicMap[trait]);
       }
-      this.set('characteristicMap', gOrg.characteristicMap);
-      this.set('metaInfo', gOrg.metaInfo);
+
+      this.set('characteristics', characteristicsArray);
+      this.set('characteristicMap', characteristicMap);
     }
   }.observes('gOrganism'),
-  
+
   // some computed properties
   sexAsString: function() {
     var sex = this.get('sex');
@@ -144,14 +147,14 @@ Geniverse.Dragon = SC.Record.extend(
     }
     return out;
   }.property('characteristics').cacheable(),
-  
+
   info: function() {
     return this.get('sexAsString') + ' -- ' + this.get('characteristicsAsString');
   }.property('sexAsString','characteristicsAsString').cacheable(),
 
   characteristicValue: function(name) {
     if (name !== null && typeof name != 'undefined') {
-      return this.get('characteristicMap').get(name.toLowerCase());
+      return this.get('characteristicMap')[name.toLowerCase()];
     }
     return "";
   }
@@ -162,53 +165,5 @@ Geniverse.Dragon.modelName = "dragon";
 Geniverse.Dragon.modelsName = "dragons";
 Geniverse.railsBackedTypes.push(Geniverse.Dragon.modelName);
 
-Geniverse.Dragon.traitRules = {
-  "armor": {
-    "Five armor": [["A1", "A1"], ["A1", "A2"]],
-    "Three armor": [["A1", "a"], ["A2", "A2"]],
-    "One armor": [["A2", "a"]],
-    "No armor": [["a", "a"]]
-  },
-  "tail": {
-    "Long tail": [["T", "T"], ["T", "Tk"], ["T", "t"]],
-    "Kinked tail": [["Tk", "Tk"], ["Tk", "t"]],
-    "Short tail": [["t", "t"]]
-  },
-  "forelimbs": {
-    "Forelimbs": [["Fl", "Fl"], ["Fl", "fl"]],
-    "No forelimbs": [["fl", "fl"]]
-  },
-  "hindlimbs": {
-    "Hindlimbs": [["Hl", "Hl"], ["Hl", "hl"]],
-    "No hindlimbs": [["hl", "hl"]]
-  },
-  "horns": {
-    "Hornless": [["H", "H"], ["H", "h"]],
-    "Horns": [["h", "h"]]
-  },
-  "nose spike": {
-    "Nose spike": [["Rh", "Rh"], ["Rh", "rh"]],
-    "No nose spike": [["rh", "rh"]]
-  },
-  "wings": {
-    "Wings": [["W", "W"], ["W", "w"]],
-    "No wings": [["w", "w"]]
-  },
-  "color": {
-    "Steel":    [["M", "M", "B", "B", "D", "D"], ["M", "m", "B", "B", "D", "D"],
-                 ["M", "M", "B", "b", "D", "D"], ["M", "M", "B", "B", "D", "d"],
-                 ["M", "m", "B", "b", "D", "D"], ["M", "m", "B", "B", "D", "d"],
-                 ["M", "M", "B", "b", "D", "d"], ["M", "m", "B", "b", "D", "d"]],
-    "Copper":   [["M", "M", "b", "b", "D", "D"], ["M", "m", "b", "b", "D", "D"],
-                 ["M", "M", "b", "b", "D", "d"], ["M", "m", "b", "b", "D", "d"]],
-    "Argent":   [["M", "M", "B", "B", "d", "d"], ["M", "m", "B", "B", "d", "d"],
-                 ["M", "M", "B", "b", "d", "d"], ["M", "m", "B", "b", "d", "d"]],
-    "Gold":     [["M", "M", "b", "b", "d", "d"], ["M", "m", "b", "b", "d", "d"]],
-    "Charcoal": [["m", "m", "B", "B", "D", "D"], ["m", "m", "B", "b", "D", "D"],
-                 ["m", "m", "B", "B", "D", "d"], ["m", "m", "B", "b", "D", "d"]],
-    "Earth":    [["m", "m", "b", "b", "D", "D"], ["m", "m", "b", "b", "D", "d"]],
-    "Dust":     [["m", "m", "B", "B", "d", "d"], ["m", "m", "B", "b", "d", "d"]],
-    "Sand":     [["m", "m", "b", "b", "d", "d"]]
-  }
-};
+Geniverse.Dragon.traitRules = BioLogica.Species.Drake.traitRules;
 

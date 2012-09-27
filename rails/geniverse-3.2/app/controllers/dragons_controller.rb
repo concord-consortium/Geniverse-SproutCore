@@ -54,6 +54,7 @@ class DragonsController < ApplicationController
   # GET /breedingRecordsShow/1
   def breedingRecordsShow
     @dragon = Dragon.find(params[:id])
+    process_stats(params[:stats])
 
     respond_to do |format|
       format.html { render :breedingRecordsShow => @dragon }
@@ -154,6 +155,74 @@ class DragonsController < ApplicationController
   def destroy_all
     Dragon.destroy_all
     redirect_to(dragons_url)
+  end
+
+  private
+
+  # Expects a data structure like:
+  # data = {
+  #   :trait => "Wings",
+  #   :stats => {
+  #     :all => {
+  #       :wings => {
+  #         :male => 16,
+  #         :female => 14
+  #       },
+  #       :"no wings" => {
+  #         :male => 15,
+  #         :female => 15
+  #       }
+  #     },
+  #     :current => {
+  #       :wings => {
+  #         :male => 7,
+  #         :female => 3
+  #       },
+  #       :"no wings" => {
+  #         :male => 4,
+  #         :female => 6
+  #       }
+  #     }
+  #   }
+  # }
+  # url like: http://gv.local:3000/breedingRecordsShow/1423815?stats[trait]=Wings&stats[all][wings][male]=16&stats[all][wings][female]=14&stats[all][no+wings][male]=15&stats[all][no+wings][female]=15&stats[current][wings][male]=6&stats[current][wings][female]=4&stats[current][no+wings][male]=5&stats[current][no+wings][female]=5
+  def process_stats(stats)
+    return unless stats
+    @trait = stats.delete(:trait) || "Unknown"
+
+    all_total = stats[:all].inject(0) do |res, arr|
+      res += (arr[1][:male].to_i + arr[1][:female].to_i)
+    end
+    current_total = stats[:current].inject(0) do |res, arr|
+      res += (arr[1][:male].to_i + arr[1][:female].to_i)
+    end
+
+    @statistics = {}
+    stats[:all].each do |ch, counts|
+      m = counts[:male].to_i
+      f = counts[:female].to_i
+      t = m + f
+      @statistics[:all] ||= {}
+      @statistics[:all][ch] = {
+        :total => t,
+        :male => m,
+        :female => f,
+        :percent => ((t.to_f/all_total)*100).floor.to_i
+      }
+    end
+    stats[:current].each do |ch, counts|
+      m = counts[:male].to_i
+      f = counts[:female].to_i
+      t = m + f
+      @statistics[:current] ||= {}
+      @statistics[:current][ch] = {
+        :total => t,
+        :male => m,
+        :female => f,
+        :percent => ((t.to_f/current_total)*100).floor.to_i
+      }
+    end
+
   end
 
 end

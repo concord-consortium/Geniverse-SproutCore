@@ -36,11 +36,12 @@ Geniverse.chromosomeController = SC.ObjectController.create(
     ['A1', 'A2', 'a'],
     ['B', 'b'],
     ['D', 'd', 'dl'],
+    ['Bog', 'bog'],
     ['Rh', 'rh']
   ],
   
-  allelesMap: {t: '1',tk: '1',m: '1',mt: '1',w: '1',h: '2',c: '2',fl: '2',hl: '2',a: '2', a1: '2', a2: '2',
-                b: 'X',d: 'X',dl: 'X',rh: 'X'},
+  allelesMap: {t: '1',tk: '1',m: '1',mt: '1',w: '1',h: '1',c: '2',fl: '2',hl: '2',a: '2', a1: '2', a2: '2',
+                b: '2',d: 'X',dl: 'X',bog: 'X',rh: 'X'},
   
   getChromosome: function(allele) {
     return this.get('allelesMap')[allele.toLowerCase()];
@@ -104,6 +105,8 @@ Geniverse.chromosomeController = SC.ObjectController.create(
       'D': 'Full color',
       'd': 'Dilute color',
       'dl': 'dl',
+      'Bog': 'Normal metabolism',
+      'bog': 'Bog breath',
       'Rh': 'Nose spike',
       'rh': 'No nose spike',
 	  'Y' : 'Y',
@@ -115,7 +118,6 @@ Geniverse.chromosomeController = SC.ObjectController.create(
     if (mappedVal !== undefined) {
       return mappedVal;
     }
-    SC.Logger.warn("couldn't find maped: %s", val);
     return val;
   },
   

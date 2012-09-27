@@ -2,7 +2,13 @@ class ActivitiesController < ApplicationController
   # GET /activities
   # GET /activities.xml
   def index
-    @activities = Activity.all
+    if params[:route]
+      act = Activity.find_by_route(params[:route])
+      @activities = act.nil? ? [] : [act]
+      @activities.compact
+    end
+
+    @activities = Activity.all unless @activities && @activities.size > 0
 
     respond_to do |format|
       format.html # index.html.erb

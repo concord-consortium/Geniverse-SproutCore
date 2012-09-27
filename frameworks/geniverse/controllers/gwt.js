@@ -15,37 +15,7 @@ Geniverse.gwtController = SC.Object.create(
 {
   bredOrganisms: [],
 
-  isReady: NO,
-
-  loadTimer: null,
-
   pendingOrganisms: [],
-
-  setupTimer: function() {
-	  if (this.get('loadTimer') !== null) {
-	    this.get('loadTimer').invalidate();
-    }
-
-    this.set('loadTimer', SC.Timer.schedule({
-      target: this,
-      action: function() {
-        if (typeof(GenGWT) != "undefined" && GenGWT.isLoaded()) {
-          this.set('isReady', YES);
-          this.get('loadTimer').invalidate();
-        }
-      },
-      interval: 200,
-      repeats: YES
-    }));
-	},
-
-  init: function() {
-		sc_super();
-
-		if (typeof(GenGWT) == "undefined" || ! GenGWT.isLoaded()) {
-		  this.setupTimer();
-		}
-	},
 
 	drakesArePending: function() {
     return this.pendingOrganisms.length > 0;
@@ -150,7 +120,7 @@ Geniverse.gwtController = SC.Object.create(
     var id = this.addPendingDrake();
     var handleGOrg = function(gOrg) {
       if (!!mustBeAlive){
-        if (gOrg.characteristicMap.stringMap[':liveliness'].indexOf('Dead') > -1){
+        if (gOrg.getCharacteristic('liveliness') == "Dead"){
           count++;
           if (count > 10){
             SC.Logger.log("Tried too many times to create this dragon, it insists on being dead");

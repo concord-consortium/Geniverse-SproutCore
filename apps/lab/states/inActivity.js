@@ -20,8 +20,11 @@ Lab.inActivity = Ki.State.extend({
     matchTargetDrakesListChallenge: Ki.State.plugin('Lab.matchTargetDrakesListChallenge'),
     matchTargetDrakesOneAtATimeChallenge: Ki.State.plugin('Lab.matchTargetDrakesOneAtATimeChallenge'),
     chromosomeBreedingOneAtATimeChallenge: Ki.State.plugin('Lab.chromosomeBreedingOneAtATimeChallenge'),
+    invisibleGenotypeChallenge: Ki.State.plugin('Lab.invisibleGenotypeChallenge'),
+    selectParentsChallenge: Ki.State.plugin('Lab.selectParentsChallenge'),
     defaultChallenge: Ki.State.plugin('Lab.defaultChallenge'),
     initialChallenge: Ki.State.plugin('Lab.initialChallenge'),
+    firstMeiosisWithMatchTarget: Ki.State.plugin('Lab.firstMeiosisWithMatchTarget'),
 
     currentChallenge: null
   }),
@@ -64,7 +67,7 @@ Lab.inActivity = Ki.State.extend({
       } else {
         Geniverse.activityController.addObserver('content', this, this._activityLoaded);
       }
-      
+
       Lab.ACTIVITY.gotoActivity();
     }
     // Indicate that we handled 'gotoActivity' action so that our parent state (atLocation) doesn't try to handle it.
@@ -89,9 +92,9 @@ Lab.inActivity = Ki.State.extend({
     } else {
       this.get('challengeState').gotoState('defaultChallenge');
     }
-    
+
     this._setupGenomeDragons(pageType);
-    
+
     if (Geniverse.activityController.get('myCase')) {
       if (Geniverse.activityController.getPath('myCase.status') & SC.Record.READY) {
         this._caseLoaded();
@@ -101,7 +104,7 @@ Lab.inActivity = Ki.State.extend({
       }
     }
   },
-  
+
   _setupGenomeDragons: function(pageType) {
     switch (pageType) {
       case 'chromosomeChallengePage':
@@ -111,6 +114,9 @@ Lab.inActivity = Ki.State.extend({
       case 'chromosomeBreedingPage':
       case 'chromosomeBreedingChallengePage':
       case 'chromosomeTrainingPage':
+      case 'invisibleMaleGenotypePage':
+      case 'invisibleFemaleGenotypePage':
+      case 'chromosomeBreedingSelectParentsPage':
         Geniverse.dragonGenomeController.initDragonForView(1, 1, true);
         Geniverse.dragonGenomeController.initDragonForView(2, 0, true);
         break;
@@ -121,7 +127,7 @@ Lab.inActivity = Ki.State.extend({
         break;
     }
   },
-  
+
   // Not a statechart action.
   _caseLoaded: function() {
     if (this.myCase) {

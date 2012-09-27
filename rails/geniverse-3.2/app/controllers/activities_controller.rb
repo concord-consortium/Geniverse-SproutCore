@@ -2,12 +2,18 @@ class ActivitiesController < ApplicationController
   # GET /activities
   # GET /activities.xml
   def index
-    @activities = Activity.all
+    if params[:route]
+      act = Activity.find_by_route(params[:route])
+      @activities = act.nil? ? [] : [act]
+      @activities.compact
+    end
+
+    @activities = Activity.all unless @activities && @activities.size > 0
 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @activities }
-      format.json #{ render :json => custom_array_hash(@activities) }
+      format.json { render :json => custom_array_hash(@activities) }
     end
   end
 
@@ -19,7 +25,7 @@ class ActivitiesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @activity }
-      format.json #{ render :json => custom_item_hash(@activity) }
+      format.json { render :json => custom_item_hash(@activity) }
     end
   end
 
@@ -49,7 +55,7 @@ class ActivitiesController < ApplicationController
         flash[:notice] = 'Activity was successfully created.'
         format.html { redirect_to(@activity) }
         format.xml  { render :xml => @activity, :status => :created, :location => @activity }
-        format.json #{ render :json => custom_item_hash(@activity), :status => :created, :location => @activity }
+        format.json { render :json => custom_item_hash(@activity), :status => :created, :location => @activity }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @activity.errors, :status => :unprocessable_entity }

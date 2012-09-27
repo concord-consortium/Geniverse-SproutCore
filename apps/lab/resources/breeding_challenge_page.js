@@ -48,7 +48,7 @@ Lab.breedingChallengePage = SC.Page.design({
         layout: {top: 0, left: 0, right: 0, bottom: 0},
         classNames: ['genome-view-intro']
       }),
-     
+
       // challenge pool to hold initial, system-created dragons
       mothersPoolView: Lab.ChallengePoolView.design({
         layout: { left: 20, top: 60, width:165, height: 173 },
@@ -105,7 +105,7 @@ Lab.breedingChallengePage = SC.Page.design({
         breedButtonView: SC.ButtonView.design({
           layout: { top: 10, centerX: 20, width: 100, height: 24 },
           target: 'Geniverse.breedDragonController',
-          trackScoreBinding: '*parentView.trackScore',
+          trackScore: NO,
           action: function() {
             return this.get('trackScore') ? "breedAndIncrementScore" : "breed";
           }.property('trackScore'),

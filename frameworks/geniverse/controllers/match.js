@@ -41,7 +41,7 @@ Geniverse.matchController = SC.ArrayController.create(
     if (!Geniverse.activityController.get('content')) {
       return;
     }
-    
+
     if (this.get('currentDragonIdx') === -1) {
       this.set('currentDragonIdx', 0);
     }
@@ -50,13 +50,13 @@ Geniverse.matchController = SC.ArrayController.create(
     if (dragons && dragons.get('length') > 0) {
       dragon = dragons.objectAt(this.get('currentDragonIdx'));
     }
-    
+
     if (this.get('currentDragon') !== dragon) {
       this.set("currentDragon", dragon);
       this.propertyDidChange('matchedCountLabel');
       Lab.statechart.sendAction('matchDragonChanged');
     }
-    
+
   }.observes('currentDragonIdx', '*arrangedObjects.length'),
   // this will be obsolete once we use a graphic
   matchedCountLabel: "",
@@ -106,11 +106,11 @@ Geniverse.matchController = SC.ArrayController.create(
 
     return moves;
   },
-  
+
   numberOfBreedingMovesToReachCurrent: function(dragon1, dragon2, changeableAlleles1, changeableAlleles2) {
     return this.numberOfBreedingMovesToReachDrake(dragon1, dragon2, changeableAlleles1, changeableAlleles2, this.get("currentDragon"));
   },
-  
+
   numberOfBreedingMovesToReachDrake: function(dragon1, dragon2, changeableAlleles1, changeableAlleles2, targetDragon) {
     var moves = 0,
         dragon1Alleles = dragon1.get('alleles').split(",").map(function(a) { return a.split(":")[1]; }),
@@ -118,10 +118,10 @@ Geniverse.matchController = SC.ArrayController.create(
         current = targetDragon,
         targetchars = current.get('characteristicMap'),
         traitRules = Geniverse.Dragon.traitRules;
-        
+
     for (var trait in traitRules) {
       if (traitRules.hasOwnProperty(trait)) {
-        var possibleSolutions = traitRules[trait][targetchars.get(trait)],
+        var possibleSolutions = traitRules[trait][targetchars[trait]],
             shortestPath = Infinity;
         if (possibleSolutions && possibleSolutions.length) {
           for (var i = 0, ii = possibleSolutions.length; i<ii; i++) {
@@ -133,8 +133,8 @@ Geniverse.matchController = SC.ArrayController.create(
                   allele2 = j%2 === 0 ? solution[j+1] : solution[j-1],
                   solutionMoves = 0;
               if (dragon1Alleles.indexOf(allele1) === -1) {
-                if (changeableAlleles1.indexOf(allele1) > -1 ||
-                    changeableAlleles1.indexOf(allele1.toLowerCase()) > -1) {
+                if (allele1 && (changeableAlleles1.indexOf(allele1) > -1 ||
+                    changeableAlleles1.indexOf(allele1.toLowerCase()) > -1)) {
                   solutionMoves++;
                 } else {
                   solutionMoves = Infinity;
@@ -142,8 +142,8 @@ Geniverse.matchController = SC.ArrayController.create(
               }
 
               if (dragon2Alleles.indexOf(allele2) === -1) {
-                if (changeableAlleles2.indexOf(allele2) > -1 ||
-                      changeableAlleles2.indexOf(allele2.toLowerCase()) > -1) {
+                if (allele2 && (changeableAlleles2.indexOf(allele2) > -1 ||
+                      changeableAlleles2.indexOf(allele2.toLowerCase()) > -1)) {
                   solutionMoves++;
                 } else {
                   solutionMoves = Infinity;
@@ -162,10 +162,7 @@ Geniverse.matchController = SC.ArrayController.create(
         }
       }
     }
-    
-    // chromo breeding must use exactly one breed
-    moves += 1;
-    
+
     return moves;
   },
 
@@ -175,7 +172,7 @@ Geniverse.matchController = SC.ArrayController.create(
 
     for (var trait in traitRules) {
       if (traitRules.hasOwnProperty(trait)) {
-        if (originalCharacteristics.get(trait) !== targetCharacteristics.get(trait)) {
+        if (originalCharacteristics[trait] !== targetCharacteristics[trait]) {
           // first we have to work out what alleles the original drake has that correspond to
           // their non-matching trait
           var possibleTraitAlleles = this._collectAllAllelesForTrait(trait, traitRules),
@@ -186,7 +183,7 @@ Geniverse.matchController = SC.ArrayController.create(
             }
           }
           // now work out the smallest number of steps to get from there to the desired characteristic
-          var possibleSolutions = traitRules[trait][targetCharacteristics.get(trait)],
+          var possibleSolutions = traitRules[trait][targetCharacteristics[trait]],
               shortestPathLength = Infinity;
           for (i = 0, ii = possibleSolutions.length; i < ii; i++) {
             var solution = possibleSolutions[i].copy(),

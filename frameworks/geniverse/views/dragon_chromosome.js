@@ -22,14 +22,14 @@ Geniverse.DragonChromosomeView = SC.View.extend(
   showEmptyOptionInPulldowns: NO,
   startWithEmptyOption: NO,
   classNames: ['opaque'],
-  
+
   chromosome: '1',
   side: 'A',
   showLines: NO,
   trackScore: NO,
-  
+
   oldAlleles: [],
-  
+
   // sc_static is search/replaced via the build tools not by the runtime,
   // therefore we have to pre-calculate all of the possible images and urls here
   chromoImageUrls: {
@@ -57,11 +57,11 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     X: sc_static("X-lines.png"),
     Y: sc_static("Y-lines.png")
   },
-  
+
   showPulldowns: function() {
     return this.get('alleles').length > 0;
   }.property('alleles'),
- 
+
   resetPulldowns: function() {
    this.get('pullDowns').resetPulldowns();
   },
@@ -86,20 +86,20 @@ Geniverse.DragonChromosomeView = SC.View.extend(
     this.propertyDidChange('allAllelesSelected');
   },
 
-  
+
   childViews: 'chromoImage linesImage pullDowns'.w(),
-  
+
   chromoImage: SC.ImageView.design({
     layout: {top: 0, left: 0, width: 22 },
     chromosomeBinding: '*parentView.chromosome',
     sideBinding: '*parentView.side',
     chromoImageUrlsBinding: '*parentView.chromoImageUrls',
     classNames: ['opaque'],
-    
+
     chromosomeDidChange: function() {
       this._setChromoImage();
     }.observes('chromosome','side'),
-    
+
     _setChromoImage: function() {
       var urls = this.get('chromoImageUrls');
       if (!!urls) {
@@ -111,7 +111,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       }
     }
   }),
-  
+
   linesImage: SC.ImageView.design({
     layout: {top: 0, left: 22, width: 22 },
     isVisibleBinding: '*parentView.showLines',
@@ -124,7 +124,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       }
     }.observes('chromosome')
   }),
-  
+
   pullDowns: SC.View.design({
     layout: {top:0, left: 30 },
     isVisibleBinding: '*parentView.showPulldowns',
@@ -135,36 +135,39 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       }
       return [];
     }.property('*parentView.alleles'),
-    
+
     alleleToPulldown: [],
     hiddenGenesBinding: '*parentView.hiddenGenes',
     staticGenesBinding: '*parentView.staticGenes',
     isEditableBinding: '*parentView.isEditable',
-    
+
     ignoreChanges: NO,
-    
+
     autoChangingPulldowns: NO,
-    
+
     init: function() {
       sc_super();
       this.invokeLast(function() {
         this._setupPulldowns();
       });
     },
-    
+
     allelesDidChange: function() {
+      if (!Geniverse.activityController.get('content')) {
+        return;
+      }
       this.set('ignoreChanges', YES);
       this.set('autoChangingPulldowns', YES);
       var alleles = this.get('alleles');
       var pulldowns = this.get('alleleToPulldown');
-      
+
       if (!pulldowns[this]){
         this._setupPulldowns();
         if (!pulldowns[this]){
           return;
         }
       }
-      
+
       for (var i = 0; i < alleles.length; i++) {
         var pd = pulldowns[this][alleles[i].toLowerCase()];
         if (!pd) {      // not findable just by getting lower case
@@ -197,9 +200,9 @@ Geniverse.DragonChromosomeView = SC.View.extend(
           }
         }
       }
-      
+
       this.set('autoChangingPulldowns', NO);
-      
+
       // go through pulldowns and hide those which don't have alleles
       // for (var j in pulldowns[this]) {
       //   if (!!pulldowns[this][j].tagName && pulldowns[this][j].tagName === 'select') {
@@ -211,15 +214,15 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       //   }
       // }
     }.observes('*parentView.alleles.[]'),
-    
+
     isEditableDidChange: function() {
       this.resetPulldowns();
     }.observes('isEditable'),
-    
+
     hiddenGenesDidChange: function() {
       this.resetPulldowns();
     }.observes('hiddenGenes'),
-    
+
     staticGenesDidChange: function() {
       this.resetPulldowns();
     }.observes('staticGenes'),
@@ -265,7 +268,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
           }
         }
       }
-      
+
       var pulldownOptions = [];
       for (var i in sisterAlleles){
         if (SC.typeOf(sisterAlleles[i]) === SC.T_STRING){
@@ -288,13 +291,13 @@ Geniverse.DragonChromosomeView = SC.View.extend(
 
       var dropDownMenuView = SC.SelectFieldView.create({
           layout: { top: top, left: 0, height: 25, width: 105 },
-          
+
          objects: pulldownOptions,
-       
+
           value: startingVal,
           nameKey: 'title',
           valueKey: 'value',
-          
+
           updater: function(ignore){
             if (!!this.get('value')) {
               var firstObj = this.get('objects')[0];
@@ -309,7 +312,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
             }
           }.observes('value')
       });
-      
+
 
       if (!map[this]) {
         map[this] = [];
@@ -320,7 +323,7 @@ Geniverse.DragonChromosomeView = SC.View.extend(
       // force the menu to make sure it sets its parent view properties
       dropDownMenuView.updater(true);
     },
-    
+
     _createStaticAllele: function(val, top){
       var map = this.get('alleleToPulldown');
 
