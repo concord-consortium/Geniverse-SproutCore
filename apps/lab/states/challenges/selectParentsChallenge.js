@@ -87,16 +87,16 @@ Lab.selectParentsChallenge = Lab.challenge.extend({
   },
 
   _getPossibleCharacteristics: function(parent1Alleles, parent2Alleles) {
-    var parent1aAlleles = parent1Alleles.match(/a:([^b,]*)/g).map(function(str) {
+    var parent1aAlleles = parent1Alleles.match(/a:([^,]*)/g).map(function(str) {
           return str.match(/[^:]+$/)[0];
         }),
-        parent1bAlleles = parent1Alleles.match(/b:([^a,]*)/g).map(function(str) {
+        parent1bAlleles = parent1Alleles.match(/b:([^,]*)/g).map(function(str) {
           return str.match(/[^:]+$/)[0];
         }),
-        parent2aAlleles = parent2Alleles.match(/a:([^b,]*)/g).map(function(str) {
+        parent2aAlleles = parent2Alleles.match(/a:([^,]*)/g).map(function(str) {
           return str.match(/[^:]+$/)[0];
         }),
-        parent2bAlleles = parent2Alleles.match(/b:([^a,]*)/g).map(function(str) {
+        parent2bAlleles = parent2Alleles.match(/b:([^,]*)/g).map(function(str) {
           return str.match(/[^:]+$/)[0];
         }),
         possibleConfigs = {},
