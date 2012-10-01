@@ -179,7 +179,7 @@
           title: "Case 14: Color My Drake",
           challenges: [
             {
-              title: "Challenge 1: Lighter Shade of Pale",
+              title: "Challenge 1: Color Comparison",
               href: "#case14/challenge1",
               useQuill: true
             }, {
@@ -212,6 +212,14 @@
               title: "Challenge 1: Protect and Serve",
               href: "#case16/challenge1",
               useQuill: true
+            }
+          ]
+        }, {
+          title: "Case 17: Frosty's Fate",
+          challenges: [
+            {
+              title: "Challenge 1: Finding a New Frosty",
+              href: "#case17/challenge1"
             }
           ]
         }

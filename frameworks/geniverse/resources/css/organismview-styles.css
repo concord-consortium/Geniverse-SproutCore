@@ -52,3 +52,11 @@
   background: none;
 }
 
+.sc-theme .sc-label-view.normal-color-label {
+  font-size: 1em;
+}
+
+.sc-theme .sc-label-view.small-color-label {
+  font-size: 0.8em;
+}
+
