@@ -23,13 +23,11 @@ a#caselog {
 a#caselog:hover {
     cursor: pointer;
     cursor: hand;
-    background-image: static_url('mainscreen-caselog-highlighted.png');
     background-repeat: none;
 }
 
 a#journal:hover {
     cursor: pointer;
     cursor: hand;
-    background-image: static_url('mainscreen-journal-highlighted.png');
     background-repeat: none;
 }

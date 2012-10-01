@@ -39,7 +39,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
 
       childViews: 'background genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle line'.w(),
 
-      layout: { centerX: 0, top: 40, width: 850, height: 560 },
+      layout: { centerX: 0, top: 94, width: 850, height: 560 },
 
       // separate parallel background so we don't make the rest of the childViews see-through
       background: SC.View.design({
