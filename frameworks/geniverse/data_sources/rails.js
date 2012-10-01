@@ -118,7 +118,10 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
 
 
   createRecord: function(store, storeKey) {
-    return NO;
+    window.setTimeout(function() {
+      store.dataSourceDidComplete(storeKey);
+    }, 2);
+    return YES;
   },
 
   didCreateRecord: function(response, store, storeKey) {
@@ -133,7 +136,10 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
   },
 
   updateRecord: function(store, storeKey) {
-    return NO;
+    window.setTimeout(function() {
+      store.dataSourceDidComplete(storeKey);
+    }, 2);
+    return YES;
   },
 
   //
