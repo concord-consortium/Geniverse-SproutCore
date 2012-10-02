@@ -56,9 +56,7 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
   checkAnswer: function() {
     sc_super();
     this.organismView = this.buttonView.getPath('parentView.genomeView.dragonView');
-    console.log(this.organismView)
     this._revealImage();
-    Geniverse.scoringController.incrementScore(1);
     
     SC.Timer.schedule({
       target: this,
@@ -75,6 +73,7 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
           );
         } else {
           this.successfulMatch = NO;
+          Geniverse.scoringController.incrementScore(1);
           SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).error(
             "That's not the drake!", 
             "The drake you have created doesn't match the target drake. Please try again.",
