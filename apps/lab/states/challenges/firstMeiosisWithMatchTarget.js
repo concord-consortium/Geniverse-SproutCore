@@ -11,6 +11,7 @@ Lab.firstMeiosisWithMatchTarget = Lab.matchTargetDrakesListChallenge.extend({
   _hasReachdRecombination: NO,
   _hasSelectedSomeAlleles: NO,
   _hasSeenMessageToTryMore: NO,
+  _hasSeenYSwapWarning: NO,
   
   showInitialRecobinationMsg: function() {
   if (!this._hasReachdRecombination) {
@@ -42,6 +43,22 @@ Lab.firstMeiosisWithMatchTarget = Lab.matchTargetDrakesListChallenge.extend({
       }, 800);      // delay a little
       this._hasSelectedSomeAlleles = YES;
     }
+  },
+
+  showYSwapAttemptedMsg: function() {
+//  if (!this._hasSeenYSwapWarning) {
+      setTimeout(function() {
+        SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).plain(
+          "Improper Swap Attempted",
+          "No recombniation occurs between X and Y chromosomes.",
+          "",
+          "OK",
+          "",
+          this
+        );
+      }, 50);      // delay a little
+//      this._hasSeenYSwapWarning = YES;
+//    }
   },
 
   showTryMoreRecombinationMsg: function() {

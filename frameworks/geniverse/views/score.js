@@ -18,6 +18,8 @@ Geniverse.ScoreView = SC.View.extend(
   showScore: YES,
   showTargetScore: NO,
 
+  isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
+
   childViews: 'background targetScoreView scoreView '.w(),
 
   background: SC.View.design({

@@ -179,6 +179,10 @@ Geniverse.AnimationView = SC.View.extend(
     Lab.statechart.sendAction('showSelectTargetnMsg');
   },
   
+  ySwapAttempted: function(){
+    Lab.statechart.sendAction('showYSwapAttemptedMsg');
+  },
+  
   swapCompleted: function(){
     Lab.statechart.sendAction('showTryMoreRecombinationMsg');
   },
@@ -250,7 +254,8 @@ Geniverse.AnimationView = SC.View.extend(
       endButtonPressed: this.endButtonPressed,
       reachedRecombination: this.reachedRecombination,
       allelesSelected: this.allelesSelected,
-      swapCompleted: this.swapCompleted
+      swapCompleted: this.swapCompleted,
+      ySwapAttempted: this.ySwapAttempted
     };
     
     if (geniverseAnimation.length > 0){
