@@ -126,7 +126,9 @@ Lab.chromosomeChallengePage = SC.Page.design({
       targetDrakes: Geniverse.MatchView.design({
         layout: { left: 40, top: 60, height: 280, width: 210 },
         onlyOne: YES,
-        dragonSize: 200
+        // FIXME dragonSize of 200 or 201 causes Chrome and Firefox to freeze when zooming in/out
+        // It's some sort of bad interaction with the Geniverse.ShiftedOrganism mixin
+        dragonSize: 202
       }),
 
       targetTitle: SC.LabelView.design({
