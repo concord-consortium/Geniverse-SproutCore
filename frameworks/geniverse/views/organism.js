@@ -33,7 +33,7 @@ Geniverse.OrganismView = SC.View.extend(
 
   showColorLabelsBinding: 'Geniverse.activityController.showColorLabels',
   colorLabelVisible: function() {
-    return this.get('showColorLabels') && !this.get('hideDragon');
+    return (this.get('showColorLabels') || false) && !this.get('hideDragon');
   }.property('hideDragon','showColorLabels'),
   colorLabelBinding: '*content.color',
 
