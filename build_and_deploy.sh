@@ -24,6 +24,13 @@ function sync {
   rsync -rqlzP tmp/build/static/* $REMOTE_USER@$SERVER:$SERVER_PATH/
 }
 
+function boxsync {
+  echo "Sending files to the server... "
+  # If you don't have rsync, use scp instead
+  # scp -r tmp/build/static/* $REMOTE_USER@$SERVER:$SERVER_PATH/
+  rsync -rqlzP tmp/build/* $REMOTE_USER@$SERVER:$SERVER_PATH/
+}
+
 function label {
   BUILD_NUM=$($CMD_PREFIX sc-build-number lab)
   echo "Lab build hash: $BUILD_NUM"
@@ -74,6 +81,16 @@ case "$1" in
     export REMOTE_USER="geniverse"
     ;;
   box)
+    export SERVER=otto.concord.org
+    export SERVER_PATH="/web/geniverse.inabox"
+    export REMOTE_USER="geniverse"
+    build
+    dbdownload
+    copyindex
+    boxsync
+    exit 0
+    ;;
+  box-package)
     build
     dbdownload
     copyindex
