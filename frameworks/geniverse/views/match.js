@@ -18,6 +18,8 @@ Geniverse.MatchView = SC.View.extend(
 /** @scope Geniverse.MatchingView.prototype */ {
 
   dragonsBinding: 'Geniverse.matchController.arrangedObjects',
+  // FIXME dragonSize of 200 or 201 causes Chrome and Firefox to freeze when zooming in/out
+  // It's some sort of bad interaction with the Geniverse.ShiftedOrganism mixin
   dragonSize: 83,
   dragonExampleView: Geniverse.OrganismView.extend(Geniverse.MatchOrganism, Geniverse.ShiftedOrganism, {glow: YES}),
 

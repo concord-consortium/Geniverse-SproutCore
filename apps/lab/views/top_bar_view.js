@@ -229,6 +229,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
         title:  "Note Pad",
         toolTip: "Click to open your notepad",
         target: this.get('notepadButtonTargetPath'),
+        isEnabledBinding: this.get('notepadControllerIsEnabledButtonPath'),
         action: 'showPane'
       })
     );

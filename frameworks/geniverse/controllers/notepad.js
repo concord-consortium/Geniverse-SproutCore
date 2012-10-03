@@ -94,7 +94,10 @@ Geniverse.notepadController = SC.ObjectController.create(
       this.updateView(this.get('content'));
     }
     var receiver = this.pane.remove();
-		this.get('iframe').parentView.removeChild(this.get('iframe'));
+    var parent = this.get('iframe').get('parentView');
+    if (!!parent) {
+      parent.removeChild(this.get('iframe'));
+    }
 //    console.log("this.pane.remove() returned receiver:", receiver);
     this.set('isEnabledButton', YES);
     
@@ -115,7 +118,10 @@ Geniverse.notepadController = SC.ObjectController.create(
     var wasCommitted = Geniverse.store.commitRecords();
     //console.log("Geniverse.store.commitRecords() returned this.wasCommitted:", this.wasCommitted);
     var receiver = this.pane.remove();
-		this.get('iframe').parentView.removeChild(this.get('iframe'));
+    var parent = this.get('iframe').get('parentView');
+    if (!!parent) {
+      parent.removeChild(this.get('iframe'));
+    }
     //console.log("this.pane.remove() returned receiver:", receiver);
     this.set('isEnabledButton', YES);
     

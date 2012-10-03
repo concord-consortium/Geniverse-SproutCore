@@ -83,16 +83,16 @@ Lab.chromosomeChallengePage = SC.Page.design({
           layout: {top: 35, right: -120, height: 500, width: 630 },
           classNames: ['overflowVis'],
           dragonView: Geniverse.OrganismView.design({
-        		layout: {top: 0, left: -35, width: 200, height: 215},
-        	  contentBinding: "*parentView.dragon",
-        	  allowDrop: YES,
+            layout: {top: 0, left: -35, width: 200, height: 215},
+            contentBinding: "*parentView.dragon",
+            allowDrop: YES,
             isVisibleBinding: "*parentView.showDragon",
             useRevealButtonBinding: "*parentView.useRevealButton",
             revealButtonEnabledBinding: "*parentView.revealButtonEnabled",
             hideDragonBinding: "*parentView.hideDragon",
             showBackground: NO,
             glow: YES
-        	}),
+          }),
           dragonOnRight: YES,
           generateDragonAtStart: NO,
           sex: 1,
@@ -120,13 +120,16 @@ Lab.chromosomeChallengePage = SC.Page.design({
       scoreLabel: Geniverse.ScoreView.design({
         layout: { left: 53, top: 370, height: 49, width: 184 },
         showScore: YES,
+        isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
         showTargetScore: YES
       }),
 
       targetDrakes: Geniverse.MatchView.design({
         layout: { left: 40, top: 60, height: 280, width: 210 },
         onlyOne: YES,
-        dragonSize: 200
+        // FIXME dragonSize of 200 or 201 causes Chrome and Firefox to freeze when zooming in/out
+        // It's some sort of bad interaction with the Geniverse.ShiftedOrganism mixin
+        dragonSize: 202
       }),
 
       targetTitle: SC.LabelView.design({

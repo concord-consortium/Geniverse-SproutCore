@@ -21,6 +21,7 @@ sc_require('lib/burst-core');
       reachedRecombination: $.noop,
       allelesSelected : $.noop,
       swapCompleted   : $.noop,
+      ySwapAttempted  : $.noop,
       zoom            : 2,
       width           : 310,
       height          : 320,
@@ -342,46 +343,61 @@ sc_require('lib/burst-core');
       }
 
       var click = function gvclick(){
-        var allele;
-        if( !inRecombSelection ){
-          defaultOpts.allelesSelected.call(defaultOpts.context);
-          for(var i=this.index, l=this.parent.alleles.length; i< l; i++){
-            if (i === 0) {
-              i++;  // prevent whole chromosome swapping
-            }
-            allele = this.parent.alleles[i];
-            allele.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
-            allele.SVG_outer.attr({ 'stroke': defaultOpts.color.hover });
-            var swap1 = allele.parent.swapList[0],
-                swap2 = allele.parent.swapList[1];
-            swap1.alleles[i].SVG_outer.attr({ 'stroke': defaultOpts.color.recomb_outer_hover });
-            swap2.alleles[i].SVG_outer.attr({ 'stroke': defaultOpts.color.recomb_outer_hover });
-            swap1.alleles[i].recombOption = true;
-            swap2.alleles[i].recombOption = true;
-            allele.recombSelected = true;
-            inRecombSelection = whichPair( this.parent.index );
-            inRecombChromeIndex = this.parent.index;
+        var allele, i, l, alleles, yChromosomeInPair = false;
+        for( i=0, l=this.parent.alleles.length; i< l; i++ ){
+          if (this.parent.alleles[i].gene == "Y"){
+            yChromosomeInPair = true;
           }
-        }else{
-          if(this.recombOption){
-          // Collect selected alleles for swapping
-            var alleles1 = [], alleles2 = [];
-            for( var i2 in this.parent.alleles ){
-              if( this.parent.alleles[i2].recombOption ){
-                alleles1.push( this.parent.alleles[i2] );
+        }
+        alleles = this.parent.swapList[0].alleles;
+        for( i=0, l=alleles.length; i< l; i++ ){
+          if (alleles[i].gene == "Y"){
+            yChromosomeInPair = true;
+          }
+        }
+        if (!yChromosomeInPair){
+          if( !inRecombSelection){
+            defaultOpts.allelesSelected.call(defaultOpts.context);
+            for( i=this.index, l=this.parent.alleles.length; i< l; i++){
+              if (i === 0) {
+                i++;  // prevent whole chromosome swapping
               }
+              allele = this.parent.alleles[i];
+              allele.SVG_inner.attr({ 'stroke': defaultOpts.color.hover });
+              allele.SVG_outer.attr({ 'stroke': defaultOpts.color.hover });
+              var swap1 = allele.parent.swapList[0],
+                  swap2 = allele.parent.swapList[1];
+              swap1.alleles[i].SVG_outer.attr({ 'stroke': defaultOpts.color.recomb_outer_hover });
+              swap2.alleles[i].SVG_outer.attr({ 'stroke': defaultOpts.color.recomb_outer_hover });
+              swap1.alleles[i].recombOption = true;
+              swap2.alleles[i].recombOption = true;
+              allele.recombSelected = true;
+              inRecombSelection = whichPair( this.parent.index );
+              inRecombChromeIndex = this.parent.index;
             }
-            var alleles = chromosomes[inRecombChromeIndex].alleles;
-            for( var i3=0, l2=alleles.length; i3< l2; i3++){
-              if( this.parent.alleles[i3].recombOption ){
-                alleles2.push( alleles[i3] );
+          }else{
+            if(this.recombOption){
+            // Collect selected alleles for swapping
+              var alleles1 = [], alleles2 = [];
+              for( i=0, l=this.parent.alleles.length; i< l; i++ ){
+                if( this.parent.alleles[i].recombOption ){
+                  alleles1.push( this.parent.alleles[i] );
+                }
               }
+              alleles = chromosomes[inRecombChromeIndex].alleles;
+              for( i=0, l=alleles.length; i< l; i++){
+               if( this.parent.alleles[i].recombOption ){
+                  alleles2.push( alleles[i] );
+                }
+              }
+              // Initiate multi-swap
+              swapMulti(alleles1, alleles2);
             }
-            // Initiate multi-swap
-            swapMulti(alleles1, alleles2);
-            }
-          // Reset colors of previously selected Alleles
-          resetAlleleColors();
+            // Reset colors of previously selected Alleles
+            resetAlleleColors();
+          }
+        } else {
+          defaultOpts.ySwapAttempted.call(defaultOpts.context);
         }
       };
 

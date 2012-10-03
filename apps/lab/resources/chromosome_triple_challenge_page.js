@@ -67,6 +67,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
       scoreLabel: Geniverse.ScoreView.design({
         layout: { left: 17, top: 340, height: 49, width: 160 },
         showScore: YES,
+        isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
         showTargetScore: YES
       }),
 

@@ -44,7 +44,7 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
     var initialDragon = Geniverse.dragonGenomeController.get('firstDragon');
     if (initialDragon && initialDragon.get('characteristicMap') &&
         Geniverse.matchController.get("currentDragon") && Geniverse.matchController.get("currentDragon").get('characteristicMap')) {
-      Geniverse.scoringController.set('minimumScore', (Geniverse.matchController.numberOfMovesToReachCurrent(initialDragon) + 1));
+      Geniverse.scoringController.set('minimumScore', Geniverse.matchController.numberOfMovesToReachCurrent(initialDragon));
     }
   },
   
@@ -56,9 +56,7 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
   checkAnswer: function() {
     sc_super();
     this.organismView = this.buttonView.getPath('parentView.genomeView.dragonView');
-    console.log(this.organismView)
     this._revealImage();
-    Geniverse.scoringController.incrementScore(1);
     
     SC.Timer.schedule({
       target: this,
@@ -75,6 +73,7 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
           );
         } else {
           this.successfulMatch = NO;
+          Geniverse.scoringController.incrementScore(1);
           SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).error(
             "That's not the drake!", 
             "The drake you have created doesn't match the target drake. Please try again.",
@@ -111,12 +110,11 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
     if (this.successfulMatch){
       if (Geniverse.matchController.isLastDragon()) {
         this._challengeComplete();
-        Geniverse.scoringController.resetChallengeScore();
+        // reset will happen in _challengeComplete()
+      } else {
+        Geniverse.scoringController.resetScore();
+        Geniverse.matchController.nextDragon();
       }
-      // reset score after we do any lastDragon stuff, so that challenge
-      // scores will be calculated correctly.
-      Geniverse.scoringController.resetScore();
-      Geniverse.matchController.nextDragon();
       this.successfulMatch = NO;
     }
     this._hideImage();

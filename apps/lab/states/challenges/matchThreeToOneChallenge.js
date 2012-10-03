@@ -78,8 +78,6 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
         var numDupes = this.duplicateOrganismViews.length;
         var numIncorrect = this.incorrectOrganismViews.length;
         
-        Geniverse.scoringController.incrementScore(1);
-        
         if (numMatched === 3){
           this.successfulMatch = YES;
           SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).plain(
@@ -91,6 +89,8 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
             this
           );
         } else {
+          Geniverse.scoringController.incrementScore(1);
+
           this.successfulMatch = NO;
           this._resetTargetMatchedState();
 
@@ -168,12 +168,12 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
   
   alertPaneDidDismiss: function() {
     if (this.successfulMatch){
-      Geniverse.scoringController.resetScore();
       if (Geniverse.matchController.isLastDragon()) {
         this._challengeComplete();
-        Geniverse.scoringController.resetChallengeScore();
+      } else {
+        Geniverse.scoringController.resetScore();
+        Geniverse.matchController.nextDragon();
       }
-      Geniverse.matchController.nextDragon();
     }
     this._hideImages();
     this.successfulMatch = NO;

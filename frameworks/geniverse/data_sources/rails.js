@@ -118,10 +118,29 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
 
 
   createRecord: function(store, storeKey) {
-    window.setTimeout(function() {
-      store.dataSourceDidComplete(storeKey);
-    }, 2);
-    return YES;
+    var recordType = store.recordTypeFor(storeKey);
+    if (Geniverse.railsBackedTypes.indexOf(recordType.modelName) != -1) {
+      if (recordType.readOnly) {
+        // pretend like we saved
+        window.setTimeout(function() {
+          store.dataSourceDidComplete(storeKey);
+        }, 2);
+      } else {
+        var modelName = recordType.modelName;
+        var modelHash = {};
+        modelHash[modelName] = store.readDataHash(storeKey);
+        // SC.Logger.dir(modelHash);
+        //delete modelHash[modelName]['guid'];    // remove guid property before sending to rails
+
+        // SC.Logger.group('Geniverse.RailsDataSource.createRecord()');
+        SC.Request.postUrl('/rails/' + recordType.modelsName).header({
+                       'Accept': 'application/json'
+                   }).json().notify(this, this.didCreateRecord, store, storeKey).send(modelHash);
+        // SC.Logger.groupEnd();
+      }
+      return YES;
+    }
+    return NO;
   },
 
   didCreateRecord: function(response, store, storeKey) {
@@ -136,10 +155,36 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
   },
 
   updateRecord: function(store, storeKey) {
-    window.setTimeout(function() {
-      store.dataSourceDidComplete(storeKey);
-    }, 2);
-    return YES;
+
+    // TODO: Add handlers to submit modified record to the data source
+    // call store.dataSourceDidComplete(storeKey) when done.
+    // return NO ; // return YES if you handled the storeKey
+    //
+    var recordType = store.recordTypeFor(storeKey);
+    if (Geniverse.railsBackedTypes.indexOf(recordType.modelName) != -1) {
+      if (recordType.readOnly) {
+        // pretend like we saved
+        window.setTimeout(function() {
+          store.dataSourceDidComplete(storeKey);
+        }, 2);
+      } else {
+        var modelName = recordType.modelName;
+        var modelHash = {};
+        modelHash[modelName] = store.readDataHash(storeKey);
+        // SC.Logger.dir(modelHash);
+        var url = store.idFor(storeKey);
+        // SC.Logger.info("updateRecord called with: %s", url);
+
+
+        // SC.Logger.group('Geniverse.RailsDataSource.createRecord()');
+        SC.Request.putUrl(url + '.json').header({
+                       'Accept': 'application/json'
+                   }).json().notify(this, this.didUpdateRecord, store, storeKey).send(modelHash);
+        // SC.Logger.groupEnd();
+      }
+      return YES;
+    }
+    return NO;
   },
 
   //

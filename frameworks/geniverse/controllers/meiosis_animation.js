@@ -86,7 +86,7 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
           chromosomesArr.push({ alleles: allelesArr});
         } else {
           SC.Logger.info("No B side!");
-          chromosomesArr.push({ alleles: [{ sex: "male", gene: "" },{ sex: "male", gene: "" },{ sex: "male", gene: "" }]});
+          chromosomesArr.push({ alleles: [{ sex: "male", gene: "" },{ sex: "male", gene: "" }]});
           // chromosomesArr.push({ alleles: []});
         }
       }
