@@ -142,6 +142,7 @@ Lab.meiosisPageRecomb = SC.Page.design({
         scoreView: Geniverse.ScoreView.design({
           layout: { top: 148, centerX: -78, height: 46, width: 165 },
           showScore: YES,
+          isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
           showTargetScore: YES
         })
         

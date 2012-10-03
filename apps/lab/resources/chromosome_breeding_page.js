@@ -123,6 +123,7 @@ Lab.chromosomeBreedingPage = SC.Page.design({
       scoreView: Geniverse.ScoreView.design({
         layout: { top: 175, centerX: 60, width: 150, height: 46 },
         showScore: YES,
+        isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
         showTargetScore: YES
       })
 

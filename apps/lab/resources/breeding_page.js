@@ -172,6 +172,7 @@ Lab.breedingPage = SC.Page.design({
       scoreView: Geniverse.ScoreView.design({
         layout: { left: 20, top: 376, height: 49, width: 184 },
         showScore: YES,
+        isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
         showTargetScore: YES
       })
     })
