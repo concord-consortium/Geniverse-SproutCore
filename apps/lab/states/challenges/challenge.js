@@ -114,7 +114,6 @@ Lab.challenge = Ki.State.extend({
           Geniverse.scoringController.resetChallengeScore();
           Geniverse.scoringController.resetScore();
           Geniverse.matchController.nextDragon();
-          this.successfulMatch = NO;
           if (status === SC.BUTTON1_STATUS) {
               self._showCongrats(next);
           } else {
