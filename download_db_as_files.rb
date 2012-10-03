@@ -26,6 +26,14 @@ File.open(File.join(BASE_DIR, "users.json"), "w") do |f|
 end
 puts " done."
 
+["dragons","articles"].each do |item|
+  print "Downloading: #{item} "
+  File.open(File.join(BASE_DIR, "#{item}.json"), "w") do |f|
+    f.write('{"content":[]}')
+  end
+  puts " done."
+end
+
 ["cases","activities","help_messages"].each do |model|
   Dir.mkdir(File.join(BASE_DIR, model)) rescue Errno::EEXIST
 
