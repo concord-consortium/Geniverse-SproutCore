@@ -39,6 +39,12 @@ Lab.BreedingPenView = SC.View.extend(
   eggsControllerPath: 'Geniverse.eggsController',
   dragonSize: 75,
 
+  shownAgain: function() {
+    if (this.tabView && this.penView && this.get('isVisibleInWindow')) {
+      this.tabView.set('nowShowing', this.penView);
+    }
+  }.observes('isVisibleInWindow'),
+
   /**
    * Overwritten createChildView where you set up all
    * the internal child views and where we are
