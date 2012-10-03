@@ -111,6 +111,10 @@ Lab.challenge = Ki.State.extend({
       "Try again",
       {
         alertPaneDidDismiss: function(pane, status) {
+          Geniverse.scoringController.resetChallengeScore();
+          Geniverse.scoringController.resetScore();
+          Geniverse.matchController.nextDragon();
+          this.successfulMatch = NO;
           if (status === SC.BUTTON1_STATUS) {
               self._showCongrats(next);
           } else {
