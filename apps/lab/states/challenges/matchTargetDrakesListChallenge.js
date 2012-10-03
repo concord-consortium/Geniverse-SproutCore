@@ -57,8 +57,6 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
     var numUnmatchedDrakes = Geniverse.matchController.filterProperty('hasBeenMatched', false).length;
     if (numUnmatchedDrakes === 0) {
       this._challengeComplete();
-      Geniverse.scoringController.resetScore();
-      Geniverse.scoringController.resetChallengeScore();
     }
   },
   

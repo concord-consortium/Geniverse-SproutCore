@@ -168,12 +168,12 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
   
   alertPaneDidDismiss: function() {
     if (this.successfulMatch){
-      Geniverse.scoringController.resetScore();
       if (Geniverse.matchController.isLastDragon()) {
         this._challengeComplete();
-        Geniverse.scoringController.resetChallengeScore();
+      } else {
+        Geniverse.scoringController.resetScore();
+        Geniverse.matchController.nextDragon();
       }
-      Geniverse.matchController.nextDragon();
     }
     this._hideImages();
     this.successfulMatch = NO;
