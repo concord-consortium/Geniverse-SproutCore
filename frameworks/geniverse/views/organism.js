@@ -90,8 +90,13 @@ Geniverse.OrganismView = SC.View.extend(
   
   colorLabelView: SC.LabelView.design({
     isVisibleBinding: '*parentView.colorLabelVisible',
+    colorOffsetBinding: '*parentView.colorOffset',
     layout: function () {
       var btm = 10;
+      var offset = this.get('colorOffset');
+      if (offset) {
+        btm += offset;
+      }
       var height = this.getPath('parentView.clippingFrame').height;
       if (height <= 75) {
         btm = -5;
