@@ -159,12 +159,12 @@ Lab.TopBarView = SC.ToolbarView.extend(
         title:  "Change",
         target: this.get('changeGroupButtonTargetPath'),
         action: 'showGroupPanel',
-        isVisible: NO,
+        isVisible: YES,
         toolTip: 'Change your Member number or Group number.',
         tagName: 'a'
       })
     );
-    childViews.push(this.changeGroupButton);
+    // childViews.push(this.changeGroupButton);
 
     this.navBarRight = this.createChildView(
       SC.ImageView.design({
@@ -177,7 +177,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     
     this.infoButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 0, right: 176, width: 27, height: 26 },
+        layout: { centerY: 0, right: 39, width: 27, height: 26 },
         layerId: 'infoButton',
         hasHover: YES,
         alt: 'Info',
@@ -198,11 +198,11 @@ Lab.TopBarView = SC.ToolbarView.extend(
         title:  "Post claim to the Journal",
         toolTip: "Post claim to the Journal",
         target: Lab.statechart,
-        isVisible: NO,
+        isVisible: YES,
         action: 'showBlogPostPanel'
       })
     );
-    childViews.push(this.blogButton);
+    // childViews.push(this.blogButton);
     
     
     this.journalButton = this.createChildView(
@@ -214,11 +214,11 @@ Lab.TopBarView = SC.ToolbarView.extend(
         title:  "Journal",
         toolTip: "Click to open the class journal",
         target: this.get('journalButtonTargetPath'),
-        isVisible: NO,
+        isVisible: YES,
         action: 'openWindow'
       })
     );
-    childViews.push(this.journalButton);
+    // childViews.push(this.journalButton);
     
     this.notepadButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
@@ -248,7 +248,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
       })
     );
     Lab.helpController.set('helpButton', this.helpButton); // So pop-up pointer works
-    childViews.push(this.helpButton);
+    // childViews.push(this.helpButton);
 
     this.logoutButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
@@ -259,11 +259,11 @@ Lab.TopBarView = SC.ToolbarView.extend(
         title:  "Log out",
         toolTip: "Click to log out",
         target: Lab.statechart,
-        isVisible: NO,
+        isVisible: YES,
         action: 'logOut'
       })
     );
-    childViews.push(this.logoutButton);
+    // childViews.push(this.logoutButton);
 
     this.set('childViews', childViews);
   }
