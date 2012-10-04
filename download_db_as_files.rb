@@ -21,8 +21,12 @@ Dir.mkdir(File.join(File.dirname(__FILE__), "tmp", "build")) rescue Errno::EEXIS
 Dir.mkdir(BASE_DIR) rescue Errno::EEXIST
 
 print "Downloading: users "
+user_content = '{"passwordHash":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","lastName":"User","guid":"/rails/users/1","memberId":1,"username":"user","metadata":null,"className":"no_class","firstName":"User","note":"","groupId":1}'
 File.open(File.join(BASE_DIR, "users.json"), "w") do |f|
-  f.write('{"content":[{"passwordHash":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","lastName":"User","guid":"/rails/users/1","memberId":1,"username":"user","metadata":null,"className":"no_class","firstName":"User","note":"","groupId":1}]}')
+  f.write(%|{"content":[#{user_content}]}|)
+end
+File.open(File.join(BASE_DIR, "users", "1.json"), "w") do |f|
+  f.write(%|{"content":#{user_content},"location":"/rails/users/1"}|)
 end
 puts " done."
 
