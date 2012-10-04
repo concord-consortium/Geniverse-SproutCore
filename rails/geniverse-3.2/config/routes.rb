@@ -68,6 +68,7 @@ Geniverse32::Application.routes.draw do
   get 'users/:username' => "users#show", :constraints => { :username => /[a-z][a-z0-9]*/i }, :defaults => {:format => 'json'}
 
   resources :users, :except => :new
+  get 'starsReport' => 'users#starsReport'
 
   # fallback
   match ':controller(/:action(/:id(/:id2)))(.:format)'
