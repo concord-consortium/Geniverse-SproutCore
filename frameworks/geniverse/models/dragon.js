@@ -67,7 +67,11 @@ Geniverse.Dragon = SC.Record.extend(
   }.property('gOrganism').cacheable(),
  
   color: function() {
-    return this.characteristicValue('color').toLowerCase();
+    if (this.get('content')) {
+      return this.characteristicValue('color').toLowerCase();
+    } else {
+      return null;
+    }
   }.property('alleles').cacheable(),
 
   init: function() {
