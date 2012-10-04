@@ -67,8 +67,9 @@ Geniverse.Dragon = SC.Record.extend(
   }.property('gOrganism').cacheable(),
  
   color: function() {
-    if (this.get('content')) {
-      return this.characteristicValue('color').toLowerCase();
+    var col = this.characteristicValue('color');
+    if (col) {
+      return col.toLowerCase();
     } else {
       return null;
     }
