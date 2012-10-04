@@ -58,6 +58,7 @@ class Report::Stars
               if sheet[row_num, col] && !sheet[row_num, col].empty?
                 sheet[row_num, col] += ","
               end
+              sheet[row_num, col] ||= ""
               sheet[row_num, col] += realVals.join(',')
             end
           end
