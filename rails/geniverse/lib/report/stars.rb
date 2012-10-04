@@ -40,7 +40,15 @@ class Report::Stars
           stars.each do |path, vals|
             id = path.gsub('/rails/activities/', '').to_i
             if col = cols[id]
-              sheet[row_num, col] = vals.join(',')
+              realVals = vals.map{|v|
+                res = case v
+                when Hash
+                  "#{v['stars']} (#{v['time']})"
+                else
+                  v
+                end
+              }
+              sheet[row_num, col] = realVals.join(',')
             end
           end
         end

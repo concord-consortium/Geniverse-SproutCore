@@ -58,9 +58,20 @@ Lab.caselogController = SC.Object.create({
     var userMetadata = this.get('userMetadata') || {},
         stars        = userMetadata.stars || {},
         useQuill     = !!challenge.useQuill,
-        activityId   = challenge.href.slice(challenge.href.lastIndexOf('#') + 1)
-        activityStarsList = stars[activityId] || [];
+        activityId   = challenge.href.slice(challenge.href.lastIndexOf('#') + 1),
+        activityStarsListTemp = stars[activityId] || [],
+        activityStarsList = [];
 
+        for (var i = 0; i < activityStarsListTemp.length; i++) {
+          var s = activityStarsListTemp[i];
+          var d = 0;
+          if (typeof(s) == "object") {
+            d = s.stars || 0;
+          } else if (typeof(s) == "number") {
+            d = s;
+          }
+          activityStarsList.push(d);
+        }
     return {
       stars:    Math.max.apply([], [0].concat(activityStarsList)),
       useQuill: useQuill

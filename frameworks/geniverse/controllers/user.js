@@ -107,7 +107,13 @@ Geniverse.userController = SC.ObjectController.create(
     if (!meta.stars[pageId]) {
      meta.stars[pageId] = [];
     }
-    meta.stars[pageId].push(numStars);
+    var now = new Date();
+    var timeStr = now.format("yyyy-MM-dd ") + now.toTimeString().replace(/ \(.*\)/, '');
+    meta.stars[pageId].push({stars: numStars, time: timeStr});
+
+    // TODO Do we bother to convert all the old data to the new format?
+    // from; stars[pageId] == [1,3,2,3,2] to stars[pageId] == [{...}, {...}, {...}, {...}]
+
     Geniverse.userController.setUserMetadata(meta);
   }
 }) ;
