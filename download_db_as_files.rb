@@ -25,6 +25,7 @@ user_content = '{"passwordHash":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934
 File.open(File.join(BASE_DIR, "users.json"), "w") do |f|
   f.write(%|{"content":[#{user_content}]}|)
 end
+Dir.mkdir(File.join(BASE_DIR, "users")) rescue Errno::EEXIST
 File.open(File.join(BASE_DIR, "users", "1.json"), "w") do |f|
   f.write(%|{"content":#{user_content},"location":"/rails/users/1"}|)
 end
