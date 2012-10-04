@@ -38,7 +38,14 @@ class Report::Stars
       if md = u.metadata
         if stars = md['stars']
           stars.each do |path, vals|
-            id = path.gsub('/rails/activities/', '').to_i
+            id = -1
+            if path =~ /\/rails\/activities\/(\d+)/
+              id = $1.to_i
+            else
+              # maybe it's a route: case1/challenge1
+              a = Activity.find_by_route(path)
+              id = a.id if a
+            end
             if col = cols[id]
               realVals = vals.map{|v|
                 res = case v
@@ -48,7 +55,10 @@ class Report::Stars
                   v
                 end
               }
-              sheet[row_num, col] = realVals.join(',')
+              if sheet[row_num, col] && !sheet[row_num, col].empty?
+                sheet[row_num, col] += ","
+              end
+              sheet[row_num, col] += realVals.join(',')
             end
           end
         end
