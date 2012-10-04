@@ -37,7 +37,9 @@ class Report::Stars
       sheet.row(row_num).concat ["#{u.first_name} #{u.last_name}", u.username, u.class_name, u.group_id, u.member_id]
       if md = u.metadata
         if stars = md['stars']
-          stars.each do |path, vals|
+          # sort so that rails ids will always come before route ids
+          stars.keys.sort.each do |path|
+            vals = stars[path]
             id = -1
             if path =~ /\/rails\/activities\/(\d+)/
               id = $1.to_i
