@@ -110,12 +110,11 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
     if (this.successfulMatch){
       if (Geniverse.matchController.isLastDragon()) {
         this._challengeComplete();
-        Geniverse.scoringController.resetChallengeScore();
+        // reset will happen in _challengeComplete()
+      } else {
+        Geniverse.scoringController.resetScore();
+        Geniverse.matchController.nextDragon();
       }
-      // reset score after we do any lastDragon stuff, so that challenge
-      // scores will be calculated correctly.
-      Geniverse.scoringController.resetScore();
-      Geniverse.matchController.nextDragon();
       this.successfulMatch = NO;
     }
     this._hideImage();

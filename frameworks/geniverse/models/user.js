@@ -27,5 +27,6 @@ Geniverse.User = SC.Record.extend(
 
 Geniverse.User.modelName = "user";
 Geniverse.User.modelsName = "users";
+Geniverse.User.readOnly = NO;
 
 Geniverse.railsBackedTypes.push(Geniverse.User.modelName);

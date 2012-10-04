@@ -1,3 +1,5 @@
+require 'report'
+
 class UsersController < ApplicationController
   # GET /users
   # GET /users.xml
@@ -101,6 +103,13 @@ class UsersController < ApplicationController
       format.html { redirect_to(users_url) }
       format.xml  { head :ok }
     end
+  end
+
+  def starsReport
+    sio = StringIO.new
+    report = Report::Stars.new
+    report.run(sio)
+    send_data(sio.string, :type => "application/vnd.ms.excel", :filename => "stars.xls" )
   end
 
 end

@@ -21,7 +21,17 @@ Geniverse.MatchView = SC.View.extend(
   // FIXME dragonSize of 200 or 201 causes Chrome and Firefox to freeze when zooming in/out
   // It's some sort of bad interaction with the Geniverse.ShiftedOrganism mixin
   dragonSize: 83,
-  dragonExampleView: Geniverse.OrganismView.extend(Geniverse.MatchOrganism, Geniverse.ShiftedOrganism, {glow: YES}),
+  dragonExampleView: Geniverse.OrganismView.extend(Geniverse.MatchOrganism, Geniverse.ShiftedOrganism, {
+    glow: YES,
+    oneAtATimeBinding: SC.Binding.oneWay('Geniverse.matchController.oneAtATime').bool(),
+    colorOffset: function() {
+      if (!this.get('oneAtATime')) {
+        return -15;
+      } else {
+        return 0;
+      }
+    }.property('oneAtATime').cacheable()
+  }),
 
   onlyOneBinding: 'Geniverse.matchController.oneAtATime',
 

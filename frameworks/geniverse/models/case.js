@@ -21,4 +21,5 @@ Geniverse.Case = SC.Record.extend(
 
 Geniverse.Case.modelName = "case";
 Geniverse.Case.modelsName = "cases";
+Geniverse.Case.readOnly = YES;
 Geniverse.railsBackedTypes.push(Geniverse.Case.modelName);
