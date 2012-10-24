@@ -11,6 +11,7 @@ sc_require('views/breeding_pen_view');
 sc_require('views/stable_view');
 sc_require('views/bottom_bar_view');
 sc_require('views/dragon_breeding_genome_view');
+sc_require('views/background');
 
 Lab.invisibleMaleGenotypePage = SC.Page.design({
   pagePath: 'Lab.invisibleMaleGenotypePage',
@@ -24,10 +25,7 @@ Lab.invisibleMaleGenotypePage = SC.Page.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'],
     childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
-    backgroundView: SC.ImageView.design({
-      value: static_url('lab_background.png'),
-      classNames: ['transparent','scalingimage']
-    }),
+    backgroundView: Lab.BackgroundView.design(),
     topBar: Lab.TopBarView.design({
       classNames: ['brown']
     }),
@@ -37,19 +35,13 @@ Lab.invisibleMaleGenotypePage = SC.Page.design({
 
     mainAppView: SC.View.design({
 
-      layout: { centerX: 0, top: 10, width: 1080, height: 880 },
+      layout: { centerX: 0, top: 90, width: 1080, height: 880 },
 
       childViews: 'genomePanel breedingPenView'.w(),
 
       genomePanel: SC.View.design({
         layout: {top: 35, height: 585, left: 15, width: 1005 },
-        childViews: 'background femaleTitle femaleGenomeView femalePhenotypeView maleTitle maleGenomeView malePhenotypeView breedButton'.w(),
-
-        // separate parallel background so we don't make the rest of the childViews see-through
-        background: SC.View.design({
-          layout: {top: 0, left: 0, right: 0, bottom: 0},
-          classNames: ['genome-view-intro']
-        }),
+        childViews: 'femaleTitle femaleGenomeView femalePhenotypeView maleTitle maleGenomeView malePhenotypeView breedButton'.w(),
 
         femaleTitle: SC.LabelView.design({
           layout: {top: 10, height: 25, left: 70, width: 200 },

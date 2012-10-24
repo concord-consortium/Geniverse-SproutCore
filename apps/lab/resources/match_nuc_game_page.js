@@ -7,6 +7,7 @@ Lab.marginSize = 15;
 
 sc_require('views/top_bar_view');
 sc_require('views/bottom_bar_view');
+sc_require('views/background');
 
 Lab.matchNucleotidesGame = SC.Page.design({
   
@@ -22,10 +23,7 @@ Lab.matchNucleotidesGame = SC.Page.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'],
     childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
-    backgroundView: SC.ImageView.design({
-      value: static_url('lab_background.png'),
-      classNames: ['transparent','scalingimage']
-    }),
+    backgroundView: Lab.BackgroundView.design(),
     topBar: Lab.TopBarView.design({
       classNames: ['brown']
     }),
@@ -45,7 +43,7 @@ Lab.matchNucleotidesGame = SC.Page.design({
               cmlUrl: "http://mw2.concord.org/model/1371db972fa/pagex.cml",
               width: 825,
               height: 550,
-              layout: { centerX: 0, centerY: -25, width: 825, height: 550 }
+              layout: { centerX: 0, centerY: 0, width: 825, height: 550 }
             })
         })
     })

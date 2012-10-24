@@ -7,6 +7,7 @@
  */
 /*globals Geniverse, CC, CcChat, java static_url sc_static */
 sc_require('views/top_bar_view');
+sc_require('views/background');
 
 Lab.marginSize = 15;
 
@@ -22,10 +23,7 @@ Lab.group1 = SC.Page.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'],
     childViews: 'backgroundView mainAppView topBar'.w(),
-    backgroundView: SC.ImageView.design({
-      value: static_url('bg2'),
-      classNames: ['transparent','scalingimage']
-    }),
+    backgroundView: Lab.BackgroundView.design(),
     topBar: Lab.TopBarView.design({
       titlePath: 'Lab.group1.title'
     }),

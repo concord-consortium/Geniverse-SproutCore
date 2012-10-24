@@ -10,6 +10,7 @@ sc_require('views/challenge_pool_view');
 sc_require('views/breeding_pen_view');
 sc_require('views/stable_view');
 sc_require('views/bottom_bar_view');
+sc_require('views/background');
 
 Lab.breedingPagePaper = SC.Page.design({
   
@@ -23,10 +24,7 @@ Lab.breedingPagePaper = SC.Page.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'],
     childViews: 'backgroundView mainAppView topBar'.w(),
-      backgroundView: SC.ImageView.design({
-        value: static_url('lab_background.png'),
-        classNames: ['transparent','scalingimage']
-      }),
+    backgroundView: Lab.BackgroundView.design(),
 
     topBar: Lab.TopBarView.design({
       classNames: ['brown']
@@ -34,7 +32,7 @@ Lab.breedingPagePaper = SC.Page.design({
 
     mainAppView: SC.View.create({
       
-      layout: { top: 45, bottom: 0, left: 10, right: 0 },
+      layout: { centerX: 0, top: 100, width: 860, height: 600 },
       
       childViews: 'breedView challengePoolView breedingPenView stableView marketplaceView chatView allArticlesView'.w(),
      

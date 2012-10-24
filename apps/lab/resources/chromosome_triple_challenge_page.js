@@ -10,6 +10,7 @@ sc_require('views/challenge_pool_view');
 sc_require('views/breeding_pen_view');
 sc_require('views/stable_view');
 sc_require('views/bottom_bar_view');
+sc_require('views/background');
 
 Lab.chromosomeTripleChallengePage = SC.Page.design({
 
@@ -24,10 +25,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'],
     childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
-    backgroundView: SC.ImageView.design({
-      value: static_url('lab_background.png'),
-      classNames: ['transparent','scalingimage']
-    }),
+    backgroundView: Lab.BackgroundView.design(),
     topBar: Lab.TopBarView.design({
       classNames: ['brown']
     }),
@@ -37,15 +35,9 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
 
     mainAppView: SC.View.design({
 
-      layout: { centerX: 0, top: 35, width: 1080, height: 605 },
+      layout: { centerX: 0, top: 95, width: 1080, height: 605 },
 
-      childViews: 'background targetDrake targetTitle genomePanels revealButton scoreLabel line1 line2 line3'.w(),
-
-      // separate parallel background so we don't make the rest of the childViews see-through
-      background: SC.View.design({
-        layout: {top: 10, left: 0, right: 0, bottom: 0},
-        classNames: ['genome-view-intro']
-      }),
+      childViews: 'targetDrake targetTitle genomePanels revealButton scoreLabel line1 line2 line3'.w(),
 
       panel1AllSelectedBinding: '*genomePanels.genome1Panel.genomeView.allAllelesSelected',
       panel2AllSelectedBinding: '*genomePanels.genome2Panel.genomeView.allAllelesSelected',

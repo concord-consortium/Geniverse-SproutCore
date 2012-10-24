@@ -10,6 +10,7 @@ sc_require('views/challenge_pool_view');
 sc_require('views/breeding_pen_view');
 sc_require('views/stable_view');
 sc_require('views/bottom_bar_view');
+sc_require('views/background');
 
 Lab.chromosomeTrainingSinglePage = SC.Page.design({
   
@@ -23,10 +24,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'], 
     childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
-    backgroundView: SC.ImageView.design({
-      value: static_url('lab_background.png'),
-      classNames: ['transparent','scalingimage']
-    }),
+    backgroundView: Lab.BackgroundView.design(),
     topBar: Lab.TopBarView.design({
       classNames: ['brown']
     }),
@@ -39,14 +37,8 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
       childViews: 'drakeGenomePanel'.w(),
       
       drakeGenomePanel: SC.View.design({
-        layout: {top: 50, height: 550, centerX: 0, width: 500 },
-        childViews: 'background title genomeView switchSexButton nextButton'.w(),
-
-        // separate parallel background so we don't make the rest of the childViews see-through
-        background: SC.View.design({
-          layout: {top: 0, left: 0, right: 0, bottom: 0},
-          classNames: ['genome-view-intro']
-        }),
+        layout: {top: 110, height: 550, centerX: 0, width: 500 },
+        childViews: 'title genomeView switchSexButton nextButton'.w(),
 
         title: SC.LabelView.design({
           layout: {top: 20, height: 25, left: 125, width: 200 },

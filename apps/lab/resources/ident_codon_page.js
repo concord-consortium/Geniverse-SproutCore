@@ -7,6 +7,7 @@ Lab.marginSize = 15;
 
 sc_require('views/top_bar_view');
 sc_require('views/bottom_bar_view');
+sc_require('views/background');
 
 Lab.identCodonPage = SC.Page.design({
   
@@ -22,10 +23,7 @@ Lab.identCodonPage = SC.Page.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'],
     childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
-    backgroundView: SC.ImageView.design({
-      value: static_url('lab_background.png'),
-      classNames: ['transparent','scalingimage']
-    }),
+    backgroundView: Lab.BackgroundView.design(),
     topBar: Lab.TopBarView.design({
       classNames: ['brown']
     }),

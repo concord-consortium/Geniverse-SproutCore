@@ -10,6 +10,7 @@ sc_require('views/challenge_pool_view');
 sc_require('views/breeding_pen_view');
 sc_require('views/stable_view');
 sc_require('views/bottom_bar_view');
+sc_require('views/background');
 
 Lab.breedingChallengePage = SC.Page.design({
 
@@ -25,10 +26,7 @@ Lab.breedingChallengePage = SC.Page.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'],
     childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
-      backgroundView: SC.ImageView.design({
-        value: static_url('lab_background.png'),
-        classNames: ['transparent','scalingimage']
-      }),
+    backgroundView: Lab.BackgroundView.design(),
 
     topBar: Lab.TopBarView.design({
       classNames: ['brown']
@@ -39,15 +37,9 @@ Lab.breedingChallengePage = SC.Page.design({
 
     mainAppView: SC.View.design({
 
-      layout: { centerX: 0, top: 32, width: 840, height: 600 },
+      layout: { centerX: 0, top: 100, width: 840, height: 600 },
 
-      childViews: 'background matchView breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView scoreView'.w(),
-
-      // separate parallel background so we don't make the rest of the childViews see-through
-      background: SC.View.design({
-        layout: {top: 0, left: 0, right: 0, bottom: 0},
-        classNames: ['genome-view-intro']
-      }),
+      childViews: 'matchView breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView scoreView'.w(),
 
       // challenge pool to hold initial, system-created dragons
       mothersPoolView: Lab.ChallengePoolView.design({
