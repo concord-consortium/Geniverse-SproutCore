@@ -1,4 +1,4 @@
-sc_require('resources/lib/biologica.min.js');
+sc_require('resources/lib/biologica.js');
 
 // ==========================================================================
 // Project:   Geniverse.Dragon
