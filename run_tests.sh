@@ -31,19 +31,19 @@ ${WORKSPACE}/spec/support/apache-error.log {
   notifempty
   missingok
 }
-${WORKSPACE}/rails/geniverse/log/test.log {
+${WORKSPACE}/rails/geniverse-3.2/log/test.log {
   rotate 4
   compress
   notifempty
   missingok
 }
-${WORKSPACE}/rails/geniverse/log/cucumber.log {
+${WORKSPACE}/rails/geniverse-3.2/log/cucumber.log {
   rotate 4
   compress
   notifempty
   missingok
 }
-${WORKSPACE}/rails/geniverse/log/development.log {
+${WORKSPACE}/rails/geniverse-3.2/log/development.log {
   rotate 4
   compress
   notifempty

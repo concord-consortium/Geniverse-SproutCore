@@ -15,7 +15,7 @@ rm -f rerun.txt
 # so run the spec tests manually.
 #
 
-cd rails/geniverse
+cd rails/geniverse-3.2
 
 # not using cucumber yet
 #Don't know how to build task 'hudson:cucumber'

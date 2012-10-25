@@ -1,6 +1,7 @@
 tmp/
 rails/geniverse/config/database.yml
 rails/geniverse/log/*.log
+rails/geniverse/log/*.gz
 rails/geniverse/db/*.sqlite3
 rails/geniverse/db/*.db
 rails/geniverse/vendor/plugins/query_reviewer
@@ -16,6 +17,7 @@ hudson/*
 results/*
 .idea/
 logrotate.conf
+logrotate.status
 bundled_gems
 .bundle/
 "/

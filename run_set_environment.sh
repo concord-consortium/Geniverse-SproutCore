@@ -21,10 +21,10 @@ setTestingEnv() {
     if [ -z $TEST_SETUP_DONE ]; then
       # set up bundler
       sh -c "bundle install --path $WORKSPACE/bundled_gems"
-      sh -c "cd rails/geniverse && bundle install --path $WORKSPACE/bundled_gems"
+      sh -c "cd rails/geniverse-3.2 && bundle install --path $WORKSPACE/bundled_gems"
 
       # make sure the rails db is ready
-      sh -c 'cd rails/geniverse && bundle exec rake db:setup RAILS_ENV=test'
+      sh -c 'cd rails/geniverse-3.2 && bundle exec rake db:setup RAILS_ENV=test'
       export TEST_SETUP_DONE="true"
     fi
 

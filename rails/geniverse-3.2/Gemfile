@@ -49,7 +49,7 @@ group :test do
   gem "rspec"
   gem "rspec-rails"
   gem "test-unit"
-  gem "ci_reporter", "~> 1.6.3"
+  gem "ci_reporter", "~> 1.7.3"
 
   # For cucumber
   gem "webrat", ">= 0.7.0"
