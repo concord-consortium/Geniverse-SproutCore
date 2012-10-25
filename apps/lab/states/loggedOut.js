@@ -6,11 +6,9 @@
 
 Lab.loggedOut =  Ki.State.extend({
   
-  // showCheckPanel() will handle logging in. This logic
-  // may be moved into here later
   enterState: function() {
-    Lab.routes.gotoLabRoute('loginPage');
-    Lab.loginController.showCheckPanel();
+    Lab.routes.gotoLabRoute({pageName: 'loginPage', paneName: 'mainPane'});
+    Lab.loginController.checkCCAuthToken();
   },
   
   // this and gotoActivity just set this property for later

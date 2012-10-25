@@ -10,9 +10,7 @@
 
   @extends SC.View
 */
-Lab.LoginLoginView = SC.PanelPane.extend({
-  layout: {centerX: 0, top: 10, width: 400, height: 100},
-  contentView: SC.View.design({
+Lab.LoginLoginView = SC.View.extend({
      layout: {left: 0, top: 0, width: 400, height: 100},
 
      // TODO: Add your own code here.
@@ -61,7 +59,6 @@ Lab.LoginLoginView = SC.PanelPane.extend({
        }
      })
 
-  })
 });
 
 

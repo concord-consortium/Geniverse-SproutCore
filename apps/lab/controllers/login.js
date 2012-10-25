@@ -24,17 +24,10 @@ Lab.loginController = SC.ObjectController.create(
   loggedIn: NO,
   triedPortal: NO,
   panel: null,
-  welcomeMessage: 'please wait ...', 
-  
-  showCheckPanel: function() {
-    this.hidePanel();
-    this.panel = Lab.LoginCheckView.create({
-      layout: {top: 10, width: 400, height: 100, centerX: 0}
-    });
-    this.panel.append();
-    this.checkCCAuthToken();  
-  },
- 
+  welcomeMessage: 'please wait ...',
+  checkShowing: YES,
+  loginShowing: NO,
+
   showGroupPanel: function() {
     this.hidePanel();
     this.panel = Lab.LoginGroupView.create({
@@ -44,15 +37,13 @@ Lab.loginController = SC.ObjectController.create(
   },
   
   showLoginPanel: function() {
-    this.hidePanel();
     this.set('welcomeMessage','please log in');
     if (this.triedPortal) {
       this.set('welcomeMessage','invalid login. try again.');
     }
-    this.panel = Lab.LoginLoginView.create({
-      layout: {top: 10, width: 400, height: 100, centerX: 0}
-    });
-    this.panel.append();
+    console.log("Showing login");
+    this.set('loginShowing', YES);
+    this.set('checkShowing', NO);
   },
   
 

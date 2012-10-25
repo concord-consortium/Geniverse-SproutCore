@@ -13,14 +13,25 @@ Lab.loginPage = SC.Page.design({
   // load.
   mainPane: SC.MainPane.design({
     defaultResponder: Lab.statechart,
-    
-    
+
     title: "Welcome to the Geniverse Labs",
-    childViews: 'background'.w(),
-    
-    background: SC.ImageView.design({
-      layout: { top: 0, centerX: 0, width: 960},
-      value: static_url('mainscreen-bg.png')
+    childViews: 'welcome checkPanel loginPanel'.w(),
+
+    welcome: SC.LabelView.design({
+      layout: { top: 40, width: 610, height: 40, centerX: 0 },
+      classNames: ['login','welcome'],
+      fontWeight: SC.BOLD_WEIGHT,
+      value: "Welcome to Geniverse"
+    }),
+
+    checkPanel: Lab.LoginCheckView.design({
+      layout: {top: 110, width: 400, height: 100, centerX: 0},
+      isVisibleBinding: 'Lab.loginController.checkShowing'
+    }),
+
+    loginPanel: Lab.LoginLoginView.design({
+      layout: {top: 110, width: 400, height: 100, centerX: 0},
+      isVisibleBinding: 'Lab.loginController.loginShowing'
     })
   })
 });
