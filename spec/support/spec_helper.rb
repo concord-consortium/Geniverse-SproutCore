@@ -9,6 +9,8 @@ require "selenium/rake/tasks"
 ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
 $:.unshift File.expand_path(File.join(ROOT, 'proxy'))
 
+Dir.chdir(ROOT)
+
 require 'apache_config'
 require 'port_tools'
 
@@ -46,6 +48,7 @@ SELENIUM_TEST_SETTINGS = {
   :timeout_in_seconds => 60
 }
 
+require 'open-uri'
 require 'daemon_controller'
 require 'socket'
 
@@ -60,29 +63,37 @@ require 'socket'
 $daemons = {
   :rails => DaemonController.new(
     :identifier => "Rails Backend",
-    :start_command => "cd rails/geniverse-32; unset BUNDLE_GEMFILE; bundle exec passenger start -d -e test -p #{RAILS_PORT}",
-    :ping_command => lambda { TCPSocket.new('localhost', RAILS_PORT)},
-    :pid_file => "#{ROOT}/rails/geniverse/passenger.#{RAILS_PORT}.pid",
-    :log_file => "#{ROOT}/rails/geniverse/passenger.#{RAILS_PORT}.log",
-    :timeout => 25
+    :start_command => "cd rails/geniverse-3.2; unset BUNDLE_GEMFILE; bundle exec passenger start -d -e test -p #{RAILS_PORT}",
+    :stop_command => "cd rails/geniverse-3.2; unset BUNDLE_GEMFILE; bundle exec passenger stop -p #{RAILS_PORT}",
+    # :ping_command => lambda { TCPSocket.new('localhost', RAILS_PORT).close },
+    :ping_command => lambda { open("http://localhost:#{RAILS_PORT}/").read },
+    :pid_file => "#{ROOT}/rails/geniverse-3.2/tmp/pids/passenger.#{RAILS_PORT}.pid",
+    :lock_file => "#{ROOT}/rails.lock",
+    :log_file => "#{ROOT}/rails/geniverse-3.2/log/passenger.#{RAILS_PORT}.log",
+    :log_file_activity_timeout => 25,
+    :start_timeout => 25
   ),
   :sproutcore => DaemonController.new(
     :identifier => "SproutCore App",
-    :start_command => "bundle exec sc-server --port #{SC_SERVER_PORT} & echo $! > sc-server.pid",
-    :ping_command => lambda { TCPSocket.new('localhost', SC_SERVER_PORT)},
-    :pid_file => "sc-server.pid",
-    :log_file => "sc-server.log",
-    :timeout => 25
+    :start_command => "bundle exec sc-server --port #{SC_SERVER_PORT} 2> #{ROOT}/sc-server.log & echo $! > #{ROOT}/sc-server.pid",
+    :ping_command => lambda { TCPSocket.new('localhost', SC_SERVER_PORT).close },
+    :pid_file => "#{ROOT}/sc-server.pid",
+    :lock_file => "#{ROOT}/sc-server.lock",
+    :log_file => "#{ROOT}/sc-server.log",
+    :log_file_activity_timeout => 25,
+    :start_timeout => 25
   ),
   :lebowski => DaemonController.new(
     :identifier => "Lebowski Server",
     # :path => "java -jar #{dir}/selenium-server.jar -userExtensions #{dir}/user-extensions.js -port #{SELENIUM_PORT} -Djava.net.preferIPv4Stack=true",
     # :start_command => "bundle exec lebowski-start-server -port #{SELENIUM_PORT} -log lebowski.log -Djava.net.preferIPv4Stack=true & echo $! > lebowski.pid",
-    :start_command => "java -jar #{dir}/selenium-server.jar -userExtensions #{dir}/user-extensions.js -port #{SELENIUM_PORT} -Djava.net.preferIPv4Stack=true & echo $! > lebowski.pid",
-    :ping_command => lambda { TCPSocket.new('localhost', SELENIUM_PORT)},
+    :start_command => "java -jar spec/support/selenium-server.jar -userExtensions spec/support/user-extensions.js -port #{SELENIUM_PORT} -Djava.net.preferIPv4Stack=true & echo $! > lebowski.pid",
+    :ping_command => lambda { TCPSocket.new('localhost', SELENIUM_PORT).close },
     :pid_file => "lebowski.pid",
+    :lock_file => "lebowski.lock",
     :log_file => "lebowski.log",
-    :timeout => 25
+    :log_file_activity_timeout => 25,
+    :start_timeout => 25
   ),
 }
 
@@ -104,7 +115,7 @@ def new_selenium_test
 end
 
 def start_apache(fake_authentication = true)
-  @apache = ApacheConfig.new {
+  $apache = ApacheConfig.new {
     x_instance_home File.expand_path(File.dirname(__FILE__))
     x_port APACHE_PORT
     x_host '127.0.0.1'
@@ -118,11 +129,11 @@ def start_apache(fake_authentication = true)
     x_proxy "/           http://127.0.0.1:#{SC_SERVER_PORT}/"
   }
 
-  @apache.controller.start
+  $apache.controller.start
 end
 
 def stop_apache
-  @apache.controller.stop
+  $apache.controller.stop
 end
 
 def start_testing_servers(fake_authentication = true)
@@ -130,14 +141,18 @@ def start_testing_servers(fake_authentication = true)
   begin
     $daemons.each do |key, daemon|
       puts "Starting: #{key.to_s}"
-      if defined? Bundler
-        Bundler.with_clean_env do
-          puts "bundler defined"
-          daemon.start
-        end
-      else
+      # if defined? Bundler
+      #   Bundler.with_clean_env do
+      #     puts "bundler defined"
+      #     daemon.start
+      #   end
+      # else
+      begin
         daemon.start
+      rescue DaemonController::AlreadyStarted
+        puts "It was already started."
       end
+      # end
     end
 
     start_apache
@@ -151,7 +166,11 @@ end
 def stop_testing_servers
   $daemons.each do |key, daemon|
     puts "Stopping #{key.to_s}"
-    daemon.stop
+    begin
+      daemon.stop
+    rescue DaemonController::StopError
+      puts "... it was already stopped?"
+    end
   end
   
   stop_apache
