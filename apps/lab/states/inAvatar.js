@@ -29,7 +29,6 @@ Lab.inAvatar = Ki.State.extend({
     stateChanged = function() {
       console.log("status: " + user.get('status'));
       if (user.get('status') == SC.Record.READY_CLEAN) {
-        Lab.avatarController.set('waiting', NO);
         user.removeObserver('status', stateChanged);
         window.location = url;
       }
