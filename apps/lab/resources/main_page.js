@@ -15,7 +15,7 @@ Lab.mainPage = SC.Page.design({
   // load.
   mainPane: SC.MainPane.design({
     title: "Welcome to the Geniverse Labs",
-    classNames: ['brown'],
+    classNames: ['brown','mainPane'],
     childViews: 'mainAppView topBar'.w(),
     topBar: Lab.TopBarView.design({
       titlePath: 'Lab.mainPage.mainPane.title'
@@ -23,12 +23,8 @@ Lab.mainPage = SC.Page.design({
 
     mainAppView: SC.View.design({
       layout: { top: 0, centerX: 0, width: 1890, height: 890},
-      childViews: 'backgroundView caselogButtonView journalButtonView'.w(),
-
-      backgroundView: SC.ImageView.design({
-        layout: { top:0, centerX: 0, width: 1890, height: 890},
-        value: static_url('mainscreen-bg.png')
-      }),
+      classNames: ['mainscreen'],
+      childViews: 'caselogButtonView journalButtonView'.w(),
 
       caselogButtonView: SC.View.design(Geniverse.SimpleButton, {
         layerId: 'caselog',

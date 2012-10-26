@@ -10,6 +10,10 @@ body {
     width: 960px;
 }
 
+.mainscreen {
+  background: top center no-repeat static_url('mainscreen-bg.png');
+}
+
 a#caselog {
     background: transparent;
     position: absolute;
