@@ -11,14 +11,23 @@ Lab.loggedIn = Ki.State.extend({
   atLocation: Ki.State.design({
     
     substatesAreConcurrent: NO,
-    
+    initialSubstate: 'empty',
+
     inHomePage: Ki.State.plugin('Lab.inHomePage'),
     inActivity: Ki.State.plugin('Lab.inActivity'),
     inCaselog:  Ki.State.plugin('Lab.inCaselog'),
+    inAvatar:   Ki.State.plugin('Lab.inAvatar'),
+
+    empty: Ki.State.design(),
 
     startPage: null,
     
     enterState: function() {
+      avatar = Geniverse.userController.get('avatar');
+      if (typeof(avatar) == "undefined" || avatar === null || avatar === "") {
+        Lab.statechart.getState('atLocation').startPage = 'avatar';
+      }
+
       this.get('statechart').sendAction('gotoRequestedPage');
     },
     
@@ -37,7 +46,13 @@ Lab.loggedIn = Ki.State.extend({
       this.get('statechart').sendAction('gotoRequestedPage');
     },
     
+    gotoAvatar: function() {
+      this.startPage = 'avatar';
+      this.get('statechart').sendAction('gotoRequestedPage');
+    },
+
     gotoRequestedPage: function() {
+      console.log("going to page");
       switch (this.startPage) {
         case 'home':
           this.gotoState('inHomePage');
@@ -48,6 +63,9 @@ Lab.loggedIn = Ki.State.extend({
         case 'activity':
           this.gotoState('inActivity');
           break;          
+        case 'avatar':
+          this.gotoState('inAvatar');
+          break;
         default:
           throw new Error(
             "Lab.statechart.loggedIn.atLocation.startPage was set to an unexpected value, '%@'".fmt(this.startPage));
