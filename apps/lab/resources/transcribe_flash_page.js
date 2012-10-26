@@ -5,8 +5,7 @@
 /*globals Lab Geniverse CC, CcChat, java static_url sc_static sc_require */
 Lab.marginSize = 15;
 
-sc_require('views/top_bar_view');
-sc_require('views/bottom_bar_view');
+sc_require('views/lab_pane');
 
 Lab.transcribeFlashPage = SC.Page.design({
   
@@ -18,17 +17,7 @@ Lab.transcribeFlashPage = SC.Page.design({
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page
   // load.
-  mainPane: SC.MainPane.design({
-    // defaultResponder: Geniverse,
-    classNames: ['brown','lab'],
-    childViews: 'mainAppView topBar bottomBar'.w(),
-    topBar: Lab.TopBarView.design({
-      classNames: ['brown']
-    }),
-    bottomBar: Lab.BottomBarView.design({
-      classNames: ['brown']
-    }),
-
+  mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
       
       childViews: 'mwView'.w(),

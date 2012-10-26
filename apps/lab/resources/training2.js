@@ -6,7 +6,7 @@
  * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
 /*globals Geniverse, CC, CcChat, java static_url sc_static */
-sc_require('views/top_bar_view');
+sc_require('views/lab_pane');
 
 Lab.marginSize = 15;
 
@@ -18,18 +18,7 @@ Lab.training2 = SC.Page.design({
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page
   // load.
-  mainPane: SC.MainPane.design({
-    // defaultResponder: Geniverse,
-    classNames: ['brown'],
-    childViews: 'backgroundView mainAppView topBar'.w(),
-    backgroundView: SC.ImageView.design({
-      value: static_url('bg2'),
-      classNames: ['transparent','scalingimage']
-    }),
-    topBar: Lab.TopBarView.design({
-      titlePath: 'Lab.training2.title'
-    }),
-
+  mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
       layout: { top: 37, left: 0, right: 0 },
       layerId: 'content',

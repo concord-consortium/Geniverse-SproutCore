@@ -5,11 +5,10 @@
 /*globals Geniverse, CC, CcChat, java, Lab */
 Lab.marginSize = 15;
 
-sc_require('views/top_bar_view');
+sc_require('views/lab_pane');
 sc_require('views/challenge_pool_view');
 sc_require('views/breeding_pen_view');
 sc_require('views/stable_view');
-sc_require('views/bottom_bar_view');
 
 Lab.breedingChallengePage = SC.Page.design({
 
@@ -21,18 +20,7 @@ Lab.breedingChallengePage = SC.Page.design({
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page
   // load.
-  mainPane: SC.MainPane.design({
-    // defaultResponder: Geniverse,
-    classNames: ['brown','lab'],
-    childViews: 'mainAppView topBar bottomBar'.w(),
-
-    topBar: Lab.TopBarView.design({
-      classNames: ['brown']
-    }),
-    bottomBar: Lab.BottomBarView.design({
-      classNames: ['brown']
-    }),
-
+  mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
 
       layout: { centerX: 0, top: 100, width: 840, height: 600 },
