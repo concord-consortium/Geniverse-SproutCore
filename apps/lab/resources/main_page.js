@@ -22,11 +22,11 @@ Lab.mainPage = SC.Page.design({
     }),
 
     mainAppView: SC.View.design({
-      layout: { top: 42, centerX: 0, width: 960},
+      layout: { top: 0, centerX: 0, width: 1890, height: 890},
       childViews: 'backgroundView caselogButtonView journalButtonView'.w(),
 
       backgroundView: SC.ImageView.design({
-        layout: { top:0, centerX: 0, width: 960},
+        layout: { top:0, centerX: 0, width: 1890, height: 890},
         value: static_url('mainscreen-bg.png')
       }),
 
@@ -34,7 +34,7 @@ Lab.mainPage = SC.Page.design({
         layerId: 'caselog',
         tagName: 'a',
         hasHover: YES,
-        layout: { top: 438, left: 467, width: 372, height: 158 },
+        layout: { top: 625, centerX: 25, width: 230, height: 160 },
         alt: 'Go to the Case Log',
         toolTip: 'Go to the Case Log',
         target: 'Lab.routes',
@@ -46,7 +46,7 @@ Lab.mainPage = SC.Page.design({
         layerId: 'journal',
         tagName: 'a',
         hasHover: YES,
-        layout: { top: 473, left: 71, width: 251, height: 127 },
+        layout: { top: 625, centerX: 240, width: 210, height: 115 },
         alt: 'Open the 3G Journal',
         toolTip: 'Open the 3G Journal',
         target: 'Lab.journalController',

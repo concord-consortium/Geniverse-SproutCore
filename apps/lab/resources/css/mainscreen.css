@@ -11,10 +11,6 @@ body {
 }
 
 a#caselog {
-    left: 467px;
-    top: 438px;
-    width: 372px;
-    height: 158px;
     background: transparent;
     position: absolute;
     border: none;
@@ -22,14 +18,12 @@ a#caselog {
 
 a#caselog:hover {
     cursor: pointer;
-    cursor: hand;
-    background-image: static_url('mainscreen-caselog-highlighted.png');
+    /*background-image: static_url('mainscreen-caselog-highlighted.png');*/
     background-repeat: none;
 }
 
 a#journal:hover {
     cursor: pointer;
-    cursor: hand;
-    background-image: static_url('mainscreen-journal-highlighted.png');
+    /*background-image: static_url('mainscreen-journal-highlighted.png');*/
     background-repeat: none;
 }
