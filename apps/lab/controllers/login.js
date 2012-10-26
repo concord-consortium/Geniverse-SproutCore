@@ -12,7 +12,7 @@
 */
 Lab.loginController = SC.ObjectController.create(
 /** @scope Lab.loginController.prototype */ {
-  
+
   defaultResponder: 'Lab.statechart',
 
   // TODO: Add your own code here.
@@ -35,7 +35,7 @@ Lab.loginController = SC.ObjectController.create(
     });
     this.panel.append();
   },
-  
+
   showLoginPanel: function() {
     this.set('welcomeMessage','please log in');
     if (this.triedPortal) {
@@ -45,7 +45,7 @@ Lab.loginController = SC.ObjectController.create(
     this.set('loginShowing', YES);
     this.set('checkShowing', NO);
   },
-  
+
 
   hidePanel: function() {
     if(this.panel) {
@@ -53,8 +53,8 @@ Lab.loginController = SC.ObjectController.create(
       this.panel = null;
     }
   },
- 
-  // ask the portal if this user is logged in 
+
+  // ask the portal if this user is logged in
   checkCCAuthToken: function() {
     var checkTokenUrl = this.checkTokenUrl;
     SC.Request.getUrl(checkTokenUrl).header({'Accept': 'application/json'}).json()
@@ -137,15 +137,15 @@ Lab.loginController = SC.ObjectController.create(
       this.showGroupPanel();
     }
   },
-  
+
   logout: function() {
     this.set('triedPortal', false);
-    
+
     var cc_auth_token = SC.Cookie.find('cc_auth_token');
     if (cc_auth_token) {
       cc_auth_token.destroy();
     }
-    
+
     var self = this;
     SC.Logger.info("logging out %s", this.get('username'));
     this.set('username','');
@@ -153,7 +153,7 @@ Lab.loginController = SC.ObjectController.create(
     this.set('firstName', '');
     this.set('password', '');
     this.set('loggedIn', NO);
-    
+
     Lab.userDefaults.writeDefault('username', '');
     Lab.userDefaults.writeDefault('password', '');
     Lab.userDefaults.writeDefault('chatroom', '');
@@ -167,7 +167,7 @@ Lab.loginController = SC.ObjectController.create(
       Geniverse.store.commitRecords();
     }
     else {
-      SC.Logger.log("probably an error condition -- no user when updateing groups"); 
+      SC.Logger.log("probably an error condition -- no user when updateing groups");
     }
   },
 
@@ -186,19 +186,19 @@ Lab.loginController = SC.ObjectController.create(
     Lab.userDefaults.writeDefault('username', user.get('username'));
     this.updateGroupInfo();
     this.set('loggedIn', YES);
-    
+
     Lab.statechart.sendAction('logIn');
   },
-  
+
   lastGroupId: -1,
   lastMemberId: -1,
-  
+
   loadTimer: null,
   setupTimer: function(array, callback) {
-	  if (this.get('loadTimer') !== null) {
-	    this.get('loadTimer').invalidate();
+    if (this.get('loadTimer') !== null) {
+      this.get('loadTimer').invalidate();
     }
-    
+
     this.set('loadTimer', SC.Timer.schedule({
       target: this,
       action: function() {
@@ -213,31 +213,31 @@ Lab.loginController = SC.ObjectController.create(
       interval: 500,
       repeats: YES
     }));
-	},
-  
+  },
+
   groupInfoDidUpdate: function() {
     var self = this;
-    if ((Geniverse.userController.get('groupId') != this.get('lastGroupId') || 
+    if ((Geniverse.userController.get('groupId') != this.get('lastGroupId') ||
         Geniverse.userController.get('memberId') != this.get('lastMemberId')) &&
         Lab.ACTIVITY.get('hasLoadedActivityData')){
       SC.Logger.log("reloading data after group change");
       Lab.ACTIVITY.set('hasLoadedActivityData', NO);
-      
+
       var user = Geniverse.userController.get('content');
       var challengeDragons = Geniverse.challengePoolController.get('arrangedObjects');
       var watchDragonsArray = [];
       challengeDragons.forEach(function(item){
         watchDragonsArray.push(item);
       });
-      
+
       function sellAndReload(){
         if ((user.get('status') & SC.Record.READY) === SC.Record.READY) {
           user.removeObserver('status', sellAndReload);
           Lab.ACTIVITY.sellAllUsersDrakes();
-          
+
           Geniverse.store.commitRecords();
-          
-          
+
+
           function reload(){
             if ((challengeDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
               challengeDragons.removeObserver('status', reload);
@@ -245,8 +245,8 @@ Lab.loginController = SC.ObjectController.create(
             }
           }
           self.setupTimer(watchDragonsArray, reload);
-          
-          
+
+
           // if ((challengeDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
           //             reload();
           //           } else {
@@ -255,15 +255,15 @@ Lab.loginController = SC.ObjectController.create(
           //           }
         }
       }
-      
+
       if ((user.get('status') & SC.Record.READY) === SC.Record.READY) {
         sellAndReload();
       } else {
         user.addObserver('status', sellAndReload);
       }
-        
-        
-        
+
+
+
       this.set('lastGroupId', Geniverse.userController.get('groupId'));
       this.set('lastMemberId', Geniverse.userController.get('memberId'));
     }

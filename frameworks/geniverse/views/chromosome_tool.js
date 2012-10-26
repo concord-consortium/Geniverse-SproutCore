@@ -17,7 +17,7 @@ Geniverse.ChromosomeToolView = SC.ButtonView.extend(
   icon: sc_static('magnifying-glass.png'),
   classNames: 'chromosome-tool',
   toolTip: "Use this to view parent, offspring, and stabled drake chromosomes.",
-  
+
   selectionBinding: 'Geniverse.allSelectedDragonsController.selection',
 
   action: function() {
@@ -28,7 +28,7 @@ Geniverse.ChromosomeToolView = SC.ButtonView.extend(
       Geniverse.chromosomeToolController.showPane();
     }
   },
-  
+
   selectionDidChange: function() {
     var selectionSet = this.get('selection');
     if (selectionSet.get('length') < 1 || selectionSet.get('length') > 1) {

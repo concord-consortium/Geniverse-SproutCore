@@ -9,20 +9,20 @@ sc_require('views/lab_pane');
 sc_require('views/challenge_pool_view');
 
 Lab.singleMeiosisPage = SC.Page.design({
-  
+
   pagePath: 'Lab.singleMeiosisPage',
   title: 'Simple Meiosis Page',
-  
+
   // challengeType: 'matchOneAtATimeChallenge',
-  
+
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
-      
+
       childViews: 'genomePanel'.w(),
-      
+
       genomePanel: SC.View.design({
         layout: {centerX: -30, top: 100, width: 680, height: 630 },
         childViews: 'challengePoolView parentTitle drakeParentView meiosisView nextButton'.w(),
@@ -41,20 +41,20 @@ Lab.singleMeiosisPage = SC.Page.design({
           value: "Parent Drake"
         }),
 
-				drakeParentView: Geniverse.OrganismView.design({
-					layout: {top: 157, centerX: 0, height: 100, width: 100 },
-					contentBinding: 'Geniverse.meiosisAnimationController.mother',
-					isDropTarget: YES,
+        drakeParentView: Geniverse.OrganismView.design({
+          layout: {top: 157, centerX: 0, height: 100, width: 100 },
+          contentBinding: 'Geniverse.meiosisAnimationController.mother',
+          isDropTarget: YES,
           glow: YES
-					}),
+          }),
 
-				meiosisView: Geniverse.AnimationView.design({
-					layout: {top: 271, centerX: 0, height: 360, width: 325 },
-					mode: 'parent',
-					swapping: false,
-					meiosisOwner: 'mother',
-					dragonBinding: 'Geniverse.meiosisAnimationController.mother',
-					gameteJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson'
+        meiosisView: Geniverse.AnimationView.design({
+          layout: {top: 271, centerX: 0, height: 360, width: 325 },
+          mode: 'parent',
+          swapping: false,
+          meiosisOwner: 'mother',
+          dragonBinding: 'Geniverse.meiosisAnimationController.mother',
+          gameteJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson'
         }),
 
         nextButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -70,5 +70,5 @@ Lab.singleMeiosisPage = SC.Page.design({
         })
       })
     })
-	})
+  })
 });

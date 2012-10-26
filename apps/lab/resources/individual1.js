@@ -69,8 +69,8 @@ Lab.individual1 = SC.Page.design({
           width: '130px'
         }
       })
-  	})
-	}),
+    })
+  }),
 
   goCaseLog: function() {
     SC.routes.set('location', 'lab/caselog');

@@ -20,16 +20,16 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
     dragon: null,
     pane: null,
     isEnabledButton: NO,
-    
+
     mother: null,
     father: null,
     offspring: null,
     fatherGameteJson: null,
     motherGameteJson: null,
-		retryMother: false,
-		retryFather: false
+    retryMother: false,
+    retryFather: false
   }),
-  
+
   reset: function() {
     this.set('dragon', null);
     this.set('mother', null);
@@ -38,18 +38,18 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
     this.set('fatherGameteJson', null);
     this.set('motherGameteJson', null);
   },
-  
+
   clearOffspring: function() {
     this.set('offspring', null);
   }.observes('mother', 'father','fatherGameteJson','motherGameteJson'),
 
   clearMotherGamete: function(){
-		this.set('motherGameteJson',null);
-	}.observes('mother'),
-	
+    this.set('motherGameteJson',null);
+  }.observes('mother'),
+
   clearFatherGamete: function(){
-		this.set('fatherGameteJson',null);
-	}.observes('father'),
+    this.set('fatherGameteJson',null);
+  }.observes('father'),
 
   allelesToJSON: function (alleleString) {
     if(alleleString !== null && typeof(alleleString) != 'undefined'){
@@ -57,7 +57,7 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
       var alleles = Geniverse.chromosomeController.processAlleleString(alleleString);
       document.alleles = alleles;
       var chromosomesArr = [];
-      
+
       // special way of iteracting through
       for(var i = 1; i < 4; i++){
         if (i === 3){
@@ -73,7 +73,7 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
           allelesArr.push(allele);
         }
         chromosomesArr.push({ alleles: allelesArr});
-        
+
         allelesArr = [];
         if (alleles[i].B !== null && typeof alleles[i].B != 'undefined') {
           for (j = 0; j < alleles[i].B.length; j++){
@@ -90,24 +90,24 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
           // chromosomesArr.push({ alleles: []});
         }
       }
-      
+
       var json = { chromosomes: chromosomesArr };
       return json;
     }
     return null;
   },
-  
+
   JSONToAlleles: function(motherJson, fatherJson) {
     var outString = "";
-    
+
     var motherString = this._JSONToAlleles(motherJson, "a:");
     var fatherString = this._JSONToAlleles(fatherJson, "b:");
-    
+
     SC.Logger.log("ALLELES : "+motherString + fatherString);
-    
+
     return motherString + fatherString;
   },
-  
+
   _JSONToAlleles: function(json, prefix) {
     var outString = "";
     for (var i = 0; i < json.chromosomes.length; i++) {
@@ -118,7 +118,7 @@ Geniverse.meiosisAnimationController = SC.ObjectController.create(
     }
     return outString;
   },
-  
+
   getOffspringSex: function() {
     var lastChromoAlleles = Geniverse.meiosisAnimationController.get('fatherGameteJson').chromosomes[2].alleles;
     var sex = 1;

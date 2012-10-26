@@ -45,11 +45,11 @@ Lab.showingBlogButton =  Ki.State.extend({
       this._showWaitDialog();
 
       this._failureTimer = SC.Timer.schedule({
-			  target: this,
-			  action: '_showFailureMessage',
-			  interval: 10000,
-			  repeats: NO
-		  });
+        target: this,
+        action: '_showFailureMessage',
+        interval: 10000,
+        repeats: NO
+      });
 
       this.closePanel();
     },

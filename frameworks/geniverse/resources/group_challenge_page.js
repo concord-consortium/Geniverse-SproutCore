@@ -16,9 +16,9 @@ sc_require('views/chromosome_tool');
 sc_require('views/stats');
 sc_require('views/chat_message');
 Geniverse.groupChallengePage = SC.Page.design({
-  
+
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page 
+  // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
@@ -30,7 +30,7 @@ Geniverse.groupChallengePage = SC.Page.design({
       classNames: ['brown'],
       childViews: 'geniverseLabelView welcomeLabelView logoutButton'.w(),
       anchorLocation: SC.ANCHOR_TOP,
-      
+
       geniverseLabelView: SC.LabelView.design({
         layout: { centerY: 0, height: 24, left: 8, width: 200 },
         controlSize: SC.LARGE_CONTROL_SIZE,
@@ -38,7 +38,7 @@ Geniverse.groupChallengePage = SC.Page.design({
         //valueBinding:   'Geniverse.activityController.title'
         value: "Group Challenge"
       }),
-      
+
       welcomeLabelView: SC.LabelView.design({
         layout: { centerY: 0, height: 24, right: 130, width: 500},
         fontWeight: SC.BOLD_WEIGHT,
@@ -56,12 +56,12 @@ Geniverse.groupChallengePage = SC.Page.design({
         isVisibleBinding: 'Geniverse.appController.userLoggedIn'
       })
     }),
-    
+
     appContainer: SC.ContainerView.design({
       isContainerView: YES,
       layout: { top: 45, bottom: 0, left: 10, right: 0 },
       contentView: null,
-    	
+
       loginView: Geniverse.LoginView.create({
         layout: {centerX: 0, top: Geniverse.marginSize, width: 500, height: 100},
         layerId: "chatLogin",
@@ -69,7 +69,7 @@ Geniverse.groupChallengePage = SC.Page.design({
       }),
       mainAppView: SC.View.create({
         childViews: 'breedView statsView challengePoolView breedingPenView challengeChromosomeToolView breedingChromosomeToolView  stableView stableChromosomeToolView marketplaceView chatView allArticlesView'.w(),
-       
+
         challengePoolView: SC.View.design({
           className: 'transparent'.w(),
           childViews: "titleView dragonsView".w(),
@@ -103,12 +103,12 @@ Geniverse.groupChallengePage = SC.Page.design({
         layout: { left: 20 + 70 - 35, top: 40, width: 35, height: 30 },
           selectionBinding: 'Geniverse.challengePoolController.selection'
         }),
-        
+
         breedView: Geniverse.BreedDragonView.design({
           layout: { top: 70 , left: 100, height: 300, width: 150 },
           showChildView: NO // child as in baby dragon
         }),
-        
+
         // Breeding pen with eggs
         breedingPenView: SC.View.design ({
           childViews: "titleView penView".w(),
@@ -140,13 +140,13 @@ Geniverse.groupChallengePage = SC.Page.design({
             autoScrollTriggerBinding: 'Geniverse.eggsController.length'
           })
         }),
-        
-        
+
+
         breedingChromosomeToolView: Geniverse.ChromosomeToolView.design({
           layout: { left: 265 + 300 - 35, top: 40, width: 35, height: 40 },
           selectionBinding: 'Geniverse.eggsController.selection'
         }),
-        
+
         marketplaceView: SC.ImageView.design({
           layout: { left: 570, top: 150, height: 90, width: 90 },
           value: sc_static('sell-to-market.jpg'),
@@ -161,7 +161,7 @@ Geniverse.groupChallengePage = SC.Page.design({
               }
               SC.RunLoop.end();
             }
-            
+
             if ((""+drag.get('source').constructor === 'Geniverse.OrganismView')){
               var dragon = drag.get('source').get('content');
               sellDragon(dragon);
@@ -189,12 +189,12 @@ Geniverse.groupChallengePage = SC.Page.design({
           dragExited: function(drag, evt) {
             this.$().removeClass('drop-target') ;
           }
-      	}),
-        
+        }),
+
         statsView: Geniverse.StatsView.design({
           layout: { left: 565, top: 70 + (300 - 80), width: 60, height: 80 }
         }),
-        
+
         stableChromosomeToolView: Geniverse.ChromosomeToolView.design({
           layout: { left: 680 + 240 -35, top: 40, width: 35, height: 40 },
           selectionBinding: 'Geniverse.stableOrganismsController.selection'
@@ -274,7 +274,7 @@ Geniverse.groupChallengePage = SC.Page.design({
                   }
                   self.set('dragonNum', dragonNum);
                 }
-                
+
                 SC.RunLoop.begin();
                   dragon.set('isEgg', false);
                   dragon.set('stableOrder', dragonNum);
@@ -283,7 +283,7 @@ Geniverse.groupChallengePage = SC.Page.design({
                 self.dragonNum = self.dragonNum + 1;
                 SC.Logger.info("Stable has %d dragons", self.dragonNum);
               }
-              
+
               if (drag.hasDataType('dragonChat')) {
                 SC.Logger.info("we found a dragon from chat");
                 var jsonData = drag.get('data');
@@ -327,24 +327,24 @@ Geniverse.groupChallengePage = SC.Page.design({
               this.$().removeClass('drop-target') ;
             }
           })
-        }), 
+        }),
 
-        allArticlesView: SC.TabView.design({ 
+        allArticlesView: SC.TabView.design({
           layout: { bottom: 10, right: 30, width: 450, height: 235},
-          items: [ 
+          items: [
             {title: "Your paper", value: "Geniverse.yourArticleView" },
             {title: "Published papers", value: "Geniverse.publishedArticlesView" }
-          ], 
-          itemTitleKey: 'title', 
+          ],
+          itemTitleKey: 'title',
           itemValueKey: 'value',
-          nowShowingBinding: 'Geniverse.articleController.nowShowing' // hack for defining the startup tab 
+          nowShowingBinding: 'Geniverse.articleController.nowShowing' // hack for defining the startup tab
         }),
-        
+
         chatView: SC.View.design ({
           layout: { bottom: 10, left: 20, width: 385, height: 215 },
           classNames: "transparent".w(),
           childViews: 'userListLabel userListView chatListView chatComposeView '.w(),
-          
+
           userListLabel: SC.LabelView.design({
             layout: {top: 0, left: 0, width: 125, height: 20},
             value: "Users in room",
@@ -357,7 +357,7 @@ Geniverse.groupChallengePage = SC.Page.design({
           userListView: CcChat.UserListView.design({
             layout: {top: 20, left: 0, width: 125, height: 210}
           }),
-          
+
           chatListView: CC.AutoScrollView.design({
             layerId: 'chatList',
             hasHorizontalScroller: NO,
@@ -377,12 +377,12 @@ Geniverse.groupChallengePage = SC.Page.design({
             }),
             autoScrollTriggerBinding:  'Geniverse.chatListController.length'
           }),
-      		
+
           chatComposeView: Geniverse.DragonChatComposeView.design({
             layout: { left: 135, top: 180, height: 100, width: 250 },
             layerId: "chatCompose"
           })
-          
+
         })
       })
     })

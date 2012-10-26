@@ -15,19 +15,19 @@ sc_require('views/published_articles');
 sc_require('views/login');
 
 Geniverse.trainingPage = SC.Page.design({
-  
+
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page 
+  // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
-    classNames: ['brown'], 
+    classNames: ['brown'],
     childViews: 'topBar mainAppView'.w(),
     topBar: SC.ToolbarView.design({
       layout: { top: 0, left: 0, right: 0, height: 36 },
       childViews: 'geniverseLabelView welcomeLabelView logoutButton'.w(),
       anchorLocation: SC.ANCHOR_TOP,
-      
+
       geniverseLabelView: SC.LabelView.design({
         layout: { centerY: 0, height: 24, left: 8, width: 200 },
         controlSize: SC.LARGE_CONTROL_SIZE,
@@ -35,7 +35,7 @@ Geniverse.trainingPage = SC.Page.design({
         //valueBinding:   'Geniverse.activityController.title'
         value: "Drake Chromosomes"
       }),
-      
+
       welcomeLabelView: SC.LabelView.design({
         layout: { centerY: 0, height: 24, right: 130, width: 500},
         fontWeight: SC.BOLD_WEIGHT,
@@ -53,11 +53,11 @@ Geniverse.trainingPage = SC.Page.design({
         isVisibleBinding: 'Geniverse.appController.userLoggedIn'
       })
     }),
-    
+
     mainAppView: SC.View.design({
-      
+
       childViews: 'femaleGenomePanel maleGenomePanel'.w(),
-      
+
       femaleGenomePanel: SC.View.design({
         layout: {top: 50, height: 550, left: 15, width: 500 },
         childViews: 'background title genomeView'.w(),
@@ -89,7 +89,7 @@ Geniverse.trainingPage = SC.Page.design({
         })
 
       }),
-      
+
       maleGenomePanel: SC.View.design({
         layout: {top: 50, height: 550, left: 600, width: 500 },
         childViews: 'background maleTitle maleGenomeView'.w(),
@@ -121,7 +121,7 @@ Geniverse.trainingPage = SC.Page.design({
         })
 
       })
-      
-  	})
-	})
+
+    })
+  })
 });

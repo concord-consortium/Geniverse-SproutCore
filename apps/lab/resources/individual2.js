@@ -69,8 +69,8 @@ Lab.individual2 = SC.Page.design({
           width: '130px'
         }
       })
-  	})
-	}),
+    })
+  }),
 
   goIndividual1: function() {
     SC.routes.set('location', 'lab/individual1');

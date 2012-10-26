@@ -17,9 +17,9 @@ sc_require('views/stats');
 sc_require('views/animation');
 
 Geniverse.animationPage = SC.Page.design({
-  
+
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page 
+  // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
@@ -31,7 +31,7 @@ Geniverse.animationPage = SC.Page.design({
       classNames: ['brown'],
       childViews: 'geniverseLabelView welcomeLabelView logoutButton'.w(),
       anchorLocation: SC.ANCHOR_TOP,
-      
+
       geniverseLabelView: SC.LabelView.design({
         layout: { centerY: 0, height: 24, left: 8, width: 200 },
         controlSize: SC.LARGE_CONTROL_SIZE,
@@ -39,7 +39,7 @@ Geniverse.animationPage = SC.Page.design({
         //valueBinding:   'Geniverse.activityController.title'
         value: "Geniverse Animation"
       }),
-      
+
       welcomeLabelView: SC.LabelView.design({
         layout: { centerY: 0, height: 24, right: 130, width: 500},
         fontWeight: SC.BOLD_WEIGHT,
@@ -57,15 +57,15 @@ Geniverse.animationPage = SC.Page.design({
         isVisibleBinding: 'Geniverse.appController.userLoggedIn'
       })
     }),
-    
+
     meiosisView: Geniverse.AnimationView.design({
       layout: { centerY: 0, height: 400, width: 400 },
       layerId: 'father',
       mode: 'parent',
-			swapping: true,
+      swapping: true,
       meiosisOwner: 'father',
       jsondataurl: static_url('chromosomes.json')
     })
   })
-  
+
 });

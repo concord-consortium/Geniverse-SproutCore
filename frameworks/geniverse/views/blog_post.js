@@ -20,7 +20,7 @@ Geniverse.BlogPostView = SC.PalettePane.design({
 
   contentView: SC.View.extend({
     childViews: 'titleView blogTitleView blogPostView1 blogPostView2 blogPostView3 blogPostView4 cancelButton postButton'.w(),
-		classNames: 'parchment'.w(),
+    classNames: 'parchment'.w(),
 
     titleView: SC.LabelView.design({
       layout: { centerY: 0, height: 24, left: 0, top:5, width: 440 },

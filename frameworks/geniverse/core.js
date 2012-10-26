@@ -7,14 +7,14 @@
 /** @namespace
 
   My cool new app.  Describe your application.
-  
+
   @extends SC.Object
 */
 // an extension of the SC.Page object to allow us to index all created pages
 SC.Page = SC.Page.extend({
   init: function() {
     sc_super();
-    
+
     var pages = SC.Page.instances;
     if (!pages) {
       pages = SC.Page.instances = [];
@@ -33,18 +33,18 @@ Geniverse = SC.Application.create(
   // of your model data.  You can also set a data source on this store to
   // connect to a backend server.  The default setup below connects the store
   // to any fixtures you define.
-  
+
   // store: SC.Store.create().from(SC.Record.fixtures),
   store: SC.Store.create().from('Geniverse.RailsDataSource'),
-  
+
   userDefaults: SC.UserDefaults.create({appDomain: "Geniverse"}),
-  
+
   railsBackedTypes: [],
 
   NEVER_SAVE_MATCH_DRAGONS: YES,
-  
+
   // TODO: Add global constants or singleton objects needed by your app here.
-  
+
   isLoaded: NO
 
 }) ;

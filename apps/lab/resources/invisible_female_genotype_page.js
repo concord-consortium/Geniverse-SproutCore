@@ -45,11 +45,11 @@ Lab.invisibleFemaleGenotypePage = SC.Page.design({
           dragonDidChange: function() {
             this.possiblyUpdateBreedDragon();
           }.observes('content'),
-          
+
           domStatusDidChange: function() {
             this.possiblyUpdateBreedDragon();
           }.observes('.pane.isPaneAttached'),
-          
+
           possiblyUpdateBreedDragon: function() {
             if (this.getPath('pane.isPaneAttached')) {
               Geniverse.breedDragonController.set('mother', this.get('content'));

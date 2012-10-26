@@ -5,17 +5,17 @@
 /*globals Lab Geniverse CcChat window Ki YES NO SC static_url sc_super*/
 
 Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
-  
+
   successfulMatch: NO,
-  
+
   organismView: null,
-  
+
   starsEarned: 0,
-  
+
   firstChromosomeDragonLoaded: NO,
-  
+
   buttonView: null,
-  
+
   startChallenge: function() {
     sc_super();
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', NO);
@@ -28,11 +28,11 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
     sc_super();
     Geniverse.matchController.removeObserver('arrangedObjects.length', this._updateNumTrials);
   },
-  
+
   matchDragonChanged: function() {
     this.setTargetScore();
   },
-  
+
   chromosomeDragonChanged: function() {
     if (!this.firstChromosomeDragonLoaded) {
       this.firstChromosomeDragonLoaded = YES;
@@ -47,24 +47,24 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
       Geniverse.scoringController.set('minimumScore', Geniverse.matchController.numberOfMovesToReachCurrent(initialDragon));
     }
   },
-  
+
   revealClicked: function(buttonView) {
     this.buttonView = buttonView;
     this.get('statechart').sendAction("checkAnswerIfDrakesReady");
   },
-  
+
   checkAnswer: function() {
     sc_super();
     this.organismView = this.buttonView.getPath('parentView.genomeView.dragonView');
     this._revealImage();
-    
+
     SC.Timer.schedule({
       target: this,
       action: function () {
         if (this._drakesMatch(this.organismView.get('content'))){
           this.successfulMatch = YES;
           SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
-            "Good work!", 
+            "Good work!",
             "The drake you have created matches the target drake.",
             "",
             "OK",
@@ -75,37 +75,37 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
           this.successfulMatch = NO;
           Geniverse.scoringController.incrementScore(1);
           SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).error(
-            "That's not the drake!", 
+            "That's not the drake!",
             "The drake you have created doesn't match the target drake. Please try again.",
             "",
             "Try again",
             "",
             this
           );
-        } 
+        }
       },
       interval: 500,
       repeats: NO
     });
-    
+
   },
-  
+
   _revealImage: function(){
     SC.RunLoop.begin();
       this.organismView.set('hideDragon', NO);
     SC.RunLoop.end();
-    
+
     this.organismView.get('imageView').notifyPropertyChange('valueNeedsRecalculated');
   },
-  
+
   _hideImage: function(){
     SC.RunLoop.begin();
       this.organismView.set('hideDragon', YES);
     SC.RunLoop.end();
-    
+
     this.organismView.get('imageView').notifyPropertyChange('valueNeedsRecalculated');
   },
-  
+
   alertPaneDidDismiss: function() {
     if (this.successfulMatch){
       if (Geniverse.matchController.isLastDragon()) {
@@ -119,7 +119,7 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
     }
     this._hideImage();
   },
-  
+
   _drakesMatch: function(dragon) {
     return Geniverse.matchController.doesMatchCurrent(dragon);
   }

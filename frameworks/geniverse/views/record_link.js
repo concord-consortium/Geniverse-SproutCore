@@ -12,7 +12,7 @@
 */
 Geniverse.RecordLinkView = SC.LabelView.extend(
 /** @scope Geniverse.RecordLinkView.prototype */ {
-  
+
   contentBinding: 'Geniverse.eggsController.arrangedObjects',
   tabView: null,
 
@@ -22,7 +22,7 @@ Geniverse.RecordLinkView = SC.LabelView.extend(
       this.set('isVisible', NO);
     } else {
       var dragon = dragons.firstObject();
-      
+
       if (dragon.get('status') & SC.Record.READY === SC.Record.READY) {
         this.updateLink(dragon);
       } else {
@@ -75,11 +75,11 @@ Geniverse.RecordLinkView = SC.LabelView.extend(
     }
     return link;
   },
-  
+
   isVisible: NO,
 
   value: "",
-  
+
   escapeHTML: NO
 
 });

@@ -18,7 +18,7 @@ Geniverse.notepadController = SC.ObjectController.create(
   pane: null,//Geniverse.NotepadView,
   contentBinding: 'Geniverse.userController*content.note',
   isEnabledButton: YES,
-	iframe: null,
+  iframe: null,
 
   /**
    *
@@ -38,9 +38,9 @@ Geniverse.notepadController = SC.ObjectController.create(
       var _pane = this.get('pane');
       //console.log("this.get('pane'):",_pane);
       if (!_pane.get('isVisibleInWindow')){
-				this.set('iframe',SC.WebView.create({								//This is an empty iFrame used to make sure the InfoView will be on top of applets
-					layoutBinding: 'Geniverse.notepadController.pane.layout',
-					value: static_url('empty.html')}));
+        this.set('iframe',SC.WebView.create({                //This is an empty iFrame used to make sure the InfoView will be on top of applets
+          layoutBinding: 'Geniverse.notepadController.pane.layout',
+          value: static_url('empty.html')}));
         if (Geniverse.activityController.get('pageContainsApplet')){
           Geniverse.activityController.get('iframeLayerToAppend').appendChild(this.get('iframe'));
         }
@@ -48,10 +48,10 @@ Geniverse.notepadController = SC.ObjectController.create(
         this.updateView(this.get('content'));
         this.set('isEnabledButton', NO);
       }
-      
+
       // this should be refactored into a Geniverse statechart at some point
       Lab.statechart.sendAction('warnUserBeforeLeaving');
-      
+
     }else {
       SC.AlertPane.error("", "You must be logged in first to use your Note Pad.");
     }
@@ -100,7 +100,7 @@ Geniverse.notepadController = SC.ObjectController.create(
     }
 //    console.log("this.pane.remove() returned receiver:", receiver);
     this.set('isEnabledButton', YES);
-    
+
     Lab.statechart.sendAction('dontWarnUserBeforeLeaving');
   },
 
@@ -124,7 +124,7 @@ Geniverse.notepadController = SC.ObjectController.create(
     }
     //console.log("this.pane.remove() returned receiver:", receiver);
     this.set('isEnabledButton', YES);
-    
+
     Lab.statechart.sendAction('dontWarnUserBeforeLeaving');
   },
 

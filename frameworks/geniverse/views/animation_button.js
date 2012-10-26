@@ -27,7 +27,7 @@ Geniverse.AnimationButtonView = SC.ButtonView.extend(
       Geniverse.meiosisAnimationController.showPane();
     }
   },
-  
+
   // FIXME: These three selection bindings are silly.
   // Will turn into an array, once I work out how...
   selectionDidChange: function() {
@@ -39,7 +39,7 @@ Geniverse.AnimationButtonView = SC.ButtonView.extend(
       Geniverse.meiosisAnimationController.set('dragon', dragon);
     }
   }.observes('selection'),
-  
+
   selection1DidChange: function() {
     var selectionSet = this.get('selection1');
     if (selectionSet.get('length') < 1 || selectionSet.get('length') > 1) {
@@ -49,7 +49,7 @@ Geniverse.AnimationButtonView = SC.ButtonView.extend(
       Geniverse.meiosisAnimationController.set('dragon', dragon);
     }
   }.observes('selection1'),
-  
+
   selection2DidChange: function() {
     var selectionSet = this.get('selection2');
     if (selectionSet.get('length') < 1 || selectionSet.get('length') > 1) {

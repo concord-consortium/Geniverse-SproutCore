@@ -18,7 +18,7 @@ Geniverse.INIT_ACTIVITY = SC.Responder.create(
     The next state to check if this state does not implement the action.
   */
   nextResponder: null,
-  
+
   didBecomeFirstResponder: function() {
     SC.Logger.log("INIT_ACTIVITY");
     var activityQuery = Geniverse.ACTIVITIES_QUERY;
@@ -26,8 +26,8 @@ Geniverse.INIT_ACTIVITY = SC.Responder.create(
 
     function setActivity() {
       if (activities.get('status') === SC.Record.READY_CLEAN) {
-		    // using objectAt because "lastObject" seems missing from SC.Enumerable mixin
-        //Geniverse.activityController.set('content', activities.lastObject() ); 
+        // using objectAt because "lastObject" seems missing from SC.Enumerable mixin
+        //Geniverse.activityController.set('content', activities.lastObject() );
         //
         //Try to find the activity matching our title
         var last  = activities.lastObject();
@@ -60,9 +60,9 @@ Geniverse.INIT_ACTIVITY = SC.Responder.create(
         activities.addObserver('status', setActivity);
     }
   },
-  
+
   willLoseFirstResponder: function() {
     // Called when this state loses first responder
   }
-  
+
 }) ;

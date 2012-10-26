@@ -5,16 +5,16 @@
 /*globals Lab Geniverse CcChat window Ki YES NO SC sc_super*/
 
 Lab.matchThreeToOneChallenge = Lab.challenge.extend({
-  
+
   successfulMatch: NO,
-  
+
   organismViews: [],
   matchedOrganismViews: [],
   duplicateOrganismViews: [],
   incorrectOrganismViews: [],
-  
+
   buttonView: null,
-  
+
   startChallenge: function() {
     sc_super();
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', NO);
@@ -27,12 +27,12 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
     sc_super();
     Geniverse.matchController.removeObserver('arrangedObjects.length', this._updateNumTrials);
   },
-  
+
   revealClicked: function(buttonView) {
     this.buttonView = buttonView;
     this.get('statechart').sendAction("checkAnswerIfDrakesReady");
   },
-  
+
   checkAnswer: function() {
     sc_super();
     var parent = this.buttonView.get('parentView');
@@ -77,11 +77,11 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
         var numMatched = this.matchedOrganismViews.length;
         var numDupes = this.duplicateOrganismViews.length;
         var numIncorrect = this.incorrectOrganismViews.length;
-        
+
         if (numMatched === 3){
           this.successfulMatch = YES;
           SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).plain(
-            "Good work!", 
+            "Good work!",
             "All of the drakes you have created match the target drake.",
             "",
             "OK",
@@ -130,9 +130,9 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
       interval: 500,
       repeats: NO
     });
-    
+
   },
-  
+
   _revealImages: function(){
     SC.RunLoop.begin();
     for (var i = 0; i < this.organismViews.length; i++) {
@@ -143,7 +143,7 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
       this.organismViews[i].get('imageView').notifyPropertyChange('valueNeedsRecalculated');
     }
   },
-  
+
   _hideImages: function(){
     SC.RunLoop.begin();
     var i = 0;
@@ -165,7 +165,7 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
       this.organismViews[i].get('imageView').notifyPropertyChange('valueNeedsRecalculated');
     }
   },
-  
+
   alertPaneDidDismiss: function() {
     if (this.successfulMatch){
       if (Geniverse.matchController.isLastDragon()) {
@@ -178,13 +178,13 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
     this._hideImages();
     this.successfulMatch = NO;
   },
-  
+
   _drakesMatch: function(dragon) {
     return Geniverse.matchController.doesMatchCurrent(dragon);
   },
-  
+
   _resetTargetMatchedState: function() {
     Geniverse.matchController.setPath('currentDragon.hasBeenMatched', NO);
   }
-  
+
 });

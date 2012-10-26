@@ -13,15 +13,15 @@
 */
 Geniverse.DragonBundle = SC.Record.extend(
 /** @scope Geniverse.DragonBundle.prototype */ {
-	dragon: null,
-	image: "",
-	imageURL: "",
-	chatHistory: [],
-	userHistory: [],
-	lastChat: "",
-	mother: null,
-	father: null
-	
+  dragon: null,
+  image: "",
+  imageURL: "",
+  chatHistory: [],
+  userHistory: [],
+  lastChat: "",
+  mother: null,
+  father: null
+
 }) ;
 
 Geniverse.DragonBundle.modelName = "dragonBundle";

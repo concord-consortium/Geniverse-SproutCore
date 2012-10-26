@@ -7,7 +7,7 @@
 /** @namespace
 
   Manages routes for the Lab application.
-  
+
   @extends SC.Object
 */
 Lab.routes = SC.Object.create({
@@ -17,85 +17,85 @@ Lab.routes = SC.Object.create({
     */
   _currentPagePane: null,
   _firstHomePane: null,
-  
+
   openHomePageRoute: function() {
     SC.routes.set('location', '');
   },
-      
+
   gotoHomePage: function(routeParams) {
     Lab.statechart.sendAction('gotoHomePage');
   },
-  
+
   openCaselogRoute: function() {
     SC.routes.set('location', 'caselog');
   },
 
   gotoCaselog: function(routeParams) {
     var level = routeParams.level;  // empty ('') or 'training', 'apprentice', 'journeyman', 'master', 'meiosis', 'dna'
-    
+
     if (level) Lab.caselogController.set('currentLevelName', level);
     Lab.statechart.sendAction('gotoCaselog');
   },
-  
+
   openAvatarPageRoute: function() {
     SC.routes.set('location', 'avatar');
   },
-      
+
   gotoAvatarPage: function(routeParams) {
     Lab.statechart.sendAction('gotoAvatarPage');
   },
-  
-  gotoActivity: function(routeParams) { 
+
+  gotoActivity: function(routeParams) {
     Lab.ACTIVITY.set('strand', routeParams.strand);                // heredity, ...
     Lab.ACTIVITY.set('level', routeParams.level);                  // apprentice, journeyman, master
     Lab.ACTIVITY.set('activityType', routeParams.activityType);    // intro, individual, group
     Lab.ACTIVITY.set('activityIndex', routeParams.activityIndex);  // 0,1,2
-      
+
     Lab.statechart.sendAction('gotoActivity');
   },
-  
+
   gotoLabRoute: function(routeParams) {
     this.gotoRoute(Lab, routeParams);
   },
-  
+
   gotoGeniverseRoute: function(routeParams) {
     this.gotoRoute(Geniverse, routeParams);
   },
-  
+
   gotoLabRouteWithFixtures: function(routeParams) {
     SC.Logger.log("fixtures: going to ");
     SC.Logger.dir(routeParams);
-  
+
     function loadFixtureData() {
       Geniverse.set('store', SC.Store.create().from(SC.FixturesDataSource.create()));
       // SC.FixturesDataSource.simulateRemoteResponse = YES;
       // SC.FixturesDataSource.latency = 1000;
-      
+
       // set up defaults
       var activities = Geniverse.store.find(Geniverse.ACTIVITIES_QUERY);
       Geniverse.activityController.set('content', activities.lastObject());
       Geniverse.userController.set('content', Geniverse.store.find(Geniverse.User, 1));
       Lab.ACTIVITY.loadData();
     }
-    
+
     loadFixtureData();
     this.gotoLabRoute(routeParams);
   },
-  
+
   gotoActivityRouteWithFixtures: function(routeParams) {
     SC.Logger.log("fixtures: going to ");
     SC.Logger.dir(routeParams);
-    
+
     Geniverse.set('store', SC.Store.create().from(SC.FixturesDataSource.create()));
     Lab.START.gotoActivity(routeParams);
   },
 
   /**
     Navigate to the specified route
-    
+
     @param {SC.Object} pageOwner The object (Lab or Geniverse, generally) which has the page routeParams.pageName
-    
-    @param {Object} routeParams route parameters are set as properties of this object. The parameters are specified 
+
+    @param {Object} routeParams route parameters are set as properties of this object. The parameters are specified
       when registering the route using SC.routes.add() in main.js.
   */
   gotoRoute: function(pageOwner, routeParams) {
@@ -105,7 +105,7 @@ Lab.routes = SC.Object.create({
         pane     = page.get(paneName);
 
     console.log("BEGIN Lab.routes.gotoRoute(pageOwner, routeParams)");
-    
+
     // If there is a current pane, remove it from the screen.
     if (this._currentPagePane !== null) {
       this._currentPagePane.remove();
@@ -117,10 +117,10 @@ Lab.routes = SC.Object.create({
     // Show the specified pane...
     pane.set('pageName', pageName);  // This must be set so the help button works!
     pane.append();
-    
+
     // ...and save the current pane so we can remove it when process the next route.
     this._currentPagePane = pane;
-    
+
     // Don't bother with SC.logger.log(). console.log() logs an inspectable object instead of forcibly converting
     // all its arguments to strings.
     // console.log("  pageOwner: %s", pageOwner && pageOwner.toString(), pageOwner);

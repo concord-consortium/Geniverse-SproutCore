@@ -5,12 +5,12 @@
 /*globals Lab Geniverse CcChat window Ki*/
 
 Lab.inHomePage = Ki.State.extend({
-  
-  enterState: function() { 
+
+  enterState: function() {
     Lab.routes.gotoLabRoute({pageName: 'mainPage'});
   },
-  
-  exitState: function() { 
+
+  exitState: function() {
   }
-  
+
 });

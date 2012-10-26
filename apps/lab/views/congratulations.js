@@ -36,7 +36,7 @@ Lab.CongratulationsView = SC.PalettePane.create({
       target: "Lab.congratulationsController"
     }),
 
-    // TODO: Solve Firefox bug: titleView lacks dark background, making title hard to read 
+    // TODO: Solve Firefox bug: titleView lacks dark background, making title hard to read
     congratulationsView: SC.LabelView.design({
       layout: { left: 10, top: 24, width: 420, height: 375 },
       value: "please wait...",

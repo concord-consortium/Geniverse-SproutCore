@@ -69,8 +69,8 @@ Lab.experiment2 = SC.Page.design({
           width: '130px'
         }
       })
-  	})
-	}),
+    })
+  }),
 
   goExperiment1: function() {
     SC.routes.set('location', 'lab/experiment1');

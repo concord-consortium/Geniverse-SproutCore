@@ -30,10 +30,10 @@ Geniverse.userController = SC.ObjectController.create(
     Geniverse.store.commitRecords();
     return user;
   },
-  
+
   findUser: function (username, callback) {
     var self = this;
-    var query = SC.Query.local(Geniverse.User, 
+    var query = SC.Query.local(Geniverse.User,
       {
         conditions: 'username = "' + username + '"',
         restParams: Geniverse.makeRestParams({
@@ -64,7 +64,7 @@ Geniverse.userController = SC.ObjectController.create(
     checkStatus();
   },
 
-  findOrCreateUser: function(username, callback) {      
+  findOrCreateUser: function(username, callback) {
     var self = this;
     var nextMethod = function(user) {
       if (user) {

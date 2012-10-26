@@ -8,20 +8,20 @@ Lab.marginSize = 15;
 sc_require('views/lab_pane');
 
 Lab.dnaComplexPlayground = SC.Page.design({
-  
+
   pagePath: 'Lab.dnaComplexPlayground',
   title: 'Identify the Connection Between DNA and Amino Acids',
-  
+
   // challengeType: 'matchOneAtATimeChallenge',
-  
+
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
-      
+
       childViews: 'mwAppletView'.w(),
-      
+
         mwAppletView: SC.View.design({
 
           childViews: 'mwApplet'.w(),

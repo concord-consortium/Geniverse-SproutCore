@@ -43,7 +43,7 @@ Geniverse.challengePoolController = SC.ArrayController.create(
       this.set('firstMale', null);
     }
   }.observes('length'),
-  
+
   configContains: function(sex) {
     var user = Geniverse.userController.get('content');
     var group = user.get('groupId')  - 1;
@@ -56,7 +56,7 @@ Geniverse.challengePoolController = SC.ArrayController.create(
     }
     return false;
   },
-  
+
   firstFemale: null,
   firstMale: null
 });

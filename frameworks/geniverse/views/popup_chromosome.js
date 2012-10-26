@@ -20,7 +20,7 @@ Geniverse.PopupChromosomeView = SC.PalettePane.extend({
       textAlign: SC.ALIGN_CENTER,
       classNames: "sc-pane sc-main sc-theme".w()
     }),
-    
+
     noticeLabel: SC.LabelView.design({
       layout: { centerY: 0, height: 24, left: 0, top:24, width: 488 },
       //valueBinding: this.get('titlePath'),

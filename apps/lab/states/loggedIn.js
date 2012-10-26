@@ -5,11 +5,11 @@
 /*globals Lab Geniverse CcChat window Ki*/
 
 Lab.loggedIn = Ki.State.extend({
-  
+
   substatesAreConcurrent: YES,
-  
+
   atLocation: Ki.State.design({
-    
+
     substatesAreConcurrent: NO,
     initialSubstate: 'empty',
 
@@ -21,7 +21,7 @@ Lab.loggedIn = Ki.State.extend({
     empty: Ki.State.design(),
 
     startPage: null,
-    
+
     enterState: function() {
       avatar = Geniverse.userController.get('avatar');
       if (typeof(avatar) == "undefined" || avatar === null || avatar === "") {
@@ -30,22 +30,22 @@ Lab.loggedIn = Ki.State.extend({
 
       this.get('statechart').sendAction('gotoRequestedPage');
     },
-    
+
     gotoHomePage: function() {
       this.startPage = 'home';
       this.get('statechart').sendAction('gotoRequestedPage');
     },
-    
+
     gotoCaselog: function() {
       this.startPage = 'caselog';
       this.get('statechart').sendAction('gotoRequestedPage');
     },
-    
+
     gotoActivity: function() {
       this.startPage = 'activity';
       this.get('statechart').sendAction('gotoRequestedPage');
     },
-    
+
     gotoAvatarPage: function() {
       this.startPage = 'avatar';
       this.get('statechart').sendAction('gotoRequestedPage');
@@ -62,7 +62,7 @@ Lab.loggedIn = Ki.State.extend({
           break;
         case 'activity':
           this.gotoState('inActivity');
-          break;          
+          break;
         case 'avatar':
           this.gotoState('inAvatar');
           break;
@@ -73,23 +73,23 @@ Lab.loggedIn = Ki.State.extend({
     }
 
   }),
-  
+
   showingBlogButton: Ki.State.plugin('Lab.showingBlogButton'),
-  
+
   warningUserBeforeLeaving: Ki.State.plugin('Lab.warningUserBeforeLeaving'),
-  
-  logOut: function() { 
+
+  logOut: function() {
     SC.Request.postUrl(Lab.loginController.logoutUrl,null).header({'Accept': 'application/json'}).json()
       .notify(this, function(){
         Lab.statechart.gotoState('loggedOut');
         })
       .send();
-    
+
     // rm cookies and blank user object
     Lab.loginController.logout();
   },
-  
-  exitState: function() { 
+
+  exitState: function() {
   }
-  
+
 });

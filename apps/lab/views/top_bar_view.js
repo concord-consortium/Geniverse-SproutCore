@@ -18,7 +18,7 @@
 
 Lab.TopBarView = SC.ToolbarView.extend(
 /** @scope Lab.TopBarView.prototype */ {
-  
+
   layout: { top: 0, left: 0, right: 0, height: 36 },
   layerId: 'topBar',
   classNames: ['brown-toolbar-view'],
@@ -63,7 +63,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
    * Binding Path for the isVisible property of the logoutButton
    */
   logoutButtonIsVisiblePath: 'Lab.loginController.loggedIn',
-  
+
   /**
    * Binding Path for the target property of the changeGroupButton
    */
@@ -188,7 +188,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
       })
     );
     childViews.push(this.introButton);
-    
+
     this.infoButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, right: 176, width: 27, height: 26 },
@@ -202,7 +202,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     );
     Lab.infoController.set('infoButton', this.infoButton); // So pop-up pointer works
     childViews.push(this.infoButton);
-    
+
     this.blogButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, right: 141, width: 27, height: 26 },
@@ -216,8 +216,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
       })
     );
     childViews.push(this.blogButton);
-    
-    
+
+
     this.journalButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, right: 107, width: 27, height: 26 },
@@ -231,7 +231,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
       })
     );
     childViews.push(this.journalButton);
-    
+
     this.notepadButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, right: 73, width: 27, height: 26 },
@@ -278,5 +278,5 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.set('childViews', childViews);
   }
-  
+
 });

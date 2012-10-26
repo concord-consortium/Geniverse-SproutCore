@@ -12,13 +12,13 @@ SC.Record.mixin({
       }
     }
 
-    return ret.join(" ");  
+    return ret.join(" ");
   }
 });
 
 // Helper function to make it easier to track down status errors
 statusEquals = function(obj, status, message){
-  equals(SC.Record.statusString(obj.get('status')), SC.Record.statusString(status), message);	
+  equals(SC.Record.statusString(obj.get('status')), SC.Record.statusString(status), message);
 };
 
 
@@ -28,12 +28,12 @@ statusNotify = function(obj, status, func){
   if(obj.get('status') & status){
     SC.Logger.log('statusNotify firing synchronously');
     func.call();
-    
+
     // resume property change notifications
-    obj.endPropertyChanges();	
+    obj.endPropertyChanges();
     return;
   }
-  
+
   var checkingFunc = function(){
     if(obj.get('status') & status){
       // remove the observer incase the passed func causes it to fire again
@@ -49,10 +49,10 @@ statusNotify = function(obj, status, func){
 //    callback: <some function to call when the status changes>}
 statusQueue = function(statusArray){
   stop(5000 + statusArray.get('length') * 1000);
-  
+
   var iterate = function(statusArray){
     var item = statusArray.shiftObject();
-    
+
     var observerFunc = function(){
       // remove the observer incase the passed func causes it to fire again
       item.target.removeObserver('status', observerFunc);
@@ -62,7 +62,7 @@ statusQueue = function(statusArray){
         item.callback(statusArray);
         if(length > 0){
           iterate(statusArray);
-        } 
+        }
       } catch(e) {
         SC.Logger.error("statusNotify died, exception and callback follows");
         SC.Logger.error(e);
@@ -78,9 +78,9 @@ statusQueue = function(statusArray){
         }
       }
     };
-    item.target.addObserver('status', observerFunc);  
+    item.target.addObserver('status', observerFunc);
   };
-  
+
   iterate(statusArray);
 };
 

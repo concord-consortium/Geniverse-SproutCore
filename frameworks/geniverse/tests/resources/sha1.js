@@ -18,8 +18,8 @@ function SHA_1_sha1Hash(msg)
     var K = [0x5a827999, 0x6ed9eba1, 0x8f1bbcdc, 0xca62c1d6];
 
 
-    // PREPROCESSING 
- 
+    // PREPROCESSING
+
     msg += String.fromCharCode(0x80); // add trailing '1' bit (+ 0's padding) to string [§5.1.1]
 
     // convert string msg into 512-bit/16-integer blocks arrays of ints [§5.2.1]
@@ -29,7 +29,7 @@ function SHA_1_sha1Hash(msg)
     for (var i=0; i<N; i++) {
         M[i] = new Array(16);
         for (var j=0; j<16; j++) {  // encode 4 chars per integer, big-endian encoding
-            M[i][j] = (msg.charCodeAt(i*64+j*4)<<24) | (msg.charCodeAt(i*64+j*4+1)<<16) | 
+            M[i][j] = (msg.charCodeAt(i*64+j*4)<<24) | (msg.charCodeAt(i*64+j*4+1)<<16) |
                       (msg.charCodeAt(i*64+j*4+2)<<8) | (msg.charCodeAt(i*64+j*4+3));
         }
     }
@@ -71,9 +71,9 @@ function SHA_1_sha1Hash(msg)
 
         // 4 - compute the new intermediate hash value
         H0 = (H0+a) & 0xffffffff;  // note 'addition modulo 2^32'
-        H1 = (H1+b) & 0xffffffff; 
-        H2 = (H2+c) & 0xffffffff; 
-        H3 = (H3+d) & 0xffffffff; 
+        H1 = (H1+b) & 0xffffffff;
+        H2 = (H2+c) & 0xffffffff;
+        H3 = (H3+d) & 0xffffffff;
         H4 = (H4+e) & 0xffffffff;
     }
 
@@ -83,7 +83,7 @@ function SHA_1_sha1Hash(msg)
 //
 // function 'f' [§4.1.1]SHA_1_f(
 //
-function SHA_1_f(s, x, y, z) 
+function SHA_1_f(s, x, y, z)
 {
     switch (s) {
     case 0: return (x & y) ^ (~x & z);           // Ch()
@@ -102,8 +102,8 @@ function SHA_1_ROTL(x, n)
 }
 
 //
-// extend Number class with a tailored hex-string method 
-//   (note toString(16) is implementation-dependant, and 
+// extend Number class with a tailored hex-string method
+//   (note toString(16) is implementation-dependant, and
 //   in IE returns signed numbers when used on full words)
 //
 Number.prototype.toHexStr = function()
@@ -121,11 +121,11 @@ test("test SHA-1 implementation internally consistant", function() {
   var password1 = "test";
   var password2 = "test";
   var password3 = "testx";
-  
+
   var password1hash = SHA_1_sha1Hash(password1);
   var password2hash = SHA_1_sha1Hash(password2);
   var password3hash = SHA_1_sha1Hash(password3);
-  
+
   equals(password1hash, password2hash, "SHA-1 hash of 'test' should equal SHA-1 hash of 'test'");
   ok(password1hash !== password3hash, "SHA-1 hash of 'test' should not equal SHA-1 hash of 'testx'");
 });
@@ -133,10 +133,10 @@ test("test SHA-1 implementation internally consistant", function() {
 test("test SHA-1 implementation accurate", function() {
   var password1 = "";
   var password2 = "The quick brown fox jumps over the lazy dog";
-  
+
   var password1hash = SHA_1_sha1Hash(password1);
   var password2hash = SHA_1_sha1Hash(password2);
-  
+
   equals(password1hash, "da39a3ee5e6b4b0d3255bfef95601890afd80709", "SHA-1 hash of '' should equal known SHA-1 result");
   equals(password2hash, "2fd4e1c67a2d28fced849ee1bb76e7391b93eb12", "SHA-1 hash of 'The quick brown fox jumps over the lazy dog' should equal known SHA-1 result");
 });

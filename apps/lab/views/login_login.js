@@ -46,7 +46,7 @@ Lab.LoginLoginView = SC.View.extend({
      }),
 
      passwordView: SC.TextFieldView.design({
-       layout: { bottom: 10, left: 75, height: 20, width: 90 },       
+       layout: { bottom: 10, left: 75, height: 20, width: 90 },
        isPassword: YES,
        valueBinding: 'Lab.loginController.password',
        keyUp: function (evt){
@@ -54,7 +54,7 @@ Lab.LoginLoginView = SC.View.extend({
            Lab.loginController.loginPortal();
          }
          this.fieldValueDidChange();
-         evt.allowDefault(); 
+         evt.allowDefault();
          return YES;
        }
      })

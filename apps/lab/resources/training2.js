@@ -69,8 +69,8 @@ Lab.training2 = SC.Page.design({
           width: '130px'
         }
       })
-  	})
-	}),
+    })
+  }),
 
   goTraining1: function() {
     SC.routes.set('location', 'lab/training1');

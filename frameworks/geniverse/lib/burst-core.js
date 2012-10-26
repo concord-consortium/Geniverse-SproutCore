@@ -32,7 +32,7 @@
     return this.timelines[name]||(arguments.length>1?this.timelines[name]=new Timeline(name,start,end,speed,loop,callback,this):undefined);
   };
 
-  Burst.prototype.load = function( name ){  
+  Burst.prototype.load = function( name ){
     return this.loaded[name] || (function(){
       for(var i in this.timelines ){
         if( this.timelines[i].name === name ){
@@ -89,7 +89,7 @@
   Timeline.prototype.obj = function(name,objRef){
     return this.objects[name]||(this.objects[name]=new Obj(name,objRef,this));
   }
-  
+
   Timeline.prototype.play = function( frame ){
     this.frame = frame || (this.frame += this.speed);
     if( this.loop ){
@@ -115,7 +115,7 @@
       }
     }
     if( this.always ){ this.always.call(this,this.frame); }
-  };  
+  };
 
 
   // Object / "Actor"
@@ -127,7 +127,7 @@
     this.tracks={};
     return this;
   };
-  
+
   Obj.prototype.track = function(prop){
     return this.tracks[prop]||(this.tracks[prop]=new Track(prop,this));
   };
@@ -142,7 +142,7 @@
     this.alwaysCallback;
     return this;
   };
-  
+
   Track.prototype.key = function(frame,value,ease,callback){
     for(var i=0,l=this.keys.length;i<l;i++){
       if(this.keys[i].frame === frame){
@@ -186,11 +186,11 @@
           curKey.value,
           nextKey.value-curKey.value,
           nextKey.frame-curKey.frame );
-          
+
           if(this.lastKeyFired && this.lastKeyFired.frame != curKey.frame){
             this.lastKeyFired.callbackFired = false;
           }
-          
+
           if(curKey.callback && !curKey.callbackFired){
             curKey.callback.call(this.parent.objRef, {
               frame      : frame,

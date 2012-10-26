@@ -11,18 +11,18 @@ sc_require('views/breeding_pen_view');
 sc_require('views/stable_view');
 
 Lab.chromosomeTrainingSinglePage = SC.Page.design({
-  
+
   pagePath: 'Lab.chromosomeTrainingSinglePage',
   title: 'Chromosome Training Page',
-  
+
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page 
+  // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
-      
+
       childViews: 'drakeGenomePanel'.w(),
-      
+
       drakeGenomePanel: SC.View.design({
         layout: {top: 110, height: 550, centerX: 0, width: 500 },
         childViews: 'title genomeView switchSexButton nextButton'.w(),
@@ -84,7 +84,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
         })
 
       })
-      
+
     })
-	})
+  })
 });

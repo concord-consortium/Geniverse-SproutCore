@@ -1,25 +1,25 @@
 .sc-theme .sc-list-item-view img.icon {
-	width: 50px;
-	height: 50px;
-	margin-top: -23px;
-	margin-left: -5px;
+  width: 50px;
+  height: 50px;
+  margin-top: -23px;
+  margin-left: -5px;
 }
 
 .sc-list-item-view.has-icon label, .sc-list-item-view.has-checkbox label {
-	left: 45px;
+  left: 45px;
 }
 
 .sc-theme .static-allele {
-	background-color: #a8a8a8;
-	border: 1px solid black;
-	text-align:center;
+  background-color: #a8a8a8;
+  border: 1px solid black;
+  text-align:center;
   text-size: 9px;
 }
 
 .sc-theme .allele-string {
-	background-color: #B6EBDE;
-	border: 1px solid black;
-	text-align:center;
+  background-color: #B6EBDE;
+  border: 1px solid black;
+  text-align:center;
   text-size: 9px;
   color: black;
   padding: 2px;
@@ -30,7 +30,7 @@
 .sc-theme .genome-view-intro {
   background-color: #877871;
   opacity: 0.8;
-	border: 1px solid black;
+  border: 1px solid black;
 }
 
 .transparent {
@@ -67,16 +67,16 @@
 }
 
 .sc-view .parchment {
-	background-image:static_url('parchment.jpg');
-	background-size: 100%;
-	border: 0;
-	background-color: transparent;
+  background-image:static_url('parchment.jpg');
+  background-size: 100%;
+  border: 0;
+  background-color: transparent;
 }
 
 .info-title {
   font-size: 16px;
-	color: #8a6331;
-	text-shadow: 0px 2px 3px #f8eddf;
+  color: #8a6331;
+  text-shadow: 0px 2px 3px #f8eddf;
 }
 
 .info-title:nth-child(2) {
@@ -84,11 +84,11 @@
 }
 
 .instTitle {
-	font-size: 24px;
+  font-size: 24px;
 }
 
 ul.instList li {
-	list-style:square static_url('diamondBullet.png');
+  list-style:square static_url('diamondBullet.png');
 }
 
 img.bringItButton {
@@ -124,5 +124,5 @@ img.postButton:hover {
 }
 
 .textFieldLabel {
-	color: gray;
+  color: gray;
 }

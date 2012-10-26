@@ -117,21 +117,21 @@ Lab.chromosomeChallengePage = SC.Page.design({
         fontWeight: SC.BOLD_WEIGHT,
         value: "Target Drake"
       }),
-      
+
       yourTitle: SC.LabelView.design({
         layout: {top: 40, height: 25, left: 345, width: 200 },
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         value: "Your Drake"
       }),
-      
+
       chromoTitle: SC.LabelView.design({
         layout: {top: 40, height: 25, left: 545, width: 200 },
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         value: "Chromosome Control"
       })
-      
+
     })
   })
 });

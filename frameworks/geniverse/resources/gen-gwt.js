@@ -87,7 +87,7 @@ GenGWT = {
     getCharacteristics: function(dragon, callback) {
         getDragonCharacteristics(dragon, callback, this.failure);
     },
-    
+
     wrapCallback: function(callback) {
       function wrappedCallback(gOrg){
         if (GenGWT.orgIsValid(gOrg)){
@@ -100,7 +100,7 @@ GenGWT = {
       }
       return wrappedCallback;
     },
-    
+
     orgIsValid: function(gOrg) {
       if (!!gOrg.size){
         var allAreValid = true;
