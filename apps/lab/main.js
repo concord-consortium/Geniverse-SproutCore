@@ -29,6 +29,7 @@ Lab.main = function main() {
   SC.routes.add('lab/:pageName', Lab.routes, 'gotoLabRoute');
   SC.routes.add('caselog', Lab.routes, 'gotoCaselog');
   SC.routes.add('caselog/:level', Lab.routes, 'gotoCaselog');
+  SC.routes.add('avatar', Lab.routes, 'gotoAvatarPage');
   
   // urls of the form #fixtures/labs/... will load Geniverse Fixtures
   SC.routes.add('fixtures/lab/:pageName', Lab.routes, 'gotoLabRouteWithFixtures');

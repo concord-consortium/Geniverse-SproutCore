@@ -28,6 +28,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
   navBarLeft: null,
   homeButton: null,
   caselogButton: null,
+  introButton: null,
   infoButton: null,
   geniverseLabelView: null,
   welcomeLabelView: null,
@@ -168,12 +169,25 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.navBarRight = this.createChildView(
       SC.ImageView.design({
-        layout: { centerY: 0, right: 0, width: 208, height: 38 },
+        layout: { centerY: 0, right: 0, width: 244, height: 38 },
         layerId: 'navBarRight',
         value: static_url('navbar-right.png')
       })
     );
     childViews.push(this.navBarRight);
+
+    this.introButton = this.createChildView(
+      SC.ImageView.design(Geniverse.SimpleButton, {
+        layout: { centerY: 0, right: 211, width: 27, height: 26 },
+        layerId: 'introButton',
+        hasHover: YES,
+        alt: 'Introduction',
+        toolTip: "Click to see introduction",
+        target: 'Lab.routes',
+        action: 'openAvatarPageRoute'
+      })
+    );
+    childViews.push(this.introButton);
     
     this.infoButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {

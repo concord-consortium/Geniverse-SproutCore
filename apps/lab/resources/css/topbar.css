@@ -12,6 +12,11 @@ img#caselogButton:hover {
     background-repeat: none;
 }
 
+img#introButton:hover {
+    background-image: static_url('intro-active.png');
+    background-repeat: none;
+}
+
 img#infoButton:hover {
     background-image: static_url('info-active.png');
     background-repeat: none;

@@ -46,7 +46,7 @@ Lab.loggedIn = Ki.State.extend({
       this.get('statechart').sendAction('gotoRequestedPage');
     },
     
-    gotoAvatar: function() {
+    gotoAvatarPage: function() {
       this.startPage = 'avatar';
       this.get('statechart').sendAction('gotoRequestedPage');
     },
