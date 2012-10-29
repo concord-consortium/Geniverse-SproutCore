@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20121029160305) do
   end
 
   create_table "unlockables", :force => true do |t|
+    t.string   "title"
     t.text     "content"
     t.string   "trigger"
     t.datetime "created_at", :null => false

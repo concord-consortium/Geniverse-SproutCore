@@ -13,6 +13,7 @@
 */
 Geniverse.Unlockable = SC.Record.extend(
 /** @scope Geniverse.Unlockable.prototype */ {
+  title: SC.Record.attr(String, { defaultValue: "No title" }),
   content: SC.Record.attr(String),
   trigger: SC.Record.attr(String),
   unlocked: SC.Record.attr(Boolean, { defaultValue: NO }),
