@@ -61,3 +61,53 @@ a#changeGroup:visited {
 a#changeGroup:hover {
   color: #DCF1F6;
 }
+
+#unlockablesButton {
+  background: top left no-repeat static_url("unlockables-button-sprite.png");
+}
+
+#unlockablesButton.none {
+  background-position-x: 0px;
+  background-position-y: 0px;
+}
+
+#unlockablesButton.one {
+  background-position-y: -29px;
+}
+
+#unlockablesButton.two {
+  background-position-y: -58px;
+}
+
+#unlockablesButton.three {
+  background-position-y: -87px;
+}
+
+#unlockablesButton.four {
+  background-position-y: -116px;
+}
+
+#unlockablesButton.five {
+  background-position-y: -145px;
+}
+
+#unlockablesButton.six {
+  background-position-y: -174px;
+}
+
+#unlockablesButton.seven {
+  background-position-y: -203px;
+}
+
+#unlockablesButton.eight {
+  background-position-y: -232px;
+}
+
+#unlockablesButton.nine {
+  background-position-y: -261px;
+}
+
+#unlockablesButton.plus {
+  background-position-y: -290px;
+}
+

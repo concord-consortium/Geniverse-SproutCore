@@ -38,6 +38,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
   notepadButton: null,
   journalButton: null,
   helpButton: null,
+  unlockablesButton: null,
 
   /**
    * Necessary configuration xPath elements to set up binding inside the composite view instances
@@ -145,7 +146,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.welcomeLabelView = this.createChildView(
       SC.LabelView.design({
-        layout: { top: 5,  height: 24, right: 300, width: 345},
+        layout: { top: 5,  height: 24, right: 350, width: 345},
         textAlign: SC.ALIGN_RIGHT,
         valueBinding: this.get('welcomePath'),
         isVisibleBinding: this.get('welcomeIsVisiblePath')
@@ -155,7 +156,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.changeGroupButton = this.createChildView(
       Lab.LinkView.design({
-        layout: { centerY: 0,  height: 24, right: 250, width: 40 },
+        layout: { centerY: 0,  height: 24, right: 300, width: 40 },
         layerId: 'changeGroup',
         title:  "Change",
         target: this.get('changeGroupButtonTargetPath'),
@@ -175,6 +176,62 @@ Lab.TopBarView = SC.ToolbarView.extend(
       })
     );
     childViews.push(this.navBarRight);
+
+    this.unlockablesButton = this.createChildView(
+      SC.ImageView.design(Geniverse.SimpleButton, {
+        layout: { centerY: 1, right: 246, width: 27, height: 27 },
+        layerId: 'unlockablesButton',
+        classNames: ['none'],
+        hasHover: YES,
+        alt: 'Unlockables',
+        toolTip: "Click to see items you've unlocked",
+        notViewedUnlockablesBinding: 'Geniverse.unlockablesController.*notViewed.length',
+        notViewed: function() {
+          var style = 'none';
+          switch(this.get('notViewedUnlockables') || 0) {
+            case 0:
+              style = 'none';
+              break;
+            case 1:
+              style = 'one';
+              break;
+            case 2:
+              style = 'two';
+              break;
+            case 3:
+              style = 'three';
+              break;
+            case 4:
+              style = 'four';
+              break;
+            case 5:
+              style = 'five';
+              break;
+            case 6:
+              style = 'six';
+              break;
+            case 7:
+              style = 'seven';
+              break;
+            case 8:
+              style = 'eight';
+              break;
+            case 9:
+              style = 'nine';
+              break;
+            default:
+              style = 'plus';
+          }
+
+          this.set('classNames', ['sc-view', 'sc-image-view', 'sc-regular-size', style]);
+          this.set('layerNeedsUpdate', YES);
+        }.observes('notViewedUnlockables'),
+        action: function() {
+          console.log("showing unlockables drop-down");
+        }
+      })
+    );
+    childViews.push(this.unlockablesButton);
 
     this.introButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
