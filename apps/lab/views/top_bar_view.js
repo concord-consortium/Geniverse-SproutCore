@@ -178,11 +178,25 @@ Lab.TopBarView = SC.ToolbarView.extend(
     childViews.push(this.navBarRight);
 
     this.unlockablesButton = this.createChildView(
-      SC.ImageView.design(Geniverse.SimpleButton, {
+      SC.PopupButtonView.design({
         layout: { centerY: 1, right: 246, width: 27, height: 27 },
+        menu: SC.MenuPane.design({
+          layout: {width: 250 },
+          rawItemsBinding: 'Geniverse.unlockablesController.*unlocked.length',
+          rawItemsChanged: function() {
+            var rawItems = Geniverse.unlockablesController.get('unlocked');
+            if (rawItems.get('length') === 0) {
+              rawItems = [{title: "Nothing unlocked"}];
+            }
+            this.set('items', rawItems);
+          }.observes('rawItems'),
+          itemTitleKey: 'title',
+          itemValueKey: 'guid',
+          itemIconKey: 'icon'
+        }),
         layerId: 'unlockablesButton',
         classNames: ['none'],
-        hasHover: YES,
+        // hasHover: YES,
         alt: 'Unlockables',
         toolTip: "Click to see items you've unlocked",
         notViewedUnlockablesBinding: 'Geniverse.unlockablesController.*notViewed.length',
@@ -226,7 +240,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
           this.set('classNames', ['sc-view', 'sc-image-view', 'sc-regular-size', style]);
           this.set('layerNeedsUpdate', YES);
         }.observes('notViewedUnlockables'),
-        action: function() {
+        oldAction: function() {
           console.log("showing unlockables drop-down");
         }
       })

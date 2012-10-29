@@ -17,7 +17,14 @@ Geniverse.Unlockable = SC.Record.extend(
   content: SC.Record.attr(String),
   trigger: SC.Record.attr(String),
   unlocked: SC.Record.attr(Boolean, { defaultValue: NO }),
-  viewed: SC.Record.attr(Boolean, { defaultValue: NO })
+  viewed: SC.Record.attr(Boolean, { defaultValue: NO }),
+
+  icon: function() {
+    if (this.get('viewed')) {
+      return '';
+    }
+    return 'sc-icon-bookmark-16';
+  }.property('viewed')
 });
 
 Geniverse.Unlockable.modelName = "unlockable";
