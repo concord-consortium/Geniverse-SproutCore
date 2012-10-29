@@ -51,6 +51,9 @@ Lab.challenge = Ki.State.extend({
     // why can't bindings in SC work as advertised?
     Lab.caselogController.propertyDidChange("userMetadata");
 
+    // unlock any unlockables
+    Geniverse.unlockablesController.unlockFor(pageId);
+
     // save stars to the backend imediately, so we don't lose this data if the user hard quits
     Geniverse.store.commitRecords();
 

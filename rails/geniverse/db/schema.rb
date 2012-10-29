@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120925153758) do
+ActiveRecord::Schema.define(:version => 20121029160305) do
 
   create_table "activities", :force => true do |t|
     t.text     "initial_alleles"
@@ -87,6 +87,13 @@ ActiveRecord::Schema.define(:version => 20120925153758) do
     t.datetime "updated_at"
   end
 
+  create_table "unlockables", :force => true do |t|
+    t.text     "content"
+    t.string   "trigger"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "username"
     t.string   "password_hash"
@@ -99,6 +106,7 @@ ActiveRecord::Schema.define(:version => 20120925153758) do
     t.text     "note"
     t.string   "class_name"
     t.text     "metadata",      :limit => 16777215
+    t.string   "avatar"
   end
 
   add_index "users", ["username", "password_hash"], :name => "index_users_on_username_and_password_hash"
