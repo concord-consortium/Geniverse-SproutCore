@@ -4,7 +4,7 @@
 // ==========================================================================
 /*globals Geniverse */
 
-Geniverse.UnlockableView = SC.PanelPane.create({
+Geniverse.UnlockableView = SC.PanelPane.extend({
   layout: { centerX: 0, top: 75, width: 1180, height: 620 },
   isModal:YES,
   contentView: SC.View.extend({

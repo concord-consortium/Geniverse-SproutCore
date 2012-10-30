@@ -186,9 +186,10 @@ Lab.TopBarView = SC.ToolbarView.extend(
           rawItemsChanged: function() {
             var rawItems = Geniverse.unlockablesController.get('unlocked');
             if (rawItems.get('length') === 0) {
-              rawItems = [{title: "Nothing unlocked"}];
+              rawItems = [{title: "Nothing unlocked yet", isEnabled: NO}];
             }
             this.set('items', rawItems);
+            this.propertyDidChange('items');
           }.observes('rawItems'),
           itemTitleKey: 'title',
           itemValueKey: 'guid',
