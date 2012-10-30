@@ -7,7 +7,7 @@ class UnlockablesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @unlockables }
-      format.json { render json: custom_array_hash(@unlockables) }
+      format.json { render :json => custom_array_hash(@unlockables) }
     end
   end
 
@@ -19,7 +19,7 @@ class UnlockablesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @unlockable }
-      format.json { render json: custom_item_hash(@unlockable) }
+      format.json { render :json => custom_item_hash(@unlockable) }
     end
   end
 
@@ -30,7 +30,7 @@ class UnlockablesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @unlockable }
+      format.json { render :json => @unlockable }
     end
   end
 
@@ -46,11 +46,12 @@ class UnlockablesController < ApplicationController
 
     respond_to do |format|
       if @unlockable.save
-        format.html { redirect_to @unlockable, notice: 'Unlockable was successfully created.' }
-        format.json { render json: custom_item_hash(@unlockable), status: :created, location: @unlockable }
+        flash[:notice] = 'Unlockable was successfully created.'
+        format.html { redirect_to @unlockable }
+        format.json { render :json => custom_item_hash(@unlockable), :status => :created, :location => @unlockable }
       else
-        format.html { render action: "new" }
-        format.json { render json: @unlockable.errors, status: :unprocessable_entity }
+        format.html { render :action => "new" }
+        format.json { render :json => @unlockable.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -62,11 +63,12 @@ class UnlockablesController < ApplicationController
 
     respond_to do |format|
       if @unlockable.update_attributes(params[:unlockable])
-        format.html { redirect_to @unlockable, notice: 'Unlockable was successfully updated.' }
+        flash[:notice] = 'Unlockable was successfully updated.'
+        format.html { redirect_to @unlockable }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @unlockable.errors, status: :unprocessable_entity }
+        format.html { render :action => "edit" }
+        format.json { render :json => @unlockable.errors, :status => :unprocessable_entity }
       end
     end
   end
