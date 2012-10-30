@@ -8,29 +8,25 @@ Geniverse.unlockablesController = SC.Object.create({
     this.set('viewed', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true AND viewed = true'})));
     this.set('notViewed', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true AND viewed = false'})));
 
-    // Not sure what's not loaded yet that this depends on, so delay it slightly
-    var _this = this;
-    setTimeout(function() {
-      var user = _this.get('user');
-      if (typeof(user) != 'undefined' && user !== null) {
-        // unlock whatever the user has already done
-        all.forEach(function(item) {
-          var stars = Geniverse.userController.getPageStars(item.get('trigger'));
-          if (stars > 0) {
-            item.set('unlocked', YES);
-            item.set('viewed', YES);
-          }
-        });
-      } else {
-        // make sure everything is locked and unvisited
-        all.forEach(function(item) {
-          item.set('unlocked', NO);
-          item.set('viewed', NO);
-        });
-      }
+    var user = this.get('user');
+    if (typeof(user) != 'undefined' && user !== null) {
+      // unlock whatever the user has already done
       Geniverse.store.commitRecords();
       all.reload();
-    }, 100);
+      all.forEach(function(item) {
+        var stars = Geniverse.userController.getPageStars(item.get('trigger'));
+        if (stars > 0) {
+          console.log("unlocking " + item.get('title'), item.get('status'));
+          item.set('unlocked', YES);
+          item.set('viewed', YES);
+        }
+      });
+      this.propertyDidChange('all');
+      this.propertyDidChange('locked');
+      this.propertyDidChange('unlocked');
+      this.propertyDidChange('viewed');
+      this.propertyDidChange('notViewed');
+    }
   }.observes('user'),
   all: [],
   unlocked: [],
