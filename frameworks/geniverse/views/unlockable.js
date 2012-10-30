@@ -4,14 +4,14 @@
 // ==========================================================================
 /*globals Geniverse */
 
-Geniverse.UnlockableView = SC.PanelPane.extend({
+Geniverse.UnlockableView = SC.PanelPane.create({
   layout: { centerX: 0, top: 75, width: 1180, height: 620 },
   isModal:YES,
   contentView: SC.View.extend({
     childViews: 'unlockableView hideButton'.w(),
     classNames: 'parchment'.w(),
 
-    hideButton: SC.ImageView.extend(Geniverse.SimpleButton, {
+    hideButton: SC.ImageView.design(Geniverse.SimpleButton, {
       layout: { bottom: 8, right: 8, width: 118, height: 27 },
       isEnabled: YES,
       hasHover: YES,

@@ -89,7 +89,7 @@ Geniverse.unlockablesController = SC.Object.create({
   },
   displayUnlockable: function() {
     var unlockable = this.get('selectedUnlockable');
-    if (unlockable) {
+    if (unlockable && unlockable.get('content')) {
       unlockable.set('viewed', YES);
       this.showPane();
     }
@@ -97,7 +97,7 @@ Geniverse.unlockablesController = SC.Object.create({
   selectedUnlockable: null,
   pane: null,
   showPane: function() {
-    var _pane = this.get('pane') || Geniverse.UnlockableView.create();
+    var _pane = Geniverse.UnlockableView;
     this.set('pane',_pane);
     if (!_pane.get('isVisibleInWindow')){
       _pane.append();
@@ -108,7 +108,7 @@ Geniverse.unlockablesController = SC.Object.create({
     if (this.get('pane')) {
       this.get('pane').remove();
       this.set('pane', null);
-      this.set('selectedUnlockable', null);
+      this.set('selectedUnlockable', SC.Object.create());
     }
     this.notifyNextUnlockable();
   }
