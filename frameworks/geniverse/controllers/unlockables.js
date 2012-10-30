@@ -11,28 +11,31 @@ Geniverse.unlockablesController = SC.Object.create({
     var user = this.get('user');
     if (typeof(user) != 'undefined' && user !== null) {
       // unlock whatever the user has already done
-      Geniverse.store.commitRecords();
-      all.reload();
-      all.forEach(function(item) {
-        var stars = Geniverse.userController.getPageStars(item.get('trigger'));
-        if (stars > 0) {
-          console.log("unlocking " + item.get('title'), item.get('status'));
-          item.set('unlocked', YES);
-          item.set('viewed', YES);
-        }
-      });
-      this.propertyDidChange('all');
-      this.propertyDidChange('locked');
-      this.propertyDidChange('unlocked');
-      this.propertyDidChange('viewed');
-      this.propertyDidChange('notViewed');
+      // FIXME Something is loading after this and resetting the changes...
+      all.invokeLater(function() {
+        all.forEach(function(item) {
+          var stars = Geniverse.userController.getPageStars(item.get('trigger'));
+          if (stars > 0) {
+            console.log("unlocking " + item.get('title'), item.get('status'));
+            item.set('unlocked', YES);
+            item.set('viewed', YES);
+          }
+        });
+        Geniverse.store.commitRecords();
+        all.reload();
+        this.propertyDidChange('all');
+        this.propertyDidChange('locked');
+        this.propertyDidChange('unlocked');
+        this.propertyDidChange('viewed');
+        this.propertyDidChange('notViewed');
+      }, 500);
     }
   }.observes('user'),
-  all: [],
-  unlocked: [],
-  locked: [],
-  viewed: [],
-  notViewed: [],
+  all: null,
+  unlocked: null,
+  locked: null,
+  viewed: null,
+  notViewed: null,
   unlockFor: function(trigger) {
     var _this = this;
     var locked = this.get('locked').filter(function(item) { return item.get('trigger') == trigger; });
