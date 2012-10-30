@@ -192,7 +192,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
           }.observes('rawItems'),
           itemTitleKey: 'title',
           itemValueKey: 'guid',
-          itemIconKey: 'icon'
+          itemIconKey: 'icon',
+          selectedItemBinding: 'Geniverse.unlockablesController.selectedUnlockable'
         }),
         layerId: 'unlockablesButton',
         classNames: ['none'],
@@ -239,10 +240,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
           this.set('classNames', ['sc-view', 'sc-image-view', 'sc-regular-size', style]);
           this.set('layerNeedsUpdate', YES);
-        }.observes('notViewedUnlockables'),
-        oldAction: function() {
-          console.log("showing unlockables drop-down");
-        }
+        }.observes('notViewedUnlockables')
       })
     );
     childViews.push(this.unlockablesButton);

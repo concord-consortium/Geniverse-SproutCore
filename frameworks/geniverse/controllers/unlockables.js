@@ -41,5 +41,26 @@ Geniverse.unlockablesController = SC.Object.create({
     var locked = this.get('locked').filter(function(item) { return item.get('trigger') == trigger; });
     locked.forEach(function(item) { item.set('unlocked', YES); });
     this.get('all').reload();
+  },
+  displayUnlockable: function() {
+    var unlockable = this.get('selectedUnlockable');
+    unlockable.set('viewed', YES);
+    this.showPane();
+  }.observes('selectedUnlockable'),
+  selectedUnlockable: null,
+  pane: null,
+  showPane: function() {
+    var unlockableView = Geniverse.UnlockableView;
+    this.set('pane',unlockableView);
+    var _pane = this.get('pane');
+    if (!_pane.get('isVisibleInWindow')){
+      _pane.append();
+    }
+  },
+  removePane: function() {
+    var _pane = this.get('pane');
+    if (this.get('pane')) {
+      this.get('pane').remove();
+    }
   }
 });
