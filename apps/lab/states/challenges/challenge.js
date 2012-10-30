@@ -51,9 +51,6 @@ Lab.challenge = Ki.State.extend({
     // why can't bindings in SC work as advertised?
     Lab.caselogController.propertyDidChange("userMetadata");
 
-    // unlock any unlockables
-    Geniverse.unlockablesController.unlockFor(pageId);
-
     // save stars to the backend imediately, so we don't lose this data if the user hard quits
     Geniverse.store.commitRecords();
 
@@ -120,6 +117,10 @@ Lab.challenge = Ki.State.extend({
           if (status === SC.BUTTON1_STATUS) {
               self._showCongrats(next);
           } else {
+            // unlock any unlockables
+            var pageId = Geniverse.activityController.get('route');
+            Geniverse.unlockablesController.unlockFor(pageId);
+
             Lab.statechart.sendAction('repeatChallenge');
           }
         }
@@ -140,6 +141,10 @@ Lab.challenge = Ki.State.extend({
   },
 
   _moveOn: function(next) {
+    // unlock any unlockables
+    var pageId = Geniverse.activityController.get('route');
+    Geniverse.unlockablesController.unlockFor(pageId);
+
     if (next) {
       Lab.statechart.sendAction('gotoNextActivity');
     } else {
