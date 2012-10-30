@@ -134,3 +134,18 @@ img.postButton:hover {
   width: 1170px;
   height: 575px;
 }
+
+/* Unlockable menu tweaks */
+.sc-menu-item img {
+  left: 4px;
+}
+
+.sc-menu-item a.has-icon span.value {
+  margin-left: 25px;
+}
+
+.icon-unviewed-16 {
+  width: 16px;
+  height: 16px;
+  background: top left no-repeat static_url('icon-unviewed-16.png');
+}

@@ -23,7 +23,7 @@ Geniverse.Unlockable = SC.Record.extend(
     if (this.get('viewed')) {
       return '';
     }
-    return 'sc-icon-bookmark-16';
+    return 'icon-unviewed-16';
   }.property('viewed')
 });
 
