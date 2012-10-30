@@ -23,8 +23,8 @@ Geniverse.UnlockableView = SC.PanelPane.extend({
     }),
 
     unlockableView: SC.LabelView.design({
-      layout: { left: 10, top: 24, bottom: 42, right: 10 },
-      valueBinding: 'Geniverse.unlockablesController.*selectedUnlockable.content',
+      layout: {left: 5, right: 5, top: 5, bottom: 40 },
+      valueBinding: SC.Binding.transform(function(value) { return "<div class='centered-content'>" + value + "</div>"; }).from('Geniverse.unlockablesController.*selectedUnlockable.content'),
       escapeHTML: NO
     })
   })

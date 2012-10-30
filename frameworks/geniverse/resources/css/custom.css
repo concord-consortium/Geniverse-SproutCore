@@ -126,3 +126,11 @@ img.postButton:hover {
 .textFieldLabel {
   color: gray;
 }
+
+.sc-view div.centered-content {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  width: 1170px;
+  height: 575px;
+}
