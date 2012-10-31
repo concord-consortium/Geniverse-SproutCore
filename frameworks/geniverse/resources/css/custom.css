@@ -149,3 +149,13 @@ img.postButton:hover {
   height: 16px;
   background: top left no-repeat static_url('icon-unviewed-16.png');
 }
+
+.sc-view.notification {
+  overflow: visible;
+}
+
+.notification .notification-title {
+}
+
+.notification .notification-message {
+}

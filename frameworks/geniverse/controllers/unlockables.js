@@ -70,8 +70,6 @@ Geniverse.unlockablesController = SC.Object.create({
         });
         this.set('currentNotification', pane);
         pane.append();
-        // Set timer to remove popup and show next popup
-        setTimeout(this.removeCurrentNotification, 5000);
       }
     }
   },
