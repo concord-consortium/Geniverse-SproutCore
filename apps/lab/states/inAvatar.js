@@ -19,8 +19,8 @@ Lab.inAvatar = Ki.State.extend({
     this._chooseAvatar('Scarlett', '/intro/scarlett.html');
   },
 
-  choseAlexandre: function() {
-    this._chooseAvatar('Alexandre', '/intro/alexandre.html');
+  choseStrider: function() {
+    this._chooseAvatar('Strider', '/intro/strider.html');
   },
 
   _chooseAvatar: function(name, url) {

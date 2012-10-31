@@ -11,7 +11,7 @@ Lab.avatarPage = SC.Page.design({
   mainPane: SC.MainPane.design({
     defaultResponder: Lab.statechart,
 
-    childViews: 'pleaseWait welcome scarlett alexandre'.w(),
+    childViews: 'pleaseWait welcome scarlett strider'.w(),
 
     pleaseWait: SC.LabelView.design({
       layout: { top: 40, width: 610, height: 40, centerX: 0 },
@@ -39,12 +39,12 @@ Lab.avatarPage = SC.Page.design({
       }
     }),
 
-    alexandre: SC.LabelView.design({
+    strider: SC.LabelView.design({
       layout: {top: 110, width: 200, height: 100, centerX: 100},
-      value: "Alexandre",
+      value: "Strider",
       isVisibleBinding: SC.Binding.not('Lab.avatarController.waiting'),
       click: function() {
-        Lab.statechart.sendAction("choseAlexandre");
+        Lab.statechart.sendAction("choseStrider");
         return YES;
       }
     })
