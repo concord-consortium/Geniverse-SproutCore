@@ -73,6 +73,9 @@ Lab.loginController = SC.ObjectController.create(
       login: usename,
       password: password
     };
+    this.set('welcomeMessage', 'please wait ...');
+    this.set('loginShowing', NO);
+
     // TODO: Default portal authentication does not use hash!
     // send over https!
     SC.Request.postUrl(loginUrl,body).header({'Accept': 'application/json'}).json()
