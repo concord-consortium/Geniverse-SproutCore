@@ -5,7 +5,7 @@
 /*globals Geniverse */
 
 Geniverse.UnlockableView = SC.PanelPane.create({
-  layout: { centerX: 0, top: 75, width: 1180, height: 620 },
+  layout: { centerX: 0, top: 15, width: 1040, height: 811 },
   isModal:YES,
   contentView: SC.View.extend({
     childViews: 'unlockableView hideButton'.w(),
