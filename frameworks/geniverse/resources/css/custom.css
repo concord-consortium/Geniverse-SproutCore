@@ -154,12 +154,13 @@ img.postButton:hover {
   overflow: visible;
 }
 
-.notification .notification-title {
+.notification .sc-view.notification-title {
   font-family: 'Sofadi One', serif;
   font-weight: 400;
 }
 
-.notification .notification-message {
+.notification .sc-view.notification-message {
   font-family: 'Sofadi One', serif;
   font-weight: 400;
+  line-height: 1.1em;
 }
