@@ -2,6 +2,10 @@
     outline: none;
 }
 
+body, body.sc-theme, .sc-theme .sc-pane.sc-main {
+  background: #65120E;
+}
+
 @font-face {
   font-family: 'Cochin';
   src: static_url('fonts/CochinLTStd.otf');
