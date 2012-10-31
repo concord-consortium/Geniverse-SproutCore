@@ -7,7 +7,9 @@
 Lab.inAvatar = Ki.State.extend({
 
   enterState: function() {
-    Lab.routes.gotoLabRoute({pageName: 'avatarPage'});
+    // FIXME Temporarily disable this until we get artwork for it
+    // Lab.routes.gotoLabRoute({pageName: 'avatarPage'});
+    this.get('statechart').sendAction('choseScarlett');
   },
 
   exitState: function() {
