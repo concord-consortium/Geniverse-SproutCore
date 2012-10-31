@@ -1,5 +1,6 @@
 div#topBar {
     background-color: #65120E;
+    background: #65120E top left repeat-x static_url('topbar-bg.png');
 }
 
 #topBar .sc-view {

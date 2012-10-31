@@ -19,7 +19,7 @@
 Lab.TopBarView = SC.ToolbarView.extend(
 /** @scope Lab.TopBarView.prototype */ {
 
-  layout: { top: 0, left: 0, right: 0, height: 36 },
+  layout: { top: 0, left: 0, right: 0, height: 57 },
   layerId: 'topBar',
   classNames: ['brown-toolbar-view'],
   anchorLocation: SC.ANCHOR_TOP,
@@ -32,6 +32,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
   infoButton: null,
   geniverseLabelView: null,
   welcomeLabelView: null,
+  groupLabelView: null,
   navBarRight: null,
   logoutButton: null,
   blogButton: null,
@@ -52,6 +53,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
    * Binding Path for the value of the welcomeLabelView
    */
   welcomePath: 'Lab.loginController.welcomeMessage',
+  groupPath: 'Lab.loginController.memberGroupMessage',
   /**
    * Binding Path for the isVisible property of the welcomeLabelView
    */
@@ -101,7 +103,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.navBarLeft = this.createChildView(
       SC.ImageView.design({
-        layout: { centerY: 0, left: 0, width: 75, height: 38 },
+        layout: { centerY: 9, left: 0, width: 75, height: 38 },
         layerId: 'navBarLeft',
         value: static_url('navbar-left.png')
       })
@@ -110,7 +112,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.homeButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 0, left: 7, width: 27, height: 26 },
+        layout: { centerY: 9, left: 7, width: 27, height: 26 },
         layerId: 'homeButton',
         hasHover: YES,
         alt: 'Home',
@@ -123,7 +125,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.caselogButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 0, left: 41, width: 27, height: 26 },
+        layout: { centerY: 9, left: 41, width: 27, height: 26 },
         layerId: 'caselogButton',
         hasHover: YES,
         alt: 'Case Log',
@@ -136,7 +138,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.geniverseLabelView = this.createChildView(
       SC.LabelView.design({
-        layout: { centerY: 0, height: 24, left: 77, width: 400 },
+        layout: { centerY: 9, height: 24, left: 77, width: 400 },
         controlSize: SC.LARGE_CONTROL_SIZE,
         //value: "Geniverse Labs"
         valueBinding: this.get('titlePath') //'Geniverse.activityController.title'
@@ -146,19 +148,29 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.welcomeLabelView = this.createChildView(
       SC.LabelView.design({
-        layout: { top: 5,  height: 24, right: 350, width: 345},
-        textAlign: SC.ALIGN_RIGHT,
+        layout: { top: 30,  height: 24, right: 350, width: 345},
+        textAlign: SC.ALIGN_LEFT,
         valueBinding: this.get('welcomePath'),
         isVisibleBinding: this.get('welcomeIsVisiblePath')
       })
     );
     childViews.push(this.welcomeLabelView);
 
+    this.groupLabelView = this.createChildView(
+      SC.LabelView.design({
+        layout: { top: 30,  height: 24, right: 350, width: 345},
+        textAlign: SC.ALIGN_RIGHT,
+        valueBinding: this.get('groupPath'),
+        isVisibleBinding: this.get('welcomeIsVisiblePath')
+      })
+    );
+    childViews.push(this.groupLabelView);
+
     this.changeGroupButton = this.createChildView(
       Lab.LinkView.design({
-        layout: { centerY: 0,  height: 24, right: 300, width: 40 },
+        layout: { top: 30,  height: 24, right: 300, width: 40 },
         layerId: 'changeGroup',
-        title:  "Change",
+        title:  "edit",
         target: this.get('changeGroupButtonTargetPath'),
         action: 'showGroupPanel',
         isVisibleBinding: this.get('changeGroupButtonIsVisiblePath'),
@@ -170,7 +182,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.navBarRight = this.createChildView(
       SC.ImageView.design({
-        layout: { centerY: 0, right: 0, width: 244, height: 38 },
+        layout: { centerY: 9, right: 0, width: 244, height: 38 },
         layerId: 'navBarRight',
         value: static_url('navbar-right.png')
       })
@@ -179,7 +191,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.unlockablesButton = this.createChildView(
       SC.PopupButtonView.design({
-        layout: { centerY: 1, right: 246, width: 27, height: 27 },
+        layout: { centerY: 10, right: 246, width: 27, height: 27 },
         menu: SC.MenuPane.design({
           layout: {width: 250 },
           rawItemsBinding: 'Geniverse.unlockablesController.*unlocked.length',
@@ -248,7 +260,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.introButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 0, right: 211, width: 27, height: 26 },
+        layout: { centerY: 9, right: 211, width: 27, height: 26 },
         layerId: 'introButton',
         hasHover: YES,
         alt: 'Introduction',
@@ -261,7 +273,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.infoButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 0, right: 176, width: 27, height: 26 },
+        layout: { centerY: 9, right: 176, width: 27, height: 26 },
         layerId: 'infoButton',
         hasHover: YES,
         alt: 'Info',
@@ -275,7 +287,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.blogButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 0, right: 141, width: 27, height: 26 },
+        layout: { centerY: 9, right: 141, width: 27, height: 26 },
         layerId: 'blogButton',
         hasHover: YES,
         alt: 'Post claim to the Journal',
@@ -290,7 +302,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.journalButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 0, right: 107, width: 27, height: 26 },
+        layout: { centerY: 9, right: 107, width: 27, height: 26 },
         hasHover: YES,
         alt: 'Your journal',
         layerId: 'journalButton',
@@ -304,7 +316,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.notepadButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 0, right: 73, width: 27, height: 26 },
+        layout: { centerY: 9, right: 73, width: 27, height: 26 },
         hasHover: YES,
         alt: 'Your notebook',
         layerId: 'notepadButton',
@@ -319,7 +331,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.helpButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 0, right: 39, width: 27, height: 26 },
+        layout: { centerY: 9, right: 39, width: 27, height: 26 },
         layerId: 'helpButton',
         hasHover: YES,
         alt: 'Help',
@@ -334,7 +346,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
     this.logoutButton = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 0, right: 6, width: 27, height: 26 },
+        layout: { centerY: 9, right: 6, width: 27, height: 26 },
         layerId: 'logOutButton',
         hasHover: YES,
         alt: 'Log out',
