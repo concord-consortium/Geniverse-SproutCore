@@ -16,7 +16,7 @@ Lab.inAvatar = Ki.State.extend({
   },
 
   choseScarlett: function() {
-    this._chooseAvatar('Scarlett', '/intro/scarlett.html');
+    this._chooseAvatar('Scarlett', 'http://geniverse.fablevision-dev.com/#sequence-1.html');
   },
 
   choseStrider: function() {
