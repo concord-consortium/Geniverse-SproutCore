@@ -13,40 +13,46 @@
 Lab.LoginLoginView = SC.View.extend({
      layout: {left: 0, top: 0, width: 400, height: 100},
 
-     // TODO: Add your own code here.
-     childViews: 'loginButtonView welcomeView usernameLabel usernameView passwordLabel passwordView'.w(),
+     childViews: 'logo loginButtonView welcomeView usernameLabel usernameView passwordLabel passwordView'.w(),
 
-       //isVisibleBinding: 'Lab.loginController.showRetypeField'
-    //}),
+     logo: SC.ImageView.design({
+       layout: {top: 0, left: 11, width: 188, height: 84 },
+       value: static_url("geniverse-logo.png")
+     }),
 
      loginButtonView: SC.ButtonView.design({
-       layout: { bottom: 10, height: 24, right: 10, width: 100 },
-       title:  "login",
+       layout: { bottom: 0, height: 40, right: 0, width: 90 },
+       title:  "enter &raquo;",
+       isVisibleBinding: 'Lab.loginController.loginShowing',
        action: 'Lab.loginController.loginPortal'
      }),
 
      welcomeView: SC.LabelView.design({
-       layout: { top: 5, height: 24, left: 10, width: 400 },
+       layout: { top: 89, height: 20, left: 0, width: 210 },
        valueBinding: 'Lab.loginController.welcomeMessage'
      }),
 
 
      usernameLabel: SC.LabelView.design({
-       layout: { bottom: 40, left: 10, height: 20, width: 65 },
+       layout: { top: 117, left: 0, height: 20, width: 210 },
+       isVisibleBinding: 'Lab.loginController.loginShowing',
        value: 'username'
      }),
      usernameView: SC.TextFieldView.design({
-       layout: { bottom: 40, left: 75, height: 20, width: 90 },
+       layout: { top: 137, left: 0, height: 20, width: 210 },
+       isVisibleBinding: 'Lab.loginController.loginShowing',
        valueBinding: 'Lab.loginController.username'
      }),
 
      passwordLabel: SC.LabelView.design({
-       layout: { bottom: 10, left: 10, height: 20, width: 65 },
+       layout: { top: 166, left: 0, height: 20, width: 210 },
+       isVisibleBinding: 'Lab.loginController.loginShowing',
        value: 'password'
      }),
 
      passwordView: SC.TextFieldView.design({
-       layout: { bottom: 10, left: 75, height: 20, width: 90 },
+       layout: { top: 185, left: 0, height: 20, width: 210 },
+       isVisibleBinding: 'Lab.loginController.loginShowing',
        isPassword: YES,
        valueBinding: 'Lab.loginController.password',
        keyUp: function (evt){
