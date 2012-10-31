@@ -233,7 +233,7 @@ Lab.loginController = SC.ObjectController.create(
         watchDragonsArray.push(item);
       });
 
-      function sellAndReload(){
+      var sellAndReload = function(){
         if ((user.get('status') & SC.Record.READY) === SC.Record.READY) {
           user.removeObserver('status', sellAndReload);
           Lab.ACTIVITY.sellAllUsersDrakes();
@@ -241,12 +241,12 @@ Lab.loginController = SC.ObjectController.create(
           Geniverse.store.commitRecords();
 
 
-          function reload(){
+          var reload = function(){
             if ((challengeDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
               challengeDragons.removeObserver('status', reload);
               Lab.ACTIVITY.reloadData();
             }
-          }
+          };
           self.setupTimer(watchDragonsArray, reload);
 
 
@@ -257,7 +257,7 @@ Lab.loginController = SC.ObjectController.create(
           //             challengeDragons.addObserver('status', reload);
           //           }
         }
-      }
+      };
 
       if ((user.get('status') & SC.Record.READY) === SC.Record.READY) {
         sellAndReload();
