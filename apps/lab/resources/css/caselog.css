@@ -5,15 +5,15 @@
 ---------------------------------------------------------------------*/
 
 .caselog-view {
-   background: #492222;
+  background: static_url('caselog-bg.png') center top no-repeat;
   color: #e5c59e;
-   font: 11px/1.4 Georgia, 'times new roman', times, serif;
-  }
+  font: 11px/1.4 Georgia, 'times new roman', times, serif;
+}
 
 #caselog-wrap {
   background: #733230 static_url('caselog-bg.png') center top no-repeat;
   margin: 0;
-  }
+}
 
 /* CASE LOG
 ---------------------------------------------------------------------*/
@@ -29,16 +29,19 @@
     font-size: 48px;
     font-weight: normal;
     text-align: center;
+    font-family: 'Rather Unfortunate',Verdana,sans-serif;
     }
   #caselog-book h2 {
     color: #492222;
     font-size: 32px;
     font-weight: normal;
     text-align: center;
+    font-family: 'Rather Unfortunate',Verdana,sans-serif;
     }
   #caselog-book h3 {
     font-weight: bold;
     font-size: 18px;
+    font-family: 'Rather Unfortunate',Verdana,sans-serif;
     }
   #caselog-book #col1, #caselog-book #col2 {
     float: left;
@@ -61,9 +64,11 @@
       }
     #caselog-book .case li {
       background: static_url('caselog-no-star.png') no-repeat;
-      font-size: 1em;
+      font-size: 1.4em;
       line-height: 160%;
       padding-left: 47px;
+      font-family: 'Cochin',Verdana,sans-serif;
+      font-style: oblique;
       }
     #caselog-book .case li.one-star {
       background: static_url('caselog-one-star.png') no-repeat;

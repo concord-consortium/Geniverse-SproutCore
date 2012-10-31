@@ -2,6 +2,15 @@
     outline: none;
 }
 
+@font-face {
+  font-family: 'Cochin';
+  src: static_url('fonts/CochinLTStd.otf');
+}
+@font-face {
+  font-family: 'Rather Unfortunate';
+  src: static_url('fonts/RatherUnfortunate.ttf');
+}
+
 #content {
     background-repeat: no-repeat;
     position: absolute;
