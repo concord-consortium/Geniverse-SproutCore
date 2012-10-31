@@ -3,167 +3,170 @@
 
 /* BASIC STYLES
 ---------------------------------------------------------------------*/
-
 .caselog-view {
   background: static_url('caselog-bg.png') center top no-repeat;
-  color: #e5c59e;
-  font: 11px/1.4 Georgia, 'times new roman', times, serif;
+  color: #492222;
 }
 
 #caselog-wrap {
-  background: #733230 static_url('caselog-bg.png') center top no-repeat;
-  margin: 0;
+  position: absolute;
+  top: 110px;
+  left: 50%;
+  margin-left: -528px;
+  width: 1056px;
+  height: 580px;
 }
 
 /* CASE LOG
 ---------------------------------------------------------------------*/
 #caselog-book {
-  background: static_url('caselog.png') no-repeat;
-  color: #492222;
-  height: 600px;
-  margin: 0 auto;
-  width: 960px;
-  }
-  #caselog-book h1 {
-    color: #111111;
-    font-size: 48px;
-    font-weight: normal;
-    text-align: center;
-    font-family: 'Rather Unfortunate',Verdana,sans-serif;
-    }
-  #caselog-book h2 {
-    color: #492222;
-    font-size: 32px;
-    font-weight: normal;
-    text-align: center;
-    font-family: 'Rather Unfortunate',Verdana,sans-serif;
-    }
-  #caselog-book h3 {
-    font-weight: bold;
-    font-size: 18px;
-    font-family: 'Rather Unfortunate',Verdana,sans-serif;
-    }
-  #caselog-book #col1, #caselog-book #col2 {
-    float: left;
-    padding-top: 90px;
-    width: 50%;
-    }
-  #caselog-book .case {
-    background: #fff;
-    height: 110px;
-    opacity: .5;
-    padding: 5px 10px;
-    /* CSS3 */
-    -moz-border-radius: 20px;
-    -webkit-border-radius: 20px;
-    border-radius: 20px;
-    }
+  position: absolute;
+  bottom: 40px;
+  right: 150px;
+  top: 0px;
+  left: 50px;
+}
+#caselog-book #title {
+  font-weight: normal;
+  text-align: center;
+  font-family: 'Rather Unfortunate',Verdana,sans-serif;
+  top: 20px;
+  left: 75px;
+  position: absolute;
+}
+#caselog-book #title h1 {
+  font-size: 40px;
+}
+#caselog-book #title h2 {
+  font-size: 32px;
+}
+#caselog-book .case h3 {
+  font-weight: bold;
+  font-size: 18px;
+  font-family: 'Rather Unfortunate',Verdana,sans-serif;
+  margin-left: 105px;
+  margin-bottom: 15px;
+}
+#caselog-book #col2 .case h3 {
+  margin-left: 125px;
+}
+#caselog-book #col1 {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 50%;
+  bottom: 0px;
+}
+#caselog-book #col2 {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 50%;
+  bottom: 0px;
+}
+#caselog-book #col1 .case ul {
+  height: 110px;
+  padding: 5px 5px 5px 42px;
+}
+#caselog-book #col1 .case ul {
+  height: 110px;
+  padding: 5px 5px 5px 42px;
+}
+#caselog-book #col2 .case ul {
+  height: 110px;
+  padding: 5px 5px 5px 66px;
+}
+
+#caselog-book .case.case0 {
+  position: absolute;
+  top: 140px;
+}
+
+#caselog-book .case.case1 {
+  position: absolute;
+  top: 340px;
+}
+
+#caselog-book .case.case2 {
+  position: absolute;
+  top: 57px;
+}
+
+#caselog-book .case.case3 {
+  position: absolute;
+  top: 257px;
+}
+
+#caselog-book .case.case4 {
+  position: absolute;
+  top: 393px;
+}
+
     #caselog-book .case ul {
       list-style: none;
       margin: 0;
       }
     #caselog-book .case li {
-      background: static_url('caselog-no-star.png') no-repeat;
-      font-size: 1.4em;
-      line-height: 160%;
+      background: static_url('caselog-no-star.png') no-repeat left center;
+      font-size: 1.3em;
+      line-height: 140%;
       padding-left: 47px;
       font-family: 'Cochin',Verdana,sans-serif;
       font-style: oblique;
       }
     #caselog-book .case li.one-star {
-      background: static_url('caselog-one-star.png') no-repeat;
+      background: static_url('caselog-one-star.png') no-repeat left center;
       }
     #caselog-book .case li.two-star {
-      background: static_url('caselog-two-star.png') no-repeat;
+      background: static_url('caselog-two-star.png') no-repeat left center;
       }
     #caselog-book .case li.three-star {
-      background: static_url('caselog-three-star.png') no-repeat;
+      background: static_url('caselog-three-star.png') no-repeat left center;
       }
     #caselog-book .case li.quill-on {
-      background: static_url('quill-on-15x15.png') no-repeat;
+      background: static_url('quill-on-15x15.png') no-repeat left center;
       }
     #caselog-book .case li.quill-off {
-      background: static_url('quill-off-15x15.png') no-repeat;
+      background: static_url('quill-off-15x15.png') no-repeat left center;
       }
-  #caselog-book .case.caselog-active, #caselog-book .case.complete {
-    opacity: .8;
-    }
-  #caselog-book .case.complete {
-    background: #fff static_url('check.png') no-repeat right top;
-    }
-  #caselog-book #col1 .case {
-    margin: 0 55px 10px 100px;
-    }
-  #caselog-book #col2 .case {
-    margin: 0 105px 10px 50px;
-    }
-  #caselog-book .case:hover, #caselog-book .case:focus {
-    opacity: .8;
-    }
   #caselog-book .case a {
     color: #492222;
     display: block;
     text-decoration: none;
     }
-  #caselog-book #title {
-    height: 110px;
-    margin-bottom: 10px;
-    padding: 5px 10px;
-    }
 
 /* NAVIGATION
 ---------------------------------------------------------------------*/
-#caselog-nav {
-  background: #492222;
-  }
-  #caselog-nav ul {
-    margin: 20px auto;
-    width: 960px;
-    }
-    #caselog-nav ul li {
-      background: static_url('book.png') no-repeat center top;
-      float: left;
-      font-size: 12px;
-      font-weight: bold;
-      height: auto;
-      list-style: none;
-      margin: 0 10px;
-      min-height: 190px;
-      opacity: .5;
-      padding: 0;
-      text-align: center;
-      width: 140px;
-      }
-    #caselog-nav ul li.caselog-active {
-      opacity: 1;
-      }
-    #caselog-nav ul li:hover, #caselog-nav ul li:focus {
-      opacity: 1;
-      }
-    #caselog-nav ul li a {
-      color: #e5c59e;
-      display: block;
-      height: auto;
-      min-height: 140px;
-      padding: 50px 10px 0 14px;
-      text-decoration: none;
-      width: 116px;
-      }
-    #caselog-nav ul li#training a {
-      background: static_url('training.png') no-repeat center 80px;
-      }
-    #caselog-nav ul li#apprentice a {
-      background: static_url('apprentice.png') no-repeat center 80px;
-      }
-    #caselog-nav ul li#journeyman a {
-      background: static_url('journeyman.png') no-repeat center 80px;
-      }
-    #caselog-nav ul li#master a {
-      background: static_url('master.png') no-repeat center 80px;
-      }
-    #caselog-nav ul li#meiosis a {
-      background: static_url('meiosis.png') no-repeat center 80px;
-      }
-    #caselog-nav ul li#dna a {
-      background: static_url('dna.png') no-repeat center 80px;
-      }
+.caselog-view #caselog-wrap #caselog-nav {
+  position: absolute;
+  right: 8px;
+  top: 0px;
+  width: 120px;
+  height: 500px;
+}
+
+.caselog-view #caselog-nav a {
+  color: #F9BCA5;
+  text-decoration: none;
+  font-family: 'Sofadi One', 'Lucida Sans', 'Lucida-Grande', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+}
+
+#caselog-nav ul li {
+  position: absolute;
+  right: 0px;
+}
+
+#caselog-nav ul li#training {
+  top: 36px;
+}
+#caselog-nav ul li#apprentice {
+  top: 150px;
+}
+#caselog-nav ul li#journeyman {
+  top: 267px;
+}
+#caselog-nav ul li#master {
+  top: 385px;
+}

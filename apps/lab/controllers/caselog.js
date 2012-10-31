@@ -15,7 +15,7 @@ Lab.LEVEL_DNA        = 5;
 
 Lab.caselogController = SC.Object.create({
 
-  levelNames: ['training', 'apprentice', 'journeyman', 'master', 'meiosis', 'dna'],
+  levelNames: ['training', 'apprentice', 'journeyman', 'master'],
 
   currentLevel: Lab.LEVEL_TRAINING,
 

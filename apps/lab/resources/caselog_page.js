@@ -61,8 +61,8 @@ Lab.caselogPage = SC.Page.design({
         context.push('<div id="col1">');
 
         context.push('<div id="title">');
-        context.push('<h1 class="tk-scrivano">Case Log</h1>');
-        context.push('<h2 class="tk-scrivano">' + currentLevelName.capitalize() + '</h2>');
+        context.push('<h1>Case Log</h1>');
+        context.push('<h2>' + currentLevelName.capitalize() + '</h2>');
         context.push('</div>');
 
 
@@ -85,8 +85,8 @@ Lab.caselogPage = SC.Page.design({
         };
 
         for (i = 0, max_i = cases.length; i < max_i; i++) {
-          context.push('<div class="case caselog-active">');
-          context.push('<h3 class="tk-scrivano">' + cases[i].title + '</h3>');
+          context.push('<div class="case caselog-active case' + i + '">');
+          context.push('<h3>' + cases[i].title + '</h3>');
           context.push('<ul>');
 
           challenges = cases[i].challenges;
@@ -105,21 +105,20 @@ Lab.caselogPage = SC.Page.design({
 
         context.push('</div>');     // #col1/#col2
         context.push('</div>');     // #caselog
-        context.push('</div>');     // #caselog-wrap
 
         context.push('<div id="caselog-nav">');
         context.push('<ul>');
 
         levelNames  = Lab.caselogController.levelNames;
         levelTitles = levelNames.map(function (s) { return s.capitalize(); });
-        levelTitles[Lab.LEVEL_DNA] = "DNA to<br>Trait";  // special-case level name of "dna" to "DNA To Trait"
 
         for (i = 0, max_i = levelNames.length; i < max_i; i++) {
-          extraClassNames = i <= currentLevel ? ' caselog-active' : '';
-          context.push('<li id="' + levelNames[i] + '" class="tk-scrivano' + extraClassNames + '"><a href="#caselog/' + levelNames[i] + '">' + levelTitles[i] + '</a></li>');
+          extraClassNames = i <= currentLevel ? 'caselog-active' : '';
+          context.push('<li id="' + levelNames[i] + '" class="' + extraClassNames + '"><a href="#caselog/' + levelNames[i] + '">' + levelTitles[i] + '</a></li>');
         }
 
         context.push('</ul>');
+        context.push('</div>');
         context.push('</div>');
 
         return context;
