@@ -2,6 +2,11 @@ div#topBar {
     background-color: #492222;
 }
 
+#topBar .sc-view {
+  font-family: 'Sofadi One', 'Lucida Sans', 'Lucida-Grande', sans-serif;
+  font-weight: 400;
+}
+
 img#homeButton:hover {
     background-image: static_url('home-active.png');
     background-repeat: none;

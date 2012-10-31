@@ -155,7 +155,11 @@ img.postButton:hover {
 }
 
 .notification .notification-title {
+  font-family: 'Sofadi One', serif;
+  font-weight: 400;
 }
 
 .notification .notification-message {
+  font-family: 'Sofadi One', serif;
+  font-weight: 400;
 }
