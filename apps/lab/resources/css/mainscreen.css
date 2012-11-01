@@ -18,12 +18,10 @@ a#caselog {
 
 a#caselog:hover {
     cursor: pointer;
-    /*background-image: static_url('mainscreen-caselog-highlighted.png');*/
-    background-repeat: none;
+    background: top left no-repeat static_url('office-caselog-active.png');
 }
 
 a#journal:hover {
     cursor: pointer;
-    /*background-image: static_url('mainscreen-journal-highlighted.png');*/
-    background-repeat: none;
+    background: top left no-repeat static_url('office-journal-active.png');
 }
