@@ -164,7 +164,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     alt: 'Post claim to the Journal',
     title:  "Post claim to the Journal",
     toolTip: "Post claim to the Journal",
-    target: Lab.statechart,
+    target: 'Lab.statechart',
     action: 'showBlogPostPanel'
   }),
 
