@@ -8,49 +8,76 @@ div#topBar {
   font-weight: 400;
 }
 
+img#homeButton {
+    background: top left no-repeat static_url('home.png');
+}
+
 img#homeButton:hover {
-    background-image: static_url('home-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('home-active.png');
+}
+
+img#caselogButton {
+    background: top left no-repeat static_url('caselog.png');
 }
 
 img#caselogButton:hover {
-    background-image: static_url('log-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('caselog-active.png');
+}
+
+img#introButton {
+    background: top left no-repeat static_url('intro.png');
 }
 
 img#introButton:hover {
-    background-image: static_url('intro-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('intro-active.png');
+}
+
+img#infoButton {
+    background: top left no-repeat static_url('info.png');
 }
 
 img#infoButton:hover {
-    background-image: static_url('info-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('info-active.png');
+}
+
+img#helpButton {
+    background: top left no-repeat static_url('help.png');
 }
 
 img#helpButton:hover {
-    background-image: static_url('help-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('help-active.png');
+}
+
+img#notepadButton {
+    background: top left no-repeat static_url('notepad.png');
 }
 
 img#notepadButton:hover {
-    background-image: static_url('notepad-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('notepad-active.png');
+}
+
+img#journalButton {
+    background: top left no-repeat static_url('journal.png');
 }
 
 img#journalButton:hover {
-    background-image: static_url('journal-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('journal-active.png');
+}
+
+img#blogButton {
+    background: top left no-repeat static_url('journal-add.png');
 }
 
 img#blogButton:hover {
-    background-image: static_url('blog-post-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('journal-add-active.png');
+}
+
+img#logOutButton {
+    background: top left no-repeat static_url('logout.png');
 }
 
 img#logOutButton:hover {
-    background-image: static_url('log-out-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('logout-active.png');
 }
 
 #changeGroupLabel {
@@ -68,52 +95,18 @@ a#changeGroup:hover {
   color: #DCF1F6;
 }
 
-#unlockablesButton {
-  background: top left no-repeat static_url("unlockables-button-sprite.png");
+img#unlockablesButton.none {
+  background: top left no-repeat static_url("locked.png");
 }
 
-#unlockablesButton.none {
-  background-position-x: 0px;
-  background-position-y: 0px;
+img#unlockablesButton.none:hover {
+  background: top left no-repeat static_url("locked-active.png");
 }
 
-#unlockablesButton.one {
-  background-position-y: -29px;
+img#unlockablesButton.some {
+  background: top left no-repeat static_url("unlocked.png");
 }
 
-#unlockablesButton.two {
-  background-position-y: -58px;
+img#unlockablesButton.some:hover {
+  background: top left no-repeat static_url("unlocked-active.png");
 }
-
-#unlockablesButton.three {
-  background-position-y: -87px;
-}
-
-#unlockablesButton.four {
-  background-position-y: -116px;
-}
-
-#unlockablesButton.five {
-  background-position-y: -145px;
-}
-
-#unlockablesButton.six {
-  background-position-y: -174px;
-}
-
-#unlockablesButton.seven {
-  background-position-y: -203px;
-}
-
-#unlockablesButton.eight {
-  background-position-y: -232px;
-}
-
-#unlockablesButton.nine {
-  background-position-y: -261px;
-}
-
-#unlockablesButton.plus {
-  background-position-y: -290px;
-}
-

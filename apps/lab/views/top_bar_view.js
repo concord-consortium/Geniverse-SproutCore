@@ -15,6 +15,8 @@
  * http://www.itsgotwhatplantscrave.com/2009/06/20/bindings-unleashed/
  * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
+sc_require('mixins/simple_button');
+sc_require('views/link');
 
 Lab.TopBarView = SC.ToolbarView.extend(
 /** @scope Lab.TopBarView.prototype */ {
@@ -24,341 +26,177 @@ Lab.TopBarView = SC.ToolbarView.extend(
   classNames: ['brown-toolbar-view'],
   anchorLocation: SC.ANCHOR_TOP,
 
-  // childViews
-  navBarLeft: null,
-  homeButton: null,
-  caselogButton: null,
-  introButton: null,
-  infoButton: null,
-  geniverseLabelView: null,
-  welcomeLabelView: null,
-  groupLabelView: null,
-  navBarRight: null,
-  logoutButton: null,
-  blogButton: null,
-  notepadButton: null,
-  journalButton: null,
-  helpButton: null,
-  unlockablesButton: null,
+  childViews: 'homeButton caselogButton introButton infoButton geniverseLabelView welcomeLabelView groupLabelView logoutButton blogButton notepadButton journalButton helpButton unlockablesButton'.w(),
 
-  /**
-   * Necessary configuration xPath elements to set up binding inside the composite view instances
-   */
-  //contentPath: '', // Binding Path for the content of the xSubView
-  /**
-   * Binding Path for the value of the geniverseLabelView
-   */
-  titlePath: 'Geniverse.activityController.title',
-  /**
-   * Binding Path for the value of the welcomeLabelView
-   */
-  welcomePath: 'Lab.loginController.welcomeMessage',
-  groupPath: 'Lab.loginController.memberGroupMessage',
-  /**
-   * Binding Path for the isVisible property of the welcomeLabelView
-   */
-  welcomeIsVisiblePath: 'Lab.loginController.loggedIn',
-  /**
-   * Binding Path for the target property of the logoutButton
-   */
-  logoutButtonTargetPath: 'Lab.loginController',
-  /**
-   * Binding Path for the isVisible property of the logoutButton
-   */
-  logoutButtonIsVisiblePath: 'Lab.loginController.loggedIn',
+  homeButton: SC.ImageView.design(Geniverse.SimpleButton, {
+    layout: { top: 0, left: 7, width: 66, height: 57 },
+    layerId: 'homeButton',
+    hasHover: YES,
+    alt: 'Home',
+    toolTip: "Click to go to the Lab's Home page",
+    target: 'Lab.routes',
+    action: 'openHomePageRoute'
+  }),
 
-  /**
-   * Binding Path for the target property of the changeGroupButton
-   */
-  changeGroupButtonTargetPath: 'Lab.loginController',
-  /**
-   * Binding Path for the isVisible property of the changeGroupButton
-   */
-  changeGroupButtonIsVisiblePath: 'Lab.loginController.loggedIn',
+  caselogButton: SC.ImageView.design(Geniverse.SimpleButton, {
+    layout: { top: 0, left: 66, width: 64, height: 57 },
+    layerId: 'caselogButton',
+    hasHover: YES,
+    alt: 'Case Log',
+    toolTip: "Click to go to the Lab's Case Log page",
+    target: 'Lab.routes',
+    action: 'openCaselogRoute'
+  }),
 
-  /**
-   * Binding Path for the target property of the notepadButton
-   */
-  notepadButtonTargetPath: 'Geniverse.notepadController',
-  /**
-   * Binding Path for the isVisible property of the notepadButton
-   */
-  notepadButtonIsVisiblePath: 'Lab.LOGIN.userLoggedIn',
-  /**
-   * Binding Path for the isEnabledButton property of the notepadController
-   */
-  notepadControllerIsEnabledButtonPath: 'Geniverse.notepadController.isEnabledButton',
-  /**
-   * Binding Path for the target property of the journalButton
-   */
-  journalButtonTargetPath: 'Lab.journalController',
+  introButton: SC.ImageView.design(Geniverse.SimpleButton, {
+    layout: { top: 0, left: 133, width: 57, height: 57 },
+    layerId: 'introButton',
+    hasHover: YES,
+    alt: 'Introduction',
+    toolTip: "Click to see introduction",
+    target: 'Lab.routes',
+    action: 'openAvatarPageRoute'
+  }),
 
-  /**
-   * Overwritten createChildView where you set up all
-   * the internal child views and where we are
-   * going to use the Binding Paths
-   */
-  createChildViews: function() {
-    var childViews = [];
+  geniverseLabelView: SC.LabelView.design({
+    layout: { centerY: 9, height: 24, left: 195, width: 400 },
+    controlSize: SC.LARGE_CONTROL_SIZE,
+    valueBinding: 'Geniverse.activityController.title'
+  }),
 
-    this.navBarLeft = this.createChildView(
-      SC.ImageView.design({
-        layout: { centerY: 9, left: 0, width: 75, height: 38 },
-        layerId: 'navBarLeft',
-        value: static_url('navbar-left.png')
-      })
-    );
-    childViews.push(this.navBarLeft);
+  welcomeLabelView: SC.LabelView.design({
+    layout: { top: 30,  height: 24, right: 550, width: 345},
+    textAlign: SC.ALIGN_LEFT,
+    valueBinding: 'Lab.loginController.welcomeMessage',
+    // useStaticLayout: YES,
+    isVisibleBinding: 'Lab.loginController.loggedIn'
+  }),
 
-    this.homeButton = this.createChildView(
-      SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 9, left: 7, width: 27, height: 26 },
-        layerId: 'homeButton',
-        hasHover: YES,
-        alt: 'Home',
-        toolTip: "Click to go to the Lab's Home page",
-        target: 'Lab.routes',
-        action: 'openHomePageRoute'
-      })
-    );
-    childViews.push(this.homeButton);
+  groupLabelView: SC.LabelView.design({
+    layout: { top: 30,  height: 24, right: 550, width: 345},
+    textAlign: SC.ALIGN_RIGHT,
+    valueBinding: 'Lab.loginController.memberGroupMessage',
+    isVisibleBinding: 'Lab.loginController.loggedIn'
+  }),
 
-    this.caselogButton = this.createChildView(
-      SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 9, left: 41, width: 27, height: 26 },
-        layerId: 'caselogButton',
-        hasHover: YES,
-        alt: 'Case Log',
-        toolTip: "Click to go to the Lab's Case Log page",
-        target: 'Lab.routes',
-        action: 'openCaselogRoute'
-      })
-    );
-    childViews.push(this.caselogButton);
+  changeGroupButton: Lab.LinkView.design({
+    layout: { top: 30,  height: 24, right: 500, width: 40 },
+    layerId: 'changeGroup',
+    title:  "edit",
+    target: 'Lab.loginController',
+    action: 'showGroupPanel',
+    isVisibleBinding: 'Lab.loginController.loggedIn',
+    toolTip: 'Change your Member number or Group number.',
+    tagName: 'a'
+  }),
 
-    this.geniverseLabelView = this.createChildView(
-      SC.LabelView.design({
-        layout: { centerY: 9, height: 24, left: 77, width: 400 },
-        controlSize: SC.LARGE_CONTROL_SIZE,
-        //value: "Geniverse Labs"
-        valueBinding: this.get('titlePath') //'Geniverse.activityController.title'
-      })
-    );
-    childViews.push(this.geniverseLabelView);
+  unlockablesButton: SC.PopupButtonView.design({
+    layout: { centerY: 10, right: 341, width: 45, height: 57 },
+    menu: SC.MenuPane.design({
+      layout: {width: 250 },
+      rawItemsBinding: 'Geniverse.unlockablesController.*unlocked.length',
+      rawItemsChanged: function() {
+        var rawItems = Geniverse.unlockablesController.get('unlocked');
+        if (rawItems.get('length') === 0) {
+          rawItems = [{title: "Nothing unlocked yet", isEnabled: NO}];
+        }
+        this.set('items', rawItems);
+        this.propertyDidChange('items');
+      }.observes('rawItems'),
+      itemTitleKey: 'title',
+      itemValueKey: 'guid',
+      itemIconKey: 'icon',
+      selectedItemBinding: 'Geniverse.unlockablesController.selectedUnlockable'
+    }),
+    layerId: 'unlockablesButton',
+    classNames: ['none'],
+    // hasHover: YES,
+    alt: 'Unlockables',
+    toolTip: "Click to see items you've unlocked",
+    notViewedUnlockablesBinding: 'Geniverse.unlockablesController.*notViewed.length',
+    notViewed: function() {
+      var style = 'none';
+      if ((this.get('notViewedUnlockables') || 0) > 0) {
+        style = 'some';
+      }
 
-    this.welcomeLabelView = this.createChildView(
-      SC.LabelView.design({
-        layout: { top: 30,  height: 24, right: 350, width: 345},
-        textAlign: SC.ALIGN_LEFT,
-        valueBinding: this.get('welcomePath'),
-        isVisibleBinding: this.get('welcomeIsVisiblePath')
-      })
-    );
-    childViews.push(this.welcomeLabelView);
+      this.set('classNames', ['sc-view', 'sc-image-view', 'sc-regular-size', style]);
+      this.set('layerNeedsUpdate', YES);
+    }.observes('notViewedUnlockables')
+  }),
 
-    this.groupLabelView = this.createChildView(
-      SC.LabelView.design({
-        layout: { top: 30,  height: 24, right: 350, width: 345},
-        textAlign: SC.ALIGN_RIGHT,
-        valueBinding: this.get('groupPath'),
-        isVisibleBinding: this.get('welcomeIsVisiblePath')
-      })
-    );
-    childViews.push(this.groupLabelView);
+  infoButton: SC.ImageView.design(Geniverse.SimpleButton, {
+    layout: { top: 0, right: 285, width: 56, height: 57 },
+    layerId: 'infoButton',
+    hasHover: YES,
+    alt: 'Info',
+    toolTip: "Click to see instructions",
+    target: 'Lab.infoController',
+    action: 'showPane',
+    init: function() {
+      sc_super();
+      Lab.infoController.set('infoButton', this); // So pop-up pointer works
+    }
+  }),
 
-    this.changeGroupButton = this.createChildView(
-      Lab.LinkView.design({
-        layout: { top: 30,  height: 24, right: 300, width: 40 },
-        layerId: 'changeGroup',
-        title:  "edit",
-        target: this.get('changeGroupButtonTargetPath'),
-        action: 'showGroupPanel',
-        isVisibleBinding: this.get('changeGroupButtonIsVisiblePath'),
-        toolTip: 'Change your Member number or Group number.',
-        tagName: 'a'
-      })
-    );
-    childViews.push(this.changeGroupButton);
-
-    this.navBarRight = this.createChildView(
-      SC.ImageView.design({
-        layout: { centerY: 9, right: 0, width: 244, height: 38 },
-        layerId: 'navBarRight',
-        value: static_url('navbar-right.png')
-      })
-    );
-    childViews.push(this.navBarRight);
-
-    this.unlockablesButton = this.createChildView(
-      SC.PopupButtonView.design({
-        layout: { centerY: 10, right: 246, width: 27, height: 27 },
-        menu: SC.MenuPane.design({
-          layout: {width: 250 },
-          rawItemsBinding: 'Geniverse.unlockablesController.*unlocked.length',
-          rawItemsChanged: function() {
-            var rawItems = Geniverse.unlockablesController.get('unlocked');
-            if (rawItems.get('length') === 0) {
-              rawItems = [{title: "Nothing unlocked yet", isEnabled: NO}];
-            }
-            this.set('items', rawItems);
-            this.propertyDidChange('items');
-          }.observes('rawItems'),
-          itemTitleKey: 'title',
-          itemValueKey: 'guid',
-          itemIconKey: 'icon',
-          selectedItemBinding: 'Geniverse.unlockablesController.selectedUnlockable'
-        }),
-        layerId: 'unlockablesButton',
-        classNames: ['none'],
-        // hasHover: YES,
-        alt: 'Unlockables',
-        toolTip: "Click to see items you've unlocked",
-        notViewedUnlockablesBinding: 'Geniverse.unlockablesController.*notViewed.length',
-        notViewed: function() {
-          var style = 'none';
-          switch(this.get('notViewedUnlockables') || 0) {
-            case 0:
-              style = 'none';
-              break;
-            case 1:
-              style = 'one';
-              break;
-            case 2:
-              style = 'two';
-              break;
-            case 3:
-              style = 'three';
-              break;
-            case 4:
-              style = 'four';
-              break;
-            case 5:
-              style = 'five';
-              break;
-            case 6:
-              style = 'six';
-              break;
-            case 7:
-              style = 'seven';
-              break;
-            case 8:
-              style = 'eight';
-              break;
-            case 9:
-              style = 'nine';
-              break;
-            default:
-              style = 'plus';
-          }
-
-          this.set('classNames', ['sc-view', 'sc-image-view', 'sc-regular-size', style]);
-          this.set('layerNeedsUpdate', YES);
-        }.observes('notViewedUnlockables')
-      })
-    );
-    childViews.push(this.unlockablesButton);
-
-    this.introButton = this.createChildView(
-      SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 9, right: 211, width: 27, height: 26 },
-        layerId: 'introButton',
-        hasHover: YES,
-        alt: 'Introduction',
-        toolTip: "Click to see introduction",
-        target: 'Lab.routes',
-        action: 'openAvatarPageRoute'
-      })
-    );
-    childViews.push(this.introButton);
-
-    this.infoButton = this.createChildView(
-      SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 9, right: 176, width: 27, height: 26 },
-        layerId: 'infoButton',
-        hasHover: YES,
-        alt: 'Info',
-        toolTip: "Click to see instructions",
-        target: 'Lab.infoController',
-        action: 'showPane'
-      })
-    );
-    Lab.infoController.set('infoButton', this.infoButton); // So pop-up pointer works
-    childViews.push(this.infoButton);
-
-    this.blogButton = this.createChildView(
-      SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 9, right: 141, width: 27, height: 26 },
-        layerId: 'blogButton',
-        hasHover: YES,
-        alt: 'Post claim to the Journal',
-        title:  "Post claim to the Journal",
-        toolTip: "Post claim to the Journal",
-        target: Lab.statechart,
-        action: 'showBlogPostPanel'
-      })
-    );
-    childViews.push(this.blogButton);
+  blogButton: SC.ImageView.design(Geniverse.SimpleButton, {
+    layout: { top: 0, right: 230, width: 55, height: 57 },
+    layerId: 'blogButton',
+    hasHover: YES,
+    alt: 'Post claim to the Journal',
+    title:  "Post claim to the Journal",
+    toolTip: "Post claim to the Journal",
+    target: Lab.statechart,
+    action: 'showBlogPostPanel'
+  }),
 
 
-    this.journalButton = this.createChildView(
-      SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 9, right: 107, width: 27, height: 26 },
-        hasHover: YES,
-        alt: 'Your journal',
-        layerId: 'journalButton',
-        title:  "Journal",
-        toolTip: "Click to open the class journal",
-        target: this.get('journalButtonTargetPath'),
-        action: 'openWindow'
-      })
-    );
-    childViews.push(this.journalButton);
+  journalButton: SC.ImageView.design(Geniverse.SimpleButton, {
+    layout: { top: 0, right: 179, width: 51, height: 57 },
+    hasHover: YES,
+    alt: 'Your journal',
+    layerId: 'journalButton',
+    title:  "Journal",
+    toolTip: "Click to open the class journal",
+    target: 'Lab.journalController',
+    action: 'openWindow'
+  }),
 
-    this.notepadButton = this.createChildView(
-      SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 9, right: 73, width: 27, height: 26 },
-        hasHover: YES,
-        alt: 'Your notebook',
-        layerId: 'notepadButton',
-        title:  "Note Pad",
-        toolTip: "Click to open your notepad",
-        target: this.get('notepadButtonTargetPath'),
-        isEnabledBinding: this.get('notepadControllerIsEnabledButtonPath'),
-        action: 'showPane'
-      })
-    );
-    childViews.push(this.notepadButton);
+  notepadButton: SC.ImageView.design(Geniverse.SimpleButton, {
+    layout: { top: 0, right: 129, width: 50, height: 57 },
+    hasHover: YES,
+    alt: 'Your notebook',
+    layerId: 'notepadButton',
+    title:  "Note Pad",
+    toolTip: "Click to open your notepad",
+    target: 'Geniverse.notepadController',
+    isEnabledBinding: 'Geniverse.notepadController.isEnabledButton',
+    action: 'showPane'
+  }),
 
-    this.helpButton = this.createChildView(
-      SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 9, right: 39, width: 27, height: 26 },
-        layerId: 'helpButton',
-        hasHover: YES,
-        alt: 'Help',
-        toolTip: "View the Help window for this page",
-        target: 'Lab.helpController',
-        action: 'showPane',
-        isVisibleBinding: 'Lab.helpController.isVisible'
-      })
-    );
-    Lab.helpController.set('helpButton', this.helpButton); // So pop-up pointer works
-    childViews.push(this.helpButton);
+  helpButton: SC.ImageView.design(Geniverse.SimpleButton, {
+    layout: { top: 0, right: 73, width: 56, height: 57 },
+    layerId: 'helpButton',
+    hasHover: YES,
+    alt: 'Help',
+    toolTip: "View the Help window for this page",
+    target: 'Lab.helpController',
+    action: 'showPane',
+    isVisibleBinding: 'Lab.helpController.isVisible',
+    init: function() {
+      sc_super();
+      Lab.helpController.set('helpButton', this); // So pop-up pointer works
+    }
+  }),
 
-    this.logoutButton = this.createChildView(
-      SC.ImageView.design(Geniverse.SimpleButton, {
-        layout: { centerY: 9, right: 6, width: 27, height: 26 },
-        layerId: 'logOutButton',
-        hasHover: YES,
-        alt: 'Log out',
-        title:  "Log out",
-        toolTip: "Click to log out",
-        target: Lab.statechart,
-        action: 'logOut'
-      })
-    );
-    childViews.push(this.logoutButton);
-
-    this.set('childViews', childViews);
-  }
-
+  logoutButton: SC.ImageView.design(Geniverse.SimpleButton, {
+    layout: { top: 0, right: 6, width: 67, height: 57 },
+    layerId: 'logOutButton',
+    hasHover: YES,
+    alt: 'Log out',
+    title:  "Log out",
+    toolTip: "Click to log out",
+    target: Lab.statechart,
+    action: 'logOut'
+  })
 });
