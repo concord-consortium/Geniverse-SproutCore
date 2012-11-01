@@ -5,11 +5,10 @@
 /*globals Lab Geniverse CC, CcChat, java static_url sc_static sc_require */
 Lab.marginSize = 15;
 
-sc_require('views/top_bar_view');
+sc_require('views/lab_pane');
 sc_require('views/challenge_pool_view');
 sc_require('views/breeding_pen_view');
 sc_require('views/stable_view');
-sc_require('views/bottom_bar_view');
 
 Lab.chromosomeChallengePage = SC.Page.design({
 
@@ -20,32 +19,12 @@ Lab.chromosomeChallengePage = SC.Page.design({
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page
   // load.
-  mainPane: SC.MainPane.design({
-    // defaultResponder: Geniverse,
-    classNames: ['brown'],
-    childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
-    backgroundView: SC.ImageView.design({
-      value: static_url('lab_background.png'),
-      classNames: ['transparent','scalingimage']
-    }),
-    topBar: Lab.TopBarView.design({
-      classNames: ['brown']
-    }),
-    bottomBar: Lab.BottomBarView.design({
-      classNames: ['brown']
-    }),
-
+  mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
 
-      childViews: 'background genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle line'.w(),
+      childViews: 'genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle line'.w(),
 
-      layout: { centerX: 0, top: 40, width: 850, height: 560 },
-
-      // separate parallel background so we don't make the rest of the childViews see-through
-      background: SC.View.design({
-        layout: {top: 0, left: 0, right: 0, bottom: 0},
-        classNames: ['genome-view-intro']
-      }),
+      layout: { centerX: 0, top: 90, width: 850, height: 560 },
 
       line: SC.View.design({
         layout: {top: 80, left: 280, width: 2, bottom: 110},
@@ -138,21 +117,21 @@ Lab.chromosomeChallengePage = SC.Page.design({
         fontWeight: SC.BOLD_WEIGHT,
         value: "Target Drake"
       }),
-      
+
       yourTitle: SC.LabelView.design({
         layout: {top: 40, height: 25, left: 345, width: 200 },
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         value: "Your Drake"
       }),
-      
+
       chromoTitle: SC.LabelView.design({
         layout: {top: 40, height: 25, left: 545, width: 200 },
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         value: "Chromosome Control"
       })
-      
+
     })
   })
 });

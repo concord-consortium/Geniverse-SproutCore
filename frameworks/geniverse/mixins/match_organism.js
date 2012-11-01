@@ -22,7 +22,7 @@ Geniverse.MatchOrganism = {
     var dragon = this._getSourceDragon(drag);
     if (this._canDrag(dragon)){
       Lab.statechart.sendAction('checkMatchDragon', [this.get('content'), dragon], this);
-      
+
       // if (Geniverse.matchController.doesMatch(this.get('content'), dragon)) {
       //   this.setPath('content.hasBeenMatched', YES);
       //   this._setClassNames();
@@ -45,7 +45,7 @@ Geniverse.MatchOrganism = {
       this._setClassNames();
     }
   },
-  
+
   _setClassNames: function(){
     var imageView = this.get('imageView');
     if (this.get('content').get('hasBeenMatched')){

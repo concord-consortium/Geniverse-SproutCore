@@ -6,7 +6,7 @@
 
 /** @class
 
-  The login state. 
+  The login state.
 
   @extends SC.Responder
   @version 0.1
@@ -15,8 +15,8 @@ Geniverse.LOGIN = SC.Responder.create(
 /** @scope Geniverse.LOGIN.prototype */ {
 
   nextResponder: null,
-  
-  // 
+
+  //
   didBecomeFirstResponder: function() {
     SC.Logger.log("LOGIN");
     function loadData() {
@@ -25,9 +25,9 @@ Geniverse.LOGIN = SC.Responder.create(
         Geniverse.makeFirstResponder(Geniverse.LOAD_DATA);
       }
     }
-    
+
     Geniverse.appController.addObserver('userLoggedIn', loadData);
     Geniverse.appController.checkLoginState();
   }
-  
+
 }) ;

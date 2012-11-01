@@ -14,27 +14,21 @@ Lab.mainPage = SC.Page.design({
   // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
-    title: "Welcome to the Geniverse Labs",
-    classNames: ['brown'],
+    title: "Office",
+    classNames: ['brown','mainPane'],
     childViews: 'mainAppView topBar'.w(),
-    topBar: Lab.TopBarView.design({
-      titlePath: 'Lab.mainPage.mainPane.title'
-    }),
+    topBar: Lab.TopBarView.design(),
 
     mainAppView: SC.View.design({
-      layout: { top: 42, centerX: 0, width: 960},
-      childViews: 'backgroundView caselogButtonView journalButtonView'.w(),
-
-      backgroundView: SC.ImageView.design({
-        layout: { top:0, centerX: 0, width: 960},
-        value: static_url('mainscreen-bg.png')
-      }),
+      layout: { top: 57, centerX: 0, width: 1890, height: 890},
+      classNames: ['mainscreen'],
+      childViews: 'caselogButtonView journalButtonView'.w(),
 
       caselogButtonView: SC.View.design(Geniverse.SimpleButton, {
         layerId: 'caselog',
         tagName: 'a',
         hasHover: YES,
-        layout: { top: 438, left: 467, width: 372, height: 158 },
+        layout: { top: 614, centerX: 29, width: 258, height: 172 },
         alt: 'Go to the Case Log',
         toolTip: 'Go to the Case Log',
         target: 'Lab.routes',
@@ -46,7 +40,7 @@ Lab.mainPage = SC.Page.design({
         layerId: 'journal',
         tagName: 'a',
         hasHover: YES,
-        layout: { top: 473, left: 71, width: 251, height: 127 },
+        layout: { top: 612, centerX: 217, width: 242, height: 125 },
         alt: 'Open the 3G Journal',
         toolTip: 'Open the 3G Journal',
         target: 'Lab.journalController',

@@ -10,15 +10,15 @@
 
   @extends SC.View
 */
-Geniverse.OrganismView = SC.View.extend( 
+Geniverse.OrganismView = SC.View.extend(
 /** @scope Geniverse.OrganismView.prototype */ {
-	label: 'Organism',
+  label: 'Organism',
   showLabel: false,
-	content: null,  //Geniverse.NO_DRAGON,
-	childViews: 'labelView colorLabelView imageView revealButtonView'.w(),
+  content: null,  //Geniverse.NO_DRAGON,
+  childViews: 'labelView colorLabelView imageView revealButtonView'.w(),
   parent: '',       // If set, drag-and-drop will replace parentView's [parent] field
   sex: null,        // If set to 0 or 1, drag-and-drop will only work with males and females, respectively
-  
+
   isDropTarget: NO, // whether this is replaceable by drag-and-drop
   acceptsOffspringDrop: YES,    // set to NO to prevent offspring from being dragged to the parent spot
   canDrag: NO,      // whether this can be dragged elsewhere
@@ -26,9 +26,9 @@ Geniverse.OrganismView = SC.View.extend(
   hideDragon: NO, // hides the dragon
   useRevealButton: NO,  // hides dragon and show a reveal button
   revealButtonEnabled: YES,
-  
+
   trackScore: NO, // whether this view will increment scoring controller when dragged into
-  
+
   glow: NO, // whether to show a glow behind drake
 
   showColorLabelsBinding: 'Geniverse.activityController.showColorLabels',
@@ -37,29 +37,29 @@ Geniverse.OrganismView = SC.View.extend(
   }.property('hideDragon','showColorLabels'),
   colorLabelBinding: '*content.color',
 
-	imageView: SC.ImageView.design({
-		layout: {top: 0, bottom: 0, left: 0, right: 0},
-		contentBinding: '*parentView.content',
+  imageView: SC.ImageView.design({
+    layout: {top: 0, bottom: 0, left: 0, right: 0},
+    contentBinding: '*parentView.content',
     hideDragonBinding: '*parentView.hideDragon',
     useRevealButtonBinding: '*parentView.useRevealButton',
-		hideImage: function() {
+    hideImage: function() {
       return this.get('hideDragon') || this.get('useRevealButton');
     }.property('hideDragon', 'useRevealButton').cacheable(),
     classNames: ['opaque'],
     valueNeedsRecalculated: YES, // simple value we can toggle to trigger the value property being recalculated
-   
+
     // get imageURL and make smaller if necessary
     value: function() {
       if (!this.get('content')){
         return '';
       }
-      
+
       if (this.get('hideImage')){
         return sc_static('question_mark.png');
       }
-      
+
       var imageURL = this.get('content').get('imageURL');
-     
+
       var height = this.get('clippingFrame').height;
       if (!height) {
         return imageURL;
@@ -75,10 +75,10 @@ Geniverse.OrganismView = SC.View.extend(
       // we need to recalculate our imageURL
       this.set('valueNeedsRecalculated', (! this.get('valueNeedsRecalculated')));
     },
-    
-		canLoadInBackground: NO,
-		useImageCache: NO
-	}),
+
+    canLoadInBackground: NO,
+    useImageCache: NO
+  }),
 
   labelView: SC.LabelView.design({
     isVisibleBinding: '*parentView.showLabel',
@@ -87,7 +87,7 @@ Geniverse.OrganismView = SC.View.extend(
     fontWeight: SC.BOLD_WEIGHT,
     textAlign: SC.ALIGN_CENTER
   }),
-  
+
   colorLabelView: SC.LabelView.design({
     isVisibleBinding: '*parentView.colorLabelVisible',
     colorOffsetBinding: '*parentView.colorOffset',
@@ -111,7 +111,7 @@ Geniverse.OrganismView = SC.View.extend(
     fontWeight: SC.BOLD_WEIGHT,
     textAlign: SC.ALIGN_CENTER
   }),
-  
+
   revealButtonView: SC.ButtonView.design({
     isVisibleBinding: '*parentView.useRevealButton',
     layout: { height: 24, bottom: 0, left: 5, right: 5 },
@@ -120,8 +120,8 @@ Geniverse.OrganismView = SC.View.extend(
     action: "revealClicked",
     target: "Lab.statechart"
   }),
-  
-  // 
+
+  //
   // SC.LabelView.design({
   //   //valueBinding: this.get('titlePath'),
   //   value: "Breeding Pen",
@@ -130,12 +130,12 @@ Geniverse.OrganismView = SC.View.extend(
   //   fontWeight: SC.BOLD_WEIGHT,
   //   classNames: "container_label".w()
   // })
-	
+
   init: function() {
     this.invokeLast(function() {
       this._checkForNullDragon();
     });
-    
+
     if (this.get('glow')) {
       var width = this.get('layout').width,
           glow = width >= 200 ? 'glow' : width >= 170 ? 'glow-180' : 'glow-82';
@@ -143,9 +143,9 @@ Geniverse.OrganismView = SC.View.extend(
     } else {
       this.set('classNames', ['sc-view organism-view opaque']);
     }
-    
+
     sc_super();
-	},
+  },
 
   isAddedToParent: NO,
 
@@ -175,16 +175,16 @@ Geniverse.OrganismView = SC.View.extend(
     sc_super();
   },
 
-	contentDidChange: function() {
+  contentDidChange: function() {
     SC.RunLoop.begin();
     this._checkForNullDragon();
     this._setClassNames();
     this.setPath('imageView.layerNeedsUpdate', YES);
     SC.RunLoop.end();
-	}.observes('*content'),
-	
+  }.observes('*content'),
+
   // isSelectedBinding: 'Geniverse.allDragonsSelectionController.selection',
-  
+
   selectionDidChange: function() {
     if (Geniverse.allSelectedDragonsController.get('selection').contains(this.get('content'))){
       this.set('isSelected', YES);
@@ -192,24 +192,24 @@ Geniverse.OrganismView = SC.View.extend(
       this.set('isSelected', NO);
     }
   }.observes('Geniverse.allSelectedDragonsController.selection'),
-	
-	isSelectedDidChange: function() {
+
+  isSelectedDidChange: function() {
     this._setClassNames();
-	}.observes('isSelected'),
+  }.observes('isSelected'),
 
   // TODO: This could probably be done cleaner with child views...
   render: function(context, firstTime) {
-			this._setClassNames();
+      this._setClassNames();
       sc_super();
   },
-  
+
   _isNull: function(object) {
     if (object === null || typeof(object) == "undefined") {
       return YES;
     }
     return NO;
   },
-  
+
   _checkForNullDragon: function() {
     var dragon = this.get('content');
     if (this._isNull(dragon)) {
@@ -219,10 +219,10 @@ Geniverse.OrganismView = SC.View.extend(
     }
     return NO;
   },
-  
+
   _setClassNames: function(){
     var classNames = [];
-    
+
     if (this.get('showBackground')) {
       if (this.get('isSelected')){
         classNames.push((this.getPath('content.sex') === 0) ? 'male-selected' : 'female-selected');
@@ -237,7 +237,7 @@ Geniverse.OrganismView = SC.View.extend(
       this.get('imageView').displayDidChange();
     }
   },
-	
+
   // // drag methods:
   mouseDownEvent: null,
   mouseDown: function(evt) {
@@ -245,17 +245,17 @@ Geniverse.OrganismView = SC.View.extend(
       // we are in a grid view, don't need to do anything
       return NO;
     }
-    
+
     var selection = SC.SelectionSet.create();
     selection.addObject(this.get('content'));
     Geniverse.allSelectedDragonsController.set('selection', selection);
-    
+
     this.set('mouseDownEvent', evt);
     return YES;
   },
-  
+
   isDragging: NO,
-  
+
   dragDidEnd: function(drag, loc, op) {
     this.set('isDragging', NO);
   },
@@ -276,12 +276,12 @@ Geniverse.OrganismView = SC.View.extend(
       this.set('isDragging', YES);
     }
   },
-  
+
   mouseUp: function(evt) {
     this.set('isDragging', NO);
   },
-   
-	// drop methods: NB: none of these will be called if isDropTarget = NO
+
+  // drop methods: NB: none of these will be called if isDropTarget = NO
   acceptDragOperation: function(drag, op) {
     var dragon = this._getSourceDragon(drag);
     if (!this._canDrop(dragon)){
@@ -290,11 +290,11 @@ Geniverse.OrganismView = SC.View.extend(
     SC.Logger.info("can drop");
     return YES;
   },
-  
+
   // this will be called if acceptDragOperation returns YES
   performDragOperation: function(drag, op) {
     var dragon = this._getSourceDragon(drag);
-    
+
     // next, if we are a prent view, check that dragged dragon
     // is not an egg
     var parentType = this.get('parent');
@@ -304,7 +304,7 @@ Geniverse.OrganismView = SC.View.extend(
           var stableCount = Geniverse.stableOrganismsController.get('length');
           var stableSize = Geniverse.stableOrganismsController.get('maxSize');
           if (stableCount >= stableSize){
-            SC.AlertPane.error("Can't move dragon", 
+            SC.AlertPane.error("Can't move dragon",
               "Your stable is full. If you want to save more dragons, sell some to the marketplace");
             return;
           }
@@ -321,11 +321,11 @@ Geniverse.OrganismView = SC.View.extend(
         this.set('content', dragon);
       SC.RunLoop.end();
     }
-    
+
     if (this.get('trackScore')){
       Geniverse.scoringController.incrementScore(1);
     }
-    
+
     this._setClassNames();
     return op;
   },
@@ -333,7 +333,7 @@ Geniverse.OrganismView = SC.View.extend(
   computeDragOperations: function(drag, evt) {
     return SC.DRAG_ANY ;
   },
-  
+
   dragEntered: function(drag, evt) {
     if (this._canDrop(this._getSourceDragon(drag))){
       SC.RunLoop.begin();
@@ -347,7 +347,7 @@ Geniverse.OrganismView = SC.View.extend(
     // this.$().removeClass('drop-target') ;
     this.set('isSelected', NO);
   },
-  
+
   _canDrop: function(dragon) {
     if (this._isNull(dragon) || (dragon.get('bred') && !this.get('acceptsOffspringDrop'))) {
       return NO;
@@ -361,10 +361,10 @@ Geniverse.OrganismView = SC.View.extend(
         return NO;
       }
     }
-    
+
     return YES;
   },
-  
+
   _getSourceDragon: function(dragEvt) {
     var sourceDragon;
     if ((""+dragEvt.get('source').constructor === 'Geniverse.OrganismView')){

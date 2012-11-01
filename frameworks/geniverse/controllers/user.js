@@ -30,10 +30,10 @@ Geniverse.userController = SC.ObjectController.create(
     Geniverse.store.commitRecords();
     return user;
   },
-  
+
   findUser: function (username, callback) {
     var self = this;
-    var query = SC.Query.local(Geniverse.User, 
+    var query = SC.Query.local(Geniverse.User,
       {
         conditions: 'username = "' + username + '"',
         restParams: Geniverse.makeRestParams({
@@ -64,7 +64,7 @@ Geniverse.userController = SC.ObjectController.create(
     checkStatus();
   },
 
-  findOrCreateUser: function(username, callback) {      
+  findOrCreateUser: function(username, callback) {
     var self = this;
     var nextMethod = function(user) {
       if (user) {
@@ -115,5 +115,24 @@ Geniverse.userController = SC.ObjectController.create(
     // from; stars[pageId] == [1,3,2,3,2] to stars[pageId] == [{...}, {...}, {...}, {...}]
 
     Geniverse.userController.setUserMetadata(meta);
+  },
+
+  getPageStars: function(pageId) {
+    var userMetadata = this.getUserMetadata(),
+        stars        = userMetadata.stars || {},
+        activityStarsListTemp = stars[pageId] || [],
+        activityStarsList = [];
+
+        for (var i = 0; i < activityStarsListTemp.length; i++) {
+          var s = activityStarsListTemp[i];
+          var d = 0;
+          if (typeof(s) == "object") {
+            d = s.stars || 0;
+          } else if (typeof(s) == "number") {
+            d = s;
+          }
+          activityStarsList.push(d);
+        }
+    return Math.max.apply([], [0].concat(activityStarsList));
   }
 }) ;

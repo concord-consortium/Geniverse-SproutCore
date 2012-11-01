@@ -4,9 +4,9 @@
 <page_title>From DNA to Proteins: Translation</page_title>
 <bg_color><Red>244</Red><Green>245</Green><Blue>239</Blue></bg_color>
 <text>
-   
 
-         
+
+
    </text>
 <section start="0" end="20">
 <paragraph start="0" end="1">
@@ -23,7 +23,7 @@
 <height>310.0</height>
 <title>&lt;html&gt;
   &lt;head&gt;
-    
+
   &lt;/head&gt;
   &lt;body&gt;
     &lt;img src=&quot;nucleotideKeyExtended.gif&quot;&gt;

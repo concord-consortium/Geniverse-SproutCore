@@ -8,22 +8,22 @@
                 {
                     "on": false
                 },
-	            {
-	                "on": true
-	            }
+              {
+                  "on": true
+              }
             ]
         },
         {
             "alleles": [
-            	{
-                	"on": false
-            	},
-            	{
-                	"on": false
-            	},
-            	{
-                	"on": true
-            	}
+              {
+                  "on": false
+              },
+              {
+                  "on": false
+              },
+              {
+                  "on": true
+              }
             ]
         },
         {

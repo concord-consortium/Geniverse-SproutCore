@@ -38,7 +38,7 @@ Lab.LoginGroupView = SC.PanelPane.extend({
 
      memberSelectView: SC.SelectFieldView.design({
        layout: { bottom: 10, left: 10, height: 25, width: 90 },
-       objects: [ 
+       objects: [
          SC.Object.create({ value: 1, title: 'member 1'}),
          SC.Object.create({ value: 2, title: 'member 2'}),
          SC.Object.create({ value: 3, title: 'member 3'}),
@@ -54,7 +54,7 @@ Lab.LoginGroupView = SC.PanelPane.extend({
      groupSelectView: SC.SelectFieldView.design({
        layout: { bottom: 10, left: 110, height: 25, width: 90 },
 
-       objects: [ 
+       objects: [
          SC.Object.create({ value: 1, title: 'group 1'}),
          SC.Object.create({ value: 2, title: 'group 2'}),
          SC.Object.create({ value: 3, title: 'group 3'}),
@@ -66,7 +66,7 @@ Lab.LoginGroupView = SC.PanelPane.extend({
          SC.Object.create({ value: 9, title: 'group 9'}),
          SC.Object.create({ value: 10, title: 'group 10'})
        ],
-       
+
        disableSort: YES,
        valueBinding: 'Geniverse.userController.content.groupId',
        nameKey: 'title',

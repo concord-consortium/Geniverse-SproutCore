@@ -5,11 +5,10 @@
 /*globals Geniverse, CC, CcChat, java, Lab */
 Lab.marginSize = 15;
 
-sc_require('views/top_bar_view');
+sc_require('views/lab_pane');
 sc_require('views/challenge_pool_view');
 sc_require('views/breeding_pen_view');
 sc_require('views/stable_view');
-sc_require('views/bottom_bar_view');
 
 Lab.breedingPage = SC.Page.design({
 
@@ -20,33 +19,12 @@ Lab.breedingPage = SC.Page.design({
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page
   // load.
-  mainPane: SC.MainPane.design({
-    // defaultResponder: Geniverse,
-    classNames: ['brown'],
-    childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
-      backgroundView: SC.ImageView.design({
-        value: static_url('lab_background.png'),
-        classNames: ['transparent','scalingimage']
-      }),
-
-    topBar: Lab.TopBarView.design({
-      classNames: ['brown']
-    }),
-    bottomBar: Lab.BottomBarView.design({
-      classNames: ['brown']
-    }),
-
+  mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
 
-      layout: { centerX: 0, top: 40, width: 840, height: 545 },
+      layout: { centerX: 0, top: 90, width: 840, height: 545 },
 
-      childViews: 'background breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView scoreView'.w(),
-
-      // separate parallel background so we don't make the rest of the childViews see-through
-      background: SC.View.design({
-        layout: {top: 0, left: 0, right: 0, bottom: 0},
-        classNames: ['genome-view-intro']
-      }),
+      childViews: 'breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView scoreView'.w(),
 
       // challenge pool to hold initial, system-created dragons
       mothersPoolView: Lab.ChallengePoolView.design({

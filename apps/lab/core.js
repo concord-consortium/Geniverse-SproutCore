@@ -7,14 +7,14 @@
 /** @namespace
 
   My cool new app.  Describe your application.
-  
+
   @extends SC.Page
 */
 // an extension of the SC.Page object to allow us to index all created pages
 SC.Page = SC.Page.extend({
   init: function() {
     sc_super();
-    
+
     var pages = SC.Page.instances;
     if (!pages) {
       pages = SC.Page.instances = [];

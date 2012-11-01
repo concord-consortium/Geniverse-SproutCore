@@ -5,19 +5,17 @@
 /*globals Lab Geniverse CcChat window Ki*/
 
 Lab.loggedOut =  Ki.State.extend({
-  
-  // showCheckPanel() will handle logging in. This logic
-  // may be moved into here later
+
   enterState: function() {
-    Lab.routes.gotoLabRoute('loginPage');
-    Lab.loginController.showCheckPanel();
+    Lab.routes.gotoLabRoute({pageName: 'loginPage', paneName: 'mainPane'});
+    Lab.loginController.checkCCAuthToken();
   },
-  
+
   // this and gotoActivity just set this property for later
   gotoHomePage: function() {
     Lab.statechart.getState('atLocation').startPage = 'home';
   },
-  
+
   gotoCaselog: function() {
     Lab.statechart.getState('atLocation').startPage = 'caselog';
   },
@@ -25,11 +23,15 @@ Lab.loggedOut =  Ki.State.extend({
   gotoActivity: function() {
     Lab.statechart.getState('atLocation').startPage = 'activity';
   },
-   
-  logIn: function() { 
+
+  gotoAvatarPage: function() {
+    Lab.statechart.getState('atLocation').startPage = 'avatar';
+  },
+
+  logIn: function() {
     this.gotoState('loggedIn');
   },
-  
-  exitState: function() { 
+
+  exitState: function() {
   }
 });

@@ -48,11 +48,11 @@ Geniverse.MatchView = SC.View.extend(
     }
   }.observes('Geniverse.matchController.currentDragonIdx', 'Geniverse.matchController.arrangedObjects.[]', 'Geniverse.matchController.currentDragon'),
 
-  
+
   isVisible: function() {
     return Geniverse.matchController.get('length') > 0;
   }.property('Geniverse.matchController.length'),
-  
+
   updateIsVisible: function(){
     this.propertyDidChange('isVisible');
   }.observes('Geniverse.matchController.arrangedObjects.[]'),
@@ -76,7 +76,7 @@ Geniverse.MatchView = SC.View.extend(
         glow: YES
       }));
       childViews.push(this.dragonView);
-      
+
       var labelPos = this.get('labelPosition');
       var bgLayout, countTitleLayout, countLayout;
       if (labelPos == "right") {
@@ -119,7 +119,7 @@ Geniverse.MatchView = SC.View.extend(
        })
       );
       childViews.push(this.titleView);
-      
+
       this.dragonsView = this.createChildView(this._getDragonsViewDesign({ centerX: 0, top: 22, bottom: 0, width: 100}));
       childViews.push(this.dragonsView);
     }

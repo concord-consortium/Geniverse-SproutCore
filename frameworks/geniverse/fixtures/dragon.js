@@ -35,7 +35,7 @@ Geniverse.Dragon.FIXTURES = [
 //     guid: 2,
 //     sex: 1,
 //     alleles: "hh,SS,Ww,lL,TT,pp,FF,AA,BB",
-// 		bred: true,
+//     bred: true,
 //     imageURL: "/biologica/cache/hh,SS,Ww,lL,TT,pp,FF,AA,BB.png",
 //     characteristics: ['Fill','In','Characteristics'],
 //     metaInfo: {}
@@ -44,7 +44,7 @@ Geniverse.Dragon.FIXTURES = [
 //     guid: 3,
 //     sex: 0,
 //     alleles: "hh,SS,Ww,lL,tT,pp,FF,aA,BB",
-// 		bred: true,
+//     bred: true,
 //     imageURL: "/biologica/cache/hh,SS,Ww,lL,tT,pp,FF,aA,BB.png",
 //     characteristics: ['Fill','In','Characteristics'],
 //     metaInfo: {}
@@ -53,7 +53,7 @@ Geniverse.Dragon.FIXTURES = [
 //     guid: 4,
 //     sex: 1,
 //     alleles: "hh,SS,wW,ll,tt,pp,ff,aa,bB",
-// 		bred: true,
+//     bred: true,
 //     imageURL: "/biologica/cache/hh,SS,wW,ll,tt,pp,ff,aa,bB.png",
 //     characteristics: ['Fill','In','Characteristics'],
 //     metaInfo: {}
@@ -62,7 +62,7 @@ Geniverse.Dragon.FIXTURES = [
 //     guid: 5,
 //     sex: 0,
 //     alleles: "Hh,SS,Ww,ll,TT,pp,FF,aa,BB",
-// 		bred: true,
+//     bred: true,
 //     imageURL: "/biologica/cache/Hh,SS,Ww,ll,TT,pp,FF,aa,BB.png",
 //     characteristics: ['Fill','In','Characteristics'],
 //     metaInfo: {}
@@ -71,7 +71,7 @@ Geniverse.Dragon.FIXTURES = [
 //     guid: 6,
 //     sex: 0,
 //     alleles: "hH,SS,WW,ll,tT,pp,ff,aa,bb",
-// 		bred: true,
+//     bred: true,
 //     imageURL: "/biologica/cache/hH,SS,WW,ll,tT,pp,ff,aa,bb.png",
 //     characteristics: ['Fill','In','Characteristics'],
 //     metaInfo: {}

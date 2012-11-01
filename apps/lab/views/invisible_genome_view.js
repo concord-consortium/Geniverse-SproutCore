@@ -4,12 +4,12 @@
 // ==========================================================================
 /*globals Lab */
 
-Lab.InvisibleGenomeView = SC.View.extend({  
+Lab.InvisibleGenomeView = SC.View.extend({
 
   childViews: 'questionMark revealButton'.w(),
 
   sex: 0,
-  
+
   questionMark: SC.ImageView.design({
     layout: {centerY: -120, centerX: 0, width: 235, height: 235 },
     value: sc_static("question_mark.png"),

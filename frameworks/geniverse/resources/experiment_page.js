@@ -16,25 +16,21 @@ sc_require('views/chromosome_tool');
 sc_require('views/stats');
 
 Geniverse.experimentPage = SC.Page.design({
-  
+
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page 
+  // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
     // defaultResponder: Geniverse,
     classNames: ['brown'],
-    childViews: 'backgroundView topBar appContainer'.w(),
-      backgroundView: SC.ImageView.design({
-        value: static_url('lab_background.png'),
-        classNames: ['transparent','scalingimage']
-      }),
+    childViews: 'topBar appContainer'.w(),
 
     topBar: SC.ToolbarView.design({
       layout: { top: 0, left: 0, right: 0, height: 36 },
       classNames: ['brown'],
       childViews: 'geniverseLabelView welcomeLabelView logoutButton'.w(),
       anchorLocation: SC.ANCHOR_TOP,
-      
+
       geniverseLabelView: SC.LabelView.design({
         layout: { centerY: 0, height: 24, left: 8, width: 200 },
         controlSize: SC.LARGE_CONTROL_SIZE,
@@ -42,7 +38,7 @@ Geniverse.experimentPage = SC.Page.design({
         //valueBinding:   'Geniverse.activityController.title'
         value: "Experiment"
       }),
-      
+
       welcomeLabelView: SC.LabelView.design({
         layout: { centerY: 0, height: 24, right: 130, width: 500},
         fontWeight: SC.BOLD_WEIGHT,
@@ -60,12 +56,12 @@ Geniverse.experimentPage = SC.Page.design({
         isVisibleBinding: 'Geniverse.appController.userLoggedIn'
       })
     }),
-    
+
     appContainer: SC.ContainerView.design({
       isContainerView: YES,
       layout: { top: 45, bottom: 0, left: 10, right: 0 },
       contentView: null,
-    	
+
       loginView: Geniverse.LoginView.create({
         layout: {centerX: 0, top: Geniverse.marginSize, width: 500, height: 100},
         layerId: "chatLogin",
@@ -73,8 +69,8 @@ Geniverse.experimentPage = SC.Page.design({
       }),
       mainAppView: SC.View.create({
         childViews: 'breedView statsView challengePoolView challengeChromosomeToolView breedingPenView breedingChromosomeToolView stableView stableChromosomeToolView marketplaceView '.w(),
-       
-        
+
+
         // challenge pool to hold initial, system-created dragons
         challengePoolView: SC.View.design({
           className: 'transparent'.w(),
@@ -109,12 +105,12 @@ Geniverse.experimentPage = SC.Page.design({
         layout: { left:55, top: 120, width: 35, height: 30 },
           selectionBinding: 'Geniverse.challengePoolController.selection'
         }),
-        
+
         breedView: Geniverse.BreedDragonView.design({
           layout: { top: 150 , left: 100, height: 300, width: 150 },
           showChildView: NO // child as in baby dragon
         }),
-        
+
         // Breeding pen with eggs
         breedingPenView: SC.View.design ({
           childViews: "titleView penView".w(),
@@ -146,12 +142,12 @@ Geniverse.experimentPage = SC.Page.design({
             autoScrollTriggerBinding: 'Geniverse.eggsController.length'
           })
         }),
-        
+
         breedingChromosomeToolView: Geniverse.ChromosomeToolView.design({
           layout: { left: 265 + 300 - 35, top: 120, width: 35, height: 40 },
           selectionBinding: 'Geniverse.eggsController.selection'
         }),
-        
+
         marketplaceView: SC.ImageView.design({
           layout: { left: 570, top: 200, height: 90, width: 90 },
           value: sc_static('sell-to-market.jpg'),
@@ -166,7 +162,7 @@ Geniverse.experimentPage = SC.Page.design({
               }
               SC.RunLoop.end();
             }
-            
+
             if ((""+drag.get('source').constructor === 'Geniverse.OrganismView')){
               var dragon = drag.get('source').get('content');
               sellDragon(dragon);
@@ -195,11 +191,11 @@ Geniverse.experimentPage = SC.Page.design({
             this.$().removeClass('drop-target') ;
           }
         }),
-        
+
         statsView: Geniverse.StatsView.design({
           layout: { left: 565, top: 150 + (300 - 80), width: 60, height: 80 }
         }),
-        
+
         stableChromosomeToolView: Geniverse.ChromosomeToolView.design({
         layout: { left:680 + 240 - 35, top: 120, width: 35, height: 30 },
           selectionBinding: 'Geniverse.stableOrganismsController.selection'
@@ -277,16 +273,16 @@ Geniverse.experimentPage = SC.Page.design({
                   }
                   self.set('dragonNum', dragonNum);
                 }
-                
+
                 SC.RunLoop.begin();
                   dragon.set('isEgg', false);
                   dragon.set('stableOrder', dragonNum);
                 SC.RunLoop.end();
-                
+
                 ++self.dragonNum;
               }
-              
-              
+
+
               if ((""+drag.get('source').constructor === 'Geniverse.OrganismView')){
                 var dragon = drag.get('source').get('content');
                 acceptDragon(dragon);
@@ -326,5 +322,5 @@ Geniverse.experimentPage = SC.Page.design({
       })
     })
   }),
-  
+
 });

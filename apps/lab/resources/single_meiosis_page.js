@@ -5,48 +5,28 @@
 /*globals Lab Geniverse CC, CcChat, java static_url sc_static sc_require */
 Lab.marginSize = 15;
 
-sc_require('views/top_bar_view');
+sc_require('views/lab_pane');
 sc_require('views/challenge_pool_view');
-sc_require('views/bottom_bar_view');
 
 Lab.singleMeiosisPage = SC.Page.design({
-  
+
   pagePath: 'Lab.singleMeiosisPage',
   title: 'Simple Meiosis Page',
-  
+
   // challengeType: 'matchOneAtATimeChallenge',
-  
+
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page
   // load.
-  mainPane: SC.MainPane.design({
-    // defaultResponder: Geniverse,
-    classNames: ['brown'],
-    childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
-    backgroundView: SC.ImageView.design({
-      value: static_url('lab_background.png'),
-      classNames: ['transparent','scalingimage']
-    }),
-    topBar: Lab.TopBarView.design({
-      classNames: ['brown']
-    }),
-    bottomBar: Lab.BottomBarView.design({
-      classNames: ['brown']
-    }),
-
+  mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
-      
-      childViews: 'genomePanel'.w(),
-      
-      genomePanel: SC.View.design({
-        layout: {top: 40, bottom: 10, left: 10, right: 10 },
-        childViews: 'background challengePoolView parentTitle drakeParentView meiosisView nextButton'.w(),
 
-        // separate parallel background so we don't make the rest of the childViews see-through
-        background: SC.View.design({
-          layout: {top: 0, left: 0, right: 0, bottom: 0},
-          classNames: ['genome-view-intro']
-        }),
+      childViews: 'genomePanel'.w(),
+
+      genomePanel: SC.View.design({
+        layout: {centerX: -30, top: 100, width: 680, height: 630 },
+        childViews: 'challengePoolView parentTitle drakeParentView meiosisView nextButton'.w(),
+
       // using horizontal Challenge Pool at top with 120-px drakes inside
       // this will necessitate moving everything down ~130px
       // In actuality, moving them down about 6px more to avoid cutting off label
@@ -61,20 +41,20 @@ Lab.singleMeiosisPage = SC.Page.design({
           value: "Parent Drake"
         }),
 
-				drakeParentView: Geniverse.OrganismView.design({
-					layout: {top: 157, centerX: 0, height: 100, width: 100 },
-					contentBinding: 'Geniverse.meiosisAnimationController.mother',
-					isDropTarget: YES,
+        drakeParentView: Geniverse.OrganismView.design({
+          layout: {top: 157, centerX: 0, height: 100, width: 100 },
+          contentBinding: 'Geniverse.meiosisAnimationController.mother',
+          isDropTarget: YES,
           glow: YES
-					}),
+          }),
 
-				meiosisView: Geniverse.AnimationView.design({
-					layout: {top: 271, centerX: 0, height: 360, width: 325 },
-					mode: 'parent',
-					swapping: false,
-					meiosisOwner: 'mother',
-					dragonBinding: 'Geniverse.meiosisAnimationController.mother',
-					gameteJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson'
+        meiosisView: Geniverse.AnimationView.design({
+          layout: {top: 271, centerX: 0, height: 360, width: 325 },
+          mode: 'parent',
+          swapping: false,
+          meiosisOwner: 'mother',
+          dragonBinding: 'Geniverse.meiosisAnimationController.mother',
+          gameteJsonBinding: 'Geniverse.meiosisAnimationController.motherGameteJson'
         }),
 
         nextButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -90,5 +70,5 @@ Lab.singleMeiosisPage = SC.Page.design({
         })
       })
     })
-	})
+  })
 });

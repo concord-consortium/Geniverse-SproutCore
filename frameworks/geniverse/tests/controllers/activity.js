@@ -10,22 +10,22 @@ module("Geniverse.activityController");
 test("test conversion of initial alleles to array", function() {
   SC.Store.create().from(SC.Record.fixtures);
   SC.run(function() {
-    var activity = Geniverse.store.createRecord(Geniverse.Activity, 
+    var activity = Geniverse.store.createRecord(Geniverse.Activity,
       {initialAlleles: "[ [{alleles: 'a:h,b:h', sex: 0, name: 'father'}, {alleles: 'a:H,b:H', sex: 1, name: 'mother'}], [{alleles: 'a:H,b:h', sex: 0}, {alleles: 'a:h,b:H', sex: 1}] ]"}
     );
     Geniverse.activityController.set('content', activity);
   });
-  
+
   var array = Geniverse.activityController.get('configurationAsArray');
-  
+
   equals(array.length, 2, "there should be two items in the initial alleles array");
-  
+
   var allelesForRoomOne = Geniverse.activityController.getConfigurationForRoom(0);
   var allelesForRoomTwo = Geniverse.activityController.getConfigurationForRoom(1);
-  
+
   var allelesForRoomOneMale;
   var allelesForRoomTwoFemale;
-  
+
   for (var i = 0; i < allelesForRoomOne.length; i++) {
     if (allelesForRoomOne[i].sex === 0) {
       allelesForRoomOneMale = allelesForRoomOne[i].alleles;
@@ -34,7 +34,7 @@ test("test conversion of initial alleles to array", function() {
       allelesForRoomTwoFemale = allelesForRoomTwo[i].alleles;
     }
   }
-  
+
   equals(allelesForRoomOneMale, 'a:h,b:h', "Room one male should be 'a:h,b:h'");
   equals(allelesForRoomTwoFemale, 'a:h,b:H', "Room two female should be 'a:h,b:H'");
 });
@@ -42,7 +42,7 @@ test("test conversion of initial alleles to array", function() {
 test("test getConfigurationForRoomMember ", function() {
   SC.Store.create().from(SC.Record.fixtures);
   SC.run(function() {
-    var config = 
+    var config =
     [
       [
         [
@@ -74,14 +74,14 @@ test("test getConfigurationForRoomMember ", function() {
       ]
     ];
 
-    var activity = Geniverse.store.createRecord(Geniverse.Activity, 
+    var activity = Geniverse.store.createRecord(Geniverse.Activity,
       {initialAlleles: JSON.stringify(config)}
     );
     Geniverse.activityController.set('content', activity);
   });
-  
+
   var testFunc = Geniverse.activityController.getConfigurationForRoomMember;
-  
+
   equals(testFunc(0,0)[0].name, 'father1', "group 0 memeber 0 first dragon should be named father'");
   equals(testFunc(0,1)[0].name, 'mother1', "group 0 memeber 1 first dragon should be named mother'");
   equals(testFunc(1,0)[0].name, 'pop1',    "group 1 memeber 0 first dragon should be named father'");

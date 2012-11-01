@@ -15,7 +15,7 @@ Lab.LEVEL_DNA        = 5;
 
 Lab.caselogController = SC.Object.create({
 
-  levelNames: ['training', 'apprentice', 'journeyman', 'master', 'meiosis', 'dna'],
+  levelNames: ['training', 'apprentice', 'journeyman', 'master'],
 
   currentLevel: Lab.LEVEL_TRAINING,
 
@@ -55,25 +55,11 @@ Lab.caselogController = SC.Object.create({
 
   _getStarInfoForRoute: function(challenge) {
 
-    var userMetadata = this.get('userMetadata') || {},
-        stars        = userMetadata.stars || {},
-        useQuill     = !!challenge.useQuill,
-        activityId   = challenge.href.slice(challenge.href.lastIndexOf('#') + 1),
-        activityStarsListTemp = stars[activityId] || [],
-        activityStarsList = [];
+    var useQuill     = !!challenge.useQuill,
+        activityId   = challenge.href.slice(challenge.href.lastIndexOf('#') + 1);
 
-        for (var i = 0; i < activityStarsListTemp.length; i++) {
-          var s = activityStarsListTemp[i];
-          var d = 0;
-          if (typeof(s) == "object") {
-            d = s.stars || 0;
-          } else if (typeof(s) == "number") {
-            d = s;
-          }
-          activityStarsList.push(d);
-        }
     return {
-      stars:    Math.max.apply([], [0].concat(activityStarsList)),
+      stars:    Geniverse.userController.getPageStars(activityId),
       useQuill: useQuill
     };
   }

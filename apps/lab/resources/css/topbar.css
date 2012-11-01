@@ -1,51 +1,134 @@
 div#topBar {
-    background-color: #492222;
+    background-color: #65120E;
+    background: #65120E top left repeat-x static_url('topbar-bg.png');
+    text-align: center;
+    color: #FAE094;
+}
+
+#topBar .sc-view {
+  font-family: 'Sofadi One', 'Lucida Sans', 'Lucida-Grande', sans-serif;
+  font-weight: 400;
+}
+
+#topBar .sc-view.sc-static-layout {
+  display: inline-block;
+}
+
+#topBar .sc-view.pageTitle #caseLabel {
+  position: absolute;
+  top: 3px;
+}
+#topBar .sc-view.pageTitle #activityLabel {
+  position: absolute;
+  top: 30px;
+}
+
+#topBar .sc-view.welcomeLabel {
+  font-size: 1.7em;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#topBar .sc-view.groupLabel {
+}
+
+img#homeButton {
+    background: top left no-repeat static_url('home.png');
 }
 
 img#homeButton:hover {
-    background-image: static_url('home-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('home-active.png');
+}
+
+img#caselogButton {
+    background: top left no-repeat static_url('caselog.png');
 }
 
 img#caselogButton:hover {
-    background-image: static_url('log-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('caselog-active.png');
+}
+
+img#introButton {
+    background: top left no-repeat static_url('intro.png');
+}
+
+img#introButton:hover {
+    background: top left no-repeat static_url('intro-active.png');
+}
+
+img#infoButton {
+    background: top left no-repeat static_url('info.png');
 }
 
 img#infoButton:hover {
-    background-image: static_url('info-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('info-active.png');
+}
+
+img#helpButton {
+    background: top left no-repeat static_url('help.png');
 }
 
 img#helpButton:hover {
-    background-image: static_url('help-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('help-active.png');
+}
+
+img#notepadButton {
+    background: top left no-repeat static_url('notepad.png');
 }
 
 img#notepadButton:hover {
-    background-image: static_url('notepad-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('notepad-active.png');
+}
+
+img#journalButton {
+    background: top left no-repeat static_url('journal.png');
 }
 
 img#journalButton:hover {
-    background-image: static_url('journal-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('journal-active.png');
+}
+
+img#blogButton {
+    background: top left no-repeat static_url('journal-add.png');
 }
 
 img#blogButton:hover {
-    background-image: static_url('blog-post-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('journal-add-active.png');
+}
+
+img#logOutButton {
+    background: top left no-repeat static_url('logout.png');
 }
 
 img#logOutButton:hover {
-    background-image: static_url('log-out-active.png');
-    background-repeat: none;
+    background: top left no-repeat static_url('logout-active.png');
+}
+
+#unlockablesButton.none {
+  background: top left no-repeat static_url("locked.png");
+}
+
+#unlockablesButton.none:hover {
+  background: top left no-repeat static_url("locked-active.png");
+}
+
+#unlockablesButton.some {
+  background: top left no-repeat static_url("unlocked.png");
+}
+
+#unlockablesButton.some:hover {
+  background: -3px -2px no-repeat static_url("unlocked-active.png");
 }
 
 #changeGroupLabel {
     font-size: 9px;
     text-decoration: underline;
     /*background-color: #C56827;*/
+    color: #F5831F;
+    padding-left: 3px;
+}
+#changeGroupLabel:hover {
+  cursor: pointer;
 }
 a#changeGroup:link {
     color: #9B7B6A;
@@ -54,5 +137,5 @@ a#changeGroup:visited {
     color: #9B7B6A;
 }
 a#changeGroup:hover {
-	color: #DCF1F6;
+  color: #DCF1F6;
 }

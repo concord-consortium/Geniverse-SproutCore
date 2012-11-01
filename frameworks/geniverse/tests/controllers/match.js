@@ -51,13 +51,13 @@ test("NumberOfMoves should count simple dominant/recessive traits", function() {
   var targetDrake = new Drake(
     {
       forelimbs: "No forelimbs"
-    }); 
-    
+    });
+
   equals(NumberOfMoves(initDrake, targetDrake), 2, "Should take 2 moves to go from homo dominant to recessive");
-  
+
   initDrake.alleles = "a:Fl,b:fl";
   equals(NumberOfMoves(initDrake, targetDrake), 1, "Should take 1 move to go from hetero to recessive");
-  
+
   initDrake = new Drake(
     {
       forelimbs: "No forelimbs"
@@ -81,9 +81,9 @@ test("NumberOfMoves should ignore matching traits", function() {
     {
       forelimbs: "Forelimbs",
       hindlimbs: "Hindlimbs"
-    }); 
+    });
   equals(NumberOfMoves(initDrake, targetDrake), 0, "Should take 0 moves for identical drakes");
-  
+
   targetDrake = new Drake(
     {
       forelimbs: "Forelimbs",
@@ -101,12 +101,12 @@ test("NumberOfMoves should understand three-allele genes", function() {
   var targetDrake = new Drake(
     {
       tail: "Kinked tail"
-    }); 
+    });
   equals(NumberOfMoves(initDrake, targetDrake), 2, "Should take 2 moves");
-  
+
   initDrake.alleles = "a:T,b:Tk";
   equals(NumberOfMoves(initDrake, targetDrake), 1, "Should take 1 move");
-  
+
   initDrake.alleles = "a:T,b:t";
   equals(NumberOfMoves(initDrake, targetDrake), 1, "Should take 1 move");
 });
@@ -120,9 +120,9 @@ test("NumberOfMoves should understand multi-gene traits", function() {
   var targetDrake = new Drake(
     {
       color: "Copper"
-    }); 
+    });
   equals(NumberOfMoves(initDrake, targetDrake), 2, "Should take 2 moves");
-  
+
   initDrake = new Drake(
     {
       color: "Steel"
@@ -131,9 +131,9 @@ test("NumberOfMoves should understand multi-gene traits", function() {
   targetDrake = new Drake(
     {
       color: "Copper"
-    }); 
+    });
   equals(NumberOfMoves(initDrake, targetDrake), 1, "Should take 1 moves");
-  
+
   initDrake = new Drake(
     {
       color: "Steel"
@@ -142,9 +142,9 @@ test("NumberOfMoves should understand multi-gene traits", function() {
   targetDrake = new Drake(
     {
       color: "Sand"
-    }); 
+    });
   equals(NumberOfMoves(initDrake, targetDrake), 6, "Should take 6 moves");
-  
+
   initDrake = new Drake(
     {
       color: "Steel"
@@ -153,7 +153,7 @@ test("NumberOfMoves should understand multi-gene traits", function() {
   targetDrake = new Drake(
     {
       color: "Sand"
-    }); 
+    });
   equals(NumberOfMoves(initDrake, targetDrake), 3, "Should take 3 moves");
 });
 
@@ -168,9 +168,9 @@ test("NumberOfMoves should combine and add up multiple trait differences", funct
     {
       tail: "Kinked tail",
       color: "Sand"
-    }); 
+    });
   equals(NumberOfMoves(initDrake, targetDrake), 5, "Should take 5 moves");
-  
+
 });
 
 
@@ -190,9 +190,9 @@ test("NumberOfBreedMoves should work in the simplest case", function() {
   var targetDrake = new Drake(
     {
       tail: "Short tail"
-    }); 
+    });
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 1, "Should take 1 moves to just breed");
-  
+
   initMother = new Drake(
     {
       tail: "Long tail"
@@ -208,9 +208,9 @@ test("NumberOfBreedMoves should work in the simplest case", function() {
   targetDrake = new Drake(
     {
       tail: "Short tail"
-    }); 
+    });
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 2, "Should take 2 moves");
-  
+
   initMother = new Drake(
     {
       tail: "Long tail"
@@ -226,9 +226,9 @@ test("NumberOfBreedMoves should work in the simplest case", function() {
   targetDrake = new Drake(
     {
       tail: "Short tail"
-    }); 
+    });
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 2, "Should take 2 moves");
-  
+
   initMother = new Drake(
     {
       tail: "Long tail"
@@ -244,9 +244,9 @@ test("NumberOfBreedMoves should work in the simplest case", function() {
   targetDrake = new Drake(
     {
       tail: "Short tail"
-    }); 
+    });
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 2, "Should take 2 moves");
-  
+
   initMother = new Drake(
     {
       tail: "Long tail"
@@ -262,9 +262,9 @@ test("NumberOfBreedMoves should work in the simplest case", function() {
   targetDrake = new Drake(
     {
       tail: "Short tail"
-    }); 
+    });
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
-  
+
 });
 
 test("NumberOfBreedMoves should be infinity in an impossible case", function() {
@@ -283,7 +283,7 @@ test("NumberOfBreedMoves should be infinity in an impossible case", function() {
   var targetDrake = new Drake(
     {
       tail: "Short tail"
-    }); 
+    });
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), Infinity, "Can't change drake2, so should be Infinity");
 });
 
@@ -303,9 +303,9 @@ test("NumberOfBreedMoves should work in Tk or A5 case", function() {
   var targetDrake = new Drake(
     {
       tail: "Kinked tail"
-    }); 
+    });
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 2, "Should take 2 moves");
-  
+
   initMother = new Drake(
     {
       tail: "Long tail"
@@ -321,9 +321,9 @@ test("NumberOfBreedMoves should work in Tk or A5 case", function() {
   targetDrake = new Drake(
     {
       tail: "Short tail"
-    }); 
+    });
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
-  
+
   initMother = new Drake(
     {
       armor: "Five armor"
@@ -339,7 +339,7 @@ test("NumberOfBreedMoves should work in Tk or A5 case", function() {
   targetDrake = new Drake(
     {
       armor: "Five armor"
-    }); 
+    });
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 2, "Should take 2 moves");
 });
 
@@ -362,9 +362,9 @@ test("NumberOfBreedMoves work in two trait cases", function() {
     {
       tail: "Short tail",
       horns: "Hornless"
-    }); 
+    });
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
-  
+
   initMother = new Drake(
     {
       tail: "Long tail",
@@ -383,9 +383,9 @@ test("NumberOfBreedMoves work in two trait cases", function() {
     {
       tail: "Short tail",
       horns: "Horns"
-    }); 
+    });
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 1, "Should take 1 moves");
-  
+
   initMother = new Drake(
     {
       tail: "Long tail",
@@ -404,7 +404,7 @@ test("NumberOfBreedMoves work in two trait cases", function() {
     {
       tail: "Short tail",
       horns: "Horns"
-    }); 
+    });
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 5, "Should take 5 moves");
 });
 
@@ -424,9 +424,9 @@ test("NumberOfBreedMoves work in multi-gene cases", function() {
   var targetDrake = new Drake(
     {
       color: "Copper"
-    }); 
+    });
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
-  
+
   initMother = new Drake(
     {
       color: "Steel"
@@ -442,9 +442,9 @@ test("NumberOfBreedMoves work in multi-gene cases", function() {
   targetDrake = new Drake(
     {
       color: "Sand"
-    }); 
+    });
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 7, "Should take 7 moves");
-  
+
   initMother = new Drake(
     {
       color: "Sand"
@@ -460,9 +460,9 @@ test("NumberOfBreedMoves work in multi-gene cases", function() {
   targetDrake = new Drake(
     {
       color: "Steel"
-    }); 
+    });
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 4, "Should take 4 moves");
-  
+
   initMother = new Drake(
     {
       color: "Sand"
@@ -478,6 +478,6 @@ test("NumberOfBreedMoves work in multi-gene cases", function() {
   targetDrake = new Drake(
     {
       color: "Sand"
-    }); 
+    });
   equals(NumberOfBreedMoves(initMother, initFather, targetDrake), 3, "Should take 3 moves");
 });

@@ -114,7 +114,7 @@ Lab.StableView = SC.View.extend(
             var allStableDragons = Geniverse.stableOrganismsController.get('arrangedObjects');
             var count = Geniverse.stableOrganismsController.get('length');
             if (count >= stableSize){
-              SC.AlertPane.error("Can't move dragon", 
+              SC.AlertPane.error("Can't move dragon",
                 "Your stable is full. If you want to save more dragons, sell some to the marketplace");
               return;
             }
@@ -131,14 +131,14 @@ Lab.StableView = SC.View.extend(
 
             dragon.set('isEgg', false);
             dragon.set('stableOrder', dragonNum);
-            
+
             // removeObject doesn't seem to work all the time...
             // resetting the array can't be as efficient, but it's not too bad.
             // // Geniverse.eggsController.removeObject(dragon);
             var oldEggs = Geniverse.eggsController.get('content');
             Geniverse.eggsController.set('content', oldEggs.without(dragon));
-              
-            
+
+
 
             self.dragonNum = self.dragonNum + 1;
             SC.Logger.info("Stable has %d dragons", self.dragonNum);
@@ -161,7 +161,7 @@ Lab.StableView = SC.View.extend(
             // This is because each time acceptDragon is called, the dragon gets removed from
             // the list, and the other dragons shift indices.
             SC.RunLoop.begin();
-            // By keeping the RunLoop outside the loop, moving drakes is much faster. 
+            // By keeping the RunLoop outside the loop, moving drakes is much faster.
             // stableOrganismsController's length doesn't change until the RunLoop ends,
             // though, so we have to check the length first here.
             var spacesRemaining = stableSize - Geniverse.stableOrganismsController.get('length');
@@ -171,7 +171,7 @@ Lab.StableView = SC.View.extend(
             }
             SC.RunLoop.end();
             if (drakesToBeMoved < selection.get('length')) {
-              SC.AlertPane.error("Can't move dragon", 
+              SC.AlertPane.error("Can't move dragon",
                 "Your stable is full. If you want to save more dragons, sell some to the marketplace");
             }
             // selection.forEach(function (dragon){
@@ -203,5 +203,5 @@ Lab.StableView = SC.View.extend(
 
     this.set('childViews', childViews);
   }
-  
+
 });

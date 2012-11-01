@@ -14,11 +14,11 @@ sc_require('views/help');
 */
 Lab.navigationController = SC.ObjectController.create(
 /** @scope Lab.helpController.prototype */ {
-  
+
   showPreviousButton: NO,
-  
+
   showNextButton: NO,
-  
+
   blockNextButton: NO,        // red arrow indicating progress is blocked
-  
+
 }) ;

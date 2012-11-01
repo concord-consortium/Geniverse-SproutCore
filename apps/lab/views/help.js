@@ -12,12 +12,12 @@ Lab.HelpView = SC.PalettePane.create({
   isModal:NO,
   contentView: SC.View.extend({
     childViews: 'titleView helpView hideButton helpIcon'.w(),
-		classNames: 'parchment'.w(),
+    classNames: 'parchment'.w(),
 
-		helpIcon: SC.ImageView.design({
-			layout: { top: 0, left: 4, width: 25, height: 25 },
-			value: static_url('stampedHelp.png')
-		}),
+    helpIcon: SC.ImageView.design({
+      layout: { top: 0, left: 4, width: 25, height: 25 },
+      value: static_url('stampedHelp.png')
+    }),
 
     titleView: SC.LabelView.design({
       layout: { centerY: 0, height: 24, left: 0, top:0, width: 600 },
@@ -39,7 +39,7 @@ Lab.HelpView = SC.PalettePane.create({
       target: "Lab.helpController"
     }),
 
-    // TODO: Solve Firefox bug: titleView lacks dark background, making title hard to read 
+    // TODO: Solve Firefox bug: titleView lacks dark background, making title hard to read
     helpView: SC.LabelView.design({
       layout: { left: 10, top: 30, width: 580, height: 539 },
       //valueBinding: "Lab.helpController.content"

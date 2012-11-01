@@ -3,162 +3,186 @@
 
 /* BASIC STYLES
 ---------------------------------------------------------------------*/
-	
 .caselog-view {
- 	background: #492222;
-	color: #e5c59e; 	
- 	font: 11px/1.4 Georgia, 'times new roman', times, serif;
-  }
+  background: static_url('caselog-bg.png') center top no-repeat;
+  color: #492222;
+}
 
 #caselog-wrap {
-	background: #733230 static_url('caselog-bg.png') center top no-repeat;
-	margin: 0;
-	}
+  position: absolute;
+  top: 167px;
+  left: 50%;
+  margin-left: -528px;
+  width: 1056px;
+  height: 580px;
+}
 
 /* CASE LOG
 ---------------------------------------------------------------------*/
 #caselog-book {
-	background: static_url('caselog.png') no-repeat;
-	color: #492222;
-	height: 600px;
-	margin: 0 auto;
-	width: 960px;
-	}
-	#caselog-book h1 {
-		color: #111111;
-		font-size: 48px;
-		font-weight: normal;
-		text-align: center;
-		}
-	#caselog-book h2 {
-		color: #492222;		
-		font-size: 32px;
-		font-weight: normal;		
-		text-align: center;
-		}
-	#caselog-book h3 {
-		font-weight: bold;
-		font-size: 18px;
-		}
-	#caselog-book #col1, #caselog-book #col2 {
-		float: left;
-		padding-top: 90px;
-		width: 50%;
-		}
-	#caselog-book .case {
-		background: #fff;
-		height: 110px;
-		opacity: .5;
-		padding: 5px 10px;
-		/* CSS3 */
-		-moz-border-radius: 20px;
-		-webkit-border-radius: 20px;
-		border-radius: 20px;
-		}
-		#caselog-book .case ul {
-			list-style: none;
-			margin: 0;
-			}
-		#caselog-book .case li {
-			background: static_url('caselog-no-star.png') no-repeat;
-			font-size: 1em;
-			line-height: 160%;
-			padding-left: 47px;
-			}
-		#caselog-book .case li.one-star {
-			background: static_url('caselog-one-star.png') no-repeat;
-			}
-		#caselog-book .case li.two-star {
-			background: static_url('caselog-two-star.png') no-repeat;
-			}
-		#caselog-book .case li.three-star {
-			background: static_url('caselog-three-star.png') no-repeat;
-			}
-		#caselog-book .case li.quill-on {
-			background: static_url('quill-on-15x15.png') no-repeat;
-			}
-		#caselog-book .case li.quill-off {
-			background: static_url('quill-off-15x15.png') no-repeat;
-			}
-	#caselog-book .case.caselog-active, #caselog-book .case.complete {
-		opacity: .8;
-		}
-	#caselog-book .case.complete {
-		background: #fff static_url('check.png') no-repeat right top;
-		}
-	#caselog-book #col1 .case {
-		margin: 0 55px 10px 100px; 
-		}
-	#caselog-book #col2 .case {
-		margin: 0 105px 10px 50px; 
-		}
-	#caselog-book .case:hover, #caselog-book .case:focus {
-		opacity: .8;
-		}
-	#caselog-book .case a {
-		color: #492222;
-		display: block;
-		text-decoration: none;
-		}
-	#caselog-book #title {
-		height: 110px;
-		margin-bottom: 10px;
-		padding: 5px 10px;
-		}
-		
+  position: absolute;
+  bottom: 40px;
+  right: 150px;
+  top: 0px;
+  left: 50px;
+}
+#caselog-book #title {
+  font-weight: normal;
+  text-align: center;
+  font-family: 'Rather Unfortunate',Verdana,sans-serif;
+  position: relative;
+  padding-right: 130px;
+  padding-left: 16px;
+}
+#caselog-book #title .title {
+  font-size: 40px;
+}
+#caselog-book #title .section {
+  font-size: 32px;
+}
+#caselog-book .case .title {
+  font-weight: normal;
+  font-size: 2em;
+  font-family: 'Rather Unfortunate',Verdana,sans-serif;
+  position: absolute;
+  top: 5px;
+  left: 63px;
+  line-height: 1.1em;
+}
+#caselog-book .case .title div {
+  height: 60px;
+  display: table-cell;
+  vertical-align: middle;
+}
+#caselog-book .case {
+  position: relative;
+}
+#caselog-book .case.case0 {
+  background: top left no-repeat static_url('dragon_icon_red.png');
+}
+#caselog-book .case.case1 {
+  background: top left no-repeat static_url('dragon_icon_blue.png');
+}
+#caselog-book .case.case2 {
+  background: top left no-repeat static_url('dragon_icon_yellow.png');
+}
+#caselog-book .case.case3 {
+  background: top left no-repeat static_url('dragon_icon_green.png');
+}
+#caselog-book .case.case4 {
+  background: top left no-repeat static_url('dragon_icon_purple.png');
+}
+#caselog-book #col1 {
+  position: absolute;
+  top: 0px;
+  left: 30px;
+  width: 370px;
+  bottom: 60px;
+}
+#caselog-book #col2 {
+  position: absolute;
+  top: 0px;
+  left: 480px;
+  width: 350px;
+  bottom: 60px;
+}
+#caselog-book #col1 .case ul {
+  min-height: 70px;
+  margin: -5px 0px 20px 5px;
+  padding-top: 65px;
+}
+#caselog-book #col2 .case ul {
+  min-height: 70px;
+  margin: -5px 0px 20px 5px;
+  padding-top: 65px;
+}
+
+#caselog-book #col1 .case0 ul {
+  margin-top: 20px;
+}
+#caselog-book #col2 .case2 ul {
+  margin-top: 0px;
+}
+
+    #caselog-book .case ul {
+      list-style: none;
+      }
+    #caselog-book .case li {
+      background: static_url('caselog-no-star.png') no-repeat left top;
+      font-size: 1.4em;
+      line-height: 140%;
+      padding-left: 70px;
+      font-family: 'Cochin',Arial,Verdana,sans-serif;
+      font-style: oblique;
+      }
+    #caselog-book .case li.one-star {
+      background: static_url('caselog-one-star.png') no-repeat left top;
+      }
+    #caselog-book .case li.two-star {
+      background: static_url('caselog-two-star.png') no-repeat left top;
+      }
+    #caselog-book .case li.three-star {
+      background: static_url('caselog-three-star.png') no-repeat left top;
+      }
+    #caselog-book .case li.quill-on {
+      background: static_url('quill-on.png') no-repeat left center;
+      padding-bottom: 10px;
+      }
+    #caselog-book .case li.quill-off {
+      background: static_url('quill-off.png') no-repeat left center;
+      padding-bottom: 10px;
+      }
+  #caselog-book .case a {
+    color: #492222;
+    display: block;
+    text-decoration: none;
+    }
+  #caselog-book .case a:hover {
+    color: #694242;
+  }
+
 /* NAVIGATION
 ---------------------------------------------------------------------*/
-#caselog-nav {
-	background: #492222;
-	}
-	#caselog-nav ul {
-		margin: 20px auto;
-		width: 960px;
-		}
-		#caselog-nav ul li {
-			background: static_url('book.png') no-repeat center top;
-			float: left;
-			font-size: 12px;
-			font-weight: bold;
-			height: auto;
-			list-style: none;
-			margin: 0 10px;
-			min-height: 190px;
-			opacity: .5;
-			padding: 0;
-			text-align: center;
-			width: 140px;
-			}
-		#caselog-nav ul li.caselog-active {
-			opacity: 1;
-			}
-		#caselog-nav ul li:hover, #caselog-nav ul li:focus {
-			opacity: 1;
-			}
-		#caselog-nav ul li a {
-			color: #e5c59e;
-			display: block;
-			height: auto;
-			min-height: 140px;
-			padding: 50px 10px 0 14px;
-			text-decoration: none;
-			width: 116px;
-			}
-		#caselog-nav ul li#training a {
-			background: static_url('training.png') no-repeat center 80px;
-			}
-		#caselog-nav ul li#apprentice a {
-			background: static_url('apprentice.png') no-repeat center 80px;
-			}
-		#caselog-nav ul li#journeyman a {
-			background: static_url('journeyman.png') no-repeat center 80px;
-			}
-		#caselog-nav ul li#master a {
-			background: static_url('master.png') no-repeat center 80px;
-			}
-		#caselog-nav ul li#meiosis a {
-			background: static_url('meiosis.png') no-repeat center 80px;
-			}
-		#caselog-nav ul li#dna a {
-			background: static_url('dna.png') no-repeat center 80px;
-			}
+.caselog-view #caselog-wrap #caselog-nav {
+  position: absolute;
+  right: 8px;
+  top: 0px;
+  width: 120px;
+  height: 500px;
+}
+
+#caselog-nav ul li {
+  position: absolute;
+  left: 0px;
+}
+
+#caselog-nav ul li div {
+  width: 124px;
+  height: 65px;
+}
+
+#caselog-nav ul li#training {
+  top: 0px;
+}
+#caselog-nav ul li#apprentice {
+  top: 114px;
+}
+#caselog-nav ul li#journeyman {
+  top: 231px;
+}
+#caselog-nav ul li#master {
+  top: 349px;
+}
+
+#caselog-nav ul li#training div:hover {
+  background: -6px -13px no-repeat static_url('caselog-training-active.png');
+}
+#caselog-nav ul li#apprentice div:hover {
+  background: -6px -14px no-repeat static_url('caselog-apprentice-active.png');
+}
+#caselog-nav ul li#journeyman div:hover {
+  background: -6px -14px no-repeat static_url('caselog-journeyman-active.png');
+}
+#caselog-nav ul li#master div:hover {
+  background: -6px -14px no-repeat static_url('caselog-master-active.png');
+}

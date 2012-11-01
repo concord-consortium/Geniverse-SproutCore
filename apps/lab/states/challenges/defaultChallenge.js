@@ -24,7 +24,10 @@ Lab.defaultChallenge = Ki.State.extend({
     Geniverse.userController.setPageStars(pageId, 3);
     Geniverse.store.commitRecords();
 
-    Lab.caselogController.propertyDidChange("userMetadata")
+    // unlock any unlockables
+    Geniverse.unlockablesController.unlockFor(pageId);
+
+    Lab.caselogController.propertyDidChange("userMetadata");
   }
 
 });

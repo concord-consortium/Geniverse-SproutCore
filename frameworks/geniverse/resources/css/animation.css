@@ -12,7 +12,7 @@
 
 /* UI Slider */
 .ui-slider .ui-slider-handle { width: 10px; margin-left: -5px; margin-top:0px; }
-  
+
 /* Debug */
 #debug-pointer{background:red;width:10px;height:10px;position:absolute;left:0;top:0;}
 .functions{clear:left;padding-top:20px;}

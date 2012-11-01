@@ -49,7 +49,7 @@ Lab.selectParentsChallenge = Lab.challenge.extend({
         currentCharacteristics = this._getPossibleCharacteristics(parent1Alleles, parent2Alleles),
         timesAttempted = this.timesAttempted;
     this.timesAttempted = timesAttempted + 1;
-   
+
     var allMatch = true;
     var trait, characteristic;
     for (trait in targetCharacteristics) {
@@ -62,7 +62,7 @@ Lab.selectParentsChallenge = Lab.challenge.extend({
         }
       }
     }
-    
+
     if (allMatch) {
       this.solved = YES;
       this.set('starsEarned', Math.max(3-timesAttempted, 1));

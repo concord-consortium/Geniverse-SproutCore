@@ -18,7 +18,7 @@ Lab.warningUserBeforeLeaving =  Ki.State.extend({
     enterState: function() {
       window.onbeforeunload = null;
     },
-    
+
     warnUserBeforeLeaving: function() {
       this.gotoState('warnUser');
     }

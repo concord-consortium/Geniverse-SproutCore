@@ -17,7 +17,7 @@ Geniverse.gwtController = SC.Object.create(
 
   pendingOrganisms: [],
 
-	drakesArePending: function() {
+  drakesArePending: function() {
     return this.pendingOrganisms.length > 0;
   }.property('*pendingOrganisms.[]'),
 
@@ -39,10 +39,10 @@ Geniverse.gwtController = SC.Object.create(
     if (mother !== null && mother.get('gOrganism') !== null && father !== null && father.get('gOrganism') !== null) {
       var onSuccess = function(organism) {
         var child = Geniverse.store.createRecord(Geniverse.Dragon, {
-					bred: YES, mother: mother.get("id"), father: father.get("id"), activity: Geniverse.activityController.getPath('content.id'),
-					user: Geniverse.userController.get('content').get('id'), isInMarketplace: NO, isEgg: YES
-				});
-				child.set('user', Geniverse.userController.get('content'));
+          bred: YES, mother: mother.get("id"), father: father.get("id"), activity: Geniverse.activityController.getPath('content.id'),
+          user: Geniverse.userController.get('content').get('id'), isInMarketplace: NO, isEgg: YES
+        });
+        child.set('user', Geniverse.userController.get('content'));
         child.set('gOrganism', organism);
 
         handleChildFunction(child);
@@ -69,10 +69,10 @@ Geniverse.gwtController = SC.Object.create(
         for (var i = 0; i < number; i++) {
           organism = orgs[i];
           var child = Geniverse.store.createRecord(Geniverse.Dragon, {
-  					bred: YES, mother: mother.get("id"), father: father.get("id"), activity: Geniverse.activityController.getPath('content.id'),
-  					user: Geniverse.userController.get('content').get('id'), breeder: Geniverse.userController.get('content').get('id'),
-  					isInMarketplace: NO, isEgg: YES
-  				});
+            bred: YES, mother: mother.get("id"), father: father.get("id"), activity: Geniverse.activityController.getPath('content.id'),
+            user: Geniverse.userController.get('content').get('id'), breeder: Geniverse.userController.get('content').get('id'),
+            isInMarketplace: NO, isEgg: YES
+          });
           child.set('gOrganism', organism);
 
           handleChildFunction(child);

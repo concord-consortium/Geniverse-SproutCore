@@ -1,0 +1,17 @@
+#drakes {
+  background: static_url("login-drakes.png") right -720px no-repeat;
+  z-index: 1;
+}
+
+.sc-theme #login {
+  background: static_url("login-bg.jpg") no-repeat center center fixed;
+  background-size: cover;
+  color: black;
+}
+
+#loginBox {
+  background: white;
+  border: solid 1px #999999;
+  border-radius: 8px;
+  opacity: 0.85;
+}
