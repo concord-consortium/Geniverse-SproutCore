@@ -7,14 +7,14 @@
 Lab.inCaselog = Ki.State.extend({
 
   enterState: function() {
-    console.log("Entering caselog state");
-    if (Geniverse.activityController.get('title')) {
-      Geniverse.activityController.set('title', "Case Log")
-    } else {
-      Geniverse.activityController.set('content', Geniverse.store.createRecord(Geniverse.Activity, {
+    var dummy = this.get('dummyActivity');
+    if (!dummy) {
+      dummy = Geniverse.store.createRecord(Geniverse.Activity, {
         title: "Case Log"
-      }));
+      });
+      this.set('dummyActivity', dummy);
     }
+    Geniverse.activityController.set('content', dummy);
     Lab.routes.gotoLabRoute({ pageName: 'caselogPage' });
   },
 

@@ -60,11 +60,21 @@ Lab.TopBarView = SC.ToolbarView.extend(
     action: 'openAvatarPageRoute'
   }),
 
-  geniverseLabelView: SC.LabelView.design({
-    layout: { top: -15, height: 24 },
-    classNames: ['pageTitle'],
+  geniverseLabelView: SC.View.design({
+    layout: { top: 0, height: 57, width: 220 },
     useStaticLayout: YES,
-    valueBinding: 'Geniverse.activityController.title'
+    classNames: ['pageTitle'],
+    childViews: 'caseTitle activityTitle'.w(),
+    caseTitle: SC.LabelView.design({
+      layout: {top: 0 },
+      layerId: 'caseLabel',
+      valueBinding: 'Geniverse.activityController.caseTitle'
+    }),
+    activityTitle: SC.LabelView.design({
+      layout: {top: 30 },
+      layerId: 'activityLabel',
+      valueBinding: 'Geniverse.activityController.actTitle'
+    })
   }),
 
   welcomeLabelView: SC.LabelView.design({

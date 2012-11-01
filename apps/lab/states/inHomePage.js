@@ -5,15 +5,17 @@
 /*globals Lab Geniverse CcChat window Ki*/
 
 Lab.inHomePage = Ki.State.extend({
+  dummyActivity: null,
 
   enterState: function() {
-    if (Geniverse.activityController.get('title')) {
-      Geniverse.activityController.set('title', "Office");
-    } else {
-      Geniverse.activityController.set('content', Geniverse.store.createRecord(Geniverse.Activity, {
+    var dummy = this.get('dummyActivity');
+    if (!dummy) {
+      dummy = Geniverse.store.createRecord(Geniverse.Activity, {
         title: "Office"
-      }));
+      });
+      this.set('dummyActivity', dummy);
     }
+    Geniverse.activityController.set('content', dummy);
     Lab.routes.gotoLabRoute({pageName: 'mainPage'});
   },
 

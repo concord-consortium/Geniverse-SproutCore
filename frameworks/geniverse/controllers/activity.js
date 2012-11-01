@@ -14,6 +14,25 @@ Geniverse.activityController = SC.ObjectController.create(
 /** @scope Geniverse.activityController.prototype */ {
   activity: null,
   activityTitle: null, // HACK: use the activity who's title matches this...o
+
+  caseTitle: function() {
+    var t = this.get('title');
+    if (!!t && t.search(/:/) != -1) {
+      return t.replace(/:.*/,':');
+    }
+    return "";
+  }.property('*content.title'),
+  actTitle: function() {
+    var t = this.get('title');
+    if (!!t) {
+      if (t.search(/:/) != -1) {
+        return t.replace(/.*?:\s+/,'');
+      } else {
+        return t;
+      }
+    }
+    return "";
+  }.property('*content.title'),
   startActivity: function() {
     if (Geniverse.ENABLE_CHAT) {
       var chatroom = CcChat.chatRoomController.get('channel');

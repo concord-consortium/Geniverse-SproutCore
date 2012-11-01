@@ -14,7 +14,13 @@ div#topBar {
   display: inline-block;
 }
 
-#topBar .sc-view.pageTitle {
+#topBar .sc-view.pageTitle #caseLabel {
+  position: absolute;
+  top: 3px;
+}
+#topBar .sc-view.pageTitle #activityLabel {
+  position: absolute;
+  top: 30px;
 }
 
 #topBar .sc-view.welcomeLabel {
