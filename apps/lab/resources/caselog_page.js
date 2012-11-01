@@ -21,6 +21,7 @@ Lab.caselogPage = SC.Page.design({
 
     caselogView: SC.View.design({
 
+      layout: { top: 57 },
       classNames: ['caselog-view','mainPane'],
 
       currentLevelBinding:     'Lab.caselogController.currentLevel',
