@@ -37,7 +37,7 @@ Lab.caselogPage = SC.Page.design({
             cases, i, max_i,
             challenges, j, max_j,
             starClassFor,
-            levelNames, levelTitles, extraClassNames;
+            levelNames, extraClassNames;
 
         // Note that if you go to the caselog route on the initial app load, then currentLevel is undefined
         // because the binding hasn't had time to sync. If so, schedule a render for the next runloop, when the binding
@@ -62,8 +62,8 @@ Lab.caselogPage = SC.Page.design({
         context.push('<div id="col1">');
 
         context.push('<div id="title">');
-        context.push('<h1>Case Log</h1>');
-        context.push('<h2>' + currentLevelName.capitalize() + '</h2>');
+        context.push('<div class="title">Case Log</div>');
+        context.push('<div class="section">' + currentLevelName.capitalize() + '</div>');
         context.push('</div>');
 
 
@@ -87,7 +87,7 @@ Lab.caselogPage = SC.Page.design({
 
         for (i = 0, max_i = cases.length; i < max_i; i++) {
           context.push('<div class="case caselog-active case' + i + '">');
-          context.push('<h3>' + cases[i].title + '</h3>');
+          context.push('<div class="title"><div>' + cases[i].title + '</div></div>');
           context.push('<ul>');
 
           challenges = cases[i].challenges;
@@ -111,11 +111,10 @@ Lab.caselogPage = SC.Page.design({
         context.push('<ul>');
 
         levelNames  = Lab.caselogController.levelNames;
-        levelTitles = levelNames.map(function (s) { return s.capitalize(); });
 
         for (i = 0, max_i = levelNames.length; i < max_i; i++) {
           extraClassNames = i <= currentLevel ? 'caselog-active' : '';
-          context.push('<li id="' + levelNames[i] + '" class="' + extraClassNames + '"><a href="#caselog/' + levelNames[i] + '">' + levelTitles[i] + '</a></li>');
+          context.push('<li id="' + levelNames[i] + '" class="' + extraClassNames + '"><a href="#caselog/' + levelNames[i] + '"><div></div></a></li>');
         }
 
         context.push('</ul>');
