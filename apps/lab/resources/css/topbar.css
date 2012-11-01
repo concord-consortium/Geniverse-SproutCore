@@ -2,6 +2,7 @@ div#topBar {
     background-color: #65120E;
     background: #65120E top left repeat-x static_url('topbar-bg.png');
     text-align: center;
+    color: #FAE094;
 }
 
 #topBar .sc-view {
@@ -117,6 +118,11 @@ img#logOutButton:hover {
     font-size: 9px;
     text-decoration: underline;
     /*background-color: #C56827;*/
+    color: #F5831F;
+    padding-left: 3px;
+}
+#changeGroupLabel:hover {
+  cursor: pointer;
 }
 a#changeGroup:link {
     color: #9B7B6A;

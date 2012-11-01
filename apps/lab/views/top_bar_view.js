@@ -15,7 +15,6 @@
  * http://www.itsgotwhatplantscrave.com/2009/06/20/bindings-unleashed/
  * @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
-sc_require('views/link');
 
 Lab.TopBarView = SC.ToolbarView.extend(
 /** @scope Lab.TopBarView.prototype */ {
@@ -26,7 +25,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
   anchorLocation: SC.ANCHOR_TOP,
 
   // the order the children are defined here determines the order they show up in the top bar!
-  childViews: 'homeButton caselogButton introButton geniverseLabelView welcomeLabelView groupLabelView infoButton notepadButton blogButton journalButton helpButton unlockablesButton logoutButton'.w(),
+  childViews: 'homeButton caselogButton introButton geniverseLabelView welcomeLabelView groupLabelView changeGroupButton infoButton notepadButton blogButton journalButton helpButton unlockablesButton logoutButton'.w(),
 
   homeButton: SC.ImageView.design(Geniverse.SimpleButton, {
     layout: { top: 0, left: 0, width: 66, height: 57 },
@@ -84,16 +83,16 @@ Lab.TopBarView = SC.ToolbarView.extend(
     isVisibleBinding: 'Lab.loginController.loggedIn'
   }),
 
-  changeGroupButton: Lab.LinkView.design({
-    layout: { top: -15,  height: 24 },
+  changeGroupButton: SC.LabelView.design({
+    layout: {top: -15, height: 24 },
     useStaticLayout: YES,
-    layerId: 'changeGroup',
-    title:  "edit",
-    target: 'Lab.loginController',
-    action: 'showGroupPanel',
+    layerId: 'changeGroupLabel',
+    value: 'edit',
+    click: function() {
+      Lab.loginController.showGroupPanel();
+    },
     isVisibleBinding: 'Lab.loginController.loggedIn',
-    toolTip: 'Change your Member number or Group number.',
-    tagName: 'a'
+    toolTip: 'Change your Member number or Group number.'
   }),
 
   unlockablesButton: SC.PopupButtonView.design({
