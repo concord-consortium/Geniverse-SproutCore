@@ -76,8 +76,10 @@ Lab.helpController = SC.ObjectController.create(
 
   removeView: function (callingView){
     if (this.get('pane')) {
+      if (this.get('pane').get('isVisibleInWindow') && Geniverse.activityController.get('pageContainsApplet')) {
+        this.get('iframe').parentView.removeChild(this.get('iframe'));
+      }
       this.get('pane').remove();
-      this.get('iframe').parentView.removeChild(this.get('iframe'));
     }
   },
 
