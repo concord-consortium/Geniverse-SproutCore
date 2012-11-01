@@ -1,11 +1,28 @@
 div#topBar {
     background-color: #65120E;
     background: #65120E top left repeat-x static_url('topbar-bg.png');
+    text-align: center;
 }
 
 #topBar .sc-view {
   font-family: 'Sofadi One', 'Lucida Sans', 'Lucida-Grande', sans-serif;
   font-weight: 400;
+}
+
+#topBar .sc-view.sc-static-layout {
+  display: inline-block;
+}
+
+#topBar .sc-view.pageTitle {
+}
+
+#topBar .sc-view.welcomeLabel {
+  font-size: 1.7em;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#topBar .sc-view.groupLabel {
 }
 
 img#homeButton {
@@ -80,6 +97,22 @@ img#logOutButton:hover {
     background: top left no-repeat static_url('logout-active.png');
 }
 
+#unlockablesButton.none {
+  background: top left no-repeat static_url("locked.png");
+}
+
+#unlockablesButton.none:hover {
+  background: top left no-repeat static_url("locked-active.png");
+}
+
+#unlockablesButton.some {
+  background: top left no-repeat static_url("unlocked.png");
+}
+
+#unlockablesButton.some:hover {
+  background: -3px -2px no-repeat static_url("unlocked-active.png");
+}
+
 #changeGroupLabel {
     font-size: 9px;
     text-decoration: underline;
@@ -93,20 +126,4 @@ a#changeGroup:visited {
 }
 a#changeGroup:hover {
   color: #DCF1F6;
-}
-
-img#unlockablesButton.none {
-  background: top left no-repeat static_url("locked.png");
-}
-
-img#unlockablesButton.none:hover {
-  background: top left no-repeat static_url("locked-active.png");
-}
-
-img#unlockablesButton.some {
-  background: top left no-repeat static_url("unlocked.png");
-}
-
-img#unlockablesButton.some:hover {
-  background: top left no-repeat static_url("unlocked-active.png");
 }

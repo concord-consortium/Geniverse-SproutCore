@@ -26,10 +26,12 @@ Lab.TopBarView = SC.ToolbarView.extend(
   classNames: ['brown-toolbar-view'],
   anchorLocation: SC.ANCHOR_TOP,
 
-  childViews: 'homeButton caselogButton introButton infoButton geniverseLabelView welcomeLabelView groupLabelView logoutButton blogButton notepadButton journalButton helpButton unlockablesButton'.w(),
+  // the order the children are defined here determines the order they show up in the top bar!
+  childViews: 'homeButton caselogButton introButton geniverseLabelView welcomeLabelView groupLabelView infoButton notepadButton blogButton journalButton helpButton unlockablesButton logoutButton'.w(),
 
   homeButton: SC.ImageView.design(Geniverse.SimpleButton, {
-    layout: { top: 0, left: 7, width: 66, height: 57 },
+    layout: { top: 0, left: 0, width: 66, height: 57 },
+    useStaticLayout: YES,
     layerId: 'homeButton',
     hasHover: YES,
     alt: 'Home',
@@ -39,7 +41,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
   }),
 
   caselogButton: SC.ImageView.design(Geniverse.SimpleButton, {
-    layout: { top: 0, left: 66, width: 64, height: 57 },
+    layout: { top: 0, left: 0, width: 64, height: 57 },
+    useStaticLayout: YES,
     layerId: 'caselogButton',
     hasHover: YES,
     alt: 'Case Log',
@@ -49,7 +52,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
   }),
 
   introButton: SC.ImageView.design(Geniverse.SimpleButton, {
-    layout: { top: 0, left: 133, width: 57, height: 57 },
+    layout: { top: 0, left: 0, width: 57, height: 57 },
+    useStaticLayout: YES,
     layerId: 'introButton',
     hasHover: YES,
     alt: 'Introduction',
@@ -59,28 +63,31 @@ Lab.TopBarView = SC.ToolbarView.extend(
   }),
 
   geniverseLabelView: SC.LabelView.design({
-    layout: { centerY: 9, height: 24, left: 195, width: 400 },
-    controlSize: SC.LARGE_CONTROL_SIZE,
+    layout: { top: -15, height: 24 },
+    classNames: ['pageTitle'],
+    useStaticLayout: YES,
     valueBinding: 'Geniverse.activityController.title'
   }),
 
   welcomeLabelView: SC.LabelView.design({
-    layout: { top: 30,  height: 24, right: 550, width: 345},
-    textAlign: SC.ALIGN_LEFT,
+    layout: { top: -12,  height: 24 },
+    classNames: ['welcomeLabel'],
+    useStaticLayout: YES,
     valueBinding: 'Lab.loginController.welcomeMessage',
-    // useStaticLayout: YES,
     isVisibleBinding: 'Lab.loginController.loggedIn'
   }),
 
   groupLabelView: SC.LabelView.design({
-    layout: { top: 30,  height: 24, right: 550, width: 345},
-    textAlign: SC.ALIGN_RIGHT,
+    layout: { top: -15,  height: 24 },
+    classNames: ['groupLabel'],
+    useStaticLayout: YES,
     valueBinding: 'Lab.loginController.memberGroupMessage',
     isVisibleBinding: 'Lab.loginController.loggedIn'
   }),
 
   changeGroupButton: Lab.LinkView.design({
-    layout: { top: 30,  height: 24, right: 500, width: 40 },
+    layout: { top: -15,  height: 24 },
+    useStaticLayout: YES,
     layerId: 'changeGroup',
     title:  "edit",
     target: 'Lab.loginController',
@@ -91,7 +98,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
   }),
 
   unlockablesButton: SC.PopupButtonView.design({
-    layout: { centerY: 10, right: 341, width: 45, height: 57 },
+    layout: { top: 0, left: 0, width: 45, height: 57 },
+    useStaticLayout: YES,
     menu: SC.MenuPane.design({
       layout: {width: 250 },
       rawItemsBinding: 'Geniverse.unlockablesController.*unlocked.length',
@@ -126,7 +134,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
   }),
 
   infoButton: SC.ImageView.design(Geniverse.SimpleButton, {
-    layout: { top: 0, right: 285, width: 56, height: 57 },
+    layout: { top: 0, left: 0, width: 56, height: 57 },
+    useStaticLayout: YES,
     layerId: 'infoButton',
     hasHover: YES,
     alt: 'Info',
@@ -140,7 +149,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
   }),
 
   blogButton: SC.ImageView.design(Geniverse.SimpleButton, {
-    layout: { top: 0, right: 230, width: 55, height: 57 },
+    layout: { top: 0, left: 0, width: 55, height: 57 },
+    useStaticLayout: YES,
     layerId: 'blogButton',
     hasHover: YES,
     alt: 'Post claim to the Journal',
@@ -152,7 +162,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
 
   journalButton: SC.ImageView.design(Geniverse.SimpleButton, {
-    layout: { top: 0, right: 179, width: 51, height: 57 },
+    layout: { top: 0, left: 0, width: 51, height: 57 },
+    useStaticLayout: YES,
     hasHover: YES,
     alt: 'Your journal',
     layerId: 'journalButton',
@@ -163,7 +174,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
   }),
 
   notepadButton: SC.ImageView.design(Geniverse.SimpleButton, {
-    layout: { top: 0, right: 129, width: 50, height: 57 },
+    layout: { top: 0, left: 0, width: 50, height: 57 },
+    useStaticLayout: YES,
     hasHover: YES,
     alt: 'Your notebook',
     layerId: 'notepadButton',
@@ -175,7 +187,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
   }),
 
   helpButton: SC.ImageView.design(Geniverse.SimpleButton, {
-    layout: { top: 0, right: 73, width: 56, height: 57 },
+    layout: { top: 0, left: 0, width: 56, height: 57 },
+    useStaticLayout: YES,
     layerId: 'helpButton',
     hasHover: YES,
     alt: 'Help',
@@ -190,7 +203,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
   }),
 
   logoutButton: SC.ImageView.design(Geniverse.SimpleButton, {
-    layout: { top: 0, right: 6, width: 67, height: 57 },
+    layout: { top: 0, left: 0, width: 67, height: 57 },
+    useStaticLayout: YES,
     layerId: 'logOutButton',
     hasHover: YES,
     alt: 'Log out',
