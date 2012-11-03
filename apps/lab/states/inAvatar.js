@@ -32,13 +32,23 @@ Lab.inAvatar = Ki.State.extend({
       console.log("status: " + user.get('status'));
       if (user.get('status') == SC.Record.READY_CLEAN) {
         user.removeObserver('status', stateChanged);
+
+        // FIXME: after going to url, back button returns user to #avatar, and
+        // then this cycles back to url. Removing hash first fixes it.
+        window.location.hash = "";
+
         window.location = url;
       }
     };
 
-    user.addObserver('status', stateChanged);
+    // FIXME: for now, adding the observer to 'avatar'. Status does not
+    // seem to get triggered (maybe it just doesn't get triggered if user
+    // already has avatar set, but FR wants avatar button to always lead
+    // to Fable Vison site for now)
+    user.addObserver('avatar', stateChanged);
     console.log("setting avatar " + name + " on user: " + user.get('firstName') + " " + user.get('lastName'));
     user.set('avatar', name);
     Geniverse.store.commitRecords();
+
   }
 });
