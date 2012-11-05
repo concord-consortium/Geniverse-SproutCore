@@ -69,7 +69,7 @@
       level: "apprentice",
       cases: [
         {
-          title: "Case 6: The Horns Dilemma",
+          title: "Case 6: How About Those Horns?",
           challenges: [
             {
               title: "Challenge 1: Tamora's Show 'n' Tell",
