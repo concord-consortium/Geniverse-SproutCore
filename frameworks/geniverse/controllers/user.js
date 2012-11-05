@@ -16,6 +16,17 @@ Geniverse.userController = SC.ObjectController.create(
   // TODO: Add your own code here.
   usernameBinding: '*user.username',
 
+  isAccelerated: function() {
+    return this.getUserMetadata().accelerated || NO;
+  }.property('*user','*user.metadata.accelerated'),
+
+  setAccelerated: function(accel) {
+    var meta = this.getUserMetadata();
+    meta.accelerated = accel;
+    this.setUserMetadata(meta);
+    Geniverse.store.commitRecords();
+  },
+
   createUser: function (username, password){
     if (!password) { password = ""; }
     var passwordHash = SHA256(password);

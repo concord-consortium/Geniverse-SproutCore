@@ -31,3 +31,7 @@ a#door:hover {
     background: top left no-repeat static_url('office-door-active.png');
 }
 
+a#backdoor:hover {
+  cursor: default;
+}
+

@@ -22,7 +22,12 @@ Geniverse.unlockablesController = SC.Object.create({
       // unlock whatever the user has already done
       var unlock = function() {
         all.forEach(function(item) {
-          var stars = Geniverse.userController.getPageStars(item.get('trigger'));
+          var stars = 0;
+          if (Geniverse.userController.isAccelerated()) {
+            stars = 1;
+          } else {
+            stars = Geniverse.userController.getPageStars(item.get('trigger'));
+          }
           if (stars > 0) {
             console.warn("unlocking " + item.get('title'), item.get('status'));
             item.set('unlocked', YES);
@@ -43,6 +48,19 @@ Geniverse.unlockablesController = SC.Object.create({
       Geniverse.store.commitRecords();
     }
   }.observes('user'),
+  unlockAllLocked: function() {
+    var _this = this;
+    this.loadQueries();
+    var locked = this.get('locked');
+    locked.forEach(function(item) {
+      item.set('unlocked', YES);
+      _this.notifyUnlockable(item);
+    });
+    this.get('all').reload();
+    this.propertyDidChange('all');
+    this.propertyDidChange('locked');
+    this.propertyDidChange('unlocked');
+  },
   all: null,
   unlocked: null,
   locked: null,
