@@ -69,10 +69,10 @@
       level: "apprentice",
       cases: [
         {
-          title: "Case 6: How About Those Horns?",
+          title: "Case 6: The Horns Dilemma",
           challenges: [
             {
-              title: "Challenge 1: Tamora's Show 'n' Tell",
+              title: "Challenge 1: How About Those Horns?",
               href: "#case6/argumentation",
               useQuill: true
             }
