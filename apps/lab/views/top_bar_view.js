@@ -110,6 +110,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     useStaticLayout: YES,
     menu: SC.MenuPane.design({
       layout: {width: 250 },
+      preferType: SC.PICKER_POINTER,
       rawItemsBinding: 'Geniverse.unlockablesController.*unlocked.length',
       rawItemsChanged: function() {
         var rawItems = Geniverse.unlockablesController.get('unlocked');
