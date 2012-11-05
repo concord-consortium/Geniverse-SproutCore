@@ -9,6 +9,10 @@ Lab.inAvatar = Ki.State.extend({
   enterState: function() {
     // FIXME Temporarily disable this until we get artwork for it
     // Lab.routes.gotoLabRoute({pageName: 'avatarPage'});
+    var user = Geniverse.userController.get('content');
+    // clear the currently chosen avatar so that when we set one later,
+    // it will definitely trigger a DIRTY state on the user object.
+    user.set('avatar', '');
     this.get('statechart').sendAction('choseScarlett');
   },
 
@@ -26,7 +30,7 @@ Lab.inAvatar = Ki.State.extend({
   _chooseAvatar: function(name, url) {
     Lab.avatarController.set('waiting', YES);
 
-    user = Geniverse.userController.get('content');
+    var user = Geniverse.userController.get('content');
 
     stateChanged = function() {
       console.log("status: " + user.get('status'));
@@ -41,11 +45,7 @@ Lab.inAvatar = Ki.State.extend({
       }
     };
 
-    // FIXME: for now, adding the observer to 'avatar'. Status does not
-    // seem to get triggered (maybe it just doesn't get triggered if user
-    // already has avatar set, but FR wants avatar button to always lead
-    // to Fable Vison site for now)
-    user.addObserver('avatar', stateChanged);
+    user.addObserver('status', stateChanged);
     console.log("setting avatar " + name + " on user: " + user.get('firstName') + " " + user.get('lastName'));
     user.set('avatar', name);
     Geniverse.store.commitRecords();
