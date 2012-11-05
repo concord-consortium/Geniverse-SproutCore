@@ -1,34 +1,46 @@
 Geniverse.unlockablesController = SC.Object.create({
   userBinding: 'Geniverse.userController.content',
-  loadUnlockables: function() {
-    var all = Geniverse.store.find(SC.Query.local(Geniverse.Unlockable));
-    this.set('all', all);
-    this.set('unlocked', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true'})));
-    this.set('locked', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = false'})));
-    this.set('viewed', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true AND viewed = true'})));
-    this.set('notViewed', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true AND viewed = false'})));
+  loaded: NO,
+  loadQueries: function() {
+    // only load the queries once. Doing it multiple times messes up the unlockables pulldown,
+    // and is totally unnecessary.
+    if (!this.get('loaded')) {
+      this.set('all', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable)));
+      this.set('unlocked', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true'})));
+      this.set('locked', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = false'})));
+      this.set('viewed', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true AND viewed = true'})));
+      this.set('notViewed', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true AND viewed = false'})));
+      this.set('loaded', YES);
+    }
+  },
 
+  loadUnlockables: function() {
+    this.loadQueries();
     var user = this.get('user');
+    var all = this.get('all');
     if (typeof(user) != 'undefined' && user !== null) {
       // unlock whatever the user has already done
-      // FIXME Something is loading after this and resetting the changes...
-      all.invokeLater(function() {
+      var unlock = function() {
         all.forEach(function(item) {
           var stars = Geniverse.userController.getPageStars(item.get('trigger'));
           if (stars > 0) {
-            console.log("unlocking " + item.get('title'), item.get('status'));
+            console.warn("unlocking " + item.get('title'), item.get('status'));
             item.set('unlocked', YES);
             item.set('viewed', YES);
           }
         });
-        Geniverse.store.commitRecords();
-        all.reload();
-        this.propertyDidChange('all');
-        this.propertyDidChange('locked');
-        this.propertyDidChange('unlocked');
-        this.propertyDidChange('viewed');
-        this.propertyDidChange('notViewed');
-      }, 500);
+      };
+      if (all.get('status') == SC.Record.READY_CLEAN) {
+        unlock();
+      } else {
+        all.addObserver('status', function() {
+          if (all.get('status') == SC.Record.READY_CLEAN) {
+            all.removeObserver('status', this);
+            unlock();
+          }
+        });
+      }
+      Geniverse.store.commitRecords();
     }
   }.observes('user'),
   all: null,
