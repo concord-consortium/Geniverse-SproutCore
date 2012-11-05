@@ -25,3 +25,9 @@ a#journal:hover {
     cursor: pointer;
     background: top left no-repeat static_url('office-journal-active.png');
 }
+
+a#door:hover {
+    cursor: pointer;
+    background: top left no-repeat static_url('office-door-active.png');
+}
+
