@@ -19,7 +19,7 @@ body, body.sc-theme, .sc-theme .sc-pane.sc-main {
   font-family: 'Rather Unfortunate', 'Lucida Sans', 'Lucida-Grande', sans-serif;
 }
 
-.sc-theme .sc-pane .cochin {
+.sc-theme .sc-pane .cochin, .tk-scrivano {
   font-family: 'Cochin', 'Lucida Sans', 'Lucida-Grande', sans-serif;
 }
 
