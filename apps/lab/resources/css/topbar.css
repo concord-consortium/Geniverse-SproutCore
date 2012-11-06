@@ -122,6 +122,12 @@ img#logOutButton:hover {
   background: -3px -2px no-repeat static_url("unlocked-active.png");
 }
 
+.sc-theme .sc-menu-item {
+  font-family: 'Cochin', 'Lucida Sans', 'Lucida-Grande', sans-serif;
+  font-style: oblique;
+  font-weight: normal;
+}
+
 #changeGroupLabel {
     font-size: 9px;
     text-decoration: underline;
