@@ -127,6 +127,7 @@ Geniverse.userController = SC.ObjectController.create(
     }
     meta.unlockedCases[caseLevel][caseTitle] = true;
     this.setUserMetadata(meta);
+    Geniverse.store.commitRecords();
   },
 
   // this could get moved into its own controller, if we want
