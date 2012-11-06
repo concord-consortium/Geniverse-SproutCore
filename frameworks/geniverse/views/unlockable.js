@@ -28,7 +28,9 @@ Geniverse.UnlockableView = SC.PanelPane.create({
         var val = (value || "").replace("{{avatar}}", Geniverse.userController.get('avatar'));
         val = val.replace(/<script[\s\S]*?<\/script>/m, '');
         var scpt = RegExp.lastMatch;
-        $("body").append($(scpt));
+        if (scpt) {
+          setTimeout(function() { $("body").append($(scpt)); }, 500);
+        }
         return "<div class='centered-content'>" + val + "</div>";
       }).from('Geniverse.unlockablesController.*selectedUnlockable.content'),
       escapeHTML: NO
