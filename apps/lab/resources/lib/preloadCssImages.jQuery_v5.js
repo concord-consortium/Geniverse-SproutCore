@@ -93,10 +93,14 @@ jQuery.preloadCssImages = function(settings){
           baseURL += '/'; //tack on a / if needed
         }
       }
-      if(sheets[sheetIndex].cssRules || sheets[sheetIndex].rules){
+      try {
         thisSheetRules = (sheets[sheetIndex].cssRules) ? //->>> http://www.quirksmode.org/dom/w3c_css.html
           sheets[sheetIndex].cssRules : //w3
           sheets[sheetIndex].rules; //ie
+      } catch(err) {
+        thisSheetRules = null;
+      }
+      if(thisSheetRules){
         var ruleIndex = thisSheetRules.length;
         while(ruleIndex--){
           if(thisSheetRules[ruleIndex].style && thisSheetRules[ruleIndex].style.cssText){
