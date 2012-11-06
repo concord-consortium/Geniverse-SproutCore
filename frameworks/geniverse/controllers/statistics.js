@@ -29,7 +29,8 @@ Geniverse.statisticsController = SC.Controller.create(
     { title: "Armor" },
     { title: "Tail" },
     { title: "Color" },
-    { title: "Nose spike"}
+    { title: "Nose spike"},
+    { title: "Health"}
   ],
 
 
@@ -44,7 +45,7 @@ Geniverse.statisticsController = SC.Controller.create(
     var cumulativeCounts = this.get('cumulativeCounts');
     var cumulativeSize = this.get('cumulativeSize');
     var dragons = this.get('dragons');
-    if (dragons != null){
+    if (dragons !== null){
       dragons.forEach(function(dragon){
         var traitList = this.get('traitList');
         cumulativeSize++;
