@@ -17,10 +17,12 @@ div#topBar {
 #topBar .sc-view.pageTitle #caseLabel {
   position: absolute;
   top: 3px;
+  font-size: 14px;
 }
 #topBar .sc-view.pageTitle #activityLabel {
   position: absolute;
   top: 30px;
+  font-size: 14px;
 }
 
 #topBar .sc-view.welcomeLabel {
