@@ -15,6 +15,19 @@ body, body.sc-theme, .sc-theme .sc-pane.sc-main {
   src: static_url('fonts/RatherUnfortunate.ttf');
 }
 
+.sc-theme .sc-pane .rather-unfortunate {
+  font-family: 'Rather Unfortunate', 'Lucida Sans', 'Lucida-Grande', sans-serif;
+}
+
+.sc-theme .sc-pane .cochin {
+  font-family: 'Cochin', 'Lucida Sans', 'Lucida-Grande', sans-serif;
+}
+
+.sc-theme .sc-pane .sofadi {
+  font-family: 'Sofadi One', 'Lucida Sans', 'Lucida-Grande', sans-serif;
+  font-weight: 400;
+}
+
 #content {
     background-repeat: no-repeat;
     position: absolute;
@@ -64,5 +77,4 @@ body, body.sc-theme, .sc-theme .sc-pane.sc-main {
 .overflowVis {
   overflow: visible;
 }
-
 

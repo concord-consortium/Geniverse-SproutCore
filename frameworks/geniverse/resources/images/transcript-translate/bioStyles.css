@@ -54,5 +54,5 @@ li {
   font-size:11px;
 }
 ul {
-  list-style-image:url(listBullet.png);
+  /*list-style-image:url(listBullet.png);*/
 }
