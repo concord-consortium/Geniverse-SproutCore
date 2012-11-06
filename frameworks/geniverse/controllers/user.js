@@ -109,6 +109,26 @@ Geniverse.userController = SC.ObjectController.create(
     user.recordDidChange();
   },
 
+  isUnlocked: function(caseLevel, caseTitle) {
+    var meta = this.getUserMetadata();
+    if (meta.unlockedCases && meta.unlockedCases[caseLevel]) {
+      return meta.unlockedCases[caseLevel][caseTitle] || false;
+    }
+    return false;
+  },
+
+  setUnlocked: function(caseLevel, caseTitle) {
+    var meta = this.getUserMetadata();
+    if (!meta.unlockedCases) {
+      meta.unlockedCases = {};
+    }
+    if (!meta.unlockedCases[caseLevel]) {
+      meta.unlockedCases[caseLevel] = {};
+    }
+    meta.unlockedCases[caseLevel][caseTitle] = true;
+    this.setUserMetadata(meta);
+  },
+
   // this could get moved into its own controller, if we want
   setPageStars: function(pageId, numStars) {
     var meta = Geniverse.userController.getUserMetadata();

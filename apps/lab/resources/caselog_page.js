@@ -88,7 +88,7 @@ Lab.caselogPage = SC.Page.design({
 
         for (i = 0, max_i = cases.length; i < max_i; i++) {
           var extra = "";
-          if (cases[i].hidden && !Geniverse.userController.isAccelerated()) {
+          if (cases[i].hidden && !Geniverse.userController.isAccelerated() && !Geniverse.userController.isUnlocked(currentLevelName, cases[i].title)) {
             extra = ' style="display: none;"';
           }
           context.push('<div class="case caselog-active case' + i + '"' + extra + '>');
