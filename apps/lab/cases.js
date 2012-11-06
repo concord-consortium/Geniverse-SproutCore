@@ -222,6 +222,15 @@
               href: "#case17/challenge1"
             }
           ]
+        }, {
+          title: "Case 18: Bog Breath",
+          hidden: true,
+          challenges: [
+            {
+              title: "Challenge 1: Bog Breath",
+              href: "#bgbrth/challenge1"
+            }
+          ]
         }
       ]
     }, {
