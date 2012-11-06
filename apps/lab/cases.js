@@ -219,7 +219,8 @@
           challenges: [
             {
               title: "Challenge 1: Finding a New Frosty",
-              href: "#case17/challenge1"
+              href: "#case17/challenge1",
+              useQuill: true
             }
           ]
         }, {
