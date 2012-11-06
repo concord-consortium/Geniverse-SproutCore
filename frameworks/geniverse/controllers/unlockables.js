@@ -25,6 +25,8 @@ Geniverse.unlockablesController = SC.Object.create({
           var stars = 0;
           if (Geniverse.userController.isAccelerated()) {
             stars = 1;
+          } else if (Geniverse.userController.isUnlocked("unlockables", item.get('title'))) {
+            stars = 1;
           } else {
             stars = Geniverse.userController.getPageStars(item.get('trigger'));
           }
@@ -45,7 +47,6 @@ Geniverse.unlockablesController = SC.Object.create({
           }
         });
       }
-      Geniverse.store.commitRecords();
     }
   }.observes('user'),
   unlockAllLocked: function() {
@@ -66,17 +67,23 @@ Geniverse.unlockablesController = SC.Object.create({
   locked: null,
   viewed: null,
   notViewed: null,
-  unlockFor: function(trigger) {
+  unlockFor: function(trigger, skipNotify) {
     var _this = this;
     var locked = this.get('locked').filter(function(item) { return item.get('trigger') == trigger; });
+    var unlocked = [];
     locked.forEach(function(item) {
       item.set('unlocked', YES);
-      _this.notifyUnlockable(item);
+      Geniverse.userController.setUnlocked("unlockables",item.get('title'));
+      if (!skipNotify) {
+        _this.notifyUnlockable(item);
+      }
+      unlocked.push(item);
     });
     this.get('all').reload();
     this.propertyDidChange('all');
     this.propertyDidChange('locked');
     this.propertyDidChange('unlocked');
+    return unlocked;
   },
   toNotify: [],
   currentNotification: null,
