@@ -44,7 +44,7 @@ Lab.meiosisPage = SC.Page.design({
         }),
 
         fathersPoolView: Lab.ChallengePoolView.design({
-          layout: { right: 12, top: 16, width:300, height: 97 },
+          layout: { left: 733, top: 16, width:300, height: 97 },
           sex: "male"
         }),
 

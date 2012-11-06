@@ -42,7 +42,7 @@ Lab.breedingPage = SC.Page.design({
       }),
 
       breedView: Geniverse.BreedDragonView.design({
-        layout: { top: 20 , left: 30, height: 430, right: 30 },
+        layout: { top: 20 , left: 30, height: 430, width: 780 },
         showChildView: NO, // child as in baby dragon
         trackScore: YES,
 
