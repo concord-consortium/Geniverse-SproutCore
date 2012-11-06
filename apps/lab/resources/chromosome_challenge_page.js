@@ -115,6 +115,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
         layout: {top: 40, height: 25, left: 75, width: 200 },
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
+        classNames: 'title'.w(),
         value: "Target Drake"
       }),
 
@@ -122,6 +123,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
         layout: {top: 40, height: 25, left: 345, width: 200 },
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
+        classNames: 'title'.w(),
         value: "Your Drake"
       }),
 
@@ -129,6 +131,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
         layout: {top: 40, height: 25, left: 545, width: 200 },
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
+        classNames: 'title'.w(),
         value: "Chromosome Control"
       })
 

@@ -33,6 +33,7 @@ Lab.invisibleFemaleGenotypePage = SC.Page.design({
         femaleTitle: SC.LabelView.design({
           layout: {top: 10, height: 25, left: 70, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
+          classNames: 'title'.w(),
           value: "Female Drake"
         }),
 
@@ -66,6 +67,7 @@ Lab.invisibleFemaleGenotypePage = SC.Page.design({
         maleTitle: SC.LabelView.design({
           layout: {top: 10, height: 25, right: 35, width: 170 },
           controlSize: SC.LARGE_CONTROL_SIZE,
+          classNames: 'title'.w(),
           value: "Male Drake"
         }),
 

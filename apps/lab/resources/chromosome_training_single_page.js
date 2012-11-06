@@ -31,6 +31,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           layout: {top: 20, height: 25, left: 125, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
+          classNames: 'title'.w(),
           sexBinding: '*parentView.genomeView.sex',
           value: function() {
             return (this.get('sex') === 0 ? "Male " : "Female ") + "Drake";

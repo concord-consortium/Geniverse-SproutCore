@@ -60,6 +60,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
 
       targetTitle: SC.LabelView.design({
         layout: {top: 40, height: 25, left: 25, width: 190 },
+        classNames: 'title'.w(),
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         value: "Target Drake"

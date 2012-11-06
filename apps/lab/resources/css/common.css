@@ -21,11 +21,19 @@ body, body.sc-theme, .sc-theme .sc-pane.sc-main {
 
 .sc-theme .sc-pane .cochin, .tk-scrivano {
   font-family: 'Cochin', 'Lucida Sans', 'Lucida-Grande', sans-serif;
+  font-style: oblique;
+  font-weight: normal;
 }
 
 .sc-theme .sc-pane .sofadi {
   font-family: 'Sofadi One', 'Lucida Sans', 'Lucida-Grande', sans-serif;
   font-weight: 400;
+}
+
+.sc-theme .sc-view.title {
+  font-family: 'Cochin', 'Lucida Sans', 'Lucida-Grande', sans-serif;
+  font-style: oblique;
+  font-weight: normal;
 }
 
 #content {

@@ -38,6 +38,7 @@ Lab.singleMeiosisPage = SC.Page.design({
         parentTitle: SC.LabelView.design({
           layout: {top: 133, centerX: 0, height: 25, width: 120 },
           controlSize: SC.LARGE_CONTROL_SIZE,
+          classNames: 'title'.w(),
           value: "Parent Drake"
         }),
 
