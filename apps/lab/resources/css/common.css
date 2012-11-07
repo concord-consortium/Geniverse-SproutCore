@@ -86,3 +86,30 @@ body, body.sc-theme, .sc-theme .sc-pane.sc-main {
   overflow: visible;
 }
 
+#ending1 {
+  position: absolute;
+  top: 476px;
+  right: 33px;
+  width: 167px;
+  height: 66px;
+  cursor: pointer;
+}
+
+#ending2 {
+  position: absolute;
+  top: 549px;
+  right: 33px;
+  width: 167px;
+  height: 66px;
+  cursor: pointer;
+}
+
+#ending3 {
+  position: absolute;
+  top: 622px;
+  right: 33px;
+  width: 167px;
+  height: 66px;
+  cursor: pointer;
+}
+
