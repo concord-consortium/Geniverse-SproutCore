@@ -175,14 +175,14 @@
 }
 
 #caselog-nav ul li#training div:hover {
-  background: -6px -13px no-repeat static_url('caselog-training-active.png');
+  background: -5px -13px no-repeat static_url('caselog-training-active.png');
 }
 #caselog-nav ul li#apprentice div:hover {
-  background: -6px -14px no-repeat static_url('caselog-apprentice-active.png');
+  background: -5px -14px no-repeat static_url('caselog-apprentice-active.png');
 }
 #caselog-nav ul li#journeyman div:hover {
-  background: -6px -14px no-repeat static_url('caselog-journeyman-active.png');
+  background: -5px -14px no-repeat static_url('caselog-journeyman-active.png');
 }
 #caselog-nav ul li#master div:hover {
-  background: -6px -14px no-repeat static_url('caselog-master-active.png');
+  background: -5px -14px no-repeat static_url('caselog-master-active.png');
 }
