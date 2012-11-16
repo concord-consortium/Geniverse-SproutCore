@@ -28,11 +28,11 @@ Lab.argumentationChallenge = Ki.State.extend({
     // Award a "star" for completion
     var pageId = Geniverse.activityController.get('route');
     Geniverse.userController.setPageStars(pageId, 1);
-    Geniverse.store.commitRecords();
 
     // unlock any unlockables
     Geniverse.unlockablesController.unlockFor(pageId);
 
+    Geniverse.store.commitRecords();
     // why can't bindings in SC work as advertised?
     Lab.caselogController.propertyDidChange("userMetadata");
   },
