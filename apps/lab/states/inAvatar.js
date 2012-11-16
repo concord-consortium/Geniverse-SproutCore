@@ -7,24 +7,22 @@
 Lab.inAvatar = Ki.State.extend({
 
   enterState: function() {
-    // FIXME Temporarily disable this until we get artwork for it
-    // Lab.routes.gotoLabRoute({pageName: 'avatarPage'});
     var user = Geniverse.userController.get('content');
     // clear the currently chosen avatar so that when we set one later,
     // it will definitely trigger a DIRTY state on the user object.
     user.set('avatar', '');
-    this.get('statechart').sendAction('choseScarlett');
+    Lab.routes.gotoLabRoute({pageName: 'avatarPage'});
   },
 
   exitState: function() {
   },
 
   choseScarlett: function() {
-    this._chooseAvatar('Scarlett', 'http://geniverse.fablevision-dev.com/#sequence-1.html');
+    this._chooseAvatar('Scarlett', 'http://geniverse.fablevision-dev.com/introduction.html#sequence-1.html');
   },
 
   choseStrider: function() {
-    this._chooseAvatar('Strider', '/intro/strider.html');
+    this._chooseAvatar('Strider', 'http://geniverse.fablevision-dev.com/introduction.html#sequence-1-strider.html');
   },
 
   _chooseAvatar: function(name, url) {
