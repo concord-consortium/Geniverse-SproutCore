@@ -35,7 +35,7 @@ Geniverse.chromosomeController = SC.ObjectController.create(
     ['Hl', 'hl'],
     ['A1', 'A2', 'a'],
     ['B', 'b'],
-    ['D', 'd', 'dl'],
+    ['D', 'd'],
     ['Bog', 'bog'],
     ['Rh', 'rh']
   ],
