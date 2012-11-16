@@ -5,11 +5,11 @@ Geniverse.unlockablesController = SC.Object.create({
     // only load the queries once. Doing it multiple times messes up the unlockables pulldown,
     // and is totally unnecessary.
     if (!this.get('loaded')) {
-      this.set('all', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable)));
-      this.set('unlocked', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true'})));
-      this.set('locked', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = false'})));
-      this.set('viewed', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true AND viewed = true'})));
-      this.set('notViewed', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true AND viewed = false'})));
+      this.set('all', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {orderBy: "title ASC"})));
+      this.set('unlocked', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true', orderBy: "title ASC"})));
+      this.set('locked', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = false', orderBy: "title ASC"})));
+      this.set('viewed', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true AND viewed = true', orderBy: "title ASC"})));
+      this.set('notViewed', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true AND viewed = false', orderBy: "title ASC"})));
       this.set('loaded', YES);
     }
   },
