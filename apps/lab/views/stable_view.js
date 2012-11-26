@@ -64,8 +64,12 @@ Lab.StableView = SC.View.extend(
         value:  function() {
           var numDragons = Geniverse.stableOrganismsController.get('length');
           var spaces = this.getPath("parentView.stableSize") - numDragons;
+          var remainingText = "";
+          if (!isNaN(spaces)) {
+            remainingText = "      -   " + spaces + " spaces remaining";
+          }
           // SC.Logger.log("recalculating");
-          return "Your Stable      -   " + spaces + " spaces remaining";
+          return "Your Stable" + remainingText;
         }.property('Geniverse.stableOrganismsController.arrangedObjects.[]'),
         destroy: function() {
           Geniverse.stableOrganismsController.removeObserver("arrangedObjects", this, this.woo);
