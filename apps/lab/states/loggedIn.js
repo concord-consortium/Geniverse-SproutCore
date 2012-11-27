@@ -17,6 +17,7 @@ Lab.loggedIn = Ki.State.extend({
     inActivity: Ki.State.plugin('Lab.inActivity'),
     inCaselog:  Ki.State.plugin('Lab.inCaselog'),
     inAvatar:   Ki.State.plugin('Lab.inAvatar'),
+    inEndingHub: Ki.State.plugin('Lab.inEndingHub'),
 
     empty: Ki.State.design(),
 
@@ -51,9 +52,14 @@ Lab.loggedIn = Ki.State.extend({
       this.get('statechart').sendAction('gotoRequestedPage');
     },
 
+    gotoEndingHub: function() {
+      this.startPage = 'endingHub';
+      this.get('statechart').sendAction('gotoRequestedPage');
+    },
+
     gotoRequestedPage: function() {
       console.log("going to page");
-      switch (this.startPage) {
+      switch (this.startPage || 'home') {
         case 'home':
           this.gotoState('inHomePage');
           break;
@@ -65,6 +71,9 @@ Lab.loggedIn = Ki.State.extend({
           break;
         case 'avatar':
           this.gotoState('inAvatar');
+          break;
+        case 'endingHub':
+          this.gotoState('inEndingHub');
           break;
         default:
           throw new Error(

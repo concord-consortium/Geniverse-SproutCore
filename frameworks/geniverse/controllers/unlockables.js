@@ -1,44 +1,58 @@
 Geniverse.unlockablesController = SC.Object.create({
   userBinding: 'Geniverse.userController.content',
-  loadUnlockables: function() {
-    var all = Geniverse.store.find(SC.Query.local(Geniverse.Unlockable));
-    this.set('all', all);
-    this.set('unlocked', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true'})));
-    this.set('locked', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = false'})));
-    this.set('viewed', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true AND viewed = true'})));
-    this.set('notViewed', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true AND viewed = false'})));
+  loaded: NO,
+  loadQueries: function() {
+    // only load the queries once. Doing it multiple times messes up the unlockables pulldown,
+    // and is totally unnecessary.
+    if (!this.get('loaded')) {
+      this.set('all', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {orderBy: "title ASC"})));
+      this.set('unlocked', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true', orderBy: "title ASC"})));
+      this.set('locked', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = false', orderBy: "title ASC"})));
+      this.set('viewed', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true AND viewed = true', orderBy: "title ASC"})));
+      this.set('notViewed', Geniverse.store.find(SC.Query.local(Geniverse.Unlockable, {conditions: 'unlocked = true AND viewed = false', orderBy: "title ASC"})));
+      this.set('loaded', YES);
+    }
+  },
 
+  loadUnlockables: function() {
+    this.loadQueries();
     var user = this.get('user');
+    var all = this.get('all');
     if (typeof(user) != 'undefined' && user !== null) {
       // unlock whatever the user has already done
-      // FIXME Something is loading after this and resetting the changes...
-      all.invokeLater(function() {
+      var unlock = function() {
         all.forEach(function(item) {
-          var stars = Geniverse.userController.getPageStars(item.get('trigger'));
+          var stars = 0;
+          if (Geniverse.userController.isAccelerated()) {
+            stars = 1;
+          } else if (Geniverse.userController.isUnlocked("unlockables", item.get('title'))) {
+            stars = 1;
+          } else {
+            stars = Geniverse.userController.getPageStars(item.get('trigger'));
+          }
           if (stars > 0) {
-            console.log("unlocking " + item.get('title'), item.get('status'));
+            console.warn("unlocking " + item.get('title'), item.get('status'));
             item.set('unlocked', YES);
             item.set('viewed', YES);
           }
         });
-        Geniverse.store.commitRecords();
-        all.reload();
-        this.propertyDidChange('all');
-        this.propertyDidChange('locked');
-        this.propertyDidChange('unlocked');
-        this.propertyDidChange('viewed');
-        this.propertyDidChange('notViewed');
-      }, 500);
+      };
+      if (all.get('status') == SC.Record.READY_CLEAN) {
+        unlock();
+      } else {
+        all.addObserver('status', function() {
+          if (all.get('status') == SC.Record.READY_CLEAN) {
+            all.removeObserver('status', this);
+            unlock();
+          }
+        });
+      }
     }
   }.observes('user'),
-  all: null,
-  unlocked: null,
-  locked: null,
-  viewed: null,
-  notViewed: null,
-  unlockFor: function(trigger) {
+  unlockAllLocked: function() {
     var _this = this;
-    var locked = this.get('locked').filter(function(item) { return item.get('trigger') == trigger; });
+    this.loadQueries();
+    var locked = this.get('locked');
     locked.forEach(function(item) {
       item.set('unlocked', YES);
       _this.notifyUnlockable(item);
@@ -47,6 +61,29 @@ Geniverse.unlockablesController = SC.Object.create({
     this.propertyDidChange('all');
     this.propertyDidChange('locked');
     this.propertyDidChange('unlocked');
+  },
+  all: null,
+  unlocked: null,
+  locked: null,
+  viewed: null,
+  notViewed: null,
+  unlockFor: function(trigger, skipNotify) {
+    var _this = this;
+    var locked = this.get('locked').filter(function(item) { return item.get('trigger') == trigger; });
+    var unlocked = [];
+    locked.forEach(function(item) {
+      item.set('unlocked', YES);
+      Geniverse.userController.setUnlocked("unlockables",item.get('title'));
+      if (!skipNotify) {
+        _this.notifyUnlockable(item);
+      }
+      unlocked.push(item);
+    });
+    this.get('all').reload();
+    this.propertyDidChange('all');
+    this.propertyDidChange('locked');
+    this.propertyDidChange('unlocked');
+    return unlocked;
   },
   toNotify: [],
   currentNotification: null,

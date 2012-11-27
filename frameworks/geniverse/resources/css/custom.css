@@ -136,6 +136,16 @@ img.postButton:hover {
 }
 
 /* Unlockable menu tweaks */
+.sc-theme .sc-menu-item {
+  font-family: 'Sofadi One', serif;
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.sc-theme .sc-menu-item a {
+  line-height: 1.1em;
+}
+
 .sc-menu-item img {
   left: 4px;
 }

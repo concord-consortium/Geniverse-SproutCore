@@ -178,7 +178,7 @@
   /*
     The constructor should be passed a genotypeHash, of the form below, and this
     will be copied to the @chromosomes property.
-
+  
     genotypeHash =
       {
         1: {
@@ -569,12 +569,12 @@
 
     /*
         Create an array of locations (in base pairs) where the parent pair of chromosomes will cross
-
+    
         First, randomly select the 10 cM segments that will experience crossover events. Give every 10 cM
         segment of the chromosome an independent probability of 0.2 of experiencing a crossover. This will
         result in having between 0 and num_10cM_segments crossover events. If the number of crossover events
         is greater than three then randomly drop all but three of the crossover events.
-
+    
         For each remaining event, determine the exact location of the crossover using a uniform random
         distribution from the start to the end of the 10 cM segment.
     */
@@ -938,7 +938,7 @@
       'dl': 'dl',
       'Rh': 'Nose spike',
       'rh': 'No nose spike',
-      'Bog': 'Normal metabolism',
+      'Bog': 'Healthy',
       'bog': 'Bog breath',
       'Y': 'Y',
       '': ''
@@ -986,9 +986,9 @@
         "Ash": BioLogica.combinations([["C"], ["C", "c"], ["m"], ["m"], ["B"], ["B", "b"], ["d", "dl"], ["d", "dl", "Y"]]),
         "Sand": BioLogica.combinations([["C"], ["C", "c"], ["m"], ["m"], ["b"], ["b"], ["d", "dl"], ["d", "dl", "Y"]])
       },
-      "metabolism": {
+      "health": {
         "Bog breath": [['bog', 'bog'], ['bog', 'Y']],
-        "Normal metabolism": [['Bog', 'Bog'], ['Bog', 'bog'], ['Bog', 'Y']]
+        "Healthy": [['Bog', 'Bog'], ['Bog', 'bog'], ['Bog', 'Y']]
       },
       "liveliness": {
         "Alive": BioLogica.combinations([["D", "d"], ["D", "d", "dl", "Y"]]),
@@ -1057,7 +1057,7 @@
       })();
       filename += trait("horns") === "Horns" ? "horn_" : "noHorn_";
       filename += trait("nose spike") === "Nose spike" ? "rostral_" : "noRostral_";
-      filename += trait("metabolism") === "Bog breath" ? "bogbreath" : "healthy";
+      filename += trait("health") === "Bog breath" ? "bogbreath" : "healthy";
       return filename += ".png";
     },
     /*

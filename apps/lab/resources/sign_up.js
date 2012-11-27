@@ -19,7 +19,7 @@ Lab.signUp = SC.Page.design({
 
     background: SC.ImageView.design({
       layout: { top: 0, left: 0, right: 0 },
-      value: static_url('mainscreen-bg.png'),
+      value: static_url('mainscreen-bg.jpg'),
       classNames: ['super-transparent']
     }),
 

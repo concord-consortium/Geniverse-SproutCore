@@ -7,7 +7,7 @@
 }
 
 .mainscreen {
-  background: top center no-repeat static_url('mainscreen-bg.png');
+  background: top center no-repeat static_url('mainscreen-bg.jpg');
 }
 
 a#caselog {
@@ -25,3 +25,13 @@ a#journal:hover {
     cursor: pointer;
     background: top left no-repeat static_url('office-journal-active.png');
 }
+
+a#door:hover {
+    cursor: pointer;
+    background: top left no-repeat static_url('office-door-active.png');
+}
+
+a#backdoor:hover {
+  cursor: default;
+}
+

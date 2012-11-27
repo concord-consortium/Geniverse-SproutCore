@@ -45,6 +45,10 @@ Lab.routes = SC.Object.create({
     Lab.statechart.sendAction('gotoAvatarPage');
   },
 
+  gotoEndingHub: function() {
+    Lab.statechart.sendAction('gotoEndingHub');
+  },
+
   gotoActivity: function(routeParams) {
     Lab.ACTIVITY.set('strand', routeParams.strand);                // heredity, ...
     Lab.ACTIVITY.set('level', routeParams.level);                  // apprentice, journeyman, master

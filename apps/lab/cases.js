@@ -72,7 +72,7 @@
           title: "Case 6: The Horns Dilemma",
           challenges: [
             {
-              title: "Challenge 1: Tamora's Show 'n' Tell",
+              title: "Challenge 1: How About Those Horns?",
               href: "#case6/argumentation",
               useQuill: true
             }
@@ -219,7 +219,17 @@
           challenges: [
             {
               title: "Challenge 1: Finding a New Frosty",
-              href: "#case17/challenge1"
+              href: "#case17/challenge1",
+              useQuill: true
+            }
+          ]
+        }, {
+          title: "Case 18: Bog Breath",
+          hidden: true,
+          challenges: [
+            {
+              title: "Challenge 1: Bog Breath",
+              href: "#bgbrth/challenge1"
             }
           ]
         }

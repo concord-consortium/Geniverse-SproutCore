@@ -109,7 +109,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
     layout: { top: 0, left: 0, width: 45, height: 57 },
     useStaticLayout: YES,
     menu: SC.MenuPane.design({
-      layout: {width: 250 },
+      layout: {width: 350 },
+      preferType: SC.PICKER_POINTER,
       rawItemsBinding: 'Geniverse.unlockablesController.*unlocked.length',
       rawItemsChanged: function() {
         var rawItems = Geniverse.unlockablesController.get('unlocked');
@@ -122,6 +123,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
       itemTitleKey: 'title',
       itemValueKey: 'guid',
       itemIconKey: 'icon',
+      itemHeight: 20,
       selectedItemBinding: 'Geniverse.unlockablesController.selectedUnlockable'
     }),
     layerId: 'unlockablesButton',
@@ -218,7 +220,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     alt: 'Log out',
     title:  "Log out",
     toolTip: "Click to log out",
-    target: Lab.statechart,
+    target: 'Lab.statechart',
     action: 'logOut'
   })
 });

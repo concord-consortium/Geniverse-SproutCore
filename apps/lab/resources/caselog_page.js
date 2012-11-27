@@ -87,7 +87,11 @@ Lab.caselogPage = SC.Page.design({
         };
 
         for (i = 0, max_i = cases.length; i < max_i; i++) {
-          context.push('<div class="case caselog-active case' + i + '">');
+          var extra = "";
+          if (cases[i].hidden && !Geniverse.userController.isAccelerated() && !Geniverse.userController.isUnlocked(currentLevelName, cases[i].title)) {
+            extra = ' style="display: none;"';
+          }
+          context.push('<div class="case caselog-active case' + i + '"' + extra + '>');
           context.push('<div class="title"><div>' + cases[i].title + '</div></div>');
           context.push('<ul>');
 

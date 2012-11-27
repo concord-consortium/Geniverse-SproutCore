@@ -32,6 +32,7 @@ Lab.chromosomeTrainingPage = SC.Page.design({
           layout: {top: 20, height: 25, left: 20, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
+          classNames: 'title'.w(),
           value: "Female Drake"
         }),
 
@@ -57,6 +58,7 @@ Lab.chromosomeTrainingPage = SC.Page.design({
           layout: {top: 20, height: 25, left: 20, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
+          classNames: 'title'.w(),
           value: "Male Drake"
         }),
 

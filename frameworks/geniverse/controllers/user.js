@@ -16,6 +16,17 @@ Geniverse.userController = SC.ObjectController.create(
   // TODO: Add your own code here.
   usernameBinding: '*user.username',
 
+  isAccelerated: function() {
+    return this.getUserMetadata().accelerated || NO;
+  }.property('*user','*user.metadata.accelerated'),
+
+  setAccelerated: function(accel) {
+    var meta = this.getUserMetadata();
+    meta.accelerated = accel;
+    this.setUserMetadata(meta);
+    Geniverse.store.commitRecords();
+  },
+
   createUser: function (username, password){
     if (!password) { password = ""; }
     var passwordHash = SHA256(password);
@@ -96,6 +107,26 @@ Geniverse.userController = SC.ObjectController.create(
     var user = this.get('content');
     user.set('metadata', metadata);
     user.recordDidChange();
+  },
+
+  isUnlocked: function(caseLevel, caseTitle) {
+    var meta = this.getUserMetadata();
+    if (meta.unlockedCases && meta.unlockedCases[caseLevel]) {
+      return meta.unlockedCases[caseLevel][caseTitle] || false;
+    }
+    return false;
+  },
+
+  setUnlocked: function(caseLevel, caseTitle) {
+    var meta = this.getUserMetadata();
+    if (!meta.unlockedCases) {
+      meta.unlockedCases = {};
+    }
+    if (!meta.unlockedCases[caseLevel]) {
+      meta.unlockedCases[caseLevel] = {};
+    }
+    meta.unlockedCases[caseLevel][caseTitle] = true;
+    this.setUserMetadata(meta);
   },
 
   // this could get moved into its own controller, if we want

@@ -211,6 +211,12 @@ Lab.inActivity = Ki.State.extend({
     this.gotoState('inAvatar');
   },
 
+  gotoEndingHub: function() {
+    Lab.statechart.getState('atLocation').startPage = 'endingHub';
+    this.gotoState('inEndingHub');
+  },
+
+
   exitState: function() {
     // Make sure any observers we might have added during in state are removed.
 

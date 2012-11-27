@@ -24,7 +24,15 @@ Geniverse.UnlockableView = SC.PanelPane.create({
 
     unlockableView: SC.LabelView.design({
       layout: {left: 5, right: 5, top: 5, bottom: 40 },
-      valueBinding: SC.Binding.transform(function(value) { return "<div class='centered-content'>" + value + "</div>"; }).from('Geniverse.unlockablesController.*selectedUnlockable.content'),
+      valueBinding: SC.Binding.transform(function(value) {
+        var val = (value || "").replace(/\{\{avatar\}\}/gm, Geniverse.userController.get('avatar'));
+        val = val.replace(/<script[\s\S]*?<\/script>/m, '');
+        var scpt = RegExp.lastMatch;
+        if (scpt) {
+          setTimeout(function() { $("body").append($(scpt)); }, 500);
+        }
+        return "<div class='centered-content'>" + val + "</div>";
+      }).from('Geniverse.unlockablesController.*selectedUnlockable.content'),
       escapeHTML: NO
     })
   })

@@ -15,3 +15,14 @@
   border-radius: 8px;
   opacity: 0.85;
 }
+
+#pleaseWait {
+  font-size: 24px;
+  padding-top: 5px;
+}
+
+#loadingStatus {
+  text-align: center;
+  font-size: 24px;
+  padding-top: 5px;
+}

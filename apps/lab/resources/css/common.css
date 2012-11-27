@@ -15,6 +15,27 @@ body, body.sc-theme, .sc-theme .sc-pane.sc-main {
   src: static_url('fonts/RatherUnfortunate.ttf');
 }
 
+.sc-theme .sc-pane .rather-unfortunate {
+  font-family: 'Rather Unfortunate', 'Lucida Sans', 'Lucida-Grande', sans-serif;
+}
+
+.sc-theme .sc-pane .cochin, .tk-scrivano {
+  font-family: 'Cochin', 'Lucida Sans', 'Lucida-Grande', sans-serif;
+  font-style: oblique;
+  font-weight: normal;
+}
+
+.sc-theme .sc-pane .sofadi {
+  font-family: 'Sofadi One', 'Lucida Sans', 'Lucida-Grande', sans-serif;
+  font-weight: 400;
+}
+
+.sc-theme .sc-view.title {
+  font-family: 'Cochin', 'Lucida Sans', 'Lucida-Grande', sans-serif;
+  font-style: oblique;
+  font-weight: normal;
+}
+
 #content {
     background-repeat: no-repeat;
     position: absolute;
@@ -30,7 +51,7 @@ body, body.sc-theme, .sc-theme .sc-pane.sc-main {
 }
 
 .sc-view.sc-pane.lab {
-  background: top center no-repeat static_url('lab_background.png');
+  background: top center no-repeat static_url('lab_background.jpg');
 }
 
 
@@ -65,4 +86,30 @@ body, body.sc-theme, .sc-theme .sc-pane.sc-main {
   overflow: visible;
 }
 
+#ending1 {
+  position: absolute;
+  top: 476px;
+  right: 33px;
+  width: 167px;
+  height: 66px;
+  cursor: pointer;
+}
+
+#ending2 {
+  position: absolute;
+  top: 549px;
+  right: 33px;
+  width: 167px;
+  height: 66px;
+  cursor: pointer;
+}
+
+#ending3 {
+  position: absolute;
+  top: 622px;
+  right: 33px;
+  width: 167px;
+  height: 66px;
+  cursor: pointer;
+}
 

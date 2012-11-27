@@ -7,6 +7,22 @@
 Lab.loggedOut =  Ki.State.extend({
 
   enterState: function() {
+    Lab.routes.gotoLabRoute({pageName: 'loadAssetsPage', paneName: 'mainPane'});
+    this.get('statechart').sendAction('loadAssets');
+  },
+
+  loadAssets: function() {
+    var _this = this;
+    var assets = $.preloadCssImages({
+      statusTextEl: "#loadingStatus",
+      showImageName: false,
+      onComplete: function() {
+        _this.get('statechart').sendAction('gotoLogin');
+      }
+    });
+  },
+
+  gotoLogin: function() {
     Lab.routes.gotoLabRoute({pageName: 'loginPage', paneName: 'mainPane'});
     Lab.loginController.checkCCAuthToken();
   },
@@ -26,6 +42,10 @@ Lab.loggedOut =  Ki.State.extend({
 
   gotoAvatarPage: function() {
     Lab.statechart.getState('atLocation').startPage = 'avatar';
+  },
+
+  gotoEndingHub: function() {
+    Lab.statechart.getState('atLocation').startPage = 'endingHub';
   },
 
   logIn: function() {
