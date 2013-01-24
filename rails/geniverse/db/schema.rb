@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121029160305) do
+ActiveRecord::Schema.define(:version => 20130124203713) do
 
   create_table "activities", :force => true do |t|
     t.text     "initial_alleles"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(:version => 20121029160305) do
     t.string   "trigger"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "open_automatically", :default => false
   end
 
   create_table "users", :force => true do |t|
