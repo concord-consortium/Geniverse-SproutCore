@@ -54,7 +54,7 @@ Geniverse.blogPostController = SC.Controller.create(
                 .replace(/\$\{reasoning\}/g, this.get('content4'));
 
     return content;
-  }.property('content1', 'content2', 'content3'),
+  }.property('content1', 'content2', 'content3', 'content4'),
 
   blogPostView: null,
 
