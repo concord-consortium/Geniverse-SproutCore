@@ -6,6 +6,7 @@
 .caselog-view {
   background: static_url('caselog-bg.jpg') center top no-repeat;
   color: #492222;
+  overflow: hidden;
 }
 
 #caselog-wrap {
