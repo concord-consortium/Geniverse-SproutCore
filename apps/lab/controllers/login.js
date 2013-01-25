@@ -107,15 +107,18 @@ Lab.loginController = SC.ObjectController.create(
       var login = response.get('body').login;
       var first = response.get('body').first;
       var last = response.get('body').last;
+      var isTeacher = response.get('body').teacher;
       var self = this;
       SC.Logger.log(login);
       var userFound = function(user) {
         user.set('firstName',first);
         user.set('lastName',last);
+        user.set('isTeacher', isTeacher);
         var classWords = response.get('body').class_words;
         if (classWords && classWords.length > 0){
           // if a user has more than one class word, use the last one on the list
           user.set('className', classWords[classWords.length-1]);
+          user.set('allClassNames', classWords);
         } else {
           user.set('className', "no_class");
         }

@@ -1,4 +1,12 @@
 class Report::Stars
+  attr_accessor :class_name
+  attr_accessor :all_classes
+
+  def initialize(class_names)
+    @class_names = class_names || []
+    @all_classes = @class_names.include?("|ALL|") ? true : false
+  end
+
   def caselogActivities
     json = File.read(File.join(File.dirname(__FILE__),'..','..','..','..','apps','lab','cases.js'))
     json.sub!(/.*?Lab.caselogData = \[/m, '[')
@@ -34,6 +42,7 @@ class Report::Stars
     row_num = 1
     User.all.each do |u|
       next if u.class_name.nil? || u.class_name.empty?
+      next unless @all_classes || @class_names.include?(u.class_name)
       sheet.row(row_num).concat ["#{u.first_name} #{u.last_name}", u.username, u.class_name, u.group_id, u.member_id]
       if md = u.metadata
         if stars = md['stars']
@@ -50,7 +59,7 @@ class Report::Stars
             end
             if col = cols[id]
               realVals = vals.map{|v|
-                res = case v
+                case v
                 when Hash
                   "#{v['stars']} (#{v['time']})"
                 else
