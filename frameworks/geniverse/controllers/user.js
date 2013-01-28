@@ -56,23 +56,7 @@ Geniverse.userController = SC.ObjectController.create(
         var user = users.firstObject();
         callback(user);
     };
-    self.doWhenReady(self,users,sendFoundUser);
-  },
-
-  doWhenReady: function(context, field, method) {
-    var self = context;
-    var outer = this;
-    var checkStatus = function() {
-      var status = field.get('status');
-      if (status & SC.Record.READY_CLEAN) {
-        field.removeObserver('status', outer, checkStatus);
-        method.call(context);
-      }
-      else {
-        field.addObserver('status', outer, checkStatus);
-      }
-    };
-    checkStatus();
+    Geniverse.doWhenReadyClean(self,users,sendFoundUser);
   },
 
   findOrCreateUser: function(username, callback) {
@@ -89,7 +73,7 @@ Geniverse.userController = SC.ObjectController.create(
           SC.Logger.log("created username %@", username);
           callback(user);
         };
-        self.doWhenReady(self, user, method);
+        Geniverse.doWhenReadyClean(self, user, method);
       }
     };
     self.findUser(username,nextMethod);

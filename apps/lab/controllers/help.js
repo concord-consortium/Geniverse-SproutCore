@@ -107,23 +107,7 @@ Lab.helpController = SC.ObjectController.create(
       //console.log("helpMessage:", helpMessage);
       callback(helpMessage);
     };
-    self.doWhenReady(self, helpMessages, sendFoundHelpMessage);
-  },
-
-  doWhenReady: function(context, field, method) {
-    var self = context;
-    //console.log("self = context:", self);
-    var status = field.get('status');
-    //console.log("status:", status, "SC.Record.READY:", SC.Record.READY);
-    if (status & SC.Record.READY == SC.Record.READY) {
-      //console.log("calling field.removeObserver('status', method);");
-      field.removeObserver('status', method);
-      //console.log("method.call(context);");
-      method.call(context);
-    }
-    else {
-      //console.log("calling field.addObserver('status', context, method);");
-      field.addObserver('status', context, method);
-    }
+    Geniverse.doWhenReady(self, helpMessages, sendFoundHelpMessage);
   }
+
 }) ;

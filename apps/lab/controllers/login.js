@@ -124,7 +124,7 @@ Lab.loginController = SC.ObjectController.create(
         }
         Geniverse.store.commitRecords();
         Geniverse.userController.set('content',user);
-        Geniverse.userController.doWhenReady(self,user,self.didAuthenticate);
+        Geniverse.doWhenReadyClean(self,user,self.didAuthenticate);
       };
       Geniverse.userController.findOrCreateUser(login, userFound);
     }
