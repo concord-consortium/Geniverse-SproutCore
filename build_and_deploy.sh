@@ -1,5 +1,7 @@
 #!/bin/sh
 
+DEBUG=""
+
 if [ -x $SKIP_BUNDLER ]; then
   CMD_PREFIX="bundle exec"
 else
@@ -36,6 +38,13 @@ case "$1" in
     export LABEL_PATH="/web/geniverse.dev.concord.org"
     export REMOTE_USER="geniverse"
     ;;
+  dev-debug)
+    export SERVER=otto.concord.org
+    export SERVER_PATH="/web/geniverse.dev.concord.org/static"
+    export LABEL_PATH="/web/geniverse.dev.concord.org"
+    export REMOTE_USER="geniverse"
+    export DEBUG="--mode debug"
+    ;;
   *)
     echo "Invalid server!"
     exit 1
@@ -44,14 +53,20 @@ esac
 
 echo "Building application... "
 rm -rf tmp/
-$CMD_PREFIX sc-build
+$CMD_PREFIX sc-build $DEBUG
 
 echo "Sending files to the server... "
 # If you don't have rsync, use scp instead
-# scp -r tmp/build/static/* $REMOTE_USER@$SERVER:$SERVER_PATH/
-rsync -rqlzP tmp/build/static/* $REMOTE_USER@$SERVER:$SERVER_PATH/
+if [ "$DEBUG" == "--mode debug" ]; then
+  # scp -r tmp/debug/build/static/* $REMOTE_USER@$SERVER:$SERVER_PATH/
+  rsync -rqlzP tmp/debug/build/static/* $REMOTE_USER@$SERVER:$SERVER_PATH/
+  export BUILD_NUM="current"
+else
+  # scp -r tmp/build/static/* $REMOTE_USER@$SERVER:$SERVER_PATH/
+  rsync -rqlzP tmp/build/static/* $REMOTE_USER@$SERVER:$SERVER_PATH/
+  export BUILD_NUM=$($CMD_PREFIX sc-build-number lab)
+fi
 
-BUILD_NUM=$($CMD_PREFIX sc-build-number lab)
 echo "Lab build hash: $BUILD_NUM"
 
 read -p "What label should this be deployed with? " -e -r LABEL
