@@ -33,6 +33,9 @@ Lab.showingBlogButton =  Ki.State.extend({
     },
 
     post: function() {
+      // save a draft first
+      this.save();
+
       var title = Geniverse.blogPostController.get('title');
       var content = Geniverse.blogPostController.get('content');
       var tags = this._get_blog_tags();
@@ -54,8 +57,17 @@ Lab.showingBlogButton =  Ki.State.extend({
       this.closePanel();
     },
 
+    save: function() {
+      Geniverse.blogPostController.saveDraftBlogPost();
+    },
+
     closePanel: function() {
       this.gotoState('ready');
+    },
+
+    saveAndClose: function() {
+      this.save();
+      this.closePanel();
     },
 
     _checkURL: function() {
@@ -124,8 +136,6 @@ Lab.showingBlogButton =  Ki.State.extend({
       }
       this._waitDialog.dismiss();
       this.get('_failureTimer').invalidate();
-
-      Geniverse.blogPostController.restoreBlogPost();
 
       this._failureDialog = SC.AlertPane.extend({
         layout: {top: 0, centerX: 0, width: 400, height: 100 }

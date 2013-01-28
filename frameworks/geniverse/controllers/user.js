@@ -149,5 +149,30 @@ Geniverse.userController = SC.ObjectController.create(
           activityStarsList.push(d);
         }
     return Math.max.apply([], [0].concat(activityStarsList));
+  },
+
+  saveBlogDraft: function(pageId) {
+    var meta = Geniverse.userController.getUserMetadata();
+    if (!meta.drafts) {
+      meta.drafts = {};
+    }
+
+    var now = new Date();
+    var timeStr = now.format("yyyy-MM-dd ") + now.toTimeString().replace(/ \(.*\)/, '');
+
+    var c1 = Geniverse.blogPostController.get('content1');
+    var c2 = Geniverse.blogPostController.get('content2');
+    var c3 = Geniverse.blogPostController.get('content3');
+    var c4 = Geniverse.blogPostController.get('content4');
+
+    meta.drafts[pageId] = {time: timeStr, content1: c1, content2: c2, content3: c3, content4: c4};
+
+    Geniverse.userController.setUserMetadata(meta);
+  },
+
+  getBlogDraft: function(pageId) {
+    var userMetadata = this.getUserMetadata(),
+        drafts        = userMetadata.drafts || {};
+    return drafts[pageId] || {};
   }
 }) ;
