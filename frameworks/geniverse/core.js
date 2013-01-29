@@ -53,11 +53,11 @@ Geniverse.NO_DRAGON = SC.Object.create({imageURL: sc_static("question-mark.png")
 
 Geniverse.doWhenReady = function(context, object, callback) {
   Geniverse.doWhen(context, object, callback, SC.Record.READY);
-}
+};
 
 Geniverse.doWhenReadyClean = function(context, object, callback) {
   Geniverse.doWhen(context, object, callback, SC.Record.READY_CLEAN);
-}
+};
 
 Geniverse.doWhen = function(context, object, callback, desiredStatus) {
     var self = context;
@@ -73,4 +73,15 @@ Geniverse.doWhen = function(context, object, callback, desiredStatus) {
       }
     };
     checkStatus();
-}
+};
+
+(function() {
+  Geniverse.resourcesBase = "http://resources.geniverse.dev.concord.org";
+  if (/^http:\/\/geniverse\.concord\.org\//.test(window.location)) {
+    Geniverse.resourcesBase = "http://resources.geniverse.concord.org";
+  }
+})();
+
+Geniverse.resourceURL = function(path) {
+  return Geniverse.resourcesBase + path;
+};

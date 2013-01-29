@@ -111,7 +111,7 @@ Geniverse.Dragon = SC.Record.extend(
       // this.set('name', gOrg.name);  // GWT doesn't create meaningful names, so no sense in overriding an existing name
       this.set('sex', gOrg.sex);
       this.set('alleles', gOrg.genetics.genotype.getAlleleString());
-      this.set('imageURL', imageUrlStart + gOrg.getImageName());
+      this.set('imageURL', Geniverse.resourceURL(imageUrlStart + gOrg.getImageName()));
 
       characteristicMap = gOrg.phenotype.characteristics;
       characteristicsArray = [];
