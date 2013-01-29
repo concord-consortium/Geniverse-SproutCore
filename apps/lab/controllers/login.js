@@ -92,6 +92,7 @@ Lab.loginController = SC.ObjectController.create(
         login: username,
         first: first_name,
         last: last_name,
+        avatar: $.cookie("avatar"),
         class_words: []
       }
     });
@@ -108,6 +109,7 @@ Lab.loginController = SC.ObjectController.create(
       var first = response.get('body').first;
       var last = response.get('body').last;
       var isTeacher = response.get('body').teacher;
+      var avatar = response.get('body').avatar;
       var self = this;
       SC.Logger.log(login);
       var userFound = function(user) {
@@ -122,6 +124,7 @@ Lab.loginController = SC.ObjectController.create(
         } else {
           user.set('className', "no_class");
         }
+        user.set('avatar', avatar);
         Geniverse.store.commitRecords();
         Geniverse.userController.set('content',user);
         Geniverse.doWhenReadyClean(self,user,self.didAuthenticate);

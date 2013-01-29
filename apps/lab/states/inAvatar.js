@@ -45,6 +45,7 @@ Lab.inAvatar = Ki.State.extend({
 
     user.addObserver('status', stateChanged);
     console.log("setting avatar " + name + " on user: " + user.get('firstName') + " " + user.get('lastName'));
+    $.cookie("avatar",name);
     user.set('avatar', name);
     Geniverse.store.commitRecords();
 
