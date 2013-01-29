@@ -25,7 +25,7 @@ Geniverse.statsController = SC.Controller.create(
   brownLabel: '--',
   labelNames: 'red green yellow purple brown'.w(),
   total: 0,
-  
+
   label: function(name) {
     return (this.get(name) + " -" + this.percent(this.get(name)) + "%");
   },
@@ -41,7 +41,7 @@ Geniverse.statsController = SC.Controller.create(
     this.set('total',0);
     this.updateLabels();
   }.observes('Geniverse.breedDragonController.resetCount'),
-  
+
   newChildObserver: function()  {
     this.updateStats(Geniverse.breedDragonController.get('newChild'));
   }.observes('Geniverse.breedDragonController.newChild'),
@@ -52,12 +52,12 @@ Geniverse.statsController = SC.Controller.create(
       var value = this.get(color) + 1;
       var total = this.total + 1;
       this.set('total',total);
-      this.set(color,value);    
+      this.set(color,value);
       this.updateLabels();
     }
   },
 
-  updateLabels: function() {    
+  updateLabels: function() {
     var labelNames = this.get('labelNames');
     var i = 0;
     for (i = 0; i < labelNames.length; i++) {
@@ -65,7 +65,7 @@ Geniverse.statsController = SC.Controller.create(
       var propertyName = colorName + 'Label';
       this.set(propertyName, this.label(colorName));
     }
-     
+
   },
 
   percent: function(number) {
@@ -75,5 +75,5 @@ Geniverse.statsController = SC.Controller.create(
     }
     return (((number / total) * 100) + ' ').substring(0,3);
   }
-  
+
 });

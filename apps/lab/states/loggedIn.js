@@ -5,40 +5,61 @@
 /*globals Lab Geniverse CcChat window Ki*/
 
 Lab.loggedIn = Ki.State.extend({
-  
+
   substatesAreConcurrent: YES,
-  
+
   atLocation: Ki.State.design({
-    
+
     substatesAreConcurrent: NO,
-    
+    initialSubstate: 'empty',
+
     inHomePage: Ki.State.plugin('Lab.inHomePage'),
     inActivity: Ki.State.plugin('Lab.inActivity'),
     inCaselog:  Ki.State.plugin('Lab.inCaselog'),
+    inAvatar:   Ki.State.plugin('Lab.inAvatar'),
+    inEndingHub: Ki.State.plugin('Lab.inEndingHub'),
+
+    empty: Ki.State.design(),
 
     startPage: null,
-    
+
     enterState: function() {
+      avatar = Geniverse.userController.get('avatar');
+      if (typeof(avatar) == "undefined" || avatar === null || avatar === "") {
+        Lab.statechart.getState('atLocation').startPage = 'avatar';
+      }
+
       this.get('statechart').sendAction('gotoRequestedPage');
     },
-    
+
     gotoHomePage: function() {
       this.startPage = 'home';
       this.get('statechart').sendAction('gotoRequestedPage');
     },
-    
+
     gotoCaselog: function() {
       this.startPage = 'caselog';
       this.get('statechart').sendAction('gotoRequestedPage');
     },
-    
+
     gotoActivity: function() {
       this.startPage = 'activity';
       this.get('statechart').sendAction('gotoRequestedPage');
     },
-    
+
+    gotoAvatarPage: function() {
+      this.startPage = 'avatar';
+      this.get('statechart').sendAction('gotoRequestedPage');
+    },
+
+    gotoEndingHub: function() {
+      this.startPage = 'endingHub';
+      this.get('statechart').sendAction('gotoRequestedPage');
+    },
+
     gotoRequestedPage: function() {
-      switch (this.startPage) {
+      console.log("going to page");
+      switch (this.startPage || 'home') {
         case 'home':
           this.gotoState('inHomePage');
           break;
@@ -47,7 +68,13 @@ Lab.loggedIn = Ki.State.extend({
           break;
         case 'activity':
           this.gotoState('inActivity');
-          break;          
+          break;
+        case 'avatar':
+          this.gotoState('inAvatar');
+          break;
+        case 'endingHub':
+          this.gotoState('inEndingHub');
+          break;
         default:
           throw new Error(
             "Lab.statechart.loggedIn.atLocation.startPage was set to an unexpected value, '%@'".fmt(this.startPage));
@@ -55,23 +82,23 @@ Lab.loggedIn = Ki.State.extend({
     }
 
   }),
-  
+
   showingBlogButton: Ki.State.plugin('Lab.showingBlogButton'),
-  
+
   warningUserBeforeLeaving: Ki.State.plugin('Lab.warningUserBeforeLeaving'),
-  
-  logOut: function() { 
+
+  logOut: function() {
     SC.Request.postUrl(Lab.loginController.logoutUrl,null).header({'Accept': 'application/json'}).json()
       .notify(this, function(){
         Lab.statechart.gotoState('loggedOut');
         })
       .send();
-    
+
     // rm cookies and blank user object
     Lab.loginController.logout();
   },
-  
-  exitState: function() { 
+
+  exitState: function() {
   }
-  
+
 });

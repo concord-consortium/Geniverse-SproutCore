@@ -18,9 +18,9 @@ Lab.helpController = SC.ObjectController.create(
   content: "Help message loading...",
   isVisible: YES,
   helpButton: null,
-	iframe: SC.WebView.create({								//This is an empty iFrame used to make sure the InfoView will be on top of applets
-		layoutBinding: 'Lab.HelpView.layout',
-		value: static_url('empty.html')}),
+  iframe: SC.WebView.create({                //This is an empty iFrame used to make sure the InfoView will be on top of applets
+    layoutBinding: 'Lab.HelpView.layout',
+    value: static_url('empty.html')}),
 
   showPane: function(callingView) {
     //console.log("showPane called by:",callingView);
@@ -32,7 +32,7 @@ Lab.helpController = SC.ObjectController.create(
     //console.log("this.get('pane'):",_pane);
     if (!_pane.get('isVisibleInWindow')){
 //      if(callingView){
-			if (Geniverse.activityController.get('pageContainsApplet')){
+      if (Geniverse.activityController.get('pageContainsApplet')){
         Geniverse.activityController.get('iframeLayerToAppend').appendChild(this.get('iframe'));
       }
       _pane.append();
@@ -76,8 +76,10 @@ Lab.helpController = SC.ObjectController.create(
 
   removeView: function (callingView){
     if (this.get('pane')) {
+      if (this.get('pane').get('isVisibleInWindow') && Geniverse.activityController.get('pageContainsApplet')) {
+        this.get('iframe').parentView.removeChild(this.get('iframe'));
+      }
       this.get('pane').remove();
-			this.get('iframe').parentView.removeChild(this.get('iframe'));
     }
   },
 
@@ -105,23 +107,7 @@ Lab.helpController = SC.ObjectController.create(
       //console.log("helpMessage:", helpMessage);
       callback(helpMessage);
     };
-    self.doWhenReady(self, helpMessages, sendFoundHelpMessage);
-  },
-
-  doWhenReady: function(context, field, method) {
-    var self = context;
-    //console.log("self = context:", self);
-    var status = field.get('status');
-    //console.log("status:", status, "SC.Record.READY:", SC.Record.READY);
-    if (status & SC.Record.READY == SC.Record.READY) {
-      //console.log("calling field.removeObserver('status', method);");
-      field.removeObserver('status', method);
-      //console.log("method.call(context);");
-      method.call(context);
-    }
-    else {
-      //console.log("calling field.addObserver('status', context, method);");
-      field.addObserver('status', context, method);
-    }
+    Geniverse.doWhenReady(self, helpMessages, sendFoundHelpMessage);
   }
+
 }) ;

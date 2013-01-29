@@ -5,11 +5,10 @@
 /*globals Lab Geniverse CC, CcChat, java static_url sc_static sc_require */
 Lab.marginSize = 15;
 
-sc_require('views/top_bar_view');
+sc_require('views/lab_pane');
 sc_require('views/challenge_pool_view');
 sc_require('views/breeding_pen_view');
 sc_require('views/stable_view');
-sc_require('views/bottom_bar_view');
 
 Lab.chromosomeTripleChallengePage = SC.Page.design({
 
@@ -20,32 +19,12 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page
   // load.
-  mainPane: SC.MainPane.design({
-    // defaultResponder: Geniverse,
-    classNames: ['brown'],
-    childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
-    backgroundView: SC.ImageView.design({
-      value: static_url('lab_background.png'),
-      classNames: ['transparent','scalingimage']
-    }),
-    topBar: Lab.TopBarView.design({
-      classNames: ['brown']
-    }),
-    bottomBar: Lab.BottomBarView.design({
-      classNames: ['brown']
-    }),
-
+  mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
 
-      layout: { centerX: 0, top: 35, width: 1080, height: 605 },
+      layout: { centerX: 0, top: 95, width: 1080, height: 605 },
 
-      childViews: 'background targetDrake targetTitle genomePanels revealButton scoreLabel line1 line2 line3'.w(),
-
-      // separate parallel background so we don't make the rest of the childViews see-through
-      background: SC.View.design({
-        layout: {top: 10, left: 0, right: 0, bottom: 0},
-        classNames: ['genome-view-intro']
-      }),
+      childViews: 'targetDrake targetTitle genomePanels revealButton scoreLabel line1 line2 line3'.w(),
 
       panel1AllSelectedBinding: '*genomePanels.genome1Panel.genomeView.allAllelesSelected',
       panel2AllSelectedBinding: '*genomePanels.genome2Panel.genomeView.allAllelesSelected',
@@ -81,6 +60,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
 
       targetTitle: SC.LabelView.design({
         layout: {top: 40, height: 25, left: 25, width: 190 },
+        classNames: 'title'.w(),
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         value: "Target Drake"

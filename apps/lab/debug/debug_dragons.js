@@ -4,17 +4,17 @@ Lab.debugDragons = function() {
   var names = ['firstDragon', 'secondDragon', 'thirdDragon'],
       str = [],
       dragon, i, len;
-      
+
   for (i = 0, len = names.length; i < len; i++) {
     str.push(names[i] + ":\n");
-    
+
     dragon = Geniverse.dragonGenomeController.get(names[i]);
     if (typeof dragon === 'undefined') dragon = '(undefined)';
     if (dragon === null) dragon = '(null)';
-    
+
     str.push(dragon + "\n\n");
   }
-  
+
   return str.join('');
 };
 

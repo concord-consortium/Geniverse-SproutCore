@@ -19,10 +19,10 @@ Lab.infoController = SC.ObjectController.create(
   content: "",
   isVisible: NO,
   infoButton: null,
-	iframe: SC.WebView.create({								//This is an empty iFrame used to make sure the InfoView will be on top of applets
-		layoutBinding: 'Lab.InfoView.layout',
-		value: static_url('empty.html')}),
-	
+  iframe: SC.WebView.create({                //This is an empty iFrame used to make sure the InfoView will be on top of applets
+    layoutBinding: 'Lab.InfoView.layout',
+    value: static_url('empty.html')}),
+
   /**
    * Makes the infoButton visible and sets the info view
    * content to the message input if it exists
@@ -53,10 +53,10 @@ Lab.infoController = SC.ObjectController.create(
     this.set('pane',infoView);
     var _pane = this.get('pane');
     if (!_pane.get('isVisibleInWindow')){
-			_pane.append();
-			if (_pane.get('isVisibleInWindow') && Geniverse.activityController.get('pageContainsApplet')) {
-				Geniverse.activityController.get('iframeLayerToAppend').appendChild(this.get('iframe'));
-			}
+      _pane.append();
+      if (_pane.get('isVisibleInWindow') && Geniverse.activityController.get('pageContainsApplet')) {
+        Geniverse.activityController.get('iframeLayerToAppend').appendChild(this.get('iframe'));
+      }
       this.updateView(this.get('content'));
     }
   },
@@ -67,11 +67,11 @@ Lab.infoController = SC.ObjectController.create(
   }.observes('content'),
 
   removeView: function (callingView){
-		var _pane = this.get('pane');
+    var _pane = this.get('pane');
     if (this.get('pane')) {
-			if (_pane.get('isVisibleInWindow') && Geniverse.activityController.get('pageContainsApplet')) {
-				this.get('iframe').parentView.removeChild(this.get('iframe'));
-			}
+      if (_pane.get('isVisibleInWindow') && Geniverse.activityController.get('pageContainsApplet')) {
+        this.get('iframe').parentView.removeChild(this.get('iframe'));
+      }
       this.get('pane').remove();
     }
   },

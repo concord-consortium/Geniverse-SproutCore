@@ -22,7 +22,7 @@ Lab.BreedingPenView = SC.View.extend(
   // childViews
   titleView: null,
   penView: null,
-  
+
   breedingRecordRight: -180,
 
   /**
@@ -52,7 +52,7 @@ Lab.BreedingPenView = SC.View.extend(
    */
   createChildViews: function() {
     var childViews = [];
-    
+
     this.penView = this.createChildView(
       CC.AutoScrollView.design({
         hasHorizontalScroller: NO,
@@ -71,30 +71,30 @@ Lab.BreedingPenView = SC.View.extend(
         autoScrollTriggerBinding: this.get('eggsControllerPath')+'.length'
       })
     );
-    
+
     this.statsView = this.createChildView(
       Geniverse.StatsView.design({
         layout: { left: 0, top: 0, bottom: 0, right: 0 },
         contentBinding: 'Geniverse.eggsController.arrangedObjects'
       })
     );
-    
+
     this.tabView = this.createChildView(
-      SC.TabView.design({ 
+      SC.TabView.design({
         layout: { left: 0, top: 0, bottom: 30, right: 0 },
-        items: [ 
+        items: [
           {title: "Breeding pen", value: this.penView },
           {title: "Stats", value: this.statsView }
-        ], 
-        itemTitleKey: 'title', 
-        itemValueKey: 'value', 
+        ],
+        itemTitleKey: 'title',
+        itemValueKey: 'value',
         nowShowing: this.penView
       })
-    ); 
-    
+    );
+
     childViews.push(this.tabView);
-    
+
     this.set('childViews', childViews);
   }
-  
+
 });

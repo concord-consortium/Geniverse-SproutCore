@@ -24,13 +24,13 @@ Lab.matchTargetDrakesOneAtATimeChallenge = Lab.challenge.extend({
   // @param view      the view to be updated
   checkMatchDragon: function(dragons, view) {
     Geniverse.scoringController.incrementScore(1);
-    
+
     if (Geniverse.matchController.doesMatch(dragons[0], dragons[1])) {
       view.setPath('content.hasBeenMatched', YES);
       view._setClassNames();
       this.successfulMatch = YES;
       SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
-        "Good work!", 
+        "Good work!",
         "The drake you have created matches the target drake.",
         "",
         "OK",
@@ -40,7 +40,7 @@ Lab.matchTargetDrakesOneAtATimeChallenge = Lab.challenge.extend({
     } else {
       this.successfulMatch = NO;
       SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).error(
-        "That's not the drake!", 
+        "That's not the drake!",
         "The drake you have created doesn't match the target drake. Please try again.",
         "",
         "Try again",

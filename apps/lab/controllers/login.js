@@ -12,7 +12,7 @@
 */
 Lab.loginController = SC.ObjectController.create(
 /** @scope Lab.loginController.prototype */ {
-  
+
   defaultResponder: 'Lab.statechart',
 
   // TODO: Add your own code here.
@@ -24,17 +24,11 @@ Lab.loginController = SC.ObjectController.create(
   loggedIn: NO,
   triedPortal: NO,
   panel: null,
-  welcomeMessage: 'please wait ...', 
-  
-  showCheckPanel: function() {
-    this.hidePanel();
-    this.panel = Lab.LoginCheckView.create({
-      layout: {top: 10, width: 400, height: 100, centerX: 0}
-    });
-    this.panel.append();
-    this.checkCCAuthToken();  
-  },
- 
+  welcomeMessage: 'please wait ...',
+  memberGroupMessage: '',
+  checkShowing: YES,
+  loginShowing: NO,
+
   showGroupPanel: function() {
     this.hidePanel();
     this.panel = Lab.LoginGroupView.create({
@@ -42,19 +36,17 @@ Lab.loginController = SC.ObjectController.create(
     });
     this.panel.append();
   },
-  
+
   showLoginPanel: function() {
-    this.hidePanel();
     this.set('welcomeMessage','please log in');
     if (this.triedPortal) {
       this.set('welcomeMessage','invalid login. try again.');
     }
-    this.panel = Lab.LoginLoginView.create({
-      layout: {top: 10, width: 400, height: 100, centerX: 0}
-    });
-    this.panel.append();
+    console.log("Showing login");
+    this.set('loginShowing', YES);
+    this.set('checkShowing', NO);
   },
-  
+
 
   hidePanel: function() {
     if(this.panel) {
@@ -62,8 +54,8 @@ Lab.loginController = SC.ObjectController.create(
       this.panel = null;
     }
   },
- 
-  // ask the portal if this user is logged in 
+
+  // ask the portal if this user is logged in
   checkCCAuthToken: function() {
     var checkTokenUrl = this.checkTokenUrl;
     SC.Request.getUrl(checkTokenUrl).header({'Accept': 'application/json'}).json()
@@ -82,6 +74,9 @@ Lab.loginController = SC.ObjectController.create(
       login: usename,
       password: password
     };
+    this.set('welcomeMessage', 'please wait ...');
+    this.set('loginShowing', NO);
+
     // TODO: Default portal authentication does not use hash!
     // send over https!
     SC.Request.postUrl(loginUrl,body).header({'Accept': 'application/json'}).json()
@@ -112,20 +107,24 @@ Lab.loginController = SC.ObjectController.create(
       var login = response.get('body').login;
       var first = response.get('body').first;
       var last = response.get('body').last;
+      var isTeacher = response.get('body').teacher;
       var self = this;
       SC.Logger.log(login);
       var userFound = function(user) {
         user.set('firstName',first);
         user.set('lastName',last);
+        user.set('isTeacher', isTeacher);
         var classWords = response.get('body').class_words;
         if (classWords && classWords.length > 0){
-          user.set('className', classWords[0]);           // for now, we assume student is only in one class on portal
+          // if a user has more than one class word, use the last one on the list
+          user.set('className', classWords[classWords.length-1]);
+          user.set('allClassNames', classWords);
         } else {
           user.set('className', "no_class");
         }
         Geniverse.store.commitRecords();
         Geniverse.userController.set('content',user);
-        Geniverse.userController.doWhenReady(self,user,self.didAuthenticate);
+        Geniverse.doWhenReadyClean(self,user,self.didAuthenticate);
       };
       Geniverse.userController.findOrCreateUser(login, userFound);
     }
@@ -146,15 +145,15 @@ Lab.loginController = SC.ObjectController.create(
       this.showGroupPanel();
     }
   },
-  
+
   logout: function() {
     this.set('triedPortal', false);
-    
+
     var cc_auth_token = SC.Cookie.find('cc_auth_token');
     if (cc_auth_token) {
       cc_auth_token.destroy();
     }
-    
+
     var self = this;
     SC.Logger.info("logging out %s", this.get('username'));
     this.set('username','');
@@ -162,7 +161,7 @@ Lab.loginController = SC.ObjectController.create(
     this.set('firstName', '');
     this.set('password', '');
     this.set('loggedIn', NO);
-    
+
     Lab.userDefaults.writeDefault('username', '');
     Lab.userDefaults.writeDefault('password', '');
     Lab.userDefaults.writeDefault('chatroom', '');
@@ -176,7 +175,7 @@ Lab.loginController = SC.ObjectController.create(
       Geniverse.store.commitRecords();
     }
     else {
-      SC.Logger.log("probably an error condition -- no user when updateing groups"); 
+      SC.Logger.log("probably an error condition -- no user when updateing groups");
     }
   },
 
@@ -186,7 +185,8 @@ Lab.loginController = SC.ObjectController.create(
     var group = user.get('groupId');
     var userName = user.get('firstName');
     this.hidePanel();
-    this.set('welcomeMessage',"Welcome %@, you are member #%@ in group %@".fmt(userName, member, group));
+    this.set('welcomeMessage',"Welcome to Geniverse, %@".fmt(userName));
+    this.set('memberGroupMessage', "Member #%@, Group #%@".fmt(member, group));
     this.set('lastGroupId', group);
     this.set('lastMemberId', member);
     //Lab.infoController.displayButtonOnly("<div><h2>"+this.get('welcomeMessage')+"</h2></div>");
@@ -195,19 +195,19 @@ Lab.loginController = SC.ObjectController.create(
     Lab.userDefaults.writeDefault('username', user.get('username'));
     this.updateGroupInfo();
     this.set('loggedIn', YES);
-    
+
     Lab.statechart.sendAction('logIn');
   },
-  
+
   lastGroupId: -1,
   lastMemberId: -1,
-  
+
   loadTimer: null,
   setupTimer: function(array, callback) {
-	  if (this.get('loadTimer') !== null) {
-	    this.get('loadTimer').invalidate();
+    if (this.get('loadTimer') !== null) {
+      this.get('loadTimer').invalidate();
     }
-    
+
     this.set('loadTimer', SC.Timer.schedule({
       target: this,
       action: function() {
@@ -222,40 +222,40 @@ Lab.loginController = SC.ObjectController.create(
       interval: 500,
       repeats: YES
     }));
-	},
-  
+  },
+
   groupInfoDidUpdate: function() {
     var self = this;
-    if ((Geniverse.userController.get('groupId') != this.get('lastGroupId') || 
+    if ((Geniverse.userController.get('groupId') != this.get('lastGroupId') ||
         Geniverse.userController.get('memberId') != this.get('lastMemberId')) &&
         Lab.ACTIVITY.get('hasLoadedActivityData')){
       SC.Logger.log("reloading data after group change");
       Lab.ACTIVITY.set('hasLoadedActivityData', NO);
-      
+
       var user = Geniverse.userController.get('content');
       var challengeDragons = Geniverse.challengePoolController.get('arrangedObjects');
       var watchDragonsArray = [];
       challengeDragons.forEach(function(item){
         watchDragonsArray.push(item);
       });
-      
-      function sellAndReload(){
+
+      var sellAndReload = function(){
         if ((user.get('status') & SC.Record.READY) === SC.Record.READY) {
           user.removeObserver('status', sellAndReload);
           Lab.ACTIVITY.sellAllUsersDrakes();
-          
+
           Geniverse.store.commitRecords();
-          
-          
-          function reload(){
+
+
+          var reload = function(){
             if ((challengeDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
               challengeDragons.removeObserver('status', reload);
               Lab.ACTIVITY.reloadData();
             }
-          }
+          };
           self.setupTimer(watchDragonsArray, reload);
-          
-          
+
+
           // if ((challengeDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
           //             reload();
           //           } else {
@@ -263,16 +263,16 @@ Lab.loginController = SC.ObjectController.create(
           //             challengeDragons.addObserver('status', reload);
           //           }
         }
-      }
-      
+      };
+
       if ((user.get('status') & SC.Record.READY) === SC.Record.READY) {
         sellAndReload();
       } else {
         user.addObserver('status', sellAndReload);
       }
-        
-        
-        
+
+
+
       this.set('lastGroupId', Geniverse.userController.get('groupId'));
       this.set('lastMemberId', Geniverse.userController.get('memberId'));
     }

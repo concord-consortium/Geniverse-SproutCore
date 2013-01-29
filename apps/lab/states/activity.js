@@ -226,7 +226,7 @@ Lab.ACTIVITY = SC.Responder.create(
       Geniverse.stableOrganismsController.set('content', stableOrganisms);
     };
     var timer = SC.Timer.schedule({
-      action: finishInitLater, interval: 1000
+      action: finishInitLater, interval: 6000
     });
 
     /////////////////// Eggs

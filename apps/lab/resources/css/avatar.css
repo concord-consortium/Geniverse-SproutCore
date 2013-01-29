@@ -1,0 +1,21 @@
+#scarlett {
+  background: 0px 0px no-repeat static_url("characters.png");
+}
+
+#scarlett:hover {
+  background: 0px -540px no-repeat static_url("characters.png");
+}
+
+#strider {
+  background: -340px -10px no-repeat static_url("characters.png");
+}
+
+#strider:hover {
+  background: -340px -550px no-repeat static_url("characters.png");
+}
+
+.sc-theme .sc-view.avatar.title div {
+  text-align: center;
+  font-size: 36px;
+  line-height: 36px;
+}

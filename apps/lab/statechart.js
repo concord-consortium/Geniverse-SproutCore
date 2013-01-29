@@ -7,9 +7,9 @@
 Lab.statechart = Ki.Statechart.create({
 
   initialState: 'loggedOut',
-  
+
   loggedOut: Ki.State.plugin('Lab.loggedOut'),
-  
+
   loggedIn: Ki.State.plugin('Lab.loggedIn')
 
 });

@@ -16,6 +16,17 @@ Geniverse.userController = SC.ObjectController.create(
   // TODO: Add your own code here.
   usernameBinding: '*user.username',
 
+  isAccelerated: function() {
+    return this.getUserMetadata().accelerated || NO;
+  }.property('*user','*user.metadata.accelerated'),
+
+  setAccelerated: function(accel) {
+    var meta = this.getUserMetadata();
+    meta.accelerated = accel;
+    this.setUserMetadata(meta);
+    Geniverse.store.commitRecords();
+  },
+
   createUser: function (username, password){
     if (!password) { password = ""; }
     var passwordHash = SHA256(password);
@@ -30,10 +41,10 @@ Geniverse.userController = SC.ObjectController.create(
     Geniverse.store.commitRecords();
     return user;
   },
-  
+
   findUser: function (username, callback) {
     var self = this;
-    var query = SC.Query.local(Geniverse.User, 
+    var query = SC.Query.local(Geniverse.User,
       {
         conditions: 'username = "' + username + '"',
         restParams: Geniverse.makeRestParams({
@@ -45,26 +56,10 @@ Geniverse.userController = SC.ObjectController.create(
         var user = users.firstObject();
         callback(user);
     };
-    self.doWhenReady(self,users,sendFoundUser);
+    Geniverse.doWhenReadyClean(self,users,sendFoundUser);
   },
 
-  doWhenReady: function(context, field, method) {
-    var self = context;
-    var outer = this;
-    var checkStatus = function() {
-      var status = field.get('status');
-      if (status & SC.Record.READY_CLEAN) {
-        field.removeObserver('status', outer, checkStatus);
-        method.call(context);
-      }
-      else {
-        field.addObserver('status', outer, checkStatus);
-      }
-    };
-    checkStatus();
-  },
-
-  findOrCreateUser: function(username, callback) {      
+  findOrCreateUser: function(username, callback) {
     var self = this;
     var nextMethod = function(user) {
       if (user) {
@@ -78,7 +73,7 @@ Geniverse.userController = SC.ObjectController.create(
           SC.Logger.log("created username %@", username);
           callback(user);
         };
-        self.doWhenReady(self, user, method);
+        Geniverse.doWhenReadyClean(self, user, method);
       }
     };
     self.findUser(username,nextMethod);
@@ -98,6 +93,26 @@ Geniverse.userController = SC.ObjectController.create(
     user.recordDidChange();
   },
 
+  isUnlocked: function(caseLevel, caseTitle) {
+    var meta = this.getUserMetadata();
+    if (meta.unlockedCases && meta.unlockedCases[caseLevel]) {
+      return meta.unlockedCases[caseLevel][caseTitle] || false;
+    }
+    return false;
+  },
+
+  setUnlocked: function(caseLevel, caseTitle) {
+    var meta = this.getUserMetadata();
+    if (!meta.unlockedCases) {
+      meta.unlockedCases = {};
+    }
+    if (!meta.unlockedCases[caseLevel]) {
+      meta.unlockedCases[caseLevel] = {};
+    }
+    meta.unlockedCases[caseLevel][caseTitle] = true;
+    this.setUserMetadata(meta);
+  },
+
   // this could get moved into its own controller, if we want
   setPageStars: function(pageId, numStars) {
     var meta = Geniverse.userController.getUserMetadata();
@@ -107,7 +122,57 @@ Geniverse.userController = SC.ObjectController.create(
     if (!meta.stars[pageId]) {
      meta.stars[pageId] = [];
     }
-    meta.stars[pageId].push(numStars);
+    var now = new Date();
+    var timeStr = now.format("yyyy-MM-dd ") + now.toTimeString().replace(/ \(.*\)/, '');
+    meta.stars[pageId].push({stars: numStars, time: timeStr});
+
+    // TODO Do we bother to convert all the old data to the new format?
+    // from; stars[pageId] == [1,3,2,3,2] to stars[pageId] == [{...}, {...}, {...}, {...}]
+
     Geniverse.userController.setUserMetadata(meta);
+  },
+
+  getPageStars: function(pageId) {
+    var userMetadata = this.getUserMetadata(),
+        stars        = userMetadata.stars || {},
+        activityStarsListTemp = stars[pageId] || [],
+        activityStarsList = [];
+
+        for (var i = 0; i < activityStarsListTemp.length; i++) {
+          var s = activityStarsListTemp[i];
+          var d = 0;
+          if (typeof(s) == "object") {
+            d = s.stars || 0;
+          } else if (typeof(s) == "number") {
+            d = s;
+          }
+          activityStarsList.push(d);
+        }
+    return Math.max.apply([], [0].concat(activityStarsList));
+  },
+
+  saveBlogDraft: function(pageId) {
+    var meta = Geniverse.userController.getUserMetadata();
+    if (!meta.drafts) {
+      meta.drafts = {};
+    }
+
+    var now = new Date();
+    var timeStr = now.format("yyyy-MM-dd ") + now.toTimeString().replace(/ \(.*\)/, '');
+
+    var c1 = Geniverse.blogPostController.get('content1');
+    var c2 = Geniverse.blogPostController.get('content2');
+    var c3 = Geniverse.blogPostController.get('content3');
+    var c4 = Geniverse.blogPostController.get('content4');
+
+    meta.drafts[pageId] = {time: timeStr, content1: c1, content2: c2, content3: c3, content4: c4};
+
+    Geniverse.userController.setUserMetadata(meta);
+  },
+
+  getBlogDraft: function(pageId) {
+    var userMetadata = this.getUserMetadata(),
+        drafts        = userMetadata.drafts || {};
+    return drafts[pageId] || {};
   }
 }) ;

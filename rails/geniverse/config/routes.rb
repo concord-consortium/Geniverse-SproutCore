@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :unlockables
+
   map.resources :help_messages
 
   map.resources :articles
@@ -13,6 +15,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect "users/:username", :format => 'json', :controller => 'users', :action => 'show',
     :requirements => { :username => /[a-z][a-z0-9]*/i } # usernames must start with an alpha character, but can have numbers or letters after that
   map.resources :users, :except => :new
+  map.connect "starsReport/:id", :controller => 'users', :action => 'starsReport'
 
   map.resources :activities
 

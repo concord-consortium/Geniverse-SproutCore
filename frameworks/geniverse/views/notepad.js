@@ -37,7 +37,7 @@ Geniverse.NotepadView = SC.PalettePane.design({
       target: "Geniverse.notepadController"
     }),
 
-    // TODO: Solve Firefox bug: titleView lacks dark background, making title hard to read 
+    // TODO: Solve Firefox bug: titleView lacks dark background, making title hard to read
     notepadView: SC.TextFieldView.design({
       layout: { left: 10, top: 24, width: 420, height: 375 },
       hint: "Type your personal lab notes into this Note Pad",

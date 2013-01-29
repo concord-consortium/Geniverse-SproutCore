@@ -170,7 +170,7 @@ Geniverse.articleController = SC.ObjectController.create(
     article.set('accepted', NO);
 
 
-		Geniverse.store.commitRecords();
+    Geniverse.store.commitRecords();
 
 
     var articleDraftChannel = this.get('articleDraftChannel');

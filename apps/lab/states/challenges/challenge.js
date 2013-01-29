@@ -117,6 +117,10 @@ Lab.challenge = Ki.State.extend({
           if (status === SC.BUTTON1_STATUS) {
               self._showCongrats(next);
           } else {
+            // unlock any unlockables
+            var pageId = Geniverse.activityController.get('route');
+            Geniverse.unlockablesController.unlockFor(pageId);
+
             Lab.statechart.sendAction('repeatChallenge');
           }
         }
@@ -137,6 +141,10 @@ Lab.challenge = Ki.State.extend({
   },
 
   _moveOn: function(next) {
+    // unlock any unlockables
+    var pageId = Geniverse.activityController.get('route');
+    Geniverse.unlockablesController.unlockFor(pageId);
+
     if (next) {
       Lab.statechart.sendAction('gotoNextActivity');
     } else {

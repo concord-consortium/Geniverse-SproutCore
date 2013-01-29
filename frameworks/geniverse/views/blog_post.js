@@ -11,7 +11,7 @@
 sc_require('mixins/simple_button');
 
 Geniverse.BlogPostView = SC.PalettePane.design({
-  layout: { width: 440, height: 547, centerX: 0, centerY: 0 },
+  layout: { width: 497, height: 547, centerX: 0, centerY: 0 },
   isModal:NO,
 
 
@@ -19,11 +19,11 @@ Geniverse.BlogPostView = SC.PalettePane.design({
 
 
   contentView: SC.View.extend({
-    childViews: 'titleView blogTitleView blogPostView1 blogPostView2 blogPostView3 blogPostView4 cancelButton postButton'.w(),
-		classNames: 'parchment'.w(),
+    childViews: 'titleView blogTitleView blogPostView1 blogPostView2 blogPostView3 blogPostView4 cancelButton saveButton saveAndCloseButton postButton'.w(),
+    classNames: 'parchment'.w(),
 
     titleView: SC.LabelView.design({
-      layout: { centerY: 0, height: 24, left: 0, top:5, width: 440 },
+      layout: { centerY: 0, height: 24, left: 0, top:5, width: 497 },
       //valueBinding: this.get('titlePath'),
       value: 'Post to the Journal',
       controlSize: "info-title",
@@ -33,7 +33,7 @@ Geniverse.BlogPostView = SC.PalettePane.design({
     }),
 
     blogTitleView: SC.LabelView.design({
-      layout: { left: 10, top: 29, width: 420, height: 42 },
+      layout: { left: 10, top: 29, width: 477, height: 42 },
       controlSize: "info-title",
       fontWeight: SC.BOLD_WEIGHT,
       textAlign: SC.ALIGN_CENTER,
@@ -41,7 +41,7 @@ Geniverse.BlogPostView = SC.PalettePane.design({
     }),
 
     cancelButton: SC.ImageView.extend(Geniverse.SimpleButton, {
-      layout: { bottom: 5, right: 128, width: 118, height: 27 },
+      layout: { bottom: 5, left: 5, width: 118, height: 27 },
       isEnabled: YES,
       hasHover: YES,
       classNames: 'cancelButton'.w(),
@@ -50,19 +50,39 @@ Geniverse.BlogPostView = SC.PalettePane.design({
       action: "closePanel"
     }),
 
+    saveButton: SC.ImageView.extend(Geniverse.SimpleButton, {
+      layout: { bottom: 5, left: 128, width: 118, height: 27 },
+      isEnabled: YES,
+      hasHover: YES,
+      classNames: 'saveButton'.w(),
+      alt: 'Save a draft of your work',
+      title: "Save draft",
+      action: "save"
+    }),
+
+    saveAndCloseButton: SC.ImageView.extend(Geniverse.SimpleButton, {
+      layout: { bottom: 5, left: 251, width: 118, height: 27 },
+      isEnabled: YES,
+      hasHover: YES,
+      classNames: 'saveAndCloseButton'.w(),
+      alt: 'Save a draft of your work and close this form',
+      title: "Save and Close",
+      action: "saveAndClose"
+    }),
+
     postButton: SC.ImageView.extend(Geniverse.SimpleButton, {
-      layout: { bottom: 5, right: 5, width: 118, height: 27 },
+      layout: { bottom: 5, left: 374, width: 118, height: 27 },
       isEnabled: YES,
       hasHover: YES,
       classNames: 'postButton'.w(),
       alt: 'Post to blog',
-      title: "Post",
+      title: "Save and Post",
       action: "post"
     }),
 
     // TODO: Solve Firefox bug: titleView lacks dark background, making title hard to read
     blogPostView1: SC.TextFieldView.design({
-      layout: { left: 10, top: 72, width: 420, height: 35 },
+      layout: { left: 10, top: 72, width: 477, height: 35 },
       hint: "Type your CLAIM here",
       fontWeight: SC.BOLD_WEIGHT,
       isEditable: YES,
@@ -71,7 +91,7 @@ Geniverse.BlogPostView = SC.PalettePane.design({
     }),
 
     blogPostView2: SC.TextFieldView.design({
-      layout: { left: 10, top: 112, width: 420, height: 174 },
+      layout: { left: 10, top: 112, width: 477, height: 174 },
       hint: "Type your EVIDENCE here",
       isEditable: YES,
       isTextArea: YES,
@@ -79,7 +99,7 @@ Geniverse.BlogPostView = SC.PalettePane.design({
     }),
 
     blogPostView3: SC.TextFieldView.design({
-      layout: { left: 10, top: 287, width: 420, height: 28 },
+      layout: { left: 10, top: 287, width: 477, height: 28 },
       hint: "Evidence URL",
       isEditable: YES,
       isTextArea: NO,
@@ -87,7 +107,7 @@ Geniverse.BlogPostView = SC.PalettePane.design({
     }),
 
     blogPostView4: SC.TextFieldView.design({
-      layout: { left: 10, top: 322, width: 420, height: 190 },
+      layout: { left: 10, top: 322, width: 477, height: 190 },
       hint: "Type your REASONING here",
       isEditable: YES,
       isTextArea: YES,

@@ -21,7 +21,7 @@ Geniverse.publishedArticlesController =  SC.ArrayController.create(
       return "";
     }
   }.property('selection').cacheable(),
-  
+
   dragons: function() {
     var article = this.get('selection').firstObject();
     if (article !== undefined && article !== null){

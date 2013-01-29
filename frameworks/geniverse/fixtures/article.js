@@ -9,7 +9,7 @@ sc_require('models/article');
 Geniverse.Article.FIXTURES = [
 
   // TODO: Add your data fixtures here.
-  // All fixture records must have a unique primary key (default 'guid').  See 
+  // All fixture records must have a unique primary key (default 'guid').  See
   // the example below.
 
   { guid: 1,
@@ -19,7 +19,7 @@ Geniverse.Article.FIXTURES = [
     // dragons: ,
     submitted: NO,
     published: NO },
-  
+
   { guid: 2,
     group: 2,
     activity: [1],
@@ -27,9 +27,9 @@ Geniverse.Article.FIXTURES = [
     // dragons: ,
     submitted: YES,
     published: YES }
-    
-    
-    
+
+
+
   // { guid: 2,
   //   firstName: "Dwight",
   //   lastName: "Schrute" },

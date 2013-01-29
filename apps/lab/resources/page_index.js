@@ -4,34 +4,34 @@
 // ==========================================================================
 /*globals Lab Geniverse */
 
-// This page describes the main user interface for your application.  
+// This page describes the main user interface for your application.
 Lab.pageIndex = SC.Page.design({
 
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page 
+  // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: SC.MainPane.design({
     title: "Welcome to the Geniverse Labs",
     childViews: 'labelView'.w(),
-    
+
     init: function() {
-  	  sc_super();
+      sc_super();
       this.addLinks();
-  	},
-    
+    },
+
     labelView: SC.LabelView.design({
       layout: { top: 50, left: 50, width: 200, height: 18 },
       textAlign: SC.ALIGN_CENTER,
-      tagName: "h1", 
+      tagName: "h1",
       valueBinding: 'Lab.mainPage.mainPane.title'
     }),
 
     addLinks: function (dragon, i) {
       var pages = SC.Page.instances;
-      
+
       var totalLinks = 0;
       var titles = [];
-      
+
       pages.forEach(function(item, i) {
         if (item.pagePath && item.title){
           var path = item.pagePath.split('.');
@@ -42,7 +42,7 @@ Lab.pageIndex = SC.Page.design({
           } else {
             path = "";
           }
-          
+
           if (!titles[item.title]) {
             var linkView = SC.LabelView.create({
               value: "<a href=\"#"+path+"\">"+item.title+"</a>",

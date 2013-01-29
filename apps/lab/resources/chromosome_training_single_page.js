@@ -5,53 +5,33 @@
 /*globals Lab Geniverse CC, CcChat, java static_url sc_static sc_require */
 Lab.marginSize = 15;
 
-sc_require('views/top_bar_view');
+sc_require('views/lab_pane');
 sc_require('views/challenge_pool_view');
 sc_require('views/breeding_pen_view');
 sc_require('views/stable_view');
-sc_require('views/bottom_bar_view');
 
 Lab.chromosomeTrainingSinglePage = SC.Page.design({
-  
+
   pagePath: 'Lab.chromosomeTrainingSinglePage',
   title: 'Chromosome Training Page',
-  
+
   // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page 
+  // Add childViews to this pane for views to display immediately on page
   // load.
-  mainPane: SC.MainPane.design({
-    // defaultResponder: Geniverse,
-    classNames: ['brown'], 
-    childViews: 'backgroundView mainAppView topBar bottomBar'.w(),
-    backgroundView: SC.ImageView.design({
-      value: static_url('lab_background.png'),
-      classNames: ['transparent','scalingimage']
-    }),
-    topBar: Lab.TopBarView.design({
-      classNames: ['brown']
-    }),
-    bottomBar: Lab.BottomBarView.design({
-      classNames: ['brown']
-    }),
-
+  mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
-      
-      childViews: 'drakeGenomePanel'.w(),
-      
-      drakeGenomePanel: SC.View.design({
-        layout: {top: 50, height: 550, centerX: 0, width: 500 },
-        childViews: 'background title genomeView switchSexButton nextButton'.w(),
 
-        // separate parallel background so we don't make the rest of the childViews see-through
-        background: SC.View.design({
-          layout: {top: 0, left: 0, right: 0, bottom: 0},
-          classNames: ['genome-view-intro']
-        }),
+      childViews: 'drakeGenomePanel'.w(),
+
+      drakeGenomePanel: SC.View.design({
+        layout: {top: 110, height: 550, centerX: 0, width: 500 },
+        childViews: 'title genomeView switchSexButton nextButton'.w(),
 
         title: SC.LabelView.design({
           layout: {top: 20, height: 25, left: 125, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
+          classNames: 'title'.w(),
           sexBinding: '*parentView.genomeView.sex',
           value: function() {
             return (this.get('sex') === 0 ? "Male " : "Female ") + "Drake";
@@ -105,7 +85,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
         })
 
       })
-      
+
     })
-	})
+  })
 });

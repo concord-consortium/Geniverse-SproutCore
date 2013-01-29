@@ -10,9 +10,7 @@
 
   @extends SC.View
 */
-Lab.LoginCheckView = SC.PanelPane.extend({
-  layout: {centerX: 0, top: 10, width: 400, height: 100},
-  contentView: SC.View.design({
+Lab.LoginCheckView = SC.View.extend({
      layout: {left: 0, top: 0, width: 400, height: 100},
 
      // TODO: Add your own code here.
@@ -24,7 +22,6 @@ Lab.LoginCheckView = SC.PanelPane.extend({
        value: "please wait ..."
      })
 
-  })
 });
 
 

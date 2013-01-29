@@ -58,14 +58,14 @@ Geniverse.invisibleGenomeController = SC.ObjectController.create(
       var alleleString = this.get('alleles');
       var allAlleles = Geniverse.chromosomeController.processAlleleString(alleleString);
       this.set('allAlleles', allAlleles);
-      
+
       SC.RunLoop.end();
   }.observes('content'),
 
   hiddenGenes: function() {
     return Geniverse.activityController.getHiddenOrStaticGenes('hiddenGenes', this.get('sex'));
   }.property(),
-  
+
   staticGenes: function() {
     return Geniverse.activityController.getHiddenOrStaticGenes('staticGenes', this.get('sex'));
   }.property(),

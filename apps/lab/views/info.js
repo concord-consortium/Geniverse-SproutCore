@@ -12,12 +12,12 @@ Lab.InfoView = SC.PalettePane.create({
   isModal:NO,
   contentView: SC.View.extend({
     childViews: 'titleView infoView hideButton instIcon'.w(),
-		classNames: 'parchment'.w(),
+    classNames: 'parchment'.w(),
 
-		instIcon: SC.ImageView.design({
-			layout: { top: 0, left: 4, width: 25, height: 25 },
-			value: static_url('stampedInstructions.png')
-		}),
+    instIcon: SC.ImageView.design({
+      layout: { top: 0, left: 4, width: 25, height: 25 },
+      value: static_url('stampedInstructions.png')
+    }),
 
     titleView: SC.LabelView.design({
       layout: { centerY: 0, height: 24, left: 0, top:0, width: 440 },
@@ -39,7 +39,7 @@ Lab.InfoView = SC.PalettePane.create({
       target: "Lab.infoController"
     }),
 
-    // TODO: Solve Firefox bug: titleView lacks dark background, making title hard to read 
+    // TODO: Solve Firefox bug: titleView lacks dark background, making title hard to read
     infoView: SC.LabelView.design({
       layout: { left: 10, top: 24, width: 420, height: 375 },
       //valueBinding: "Lab.infoController.content"

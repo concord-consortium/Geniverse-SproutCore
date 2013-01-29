@@ -16,7 +16,7 @@ Lab.DragonBreedingGenomeView = Geniverse.DragonGenomeView.extend({
   showIsEditableCheck: NO,
   showFromLabels: NO,
   trackScore: YES,
-  
+
   parentToUpdate: function() {
     switch (this.get('sex')) {
       case 0:
@@ -25,15 +25,15 @@ Lab.DragonBreedingGenomeView = Geniverse.DragonGenomeView.extend({
         return 'mother';
     }
   }.property('sex'),
-  
+
   dragonDidChange: function() {
     this.possiblyUpdateBreedDragon();
   }.observes('dragon'),
-  
+
   domStatusDidChange: function() {
     this.possiblyUpdateBreedDragon();
   }.observes('.pane.isPaneAttached'),
-  
+
   possiblyUpdateBreedDragon: function() {
     if (this.getPath('pane.isPaneAttached')) {
       Geniverse.breedDragonController.set(this.get('parentToUpdate'), this.get('dragon'));

@@ -36,7 +36,7 @@ Lab.InfoButtonView = SC.ButtonView.design(
   toolTip:  "Information Button",
   target: 'Lab.infoController',
   action: 'showPane',
-  isVisibleBinding: 'Lab.infoController.isVisible', 
+  isVisibleBinding: 'Lab.infoController.isVisible',
   didTriggerAction: function(){
     console.log("infoButton.didTriggerAction() called");
     console.log("infoButton.isActive:",this.get('isActive'));

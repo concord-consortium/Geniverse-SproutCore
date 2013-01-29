@@ -7,12 +7,12 @@
 sc_require('states/challenges/matchTargetDrakesListChallenge');
 
 Lab.firstMeiosisWithMatchTarget = Lab.matchTargetDrakesListChallenge.extend({
-  
+
   _hasReachdRecombination: NO,
   _hasSelectedSomeAlleles: NO,
   _hasSeenMessageToTryMore: NO,
   _hasSeenYSwapWarning: NO,
-  
+
   showInitialRecobinationMsg: function() {
   if (!this._hasReachdRecombination) {
       setTimeout(function() {
@@ -28,7 +28,7 @@ Lab.firstMeiosisWithMatchTarget = Lab.matchTargetDrakesListChallenge.extend({
       this._hasReachdRecombination = YES;
     }
   },
-  
+
   showSelectTargetnMsg: function() {
   if (!this._hasSelectedSomeAlleles) {
       setTimeout(function() {

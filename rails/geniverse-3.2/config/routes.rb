@@ -56,7 +56,7 @@ Geniverse32::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
 
-  resources :help_messages, :articles, :cases, :activities, :dragons
+  resources :help_messages, :articles, :cases, :activities, :dragons, :unlockables
 
   get 'destroy_all_dragons' => 'dragons#destroy_all'
   get 'fathom/:id/:id2' => 'dragons#fathom', :defaults => {:format => 'html', :id => '-1', :id2 => '-1'}
@@ -68,6 +68,7 @@ Geniverse32::Application.routes.draw do
   get 'users/:username' => "users#show", :constraints => { :username => /[a-z][a-z0-9]*/i }, :defaults => {:format => 'json'}
 
   resources :users, :except => :new
+  get 'starsReport/:id' => 'users#starsReport'
 
   # fallback
   match ':controller(/:action(/:id(/:id2)))(.:format)'

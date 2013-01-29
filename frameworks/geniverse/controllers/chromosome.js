@@ -12,19 +12,19 @@
 */
 Geniverse.chromosomeController = SC.ObjectController.create(
 /** @scope Geniverse.chromosomeController.prototype */ {
-  
+
   initRandomDragon: function () {
     var self = this;
-    
-		if (typeof(generateDragonWithCallback) != "undefined") {
-		  Geniverse.gwtController.generateRandomDragon(function(dragon) {
-		    SC.run(function() {
-  		    self.set('content', dragon);
-		    });
-		  });
-		}
+
+    if (typeof(generateDragonWithCallback) != "undefined") {
+      Geniverse.gwtController.generateRandomDragon(function(dragon) {
+        SC.run(function() {
+          self.set('content', dragon);
+        });
+      });
+    }
   },
-  
+
   allAlleles: [
     ['T', 'Tk', 't'],
     ['M', 'm'],
@@ -35,20 +35,20 @@ Geniverse.chromosomeController = SC.ObjectController.create(
     ['Hl', 'hl'],
     ['A1', 'A2', 'a'],
     ['B', 'b'],
-    ['D', 'd', 'dl'],
+    ['D', 'd'],
     ['Bog', 'bog'],
     ['Rh', 'rh']
   ],
-  
+
   allelesMap: {t: '1',tk: '1',m: '1',mt: '1',w: '1',h: '1',c: '2',fl: '2',hl: '2',a: '2', a1: '2', a2: '2',
                 b: '2',d: 'X',dl: 'X',bog: 'X',rh: 'X'},
-  
+
   getChromosome: function(allele) {
     return this.get('allelesMap')[allele.toLowerCase()];
   },
-  
+
   chromosomeAlleles: {a: this.allAlleles, b: this.allAlleles},
-  
+
   updateDragon: function (aAlleles, bAlleles){
     if (!this._allelesEqual(aAlleles,this.chromosomeAlleles['a']) || !this._allelesEqual(bAlleles, this.chromosomeAlleles['b'])){
       // create a new allele string
@@ -61,16 +61,16 @@ Geniverse.chromosomeController = SC.ObjectController.create(
       }
       // rm last comma
       alleleString = alleleString.substring(0,alleleString.length-1);
-      
+
       var self = this;
       Geniverse.gwtController.generateDragonWithAlleles(alleleString, this.get('sex'), this.get('name'), function(dragon) {
-		    SC.run(function() {
-  		    self.set('content', dragon);
-		    });
-		  });
+        SC.run(function() {
+          self.set('content', dragon);
+        });
+      });
     }
   },
-  
+
   // a little helper method for checking if [a,b] and [[a,A],[b,B]] are equal
   _allelesEqual: function(alleles, expandedAlleles){
     for (var i = 0; i < alleles.length; i++){
@@ -109,8 +109,8 @@ Geniverse.chromosomeController = SC.ObjectController.create(
       'bog': 'Bog breath',
       'Rh': 'Nose spike',
       'rh': 'No nose spike',
-	  'Y' : 'Y',
-	    '' : ''
+    'Y' : 'Y',
+      '' : ''
   },
 
   titleForAllele: function(val) {
@@ -120,22 +120,22 @@ Geniverse.chromosomeController = SC.ObjectController.create(
     }
     return val;
   },
-  
+
   processAlleleString: function(alleleString) {
     var map = this.get('allelesMap');
-    
+
     if (alleleString === null || typeof(alleleString) == "undefined") {
       return [];
     }
-    
+
     var alleleSet = alleleString.split(/,/);
-    
+
     var alleles = [];
     for (var i = 0; i < alleleSet.length; i++) {
       var alleleInfo = alleleSet[i].split(/:/);
       var chromo = ""+map[alleleInfo[1].toLowerCase()];
       var side = alleleInfo[0].toUpperCase();
-      
+
       if (!alleles[chromo] || !alleles[chromo][side]) {
         var values = [alleleInfo[1]];
         if (!alleles[chromo]) {
@@ -146,8 +146,8 @@ Geniverse.chromosomeController = SC.ObjectController.create(
         alleles[chromo][side].pushObject(alleleInfo[1]);
       }
     }
-    
+
     return alleles;
   }
-  
+
 }) ;

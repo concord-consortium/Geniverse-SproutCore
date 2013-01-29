@@ -12,7 +12,7 @@ apache = ApacheConfig.new {
 x_proxy "/portal/verify_cc_token    http://geniverse-portal.dev.concord.org/portal/fake_token.txt" 
   x_proxy "/chat/      http://geniverse.dev.concord.org/chat/"
   x_proxy "/biologica/ http://geniverse.dev.concord.org/biologica/"
-  x_proxy "/resources/ http://geniverse.dev.concord.org/resources/"
+  x_proxy "/resources/ http://resources.geniverse.dev.concord.org/resources/"
   x_proxy "/           http://127.0.0.1:#{ENV['SC_SERVER_PORT'] || 4020}/"
 
 # Aaron's settings:

@@ -49,7 +49,7 @@ Geniverse.breedDragonController = SC.Controller.create(
     this.set('breedCount', 0);
     this.set('isBreeding', NO);
   },
-  
+
   // this is the equivalent of setting "trackScore: YES" and then breeding, but useful for
   // buttons that just call an action, as we can't set the property on the view
   breedAndIncrementScore: function () {
@@ -63,17 +63,17 @@ Geniverse.breedDragonController = SC.Controller.create(
           SC.AlertPane.error("", "You can't breed a dead Drake!");
           return;
     }
-    
+
     var self = this;
     var nEggs = 0;
     this.set('isBreeding', YES);
     Geniverse.eggsController.removeAllEggs(); // clear the breeding pen
-    
+
     if (this._callback_version === undefined) {
       this._callback_version = 0;
     }
     this._callback_version++;
-    
+
     var breedTime = new Date().getTime();
     this.set('breedCount', this.get('breedCount') + 1);
     if (this.get('trackScore')) {
@@ -102,9 +102,9 @@ Geniverse.breedDragonController = SC.Controller.create(
           // child.set('isInMarketplace', false);
           child.set('isInMarketplace', true);
         }
-        
+
         child.set('breedTime', breedTime);
-        
+
         Geniverse.eggsController.addObject(child);
         SC.RunLoop.end();
 
@@ -122,5 +122,5 @@ Geniverse.breedDragonController = SC.Controller.create(
     }(this._callback_version);
     Geniverse.gwtController.breedOrganisms(this.get('numberOfOffspring'), this.get('mother'), this.get('father'), didCreateChild);
   }
-  
+
 });

@@ -1,4 +1,4 @@
-sc_require('resources/lib/biologica.min.js');
+sc_require('resources/lib/biologica.js');
 
 // ==========================================================================
 // Project:   Geniverse.Dragon
@@ -16,42 +16,42 @@ var imageUrlStart = "/resources/drakes/images/";
 */
 Geniverse.Dragon = SC.Record.extend(
 /** @scope Geniverse.Dragon.prototype */ {
-  
+
   // All the attributes that we want to be sure to persist
   name: SC.Record.attr(String),
-  
+
   sex: SC.Record.attr(Number),
-  
+
   alleles: SC.Record.attr(String),
-  
+
   imageURL: SC.Record.attr(String),
-  
+
   mother: SC.Record.toOne("Geniverse.Dragon"),
-  
+
   father: SC.Record.toOne("Geniverse.Dragon"),
-  
+
   bred: SC.Record.attr(Boolean),
-  
+
   user: SC.Record.toOne("Geniverse.User"),
-  
+
   breeder: SC.Record.toOne("Geniverse.User"),
-  
+
   breedTime: SC.Record.attr(Number),
-  
+
   stableOrder: SC.Record.attr(Number),
-  
+
   isEgg: SC.Record.attr(Boolean),
-  
+
   isInMarketplace: SC.Record.attr(Boolean),
-  
+
   isMatchDragon: SC.Record.attr(Boolean,  { defaultValue: NO }),
-  
+
   activity: SC.Record.toOne('Geniverse.Activity'),        // which activity the dragon belogs to. Can only be in one
-  
+
   articles: SC.Record.toMany('Geniverse.Articles', {          // any papers the dragon has been cited in
-    inverse: 'dragons', isMaster: NO 
+    inverse: 'dragons', isMaster: NO
   }),
-  
+
   // attributes that don't want to be persisted
   gOrganism: null,
   characteristics: null,
@@ -59,15 +59,20 @@ Geniverse.Dragon = SC.Record.extend(
   characteristicMap: null,
   hasBeenMatched: NO,
   session: null,
-  
+
   gOrganismDefined: function() {
     var gOrg = this.get('gOrganism');
     var defined = (gOrg !== null && (typeof gOrg != 'undefined') && (typeof gOrg.alleles != 'undefined')) ? YES : NO;
     return defined;
   }.property('gOrganism').cacheable(),
- 
+
   color: function() {
-    return this.characteristicValue('color').toLowerCase();
+    var col = this.characteristicValue('color');
+    if (col) {
+      return col.toLowerCase();
+    } else {
+      return null;
+    }
   }.property('alleles').cacheable(),
 
   init: function() {
@@ -85,18 +90,18 @@ Geniverse.Dragon = SC.Record.extend(
       // }
     });
   },
-  
+
   createGOrganism: function() {
     if (this.get('status') & SC.Record.READY) {
       this.removeObserver('status', this);
       var self = this;
       Geniverse.gwtController.generateGOrganismWithAlleles(this.get('alleles'), this.get('sex'), function(gOrg) {
-        console.log("setting gOrganism")
+        console.log("setting gOrganism");
         self.set('gOrganism', gOrg);
       });
     }
   },
-  
+
   setAttributes: function() {
     if (this.get('status') & SC.Record.DESTROYED) {
       return;
@@ -106,12 +111,12 @@ Geniverse.Dragon = SC.Record.extend(
       // this.set('name', gOrg.name);  // GWT doesn't create meaningful names, so no sense in overriding an existing name
       this.set('sex', gOrg.sex);
       this.set('alleles', gOrg.genetics.genotype.getAlleleString());
-      this.set('imageURL', imageUrlStart + gOrg.getImageName());
+      this.set('imageURL', Geniverse.resourceURL(imageUrlStart + gOrg.getImageName()));
 
       characteristicMap = gOrg.phenotype.characteristics;
       characteristicsArray = [];
 
-      for (trait in characteristicMap) {
+      for (var trait in characteristicMap) {
         if (!characteristicMap.hasOwnProperty(trait)) continue;
         characteristicsArray.push(characteristicMap[trait]);
       }
@@ -134,7 +139,7 @@ Geniverse.Dragon = SC.Record.extend(
       return "Unknown";
     }
   }.property('sex').cacheable(),
-  
+
   characteristicsAsString: function() {
     var out = '';
     var chars = this.get('characteristics');

@@ -18,23 +18,23 @@ Geniverse.loginController = SC.ObjectController.create(
 /** @scope CcChat.loginController.prototype */ {
 
   // TODO: Add your own code here.
-  
+
   textAreaValue: null,
-  
+
   username: null,
-  
+
   passwordValue: null,
-  
+
   retypePasswordValue: null,
-  
+
   usernameBinding: 'CcChat.chatController.username',
-  
+
   showRetypeField: NO,
-  
+
   loggedIn: NO,
-  
+
   test: 35,
-  
+
   groupNumber: 2,
   memberNumber: 2,
 
@@ -46,33 +46,33 @@ Geniverse.loginController = SC.ObjectController.create(
     var uname = this.username;
     var userFound = function(user) {
       if (typeof user == 'undefined') {
-		    // no user exists for that username. create one
-		    SC.Logger.info("No User exists for that login. Creating account.");
-		    user = Geniverse.userController.createUser(uname, password);
-		  }
+        // no user exists for that username. create one
+        SC.Logger.info("No User exists for that login. Creating account.");
+        user = Geniverse.userController.createUser(uname, password);
+      }
       self.checkUserPassword(user, passwordHash);
     };
-    
+
     Geniverse.userController.findUser(this.username, userFound);
     this.set('textAreaValue', '');
   },
-  
+
   autoLogin: function(username) {
     var self = this;
-    
+
     var userFound = function(user) {
       if (typeof user == 'undefined') {
-		    // no user exists for that username
-		    SC.Logger.info("No User exists for that login. Please log in again.");
-		    Geniverse.appController.logout();
-		  } else {
-		    self.finishLogin(user);
-		  }
+        // no user exists for that username
+        SC.Logger.info("No User exists for that login. Please log in again.");
+        Geniverse.appController.logout();
+      } else {
+        self.finishLogin(user);
+      }
     };
-    
+
     Geniverse.userController.findUser(username, userFound);
   },
-  
+
   checkUserPassword: function(user, passwordHash) {
     var username = user.username;
     var rails_password_hash = user.get('passwordHash');
@@ -85,7 +85,7 @@ Geniverse.loginController = SC.ObjectController.create(
       SC.AlertPane.error("", "Passwords do not match");
     }
   },
-  
+
   finishLogin: function(user) {
     Geniverse.userController.set('content', user);
     Geniverse.loginController.set('loggedIn', YES);
@@ -100,6 +100,6 @@ Geniverse.loginController = SC.ObjectController.create(
     //SC.Logger.log("returning %@", welcomeMessage);
     return welcomeMessage;
   }.property('groupNumber', 'memberNumber', 'username').cacheable()
- 
+
 
 }) ;

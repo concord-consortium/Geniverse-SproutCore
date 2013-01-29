@@ -15,11 +15,14 @@ Lab.caselogPage = SC.Page.design({
 
   mainPane: SC.MainPane.design({
 
+    layout: { minWidth: 1056, minHeight: 820 },
     childViews: ['caselogView', 'topBar'],
+    classNames: ['mainPane'],
 
     caselogView: SC.View.design({
 
-      classNames: ['caselog-view'],
+      layout: { top: 57 },
+      classNames: ['caselog-view','mainPane'],
 
       currentLevelBinding:     'Lab.caselogController.currentLevel',
       currentLevelNameBinding: 'Lab.caselogController.currentLevelName',
@@ -35,7 +38,7 @@ Lab.caselogPage = SC.Page.design({
             cases, i, max_i,
             challenges, j, max_j,
             starClassFor,
-            levelNames, levelTitles, extraClassNames;
+            levelNames, extraClassNames;
 
         // Note that if you go to the caselog route on the initial app load, then currentLevel is undefined
         // because the binding hasn't had time to sync. If so, schedule a render for the next runloop, when the binding
@@ -60,8 +63,8 @@ Lab.caselogPage = SC.Page.design({
         context.push('<div id="col1">');
 
         context.push('<div id="title">');
-        context.push('<h1 class="tk-scrivano">Case Log</h1>');
-        context.push('<h2 class="tk-scrivano">' + currentLevelName.capitalize() + '</h2>');
+        context.push('<div class="title">Case Log</div>');
+        context.push('<div class="section">' + currentLevelName.capitalize() + '</div>');
         context.push('</div>');
 
 
@@ -84,8 +87,12 @@ Lab.caselogPage = SC.Page.design({
         };
 
         for (i = 0, max_i = cases.length; i < max_i; i++) {
-          context.push('<div class="case caselog-active">');
-          context.push('<h3 class="tk-scrivano">' + cases[i].title + '</h3>');
+          var extra = "";
+          if (cases[i].hidden && !Geniverse.userController.isAccelerated() && !Geniverse.userController.isUnlocked(currentLevelName, cases[i].title)) {
+            extra = ' style="display: none;"';
+          }
+          context.push('<div class="case caselog-active case' + i + '"' + extra + '>');
+          context.push('<div class="title"><div>' + cases[i].title + '</div></div>');
           context.push('<ul>');
 
           challenges = cases[i].challenges;
@@ -104,21 +111,19 @@ Lab.caselogPage = SC.Page.design({
 
         context.push('</div>');     // #col1/#col2
         context.push('</div>');     // #caselog
-        context.push('</div>');     // #caselog-wrap
 
         context.push('<div id="caselog-nav">');
         context.push('<ul>');
 
         levelNames  = Lab.caselogController.levelNames;
-        levelTitles = levelNames.map(function (s) { return s.capitalize(); });
-        levelTitles[Lab.LEVEL_DNA] = "DNA to<br>Trait";  // special-case level name of "dna" to "DNA To Trait"
 
         for (i = 0, max_i = levelNames.length; i < max_i; i++) {
-          extraClassNames = i <= currentLevel ? ' caselog-active' : '';
-          context.push('<li id="' + levelNames[i] + '" class="tk-scrivano' + extraClassNames + '"><a href="#caselog/' + levelNames[i] + '">' + levelTitles[i] + '</a></li>');
+          extraClassNames = i <= currentLevel ? 'caselog-active' : '';
+          context.push('<li id="' + levelNames[i] + '" class="' + extraClassNames + '"><a href="#caselog/' + levelNames[i] + '"><div></div></a></li>');
         }
 
         context.push('</ul>');
+        context.push('</div>');
         context.push('</div>');
 
         return context;

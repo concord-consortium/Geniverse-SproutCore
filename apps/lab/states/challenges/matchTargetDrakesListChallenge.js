@@ -5,21 +5,21 @@
 /*globals Lab Geniverse CcChat window Ki YES NO SC*/
 
 Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
-  
+
   successfulMatch: NO,
-  
+
   organismView: null,
-  
+
   _hasBred: NO,
   _hasBredMeiosis: NO,
-  
+
   startChallenge: function() {
     sc_super();
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', NO);
 
     Geniverse.scoringController.set('numberOfTrials', 1);
   },
-  
+
   // Annoyingly, actions can only be called with a max of two arguments,
   // so we call this with the first argument being an array of the
   // two dragons to be matched:
@@ -29,12 +29,12 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
   // Needs to be DRY'd up - see match TargetDrakesListChallenge.js
   checkMatchDragon: function(dragons, view) {
     Geniverse.scoringController.incrementScore(1);
-    
+
     if (Geniverse.matchController.doesMatch(dragons[0], dragons[1])) {
       view.setPath('content.hasBeenMatched', YES);
       view._setClassNames();
       SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).plain(
-        "Good work!", 
+        "Good work!",
         "The drake you have created matches the target drake.",
         "",
         "OK",
@@ -43,7 +43,7 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
       );
     } else {
       SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).error(
-        "That's not the drake!", 
+        "That's not the drake!",
         "The drake you have created doesn't match the target drake. Please try again.",
         "",
         "Try again",
@@ -52,19 +52,19 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
       );
     }
   },
-  
+
   alertPaneDidDismiss: function() {
     var numUnmatchedDrakes = Geniverse.matchController.filterProperty('hasBeenMatched', false).length;
     if (numUnmatchedDrakes === 0) {
       this._challengeComplete();
     }
   },
-  
+
   didBreed: function() {
     if (!this._hasBred) {
       setTimeout(function() {
         SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).plain(
-          "", 
+          "",
           "To match a target, drag an offspring to it.",
           "",
           "OK",
@@ -75,7 +75,7 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
       this._hasBred = true;
     }
   },
-  
+
   didBreedMeiosis: function() {
     if (!this._hasBredMeiosis) {
       this._hasBred = false;
@@ -83,5 +83,5 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
       this._hasBredMeiosis = true;
     }
   }
-  
+
 });

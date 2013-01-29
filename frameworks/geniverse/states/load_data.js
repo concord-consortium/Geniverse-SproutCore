@@ -6,7 +6,7 @@
 
 /** @class
 
-  The load data state. 
+  The load data state.
 
   @extends SC.Responder
   @version 0.1
@@ -47,13 +47,13 @@ Geniverse.LOAD_DATA = SC.Responder.create(
 /** @scope Geniverse.LOGIN.prototype */ {
 
   nextResponder: null,
-  
-  // 
+
+  //
   didBecomeFirstResponder: function() {
     SC.Logger.log("LOAD");
     var user = Geniverse.userController.get('content');
     var activity = Geniverse.activityController.get('content');
-    
+
     /////////////////// Stable
     SC.Logger.log("LOAD: stable");
     var stableQuery = SC.Query.local(Geniverse.Dragon, {
@@ -71,7 +71,7 @@ Geniverse.LOAD_DATA = SC.Responder.create(
     });
     var stableOrganisms = Geniverse.store.find(stableQuery);
     Geniverse.stableOrganismsController.set('content', stableOrganisms);
-    
+
     /////////////////// Eggs
     SC.Logger.log("LOAD: eggs");
     Geniverse.EGGS_QUERY = SC.Query.local('Geniverse.Dragon', {
@@ -89,7 +89,7 @@ Geniverse.LOAD_DATA = SC.Responder.create(
     });
     // var eggs = Geniverse.store.find(Geniverse.EGGS_QUERY);
     Geniverse.eggsController.set('content',[]);
-    
+
     /////////////////// Chats
     SC.Logger.log("LOAD: chats");
     var chatQuery = SC.Query.local(CcChat.ChatMessage, {
@@ -105,7 +105,7 @@ Geniverse.LOAD_DATA = SC.Responder.create(
     });
     var articles = Geniverse.store.find(articlesQuery);
     Geniverse.publishedArticlesController.set('content', articles);
-    
+
     /////////////////// Challenge dragons
     SC.Logger.log("LOAD: challenge dragons");
     var challengePoolQuery = SC.Query.local('Geniverse.Dragon', {
@@ -123,10 +123,10 @@ Geniverse.LOAD_DATA = SC.Responder.create(
         activity: activity
       })
     });
-    
+
     var challengeDragons = Geniverse.store.find(challengePoolQuery);
     var self = this;
-    
+
     function challengeDragonsReady() {
       SC.Logger.info("challenge dragons observer called");
       if (challengeDragons.get('status') & SC.Record.READY === SC.Record.READY) {
@@ -141,7 +141,7 @@ Geniverse.LOAD_DATA = SC.Responder.create(
         }
       } else { SC.Logger.info("Results not ready."); }
     }
-    
+
     if (challengeDragons.get('status') & SC.Record.READY === SC.Record.READY) {
       SC.Logger.log('already ready to go!');
       challengeDragonsReady();
@@ -152,7 +152,7 @@ Geniverse.LOAD_DATA = SC.Responder.create(
   },
 
   initChallengeDragons: function() {
-    function handleDragon(dragon) { 
+    function handleDragon(dragon) {
       SC.RunLoop.begin();
       SC.Logger.info("created dragon");
       SC.Logger.dir(dragon.attributes());
@@ -176,7 +176,7 @@ Geniverse.LOAD_DATA = SC.Responder.create(
       Geniverse.gwtController.generateDragon(0, 'Father', handleDragon);
     }
   }
-  
+
 }) ;
 
 

@@ -24,7 +24,7 @@ Lab.ChallengePoolView = SC.View.extend(
   dragonsView: null,
   dragonSize: 75,
   dragonExampleView: Geniverse.OrganismView.extend(Geniverse.ShiftedOrganism),
-  
+
   sex: null,
 
   /**
@@ -49,7 +49,7 @@ Lab.ChallengePoolView = SC.View.extend(
     var childViews = [],
         controller = "Geniverse.challengePoolController",
         title = "Parent Pool";
-    
+
     if (this.get("sex") === 'female') {
       controller = "Geniverse.challengePoolFemalesController";
       title = "Mothers Pool";
@@ -57,7 +57,7 @@ Lab.ChallengePoolView = SC.View.extend(
       controller = "Geniverse.challengePoolMalesController";
       title = "Fathers Pool";
     }
-    
+
     this.set("challengePoolControllerPath", controller);
 
     this.dragonsView = this.createChildView(
@@ -95,5 +95,5 @@ Lab.ChallengePoolView = SC.View.extend(
 
     this.set('childViews', childViews);
   }
-  
+
 });

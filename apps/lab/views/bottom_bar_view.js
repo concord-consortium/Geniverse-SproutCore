@@ -7,7 +7,7 @@
 
 Lab.BottomBarView = SC.ToolbarView.extend(
 /** @scope Lab.TopBarView.prototype */ {
-  
+
   layout: { bottom: 0, left: 0, right: 0, height: 36 },
   layerId: 'bottomBar',
   classNames: ['brown-toolbar-view'],
@@ -27,18 +27,18 @@ Lab.BottomBarView = SC.ToolbarView.extend(
    */
   createChildViews: function() {
     var childViews = [];
-    
+
     // this is a little funny, but it seems to be much more stable to lay the
-    // active buttons ontop of the disabled images, binding the button's isVisible 
+    // active buttons ontop of the disabled images, binding the button's isVisible
     // to the controller, than to bind the button's image value to the controller.
     // In the latter method the image frequently doesn't repaint right away...
-    
+
     this.navBarLeftArrowBW = this.createChildView(
       SC.ImageView.design({
         layout: { centerY: 0, centerX: -40, width:38, height: 38 },
         value: static_url('arrow_left_bw.png'),
         canLoadInBackground: YES,
-    		useImageCache: YES
+        useImageCache: YES
       })
     );
     childViews.push(this.navBarLeftArrowBW);
@@ -52,7 +52,7 @@ Lab.BottomBarView = SC.ToolbarView.extend(
       })
     );
     childViews.push(this.navBarRightArrowBW);
-    
+
     this.navBarLeftArrow = this.createChildView(
       SC.ImageView.design(Geniverse.SimpleButton, {
         layout: { centerY: 0, centerX: -40, width:38, height: 38 },
@@ -63,8 +63,8 @@ Lab.BottomBarView = SC.ToolbarView.extend(
         target: 'Lab.statechart',
         action: 'gotoPreviousActivity',
         canLoadInBackground: NO,
-    		useImageCache: NO,
-    		isVisibleBinding: 'Lab.navigationController.showPreviousButton'
+        useImageCache: NO,
+        isVisibleBinding: 'Lab.navigationController.showPreviousButton'
       })
     );
     childViews.push(this.navBarLeftArrow);
@@ -79,25 +79,25 @@ Lab.BottomBarView = SC.ToolbarView.extend(
         target: 'Lab.statechart',
         action: 'gotoNextActivity',
         canLoadInBackground: NO,
-    		useImageCache: NO,
-    		isVisibleBinding: 'Lab.navigationController.showNextButton'
+        useImageCache: NO,
+        isVisibleBinding: 'Lab.navigationController.showNextButton'
       })
     );
     childViews.push(this.navBarRightArrow);
-    
+
     this.navBarRightArrowRed = this.createChildView(
       SC.ImageView.design({
         layout: { centerY: 0, centerX: 40, width:38, height: 38 },
         value: static_url('arrow_right_red.png'),
         canLoadInBackground: YES,
-    		useImageCache: YES,
-    		toolTip: "You can't move forward until you complete the challenge",
-    		isVisibleBinding: 'Lab.navigationController.blockNextButton'
+        useImageCache: YES,
+        toolTip: "You can't move forward until you complete the challenge",
+        isVisibleBinding: 'Lab.navigationController.blockNextButton'
       })
     );
     childViews.push(this.navBarRightArrowRed);
 
     this.set('childViews', childViews);
   }
-  
+
 });

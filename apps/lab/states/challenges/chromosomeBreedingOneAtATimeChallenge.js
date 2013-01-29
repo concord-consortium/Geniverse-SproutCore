@@ -42,7 +42,7 @@ Lab.chromosomeBreedingOneAtATimeChallenge = Lab.matchTargetDrakesOneAtATimeChall
           changeableAlleles2 = this._removeObjectsIgnoreCase(allAlleles.copy(), hiddenGenes2.concat(staticGenes2));
 
       var moves = Geniverse.matchController.numberOfBreedingMovesToReachCurrent(initialDragon1, initialDragon2, changeableAlleles1, changeableAlleles2);
-      
+
       moves = moves + 1;        // for for final drag
       Geniverse.scoringController.set('minimumScore', moves);
     }

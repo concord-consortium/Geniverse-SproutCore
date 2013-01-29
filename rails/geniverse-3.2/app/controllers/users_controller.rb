@@ -1,3 +1,6 @@
+require 'report'
+require 'base64'
+
 class UsersController < ApplicationController
   # GET /users
   # GET /users.xml
@@ -101,6 +104,15 @@ class UsersController < ApplicationController
       format.html { redirect_to(users_url) }
       format.xml  { head :ok }
     end
+  end
+
+  def starsReport
+    sio = StringIO.new
+    b64 = params[:id] || ""
+    b64 = b64.gsub('_','/').gsub('-','+')
+    report = Report::Stars.new Base64.decode64(b64).split(',')
+    report.run(sio)
+    send_data(sio.string, :type => "application/vnd.ms.excel", :filename => "stars.xls" )
   end
 
 end
