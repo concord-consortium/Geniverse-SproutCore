@@ -76,7 +76,13 @@ Geniverse.doWhen = function(context, object, callback, desiredStatus) {
 };
 
 (function() {
-  Geniverse.resourcesBase = window.CC_RESOURCES_BASE || "http://resources.geniverse.dev.concord.org";
+  if (typeof(Geniverse.resourcesBase) == "undefined") {
+    if (typeof(window.CC_RESOURCES_BASE) !== "undefined") {
+      Geniverse.resourcesBase = window.CC_RESOURCES_BASE;
+    } else {
+      Geniverse.resourcesBase = "http://resources.geniverse.dev.concord.org";
+    }
+  }
 })();
 
 Geniverse.resourceURL = function(path) {
