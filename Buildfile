@@ -7,6 +7,21 @@ config :all,
   :required => [:geniverse, :sproutcore, :cc, :ki], 
   :load_fixtures => true
 
+mode :production do
+  config :lab,
+    :resources_base => "http://resources.geniverse.concord.org"
+end
+
+mode :inabox do
+  config :lab,
+    :resources_base => ""
+end
+
+mode :dev do
+  config :lab,
+    :resources_base => "http://resources.geniverse.dev.concord.org"
+end
+
 config :geniverse,
   :layout => 'lib/index.rhtml',
   :test_layout => 'lib/index.rhtml'
