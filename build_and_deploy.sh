@@ -1,7 +1,5 @@
 #!/bin/sh
 
-DEBUG=""
-
 if [ -x $SKIP_BUNDLER ]; then
   CMD_PREFIX="bundle exec"
 else
@@ -16,13 +14,13 @@ fi
 function build {
   echo "Building application... "
   rm -rf tmp/
-  $CMD_PREFIX sc-build $DEBUG
+  $CMD_PREFIX sc-build --mode $BUILD_MODE
 }
 
 function sync {
   echo "Sending files to the server... "
   # If you don't have rsync, use scp instead
-  if [ "$DEBUG" == "--mode debug" ]; then
+  if [ "$BUILD_MODE" == "debug" ]; then
     # scp -r tmp/debug/build/static/* $REMOTE_USER@$SERVER:$SERVER_PATH/
     rsync -rqlzP tmp/debug/build/static/* $REMOTE_USER@$SERVER:$SERVER_PATH/
     export BUILD_NUM="current"
@@ -81,36 +79,41 @@ case "$1" in
     export SERVER_PATH="/web/production/geniverse/static"
     export LABEL_PATH="/web/production/geniverse"
     export REMOTE_USER="geniverse"
+    export BUILD_MODE="production"
     ;;
   ungamed)
     export SERVER=ungamed.genigames.concord.org
     export SERVER_PATH="/web/static/static"
     export LABEL_PATH="/web/static"
     export REMOTE_USER="deploy"
+    export BUILD_MODE="production"
     ;;
   baseline)
     export SERVER=baseline.genigames.concord.org
     export SERVER_PATH="/web/static/static"
     export LABEL_PATH="/web/static"
     export REMOTE_USER="deploy"
+    export BUILD_MODE="production"
     ;;
   dev)
     export SERVER=otto.concord.org
     export SERVER_PATH="/web/geniverse.dev.concord.org/static"
     export LABEL_PATH="/web/geniverse.dev.concord.org"
     export REMOTE_USER="geniverse"
+    export BUILD_MODE="dev"
     ;;
   dev-debug)
     export SERVER=otto.concord.org
     export SERVER_PATH="/web/geniverse.dev.concord.org/static"
     export LABEL_PATH="/web/geniverse.dev.concord.org"
     export REMOTE_USER="geniverse"
-    export DEBUG="--mode debug"
+    export BUILD_MODE="debug"
     ;;
   demo)
     export SERVER=seymour.concord.org
     export SERVER_PATH="/web/production/demo.geniverse"
     export REMOTE_USER="geniverse"
+    export BUILD_MODE="inabox"
     build
     dbdownload
     resourcesdownload
@@ -122,6 +125,7 @@ case "$1" in
     export SERVER=otto.concord.org
     export SERVER_PATH="/web/geniverse.inabox"
     export REMOTE_USER="geniverse"
+    export BUILD_MODE="inabox"
     build
     dbdownload
     resourcesdownload
@@ -130,6 +134,7 @@ case "$1" in
     exit 0
     ;;
   box-package)
+    export BUILD_MODE="inabox"
     build
     dbdownload
     resourcesdownload
