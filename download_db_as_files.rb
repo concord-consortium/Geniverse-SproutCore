@@ -39,7 +39,7 @@ puts " done."
   puts " done."
 end
 
-["cases","activities","help_messages"].each do |model|
+["cases","activities","help_messages","unlockables"].each do |model|
   Dir.mkdir(File.join(BASE_DIR, model)) rescue Errno::EEXIST
 
   print "Downloading: #{model} "
