@@ -9,16 +9,25 @@ config :all,
 
 mode :production do
   config :lab,
+    :google_analytics_id => "UA-6899787-33",
     :resources_base => "http://resources.geniverse.concord.org"
 end
 
 mode :inabox do
   config :lab,
+    :google_analytics_id => nil,
+    :resources_base => ""
+end
+
+mode :demo do
+  config :lab,
+    :google_analytics_id => "UA-6899787-32",
     :resources_base => ""
 end
 
 mode :dev do
   config :lab,
+    :google_analytics_id => nil,
     :resources_base => "http://resources.geniverse.dev.concord.org"
 end
 

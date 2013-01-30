@@ -106,7 +106,7 @@ case "$1" in
     export SERVER=seymour.concord.org
     export SERVER_PATH="/web/production/demo.geniverse"
     export REMOTE_USER="geniverse"
-    export BUILD_MODE="inabox"
+    export BUILD_MODE="demo"
     build
     dbdownload
     resourcesdownload
