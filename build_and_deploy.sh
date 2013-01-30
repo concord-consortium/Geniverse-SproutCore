@@ -54,6 +54,17 @@ function dbdownload {
   ./download_db_as_files.rb
 }
 
+function resourcesdownload {
+  echo "Downloading necessary resource files... "
+  if [ -e "resources-current.zip" ]; then
+    echo "Skipping - already exist!"
+  else
+    wget http://geniverse.resources.concord.org/resources-current.zip
+  fi
+  unzip -q -d tmp/build/ resources-current.zip
+  echo "Done."
+}
+
 function package {
   echo "Packaging app... "
   tar -C tmp/build -czf box.tar.gz .
@@ -102,6 +113,7 @@ case "$1" in
     export REMOTE_USER="geniverse"
     build
     dbdownload
+    resourcesdownload
     copyindex
     boxsync
     exit 0
@@ -109,6 +121,7 @@ case "$1" in
   box-package)
     build
     dbdownload
+    resourcesdownload
     copyindex
     package
     exit 0
