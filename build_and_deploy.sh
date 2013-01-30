@@ -81,25 +81,18 @@ case "$1" in
     export REMOTE_USER="geniverse"
     export BUILD_MODE="production"
     ;;
-  ungamed)
-    export SERVER=ungamed.genigames.concord.org
-    export SERVER_PATH="/web/static/static"
-    export LABEL_PATH="/web/static"
-    export REMOTE_USER="deploy"
-    export BUILD_MODE="production"
-    ;;
-  baseline)
-    export SERVER=baseline.genigames.concord.org
-    export SERVER_PATH="/web/static/static"
-    export LABEL_PATH="/web/static"
-    export REMOTE_USER="deploy"
-    export BUILD_MODE="production"
-    ;;
   dev)
     export SERVER=otto.concord.org
     export SERVER_PATH="/web/geniverse.dev.concord.org/static"
     export LABEL_PATH="/web/geniverse.dev.concord.org"
     export REMOTE_USER="geniverse"
+    export BUILD_MODE="dev"
+    ;;
+  dev-new)
+    export SERVER=gvnew.dev.concord.org
+    export SERVER_PATH="/web/static/static"
+    export LABEL_PATH="/web/static"
+    export REMOTE_USER="deploy"
     export BUILD_MODE="dev"
     ;;
   dev-debug)
@@ -113,7 +106,7 @@ case "$1" in
     export SERVER=seymour.concord.org
     export SERVER_PATH="/web/production/demo.geniverse"
     export REMOTE_USER="geniverse"
-    export BUILD_MODE="inabox"
+    export BUILD_MODE="demo"
     build
     dbdownload
     resourcesdownload

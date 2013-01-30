@@ -68,7 +68,7 @@ Lab.avatarPage = SC.Page.design({
       escapeHTML: NO,
       isVisibleBinding: SC.Binding.not('Lab.avatarController.waiting'),
       click: function() {
-        Lab.statechart.sendAction("choseScarlett");
+        Lab.statechart.sendAction("choseStrider");
         return YES;
       }
     })
