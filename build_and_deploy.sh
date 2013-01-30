@@ -107,6 +107,17 @@ case "$1" in
     export REMOTE_USER="geniverse"
     export DEBUG="--mode debug"
     ;;
+  demo)
+    export SERVER=seymour.concord.org
+    export SERVER_PATH="/web/production/demo.geniverse"
+    export REMOTE_USER="geniverse"
+    build
+    dbdownload
+    resourcesdownload
+    copyindex
+    boxsync
+    exit 0
+    ;;
   box)
     export SERVER=otto.concord.org
     export SERVER_PATH="/web/geniverse.inabox"
