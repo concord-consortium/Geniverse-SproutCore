@@ -47,6 +47,7 @@ end
 
   come_back = []
   all.scan(/"guid":"[^"]*?\/(\d+)"/) do |id|
+    id = id.first if id.is_a?(Array)
     tries = 0
     url = DB_BASE + "#{model}/#{id}.json"
     filename = File.join(BASE_DIR, model, "#{id}.json")
