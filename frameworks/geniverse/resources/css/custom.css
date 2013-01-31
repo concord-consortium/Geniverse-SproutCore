@@ -115,6 +115,22 @@ img.cancelButton:hover {
   background-position: top right;
 }
 
+img.saveButton {
+    background: static_url('gv-butt-save.png') no-repeat top left;
+}
+
+img.saveButton:hover {
+  background-position: top right;
+}
+
+img.saveAndCloseButton {
+    background: static_url('gv-butt-saveAndClose.png') no-repeat top left;
+}
+
+img.saveAndCloseButton:hover {
+  background-position: top right;
+}
+
 img.postButton {
     background: static_url('gv-butt-post.png') no-repeat top left;
 }

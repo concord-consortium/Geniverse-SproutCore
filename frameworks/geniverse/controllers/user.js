@@ -56,23 +56,7 @@ Geniverse.userController = SC.ObjectController.create(
         var user = users.firstObject();
         callback(user);
     };
-    self.doWhenReady(self,users,sendFoundUser);
-  },
-
-  doWhenReady: function(context, field, method) {
-    var self = context;
-    var outer = this;
-    var checkStatus = function() {
-      var status = field.get('status');
-      if (status & SC.Record.READY_CLEAN) {
-        field.removeObserver('status', outer, checkStatus);
-        method.call(context);
-      }
-      else {
-        field.addObserver('status', outer, checkStatus);
-      }
-    };
-    checkStatus();
+    Geniverse.doWhenReadyClean(self,users,sendFoundUser);
   },
 
   findOrCreateUser: function(username, callback) {
@@ -89,7 +73,7 @@ Geniverse.userController = SC.ObjectController.create(
           SC.Logger.log("created username %@", username);
           callback(user);
         };
-        self.doWhenReady(self, user, method);
+        Geniverse.doWhenReadyClean(self, user, method);
       }
     };
     self.findUser(username,nextMethod);
@@ -165,5 +149,30 @@ Geniverse.userController = SC.ObjectController.create(
           activityStarsList.push(d);
         }
     return Math.max.apply([], [0].concat(activityStarsList));
+  },
+
+  saveBlogDraft: function(pageId) {
+    var meta = Geniverse.userController.getUserMetadata();
+    if (!meta.drafts) {
+      meta.drafts = {};
+    }
+
+    var now = new Date();
+    var timeStr = now.format("yyyy-MM-dd ") + now.toTimeString().replace(/ \(.*\)/, '');
+
+    var c1 = Geniverse.blogPostController.get('content1');
+    var c2 = Geniverse.blogPostController.get('content2');
+    var c3 = Geniverse.blogPostController.get('content3');
+    var c4 = Geniverse.blogPostController.get('content4');
+
+    meta.drafts[pageId] = {time: timeStr, content1: c1, content2: c2, content3: c3, content4: c4};
+
+    Geniverse.userController.setUserMetadata(meta);
+  },
+
+  getBlogDraft: function(pageId) {
+    var userMetadata = this.getUserMetadata(),
+        drafts        = userMetadata.drafts || {};
+    return drafts[pageId] || {};
   }
 }) ;

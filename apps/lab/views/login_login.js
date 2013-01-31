@@ -41,7 +41,19 @@ Lab.LoginLoginView = SC.View.extend({
      usernameView: SC.TextFieldView.design({
        layout: { top: 137, left: 0, height: 20, width: 210 },
        isVisibleBinding: 'Lab.loginController.loginShowing',
-       valueBinding: 'Lab.loginController.username'
+       valueBinding: 'Lab.loginController.username',
+       keyDown: function (evt){
+         // HACK on tab, focus on the password field.
+         // This fixes a bug where after you log out, tab no longer switches the cursor location.
+         // This has to happen on keyDown so that we intercept it before the browser handles it.
+         if (evt.keyCode === 9){
+           this.getPath('parentView.passwordView').$input().focus();
+           return YES;
+         }
+         this.fieldValueDidChange();
+         evt.allowDefault();
+         return YES;
+       }
      }),
 
      passwordLabel: SC.LabelView.design({

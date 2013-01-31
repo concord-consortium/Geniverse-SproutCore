@@ -92,9 +92,12 @@ Geniverse.unlockablesController = SC.Object.create({
     this.notifyNextUnlockable();
   },
   notifyNextUnlockable: function() {
-    if (!this.get('currentNotification')) {
+    if (!this.get('currentNotification') && !this.getPath('selectedUnlockable.content')) {
       var n = this.get('toNotify').shift();
-      if (n) {
+      if (n && n.get('openAutomatically')) {
+        // Skip the notification and show the unlockable immediately
+        this.set('selectedUnlockable', n);
+      } else if (n) {
         // Show notification popup
         var _this = this;
         var pane = Geniverse.UnlockableNotificationView.create({

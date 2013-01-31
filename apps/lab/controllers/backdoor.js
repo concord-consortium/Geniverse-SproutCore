@@ -44,6 +44,21 @@ Lab.backdoorController = SC.Object.create(
         Geniverse.userController.setAccelerated(true);
         Geniverse.unlockablesController.unlockAllLocked();
         break;
+      case "starz":
+        if (Geniverse.userController.get('isTeacher')) {
+          // open the starz report in a new tab
+          var all_classes = Geniverse.userController.get('allClassNames');
+          var class_names = all_classes[0];
+          for (var i = 1; i < all_classes.length; i++) {
+            class_names += ',' + all_classes[i];
+          }
+          var encoded = window.btoa(class_names);
+          encoded = encoded.replace(/\//g,'_').replace(/\+/g,'-').replace(/=/g,'%3D')
+          try {
+            window.open('/rails/starsReport/' + encoded, "_blank");
+          } catch (e) { }
+        }
+        break;
       case "":
         break;
       default:

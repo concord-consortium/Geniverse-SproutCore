@@ -50,3 +50,41 @@ Geniverse = SC.Application.create(
 }) ;
 
 Geniverse.NO_DRAGON = SC.Object.create({imageURL: sc_static("question-mark.png"), alleles: "" });
+
+Geniverse.doWhenReady = function(context, object, callback) {
+  Geniverse.doWhen(context, object, callback, SC.Record.READY);
+};
+
+Geniverse.doWhenReadyClean = function(context, object, callback) {
+  Geniverse.doWhen(context, object, callback, SC.Record.READY_CLEAN);
+};
+
+Geniverse.doWhen = function(context, object, callback, desiredStatus) {
+    var self = context;
+    var outer = this;
+    var checkStatus = function() {
+      var status = object.get('status');
+      if (status & desiredStatus) {
+        object.removeObserver('status', outer, checkStatus);
+        callback.call(context);
+      }
+      else {
+        object.addObserver('status', outer, checkStatus);
+      }
+    };
+    checkStatus();
+};
+
+(function() {
+  if (typeof(Geniverse.resourcesBase) == "undefined") {
+    if (typeof(window.CC_RESOURCES_BASE) !== "undefined") {
+      Geniverse.resourcesBase = window.CC_RESOURCES_BASE;
+    } else {
+      Geniverse.resourcesBase = "http://resources.geniverse.dev.concord.org";
+    }
+  }
+})();
+
+Geniverse.resourceURL = function(path) {
+  return Geniverse.resourcesBase + path;
+};

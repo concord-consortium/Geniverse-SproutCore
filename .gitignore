@@ -21,3 +21,6 @@ bundled_gems
 "/
 gems/
 bin/
+resources*.zip
+box.tar.gz
+public/rails

@@ -15,7 +15,7 @@ Lab.caselogPage = SC.Page.design({
 
   mainPane: SC.MainPane.design({
 
-    layout: { minWidth: 1056, minHeight: 690 },
+    layout: { minWidth: 1056, minHeight: 820 },
     childViews: ['caselogView', 'topBar'],
     classNames: ['mainPane'],
 

@@ -18,11 +18,11 @@ Lab.inAvatar = Ki.State.extend({
   },
 
   choseScarlett: function() {
-    this._chooseAvatar('Scarlett', 'http://geniverse.fablevision-dev.com/introduction.html#sequence-1.html');
+    this._chooseAvatar('Scarlett', Geniverse.resourceURL('/resources/narrative/intro/introduction.html#sequence-1.html'));
   },
 
   choseStrider: function() {
-    this._chooseAvatar('Strider', 'http://geniverse.fablevision-dev.com/introduction.html#sequence-1-strider.html');
+    this._chooseAvatar('Strider', Geniverse.resourceURL('/resources/narrative/intro/introduction.html#sequence-1-strider.html'));
   },
 
   _chooseAvatar: function(name, url) {
@@ -45,6 +45,7 @@ Lab.inAvatar = Ki.State.extend({
 
     user.addObserver('status', stateChanged);
     console.log("setting avatar " + name + " on user: " + user.get('firstName') + " " + user.get('lastName'));
+    $.cookie("avatar",name);
     user.set('avatar', name);
     Geniverse.store.commitRecords();
 

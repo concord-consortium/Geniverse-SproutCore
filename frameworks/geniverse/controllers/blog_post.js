@@ -54,13 +54,14 @@ Geniverse.blogPostController = SC.Controller.create(
                 .replace(/\$\{reasoning\}/g, this.get('content4'));
 
     return content;
-  }.property('content1', 'content2', 'content3'),
+  }.property('content1', 'content2', 'content3', 'content4'),
 
   blogPostView: null,
 
   iframe: null,
 
   showBlogPane: function() {
+    this.restoreDraftBlogPost();
     this.blogPostView = Geniverse.BlogPostView.create();
     this.set('iframe',SC.WebView.create({                //This is an empty iFrame used to make sure the InfoView will be on top of applets
       layoutBinding: 'Geniverse.blogPostController.blogPostView.layout',
@@ -72,37 +73,36 @@ Geniverse.blogPostController = SC.Controller.create(
   },
 
   hideBlogPane: function() {
-    // save content in case in needs to be restored
-    this.set('_savedContent1', this.get('content1'));
-    this.set('_savedContent2', this.get('content2'));
-    this.set('_savedContent3', this.get('content3'));
-    this.set('_savedContent4', this.get('content4'));
-
-    this.set('title', '');
-    this.set('content1', '');
-    this.set('content2', '');
-    this.set('content3', '');
-    this.set('content4', '');
     this.blogPostView.remove();
     if (this.get('iframe') && this.get('iframe').get('parentView')) {
       this.get('iframe').get('parentView').removeChild(this.get('iframe'));
     }
   },
 
-  restoreBlogPost: function() {
-    this.set('title', this.get('_savedTitle'));
-    this.set('content1', this.get('_savedContent1'));
-    this.set('content2', this.get('_savedContent2'));
-    this.set('content3', this.get('_savedContent3'));
-    this.set('content4', this.get('_savedContent4'));
+  saveDraftBlogPost: function() {
+    var pageId = Geniverse.activityController.get('route');
+    if (pageId == null && Geniverse.activityController.get('title') == "Case Log") {
+      pageId = "caselog";
+    }
+
+    Geniverse.userController.saveBlogDraft(pageId);
+    // Commit user record, if not busy
+    Geniverse.doWhenReady(this, Geniverse.userController.get('content'), function() {
+      Geniverse.store.commitRecords();
+    });
   },
 
-  _savedContent1: "",
+  restoreDraftBlogPost: function() {
+    var pageId = Geniverse.activityController.get('route');
+    if (pageId == null && Geniverse.activityController.get('title') == "Case Log") {
+      pageId = "caselog";
+    }
+    draft = Geniverse.userController.getBlogDraft(pageId);
 
-  _savedContent2: "",
-
-  _savedContent3: "",
-
-  _savedContent4: ""
+    this.set('content1', draft.content1 || "");
+    this.set('content2', draft.content2 || "");
+    this.set('content3', draft.content3 || "");
+    this.set('content4', draft.content4 || "");
+  }
 
 }) ;

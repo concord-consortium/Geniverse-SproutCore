@@ -16,6 +16,7 @@ Geniverse.Unlockable = SC.Record.extend(
   title: SC.Record.attr(String, { defaultValue: "No title" }),
   content: SC.Record.attr(String),
   trigger: SC.Record.attr(String),
+  openAutomatically: SC.Record.attr(Boolean, { defaultValue: NO }),
   unlocked: SC.Record.attr(Boolean, { defaultValue: NO }),
   viewed: SC.Record.attr(Boolean, { defaultValue: NO }),
 
