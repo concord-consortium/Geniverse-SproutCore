@@ -25,7 +25,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
   anchorLocation: SC.ANCHOR_TOP,
 
   // the order the children are defined here determines the order they show up in the top bar!
-  childViews: 'homeButton caselogButton introButton geniverseLabelView welcomeLabelView groupLabelView infoButton notepadButton unlockablesButton'.w(),
+  childViews: 'caselogButton geniverseLabelView welcomeLabelView groupLabelView infoButton helpButton notepadButton'.w(),
 
   homeButton: SC.ImageView.design(Geniverse.SimpleButton, {
     layout: { top: 0, left: 0, width: 66, height: 57 },

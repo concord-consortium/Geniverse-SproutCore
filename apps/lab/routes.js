@@ -49,6 +49,14 @@ Lab.routes = SC.Object.create({
     Lab.statechart.sendAction('gotoEndingHub');
   },
 
+  gotoMeiosisDemo: function(routeParams) {
+    console.log("Going to meiosis demo");
+    Lab.ACTIVITY.set('strand','meiosis');
+    Lab.ACTIVITY.set('level','drakeintro');
+
+    Lab.statechart.sendAction('gotoActivity');
+  },
+
   gotoActivity: function(routeParams) {
     Lab.ACTIVITY.set('strand', routeParams.strand);                // heredity, ...
     Lab.ACTIVITY.set('level', routeParams.level);                  // apprentice, journeyman, master

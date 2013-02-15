@@ -5,7 +5,8 @@ require 'net/http'
 
 VERBOSE=true
 STDOUT.sync = true
-DB_BASE = "http://geniverse.concord.org/rails/"
+DB_HOST = ARGV[0] || "geniverse.concord.org"
+DB_BASE = "http://#{DB_HOST}/rails/"
 BASE_DIR = File.join(File.dirname(__FILE__), "tmp", "build", "rails")
 
 def download(uri_str, dest)

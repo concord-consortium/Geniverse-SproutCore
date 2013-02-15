@@ -92,7 +92,7 @@ Lab.loginController = SC.ObjectController.create(
         login: username,
         first: first_name,
         last: last_name,
-        avatar: $.cookie("avatar"),
+        avatar: "Scarlett",
         class_words: []
       }
     });

@@ -44,7 +44,7 @@ Lab.main = function main() {
   SC.routes.add('geniverse/:pageName', Lab.routes, 'gotoGeniverseRoute');
 
   // home page (requires login)
-  SC.routes.add(':', Lab.routes, 'gotoHomePage');
+  SC.routes.add(':', Lab.routes, 'gotoMeiosisDemo');
 
   // *** End routes setup ***
 

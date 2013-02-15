@@ -71,7 +71,7 @@ Lab.ACTIVITY = SC.Responder.create(
     var parts = [level,activityType,activityIndex];
     for (var i = 0; i < 3; i++) {
       var part = parts[i];
-      if (typeof(part) != "undefined") {
+      if (typeof(part) != "undefined" && part !== null) {
         routeStr += "/" + part;
       }
     }
