@@ -39,7 +39,6 @@ function boxsync {
 }
 
 function label {
-  BUILD_NUM=$($CMD_PREFIX sc-build-number lab)
   echo "Lab build hash: $BUILD_NUM"
 
   read -p "What label should this be deployed with? " -e -r LABEL
