@@ -13,7 +13,7 @@
 Lab.LoginLoginView = SC.View.extend({
      layout: {left: 0, top: 0, width: 400, height: 100},
 
-     childViews: 'logo loginButtonView welcomeView usernameLabel usernameView passwordLabel passwordView'.w(),
+     childViews: 'logo loginButtonView welcomeView introLabel'.w(),
 
      logo: SC.ImageView.design({
        layout: {top: 0, left: 11, width: 188, height: 84 },
@@ -21,17 +21,39 @@ Lab.LoginLoginView = SC.View.extend({
      }),
 
      loginButtonView: SC.ButtonView.design({
-       layout: { bottom: 0, height: 40, right: 0, width: 90 },
-       title:  "enter &raquo;",
-       isVisibleBinding: 'Lab.loginController.loginShowing',
-       action: 'Lab.loginController.loginPortal'
+       layout: { bottom: 0, height: 40, centerX: 0, width: 210 },
+       title:  function() {
+        var extra = "";
+        if (SC.buildMode == "demo") {
+          extra = " Demo";
+        }
+        return "Continue to Geniverse" + extra;
+       }.property('SC.buildMode'),
+       action: function() {
+        Lab.loginController.autoLogin("User", "User", "user");
+       }
      }),
 
      welcomeView: SC.LabelView.design({
-       layout: { top: 89, height: 20, left: 0, width: 210 },
-       valueBinding: 'Lab.loginController.welcomeMessage'
+       layout: { top: 89, height: 20, left: 0, right: 0 },
+       fontWeight: SC.BOLD_WEIGHT,
+       textAlign: "center",
+       attributeBindings: ['style'],
+       controlSize: SC.LARGE_CONTROL_SIZE,
+       value: 'Welcome!'
      }),
 
+     introLabel: SC.LabelView.design({
+       layout: { top: 129, height: 60, left: 0, right: 0 },
+       escapeHTML: NO,
+       value: function() {
+         var extra = "";
+         if (SC.buildMode == "demo") {
+           extra = "This is the Geniverse DEMO site. ";
+         }
+         return extra + 'To log in to Geniverse and save data, visit <a href="http://geniverse.concord.org/lab/">geniverse.concord.org/lab</a>.';
+       }.property()
+     }),
 
      usernameLabel: SC.LabelView.design({
        layout: { top: 117, left: 0, height: 20, width: 210 },

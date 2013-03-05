@@ -24,7 +24,6 @@ Lab.loggedOut =  Ki.State.extend({
 
   gotoLogin: function() {
     Lab.routes.gotoLabRoute({pageName: 'loginPage', paneName: 'mainPane'});
-    Lab.loginController.autoLogin("User", "User", "user");
   },
 
   // this and gotoActivity just set this property for later
