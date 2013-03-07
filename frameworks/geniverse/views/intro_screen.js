@@ -24,9 +24,16 @@ Geniverse.IntroScreenView = SC.PanelPane.design({
       action: "closePanel"
     }),
 
-    imageView: SC.ImageView.design({
+    imageView: SC.View.design({
       layout: { left: 5, top: 5, right: 5, bottom: 34 },
-      valueBinding: "Geniverse.introScreenController.imageUrl"
+      classNames: ['intro-image-wrapper'],
+      displayProperties: ['value'],
+      valueBinding: "Geniverse.introScreenController.imageUrl",
+      render: function(context, firstTime) {
+        if (this.get('value')) {
+          context.push('<image src="' + this.get('value') + '" />');
+        }
+      }
     })
 
   })
