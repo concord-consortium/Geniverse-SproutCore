@@ -29,6 +29,38 @@ Lab.caselogPage = SC.Page.design({
       levelsBinding:           'Lab.caselogController.levels',
 
       displayProperties: ['currentLevel', 'levels'],
+      drakesTimer: null,
+      didDisplay: function() {
+        if (this.get('isVisibleInWindow')) {
+          console.log("displaying now2");
+          this.animate();
+        } else {
+          console.log("not displaying anymore2");
+          if (this.get('drakesTimer')) {
+            clearTimeout(this.get('drakesTimer'));
+            this.set('drakesTimer', null);
+          }
+        }
+      }.observes('isVisibleInWindow'),
+      animationStep: 0,
+      animate: function() {
+        var _this = this;
+        var animation = function() {
+          clearTimeout(_this.get('drakesTimer'));
+          var step = _this.get('animationStep');
+          var top = step * 30;
+          var delay = 100;
+          if (step == 9) {
+            _this.set('animationStep', 0);
+            delay = 7000;
+          } else {
+            _this.set('animationStep', step+1);
+          }
+          $('#small-drakes').css({'background-position': 'right -' + top + 'px'});
+          _this.set('drakesTimer', setTimeout(animation, delay));
+        };
+        this.set('drakesTimer', setTimeout(animation, 100));
+      },
 
       render: function (context, isFirstTime) {
 
@@ -124,6 +156,14 @@ Lab.caselogPage = SC.Page.design({
 
         context.push('</ul>');
         context.push('</div>');
+
+        var out = '<div id="illustration" style="background: url(\'' + sc_static('illustration.png') + '\') no-repeat; height: 319px; left: 518px; padding: 0; position: absolute; top: 0; width: 363px; z-index: 1;">';
+        out += '<a style="color: #492222; display: block; height: 315px; text-decoration: none; text-indent: -999em; width: 363px;" href="http://concord.org/projects/geniverse">';
+        out += '<div style="background-position: right -270px;" id="small-drakes"></div>';
+        out += '</a>';
+        out += '</div>';
+        context.push(out);
+
         context.push('</div>');
 
         return context;
