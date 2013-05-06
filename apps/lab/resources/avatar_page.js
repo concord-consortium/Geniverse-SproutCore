@@ -29,7 +29,7 @@ Lab.avatarPage = SC.Page.design({
       isVisibleBinding: SC.Binding.not('Lab.avatarController.waiting')
     }),
 
-    scarlett: SC.View.design({
+    scarlett: Lab.AvatarView.design({
       layerId: 'scarlett',
       layout: {top: 110, width: 340, height: 545, centerX: -170},
       isVisibleBinding: SC.Binding.not('Lab.avatarController.waiting'),
@@ -51,7 +51,7 @@ Lab.avatarPage = SC.Page.design({
       }
     }),
 
-    strider: SC.View.design({
+    strider: Lab.AvatarView.design({
       layerId: 'strider',
       layout: {top: 120, width: 340, height: 540, centerX: 170},
       isVisibleBinding: SC.Binding.not('Lab.avatarController.waiting'),
