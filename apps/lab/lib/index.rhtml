@@ -19,7 +19,26 @@
     <meta http-equiv="Content-Script-Type" content="text/javascript" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="<%= config.status_bar_style || 'default' %>" />
-    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta id="viewport-meta" name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script type="text/javascript">
+      function updateMetaViewport(){
+        var mvp = document.getElementById('viewport-meta');
+        var mvpScale = 1.0, mvpWidthScale = 1.0, mvpHeightScale = 1.0;
+        if (innerWidth < 1100){
+          mvpWidthScale = innerWidth/1100;
+        }
+        if (innerHeight < 800){
+          mvpHeightScale = innerHeight/800;
+        }
+        mvpScale = Math.min(mvpWidthScale, mvpHeightScale);
+        mvp.setAttribute('content', "initial-scale=" + mvpScale +
+                                    ", minimum-scale=" + mvpScale +
+                                    ", maximum-scale=" + mvpScale +
+                                    ", user-scalable=no");
+      }
+      updateMetaViewport();
+    </script>
+
     <link rel="apple-touch-icon<%= '-precomposed' if config.precomposed_icon %>" href="<%= sc_static(config.icon || 'sproutcore-logo.png') %>" />
     <link rel="apple-touch-startup-image" media="screen and (orientation:portrait)" href="<%= sc_static(config.startup_image_portrait || 'sproutcore-startup-portrait.png') %>" />
     <link rel="apple-touch-startup-image" media="screen and (orientation:landscape)" href="<%= sc_static(config.startup_image_landscape || 'sproutcore-startup-landscape.png') %>" />
