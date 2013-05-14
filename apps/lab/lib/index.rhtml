@@ -31,10 +31,24 @@
           mvpHeightScale = innerHeight/800;
         }
         mvpScale = Math.min(mvpWidthScale, mvpHeightScale);
-        mvp.setAttribute('content', "initial-scale=" + mvpScale +
-                                    ", minimum-scale=" + mvpScale +
-                                    ", maximum-scale=" + mvpScale +
-                                    ", user-scalable=no");
+        mvpWidth = innerWidth/mvpScale;
+
+        // using target-densitydpi=X is being removed from webkit,
+        // but the *-scale options are not supported by Dolphin or the webkit used by PhoneGap
+        // Chrome 18 on Android supports both options, Chrome >21 does not support target-densitydpi
+        // So for all Android browsers except chrome we'll use the target-densitydpi for now
+        // we might be able to improve this by using the webkit version on Android instead of !Chrome
+        if ( /Android/.exec(navigator.userAgent) && !/Chrome/.exec(navigator.userAgent)) {
+          // by default it is 160dpi
+          mvp.setAttribute('content', "target-densitydpi=" + 160/mvpScale +
+                                      ", initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no");
+
+        } else {
+          mvp.setAttribute('content', "initial-scale=" + mvpScale +
+                                      ", minimum-scale=" + mvpScale +
+                                      ", maximum-scale=" + mvpScale +
+                                      ", user-scalable=no");
+        }
       }
       updateMetaViewport();
     </script>
