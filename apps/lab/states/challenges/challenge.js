@@ -105,9 +105,10 @@ Lab.challenge = Ki.State.extend({
         return '<p class="description">' + desc.split('\n').join('</p><p class="description">') + '</p>';
       }.property('description').cacheable()}).plain(
       "Good work!",
-      message+starsMessage,
+//      message+starsMessage,
+      message,
       "",
-      (next ? "Go on to the next challenge" : "Go back to the Case Log"),
+      (next ? "Go on to the next challenge" : "Go back to the Dragon Book"),
       "Try again",
       {
         alertPaneDidDismiss: function(pane, status) {

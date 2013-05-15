@@ -20,25 +20,30 @@ Lab.chromosomeBreedingPage = SC.Page.design({
   // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: Lab.LabPane.design({
+
+    layout: { left: 0, top: 0, width: 800, height: 1400 },
+
     mainAppView: SC.View.design({
 
-      layout: { centerX: 0, top: 80, width: 1080, height: 880 },
+
+      layout: { left: 0, top: 100, width: 800, height: 1300 },
 
       childViews: 'genomePanel breedingPenView matchView scoreView'.w(),
 
       genomePanel: SC.View.design({
-        layout: {top: 35, height: 585, left: 15, width: 1005 },
+        layout: { left: 0, top: 0, width: 800, height: 1300 },
         childViews: 'femaleTitle femaleGenomeView femalePhenotypeView maleTitle maleGenomeView malePhenotypeView breedButton'.w(),
 
         femaleTitle: SC.LabelView.design({
-          layout: {top: 10, height: 25, left: 70, width: 200 },
+          layout: {top: 0, height: 25, centerX: -105, width: 200 },
+          textAlign: SC.ALIGN_CENTER,
           controlSize: SC.LARGE_CONTROL_SIZE,
           classNames: 'title'.w(),
-          value: "Female Drake"
+          value: "Female Dragon"
         }),
 
         femalePhenotypeView: Geniverse.OrganismView.design({
-          layout: {top: 0, left: 30, width: 200, height: 200},
+          layout: {top: 35, centerX: -105, width: 200, height: 200},
           contentBinding: "*parentView.femaleGenomeView.dragon",
           allowDrop: NO,
           showBackground: NO,
@@ -46,20 +51,21 @@ Lab.chromosomeBreedingPage = SC.Page.design({
         }),
 
         femaleGenomeView: Lab.DragonBreedingGenomeView.design({
-          layout: {top: 170, left: 15, height: 500, width: 500 },
+          layout: {top: 245, centerX: -75, height: 500, width: 500 },
           sex: 1,
           index: 1
         }),
 
         maleTitle: SC.LabelView.design({
-          layout: {top: 10, height: 25, right: 35, width: 170 },
+          layout: {top: 0, height: 25, centerX: 105, width: 200 },
+          textAlign: SC.ALIGN_CENTER,
           controlSize: SC.LARGE_CONTROL_SIZE,
           classNames: 'title'.w(),
-          value: "Male Drake"
+          value: "Male Dragon"
         }),
 
         malePhenotypeView: Geniverse.OrganismView.design({
-          layout: {top: 0, right: 60, width: 200, height: 200},
+          layout: {top: 35, centerX: 105, width: 200, height: 200},
           contentBinding: "*parentView.maleGenomeView.dragon",
           allowDrop: NO,
           showBackground: NO,
@@ -67,14 +73,14 @@ Lab.chromosomeBreedingPage = SC.Page.design({
         }),
 
         maleGenomeView: Lab.DragonBreedingGenomeView.design({
-          layout: {top: 170, right: 0, height: 500, width: 500 },
+          layout: {top: 245, centerX: 105, height: 500, width: 500 },
           sex: 0,
           index: 2,
           dragonOnRight: YES
         }),
 
         breedButton: SC.ButtonView.design({
-          layout: { top: 150, centerX: -60, width: 100, height: 24 },
+          layout: { top: 695, centerX: -60, width: 100, height: 24 },
           target: 'Geniverse.breedDragonController',
           action: "breed",
           isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
@@ -92,17 +98,17 @@ Lab.chromosomeBreedingPage = SC.Page.design({
 
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
-        layout: { left: 329, top: 240, width: 380, height: 350 },
+        layout: { centerX: 0, top: 695+34, width: 380, height: 350 },
         breedingRecordRight: -20
       }),
 
       matchView: Geniverse.MatchView.design({
-        layout: { centerX: 0, top: 40, height: 125, width: 410 },
+        layout: { centerX: 0, top: 695+34+350+10, height: 125, width: 410 },
         dragonSize: 105
       }),
 
       scoreView: Geniverse.ScoreView.design({
-        layout: { top: 175, centerX: 60, width: 150, height: 46 },
+        layout: { top: 695-24, centerX: 10+150/2, width: 150, height: 46 },
         showScore: YES,
         isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
         showTargetScore: YES

@@ -87,7 +87,7 @@ describe "Templates" do
       [@phenotype_view1, @phenotype_view2, @phenotype_view3].each do |view|
         verify_images(view, false)
       end
-      verify_incorrect_match("None of the drakes you have created match the target. Please try again.")
+      verify_incorrect_match("None of the dragons you have created match the target. Please try again.")
     end
 
     it 'should leave all 3 dragons hidden' do
@@ -104,7 +104,7 @@ describe "Templates" do
       [@phenotype_view2, @phenotype_view3].each do |view|
         verify_images(view, false)
       end
-      verify_incorrect_match("2 of the drakes you have created don't match the target. Please try again.")
+      verify_incorrect_match("2 of the dragons you have created don't match the target. Please try again.")
     end
 
     it 'should leave the 2 incorrect dragons hidden' do
@@ -122,7 +122,7 @@ describe "Templates" do
       verify_images(@phenotype_view1, true)
       verify_images(@phenotype_view2, true)
       verify_images(@phenotype_view3, false)
-      verify_incorrect_match("1 of the drakes you have created doesn't match the target. Please try again.")
+      verify_incorrect_match("1 of the dragons you have created doesn't match the target. Please try again.")
     end
 
     it 'should leave the 1 incorrect dragon hidden' do
@@ -138,7 +138,7 @@ describe "Templates" do
       [@phenotype_view1, @phenotype_view2, @phenotype_view3].each do |view|
         verify_images(view, true)
       end
-      verify_incorrect_match("Some of your drakes are exactly the same! All of your drakes need to have different alleles.")
+      verify_incorrect_match("Some of your dragons are exactly the same! All of your dragons need to have different alleles.")
     end
 
     it 'should leave the 2 duplicate dragons hidden' do
@@ -155,7 +155,7 @@ describe "Templates" do
         verify_images(view, true)
       end
       verify_images(@phenotype_view2, false)
-      verify_incorrect_match("1 of the drakes you have created doesn't match the target. Also, some of your drakes are exactly the same! All of your drakes need to have different alleles. Please try again.")
+      verify_incorrect_match("1 of the dragons you have created doesn't match the target. Also, some of your dragons are exactly the same! All of your dragons need to have different alleles. Please try again.")
     end
 
     it 'should leave all dragons hidden' do

@@ -22,7 +22,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
   mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
 
-      layout: { centerX: 0, top: 95, width: 1080, height: 605 },
+      layout: { left: 0, top: 95, width: 1080, height: 605 },
 
       childViews: 'targetDrake targetTitle genomePanels revealButton scoreLabel line1 line2 line3'.w(),
 
@@ -63,7 +63,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
         classNames: 'title'.w(),
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
-        value: "Target Drake"
+        value: "Target Dragon"
       }),
 
       line1: SC.View.design({
@@ -106,7 +106,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             alt: 'Switch Sex',
             title: 'Switch Sex',
             sexBinding: '*parentView.genomeView.sex',
-            toolTip: 'Click to switch the sex of the drake',
+            toolTip: 'Click to switch the sex of the dragon',
             target: 'parentView.genomeView',
             action: 'switchSex',
             _setClassNames: function(){
@@ -158,7 +158,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             alt: 'Switch Sex',
             title: 'Switch Sex',
             sexBinding: '*parentView.genomeView.sex',
-            toolTip: 'Click to switch the sex of the drake',
+            toolTip: 'Click to switch the sex of the dragon',
             target: 'parentView.genomeView',
             action: 'switchSex',
             _setClassNames: function(){
@@ -210,7 +210,7 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             alt: 'Switch Sex',
             title: 'Switch Sex',
             sexBinding: '*parentView.genomeView.sex',
-            toolTip: 'Click to switch the sex of the drake',
+            toolTip: 'Click to switch the sex of the dragon',
             target: 'parentView.genomeView',
             action: 'switchSex',
             _setClassNames: function(){

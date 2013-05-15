@@ -7,8 +7,9 @@
 Lab.loggedOut =  Ki.State.extend({
 
   enterState: function() {
-    Lab.routes.gotoLabRoute({pageName: 'loadAssetsPage', paneName: 'mainPane'});
-    this.get('statechart').sendAction('loadAssets');
+    //Lab.routes.gotoLabRoute({pageName: 'loadAssetsPage', paneName: 'mainPane'});
+    //this.get('statechart').sendAction('loadAssets');
+    this.get('statechart').sendAction('gotoLogin');
   },
 
   loadAssets: function() {
@@ -23,8 +24,8 @@ Lab.loggedOut =  Ki.State.extend({
   },
 
   gotoLogin: function() {
-    Lab.routes.gotoLabRoute({pageName: 'loginPage', paneName: 'mainPane'});
-    Lab.loginController.checkCCAuthToken();
+    //Lab.routes.gotoLabRoute({pageName: 'loginPage', paneName: 'mainPane'});
+    Lab.loginController.autoLogin("User", "User", "user");
   },
 
   // this and gotoActivity just set this property for later

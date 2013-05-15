@@ -82,7 +82,7 @@ test("NumberOfMoves should ignore matching traits", function() {
       forelimbs: "Forelimbs",
       hindlimbs: "Hindlimbs"
     });
-  equals(NumberOfMoves(initDrake, targetDrake), 0, "Should take 0 moves for identical drakes");
+  equals(NumberOfMoves(initDrake, targetDrake), 0, "Should take 0 moves for identical dragons");
 
   targetDrake = new Drake(
     {
@@ -284,7 +284,7 @@ test("NumberOfBreedMoves should be infinity in an impossible case", function() {
     {
       tail: "Short tail"
     });
-  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), Infinity, "Can't change drake2, so should be Infinity");
+  equals(NumberOfBreedMoves(initMother, initFather, targetDrake), Infinity, "Can't change dragon2, so should be Infinity");
 });
 
 test("NumberOfBreedMoves should work in Tk or A5 case", function() {

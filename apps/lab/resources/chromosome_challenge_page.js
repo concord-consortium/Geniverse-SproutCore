@@ -20,115 +20,121 @@ Lab.chromosomeChallengePage = SC.Page.design({
   // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: Lab.LabPane.design({
+
+    layout: { left: 0, top: 0, width: 800, height: 1322 },
+
     mainAppView: SC.View.design({
 
       childViews: 'genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle line'.w(),
 
-      layout: { centerX: 0, top: 90, width: 850, height: 560 },
+      layout: { left: 0, top: 100, width: 800, height: 1222 },
 
       line: SC.View.design({
-        layout: {top: 80, left: 280, width: 2, bottom: 110},
+        layout: {top: 25+280+49+40, centerX: 0, width: 2, bottom: 110},
         classNames: ['genome-view-intro']
       }),
 
       genomePanel: SC.View.design({
-        layout: {top: 40, height: 530, right: 0, width: 580 },
-        childViews: 'genomeView switchSexButton revealButton'.w(),
+            layout: { left: 0, top: 0, height: 1322, width: 800 },
+            childViews: 'genomeView switchSexButton revealButton'.w(),
 
-        switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
-          layout: { top: 268, left: 85, width: 100, height: 43 },
-          isEnabled: YES,
-          hasHover: YES,
-          classNames: "switchsex switch-female".w(),
-          alt: 'Switch Sex',
-          title: 'Switch Sex',
-          sexBinding: '*parentView.genomeView.sex',
-          toolTip: 'Click to switch the sex of the drake',
-          target: 'parentView.genomeView',
-          action: 'switchSex',
-          _setClassNames: function(){
-            classNames = this.get('classNames');
-            classNames.removeObject("switch-female");
-            classNames.removeObject("switch-male");
+            switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
+                layout: { top: 25+280+49+25+275+60, centerX: 110, width: 100, height: 43 },
+                isEnabled: YES,
+                hasHover: YES,
+                classNames: "switchsex switch-female".w(),
+                alt: 'Switch Sex',
+                title: 'Switch Sex',
+                sexBinding: '*parentView.genomeView.sex',
+                toolTip: 'Click to switch the sex of the dragon',
+                target: 'parentView.genomeView',
+                action: 'switchSex',
+                _setClassNames: function(){
+                    classNames = this.get('classNames');
+                    classNames.removeObject("switch-female");
+                    classNames.removeObject("switch-male");
 
-            classNames.push( this.getPath('parentView.genomeView.sex') === 0 ? "switch-male" : "switch-female");
-            this.set('classNames', classNames);
-            this.displayDidChange();
-          }.observes('sex')
+                    classNames.push( this.getPath('parentView.genomeView.sex') === 0 ? "switch-male" : "switch-female");
+                    this.set('classNames', classNames);
+                    this.displayDidChange();
+                }.observes('sex')
 
-        }),
+            }),
 
-        genomeView: Geniverse.DragonGenomeView.design({
-          layout: {top: 35, right: -120, height: 500, width: 630 },
-          classNames: ['overflowVis'],
-          dragonView: Geniverse.OrganismView.design({
-            layout: {top: 0, left: -35, width: 200, height: 215},
-            contentBinding: "*parentView.dragon",
-            allowDrop: YES,
-            isVisibleBinding: "*parentView.showDragon",
-            useRevealButtonBinding: "*parentView.useRevealButton",
-            revealButtonEnabledBinding: "*parentView.revealButtonEnabled",
-            hideDragonBinding: "*parentView.hideDragon",
-            showBackground: NO,
-            glow: YES
-          }),
-          dragonOnRight: YES,
-          generateDragonAtStart: NO,
-          sex: 1,
-          displayChallengeDragon: YES,
-          showGenerateNewDragon: NO,
-          showIsEditableCheck: NO,
-          hideDragon: YES,
-          trackScore: YES,
-          revealButtonNeedsEnabled: function() {
-            this.set('revealButtonEnabled', this.get('allAllelesSelected'));
-          }.observes('allAllelesSelected'),
-          showEmptyOptions: NO,
-          showFromLabels: NO,
-          startWithEmptyOptions: NO
-        }),
+            genomeView: Geniverse.DragonGenomeView.design({
+                layout: {top: 25+280+49+25+50, centerX: -260, height: 500, width: 510 },
+                classNames: ['overflowVis'],
+                dragonView: Geniverse.OrganismView.design({
+                    layout: {top: 20, left: 510+30, width: 200, height: 215},
+                    contentBinding: "*parentView.dragon",
+                    allowDrop: YES,
+                    isVisibleBinding: "*parentView.showDragon",
+                    useRevealButtonBinding: "*parentView.useRevealButton",
+                    revealButtonEnabledBinding: "*parentView.revealButtonEnabled",
+                    hideDragonBinding: "*parentView.hideDragon",
+                    showBackground: NO,
+                    glow: YES
+                }),
+                dragonOnRight: YES,
+                generateDragonAtStart: NO,
+                sex: 1,
+                displayChallengeDragon: YES,
+                showGenerateNewDragon: NO,
+                showIsEditableCheck: NO,
+                hideDragon: YES,
+                trackScore: YES,
+                revealButtonNeedsEnabled: function() {
+                    this.set('revealButtonEnabled', this.get('allAllelesSelected'));
+                }.observes('allAllelesSelected'),
+                showEmptyOptions: NO,
+                showFromLabels: NO,
+                startWithEmptyOptions: NO
+            }),
 
-        revealButton: SC.ButtonView.design({
-          layout: { height: 24, bottom: 30, width: 120, right: 100 },
-          title: "Enter",
-          action: "revealClicked",
-          target: "Lab.statechart"
-        })
+            revealButton: SC.ButtonView.design({
+                layout: { height: 24, top: 25+280+49+25+425+60, width: 120, centerX: -120 },
+                title: "Enter",
+                action: "revealClicked",
+                target: "Lab.statechart"
+            })
       }),
 
       scoreLabel: Geniverse.ScoreView.design({
-        layout: { left: 53, top: 370, height: 49, width: 184 },
-        showScore: YES,
-        isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
-        showTargetScore: YES
+            layout: { centerX: 0, top: 25+10+280+10, height: 49, width: 184 },
+            showScore: YES,
+            isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
+            showTargetScore: YES
       }),
 
       targetDrakes: Geniverse.MatchView.design({
-        layout: { left: 40, top: 60, height: 280, width: 210 },
-        onlyOne: YES,
-        // FIXME dragonSize of 200 or 201 causes Chrome and Firefox to freeze when zooming in/out
-        // It's some sort of bad interaction with the Geniverse.ShiftedOrganism mixin
-        dragonSize: 202
+            layout: { centerX: 0, top: 35, height: 280, width: 210 },
+            onlyOne: YES,
+            // FIXME dragonSize of 200 or 201 causes Chrome and Firefox to freeze when zooming in/out
+            // It's some sort of bad interaction with the Geniverse.ShiftedOrganism mixin
+            dragonSize: 202,
       }),
 
       targetTitle: SC.LabelView.design({
-        layout: {top: 40, height: 25, left: 75, width: 200 },
+        layout: {top: 0, height: 25, centerX: 0, width: 200 },
+        textAlign:SC.ALIGN_CENTER,
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         classNames: 'title'.w(),
-        value: "Target Drake"
+        value: "Target Dragon"
       }),
 
       yourTitle: SC.LabelView.design({
-        layout: {top: 40, height: 25, left: 345, width: 200 },
+        layout: {top: 25+10+280+10+49+10+10, height: 25, centerX: 130, width: 200 },
+        textAlign:SC.ALIGN_CENTER,
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         classNames: 'title'.w(),
-        value: "Your Drake"
+        value: "Your Dragon"
       }),
 
       chromoTitle: SC.LabelView.design({
-        layout: {top: 40, height: 25, left: 545, width: 200 },
+        layout: {top: 25+10+280+10+49+10+10, height: 25, centerX: -130, width: 200 },
+        textAlign:SC.ALIGN_CENTER,
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         classNames: 'title'.w(),

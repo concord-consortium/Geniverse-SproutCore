@@ -33,7 +33,7 @@ Geniverse.trainingPage = SC.Page.design({
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         //valueBinding:   'Geniverse.activityController.title'
-        value: "Drake Chromosomes"
+        value: "Dragon Chromosomes"
       }),
 
       welcomeLabelView: SC.LabelView.design({
@@ -72,7 +72,7 @@ Geniverse.trainingPage = SC.Page.design({
           layout: {top: 20, height: 25, left: 20, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
-          value: "Female Drake"
+          value: "Female Dragon"
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({
@@ -104,7 +104,7 @@ Geniverse.trainingPage = SC.Page.design({
           layout: {top: 20, height: 25, left: 20, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
-          value: "Male Drake"
+          value: "Male Dragon"
         }),
 
         maleGenomeView: Geniverse.DragonGenomeView.design({

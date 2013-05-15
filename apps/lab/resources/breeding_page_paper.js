@@ -21,9 +21,9 @@ Lab.breedingPagePaper = SC.Page.design({
   mainPane: Lab.LabPane.design({
     mainAppView: SC.View.create({
 
-      layout: { centerX: 0, top: 100, width: 860, height: 600 },
+      layout: { left: 0, top: 100, width: 860, height: 600 },
 
-      childViews: 'breedView challengePoolView breedingPenView stableView marketplaceView chatView allArticlesView'.w(),
+      childViews: 'breedView challengePoolView breedingPenView stableView marketplaceView allArticlesView'.w(),
 
       challengePoolView: Lab.ChallengePoolView.design({
         layout: { left: 20, top: 70, width:70, height: 300 }

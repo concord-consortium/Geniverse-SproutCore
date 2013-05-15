@@ -19,12 +19,15 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
   // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: Lab.LabPane.design({
+  
+   layout: { left: 0, top: 0, width: 800, height: 1400 },
+
     mainAppView: SC.View.design({
 
       childViews: 'drakeGenomePanel'.w(),
 
       drakeGenomePanel: SC.View.design({
-        layout: {top: 110, height: 550, centerX: 0, width: 500 },
+        layout: {top: 110, height: 550, left: 0, width: 500 },
         childViews: 'title genomeView switchSexButton nextButton'.w(),
 
         title: SC.LabelView.design({
@@ -34,7 +37,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           classNames: 'title'.w(),
           sexBinding: '*parentView.genomeView.sex',
           value: function() {
-            return (this.get('sex') === 0 ? "Male " : "Female ") + "Drake";
+            return (this.get('sex') === 0 ? "Male " : "Female ") + "Dragon";
           }.property('sex')
         }),
 
@@ -45,7 +48,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           classNames: "switchsex switch-female".w(),
           alt: 'Switch Sex',
           title: 'Switch Sex',
-          toolTip: 'Click to switch the sex of the drake',
+          toolTip: 'Click to switch the sex of the dragon',
           sexBinding: '*parentView.genomeView.sex',
           target: 'parentView.genomeView',
           action: 'switchSex',
@@ -68,8 +71,8 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           alt: 'Bring it on!',
           title: 'Bring it on!',
           toolTip: 'Click when ready for the challenge.',
-          target: 'Lab.statechart',
-          action: 'gotoNextActivity'
+          target: 'Lab.routes',
+          action: 'openCaselogRoute'
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({

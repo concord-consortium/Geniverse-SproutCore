@@ -9,8 +9,8 @@ config :all,
 
 mode :production do
   config :lab,
-    :google_analytics_id => "UA-6899787-33",
-    :resources_base => "http://resources.geniverse.concord.org"
+    :google_analytics_id => "null",
+    :resources_base => "/"
 end
 
 mode :inabox do
@@ -21,20 +21,20 @@ end
 
 mode :demo do
   config :lab,
-    :google_analytics_id => "UA-6899787-32",
-    :resources_base => ""
+    :google_analytics_id => "null",
+    :resources_base => "/"
 end
 
 mode :dev do
   config :lab,
     :google_analytics_id => nil,
-    :resources_base => "http://resources.geniverse.dev.concord.org"
+    :resources_base => "/"
 end
 
 mode :debug do
   config :lab,
     :google_analytics_id => nil,
-    :resources_base => "http://resources.geniverse.dev.concord.org"
+    :resources_base => "/"
 end
 
 config :geniverse,
@@ -58,8 +58,10 @@ mode :test do
 end
 
 mode :remote do
-  proxy '/geniverse/', :to => 'geniverse.dev.concord.org'
-  proxy '/chat/', :to => 'geniverse.dev.concord.org'
-  proxy "/rails", :to => "geniverse-rails.dev.concord.org"
-  proxy "/portal", :to=> "geniverse-portal.dev.concord.org"
+#  proxy '/geniverse/', :to => 'geniverse.dev.concord.org'
+#  proxy '/resources/', :to => 'geniverse.dev.concord.org'
+#  proxy '/static/', :to => 'geniverse.dev.concord.org'
+#  proxy '/chat/', :to => 'geniverse.dev.concord.org'
+#  proxy "/rails", :to => 'geniverse.dev.concord.org' #"localhost:3000"
+#  proxy "/portal", :to=> "geniverse-portal.dev.concord.org"
 end

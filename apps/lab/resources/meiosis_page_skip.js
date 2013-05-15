@@ -64,7 +64,7 @@ Lab.meiosisPageSkip = SC.Page.design({
         offspringTitle: SC.LabelView.design({
           layout: {top: 131, centerX: 107, height: 25, width: 140 },
           fontWeight: SC.BOLD_WEIGHT,
-          value: "Offspring Drake"
+          value: "Offspring Dragon"
         }),
 
         offspringView: SC.View.design({
@@ -127,10 +127,8 @@ Lab.meiosisPageSkip = SC.Page.design({
           alt: 'Bring it on!',
           title: 'Bring it on!',
           toolTip: 'Click when ready for the next challenge.',
-          action: function() {
-            Lab.statechart.sendAction('endChallenge');
-            Lab.statechart.sendAction('gotoNextActivity');
-          }
+          target: 'Lab.routes',
+          action: 'openCaselogRoute'
         }),
 
         scoreView: Geniverse.ScoreView.design({

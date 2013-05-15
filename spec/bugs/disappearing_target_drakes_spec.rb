@@ -2,7 +2,7 @@ dir = File.expand_path(File.dirname(__FILE__))
 require "#{dir}/../support/spec_helper.rb"
 
 describe "Bugs" do
-describe "Disappearing Target Drakes" do
+describe "Disappearing Target Dragons" do
   before(:all) do
     start_testing_servers
     @app = new_test({:app_root_path => "/lab#heredity/apprentice/case04"}) {|app|

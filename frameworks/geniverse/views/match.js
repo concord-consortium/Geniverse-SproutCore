@@ -115,7 +115,7 @@ Geniverse.MatchView = SC.View.extend(
        controlSize: SC.REGULAR_CONTROL_SIZE,
        textAlign: SC.ALIGN_CENTER,
        fontWeight: SC.BOLD_WEIGHT,
-       value: "Target Drake" + (this.get('onlyOne') ? "" : "s")
+       value: "Target Dragon" + (this.get('onlyOne') ? "" : "s")
        })
       );
       childViews.push(this.titleView);

@@ -22,7 +22,7 @@ Lab.breedingPage = SC.Page.design({
   mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
 
-      layout: { centerX: 0, top: 90, width: 840, height: 545 },
+      layout: { left: 0, top: 90, width: 840, height: 545 },
 
       childViews: 'breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView scoreView'.w(),
 

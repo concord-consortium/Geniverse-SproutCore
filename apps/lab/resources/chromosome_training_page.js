@@ -21,7 +21,7 @@ Lab.chromosomeTrainingPage = SC.Page.design({
   mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
 
-      layout: { centerX: 0, top: 100, width: 1150, height: 600 },
+      layout: { left: 0, top: 100, width: 1150, height: 600 },
       childViews: 'femaleGenomePanel maleGenomePanel'.w(),
 
       femaleGenomePanel: SC.View.design({
@@ -33,7 +33,7 @@ Lab.chromosomeTrainingPage = SC.Page.design({
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
           classNames: 'title'.w(),
-          value: "Female Drake"
+          value: "Female Dragon"
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({
@@ -59,7 +59,7 @@ Lab.chromosomeTrainingPage = SC.Page.design({
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
           classNames: 'title'.w(),
-          value: "Male Drake"
+          value: "Male Dragon"
         }),
 
         maleGenomeView: Geniverse.DragonGenomeView.design({

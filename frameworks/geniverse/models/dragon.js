@@ -168,7 +168,7 @@ Geniverse.Dragon = SC.Record.extend(
 
 Geniverse.Dragon.modelName = "dragon";
 Geniverse.Dragon.modelsName = "dragons";
-Geniverse.Dragon.readOnly = NO;
+Geniverse.Dragon.readOnly = YES;
 Geniverse.railsBackedTypes.push(Geniverse.Dragon.modelName);
 
 Geniverse.Dragon.traitRules = BioLogica.Species.Drake.traitRules;

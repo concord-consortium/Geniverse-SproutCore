@@ -24,7 +24,7 @@ Geniverse.PopupChromosomeView = SC.PalettePane.extend({
     noticeLabel: SC.LabelView.design({
       layout: { centerY: 0, height: 24, left: 0, top:24, width: 488 },
       //valueBinding: this.get('titlePath'),
-      value: 'Select a drake to see its traits',
+      value: 'Select a dragon to see its traits',
       controlSize: SC.LARGE_CONTROL_SIZE,
       fontWeight: SC.BOLD_WEIGHT,
       textAlign: SC.ALIGN_CENTER,

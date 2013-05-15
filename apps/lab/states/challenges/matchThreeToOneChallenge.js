@@ -80,9 +80,11 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
 
         if (numMatched === 3){
           this.successfulMatch = YES;
+          Lab.whyville.reportChallenge(this.successfulMatch);
+            
           SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).plain(
             "Good work!",
-            "All of the drakes you have created match the target drake.",
+            "All of the dragons you have created match the target dragon.",
             "",
             "OK",
             "",
@@ -92,6 +94,8 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
           Geniverse.scoringController.incrementScore(1);
 
           this.successfulMatch = NO;
+          Lab.whyville.reportChallenge(this.successfulMatch);
+            
           this._resetTargetMatchedState();
 
           // if we only have matches and duplicates, display the message about duplicates.
@@ -99,11 +103,11 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
           if (numIncorrect > 0) {
             var msg = "";
             if (numIncorrect === 3) {
-              msg = "None of the drakes you have created match the target.";
+              msg = "None of the dragons you have created match the target.";
             } else {
-              msg = "" + numIncorrect + " of the drakes you have created do" + (numIncorrect === 1 ? "es" : "") + "n't match the target.";
+              msg = "" + numIncorrect + " of the dragons you have created do" + (numIncorrect === 1 ? "es" : "") + "n't match the target.";
               if (numDupes !== 0) {
-                msg += " Also, some of your drakes are exactly the same! All of your drakes need to have different alleles.";
+                msg += " Also, some of your dragons are exactly the same! All of your dragons need to have different alleles.";
               }
             }
             msg += " Please try again.";
@@ -118,7 +122,7 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
           } else {
             SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).error(
               "You have some duplicates.",
-              "Some of your drakes are exactly the same! All of your drakes need to have different alleles.",
+              "Some of your dragons are exactly the same! All of your dragons need to have different alleles.",
               "",
               "Try again",
               "",

@@ -6,7 +6,7 @@ body.mainidea {
   margin-top: 5px;
 }
 body.subhead {
-  background-image:subHeadingBackground.png;
+  background-image:url('subHeadingBackground.png');
 }
 body.question {
   background-color: #e6e6e6;

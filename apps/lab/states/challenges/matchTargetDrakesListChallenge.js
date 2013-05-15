@@ -33,18 +33,22 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
     if (Geniverse.matchController.doesMatch(dragons[0], dragons[1])) {
       view.setPath('content.hasBeenMatched', YES);
       view._setClassNames();
+      Lab.whyville.reportChallenge(true);
+      
       SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).plain(
         "Good work!",
-        "The drake you have created matches the target drake.",
+        "The dragon you have created matches the target dragon.",
         "",
         "OK",
         "",
         this
       );
     } else {
+      Lab.whyville.reportChallenge(false);
+      
       SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).error(
-        "That's not the drake!",
-        "The drake you have created doesn't match the target drake. Please try again.",
+        "That's not the dragon!",
+        "The dragon you have created doesn't match the target dragon. Please try again.",
         "",
         "Try again",
         "",

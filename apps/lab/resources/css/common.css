@@ -47,11 +47,11 @@ body, body.sc-theme, .sc-theme .sc-pane.sc-main {
 
 .mainPane {
   overflow-x: hidden;
-  overflow-y: auto;]
+  overflow-y: auto;
 }
 
 .sc-view.sc-pane.lab {
-  background: top center no-repeat static_url('lab_background.jpg');
+/*  background: top center no-repeat static_url('lab_background.jpg'); */
 }
 
 

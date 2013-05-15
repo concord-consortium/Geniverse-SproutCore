@@ -745,7 +745,7 @@ sc_require('lib/burst-core');
         this.hide();
       }
 
-      if (this.gene == "Y" && !this.parent.hidden){
+      if (this.isYish(this.gene) && !this.parent.hidden){
         this.labelLink.show();
         this.geneText.show();
         this.geneFrame.show();
@@ -787,6 +787,26 @@ sc_require('lib/burst-core');
 
       return this;
     }
+
+	Allele.prototype.isYish = function(name){
+		var ret= 
+			name == 'Y'
+/*			|| name == 'M' ||
+			name == 'm' ||
+			name == 'W' ||
+			name == 'w' ||
+//			name == 'H' ||
+//			name == 'h' ||
+			name == 'Fl' ||
+			name == 'fl' ||
+			name == 'Hl' ||
+			name == 'hl' ||
+			name == 'Rh' ||
+			name == 'rh'
+*/
+			;		
+		return ret;
+	}
 
     Allele.prototype.hide = function(){
       this.SVG_inner.attr({stroke:"rgba(0,0,0,0)"});
@@ -2095,11 +2115,15 @@ sc_require('lib/burst-core');
       var endButton = self.find('.end').click(function(){
         if ((mode === 'parent') || ((mode === 'offspring') && (mother && father))){
           defaultOpts.endButtonPressed.call(defaultOpts.context, playing);
-          burst.timelines['geniverseTimeline_'+owner].play(79);
-          burst.timelines['geniverseTimeline_'+owner].play(80);
-          frame = 80;
-          scrub.slider('value',8000);
-          frameInput.val(80);
+          
+          var end=95;
+          for(var i=79; i<=end; i++)
+	          burst.timelines['geniverseTimeline_'+owner].play(end);
+          var end=80;
+          
+          frame = end;
+          scrub.slider('value',end*100);
+          frameInput.val(end);
           clearOffsets();
           burst.stop();
           playing = false;

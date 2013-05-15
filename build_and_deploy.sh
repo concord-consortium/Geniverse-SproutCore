@@ -48,7 +48,7 @@ function label {
 
 function dbdownload {
   echo "Download necessary database files... "
-  ./download_db_as_files.rb
+  ./download_db_as_files.rb $DB_SOURCE
 }
 
 function resourcesdownload {
@@ -106,6 +106,7 @@ case "$1" in
     export SERVER_PATH="/web/production/demo.geniverse"
     export REMOTE_USER="geniverse"
     export BUILD_MODE="demo"
+    export DB_SOURCE="geniverse.concord.org"
     build
     dbdownload
     resourcesdownload
@@ -118,6 +119,7 @@ case "$1" in
     export SERVER_PATH="/web/geniverse.inabox"
     export REMOTE_USER="geniverse"
     export BUILD_MODE="inabox"
+    export DB_SOURCE="geniverse.concord.org"
     build
     dbdownload
     resourcesdownload
@@ -125,8 +127,18 @@ case "$1" in
     boxsync
     exit 0
     ;;
+  meiosis-demo)
+    export BUILD_MODE="inabox"
+    export DB_SOURCE="geniverse.dev.concord.org"
+    build
+    dbdownload
+    copyindex
+    package
+    exit 0
+    ;;
   box-package)
     export BUILD_MODE="inabox"
+    export DB_SOURCE="geniverse.concord.org"
     build
     dbdownload
     resourcesdownload

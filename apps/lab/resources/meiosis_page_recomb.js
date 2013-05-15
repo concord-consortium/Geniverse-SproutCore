@@ -25,7 +25,7 @@ Lab.meiosisPageRecomb = SC.Page.design({
 
       childViews: 'genomePanel'.w(),
 
-      layout: { centerX: 0, top: 100, width: 1050, height: 640 },
+      layout: { left: 0, top: 100, width: 1050, height: 640 },
 
       genomePanel: SC.View.design({
         layout: {top: 0, bottom: 10, left: 5, right: 5 },
@@ -64,7 +64,7 @@ Lab.meiosisPageRecomb = SC.Page.design({
         offspringTitle: SC.LabelView.design({
           layout: {top: 131, centerX: 107, height: 25, width: 140 },
           fontWeight: SC.BOLD_WEIGHT,
-          value: "Offspring Drake"
+          value: "Offspring Dragon"
         }),
 
         offspringView: SC.View.design({

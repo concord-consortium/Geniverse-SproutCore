@@ -92,7 +92,7 @@ Lab.loginController = SC.ObjectController.create(
         login: username,
         first: first_name,
         last: last_name,
-        avatar: $.cookie("avatar"),
+        avatar: "Scarlett",
         class_words: []
       }
     });
@@ -128,6 +128,8 @@ Lab.loginController = SC.ObjectController.create(
         Geniverse.store.commitRecords();
         Geniverse.userController.set('content',user);
         Geniverse.doWhenReadyClean(self,user,self.didAuthenticate);
+        
+        setTimeout(function(){SC.run();}, 1);
       };
       Geniverse.userController.findOrCreateUser(login, userFound);
     }
@@ -188,8 +190,8 @@ Lab.loginController = SC.ObjectController.create(
     var group = user.get('groupId');
     var userName = user.get('firstName');
     this.hidePanel();
-    this.set('welcomeMessage',"Welcome to Geniverse, %@".fmt(userName));
-    this.set('memberGroupMessage', "Member #%@, Group #%@".fmt(member, group));
+    this.set('welcomeMessage',"Welcome to Geniverse");
+    this.set('memberGroupMessage', "");
     this.set('lastGroupId', group);
     this.set('lastMemberId', member);
     //Lab.infoController.displayButtonOnly("<div><h2>"+this.get('welcomeMessage')+"</h2></div>");

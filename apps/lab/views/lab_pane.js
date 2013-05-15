@@ -5,7 +5,7 @@ Lab.LabPane = SC.MainPane.extend({
   classNames: ['brown','lab'],
   layout: { minHeight: 780, minWidth: 1200 },
 
-  childViews: 'mainAppView topBar bottomBar'.w(),
+  childViews: 'mainAppView topBar'.w(),
 
   topBar: Lab.TopBarView.design({
     classNames: ['brown']

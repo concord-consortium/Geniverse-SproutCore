@@ -36,7 +36,7 @@ Geniverse.Article = SC.Record.extend(
 
 Geniverse.Article.modelName = "article";
 Geniverse.Article.modelsName = "articles";
-Geniverse.Article.readOnly = NO;
+Geniverse.Article.readOnly = YES;
 
 Geniverse.railsBackedTypes.push(Geniverse.Article.modelName);
 

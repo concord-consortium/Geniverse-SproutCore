@@ -27,7 +27,8 @@ Lab.routes = SC.Object.create({
   },
 
   openCaselogRoute: function() {
-    SC.routes.set('location', 'caselog');
+  	window.parent.location.href= "/smmk/nii/chalBook";
+//    SC.routes.set('location', 'caselog');
   },
 
   gotoCaselog: function(routeParams) {
@@ -47,6 +48,14 @@ Lab.routes = SC.Object.create({
 
   gotoEndingHub: function() {
     Lab.statechart.sendAction('gotoEndingHub');
+  },
+
+  gotoMeiosisDemo: function(routeParams) {
+    console.log("Going to meiosis demo");
+    Lab.ACTIVITY.set('strand','meiosis');
+    Lab.ACTIVITY.set('level','drakeintro');
+
+    Lab.statechart.sendAction('gotoActivity');
   },
 
   gotoActivity: function(routeParams) {

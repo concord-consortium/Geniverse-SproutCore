@@ -95,7 +95,7 @@ GenGWT = {
         } else {
           console.log("WARN: Organism generated was not valid");
           console.log(gOrg);
-          SC.AlertPane.error("", "The application created an invalid Drake. Please reload the page and try again.");
+          SC.AlertPane.error("", "The application created an invalid Dragon. Please reload the page and try again.");
         }
       }
       return wrappedCallback;

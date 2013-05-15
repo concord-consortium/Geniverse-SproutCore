@@ -20,9 +20,9 @@ Lab.mainPage = SC.Page.design({
     topBar: Lab.TopBarView.design(),
 
     mainAppView: SC.View.design({
-      layout: { top: 57, centerX: 0, width: 1890, height: 890},
+      layout: { top: 57, left: 0, width: 1890, height: 890},
       classNames: ['mainscreen'],
-      childViews: 'caselogButtonView journalButtonView doorButtonView backdoorButtonView'.w(),
+      childViews: 'caselogButtonView backdoorButtonView'.w(),
 
       caselogButtonView: SC.View.design(Geniverse.SimpleButton, {
         layerId: 'caselog',

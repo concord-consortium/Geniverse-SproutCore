@@ -8,7 +8,7 @@
  *   @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
 Lab.InfoView = SC.PalettePane.create({
-  layout: { width: 440, height: 430, centerX: 0, centerY: 0 },
+  layout: { width: 440, height: 430, centerX: 0, top: 50 },
   isModal:NO,
   contentView: SC.View.extend({
     childViews: 'titleView infoView hideButton instIcon'.w(),

@@ -19,12 +19,18 @@ Lab.singleMeiosisPage = SC.Page.design({
   // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: Lab.LabPane.design({
+  
+    layout: { left: 0, top: 0, width: 800, height: 1400 },
+
     mainAppView: SC.View.design({
 
+	  layout: { left: 0, top: 0, width: 800, height: 1300 },
+	  
       childViews: 'genomePanel'.w(),
 
       genomePanel: SC.View.design({
-        layout: {centerX: -30, top: 100, width: 680, height: 630 },
+        layout: {centerX: 0, top: 100, width: 800, height: 1000 },
+        
         childViews: 'challengePoolView parentTitle drakeParentView meiosisView nextButton'.w(),
 
       // using horizontal Challenge Pool at top with 120-px drakes inside
@@ -39,7 +45,7 @@ Lab.singleMeiosisPage = SC.Page.design({
           layout: {top: 133, centerX: 0, height: 25, width: 120 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           classNames: 'title'.w(),
-          value: "Parent Drake"
+          value: "Parent Dragon"
         }),
 
         drakeParentView: Geniverse.OrganismView.design({
@@ -66,8 +72,8 @@ Lab.singleMeiosisPage = SC.Page.design({
           alt: 'Bring it on!',
           title: 'Bring it on!',
           toolTip: 'Click when ready for the challenge.',
-          target: 'Lab.statechart',
-          action: 'gotoNextActivity'
+          target: 'Lab.routes',
+          action: 'openCaselogRoute'
         })
       })
     })

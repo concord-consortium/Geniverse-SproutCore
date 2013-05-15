@@ -29,9 +29,11 @@ Lab.matchTargetDrakesOneAtATimeChallenge = Lab.challenge.extend({
       view.setPath('content.hasBeenMatched', YES);
       view._setClassNames();
       this.successfulMatch = YES;
-      SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
+      Lab.whyville.reportChallenge(this.successfulMatch);
+      
+      SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).plain(
         "Good work!",
-        "The drake you have created matches the target drake.",
+        "The dragon you have created matches the target dragon.",
         "",
         "OK",
         "",
@@ -39,9 +41,11 @@ Lab.matchTargetDrakesOneAtATimeChallenge = Lab.challenge.extend({
       );
     } else {
       this.successfulMatch = NO;
-      SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).error(
-        "That's not the drake!",
-        "The drake you have created doesn't match the target drake. Please try again.",
+      Lab.whyville.reportChallenge(this.successfulMatch);
+      
+      SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).error(
+        "That's not the dragon!",
+        "The dragon you have created doesn't match the target dragon. Please try again.",
         "",
         "Try again",
         "",

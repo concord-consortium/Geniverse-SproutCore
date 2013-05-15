@@ -53,19 +53,24 @@ Lab.invisibleGenotypeChallenge = Lab.challenge.extend({
     var allCorrect = Geniverse.invisibleGenomeController.isAllCorrect();
     if (allCorrect) {
       this.solved = YES;
+      
+      Lab.whyville.reportChallenge(true);
+      
       this.set('starsEarned', Math.max(3-timesAttempted, 1));
       SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
         "Good work!",
-        "You correctly determined the Drake's genotype.",
+        "You correctly determined the Dragon's genotype.",
         "",
         "OK",
         "",
         this
       );
     } else {
+      Lab.whyville.reportChallenge(false);
+      
       SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).error(
         "That's not right!",
-        "You have not yet correctly determined the Drake's genotype. Keep trying!",
+        "You have not yet correctly determined the Dragon's genotype. Keep trying!",
         "",
         "OK",
         "",

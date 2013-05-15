@@ -22,7 +22,7 @@ Lab.invisibleFemaleGenotypePage = SC.Page.design({
   mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
 
-      layout: { centerX: 0, top: 90, width: 1080, height: 880 },
+      layout: { left: 0, top: 90, width: 1080, height: 880 },
 
       childViews: 'genomePanel breedingPenView'.w(),
 
@@ -34,7 +34,7 @@ Lab.invisibleFemaleGenotypePage = SC.Page.design({
           layout: {top: 10, height: 25, left: 70, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           classNames: 'title'.w(),
-          value: "Female Drake"
+          value: "Female Dragon"
         }),
 
         femalePhenotypeView: Geniverse.OrganismView.design({
@@ -68,7 +68,7 @@ Lab.invisibleFemaleGenotypePage = SC.Page.design({
           layout: {top: 10, height: 25, right: 35, width: 170 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           classNames: 'title'.w(),
-          value: "Male Drake"
+          value: "Male Dragon"
         }),
 
         malePhenotypeView: Geniverse.OrganismView.design({
