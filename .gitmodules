@@ -6,7 +6,7 @@
 	url = git://github.com/concord-consortium/capybara-testrunner.git
 [submodule "frameworks/ki"]
 	path = frameworks/ki
-	url = https://github.com/FrozenCanuck/Ki.git
+	url = git://github.com/sfentress/Ki.git
 [submodule "frameworks/sproutcore"]
 	path = frameworks/sproutcore
 	url = git@github.com:concord-consortium/sproutcore.git
