@@ -58,6 +58,12 @@ Lab.main = function main() {
     // Will do nothing because uncaught exception will show in console
     // for developers
   };
+
+  // *** monkey-patch view renderer to support tooltips
+  SC.View.prototype.render = function (context, firstTime) {
+    if (firstTime) this.renderChildViews(context, firstTime) ;
+    context.attr('title', this.get('toolTip'));
+  }
 } ;
 
 function main() { Lab.main(); }
