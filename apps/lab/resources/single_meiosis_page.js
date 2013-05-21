@@ -47,7 +47,7 @@ Lab.singleMeiosisPage = SC.Page.design({
           contentBinding: 'Geniverse.meiosisAnimationController.mother',
           isDropTarget: YES,
           glow: YES
-          }),
+        }),
 
         meiosisView: Geniverse.AnimationView.design({
           layout: {top: 271, centerX: 0, height: 360, width: 325 },
