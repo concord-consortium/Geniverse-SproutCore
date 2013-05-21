@@ -22,7 +22,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
   mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
 
-      childViews: 'genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle line'.w(),
+      childViews: 'line genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle'.w(),
 
       layout: { centerX: 0, top: 90, width: 850, height: 560 },
 
@@ -43,7 +43,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
           alt: 'Switch Sex',
           title: 'Switch Sex',
           sexBinding: '*parentView.genomeView.sex',
-          toolTip: 'Click to switch the sex of the drake',
+          toolTip: 'Click to change between a male and female dragon. Notice the dragon’s neck!',
           target: 'parentView.genomeView',
           action: 'switchSex',
           _setClassNames: function(){
@@ -85,14 +85,17 @@ Lab.chromosomeChallengePage = SC.Page.design({
           }.observes('allAllelesSelected'),
           showEmptyOptions: NO,
           showFromLabels: NO,
-          startWithEmptyOptions: NO
+          startWithEmptyOptions: NO,
+          toolTip: "Select a different allele for each gene.  Watch to see if the dragon changes."
         }),
 
         revealButton: SC.ButtonView.design({
           layout: { height: 24, bottom: 30, width: 120, right: 100 },
           title: "Enter",
           action: "revealClicked",
-          target: "Lab.statechart"
+          target: "Lab.statechart",
+          classNames: "hint-available hint-target-rightMiddle hint-tooltip-leftMiddle",
+          toolTip: "Click this to reveal your dragon.  Did it match the target?"
         })
       }),
 
@@ -100,7 +103,9 @@ Lab.chromosomeChallengePage = SC.Page.design({
         layout: { left: 53, top: 370, height: 49, width: 184 },
         showScore: YES,
         isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
-        showTargetScore: YES
+        showTargetScore: YES,
+        toolTip: "To win the most stars, make the fewest number of allele changes.",
+        classNames: "hint-available hint-target-rightMiddle hint-tooltip-leftTop"
       }),
 
       targetDrakes: Geniverse.MatchView.design({

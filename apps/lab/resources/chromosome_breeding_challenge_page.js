@@ -24,7 +24,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
 
       layout: { centerX: 0, top: 80, width: 1080, height: 880 },
 
-      childViews: 'genomePanel breedingPenView matchView scoreView'.w(),
+      childViews: 'genomePanel breedingPenView matchView scoreView targetHintView'.w(),
 
       genomePanel: SC.View.design({
         layout: {top: 35, height: 585, left: 15, width: 1005 },
@@ -85,7 +85,10 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
 
           title: function () {
             return this.get('isBreeding') ? 'Breeding...' :  'Breed';
-          }.property('isBreeding').cacheable()
+          }.property('isBreeding').cacheable(),
+
+          toolTip: "Press the breed button to create a herd of baby dragons.",
+          classNames: 'hint-available'.w()
         })
 
       }),
@@ -108,8 +111,13 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
         showScore: YES,
         isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
         showTargetScore: YES
-      })
+      }),
 
+      targetHintView: SC.View.design({
+        layout: {centerX: -40, top: 20, height: 150, width: 150 },
+        toolTip: "Drag a matching baby dragon from the herd onto the target.  If you can’t match the target, change the alleles and try again!",
+        classNames: 'hint-available hint-target-rightMiddle hint-tooltip-leftTop'.w()
+      })
     })
   })
 });
