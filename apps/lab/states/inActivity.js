@@ -216,6 +216,86 @@ Lab.inActivity = Ki.State.extend({
     this.gotoState('inEndingHub');
   },
 
+  QTipStyle: {
+    width: {
+      max: 350
+    },
+    padding: '14px',
+    border: {
+      width: 1,
+      radius: 5,
+      color: '#b68b5a'
+    },
+    name: 'light',
+    backgroundColor: '#f4eed3'
+  },
+
+  // Shows a tooltip on a jquery element, with a given text and options.
+  // The options hash can specify a target (topLeft, leftMiddle, etc), a tooltip
+  // (same values but for the tail of the tooltip), a maxWidth and a hideAction.
+  // For convenience, if the $elem has title text then the tooltip will use that,
+  // and if it has the classes 'hint-target-*' or 'hint-tooltip-*' it will pass
+  // the * values as the appropriate options.
+  showTooltip: function($elem, text, options) {
+    var backdrop, config, style, classes, elemClass, i,
+        opts      = options || {};
+        target    = opts.target     || "leftMiddle",
+        tooltip   = opts.tooltip    || "rightMiddle",
+        maxWidth  = opts.maxWidth   || 280,
+        text      = text || $elem.attr("title");
+
+    if (!text) {
+      return;
+    }
+
+    classes = $elem.attr('class').split(/\s+/);
+    for (i = 0; i < classes.length; i++) {
+      elemClass = classes[i];
+      if (/hint-target-(.*)/.exec(elemClass)) {
+        target = /hint-target-(.*)/.exec(elemClass)[1];
+      } else if (/hint-tooltip-(.*)/.exec(elemClass)) {
+        tooltip = /hint-tooltip-(.*)/.exec(elemClass)[1];
+      }
+    }
+
+    style = SC.clone(this.QTipStyle, true);
+    style.tip = tooltip;
+    style.width = {
+      max: maxWidth
+    };
+    config = {
+      content: {
+        title: {
+          text: ''
+        },
+        text: text
+      },
+      position: {
+        corner: {
+          target: target,
+          tooltip: tooltip
+        }
+      },
+      show: {
+        ready: true,
+        solo: false,
+        effect: { type: 'fade', length: 800 }
+      },
+      hide: {
+        effect: { type: 'fade' }
+      },
+      style: style,
+      api: {
+        onRender: function() {
+          this.elements.tooltip.click(this.hide);
+        }
+      }
+    };
+    if (opts.hideAction != null) {
+      config.api.onHide = opts.hideAction;
+    }
+    return $elem.qtip(config);
+  },
 
   exitState: function() {
     // Make sure any observers we might have added during in state are removed.
