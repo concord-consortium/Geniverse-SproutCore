@@ -27,7 +27,7 @@ Lab.breedingPageMatch = SC.Page.design({
 
       layout: { left: 0, top: 100, width: 800, height: 1004 },
 
-      childViews: 'breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView matchView scoreView'.w(),
+      childViews: 'breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView matchView scoreView glowHintView offspringHintView stableHintView'.w(),
 
       // challenge pool to hold initial, system-created dragons
       mothersPoolView: Lab.ChallengePoolView.design({
@@ -77,6 +77,7 @@ Lab.breedingPageMatch = SC.Page.design({
           target: 'Geniverse.breedDragonController',
           trackScore: NO,
           action: function() {
+            Lab.statechart.sendAction('breedingPageMatchBreedingCompleted');
             return this.get('trackScore') ? "breedAndIncrementScore" : "breed";
           }.property('trackScore'),
           isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
@@ -87,13 +88,18 @@ Lab.breedingPageMatch = SC.Page.design({
 
           title: function () {
             return this.get('isBreeding') ? 'Breeding...' :  'Breed';
-          }.property('isBreeding').cacheable()
+          }.property('isBreeding').cacheable(),
+
+          toolTip: "Press Breed to create a herd of baby dragons.",
+          classNames: 'hint-available hint-target-rightMiddle hint-tooltip-leftMiddle'
         })
 
       }),
 
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { centerX: -51, top: 500-127, width: 35, height: 30 }
+        layout: { centerX: -51, top: 500-127, width: 35, height: 30 },
+        toolTip: "Click a dragon and then scope it with this button.  Does it have the right alleles to match the targets?",
+        classNames: 'hint-available breeding-completed-hint'
       }),
 
       // Breeding pen with eggs
@@ -159,8 +165,30 @@ Lab.breedingPageMatch = SC.Page.design({
         },
         dragExited: function(drag, evt) {
           this.$().removeClass('drop-target') ;
-        }
+        },
+        toolTip: "If your stable is full, drag dragons here to remove them!",
+        classNames: "first-stable-hint hint-target-topMiddle hint-tooltip-bottomMiddle".w()
+      }),
+
+      // special views for extact-positioning of hints
+      glowHintView: SC.View.design({
+        layout: { top: 200, centerX: 65, width:165, height: 173 },
+        toolTip: "Drag parents to the yellow spots.",
+        classNames: "hint-available hint-target-topRight hint-tooltip-bottomLeft".w()
+      }),
+
+      offspringHintView: SC.View.design({
+        layout: { top: 420, centerX: 100, width:10, height: 10 },
+        toolTip: "Drag a matching baby dragon from the herd onto the target.",
+        classNames: "breeding-completed-hint hint-tooltip-bottomLeft".w()
+      }),
+
+      stableHintView: SC.View.design({
+        layout: { top: 900, centerX: 180, width:10, height: 10 },
+        toolTip: "To save a baby dragon to use as a parent later, drag it here. If you can’t match the target, change the parents and try again!",
+        classNames: "breeding-completed-hint hint-tooltip-bottomLeft".w()
       })
+
     })
   })
 

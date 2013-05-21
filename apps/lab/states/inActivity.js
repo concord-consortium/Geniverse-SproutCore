@@ -308,7 +308,7 @@ Lab.inActivity = Ki.State.extend({
     });
   },
 
-  // show second meiosis hints, if there are any
+  // show secondary hints, if there are any
   meiosisAnimationCompleted: function(mode) {
     if (mode !== "offspring") {
       Lab.statechart.sendAction('showAllTooltips', 'meiosis-completion-hint');
@@ -317,6 +317,14 @@ Lab.inActivity = Ki.State.extend({
 
   fertilizationReady: function() {
     Lab.statechart.sendAction('showAllTooltips', 'fertilization-ready-hint');
+  },
+
+  breedingPageMatchBreedingCompleted: function() {
+    Lab.statechart.sendAction('showAllTooltips', 'breeding-completed-hint');
+  },
+
+  stabledFirstDrake: function() {
+    Lab.statechart.sendAction('showAllTooltips', 'first-stable-hint');
   },
 
   exitState: function() {
