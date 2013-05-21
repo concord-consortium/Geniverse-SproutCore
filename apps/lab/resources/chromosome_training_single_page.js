@@ -24,11 +24,11 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
 
     mainAppView: SC.View.design({
 
-      childViews: 'drakeGenomePanel'.w(),
+      childViews: 'drakeGenomePanel infoHintView'.w(),
 
       drakeGenomePanel: SC.View.design({
         layout: {top: 110, height: 550, left: 0, width: 500 },
-        childViews: 'title genomeView switchSexButton nextButton'.w(),
+        childViews: 'title genomeView switchSexButton nextButton chromoHintView'.w(),
 
         title: SC.LabelView.design({
           layout: {top: 20, height: 25, left: 125, width: 200 },
@@ -45,10 +45,10 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           layout: { top: 18, left: 20, width: 100, height: 43 },
           isEnabled: YES,
           hasHover: YES,
-          classNames: "switchsex switch-female".w(),
+          classNames: "switchsex switch-female hint-available hint-target-topMiddle hint-tooltip-bottomLeft".w(),
           alt: 'Switch Sex',
           title: 'Switch Sex',
-          toolTip: 'Click to switch the sex of the dragon',
+          toolTip: 'Click to change between a male and female dragon. Notice the dragon’s neck!',
           sexBinding: '*parentView.genomeView.sex',
           target: 'parentView.genomeView',
           action: 'switchSex',
@@ -67,10 +67,10 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           layout: {bottom: 20, right: 20, width: 118, height: 27},
           isEnabled: YES,
           hasHover: YES,
-          classNames: 'bringItButton'.w(),
+          classNames: 'bringItButton hint-available hint-target-topLeft hint-tooltip-bottomLeft'.w(),
           alt: 'Bring it on!',
           title: 'Bring it on!',
-          toolTip: 'Click when ready for the challenge.',
+          toolTip: 'Click here when you are ready for the next Lab.',
           target: 'Lab.routes',
           action: 'openCaselogRoute'
         }),
@@ -85,8 +85,21 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           showIsEditableCheck: NO,
           showFromLabels: NO,
           showSwitchSex: YES
+        }),
+
+        // for extra-specific positioning of a tooltip, we have to use another view
+        chromoHintView: SC.View.design({
+          layout: {top: 310, left: 300, height: 50, width: 10 },
+          toolTip: "Select a different allele for each gene.  Watch to see if the dragon changes.",
+          classNames: "hint-available hint-target-rightMiddle hint-tooltip-leftMiddle hint-clickthrough",
         })
 
+      }),
+
+      infoHintView: SC.View.design({
+        layout: {top: 50, left: 485, height: 10, width: 10 },
+        toolTip: "Click this button to open the instructions for the lab.",
+        classNames: "hint-available hint-tooltip-topLeft",
       })
 
     })

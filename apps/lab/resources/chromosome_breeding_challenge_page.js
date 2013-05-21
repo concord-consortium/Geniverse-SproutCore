@@ -27,11 +27,11 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
 
       layout: { left: 0, top: 100, width: 800, height: 1300 },
 
-      childViews: 'genomePanel breedingPenView matchView scoreView'.w(),
+      childViews: 'genomePanel breedingPenView matchView scoreView targetHintView'.w(),
 
       genomePanel: SC.View.design({
         layout: { left: 0, top: 0, width: 800, height: 1300 },
-        childViews: 'femaleTitle femaleGenomeView femalePhenotypeView maleTitle maleGenomeView malePhenotypeView breedButton'.w(),
+        childViews: 'femaleTitle femaleGenomeView femalePhenotypeView maleTitle maleGenomeView malePhenotypeView breedButton chromosomeHintView'.w(),
 
         femaleTitle: SC.LabelView.design({
           layout: {top: 0, height: 25, centerX: -110, width: 200 },
@@ -89,7 +89,16 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
 
           title: function () {
             return this.get('isBreeding') ? 'Breeding...' :  'Breed';
-          }.property('isBreeding').cacheable()
+          }.property('isBreeding').cacheable(),
+
+          toolTip: "Press the breed button to create a herd of baby dragons.",
+          classNames: 'hint-available'.w()
+        }),
+
+        chromosomeHintView: SC.View.design({
+          layout: {top: 370, left: 90, height: 100, width: 300 },
+          toolTip: "Select alleles for each gene so that a baby dragon will match the target.",
+          classNames: 'hint-available hint-target-rightTop hint-tooltip-leftTop'.w()
         })
 
       }),
@@ -112,8 +121,13 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
         showScore: YES,
         isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
         showTargetScore: YES
-      })
+      }),
 
+      targetHintView: SC.View.design({
+        layout: {centerX: 0, top: 245+450+10+350+20, height: 190, width: 270 },
+        toolTip: "Drag a matching baby dragon from the herd onto the target.  If you can’t match the target, change the alleles and try again!",
+        classNames: 'hint-available hint-tooltip-bottomRight'.w()
+      })
     })
   })
 });

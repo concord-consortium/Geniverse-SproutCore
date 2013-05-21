@@ -25,7 +25,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
 
     mainAppView: SC.View.design({
 
-      childViews: 'genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle line'.w(),
+      childViews: 'infoHintView line genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle'.w(),
 
       layout: { left: 0, top: 100, width: 800, height: 1222 },
 
@@ -46,7 +46,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
                 alt: 'Switch Sex',
                 title: 'Switch Sex',
                 sexBinding: '*parentView.genomeView.sex',
-                toolTip: 'Click to switch the sex of the dragon',
+                toolTip: 'Click to change between a male and female dragon. Notice the dragon’s neck!',
                 target: 'parentView.genomeView',
                 action: 'switchSex',
                 _setClassNames: function(){
@@ -63,7 +63,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
 
             genomeView: Geniverse.DragonGenomeView.design({
                 layout: {top: 25+280+49+25+50, centerX: -260, height: 500, width: 510 },
-                classNames: ['overflowVis'],
+                classNames: ['overflowVis hint-available hint-target-rightMiddle hint-tooltip-leftMiddle'],
                 dragonView: Geniverse.OrganismView.design({
                     layout: {top: 20, left: 510+30, width: 200, height: 215},
                     contentBinding: "*parentView.dragon",
@@ -88,14 +88,17 @@ Lab.chromosomeChallengePage = SC.Page.design({
                 }.observes('allAllelesSelected'),
                 showEmptyOptions: NO,
                 showFromLabels: NO,
-                startWithEmptyOptions: NO
+                startWithEmptyOptions: NO,
+                toolTip: "Select a different allele for each gene.  Watch to see if the dragon changes."
             }),
 
             revealButton: SC.ButtonView.design({
                 layout: { height: 24, top: 25+280+49+25+425+60, width: 120, centerX: -120 },
-                title: "Enter",
+                title: "Reveal Dragon",
                 action: "revealClicked",
-                target: "Lab.statechart"
+                target: "Lab.statechart",
+                classNames: "hint-available hint-target-rightMiddle hint-tooltip-leftMiddle",
+                toolTip: "Click this to reveal your dragon.  Did it match the target?"
             })
       }),
 
@@ -103,7 +106,9 @@ Lab.chromosomeChallengePage = SC.Page.design({
             layout: { centerX: 0, top: 25+10+280+10, height: 49, width: 184 },
             showScore: YES,
             isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
-            showTargetScore: YES
+            showTargetScore: YES,
+            toolTip: "To win the most clams, make the fewest number of allele changes.",
+            classNames: "hint-available hint-target-rightMiddle hint-tooltip-leftBottom"
       }),
 
       targetDrakes: Geniverse.MatchView.design({
@@ -111,7 +116,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
             onlyOne: YES,
             // FIXME dragonSize of 200 or 201 causes Chrome and Firefox to freeze when zooming in/out
             // It's some sort of bad interaction with the Geniverse.ShiftedOrganism mixin
-            dragonSize: 202,
+            dragonSize: 202
       }),
 
       targetTitle: SC.LabelView.design({
@@ -139,6 +144,12 @@ Lab.chromosomeChallengePage = SC.Page.design({
         fontWeight: SC.BOLD_WEIGHT,
         classNames: 'title'.w(),
         value: "Chromosome Control"
+      }),
+
+      infoHintView: SC.View.design({
+        layout: {top: -40, left: 485, height: 10, width: 10 },
+        toolTip: "Click this button to open the instructions for the lab.",
+        classNames: "hint-available hint-tooltip-topLeft",
       })
 
     })
