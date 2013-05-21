@@ -153,6 +153,7 @@ Geniverse.AnimationView = SC.View.extend(
       var sex = Geniverse.meiosisAnimationController.getOffspringSex();
       Geniverse.gwtController.generateDragonWithAlleles(alleles, sex, "Meiosis Child", callback);
     }
+    Lab.statechart.sendAction('meiosisAnimationCompleted');
   },
 
   playButtonPressed: function() {
