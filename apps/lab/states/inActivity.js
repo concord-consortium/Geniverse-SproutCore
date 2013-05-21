@@ -308,6 +308,9 @@ Lab.inActivity = Ki.State.extend({
   exitState: function() {
     // Make sure any observers we might have added during in state are removed.
 
+    // Rm any created tooltips
+    $(".qtip").remove();
+
     // TODO implement methods to remember which observers we have added to which objects, and to remove them later.
     // (called perhaps this.pushObserver, this.cancelObserver, and this.cancelAllObservers)
     // These would be useful for managing observer lifecycle within any Ki.State.
