@@ -297,6 +297,14 @@ Lab.inActivity = Ki.State.extend({
     return $elem.qtip(config);
   },
 
+  showAllTooltips: function(elemClass) {
+    var selection = $("."+elemClass),
+        self = this;
+    selection.each(function(){
+      Lab.get('statechart').sendAction("showTooltip", $(this));
+    });
+  },
+
   exitState: function() {
     // Make sure any observers we might have added during in state are removed.
 
