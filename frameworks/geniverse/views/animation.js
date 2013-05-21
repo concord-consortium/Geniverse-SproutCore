@@ -103,6 +103,7 @@ Geniverse.AnimationView = SC.View.extend(
       var mother = this.get('motherJson');
       var father = this.get('fatherJson');
      if (mother !== null && father !== null) {
+        Lab.statechart.sendAction('fertilizationReady');
         this._combineMotherFatherJson(mother, father);
 //        this.set('completedAnimationCalled', NO);
       } else {
@@ -153,7 +154,7 @@ Geniverse.AnimationView = SC.View.extend(
       var sex = Geniverse.meiosisAnimationController.getOffspringSex();
       Geniverse.gwtController.generateDragonWithAlleles(alleles, sex, "Meiosis Child", callback);
     }
-    Lab.statechart.sendAction('meiosisAnimationCompleted');
+    Lab.statechart.sendAction('meiosisAnimationCompleted', this.get('mode'));
   },
 
   playButtonPressed: function() {

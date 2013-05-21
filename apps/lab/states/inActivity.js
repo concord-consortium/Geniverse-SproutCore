@@ -309,8 +309,14 @@ Lab.inActivity = Ki.State.extend({
   },
 
   // show second meiosis hints, if there are any
-  meiosisAnimationCompleted: function() {
-    Lab.statechart.sendAction('showAllTooltips', 'meiosis-completion-hint');
+  meiosisAnimationCompleted: function(mode) {
+    if (mode !== "offspring") {
+      Lab.statechart.sendAction('showAllTooltips', 'meiosis-completion-hint');
+    }
+  },
+
+  fertilizationReady: function() {
+    Lab.statechart.sendAction('showAllTooltips', 'fertilization-ready-hint');
   },
 
   exitState: function() {
