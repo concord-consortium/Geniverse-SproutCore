@@ -19,6 +19,7 @@ Lab.infoController = SC.ObjectController.create(
   content: "",
   isVisible: NO,
   infoButton: null,
+  onClose: null,
   iframe: SC.WebView.create({                //This is an empty iFrame used to make sure the InfoView will be on top of applets
     layoutBinding: 'Lab.InfoView.layout',
     value: static_url('empty.html')}),
@@ -41,9 +42,10 @@ Lab.infoController = SC.ObjectController.create(
    * pops-up the info view.
    * @param message (optional)
    */
-  display: function (message){
+  display: function (message, onClose){
     this.displayButtonOnly(message);
     this.showPane(this.infoButton);
+    this.set("onClose", onClose);
   },
 
   showPane: function(callingView) {
@@ -73,6 +75,9 @@ Lab.infoController = SC.ObjectController.create(
         this.get('iframe').parentView.removeChild(this.get('iframe'));
       }
       this.get('pane').remove();
+    }
+    if (onClose = this.get("onClose")) {
+      onClose();
     }
   },
 

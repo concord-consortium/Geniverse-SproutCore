@@ -529,7 +529,7 @@ Lab.ACTIVITY = SC.Responder.create(
     // If a message has been authored for this Activity, display it now
     var message = Geniverse.activityController.get('message');
     if (message){
-      Lab.infoController.display(message);
+      Lab.infoController.display(message, function(){Lab.get('statechart').sendAction("showAllTooltips", "hint-available")});
     }
   }
 }) ;
