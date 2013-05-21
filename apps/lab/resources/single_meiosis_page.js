@@ -25,7 +25,7 @@ Lab.singleMeiosisPage = SC.Page.design({
 
       genomePanel: SC.View.design({
         layout: {centerX: -30, top: 100, width: 680, height: 630 },
-        childViews: 'challengePoolView parentTitle drakeParentView meiosisView nextButton'.w(),
+        childViews: 'challengePoolView parentTitle drakeParentView meiosisView nextButton glowHint playHint gametesHint retryHint'.w(),
 
       // using horizontal Challenge Pool at top with 120-px drakes inside
       // this will necessitate moving everything down ~130px
@@ -68,6 +68,31 @@ Lab.singleMeiosisPage = SC.Page.design({
           toolTip: 'Click when ready for the challenge.',
           target: 'Lab.statechart',
           action: 'gotoNextActivity'
+        }),
+
+        // special views for extact-positioning of hints
+        glowHint: SC.View.design({
+          layout: { top: 157, centerX: 0, height: 100, width: 100 },
+          toolTip: "Drag a dragon from the parent pool above to this yellow spot.",
+          classNames: "hint-available".w()
+        }),
+
+        playHint: SC.View.design({
+          layout: { top: 593, left: 177, height: 10, width: 10 },
+          toolTip: "Press run to create four eggs or sperm through the process of meiosis.",
+          classNames: "hint-available hint-target-leftMiddle hint-tooltip-rightBottom".w()
+        }),
+
+        gametesHint: SC.View.design({
+          layout: { top: 325, left: 505, height: 10, width: 10 },
+          toolTip: "Each egg or sperm contains 3 chromosomes. Click each chromosome to see the alleles.",
+          classNames: "meiosis-completion-hint hint-tooltip-leftMiddle".w()
+        }),
+
+        retryHint: SC.View.design({
+          layout: { top: 593, left: 177, height: 10, width: 10 },
+          toolTip: "Meiosis is random.  Each time you run it, there will be a different combination of alleles on the chromosomes!",
+          classNames: "meiosis-completion-hint hint-target-leftMiddle hint-tooltip-rightBottom".w()
         })
       })
     })

@@ -298,11 +298,19 @@ Lab.inActivity = Ki.State.extend({
   },
 
   showAllTooltips: function(elemClass) {
+    // Rm any created tooltips
+    $(".qtip").remove();
+
     var selection = $("."+elemClass),
         self = this;
     selection.each(function(){
       Lab.get('statechart').sendAction("showTooltip", $(this));
     });
+  },
+
+  // show second meiosis hints, if there are any
+  meiosisAnimationCompleted: function() {
+    Lab.statechart.sendAction('showAllTooltips', 'meiosis-completion-hint');
   },
 
   exitState: function() {
