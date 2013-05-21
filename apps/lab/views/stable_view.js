@@ -122,6 +122,9 @@ Lab.StableView = SC.View.extend(
                 "Your stable is full. If you want to save more dragons, sell some to the marketplace");
               return;
             }
+            if (count === 0) {
+              Lab.statechart.sendAction("stabledFirstDrake");
+            }
             if (count > 0){
               var lastDragon = allStableDragons.objectAt(count-1);
               var lastStableOrder = lastDragon.get('stableOrder');
