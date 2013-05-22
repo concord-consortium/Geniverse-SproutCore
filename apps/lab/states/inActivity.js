@@ -327,6 +327,14 @@ Lab.inActivity = Ki.State.extend({
     Lab.statechart.sendAction('showAllTooltips', 'first-stable-hint');
   },
 
+  bringItOnClicked: function() {
+    // report success to WhyVille
+    Lab.whyville.reportChallenge(true);
+
+    // go to WhyVille challenge book
+    window.parent.location.href= "/smmk/nii/chalBook";
+  },
+
   exitState: function() {
     // Make sure any observers we might have added during in state are removed.
 

@@ -19,13 +19,13 @@ Lab.singleMeiosisPage = SC.Page.design({
   // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: Lab.LabPane.design({
-  
+
     layout: { left: 0, top: 0, width: 800, height: 1400 },
 
     mainAppView: SC.View.design({
 
 	  layout: { left: 0, top: 0, width: 800, height: 1300 },
-	  
+
       childViews: 'genomePanel'.w(),
 
       genomePanel: SC.View.design({
@@ -72,8 +72,8 @@ Lab.singleMeiosisPage = SC.Page.design({
           alt: 'Bring it on!',
           title: 'Bring it on!',
           toolTip: 'Click when ready for the challenge.',
-          target: 'Lab.routes',
-          action: 'openCaselogRoute'
+          target: 'Lab.statechart',
+          action: 'bringItOnClicked'
         }),
 
         // special views for extact-positioning of hints

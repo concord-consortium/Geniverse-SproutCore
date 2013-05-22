@@ -19,7 +19,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
   // Add childViews to this pane for views to display immediately on page
   // load.
   mainPane: Lab.LabPane.design({
-  
+
    layout: { left: 0, top: 0, width: 800, height: 1400 },
 
     mainAppView: SC.View.design({
@@ -71,8 +71,8 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           alt: 'Bring it on!',
           title: 'Bring it on!',
           toolTip: 'Click here when you are ready for the next Lab.',
-          target: 'Lab.routes',
-          action: 'openCaselogRoute'
+          target: 'Lab.statechart',
+          action: 'bringItOnClicked'
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({

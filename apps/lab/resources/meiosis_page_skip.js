@@ -127,8 +127,8 @@ Lab.meiosisPageSkip = SC.Page.design({
           alt: 'Bring it on!',
           title: 'Bring it on!',
           toolTip: 'Click when ready for the next challenge.',
-          target: 'Lab.routes',
-          action: 'openCaselogRoute'
+          target: 'Lab.statechart',
+          action: 'bringItOnClicked'
         }),
 
         scoreView: Geniverse.ScoreView.design({
