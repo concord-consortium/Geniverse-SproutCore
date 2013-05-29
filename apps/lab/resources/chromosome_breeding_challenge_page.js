@@ -31,7 +31,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
 
       genomePanel: SC.View.design({
         layout: { left: 0, top: 0, width: 800, height: 1300 },
-        childViews: 'femaleTitle femaleGenomeView femalePhenotypeView maleTitle maleGenomeView malePhenotypeView breedButton chromosomeHintView'.w(),
+        childViews: 'maleTitle maleGenomeView malePhenotypeView femaleTitle femaleGenomeView femalePhenotypeView breedButton chromosomeHintView'.w(),
 
         femaleTitle: SC.LabelView.design({
           layout: {top: 0, height: 25, centerX: -110, width: 200 },
