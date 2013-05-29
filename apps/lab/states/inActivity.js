@@ -331,8 +331,16 @@ Lab.inActivity = Ki.State.extend({
     // report success to WhyVille
     Lab.whyville.reportChallenge(true);
 
-    // go to WhyVille challenge book
-    window.parent.location.href= "/smmk/nii/chalBook";
+    var next = Geniverse.activityController.getNextActivity();
+
+    if (next) {
+      pageId = Geniverse.activityController.get('route');
+      Geniverse.unlockablesController.unlockFor(pageId);
+      Lab.statechart.sendAction('gotoNextActivity');
+    } else {
+      // go to WhyVille challenge book
+      window.parent.location.href= "/smmk/nii/chalBook";
+    }
   },
 
   exitState: function() {
