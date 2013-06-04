@@ -171,5 +171,5 @@ Geniverse.Dragon.modelsName = "dragons";
 Geniverse.Dragon.readOnly = YES;
 Geniverse.railsBackedTypes.push(Geniverse.Dragon.modelName);
 
-Geniverse.Dragon.traitRules = BioLogica.Species.Drake.traitRules;
+Geniverse.Dragon.traitRules = BioLogica.Species.GenivilleDrake.traitRules;
 

@@ -157,7 +157,7 @@ Lab.selectParentsChallenge = Lab.challenge.extend({
           alleleString += "a:"+config[j]+",b:"+config[j+1]+",";
         }
         alleleString = alleleString.slice(0,alleleString.length-1);
-        org = new BioLogica.Organism.createOrganism(BioLogica.Species.Drake, alleleString);
+        org = new BioLogica.Organism.createOrganism(BioLogica.Species.GenivilleDrake, alleleString);
         characteristic = org.getCharacteristic(trait);
         if (!possibleChars[trait][characteristic]) possibleChars[trait][characteristic] = 0;
         possibleChars[trait][characteristic]++;
@@ -168,7 +168,7 @@ Lab.selectParentsChallenge = Lab.challenge.extend({
 
   _getTraitOfAllele: function(allele) {
     var trait, traitName, _ref, charName;
-    _ref = BioLogica.Species.Drake.traitRules;
+    _ref = BioLogica.Species.GenivilleDrake.traitRules;
     for (traitName in _ref) {
       if (!_ref.hasOwnProperty(traitName)) continue;
       trait = _ref[traitName];

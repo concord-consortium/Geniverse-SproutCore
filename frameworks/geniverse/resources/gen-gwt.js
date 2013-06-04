@@ -1,6 +1,6 @@
 sc_require('resources/lib/biologica.js');
 
-var drake = BioLogica.Species.Drake;
+var drake = BioLogica.Species.GenivilleDrake;
 
 GenGWT = {
 
