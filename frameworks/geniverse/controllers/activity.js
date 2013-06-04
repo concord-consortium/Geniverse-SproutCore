@@ -188,9 +188,7 @@ Geniverse.activityController = SC.ObjectController.create(
         // hard-code extras for now -- not DRY, but much more efficient than searching
         var extras = [];
         for (var i in genes){
-          if (genes[i] === "a"){
-            extras.push("a1", "a2");
-          } else if (genes[i] === "d"){
+          if (genes[i] === "d"){
             extras.push("dl");
           } else if (genes[i] === "m"){
             extras.push("mt");
