@@ -4,6 +4,8 @@
 // ==========================================================================
 /*globals Lab Geniverse CcChat window Ki YES NO SC sc_super*/
 
+sc_require('whyville');
+
 Lab.matchThreeToOneChallenge = Lab.challenge.extend({
 
   successfulMatch: NO,

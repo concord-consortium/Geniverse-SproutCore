@@ -4,6 +4,8 @@
 // ==========================================================================
 /*globals Lab Geniverse CcChat window Ki YES NO SC static_url sc_super*/
 
+sc_require('whyville');
+
 Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
 
   successfulMatch: NO,

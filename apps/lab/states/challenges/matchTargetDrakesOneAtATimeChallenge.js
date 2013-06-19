@@ -4,6 +4,8 @@
 // ==========================================================================
 /*globals Lab Geniverse CcChat window Ki YES NO SC*/
 
+sc_require('whyville');
+
 Lab.matchTargetDrakesOneAtATimeChallenge = Lab.challenge.extend({
 
   successfulMatch: NO,
