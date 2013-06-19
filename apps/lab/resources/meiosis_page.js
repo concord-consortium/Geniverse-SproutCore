@@ -142,9 +142,9 @@ Lab.meiosisPage = SC.Page.design({
         }),
 
         gametesHint: SC.View.design({
-          layout: { top: 265, left: 740, height: 10, width: 10 },
+          layout: { top: 215, left: 615, height: 10, width: 10 },
           toolTip: "Check the chromosomes in each sperm or egg.  Select one sperm and one egg to use to create a baby dragon.",
-          classNames: "meiosis-completion-hint hint-tooltip-leftMiddle".w()
+          classNames: "meiosis-completion-hint hint-tooltip-bottomMiddle".w()
         }),
 
         retryHint: SC.View.design({

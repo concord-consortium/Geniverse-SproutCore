@@ -96,9 +96,9 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
         }),
 
         chromosomeHintView: SC.View.design({
-          layout: {top: 370, left: 90, height: 100, width: 300 },
+          layout: {top: 370+150, left: 90, height: 100, width: 300 },
           toolTip: "Select alleles for each gene so that a baby dragon will match the target.",
-          classNames: 'hint-available hint-target-rightTop hint-tooltip-leftTop'.w()
+          classNames: 'hint-available hint-target-rightTop hint-tooltip-leftBottom'.w()
         })
 
       }),
@@ -124,7 +124,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
       }),
 
       targetHintView: SC.View.design({
-        layout: {centerX: 0, top: 245+450+10+350+20, height: 190, width: 270 },
+        layout: {centerX: 10, top: 245+450+10+350+20, height: 190, width: 270 },
         toolTip: "Drag a matching baby dragon from the herd onto the target.  If you can’t match the target, change the alleles and try again!",
         classNames: 'hint-available hint-tooltip-bottomRight'.w()
       })

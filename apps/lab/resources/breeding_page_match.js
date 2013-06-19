@@ -184,9 +184,9 @@ Lab.breedingPageMatch = SC.Page.design({
       }),
 
       stableHintView: SC.View.design({
-        layout: { top: 900, centerX: 180, width:10, height: 10 },
+        layout: { top: 900+100, centerX: 180-240, width:10, height: 10 },
         toolTip: "To save a baby dragon to use as a parent later, drag it here. If you can’t match the target, change the parents and try again!",
-        classNames: "breeding-completed-hint hint-tooltip-bottomLeft".w()
+        classNames: "breeding-completed-hint hint-tooltip-topRight".w()
       })
 
     })
