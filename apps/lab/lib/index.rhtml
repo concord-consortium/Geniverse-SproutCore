@@ -24,6 +24,9 @@
       function updateMetaViewport(){
         var mvp = document.getElementById('viewport-meta');
         var mvpScale = 1.0, mvpWidthScale = 1.0, mvpHeightScale = 1.0;
+		var innerWidth=window.innerWidth;
+		var innerHeight=window.innerHeight;
+
         if (innerWidth < 1100){
           mvpWidthScale = innerWidth/1100;
         }
