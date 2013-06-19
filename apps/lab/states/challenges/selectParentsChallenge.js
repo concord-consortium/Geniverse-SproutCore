@@ -69,7 +69,7 @@ Lab.selectParentsChallenge = Lab.challenge.extend({
       Lab.whyville.reportChallenge(true);
       
       this.set('starsEarned', Math.max(3-timesAttempted, 1));
-      SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
+      SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 0, width: 300, height: 100 }}).plain(
         "Good work!",
         "Those parents will do perfectly!",
         "",
@@ -80,7 +80,7 @@ Lab.selectParentsChallenge = Lab.challenge.extend({
     } else {
       Lab.whyville.reportChallenge(false);
       
-      SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).error(
+      SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 0, width: 300, height: 100 }}).error(
         "That's not right!",
         "Those parents will not produce the right proportions of offspring. Keep trying!",
         "",

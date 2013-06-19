@@ -65,7 +65,7 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
           this.successfulMatch = YES;
           Lab.whyville.reportChallenge(this.successfulMatch);
             
-          SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).plain(
+          SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 150, centerX: 0, width: 300, height: 100 }}).plain(
             "Good work!",
             "The dragon you have created matches the target dragon.",
             "",
@@ -78,7 +78,7 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
           Lab.whyville.reportChallenge(this.successfulMatch);
             
           Geniverse.scoringController.incrementScore(1);
-          SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).error(
+          SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 150, centerX: 200, width: 300, height: 100 }}).error(
             "That's not the dragon!",
             "The dragon you have created doesn't match the target dragon. Please try again.",
             "",

@@ -5,6 +5,7 @@
 /*globals Lab Geniverse CcChat window Ki YES NO SC*/
 
 sc_require('states/challenges/matchTargetDrakesListChallenge');
+sc_require('whyville');
 
 Lab.firstMeiosisWithMatchTarget = Lab.matchTargetDrakesListChallenge.extend({
 
@@ -16,7 +17,7 @@ Lab.firstMeiosisWithMatchTarget = Lab.matchTargetDrakesListChallenge.extend({
   showInitialRecobinationMsg: function() {
   if (!this._hasReachdRecombination) {
       setTimeout(function() {
-        SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).plain(
+        SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
           "Step 1",
           "You can select parts of chromosomes to swap by hovering over and clicking on a chromosome. Try it now.",
           "",
@@ -32,7 +33,7 @@ Lab.firstMeiosisWithMatchTarget = Lab.matchTargetDrakesListChallenge.extend({
   showSelectTargetnMsg: function() {
   if (!this._hasSelectedSomeAlleles) {
       setTimeout(function() {
-        SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).plain(
+        SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
           "Step 2",
           "Click on one of the red highlighted portions to swap. Click on any other chromosome to start over.",
           "",
@@ -48,7 +49,7 @@ Lab.firstMeiosisWithMatchTarget = Lab.matchTargetDrakesListChallenge.extend({
   showYSwapAttemptedMsg: function() {
 //  if (!this._hasSeenYSwapWarning) {
       setTimeout(function() {
-        SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).plain(
+        SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
           "Improper Swap Attempted",
           "No recombniation occurs between X and Y chromosomes.",
           "",
@@ -64,7 +65,7 @@ Lab.firstMeiosisWithMatchTarget = Lab.matchTargetDrakesListChallenge.extend({
   showTryMoreRecombinationMsg: function() {
   if (!this._hasSeenMessageToTryMore) {
       setTimeout(function() {
-        SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).plain(
+        SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
           "Nice job!",
           "You completed your first crossover between chromosomes. Make additional recombinations, or press 'play' or 'end' to continue meiosis.",
           "",

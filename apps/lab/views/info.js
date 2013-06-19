@@ -7,7 +7,10 @@
 /**
  *   @author Dr. Baba Kofi Weusijana <kofi@edutek.net>
  */
-Lab.InfoView = SC.PalettePane.create({
+
+sc_require('whyville');
+
+Lab.InfoView = SC.PalettePane.create(Lab.screenMixin, {
   layout: { width: 440, height: 430, centerX: 0, top: 50 },
   isModal:NO,
   contentView: SC.View.extend({

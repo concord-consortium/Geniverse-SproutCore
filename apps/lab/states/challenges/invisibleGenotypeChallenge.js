@@ -57,7 +57,7 @@ Lab.invisibleGenotypeChallenge = Lab.challenge.extend({
       Lab.whyville.reportChallenge(true);
       
       this.set('starsEarned', Math.max(3-timesAttempted, 1));
-      SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
+      SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
         "Good work!",
         "You correctly determined the Dragon's genotype.",
         "",
@@ -68,7 +68,7 @@ Lab.invisibleGenotypeChallenge = Lab.challenge.extend({
     } else {
       Lab.whyville.reportChallenge(false);
       
-      SC.AlertPane.extend({layout: {top: 0, centerX: 0, width: 300, height: 100 }}).error(
+      SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 0, centerX: 0, width: 300, height: 100 }}).error(
         "That's not right!",
         "You have not yet correctly determined the Dragon's genotype. Keep trying!",
         "",

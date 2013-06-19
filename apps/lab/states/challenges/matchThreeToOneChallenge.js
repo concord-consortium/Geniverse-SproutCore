@@ -82,7 +82,7 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
           this.successfulMatch = YES;
           Lab.whyville.reportChallenge(this.successfulMatch);
             
-          SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).plain(
+          SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 0, right: 0, width: 300, height: 100 }}).plain(
             "Good work!",
             "All of the dragons you have created match the target dragon.",
             "",
@@ -111,7 +111,7 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
               }
             }
             msg += " Please try again.";
-            SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).error(
+            SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 0, right: 0, width: 300, height: 100 }}).error(
               "You didn't get all of them.",
               msg,
               "",
@@ -120,7 +120,7 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
               this
             );
           } else {
-            SC.AlertPane.extend({layout: {right: 0, centerY: 0, width: 300, height: 100 }}).error(
+            SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 0, right:0, width: 300, height: 100 }}).error(
               "You have some duplicates.",
               "Some of your dragons are exactly the same! All of your dragons need to have different alleles.",
               "",

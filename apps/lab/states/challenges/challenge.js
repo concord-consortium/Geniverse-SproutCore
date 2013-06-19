@@ -8,6 +8,8 @@
  This is a generic top-level challenge state, and is intended to be extended by the
  actual challenge states.
 **/
+sc_require('whyville');
+
 Lab.challenge = Ki.State.extend({
 
   challengeComplete: NO,
@@ -97,7 +99,7 @@ Lab.challenge = Ki.State.extend({
     var starsMessage = "<img src='"+starImageUrl+"' class='centered-block'/>\n"+
                        "You earned "+this.starsEarned+" star" + (this.starsEarned === 1 ? "" : "s") + "!\n\n";
 
-    SC.AlertPane.extend({
+    SC.AlertPane.extend(Lab.screenMixin, {
       layout: {top: 0, centerX: 0, width: 350, height: 100 },
       displayDescription: function() {
         var desc = this.get('description');

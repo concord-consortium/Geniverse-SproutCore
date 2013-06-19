@@ -35,7 +35,7 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
       view._setClassNames();
       Lab.whyville.reportChallenge(true);
       
-      SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).plain(
+      SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 150, centerX: 0, width: 300, height: 100 }}).plain(
         "Good work!",
         "The dragon you have created matches the target dragon.",
         "",
@@ -46,7 +46,7 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
     } else {
       Lab.whyville.reportChallenge(false);
       
-      SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).error(
+      SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 150, centerX: 0, width: 300, height: 100 }}).error(
         "That's not the dragon!",
         "The dragon you have created doesn't match the target dragon. Please try again.",
         "",
@@ -67,7 +67,7 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
   didBreed: function() {
     if (!this._hasBred) {
       setTimeout(function() {
-        SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).plain(
+        SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 0, centerX: 0, width: 300, height: 100 }}).plain(
           "",
           "To match a target, drag an offspring to it.",
           "",
