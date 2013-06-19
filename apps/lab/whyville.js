@@ -25,25 +25,28 @@ Lab.screenMixin = {
 	render: function(context){
 		sc_super();
 
-		var thisTop = this.get('frame').y;
-		var iFrameOffsetTop = window.parent.Element.cumulativeOffset(window.parent.$('iframe')).top;
-		var minTop = iFrameOffsetTop+thisTop; //how far from the top of the document this item sits (including iframe offset)
-
-		//ignore the first several pixels of scroll, since that is taken up by whyvlle headers
-		var top=Math.max(0, window.parent.document.body.scrollTop-minTop);
-		
-		if(top!=0)
+		if (window.parent && window.parent!=parent && window.parent.Element)
 		{
-			top += thisTop;
+			var thisTop = this.get('frame').y;
+			var iFrameOffsetTop = window.parent.Element.cumulativeOffset(window.parent.$('iframe')).top;
+			var minTop = iFrameOffsetTop+thisTop; //how far from the top of the document this item sits (including iframe offset)
 
-			//cause a delay so this layer has time to be created
-			setTimeout(function(){
-				var layer = jQuery("#"+context._id);
+			//ignore the first several pixels of scroll, since that is taken up by whyvlle headers
+			var top=Math.max(0, window.parent.document.body.scrollTop-minTop);
+		
+			if(top!=0)
+			{
+				top += thisTop;
 
-				//TODO:when dragging the dialog box around it still jumps by back to where it would have started
-				//.dialog() must be caching its start location.  need to figure how to refresh that cache...
-				layer.animate({'top':top});
-			}, 1);
+				//cause a delay so this layer has time to be created
+				setTimeout(function(){
+					var layer = jQuery("#"+context._id);
+
+					//TODO:when dragging the dialog box around it still jumps by back to where it would have started
+					//.dialog() must be caching its start location.  need to figure how to refresh that cache...
+					layer.animate({'top':top});
+				}, 1);
+			}
 		}
 	},
 }
