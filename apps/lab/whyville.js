@@ -25,7 +25,7 @@ Lab.screenMixin = {
 	render: function(context){
 		sc_super();
 
-		if (window.parent && window.parent!=parent && window.parent.Element)
+//		if (window.parent && window.parent!=parent && window.parent.Element)
 		{
 			var thisTop = this.get('frame').y;
 			var iFrameOffsetTop = window.parent.Element.cumulativeOffset(window.parent.$('iframe')).top;

@@ -15,7 +15,7 @@ Lab.meiosisPage = SC.Page.design({
   pagePath: 'Lab.meiosisPage',
   title: 'Meiosis Page',
 
-  // challengeType: 'matchOneAtATimeChallenge',
+//  challengeType: 'matchOneAtATimeChallenge',
 
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page
@@ -160,7 +160,7 @@ Lab.meiosisPage = SC.Page.design({
         }),
 
         targetHint: SC.View.design({
-          layout: { top: 1160, left: 510, height: 10, width: 10 },
+          layout: { top: 1160, left: 500, height: 10, width: 10 },
           toolTip: "Drag the offspring to match the target dragons. If it doesn't match, choose a different sperm and egg.  Make sure you look at the alleles first!",
           classNames: "fertilization-ready-hint hint-tooltip-leftBottom".w()
         })

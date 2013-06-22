@@ -96,7 +96,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
         }),
 
         chromosomeHintView: SC.View.design({
-          layout: {top: 370+150, left: 90, height: 100, width: 300 },
+          layout: {top: 520, left: 90, height: 15, width: 300 },
           toolTip: "Select alleles for each gene so that a baby dragon will match the target.",
           classNames: 'hint-available hint-target-rightTop hint-tooltip-leftBottom'.w()
         })

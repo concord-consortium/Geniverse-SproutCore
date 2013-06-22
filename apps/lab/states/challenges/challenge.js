@@ -91,7 +91,8 @@ Lab.challenge = Ki.State.extend({
       message = "You've completed all the trials in this challenge!\n";
     }
 
-    var next = Geniverse.activityController.getNextActivity();
+    //var next = Geniverse.activityController.getNextActivity();
+	var next = false; //for whyville we never want to goto next, always return to caseLog
 
     // Notify the user that they're done
     var starImageUrl = this.starsEarned === 3 ? static_url('three-star.png') :
