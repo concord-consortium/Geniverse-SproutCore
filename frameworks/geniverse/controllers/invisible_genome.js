@@ -24,9 +24,9 @@ Geniverse.invisibleGenomeController = SC.ObjectController.create(
   showGenomePane: function() {
     if (!this.genomeSolutionView) {
       if (this.get('sex') === 0) {
-        layout =  { width: 360, height: 490, centerX: 310, centerY: 50 }
+        layout =  { width: 360, height: 490, centerX: 200, centerY: -220 }
       } else {
-        layout = { width: 360, height: 490, centerX: -310, centerY: 50 }
+        layout = { width: 360, height: 490, centerX: -200, centerY: -220 }
       }
       this.genomeSolutionView = Geniverse.GenomeSolutionView.create({
         layout: layout
