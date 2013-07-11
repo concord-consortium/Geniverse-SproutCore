@@ -25,7 +25,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
 
     mainAppView: SC.View.design({
 
-      childViews: 'infoHintView line genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle'.w(),
+      childViews: 'line genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle'.w(),
 
       layout: { left: 0, top: 100, width: 800, height: 1222 },
 
@@ -144,12 +144,6 @@ Lab.chromosomeChallengePage = SC.Page.design({
         fontWeight: SC.BOLD_WEIGHT,
         classNames: 'title'.w(),
         value: "Chromosome Control"
-      }),
-
-      infoHintView: SC.View.design({
-        layout: {top: -40, left: 485, height: 10, width: 10 },
-        toolTip: "Click this button to open the instructions for the lab.",
-        classNames: "hint-available hint-tooltip-topLeft",
       })
 
     })

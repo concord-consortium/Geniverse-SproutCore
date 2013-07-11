@@ -96,12 +96,6 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
 
       }),
 
-      infoHintView: SC.View.design({
-        layout: {top: 50, left: 485, height: 10, width: 10 },
-        toolTip: "Click this button to open the instructions for the lab.",
-        classNames: "hint-available hint-tooltip-topLeft",
-      })
-
     })
   })
 });
