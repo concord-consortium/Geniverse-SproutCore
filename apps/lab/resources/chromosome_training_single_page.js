@@ -24,7 +24,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
 
     mainAppView: SC.View.design({
 
-      childViews: 'drakeGenomePanel infoHintView'.w(),
+      childViews: 'drakeGenomePanel'.w(),
 
       drakeGenomePanel: SC.View.design({
         layout: {top: 110, height: 550, left: 0, width: 500 },
