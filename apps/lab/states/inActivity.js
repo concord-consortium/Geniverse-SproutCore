@@ -331,6 +331,9 @@ Lab.inActivity = Ki.State.extend({
     // report success to WhyVille
     Lab.whyville.reportChallenge(true);
 
+      window.parent.location.href= "/smmk/nii/chalBook";
+
+/*
     var next = Geniverse.activityController.getNextActivity();
 
     if (next) {
@@ -341,6 +344,7 @@ Lab.inActivity = Ki.State.extend({
       // go to WhyVille challenge book
       window.parent.location.href= "/smmk/nii/chalBook";
     }
+*/
   },
 
   exitState: function() {
