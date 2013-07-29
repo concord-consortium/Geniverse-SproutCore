@@ -87,12 +87,19 @@ case "$1" in
     export REMOTE_USER="geniverse"
     export BUILD_MODE="dev"
     ;;
-  dev-new)
-    export SERVER=gvnew.dev.concord.org
+  production-new)
+    export SERVER=gvnew.concord.org
     export SERVER_PATH="/web/static/static"
     export LABEL_PATH="/web/static"
     export REMOTE_USER="deploy"
-    export BUILD_MODE="dev"
+    export BUILD_MODE="production"
+    ;;
+  testing)
+    export SERVER=geniverse.testing.concord.org
+    export SERVER_PATH="/web/static/static"
+    export LABEL_PATH="/web/static"
+    export REMOTE_USER="deploy"
+    export BUILD_MODE="testing"
     ;;
   dev-debug)
     export SERVER=otto.concord.org
