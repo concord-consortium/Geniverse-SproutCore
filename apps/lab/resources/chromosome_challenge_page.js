@@ -107,7 +107,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
             showScore: YES,
             isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
             showTargetScore: YES,
-            toolTip: "To win the most clams, make the fewest number of allele changes.",
+            toolTip: "As an extra challenge try to make the fewest number of allele changes.",
             classNames: "hint-available hint-target-rightMiddle hint-tooltip-leftBottom"
       }),
 
