@@ -10,14 +10,18 @@
 */
 Lab.whyville = SC.Object.create({
 
-  reportChallenge: function(success)
+  reportChallenge: function(success, cbObj, cb)
   {
     var c = Geniverse.activityController.caseTitle();
     var a = Geniverse.activityController.actTitle();
     
     var cdi = Geniverse.matchController.get('currentDragonIdx');
     
-    SC.Request.postUrl("/smmk/nii/challengeComplete?case="+ c +"&act="+ a + "&cdi=" + cdi+ "&win=" + (success?"1":"0") , "" ).send();
+	var ajax = SC.Request.postUrl("/smmk/nii/challengeComplete?case="+ c +"&act="+ a + "&cdi=" + cdi+ "&win=" + (success?"1":"0") , "" );
+
+	if (cbObj && cb) ajax.notify(cbObj, cb);
+
+	ajax.send();
   }
 });
 

@@ -328,23 +328,12 @@ Lab.inActivity = Ki.State.extend({
   },
 
   bringItOnClicked: function() {
-    // report success to WhyVille
-    Lab.whyville.reportChallenge(true);
+    // report success to Whyville
+    Lab.whyville.reportChallenge(true, this, 'gotoChalBook');
+  },
 
-      window.parent.location.href= "/smmk/nii/chalBook";
-
-/*
-    var next = Geniverse.activityController.getNextActivity();
-
-    if (next) {
-      pageId = Geniverse.activityController.get('route');
-      Geniverse.unlockablesController.unlockFor(pageId);
-      Lab.statechart.sendAction('gotoNextActivity');
-    } else {
-      // go to WhyVille challenge book
-      window.parent.location.href= "/smmk/nii/chalBook";
-    }
-*/
+  gotoChalBook: function() {
+	window.parent.location.href= "/smmk/nii/chalBook";
   },
 
   exitState: function() {
