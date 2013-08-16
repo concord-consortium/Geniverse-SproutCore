@@ -7,3 +7,6 @@
 [submodule "frameworks/ki"]
 	path = frameworks/ki
 	url = https://github.com/FrozenCanuck/Ki.git
+[submodule "frameworks/sproutcore"]
+	path = frameworks/sproutcore
+	url = git@github.com:concord-consortium/sproutcore.git

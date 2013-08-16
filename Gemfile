@@ -1,4 +1,4 @@
-source :rubygems
+source "https://rubygems.org"
 
 # for sproutcore
 gem "sproutcore", "~> 1.4.4"

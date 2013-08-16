@@ -31,6 +31,18 @@ mode :dev do
     :resources_base => "http://resources.geniverse.dev.concord.org"
 end
 
+mode :testing do
+  config :lab,
+    :google_analytics_id => nil,
+    :resources_base => "http://resources.geniverse.testing.concord.org"
+end
+
+mode :debug do
+  config :lab,
+    :google_analytics_id => nil,
+    :resources_base => "http://resources.geniverse.dev.concord.org"
+end
+
 config :geniverse,
   :layout => 'lib/index.rhtml',
   :test_layout => 'lib/index.rhtml'

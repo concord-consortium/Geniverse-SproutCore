@@ -14,11 +14,8 @@
               title: "Challenge 1: Make a Drake",
               href: "#case1/challenge1"
             }, {
-              title: "Challenge 2: All Together Now!",
+              title: "Challenge 2: Good Things Come in Threes",
               href: "#case1/challenge2"
-            }, {
-              title: "Challenge 3: Shiny, Happy Drakes",
-              href: "#case1/challenge3"
             }
           ]
         }, {
@@ -165,14 +162,20 @@
             }
           ]
         }, {
-          title: "Case 13: All for One and One for All!",
+          title: "Case 13: Time for Recess(ive)",
           challenges: [
             {
-              title: "Challenge 1: One-at-a-time Targets",
+              title: "Challenge 1: Armor All",
               href: "#case13/challenge1"
             }, {
-              title: "Challenge 2: Three's a Charm",
+              title: "Challenge 2: Receeding Armor",
               href: "#case13/challenge2"
+            }, {
+              title: "Challenge 3: Disarming, Dislegging",
+              href: "#case13/challenge3"
+            }, {
+              title: "Challenge 2: Going, Going...",
+              href: "#case13/challenge4"
             }
           ]
         }, {

@@ -19,7 +19,7 @@ Lab.caselogPage = SC.Page.design({
     childViews: ['caselogView', 'topBar'],
     classNames: ['mainPane'],
 
-    caselogView: SC.View.design({
+    caselogView: Lab.TouchEnabledView.design({
 
       layout: { top: 57 },
       classNames: ['caselog-view','mainPane'],

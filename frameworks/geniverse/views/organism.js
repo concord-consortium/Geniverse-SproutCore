@@ -238,10 +238,14 @@ Geniverse.OrganismView = SC.View.extend(
     }
   },
 
+  insideGridView: function() {
+    return !!this.get('parentView') && ""+this.get('parentView').constructor === 'SC.GridView';
+  },
+
   // // drag methods:
   mouseDownEvent: null,
   mouseDown: function(evt) {
-    if (!!this.get('parentView') && ""+this.get('parentView').constructor === 'SC.GridView'){
+    if (this.insideGridView()){
       // we are in a grid view, don't need to do anything
       return NO;
     }
@@ -278,6 +282,30 @@ Geniverse.OrganismView = SC.View.extend(
   },
 
   mouseUp: function(evt) {
+    this.set('isDragging', NO);
+  },
+
+  touchStart: function(touch) {
+    this.set('touchStartEvent', touch);
+    return YES;
+  },
+
+  touchesDragged: function(evt, touches) {
+    if (!this.get('isDragging') &&
+        (this.get('canDrag') || this.insideGridView())){
+      var x = SC.Drag.start({
+        event: this.get('touchStartEvent'),
+        source: this,
+        dragView: this,
+        ghost: NO,
+        slideBack: YES,
+        ghostActsLikeCursor: NO
+      });
+      this.set('isDragging', YES);
+    }
+  },
+
+  touchEnd: function(touch) {
     this.set('isDragging', NO);
   },
 
