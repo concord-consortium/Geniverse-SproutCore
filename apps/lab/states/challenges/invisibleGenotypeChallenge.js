@@ -33,7 +33,7 @@ Lab.invisibleGenotypeChallenge = Lab.challenge.extend({
     var pageId = Geniverse.activityController.get('route');
     Geniverse.userController.setPageStars(pageId, this.get('starsEarned'));
 
-    Lab.whyville.reportChallenge(true);
+    Lab.whyville.reportChallenge(true, {stars: this.get('starsEarned')});
     Geniverse.store.commitRecords();
 
     // why can't bindings in SC work as advertised?

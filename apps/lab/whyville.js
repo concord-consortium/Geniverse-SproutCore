@@ -10,13 +10,14 @@
 */
 Lab.whyville = SC.Object.create({
 
-  reportChallenge: function(success, cbObj, cb)
+  reportChallenge: function(success, info, cbObj, cb)
   {
     var data = {
       "case": Geniverse.activityController.caseTitle(),
       "act":  Geniverse.activityController.actTitle(),
       "cdi":  Geniverse.matchController.get('currentDragonIdx'),
-      "win":  success ? 1:0
+      "win":  success ? 1:0,
+      "info": info
     };
 
     var ajax = SC.Request.postUrl("/smmk/nii/challengeComplete", SC.json.encode(data));

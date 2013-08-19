@@ -54,7 +54,7 @@ Lab.challenge = Ki.State.extend({
     Lab.caselogController.propertyDidChange("userMetadata");
 
     // report to whyville
-    Lab.whyville.reportChallenge(true);
+    Lab.whyville.reportChallenge(true, {stars: stars});
 
     // save stars to the backend imediately, so we don't lose this data if the user hard quits
     Geniverse.store.commitRecords();

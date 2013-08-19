@@ -328,8 +328,10 @@ Lab.inActivity = Ki.State.extend({
   },
 
   bringItOnClicked: function() {
+    // playground always gets 3 stars
+    var info = {stars: 3};
     // report success to Whyville
-    Lab.whyville.reportChallenge(true, this, 'gotoChalBook');
+    Lab.whyville.reportChallenge(true, info, this, 'gotoChalBook');
   },
 
   gotoChalBook: function() {

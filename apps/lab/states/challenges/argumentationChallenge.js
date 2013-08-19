@@ -32,7 +32,7 @@ Lab.argumentationChallenge = Ki.State.extend({
     Geniverse.userController.setPageStars(pageId, 1);
 
 
-    Lab.whyville.reportChallenge(true);
+    Lab.whyville.reportChallenge(true, {stars: 1});
 
     // unlock any unlockables
     Geniverse.unlockablesController.unlockFor(pageId);
