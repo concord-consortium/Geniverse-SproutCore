@@ -20,7 +20,15 @@ Lab.whyville = SC.Object.create({
       "info": info
     };
 
-    var ajax = SC.Request.postUrl("/smmk/nii/challengeComplete", SC.json.encode(data));
+    var url = "";
+
+    if (success) {
+      url = "/smmk/nii/challengeComplete";
+    } else {
+      url = "/smmk/nii/challengeProgress";
+    }
+
+    var ajax = SC.Request.postUrl(url, SC.json.encode(data));
 
     if (cbObj && cb) ajax.notify(cbObj, cb);
 
