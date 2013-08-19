@@ -68,8 +68,6 @@ Lab.selectParentsChallenge = Lab.challenge.extend({
     if (allMatch) {
       this.solved = YES;
       
-      Lab.whyville.reportChallenge(true);
-      
       this.set('starsEarned', Math.max(3-timesAttempted, 1));
       SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 0, width: 300, height: 100 }}).plain(
         "Good work!",

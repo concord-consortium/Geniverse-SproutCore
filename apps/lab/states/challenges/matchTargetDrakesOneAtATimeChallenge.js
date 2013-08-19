@@ -31,7 +31,6 @@ Lab.matchTargetDrakesOneAtATimeChallenge = Lab.challenge.extend({
       view.setPath('content.hasBeenMatched', YES);
       view._setClassNames();
       this.successfulMatch = YES;
-      Lab.whyville.reportChallenge(this.successfulMatch);
       
       SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 150, centerX: 0, width: 300, height: 100 }}).plain(
         "Good work!",

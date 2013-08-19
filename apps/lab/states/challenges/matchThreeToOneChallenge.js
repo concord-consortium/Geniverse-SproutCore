@@ -82,7 +82,6 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
 
         if (numMatched === 3){
           this.successfulMatch = YES;
-          Lab.whyville.reportChallenge(this.successfulMatch);
             
           SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 0, right: 0, width: 300, height: 100 }}).plain(
             "Good work!",

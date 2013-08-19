@@ -35,7 +35,6 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
     if (Geniverse.matchController.doesMatch(dragons[0], dragons[1])) {
       view.setPath('content.hasBeenMatched', YES);
       view._setClassNames();
-      Lab.whyville.reportChallenge(true);
       
       SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 150, centerX: 0, width: 300, height: 100 }}).plain(
         "Good work!",

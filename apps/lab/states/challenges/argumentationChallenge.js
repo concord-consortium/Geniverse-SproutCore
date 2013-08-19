@@ -31,6 +31,9 @@ Lab.argumentationChallenge = Ki.State.extend({
     var pageId = Geniverse.activityController.get('route');
     Geniverse.userController.setPageStars(pageId, 1);
 
+
+    Lab.whyville.reportChallenge(true);
+
     // unlock any unlockables
     Geniverse.unlockablesController.unlockFor(pageId);
 
@@ -54,8 +57,6 @@ Lab.argumentationChallenge = Ki.State.extend({
     if (Geniverse.matchController.doesMatch(dragons[0], dragons[1])) {
       view.setPath('content.hasBeenMatched', YES);
       view._setClassNames();
-      
-      Lab.whyville.reportChallenge(true);
       
       SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 150, centerX: 0, width: 300, height: 100 }}).plain(
         "Good work!",

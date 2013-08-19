@@ -65,8 +65,7 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
       action: function () {
         if (this._drakesMatch(this.organismView.get('content'))){
           this.successfulMatch = YES;
-          Lab.whyville.reportChallenge(this.successfulMatch);
-            
+
           SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 150, centerX: 0, width: 300, height: 100 }}).plain(
             "Good work!",
             "The dragon you have created matches the target dragon.",
