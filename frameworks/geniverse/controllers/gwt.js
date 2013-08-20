@@ -139,7 +139,7 @@ Geniverse.gwtController = SC.Object.create(
       Geniverse.store.commitRecords();
       self.removePendingDrake(id);
     };
-    GenGWT.generateDragonWithAlleleStringAndSex(alleles, sex, handleGOrg);
+    GenGWT.generateDragonWithAlleleStringAndSex(alleles, sex, handleGOrg, !mustBeAlive);
   },
 
   generateGOrganismWithAlleles: function(alleles, sex, callback) {

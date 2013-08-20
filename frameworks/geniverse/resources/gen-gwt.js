@@ -24,18 +24,20 @@ GenGWT = {
       }
     },
 
-    generateDragonWithAlleleStringAndSex: function(alleles, sex, callback) {
+    generateDragonWithAlleleStringAndSex: function(alleles, sex, callback, report) {
       if (!alleles) {
         if (!!console) { console.error("Need to define alleles!"); } // console.trace(); }
       } else {
         org = BioLogica.Organism.createOrganism(drake, alleles, sex);
 
         // report action to whyville
-      var info = {
-        action: "create dragon",
-        dragon: alleles
+      if (report) {
+        var info = {
+          action: "create dragon",
+          dragon: alleles
+        }
+        Lab.whyville.reportChallenge(false, info);
       }
-      Lab.whyville.reportChallenge(false, info);
 
 
         callback(org);
