@@ -29,6 +29,15 @@ GenGWT = {
         if (!!console) { console.error("Need to define alleles!"); } // console.trace(); }
       } else {
         org = BioLogica.Organism.createOrganism(drake, alleles, sex);
+
+        // report action to whyville
+      var info = {
+        action: "create dragon",
+        dragon: alleles
+      }
+      Lab.whyville.reportChallenge(false, info);
+
+
         callback(org);
       }
     },
@@ -43,6 +52,15 @@ GenGWT = {
       while (number--) {
         organisms.array.push(BioLogica.breed(mother, father, crossover));
       }
+
+      // report action to whyville
+      var info = {
+        action: "breed dragons",
+        mother: mother.genetics.getAlleleString(),
+        father: father.genetics.getAlleleString()
+      }
+      Lab.whyville.reportChallenge(false, info);
+
       callback(organisms);
     },
 
