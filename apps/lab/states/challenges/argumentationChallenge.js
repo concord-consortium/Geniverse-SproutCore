@@ -67,7 +67,12 @@ Lab.argumentationChallenge = Ki.State.extend({
         this
       );
     } else {
-      Lab.whyville.reportChallenge(false);
+      var info = {
+        targetDragon:    dragons[0].get('gOrganism').genetics.getAlleleString(),
+        submittedDragon: dragons[1].get('gOrganism').genetics.getAlleleString()
+      };
+
+      Lab.whyville.reportChallenge(false, info);
       
       SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 150, centerX: 0, width: 300, height: 100 }}).error(
         "That's not the dragon!",

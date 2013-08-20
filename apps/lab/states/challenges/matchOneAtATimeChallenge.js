@@ -76,7 +76,11 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
           );
         } else {
           this.successfulMatch = NO;
-          Lab.whyville.reportChallenge(this.successfulMatch);
+          var info = {
+            targetDragon:    Geniverse.matchController.getPath('currentDragon.gOrganism').genetics.getAlleleString(),
+            submittedDragon: this.organismView.getPath('content.gOrganism').genetics.getAlleleString()
+          };
+          Lab.whyville.reportChallenge(false, info);
             
           Geniverse.scoringController.incrementScore(1);
           SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 150, centerX: 200, width: 300, height: 100 }}).error(

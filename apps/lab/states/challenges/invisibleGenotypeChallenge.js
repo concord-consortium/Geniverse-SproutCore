@@ -68,7 +68,11 @@ Lab.invisibleGenotypeChallenge = Lab.challenge.extend({
         this
       );
     } else {
-      Lab.whyville.reportChallenge(false);
+      var info = {
+        dragon: Geniverse.invisibleGenomeController.getPath('content.gOrganism').genetics.getAlleleString(),
+        submittedSolution: this.getCurrentSolutionString()
+      };
+      Lab.whyville.reportChallenge(false, info);
       
       SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 0, centerX: 0, width: 300, height: 100 }}).error(
         "That's not right!",
@@ -86,6 +90,26 @@ Lab.invisibleGenotypeChallenge = Lab.challenge.extend({
     if (this.solved) {
       this._challengeComplete(" ");
     }
+  },
+
+  // these functions just used for whyville logging
+  currentSolution: null,
+
+  addCurrentSelection: function(key, option) {
+    if (!this.currentSolution) {
+      this.currentSolution = {};
+    }
+    this.currentSolution[key] = option;
+  },
+
+  getCurrentSolutionString: function() {
+    var solution = "";
+    if (this.currentSolution) {
+      for (key in this.currentSolution) {
+        solution += this.currentSolution[key] + ", ";
+      }
+    }
+    return solution;
   },
 
   exitState: function() {

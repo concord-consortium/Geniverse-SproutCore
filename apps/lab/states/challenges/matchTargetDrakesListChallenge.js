@@ -45,7 +45,11 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
         this
       );
     } else {
-      Lab.whyville.reportChallenge(false);
+      var info = {
+        targetDragon:    Geniverse.matchController.getPath('currentDragon.gOrganism').genetics.getAlleleString(),
+        submittedDragon: this.organismView.getPath('content.gOrganism').genetics.getAlleleString()
+      };
+      Lab.whyville.reportChallenge(false, info);
       
       SC.AlertPane.extend(Lab.screenMixin, {layout: {top: 150, centerX: 0, width: 300, height: 100 }}).error(
         "That's not the dragon!",

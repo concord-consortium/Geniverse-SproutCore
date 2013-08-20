@@ -172,6 +172,7 @@ Geniverse.GenomeSolutionView = SC.PanelPane.design({
           updater: function(){
             var isCorrect = this.get('value') === this.get('correctOption');
             Geniverse.invisibleGenomeController.setFieldCorrect(val, isCorrect);
+            Lab.statechart.sendAction("addCurrentSelection", val, this.get('value'));
           }.observes('value')
       });
 
