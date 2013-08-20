@@ -21,7 +21,7 @@ Lab.invisibleGenotypeChallenge = Lab.challenge.extend({
     this.set('solved', NO);
 
     this.get('statechart').sendAction('blockNextNavButton');
-    Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', YES);
+    Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', NO);
   },
 
   endChallenge: function() {
