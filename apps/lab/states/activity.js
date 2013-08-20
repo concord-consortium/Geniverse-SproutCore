@@ -242,26 +242,6 @@ Lab.ACTIVITY = SC.Responder.create(
       Geniverse.chatListController.set('content', chats);
     }
 
-    /////////////////// Articles
-    SC.Logger.log("LOAD: articles");
-    var articlesQuery = SC.Query.local(Geniverse.Article, {
-      conditions: 'activity = {activity} AND accepted = true',
-      activity: activity,
-      orderBy: 'time'
-    });
-    var articles = Geniverse.store.find(articlesQuery);
-    Geniverse.publishedArticlesController.set('content', articles);
-
-    var myArticlesQuery = SC.Query.local(Geniverse.Article, {
-      conditions: 'group = {group} AND activity = {activity} AND submitted = false AND accepted = false',
-      group: user.get('groupId'),
-      activity: activity,
-      orderBy: 'time'
-    });
-    var myArticles = Geniverse.store.find(myArticlesQuery);
-
-    Geniverse.articleController.set('content', myArticles);
-
     /////////////////// Challenge dragons
     SC.Logger.log("LOAD: challenge dragons");
     var challengePoolQuery = SC.Query.local('Geniverse.Dragon', {
