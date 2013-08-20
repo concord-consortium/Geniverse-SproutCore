@@ -412,6 +412,7 @@ Lab.ACTIVITY = SC.Responder.create(
   },
 
   clearData: function() {
+    Geniverse.dragonGenomeController.reset();
     Geniverse.matchController.set('content', []);
     Geniverse.challengePoolController.set('content', []);
     Geniverse.challengePoolController.firstFemale = null;
