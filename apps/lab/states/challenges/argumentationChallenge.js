@@ -68,6 +68,7 @@ Lab.argumentationChallenge = Ki.State.extend({
       );
     } else {
       var info = {
+        action: "submitted dragon",
         targetDragon:    dragons[0].get('gOrganism').genetics.getAlleleString(),
         submittedDragon: dragons[1].get('gOrganism').genetics.getAlleleString()
       };

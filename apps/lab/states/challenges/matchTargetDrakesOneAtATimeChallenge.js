@@ -43,6 +43,7 @@ Lab.matchTargetDrakesOneAtATimeChallenge = Lab.challenge.extend({
     } else {
       this.successfulMatch = NO;
       var info = {
+        action: "submitted dragon",
         targetDragon:    dragons[0].get('gOrganism').genetics.getAlleleString(),
         submittedDragon: dragons[1].get('gOrganism').genetics.getAlleleString()
       };

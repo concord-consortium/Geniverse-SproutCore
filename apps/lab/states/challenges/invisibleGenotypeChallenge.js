@@ -69,6 +69,7 @@ Lab.invisibleGenotypeChallenge = Lab.challenge.extend({
       );
     } else {
       var info = {
+        action: "submitted solution",
         dragon: Geniverse.invisibleGenomeController.getPath('content.gOrganism').genetics.getAlleleString(),
         submittedSolution: this.getCurrentSolutionString()
       };

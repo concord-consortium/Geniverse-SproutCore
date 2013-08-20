@@ -77,6 +77,7 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
         } else {
           this.successfulMatch = NO;
           var info = {
+            action: "submitted dragon",
             targetDragon:    Geniverse.matchController.getPath('currentDragon.gOrganism').genetics.getAlleleString(),
             submittedDragon: this.organismView.getPath('content.gOrganism').genetics.getAlleleString()
           };
