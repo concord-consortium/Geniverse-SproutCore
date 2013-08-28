@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130124204216) do
+ActiveRecord::Schema.define(:version => 20130828144400) do
 
   create_table "activities", :force => true do |t|
     t.string   "initial_alleles"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20130124204216) do
     t.integer  "threshold_two_stars"
     t.boolean  "show_color_labels"
     t.text     "congratulations"
+    t.boolean  "show_tooltips",              :default => false
   end
 
   create_table "articles", :force => true do |t|
@@ -93,8 +94,8 @@ ActiveRecord::Schema.define(:version => 20130124204216) do
     t.string   "title"
     t.text     "content"
     t.string   "trigger"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.boolean  "open_automatically", :default => false
   end
 
