@@ -224,7 +224,7 @@ Lab.inActivity = Ki.State.extend({
     border: {
       width: 1,
       radius: 5,
-      color: '#9E5A2D'
+      color: '#f3e77d'
     },
     name: 'light',
     backgroundColor: '#f4eed3'
@@ -237,12 +237,18 @@ Lab.inActivity = Ki.State.extend({
   // and if it has the classes 'hint-target-*' or 'hint-tooltip-*' it will pass
   // the * values as the appropriate options.
   showTooltip: function($elem, text, options) {
+    if (!Geniverse.activityController.getPath('content.showTooltips')) return;
+
+    if (!$elem.attr("alt")) {
+      $elem.attr("alt", $elem.attr("title"));
+    }
+
     var backdrop, config, style, classes, elemClass, i,
         opts      = options || {};
         target    = opts.target     || "leftMiddle",
         tooltip   = opts.tooltip    || "rightMiddle",
         maxWidth  = opts.maxWidth   || 280,
-        text      = text || $elem.attr("title");
+        text      = text || $elem.attr("alt");
 
     if (!text) {
       return;
@@ -294,6 +300,9 @@ Lab.inActivity = Ki.State.extend({
     if (opts.hideAction != null) {
       config.api.onHide = opts.hideAction;
     }
+
+    $elem.attr('title', '');  // rm title attribute so we don't see it as well
+
     return $elem.qtip(config);
   },
 
@@ -304,7 +313,7 @@ Lab.inActivity = Ki.State.extend({
     var selection = $("."+elemClass),
         self = this;
     selection.each(function(){
-      Lab.get('statechart').sendAction("showTooltip", $(this));
+      self.showTooltip($(this));
     });
   },
 
