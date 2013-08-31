@@ -153,7 +153,7 @@ Lab.breedingPageMatch = SC.Page.design({
         dragExited: function(drag, evt) {
           this.$().removeClass('drop-target') ;
         },
-        toolTip: "If your stable is full, drag dragons here to remove them!",
+        toolTip: "If your stable is full, drag drakes here to remove them!",
         classNames: "first-stable-hint hint-target-topMiddle hint-tooltip-bottomMiddle".w()
       }),
 
@@ -173,7 +173,7 @@ Lab.breedingPageMatch = SC.Page.design({
 
       stableHintView: SC.View.design({
         layout: { top: 500, centerX: -260, width:20, height: 100 },
-        toolTip: "To save a baby dragon to use as a parent later, drag it here. If you can’t match the target, change the parents and try again!",
+        toolTip: "To save a baby drake to use as a parent later, drag it here. If you can’t match the target, change the parents and try again!",
         classNames: "breeding-completed-hint hint-target-leftMiddle hint-tooltip-rightMiddle".w()
       })
 

@@ -73,7 +73,7 @@ Lab.singleMeiosisPage = SC.Page.design({
         // special views for extact-positioning of hints
         glowHint: SC.View.design({
           layout: { top: 157, centerX: 0, height: 100, width: 100 },
-          toolTip: "Drag a dragon from the parent pool above to this yellow spot.",
+          toolTip: "Drag a drake from the parent pool above to this yellow spot.",
           classNames: "hint-available".w()
         }),
 

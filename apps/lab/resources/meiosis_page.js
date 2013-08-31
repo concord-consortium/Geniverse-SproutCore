@@ -140,19 +140,19 @@ Lab.meiosisPage = SC.Page.design({
 
         gametesHint: SC.View.design({
           layout: { top: 250, left: 280, height: 10, width: 10 },
-          toolTip: "Check the chromosomes in each sperm or egg.  Select one sperm and one egg to use to create a baby dragon.",
+          toolTip: "Check the chromosomes in each sperm or egg.  Select one sperm and one egg to use to create a baby drake.",
           classNames: "meiosis-completion-hint hint-tooltip-bottomMiddle".w()
         }),
 
         fertilizationPlayHint: SC.View.design({
           layout: { top: 580, centerX: -20, height: 10, width: 10 },
-          toolTip: "Click run to fertilize the egg and make a new baby dragon!",
+          toolTip: "Click run to fertilize the egg and make a new baby drake!",
           classNames: "fertilization-ready-hint hint-tooltip-leftMiddle".w()
         }),
 
         targetHint: SC.View.design({
           layout: { top: 50, centerX: 150, height: 10, width: 10 },
-          toolTip: "Drag the offspring to match the target dragons. If it doesn't match, choose a different sperm and egg.  Make sure you look at the alleles first!",
+          toolTip: "Drag the offspring to match the target drakes. If it doesn't match, choose a different sperm and egg.  Make sure you look at the alleles first!",
           classNames: "meiosis-offspring-ready-hint hint-tooltip-leftMiddle".w()
         })
 

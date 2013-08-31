@@ -86,7 +86,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
           showEmptyOptions: NO,
           showFromLabels: NO,
           startWithEmptyOptions: NO,
-          toolTip: "Select a different allele for each gene.  Watch to see if the dragon changes."
+          toolTip: "Select a different allele for each gene.  Watch to see if the drake changes."
         }),
 
         revealButton: SC.ButtonView.design({
@@ -95,7 +95,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
           action: "revealClicked",
           target: "Lab.statechart",
           classNames: "hint-available hint-target-rightMiddle hint-tooltip-leftMiddle",
-          toolTip: "Click this to reveal your dragon.  Did it match the target?"
+          toolTip: "Click this to reveal your drake.  Did it match the target?"
         })
       }),
 

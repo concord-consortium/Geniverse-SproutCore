@@ -87,7 +87,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
         // for extra-specific positioning of a tooltip, we have to use another view
         chromoHintView: SC.View.design({
           layout: {top: 310, left: 300, height: 50, width: 10 },
-          toolTip: "Select a different allele for each gene.  Watch to see if the dragon changes.",
+          toolTip: "Select a different allele for each gene.  Watch to see if the drake changes.",
           classNames: "hint-available hint-target-rightMiddle hint-tooltip-leftMiddle hint-clickthrough",
         })
 
