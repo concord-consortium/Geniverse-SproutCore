@@ -222,12 +222,11 @@ Lab.inActivity = Ki.State.extend({
     },
     padding: '14px',
     border: {
-      width: 1,
-      radius: 5,
-      color: '#f3e77d'
+      width: 0,
+      radius: 2,
+      color: '#FFFFFF'
     },
-    name: 'light',
-    backgroundColor: '#f4eed3'
+    color: '#FFFFFF'
   },
 
   // Shows a tooltip on a jquery element, with a given text and options.
