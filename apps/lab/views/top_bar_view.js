@@ -154,8 +154,13 @@ Lab.TopBarView = SC.ToolbarView.extend(
     action: 'showPane',
     init: function() {
       sc_super();
+      if (Geniverse.activityController.get('pageType') === "chromosomeBreedingPage") {
+        this.set("toolTip", "When in doubt, read the Instructions.");
+      }
       Lab.infoController.set('infoButton', this); // So pop-up pointer works
-    }
+    },
+    toolTip: "",
+    classNames: 'hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
   }),
 
   blogButton: SC.ImageView.design(Geniverse.SimpleButton, {

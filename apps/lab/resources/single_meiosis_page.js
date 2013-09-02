@@ -79,19 +79,19 @@ Lab.singleMeiosisPage = SC.Page.design({
 
         playHint: SC.View.design({
           layout: { top: 593, left: 177, height: 10, width: 10 },
-          toolTip: "Press run to create four eggs or sperm through the process of meiosis.",
+          toolTip: "Click Play to create four eggs or sperm through the process of meiosis.",
           classNames: "hint-available hint-target-leftMiddle hint-tooltip-rightBottom".w()
         }),
 
         gametesHint: SC.View.design({
           layout: { top: 325, left: 505, height: 10, width: 10 },
-          toolTip: "Each egg or sperm contains 3 chromosomes. Click each chromosome to see the alleles.",
+          toolTip: "Each egg or sperm contains three chromosomes. Hover over chromosome to see the alleles.",
           classNames: "meiosis-completion-hint hint-tooltip-leftMiddle".w()
         }),
 
         retryHint: SC.View.design({
           layout: { top: 593, left: 177, height: 10, width: 10 },
-          toolTip: "Meiosis is random.  Each time you run it, there will be a different combination of alleles on the chromosomes!",
+          toolTip: "Meiosis assorts the chromosomes randomly. Click Retry to try your luck again!",
           classNames: "meiosis-completion-hint hint-target-leftMiddle hint-tooltip-rightBottom".w()
         })
       })

@@ -113,6 +113,10 @@ body, body.sc-theme, .sc-theme .sc-pane.sc-main {
   cursor: pointer;
 }
 
+.sc-view {
+  overflow: visible;
+}
+
 /** QTIP ***/
 
 .qtip {

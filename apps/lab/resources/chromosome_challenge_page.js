@@ -86,7 +86,8 @@ Lab.chromosomeChallengePage = SC.Page.design({
           showEmptyOptions: NO,
           showFromLabels: NO,
           startWithEmptyOptions: NO,
-          toolTip: "Select a different allele for each gene.  Watch to see if the drake changes."
+          toolTip: 'Your drake is hidden. Change the alleles until you think it matches the target.',
+          classNames: "hint-available hint-target-leftTop hint-tooltip-bottomRight"
         }),
 
         revealButton: SC.ButtonView.design({
@@ -95,7 +96,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
           action: "revealClicked",
           target: "Lab.statechart",
           classNames: "hint-available hint-target-rightMiddle hint-tooltip-leftMiddle",
-          toolTip: "Click this to reveal your drake.  Did it match the target?"
+          toolTip: "Click this to reveal your drake.  Does it match the target?"
         })
       }),
 
@@ -104,7 +105,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
         showScore: YES,
         isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
         showTargetScore: YES,
-        toolTip: "To win the most stars, make the fewest number of allele changes.",
+        toolTip: "To win the most stars, make the fewest number of allele and male/female changes.",
         classNames: "hint-available hint-target-rightMiddle hint-tooltip-leftTop"
       }),
 

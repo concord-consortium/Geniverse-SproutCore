@@ -247,7 +247,8 @@ Lab.inActivity = Ki.State.extend({
         target    = opts.target     || "leftMiddle",
         tooltip   = opts.tooltip    || "rightMiddle",
         maxWidth  = opts.maxWidth   || 280,
-        text      = text || $elem.attr("alt");
+        text      = text || $elem.attr("alt"),
+        dark      = false;
 
     if (!text) {
       return;
@@ -260,10 +261,15 @@ Lab.inActivity = Ki.State.extend({
         target = /hint-target-(.*)/.exec(elemClass)[1];
       } else if (/hint-tooltip-(.*)/.exec(elemClass)) {
         tooltip = /hint-tooltip-(.*)/.exec(elemClass)[1];
+      } else if (/hint-dark/.exec(elemClass)) {
+        dark = true;
       }
     }
 
     style = SC.clone(this.QTipStyle, true);
+    if (dark) {
+      style.border.color = "#777";
+    }
     style.tip = tooltip;
     style.width = {
       max: maxWidth

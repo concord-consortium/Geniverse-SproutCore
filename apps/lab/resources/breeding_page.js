@@ -38,7 +38,9 @@ Lab.breedingPage = SC.Page.design({
       }),
 
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { centerX: -51, top: 30, width: 35, height: 30 }
+        layout: { centerX: -51, top: 30, width: 35, height: 30 },
+        toolTip: "The magnifying glass shows you some of the genes. But unfortunately, not always the ones you need...",
+        classNames: 'hint-available'
       }),
 
       breedView: Geniverse.BreedDragonView.design({
@@ -78,6 +80,7 @@ Lab.breedingPage = SC.Page.design({
           target: 'Geniverse.breedDragonController',
           trackScore: NO,
           action: function() {
+            Lab.statechart.sendAction('breedingPageMatchBreedingCompleted');
             return this.get('trackScore') ? "breedAndIncrementScore" : "breed";
           }.property('trackScore'),
           isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
@@ -99,7 +102,9 @@ Lab.breedingPage = SC.Page.design({
       }),
 
       stableView: Lab.StableView.design({
-        layout: { centerX: 0, top: 428, width: 520, height: 100 }
+        layout: { centerX: 0, top: 428, width: 520, height: 100 },
+        toolTip: "Drag up to 10 offspring drakes here to keep them and use them to breed. To make room for different drakes, drag them to \'Remove From Stable.\'",
+        classNames: 'hint-available hint-target-bottomMiddle hint-tooltip-topLeft'.w()
       }),
 
       marketplaceView: SC.ImageView.design({

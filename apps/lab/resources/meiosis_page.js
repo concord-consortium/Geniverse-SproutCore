@@ -29,7 +29,7 @@ Lab.meiosisPage = SC.Page.design({
 
       genomePanel: SC.View.design({
         layout: {top: 0, bottom: 10, left: 5, right: 5 },
-        childViews: 'mothersPoolView fathersPoolView femaleView motherMeiosis offspringTitle offspringView maleView fatherMeiosis fertilization matchView scoreView glowHint playHint gametesHint fertilizationPlayHint targetHint'.w(),
+        childViews: 'mothersPoolView fathersPoolView femaleView motherMeiosis offspringTitle offspringView maleView fatherMeiosis fertilization matchView scoreView glowHint playHint gametesHint fertilizationPlayHint'.w(),
         // childViews: 'femaleTitle femaleView offspringTitle offspringView maleTitle maleView'.w(),
 
         matchView: Geniverse.MatchView.design({
@@ -74,7 +74,9 @@ Lab.meiosisPage = SC.Page.design({
             layout: {left: 0, right: 0, top: 0, bottom: 0},
             contentBinding: 'Geniverse.meiosisAnimationController.offspring',
             canDrag: YES
-          })
+          }),
+          toolTip: "Drag the offspring to match a target drakes. If it doesn't match, choose a different sperm and egg.  Make sure you look at the alleles first!",
+          classNames: "meiosis-offspring-ready-hint hint-tooltip-leftMiddle hint-target-rightMiddle".w()
         }),
 
         maleView: Geniverse.OrganismView.design({
@@ -134,26 +136,20 @@ Lab.meiosisPage = SC.Page.design({
 
         playHint: SC.View.design({
           layout: { top: 580, left: 145, height: 10, width: 10 },
-          toolTip: "Press run to create four eggs or sperm through the process of meiosis.",
-          classNames: "hint-available hint-tooltip-leftTop".w()
+          toolTip: "Click Play to create four eggs or sperm through the process of meiosis.",
+          classNames: "hint-available hint-tooltip-leftTop hint-dark".w()
         }),
 
         gametesHint: SC.View.design({
-          layout: { top: 250, left: 280, height: 10, width: 10 },
-          toolTip: "Check the chromosomes in each sperm or egg.  Select one sperm and one egg to use to create a baby drake.",
+          layout: { top: 245, left: 280, height: 10, width: 10 },
+          toolTip: "Check the alleles in each sperm or egg.  Select one sperm and one egg to use to create an offspring drake.",
           classNames: "meiosis-completion-hint hint-tooltip-bottomMiddle".w()
         }),
 
         fertilizationPlayHint: SC.View.design({
           layout: { top: 580, centerX: -20, height: 10, width: 10 },
-          toolTip: "Click run to fertilize the egg and make a new baby drake!",
-          classNames: "fertilization-ready-hint hint-tooltip-leftMiddle".w()
-        }),
-
-        targetHint: SC.View.design({
-          layout: { top: 50, centerX: 150, height: 10, width: 10 },
-          toolTip: "Drag the offspring to match the target drakes. If it doesn't match, choose a different sperm and egg.  Make sure you look at the alleles first!",
-          classNames: "meiosis-offspring-ready-hint hint-tooltip-leftMiddle".w()
+          toolTip: "Click Play to fertilize the egg and make a new offspring drake!",
+          classNames: "fertilization-ready-hint hint-tooltip-leftMiddle hint-dark".w()
         })
 
       })
