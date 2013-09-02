@@ -173,7 +173,7 @@ Lab.breedingPageMatch = SC.Page.design({
 
       stableHintView: SC.View.design({
         layout: { top: 500, centerX: -260, width:20, height: 100 },
-        toolTip: "To save a baby drake to use as a parent later, drag it here. If you can’t match the target, change the parents and try again!",
+        toolTip: "To save an offspring drake to use as a parent later, drag it here. If you can’t match the target, change the parents and try again!",
         classNames: "breeding-completed-hint hint-target-leftMiddle hint-tooltip-rightMiddle".w()
       })
 

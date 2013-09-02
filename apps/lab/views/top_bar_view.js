@@ -207,14 +207,15 @@ Lab.TopBarView = SC.ToolbarView.extend(
     layerId: 'helpButton',
     hasHover: YES,
     alt: 'Help',
-    toolTip: "View the Help window for this page",
     target: 'Lab.helpController',
     action: 'showPane',
     isVisibleBinding: 'Lab.helpController.isVisible',
     init: function() {
       sc_super();
       Lab.helpController.set('helpButton', this); // So pop-up pointer works
-    }
+    },
+    toolTip: "Click here for help on any page.",
+    classNames: 'office-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
   }),
 
   logoutButton: SC.ImageView.design(Geniverse.SimpleButton, {

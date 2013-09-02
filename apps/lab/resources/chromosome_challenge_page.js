@@ -43,7 +43,6 @@ Lab.chromosomeChallengePage = SC.Page.design({
           alt: 'Switch Sex',
           title: 'Switch Sex',
           sexBinding: '*parentView.genomeView.sex',
-          toolTip: 'Click to change between a male and female dragon. Notice the dragon’s neck!',
           target: 'parentView.genomeView',
           action: 'switchSex',
           _setClassNames: function(){
