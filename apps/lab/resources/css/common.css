@@ -113,7 +113,7 @@ body, body.sc-theme, .sc-theme .sc-pane.sc-main {
   cursor: pointer;
 }
 
-.sc-view {
+.sc-view.hint-available {
   overflow: visible;
 }
 
