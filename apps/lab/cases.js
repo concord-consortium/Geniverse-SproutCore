@@ -232,7 +232,8 @@
           challenges: [
             {
               title: "Challenge 1: Bog Breath",
-              href: "#bgbrth/challenge1"
+              href: "#bgbrth/challenge1",
+              useQuill: true
             }
           ]
         }
