@@ -33,6 +33,10 @@
   border: 1px solid black;
 }
 
+.sc-theme .intro-image-wrapper {
+  text-align: center;
+}
+
 .transparent {
   opacity: 0.95;
 }
@@ -190,3 +194,5 @@ img.postButton:hover {
   font-weight: 400;
   line-height: 1.1em;
 }
+
+

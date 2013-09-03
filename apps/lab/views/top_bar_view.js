@@ -154,8 +154,13 @@ Lab.TopBarView = SC.ToolbarView.extend(
     action: 'showPane',
     init: function() {
       sc_super();
+      if (Geniverse.activityController.get('pageType') === "chromosomeBreedingPage") {
+        this.set("toolTip", "When in doubt, read the Instructions.");
+      }
       Lab.infoController.set('infoButton', this); // So pop-up pointer works
-    }
+    },
+    toolTip: "",
+    classNames: 'hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
   }),
 
   blogButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -202,14 +207,15 @@ Lab.TopBarView = SC.ToolbarView.extend(
     layerId: 'helpButton',
     hasHover: YES,
     alt: 'Help',
-    toolTip: "View the Help window for this page",
     target: 'Lab.helpController',
     action: 'showPane',
     isVisibleBinding: 'Lab.helpController.isVisible',
     init: function() {
       sc_super();
       Lab.helpController.set('helpButton', this); // So pop-up pointer works
-    }
+    },
+    toolTip: "Click here for help on any page.",
+    classNames: 'office-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
   }),
 
   logoutButton: SC.ImageView.design(Geniverse.SimpleButton, {

@@ -48,7 +48,7 @@ Geniverse.MatchOrganism = {
 
   _setClassNames: function(){
     var imageView = this.get('imageView');
-    if (this.get('content').get('hasBeenMatched')){
+    if (this.getPath('content.hasBeenMatched')){
       imageView.set('classNames', ['matched']);
     } else if (this.get('isSelected')) {
       imageView.set('classNames', ['male-selected']);

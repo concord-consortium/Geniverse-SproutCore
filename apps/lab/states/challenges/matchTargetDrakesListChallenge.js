@@ -61,19 +61,7 @@ Lab.matchTargetDrakesListChallenge = Lab.challenge.extend({
   },
 
   didBreed: function() {
-    if (!this._hasBred) {
-      setTimeout(function() {
-        SC.AlertPane.extend({layout: {centerY: 0, centerX: 0, width: 300, height: 100 }}).plain(
-          "",
-          "To match a target, drag an offspring to it.",
-          "",
-          "OK",
-          "",
-          this
-        );
-      }, 800);      // delay a little
-      this._hasBred = true;
-    }
+    // we no longer pop up message
   },
 
   didBreedMeiosis: function() {

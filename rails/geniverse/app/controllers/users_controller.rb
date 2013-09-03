@@ -10,7 +10,7 @@ class UsersController < ApplicationController
       @users = [user] if user
 
       # raise ActiveRecord::RecordNotFound, "Couldn't find user with username #{params[:username]}" unless @users
-      @users = User.all unless @users
+      @users = [] unless @users
     else
        @users = User.all
     end

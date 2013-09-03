@@ -85,9 +85,9 @@ Geniverse.blogPostController = SC.Controller.create(
       pageId = "caselog";
     }
 
-    Geniverse.userController.saveBlogDraft(pageId);
     // Commit user record, if not busy
     Geniverse.doWhenReady(this, Geniverse.userController.get('content'), function() {
+      Geniverse.userController.saveBlogDraft(pageId);
       Geniverse.store.commitRecords();
     });
   },

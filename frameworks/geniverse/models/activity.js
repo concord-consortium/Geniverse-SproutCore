@@ -44,6 +44,8 @@ Geniverse.Activity = SC.Record.extend(
 
   isArgumentationChallenge: SC.Record.attr(Boolean, {defaultValue: NO}),    // whether chal. is solved by a blog post
 
+  showTooltips: SC.Record.attr(Boolean, {defaultValue: NO}), // whether templates should show their tooltips
+
   myCase: SC.Record.toOne('Geniverse.Case'),
   myCaseOrder: SC.Record.attr(Number, { defaultValue: 1 }),
 

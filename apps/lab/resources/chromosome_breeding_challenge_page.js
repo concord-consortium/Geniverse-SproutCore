@@ -24,7 +24,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
 
       layout: { centerX: 0, top: 80, width: 1080, height: 880 },
 
-      childViews: 'genomePanel breedingPenView matchView scoreView'.w(),
+      childViews: 'genomePanel breedingPenView matchView scoreView chromosomeHintView'.w(),
 
       genomePanel: SC.View.design({
         layout: {top: 35, height: 585, left: 15, width: 1005 },
@@ -76,7 +76,10 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
         breedButton: SC.ButtonView.design({
           layout: { top: 150, centerX: -60, width: 100, height: 24 },
           target: 'Geniverse.breedDragonController',
-          action: "breed",
+          action: function() {
+            Geniverse.breedDragonController.breed();
+            Lab.statechart.sendAction('breedingPageMatchBreedingCompleted');
+          },
           isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
           hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
           isEnabled: function() {
@@ -85,7 +88,10 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
 
           title: function () {
             return this.get('isBreeding') ? 'Breeding...' :  'Breed';
-          }.property('isBreeding').cacheable()
+          }.property('isBreeding').cacheable(),
+
+          toolTip: "Click Breed to create a clutch of 20 offspring drakes. Clicking Breed costs zero moves!",
+          classNames: 'hint-available'.w()
         })
 
       }),
@@ -93,7 +99,9 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
         layout: { left: 329, top: 240, width: 380, height: 350 },
-        breedingRecordRight: -20
+        breedingRecordRight: -20,
+        toolTip: "Drag a matching drake from the pen onto the target.",
+        classNames: 'breeding-completed-hint hint-target-topRight hint-tooltip-bottomLeft'.w()
       }),
 
       matchView: Geniverse.MatchView.design({
@@ -108,8 +116,13 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
         showScore: YES,
         isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
         showTargetScore: YES
-      })
+      }),
 
+      chromosomeHintView: SC.View.design({
+        layout: {left: 30, top: 320, height: 100, width: 290 },
+        toolTip: "Set the alleles to increase your chances of breeding the target drake. Each change costs a move.",
+        classNames: 'hint-available hint-target-rightTop hint-tooltip-leftTop'.w()
+      })
     })
   })
 });
