@@ -88,6 +88,20 @@ Lab.loggedIn = Ki.State.extend({
 
   }),
 
+  enterState: function() {
+    console.log("woo!");
+
+    /** WARNING MESSAGE **/
+
+    // reveal warning message
+    $('#demo-warning').delay(1000).animate({'top': 0});
+
+    $('.dismiss-warning').click(function(){
+      $(this).parent().animate({'top': '-40px'});
+    });
+
+  },
+
   showingBlogButton: Ki.State.plugin('Lab.showingBlogButton'),
 
   warningUserBeforeLeaving: Ki.State.plugin('Lab.warningUserBeforeLeaving'),

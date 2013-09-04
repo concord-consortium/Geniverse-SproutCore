@@ -83,6 +83,11 @@
 -%>
   <body class="<%= [theme_name(:default => 'sc-theme'), 'focus'].compact.join(' ') %>">
 
+<div id="demo-warning" class="warning">
+  <strong>WARNING!</strong> This is a demo site. Your work will not be saved. If you already have a Geniverse username and password, log in to <a href="http://geniverse.concord.org/lab/">geniverse.concord.org/lab</a>. <span class="dismiss-warning">[ hide warning ]</span>
+</div>
+
+
 
 <% # modified for Geniverse. It would be nice to load the section below as a partial
    # but I'm not sure how to get sc-server to load partials from an .rhtml file (such as
