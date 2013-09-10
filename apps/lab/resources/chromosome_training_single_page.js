@@ -93,7 +93,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
 
         chromoHint2View: SC.View.design({
           layout: {top: 397, left: 16, height: 90, width: 19 },
-          toolTip: "Every drake has 2 pairs of 3 chromosomes. (Humans have 2 pairs of 23 different chromosomes).",
+          toolTip: "Every drake has 3 pairs of chromosomes. (Humans have 23 pairs of chromosomes).",
           classNames: "hint-available hint-target-bottomMiddle hint-tooltip-topRight hint-clickthrough",
         })
 
