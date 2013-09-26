@@ -105,6 +105,7 @@ Lab.loggedIn = Ki.State.extend({
 
   exitState: function() {
     // clear fragment identifier from navigation bar
+    SC.routes.set('location', '');
     if (history && history.pushState) {
       history.pushState('', document.title, window.location.pathname);
     } else {
