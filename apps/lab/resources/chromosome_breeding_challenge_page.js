@@ -119,7 +119,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
       }),
 
       chromosomeHintView: SC.View.design({
-        layout: {left: 30, top: 320, height: 100, width: 290 },
+        layout: {left: 30, top: 342, height: 85, width: 290 },
         toolTip: "Set the alleles to increase your chances of breeding the target drake. Each change costs a move.",
         classNames: 'hint-available hint-target-rightTop hint-tooltip-leftTop'.w()
       })
