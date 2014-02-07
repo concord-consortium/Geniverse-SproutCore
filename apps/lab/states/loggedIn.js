@@ -204,7 +204,7 @@ Lab.loggedIn = Ki.State.extend({
 
   showAllTooltips: function(elemClass) {
     // Rm any created tooltips
-    $(".qtip").remove();
+    $(".qtip").hide();
 
     var selection = $("."+elemClass),
         self = this;
