@@ -61,7 +61,7 @@ Lab.main = function main() {
 
   // *** monkey-patch view renderer to support tooltips
   SC.View.prototype.didCreateLayer = function () {
-    this.$().attr('title', this.get('toolTip'));
+    this.$().attr('alt', this.get('toolTip'));
     this.set('toolTip', null);
   }
 } ;
