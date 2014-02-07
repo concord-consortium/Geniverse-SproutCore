@@ -95,7 +95,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
           }.property('isBreeding').cacheable(),
 
           toolTip: "Click Breed to create a clutch of 20 offspring drakes. Clicking Breed costs zero moves!",
-          classNames: 'hint-available'.w()
+          classNames: 'hint-available hint-max-width-151'.w()
         })
 
       }),

@@ -131,7 +131,7 @@ Lab.loggedIn = Ki.State.extend({
         opts      = options || {};
         target    = opts.target     || "leftMiddle",
         tooltip   = opts.tooltip    || "rightMiddle",
-        maxWidth  = opts.maxWidth   || 280,
+        maxWidth  = opts.maxWidth   || 250,
         text      = text || $elem.attr("alt"),
         dark      = false,
         showOnReady = opts.showOnReady == null ? true : opts.showOnReady;
@@ -147,14 +147,19 @@ Lab.loggedIn = Ki.State.extend({
         target = /hint-target-(.*)/.exec(elemClass)[1];
       } else if (/hint-tooltip-(.*)/.exec(elemClass)) {
         tooltip = /hint-tooltip-(.*)/.exec(elemClass)[1];
+      } else if (/hint-max-width-(.*)/.exec(elemClass)) {
+        maxWidth = /hint-max-width-(.*)/.exec(elemClass)[1];
       } else if (/hint-dark/.exec(elemClass)) {
         dark = true;
       }
     }
 
+    var minWidth = Math.min(maxWidth, 240)
+
     style = {
       width: {
-        min: 240
+        min: minWidth,
+        max: maxWidth
       },
       padding: '14px',
       border: {
