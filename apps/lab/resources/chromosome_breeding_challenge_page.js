@@ -76,9 +76,13 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
         breedButton: SC.ButtonView.design({
           layout: { top: 150, centerX: -60, width: 100, height: 24 },
           target: 'Geniverse.breedDragonController',
+          bredOnce: false,
           action: function() {
             Geniverse.breedDragonController.breed();
-            Lab.statechart.sendAction('breedingPageMatchBreedingCompleted');
+            if (!this.get('bredOnce')) {
+              Lab.statechart.sendAction('breedingPageMatchBreedingCompleted');
+              this.set('bredOnce', true);
+            }
           },
           isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
           hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
