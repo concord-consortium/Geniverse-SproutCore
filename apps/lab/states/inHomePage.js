@@ -19,6 +19,9 @@ Lab.inHomePage = Ki.State.extend({
     Lab.routes.gotoLabRoute({pageName: 'mainPage'});
     setTimeout( function() {
       Lab.statechart.sendAction('showAllTooltips', 'office-hint-available');
+      setTimeout( function() {
+        $(".qtip").fadeOut();
+      },3500);
     },1500);
   },
 
