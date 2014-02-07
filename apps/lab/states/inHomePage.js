@@ -43,7 +43,8 @@ Lab.inHomePage = Ki.State.extend({
         tooltip   = opts.tooltip    || "rightMiddle",
         maxWidth  = opts.maxWidth   || 280,
         text      = text || $elem.attr("alt"),
-        dark      = false;
+        dark      = false,
+        showOnReady = opts.showOnReady == null ? true : opts.showOnReady;
 
     if (!text) {
       return;
@@ -88,7 +89,7 @@ Lab.inHomePage = Ki.State.extend({
         }
       },
       show: {
-        ready: true,
+        ready: showOnReady,
         solo: false,
         effect: { type: 'fade', length: 800 }
       },
@@ -119,6 +120,14 @@ Lab.inHomePage = Ki.State.extend({
         self = this;
     selection.each(function(){
       self.showTooltip($(this));
+    });
+  },
+
+  registerAllTooltips: function(elemClass) {
+    var selection = $("."+elemClass),
+        self = this;
+    selection.each(function(){
+      self.showTooltip($(this), null, {showOnReady: false});
     });
   },
 
