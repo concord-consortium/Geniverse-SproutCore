@@ -212,6 +212,12 @@ Lab.loggedIn = Ki.State.extend({
     selection.each(function(){
       self.showTooltip($(this));
     });
+
+    hideListener = function() {
+      $(".qtip").hide();
+      $('body').unbind('click', hideListener);
+    }
+    $('body').bind('click', hideListener)
   },
 
   registerAllTooltips: function(elemClass) {
