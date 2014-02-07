@@ -2,7 +2,7 @@
 // Project:   Lab - TopBarView
 // Copyright: 2010 Concord Consortium
 // ==========================================================================
-/*globals Lab Geniverse */
+/*global Lab Geniverse SC YES NO sc_super*/
 
 /**
  * Top toolbar with labels and logout button.
@@ -35,7 +35,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
     alt: 'Home',
     toolTip: "Click to go to the Lab's Home page",
     target: 'Lab.routes',
-    action: 'openHomePageRoute'
+    action: 'openHomePageRoute',
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
   }),
 
   caselogButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -46,7 +47,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
     alt: 'Case Log',
     toolTip: "Click to go to the Lab's Case Log page",
     target: 'Lab.routes',
-    action: 'openCaselogRoute'
+    action: 'openCaselogRoute',
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
   }),
 
   introButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -57,7 +59,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
     alt: 'Introduction',
     toolTip: "Click to see introduction",
     target: 'Lab.routes',
-    action: 'openAvatarPageRoute'
+    action: 'openAvatarPageRoute',
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
   }),
 
   geniverseLabelView: SC.View.design({
@@ -102,7 +105,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
       Lab.loginController.showGroupPanel();
     },
     isVisibleBinding: 'Lab.loginController.loggedIn',
-    toolTip: 'Change your Member number or Group number.'
+    toolTip: 'Change your Member number or Group number.',
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
   }),
 
   unlockablesButton: SC.PopupButtonView.design({
@@ -127,7 +131,6 @@ Lab.TopBarView = SC.ToolbarView.extend(
       selectedItemBinding: 'Geniverse.unlockablesController.selectedUnlockable'
     }),
     layerId: 'unlockablesButton',
-    classNames: ['none'],
     // hasHover: YES,
     alt: 'Unlockables',
     toolTip: "Click to see items you've unlocked",
@@ -140,7 +143,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
       this.set('classNames', ['sc-view', 'sc-image-view', 'sc-regular-size', style]);
       this.set('layerNeedsUpdate', YES);
-    }.observes('notViewedUnlockables')
+    }.observes('notViewedUnlockables'),
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
   }),
 
   infoButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -156,11 +160,11 @@ Lab.TopBarView = SC.ToolbarView.extend(
       sc_super();
       if (Geniverse.activityController.get('pageType') === "chromosomeBreedingPage") {
         this.set("toolTip", "When in doubt, read the Instructions.");
+        this.$().addClass('hint-available');
       }
       Lab.infoController.set('infoButton', this); // So pop-up pointer works
     },
-    toolTip: "",
-    classNames: 'hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
   }),
 
   blogButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -172,7 +176,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
     title:  "Post claim to the Journal",
     toolTip: "Post claim to the Journal",
     target: 'Lab.statechart',
-    action: 'showBlogPostPanel'
+    action: 'showBlogPostPanel',
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
   }),
 
 
@@ -185,7 +190,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
     title:  "Journal",
     toolTip: "Click to open the class journal",
     target: 'Lab.journalController',
-    action: 'openWindow'
+    action: 'openWindow',
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
   }),
 
   notepadButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -198,7 +204,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
     toolTip: "Click to open your notepad",
     target: 'Geniverse.notepadController',
     isEnabledBinding: 'Geniverse.notepadController.isEnabledButton',
-    action: 'showPane'
+    action: 'showPane',
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
   }),
 
   helpButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -215,7 +222,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
       Lab.helpController.set('helpButton', this); // So pop-up pointer works
     },
     toolTip: "Click here for help on any page.",
-    classNames: 'office-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
+    classNames: 'topbar-hint-available topbar-hint-available-show hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
   }),
 
   logoutButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -227,6 +234,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
     title:  "Log out",
     toolTip: "Click to log out",
     target: 'Lab.statechart',
-    action: 'logOut'
+    action: 'logOut',
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
   })
 });

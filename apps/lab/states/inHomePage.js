@@ -17,8 +17,10 @@ Lab.inHomePage = Ki.State.extend({
     }
     Geniverse.activityController.set('content', dummy);
     Lab.routes.gotoLabRoute({pageName: 'mainPage'});
+
+    Lab.statechart.sendAction('registerAllTooltips', 'topbar-hint-available');
     setTimeout( function() {
-      Lab.statechart.sendAction('showAllTooltips', 'office-hint-available');
+      Lab.statechart.sendAction('showAllTooltips', 'topbar-hint-available-show');
       setTimeout( function() {
         $(".qtip").fadeOut();
       },3500);
