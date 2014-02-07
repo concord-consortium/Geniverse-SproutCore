@@ -62,6 +62,7 @@ Geniverse.AnimationView = SC.View.extend(
     if (dragon !== null && typeof dragon != 'undefined') {
       this.set('jsonData', Geniverse.meiosisAnimationController.allelesToJSON(dragon.get('alleles')) );
       this.set('completedAnimationCalled', NO);
+      Lab.statechart.sendAction('meiosisAnimationReady');
     } else {
       this.set('jsonData', null);
     }
