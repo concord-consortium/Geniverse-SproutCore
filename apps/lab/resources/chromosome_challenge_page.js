@@ -22,7 +22,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
   mainPane: Lab.LabPane.design({
     mainAppView: SC.View.design({
 
-      childViews: 'line genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle'.w(),
+      childViews: 'line genomePanel scoreLabel targetDrakes targetTitle yourTitle chromoTitle drakeHintView'.w(),
 
       layout: { centerX: 0, top: 90, width: 850, height: 560 },
 
@@ -84,9 +84,7 @@ Lab.chromosomeChallengePage = SC.Page.design({
           }.observes('allAllelesSelected'),
           showEmptyOptions: NO,
           showFromLabels: NO,
-          startWithEmptyOptions: NO,
-          toolTip: 'Your drake is hidden. Change the alleles until you think it matches the target.',
-          classNames: "hint-available hint-target-leftTop hint-tooltip-bottomRight"
+          startWithEmptyOptions: NO
         }),
 
         revealButton: SC.ButtonView.design({
@@ -138,6 +136,12 @@ Lab.chromosomeChallengePage = SC.Page.design({
         fontWeight: SC.BOLD_WEIGHT,
         classNames: 'title'.w(),
         value: "Chromosome Control"
+      }),
+
+      drakeHintView: SC.View.design({
+        layout: { top: 55, left: 288, width: 245, height: 231 },
+        toolTip: 'Your drake is hidden. Change the alleles until you think it matches the target.',
+        classNames: "hint-available hint-target-topMiddle hint-tooltip-bottomMiddle"
       })
 
     })
