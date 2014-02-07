@@ -512,5 +512,7 @@ Lab.ACTIVITY = SC.Responder.create(
     if (message){
       Lab.infoController.display(message, function(){Lab.get('statechart').sendAction("showAllTooltips", "hint-available")});
     }
+
+    Lab.statechart.sendAction('registerAllTooltips', 'topbar-hint-available');
   }
 }) ;
