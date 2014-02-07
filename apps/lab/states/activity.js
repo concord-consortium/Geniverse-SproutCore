@@ -514,5 +514,6 @@ Lab.ACTIVITY = SC.Responder.create(
     }
 
     Lab.statechart.sendAction('registerAllTooltips', 'topbar-hint-available');
+    Lab.statechart.sendAction('registerAllTooltips', 'hint-available-no-show');
   }
 }) ;
