@@ -179,6 +179,7 @@ Lab.loggedIn = Ki.State.extend({
         }
       },
       show: {
+        delay: 800,
         ready: showOnReady,
         solo: false,
         effect: { type: 'fade', length: 800 }
