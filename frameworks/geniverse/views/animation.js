@@ -280,14 +280,14 @@ Geniverse.AnimationView = SC.View.extend(
     out += '<div class="cell ui-state-default ui-corner-all"></div>';
     out += '<div class="controls">';
 
-    out += '<button class="stop" title="Stop"><img src="' + sc_static('images/meiosis_stop_small.png') + '" /></button>';
-    out += '<button class="play" title="Play"><img src="' + sc_static('images/meiosis_play_small.png') + '" /></button>';
-    out += '<button class="end" title="End"><img src="' + sc_static('images/meiosis_end_small.png') + '" /></button>';
+    out += '<button class="stop"><img src="' + sc_static('images/meiosis_stop_small.png') + '" /></button>';
+    out += '<button class="play"><img src="' + sc_static('images/meiosis_play_small.png') + '" /></button>';
+    out += '<button class="end"><img src="' + sc_static('images/meiosis_end_small.png') + '" /></button>';
     if ((this.get('mode') === 'parent') && this.get('swapping')) {
-      out += '<button class="swap" title="Swap Genes"><img src="' + sc_static('images/meiosis_exchange_16x16_monochrome.png') + '" /></button>';
+      out += '<button class="swap"><img src="' + sc_static('images/meiosis_exchange_16x16_monochrome.png') + '" /></button>';
     }
     if (this.get('mode') === 'parent') {
-      out += '<button class="retry" title="Retry"><img src="' + sc_static('images/meiosis_retry_monochrome.png') + '" /></button>';
+      out += '<button class="retry"><img src="' + sc_static('images/meiosis_retry_monochrome.png') + '" /></button>';
     }
     out += '<div class="scrub"></div>';
 //    out += '<div class="frame"><input type="text" value="0"></div>';
