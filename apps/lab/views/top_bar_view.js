@@ -25,7 +25,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
   anchorLocation: SC.ANCHOR_TOP,
 
   // the order the children are defined here determines the order they show up in the top bar!
-  childViews: 'homeButton caselogButton introButton geniverseLabelView welcomeLabelView groupLabelView infoButton notepadButton unlockablesButton'.w(),
+  childViews: 'homeButton caselogButton introButton geniverseLabelView welcomeLabelView groupLabelView infoButton notepadButton blogButton journalButton unlockablesButton'.w(),
 
   homeButton: SC.ImageView.design(Geniverse.SimpleButton, {
     layout: { top: 0, left: 0, width: 66, height: 57 },
@@ -169,10 +169,12 @@ Lab.TopBarView = SC.ToolbarView.extend(
     layerId: 'blogButton',
     hasHover: YES,
     title:  "Post claim to the Journal",
-    toolTip: "Post your claim to the class journal",
+    toolTip: "Post your claim to the class journal &mdash; Not available in Demo version",
     target: 'Lab.statechart',
-    action: 'showBlogPostPanel',
-    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-240'.w()
+    action: function() {
+      alert("The Journal is not active in the Demo version of Geniverse.")
+    },
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-290 disabled'.w()
   }),
 
 
@@ -182,10 +184,12 @@ Lab.TopBarView = SC.ToolbarView.extend(
     hasHover: YES,
     layerId: 'journalButton',
     title:  "Journal",
-    toolTip: "Open class journal",
+    toolTip: "Class journal &mdash; Not available in Demo version",
     target: 'Lab.journalController',
-    action: 'openWindow',
-    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-160'.w()
+    action: function() {
+      alert("The Journal is not active in the Demo version of Geniverse.")
+    },
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-220 disabled'.w()
   }),
 
   notepadButton: SC.ImageView.design(Geniverse.SimpleButton, {
