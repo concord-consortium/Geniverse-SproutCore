@@ -118,6 +118,10 @@ Lab.loginController = SC.ObjectController.create(
         user.set('isTeacher', isTeacher);
         var classWords = response.get('body').class_words;
         if (classWords && classWords.length > 0){
+          // filter the class names and remove invalid characters
+          for (var i = 0; i < classWords.length; i++) {
+            classWords[i] = classWords[i].replace(/[^a-zA-Z0-9_\-]+/g, '');
+          }
           // if a user has more than one class word, use the last one on the list
           user.set('className', classWords[classWords.length-1]);
           user.set('allClassNames', classWords);

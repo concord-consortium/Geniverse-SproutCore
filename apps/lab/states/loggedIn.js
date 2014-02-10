@@ -119,12 +119,132 @@ Lab.loggedIn = Ki.State.extend({
 
   exitState: function() {
     // clear fragment identifier from navigation bar
+    SC.routes.set('location', '');
     if (history && history.pushState) {
       history.pushState('', document.title, window.location.pathname);
     } else {
       // this notifies app of statechange so is not as good...
       window.location.hash = '';
     }
+  },
+
+  // *** tooltip-related functions ***
+    // Shows a tooltip on a jquery element, with a given text and options.
+  // The options hash can specify a target (topLeft, leftMiddle, etc), a tooltip
+  // (same values but for the tail of the tooltip), a maxWidth and a hideAction.
+  // For convenience, if the $elem has title text then the tooltip will use that,
+  // and if it has the classes 'hint-target-*' or 'hint-tooltip-*' it will pass
+  // the * values as the appropriate options.
+  showTooltip: function($elem, text, options) {
+
+    if (!$elem.attr("alt")) {
+      $elem.attr("alt", $elem.attr("title"));
+    }
+
+    var backdrop, config, style, classes, elemClass, i,
+        opts      = options || {};
+        target    = opts.target     || "leftMiddle",
+        tooltip   = opts.tooltip    || "rightMiddle",
+        maxWidth  = opts.maxWidth   || 250,
+        text      = text || $elem.attr("alt"),
+        dark      = false,
+        showOnReady = opts.showOnReady == null ? true : opts.showOnReady;
+
+    if (!text) {
+      return;
+    }
+
+    classes = $elem.attr('class').split(/\s+/);
+    for (i = 0; i < classes.length; i++) {
+      elemClass = classes[i];
+      if (/hint-target-(.*)/.exec(elemClass)) {
+        target = /hint-target-(.*)/.exec(elemClass)[1];
+      } else if (/hint-tooltip-(.*)/.exec(elemClass)) {
+        tooltip = /hint-tooltip-(.*)/.exec(elemClass)[1];
+      } else if (/hint-max-width-(.*)/.exec(elemClass)) {
+        maxWidth = /hint-max-width-(.*)/.exec(elemClass)[1];
+      } else if (/hint-dark/.exec(elemClass)) {
+        dark = true;
+      }
+    }
+
+    var minWidth = Math.min(maxWidth, 240)
+
+    style = {
+      width: {
+        min: minWidth,
+        max: maxWidth
+      },
+      padding: '14px',
+      border: {
+        width: 0,
+        radius: 2,
+        color: '#FFF'
+      },
+      color: '#FFF'
+    };
+    style.tip = tooltip;
+    config = {
+      content: {
+        title: {
+          text: ''
+        },
+        text: text
+      },
+      position: {
+        corner: {
+          target: target,
+          tooltip: tooltip
+        }
+      },
+      show: {
+        delay: 800,
+        ready: showOnReady,
+        solo: false,
+        effect: { type: 'fade', length: 800 }
+      },
+      hide: {
+        effect: { type: 'fade' }
+      },
+      style: style,
+      api: {
+        onRender: function() {
+          this.elements.tooltip.click(this.hide);
+        }
+      }
+    };
+    if (opts.hideAction != null) {
+      config.api.onHide = opts.hideAction;
+    }
+
+    $elem.attr('title', '');  // rm title attribute so we don't see it as well
+
+    return $elem.qtip(config);
+  },
+
+  showAllTooltips: function(elemClass) {
+    // Rm any created tooltips
+    $(".qtip").hide();
+
+    var selection = $("."+elemClass),
+        self = this;
+    selection.each(function(){
+      self.showTooltip($(this));
+    });
+
+    hideListener = function() {
+      $(".qtip").hide();
+      $('body').unbind('mousedown', hideListener);
+    }
+    $('body').bind('mousedown', hideListener)
+  },
+
+  registerAllTooltips: function(elemClass) {
+    var selection = $("."+elemClass),
+        self = this;
+    selection.each(function(){
+      self.showTooltip($(this), null, {showOnReady: false});
+    });
   }
 
 });

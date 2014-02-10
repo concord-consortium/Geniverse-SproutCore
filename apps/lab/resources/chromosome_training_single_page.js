@@ -25,7 +25,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
 
       drakeGenomePanel: SC.View.design({
         layout: {top: 110, height: 550, centerX: 0, width: 500 },
-        childViews: 'title genomeView switchSexButton nextButton chromoHintView chromoHint2View'.w(),
+        childViews: 'title genomeView switchSexButton nextButton chromoHintView'.w(),
 
         title: SC.LabelView.design({
           layout: {top: 20, height: 25, left: 125, width: 200 },
@@ -45,7 +45,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           classNames: "switchsex switch-female hint-available hint-target-leftMiddle hint-tooltip-rightMiddle".w(),
           alt: 'Switch Sex',
           title: 'Switch Sex',
-          toolTip: 'Click to change between a male and female dragon. Notice the dragon’s neck!',
+          toolTip: 'Click to change between a male and female drake. Notice the drake’s neck!',
           sexBinding: '*parentView.genomeView.sex',
           target: 'parentView.genomeView',
           action: 'switchSex',
@@ -81,20 +81,15 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           showGenerateNewDragon: NO,
           showIsEditableCheck: NO,
           showFromLabels: NO,
-          showSwitchSex: YES
-        }),
-
-        // for extra-specific positioning of a tooltip, we have to use another view
-        chromoHintView: SC.View.design({
-          layout: {top: 310, left: 300, height: 50, width: 10 },
+          showSwitchSex: YES,
           toolTip: "Select a different allele for each gene.  Watch to see if the drake changes.",
-          classNames: "hint-available hint-target-rightMiddle hint-tooltip-leftMiddle hint-clickthrough",
+          classNames: "hint-available hint-target-leftMiddle hint-tooltip-rightMiddle"
         }),
 
-        chromoHint2View: SC.View.design({
-          layout: {top: 397, left: 16, height: 90, width: 19 },
-          toolTip: "Every drake has 2 pairs of 3 chromosomes. (Humans have 2 pairs of 23 different chromosomes).",
-          classNames: "hint-available hint-target-bottomMiddle hint-tooltip-topRight hint-clickthrough",
+        chromoHintView: SC.View.design({
+          layout: {top: 100, left: 16, height: 390, width: 19 },
+          toolTip: "Every drake has 3 pairs of chromosomes. (Humans have 23 pairs of chromosomes).",
+          classNames: "hint-available hint-target-bottomMiddle hint-tooltip-topRight"
         })
 
       })
