@@ -28,7 +28,9 @@ Lab.inAvatar = Ki.State.extend({
   _chooseAvatar: function(name, url) {
     Lab.avatarController.set('waiting', YES);
 
-    var user = Geniverse.userController.get('content');
+    var user = Geniverse.userController.get('content'),
+        date,
+        minutes;
 
     stateChanged = function() {
       console.log("status: " + user.get('status'));
@@ -47,6 +49,15 @@ Lab.inAvatar = Ki.State.extend({
     console.log("setting avatar " + name + " on user: " + user.get('firstName') + " " + user.get('lastName'));
     $.cookie("avatar",name);
     user.set('avatar', name);
+
+    // set a quickly-expiring cookie that shows that we have recently selected an avatar, so that
+    // when we return from the narrative we can go straight to the home page. This cookie expires so
+    // that if we later return to GV, we will still see the intro screen.
+    date = new Date();
+    minutes = 20;
+    date.setTime(date.getTime() + (minutes * 60 * 1000));
+    $.cookie("avatar_selected", "true", { expires: date });
+
     Geniverse.store.commitRecords();
 
   }
