@@ -141,3 +141,7 @@ a#changeGroup:visited {
 a#changeGroup:hover {
   color: #DCF1F6;
 }
+
+#topBar img.disabled {
+  opacity: 0.3;
+}
