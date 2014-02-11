@@ -152,12 +152,22 @@ Lab.TopBarView = SC.ToolbarView.extend(
     toolTip: "Instructions",
     target: 'Lab.infoController',
     action: 'showPane',
-    init: function() {
+    render: function() {
       sc_super();
+
+      classes = 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
       if (Geniverse.activityController.get('pageType') === "chromosomeBreedingPage") {
         this.set("toolTip", "When in doubt, read the Instructions.");
-        this.$().addClass('hint-available');
+        classes.push('hint-available');
+        classes.push('hint-max-width-300');
+      } else if (Geniverse.activityController.get('pageType') === null) {
+        classes.push('disabled');
+        classes.push('hint-max-width-110');
+        this.set('action', null);
+      } else {
+        classes.push('hint-max-width-110');
       }
+      this.set('classNames', classes);
       Lab.infoController.set('infoButton', this); // So pop-up pointer works
     },
     classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-110'.w()
