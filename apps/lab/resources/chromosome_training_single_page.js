@@ -83,7 +83,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           showFromLabels: NO,
           showSwitchSex: YES,
           toolTip: "Select a different allele for each gene.  Watch to see if the drake changes.",
-          classNames: "hint-available hint-target-leftMiddle hint-tooltip-rightMiddle"
+          classNames: "hint-available hint-target-topMiddle hint-tooltip-bottomLeft hint-max-width-280"
         }),
 
         chromoHintView: SC.View.design({
