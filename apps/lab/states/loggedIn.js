@@ -58,7 +58,6 @@ Lab.loggedIn = Ki.State.extend({
     },
 
     gotoRequestedPage: function() {
-      console.log("going to page");
       switch (this.startPage || 'home') {
         case 'home':
           this.gotoState('inHomePage');
@@ -89,8 +88,6 @@ Lab.loggedIn = Ki.State.extend({
   }),
 
   enterState: function() {
-    console.log("woo!");
-
     /** WARNING MESSAGE **/
 
     // reveal warning message

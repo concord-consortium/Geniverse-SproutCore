@@ -70,6 +70,12 @@ Geniverse.doWhen = function(context, object, callback, desiredStatus) {
       }
       else {
         object.addObserver('status', outer, checkStatus);
+        // I don't know why this is needed... If checkStatus was false when the observer
+        // first fired, the observer won't get called abain until a RunLoop ends...
+        setTimeout( function() {
+          SC.RunLoop.begin();
+          SC.RunLoop.end();
+        }, 100);
       }
     };
     checkStatus();
