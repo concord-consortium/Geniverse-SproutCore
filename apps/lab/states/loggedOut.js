@@ -23,9 +23,10 @@ Lab.loggedOut =  Ki.State.extend({
   },
 
   gotoLogin: function() {
-    Lab.routes.gotoLabRoute({pageName: 'loginPage', paneName: 'mainPane'});
-    if ($.cookie("avatar_selected")) {
+    if ($.cookie("avatar")) {
       Lab.loginController.autoLogin("User", "User", "user");
+    } else {
+      Lab.routes.gotoLabRoute({pageName: 'loginPage', paneName: 'mainPane'});
     }
   },
 
