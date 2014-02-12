@@ -107,6 +107,7 @@ Lab.loggedIn = Ki.State.extend({
   warningUserBeforeLeaving: Ki.State.plugin('Lab.warningUserBeforeLeaving'),
 
   logOut: function() {
+    $.removeCookie("avatar");
     SC.Request.postUrl(Lab.loginController.logoutUrl,null).header({'Accept': 'application/json'}).json()
       .notify(this, function(){
         Lab.statechart.gotoState('loggedOut');
