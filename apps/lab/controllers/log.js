@@ -2,10 +2,14 @@
 // Project:   Lab.logController
 // Copyright: ©2012 Concord Consortium
 // ==========================================================================
-/*global Lab SC console*/
+/*global Lab SC Geniverse*/
 
 Lab.logController = SC.Object.create(
 /** @scope Lab.avatarController.prototype */ {
+
+  init: function () {
+    this._attachDefaultListeners();
+  },
 
   _session: null,
 
@@ -83,6 +87,57 @@ Lab.logController = SC.Object.create(
       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     }
     return S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4();
+  },
+
+  /**
+    Since this is SproutCore, we can accomplish much of our logging
+    via change listeners on various controllers.
+  */
+  _attachDefaultListeners: function () {
+    Geniverse.activityController.addObserver('title', function() {
+      if (Geniverse.activityController.get('title')) {
+        Lab.logController.logEvent(Lab.EVENT.MOVED_TO,
+          Geniverse.activityController, "title".w());
+      }
+
+      if (Geniverse.activityController.get('myCase')) {
+        Lab.logController.logEvent(Lab.EVENT.STARTED_CHALLENGE,
+          Geniverse.activityController, "title route case:myCase.order challenge:myCaseOrder".w());
+      }
+    });
+
+    Geniverse.breedDragonController.addObserver('isBreeding', function() {
+      if (Geniverse.breedDragonController.get('isBreeding')) {
+        Lab.logController.logEvent(Lab.EVENT.BRED_DRAGONS,
+          Geniverse.breedDragonController, "mother:mother.alleles father:father.alleles".w());
+      }
+    });
+
+    Geniverse.chromosomeToolController.addObserver('dragon', function() {
+      if (Geniverse.chromosomeToolController.get('dragon') &&
+          Geniverse.chromosomeToolController.getPath("paneInstance") &&
+          !Geniverse.chromosomeToolController.getPath("paneInstance.isDestroyed")) {
+        Lab.logController.logEvent(Lab.EVENT.EXAMINED_GENOTYPE,
+          Geniverse.chromosomeToolController, "alleles:dragon.alleles sex:dragon.sex".w());
+      }
+    });
+
+    Geniverse.meiosisAnimationController.addObserver('mother', function() {
+      Lab.logController.logEvent(Lab.EVENT.SELECTED_PARENT,
+          Geniverse.meiosisAnimationController, 'alleles:mother.alleles sex:mother.sex'.w());
+    });
+    Geniverse.meiosisAnimationController.addObserver('father', function() {
+      Lab.logController.logEvent(Lab.EVENT.SELECTED_PARENT,
+          Geniverse.meiosisAnimationController, 'alleles:father.alleles sex:father.sex'.w());
+    });
+    Geniverse.meiosisAnimationController.addObserver('offspring', function() {
+      if (Geniverse.meiosisAnimationController.get('offspring')) {
+        Lab.logController.logEvent(Lab.EVENT.PRODUCED_OFFSPRING_BY_MEIOSIS,
+            Geniverse.meiosisAnimationController, 'alleles:offspring.alleles sex:offspring.sex'.w());
+      }
+    });
+
+
   }
 
 }) ;
