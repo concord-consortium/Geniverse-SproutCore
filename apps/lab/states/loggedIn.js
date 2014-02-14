@@ -103,7 +103,14 @@ Lab.loggedIn = Ki.State.extend({
     Lab.loginController.logout();
   },
 
+  enterState: function() {
+    Lab.logController.logEvent(Lab.EVENT.USER_LOGGED_IN, Geniverse.userController,
+      "username firstName lastName className".w());
+  },
+
   exitState: function() {
+    Lab.logController.logEvent(Lab.EVENT.USER_LOGGED_OUT);
+    Lab.logController.endSession();
     // clear fragment identifier from navigation bar
     SC.routes.set('location', '');
     if (history && history.pushState) {

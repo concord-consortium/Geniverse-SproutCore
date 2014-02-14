@@ -64,6 +64,9 @@ Lab.main = function main() {
     this.$().attr('alt', this.get('toolTip'));
     this.set('toolTip', null);
   }
+
+
+  Lab.logController.startNewSession();
 } ;
 
 function main() { Lab.main(); }
