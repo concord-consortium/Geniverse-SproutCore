@@ -10,7 +10,7 @@ Lab.logController = SC.Object.create(
   _session: null,
 
   startNewSession: function () {
-    var session = this.generateGUID();
+    var session = this._generateGUID();
     this.set('_session', session);
     this.logEvent(Lab.EVENT.STARTED_SESSION);
     return session;
@@ -25,21 +25,35 @@ Lab.logController = SC.Object.create(
     Logs an event with optional parameters.
 
     The parameters can EITHER be an object containing the params, or, as a conventience,
-    they can be an object controller and an array of property strings:
+    they can be an object controller and an array of property paths:
 
-      Lab.logController.logEvent(Lab.EVENT.CHANGED_ALLELE, {allele: 'horns', newValue: 'H'});
+      Lab.logController.logEvent(Lab.EVENT.CHANGED_ALLELE,
+        {allele: 'horns', newValue: 'H'});
 
-      Lab.logController.logEvent(Lab.EVENT.USER_LOGGED_IN, Geniverse.userController, "username firstName".w());
+      Lab.logController.logEvent(Lab.EVENT.USER_LOGGED_IN,
+        Geniverse.userController, "username firstName".w());
+
+    you can use a different name for the logged property key using 'key:property_path' like so
+
+      Lab.logController.logEvent(Lab.EVENT.EXAMINED_GENOTYPE,
+          Geniverse.chromosomeToolController, "alleles:dragon.alleles sex:dragon.sex".w());
   */
   logEvent: function (evt, params, paramNames) {
-    var controller, date, logData, param, session, i, ii;
+    var controller, date, logData, param, logKey, session, i, ii;
 
     if (paramNames) {
       controller = params;
       params = {};
       for (i = 0, ii = paramNames.length; i < ii; i++) {
         param = paramNames[i];
-        params[param] = controller.get(param);
+        logKey = param.split(":");
+        if (logKey.length > 1){
+          param   = logKey[1];
+          logKey  = logKey[0];
+        } else {
+          logKey = param;
+        }
+        params[logKey] = controller.getPath(param);
       }
     }
 
@@ -64,7 +78,7 @@ Lab.logController = SC.Object.create(
     SC.Logger.groupEnd();
   },
 
-  generateGUID: function () {
+  _generateGUID: function () {
     function S4() {
       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     }
