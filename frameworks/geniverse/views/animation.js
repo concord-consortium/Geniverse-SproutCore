@@ -74,6 +74,8 @@ Geniverse.AnimationView = SC.View.extend(
       SC.RunLoop.begin();
       this.set('gameteJson',null);
       SC.RunLoop.end();
+
+      Lab.logController.logEvent(Lab.EVENT.RESTARTED_MEIOSIS, {sex: 0});
     }
   }.observes('Geniverse.meiosisAnimationController.retryMother'),
 
@@ -83,6 +85,8 @@ Geniverse.AnimationView = SC.View.extend(
       SC.RunLoop.begin();
       this.set('gameteJson',null);
       SC.RunLoop.end();
+
+      Lab.logController.logEvent(Lab.EVENT.RESTARTED_MEIOSIS, {sex: 1});
     }
   }.observes('Geniverse.meiosisAnimationController.retryFather'),
 
@@ -155,6 +159,9 @@ Geniverse.AnimationView = SC.View.extend(
       var alleles = Geniverse.meiosisAnimationController.JSONToAlleles(Geniverse.meiosisAnimationController.get('motherGameteJson'), Geniverse.meiosisAnimationController.get('fatherGameteJson'));
       var sex = Geniverse.meiosisAnimationController.getOffspringSex();
       Geniverse.gwtController.generateDragonWithAlleles(alleles, sex, "Meiosis Child", callback);
+    } else {
+      var sex = this.get("meiosisOwner") == "mother" ? 1 : 0;
+      Lab.logController.logEvent(Lab.EVENT.COMPLETED_MEIOSIS, {sex: sex});
     }
     Lab.statechart.sendAction('meiosisAnimationCompleted', this.get('mode'));
   },
@@ -197,6 +204,22 @@ Geniverse.AnimationView = SC.View.extend(
     SC.RunLoop.begin();
     this.set('gameteJson', data);
     SC.RunLoop.end();
+
+    var sex = this.get("meiosisOwner") == "mother" ? 1 : 0,
+        alleles = this._chromosomeJsonToString(data);
+    Lab.logController.logEvent(Lab.EVENT.SELECTED_GAMETE, {alleles: alleles, sex: sex});
+  },
+
+  _chromosomeJsonToString: function(json) {
+    var str = "",
+        i, ii, alleles, j, jj;
+    for (i=0, ii=json.chromosomes.length; i < ii; i++) {
+      alleles = json.chromosomes[i].alleles;
+      for (j=0, jj=alleles.length; j < jj; j++) {
+        str += alleles[j].gene + ",";
+      }
+    }
+    return str.slice(0, -1);
   },
 
   hasAppended: NO,

@@ -332,15 +332,21 @@ Geniverse.OrganismView = SC.View.extend(
           var stableCount = Geniverse.stableOrganismsController.get('length');
           var stableSize = Geniverse.stableOrganismsController.get('maxSize');
           if (stableCount >= stableSize){
+            Lab.logController.logEvent(Lab.EVENT.KEPT_OFFSPRING_FAILED,
+              {alleles: dragon.get('alleles'), draggedToParentSlot: true});
             SC.AlertPane.error("Can't move dragon",
               "Your stable is full. If you want to save more dragons, sell some to the marketplace");
             return;
           }
           // move dragon from eggs controller to stable if our stable isn't full already
+          Lab.logController.logEvent(Lab.EVENT.KEPT_OFFSPRING,
+            {alleles: dragon.get('alleles'), draggedToParentSlot: true});
           dragon.set('isEgg',NO);
           var oldEggs = Geniverse.eggsController.get('content');
           Geniverse.eggsController.set('content', oldEggs.without(dragon));
         }
+        Lab.logController.logEvent(Lab.EVENT.SELECTED_PARENT,
+          {alleles: dragon.get('alleles'), sex: dragon.get('sex')});
         this.get('parentView').set(this.get('parent'), dragon);
         this.get('parentView').set('child', null);   //Geniverse.NO_DRAGON);
       SC.RunLoop.end();
