@@ -31,7 +31,6 @@ Geniverse.unlockablesController = SC.Object.create({
             stars = Geniverse.userController.getPageStars(item.get('trigger'));
           }
           if (stars > 0) {
-            console.warn("unlocking " + item.get('title'), item.get('status'));
             item.set('unlocked', YES);
             item.set('viewed', YES);
           }
@@ -103,7 +102,6 @@ Geniverse.unlockablesController = SC.Object.create({
         var pane = Geniverse.UnlockableNotificationView.create({
           message: n.get('title'),
           click: function() {
-            console.log("notification clicked");
             _this.removeCurrentNotification(true);
             _this.set('selectedUnlockable', n);
           }

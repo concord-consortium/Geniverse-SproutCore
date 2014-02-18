@@ -42,7 +42,6 @@ Lab.loginController = SC.ObjectController.create(
     if (this.triedPortal) {
       this.set('welcomeMessage','invalid login. try again.');
     }
-    console.log("Showing login");
     this.set('loginShowing', YES);
     this.set('checkShowing', NO);
   },
@@ -111,7 +110,6 @@ Lab.loginController = SC.ObjectController.create(
       var isTeacher = response.get('body').teacher;
       var avatar = response.get('body').avatar;
       var self = this;
-      SC.Logger.log(login);
       var userFound = function(user) {
         user.set('firstName',first);
         user.set('lastName',last);

@@ -35,10 +35,8 @@ Lab.loginPage = SC.Page.design({
     drakesTimer: null,
     didDisplay: function() {
       if (this.get('isVisibleInWindow')) {
-        console.log("displaying now");
         this.animate();
       } else {
-        console.log("not displaying anymore");
         if (this.get('drakesTimer')) {
           clearTimeout(this.get('drakesTimer'));
           this.set('drakesTimer', null);

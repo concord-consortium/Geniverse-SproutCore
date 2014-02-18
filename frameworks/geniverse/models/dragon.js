@@ -96,7 +96,6 @@ Geniverse.Dragon = SC.Record.extend(
       this.removeObserver('status', this);
       var self = this;
       Geniverse.gwtController.generateGOrganismWithAlleles(this.get('alleles'), this.get('sex'), function(gOrg) {
-        console.log("setting gOrganism");
         self.set('gOrganism', gOrg);
       });
     }
