@@ -158,8 +158,9 @@ Geniverse.Dragon = SC.Record.extend(
   }.property('sexAsString','characteristicsAsString').cacheable(),
 
   characteristicValue: function(name) {
-    if (name !== null && typeof name != 'undefined') {
-      return this.get('characteristicMap')[name.toLowerCase()];
+    var map = this.get('characteristicMap');
+    if (map && name !== null && typeof name != 'undefined') {
+      return map[name.toLowerCase()];
     }
     return "";
   }
