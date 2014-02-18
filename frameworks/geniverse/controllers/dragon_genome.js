@@ -71,6 +71,10 @@ Geniverse.dragonGenomeController = SC.Object.create({
     if (outStr === this.dragonAllelesMap[index]) {
       return;       // don't create new dragon if alleles are the same
     }
+
+    Lab.logController.logEvent(Lab.EVENT.CHANGED_ALLELE,
+      {drakeId: index, oldAlleles: this.dragonAllelesMap[index], newAlleles: outStr});
+
     this.dragonAllelesMap[index] = outStr;
 
     var self = this;
