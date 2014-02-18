@@ -91,6 +91,10 @@ Geniverse.invisibleGenomeController = SC.ObjectController.create(
         allCorrect = false;
       }
     }
+
+    Lab.logController.logEvent(Lab.EVENT.DRAKE_SUBMITTED,
+      {correctGenotypes: this.allFields, correct: allCorrect});
+
     return allCorrect;
   }
 

@@ -15,6 +15,8 @@ Lab.EVENT = {
   , COMPLETED_CHALLENGE   : "Completed challenge"
   , REPEAT_CHALLENGE      : "Repeat challenge"
   , STARS_EARNED          : "Stars earned"
+  , DRAKE_SUBMITTED       : "Drake submitted"
+  , DRAKES_REVEALED       : "Drakes revealed"
 
     // Breeding events
   , SELECTED_PARENT       : "Selected parent"
@@ -22,7 +24,6 @@ Lab.EVENT = {
   , BRED_DRAGONS          : "Bred dragons"
   , KEPT_OFFSPRING        : "Kept offspring"
   , KEPT_OFFSPRING_FAILED : "Failed to keep offspring"
-  , SUBMITTED_OFFSPRING   : "Submitted offspring"
 
   // Meiosis events
   , COMPLETED_MEIOSIS     : "Completed meiosis"
