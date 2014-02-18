@@ -123,12 +123,16 @@ Lab.logController = SC.Object.create(
     });
 
     Geniverse.meiosisAnimationController.addObserver('mother', function() {
-      Lab.logController.logEvent(Lab.EVENT.SELECTED_PARENT,
-          Geniverse.meiosisAnimationController, 'alleles:mother.alleles sex:mother.sex'.w());
+      if (Geniverse.meiosisAnimationController.get('mother')) {
+        Lab.logController.logEvent(Lab.EVENT.SELECTED_PARENT,
+            Geniverse.meiosisAnimationController, 'alleles:mother.alleles sex:mother.sex'.w());
+      }
     });
     Geniverse.meiosisAnimationController.addObserver('father', function() {
-      Lab.logController.logEvent(Lab.EVENT.SELECTED_PARENT,
-          Geniverse.meiosisAnimationController, 'alleles:father.alleles sex:father.sex'.w());
+      if (Geniverse.meiosisAnimationController.get('father')) {
+        Lab.logController.logEvent(Lab.EVENT.SELECTED_PARENT,
+            Geniverse.meiosisAnimationController, 'alleles:father.alleles sex:father.sex'.w());
+      }
     });
     Geniverse.meiosisAnimationController.addObserver('offspring', function() {
       if (Geniverse.meiosisAnimationController.get('offspring')) {
