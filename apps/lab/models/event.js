@@ -13,6 +13,7 @@ Lab.EVENT = {
     // Challenge events
   , STARTED_CHALLENGE     : "Started challenge"
   , COMPLETED_CHALLENGE   : "Completed challenge"
+  , REPEAT_CHALLENGE      : "Repeat challenge"
   , STARS_EARNED          : "Stars earned"
 
     // Breeding events
