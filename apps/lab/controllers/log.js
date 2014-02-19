@@ -2,7 +2,9 @@
 // Project:   Lab.logController
 // Copyright: ©2012 Concord Consortium
 // ==========================================================================
-/*global Lab SC Geniverse*/
+/*global Lab SC Geniverse SyncTime $ console setInterval sc_require*/
+
+sc_require('lib/sync_time');
 
 Lab.logController = SC.Object.create(
 /** @scope Lab.avatarController.prototype */ {
@@ -13,10 +15,17 @@ Lab.logController = SC.Object.create(
 
   _session: null,
 
+  learnerDataUrl: null,
+
+  syncTime: new SyncTime('/portal/time'),
+  eventQueue: [],
+  eventQueueInProgress: [],
+
   startNewSession: function () {
     var session = this._generateGUID();
     this.set('_session', session);
     this.logEvent(Lab.EVENT.STARTED_SESSION);
+    this._startEventQueuePolling();
     return session;
   },
 
@@ -43,7 +52,7 @@ Lab.logController = SC.Object.create(
           Geniverse.chromosomeToolController, "alleles:dragon.alleles sex:dragon.sex".w());
   */
   logEvent: function (evt, params, paramNames) {
-    var controller, date, logData, param, logKey, session, i, ii;
+    var controller, date, eventData, param, logKey, session, i, ii;
 
     if (paramNames) {
       controller = params;
@@ -66,20 +75,75 @@ Lab.logController = SC.Object.create(
       session = this.startNewSession();
     }
 
-    date = new Date();
-    logData = {
+    var sync = this.get('syncTime');
+    date = sync ? sync.now() : new Date();
+    var drift = sync ? sync.drift : null;
+    eventData = {
       session     : session,
       time        : date.getTime(),
       prettyTime  : date.toString(),
+      timeDrift   : drift,
       event       : evt,
       parameters  : params
     };
 
     // for now
     SC.Logger.group("Log Event");
-    SC.Logger.info("Event: "+logData.event);
-    SC.Logger.info(logData.parameters);
+    SC.Logger.info("Event: "+eventData.event);
+    SC.Logger.info(eventData.parameters);
     SC.Logger.groupEnd();
+
+    this._persistEvent(eventData);
+  },
+
+  _persistEvent: function(evt) {
+    var self = this,
+        url  = this.get('learnerLogUrl');
+    if (url) {
+      $.post({
+        url: url,
+        data: JSON.stringify(evt),
+        success: function() {
+          console.log('log event saved');
+        },
+        error: function() {
+          console.log('log event save failed!');
+          self.eventQueue.push(evt);
+        }
+      });
+    } else {
+      console.log('log event generated (no saving)', evt);
+      return this.eventQueue.push(evt);
+    }
+  },
+
+  _learnerLogUrlChanged: function() {
+    var url = Geniverse.userController.get('learnerDataUrl');
+    if (url) {
+      this.set('learnerDataUrl', url);
+    }
+    this._processEventQueue();
+  }.observes('Geniverse.userController.content', 'Geniverse.userController.learnerDataUrl'),
+
+  _startEventQueuePolling: function() {
+    var self = this;
+    setInterval(function() {
+      if (self.eventQueueInProgress.length === 0) {
+        self._processEventQueue();
+      }
+    }, 10000);
+  },
+
+  _processEventQueue: function() {
+    var evt;
+    if (this.get('learnerDataUrl') && this.eventQueue.length > 0) {
+      this.eventQueueInProgress = this.eventQueue.slice(0);
+      this.eventQueue = [];
+      while (this.eventQueueInProgress.length > 0) {
+        evt = this.eventQueueInProgress.shift();
+        this.persistEvent(evt);
+      }
+    }
   },
 
   _generateGUID: function () {
