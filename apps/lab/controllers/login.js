@@ -126,7 +126,7 @@ Lab.loginController = SC.ObjectController.create(
           user.set('allClassNames', classWords);
 
           // Set learner id. We don't save this to backend as it might change (?)
-          var classes = response.get('body').classes;
+          var classes = response.get('body').classes || [];
           for (var i=0, ii=classes.length; i<ii; i++) {
             if (classes[i].word == classWord) {
               var lid = classes[i].learner;
