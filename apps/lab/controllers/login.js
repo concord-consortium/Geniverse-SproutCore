@@ -121,8 +121,21 @@ Lab.loginController = SC.ObjectController.create(
             classWords[i] = classWords[i].replace(/[^a-zA-Z0-9_\-]+/g, '');
           }
           // if a user has more than one class word, use the last one on the list
-          user.set('className', classWords[classWords.length-1]);
+          var classWord = classWords[classWords.length-1];
+          user.set('className', classWord);
           user.set('allClassNames', classWords);
+
+          // Set learner id. We don't save this to backend as it might change (?)
+          var classes = response.get('body').classes;
+          for (var i=0, ii=classes.length; i<ii; i++) {
+            if (classes[i].word == classWord) {
+              var lid = classes[i].learner;
+              if (lid) {
+                user.set('learnerId', lid);
+                user.set('learnerDataUrl', '/portal/dataservice/bucket_loggers/learner/' + lid + '/bucket_contents.bundle');
+              }
+            }
+          }
         } else {
           user.set('className', "no_class");
         }
