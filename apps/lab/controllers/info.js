@@ -60,6 +60,7 @@ Lab.infoController = SC.ObjectController.create(
         Geniverse.activityController.get('iframeLayerToAppend').appendChild(this.get('iframe'));
       }
       this.updateView(this.get('content'));
+      Lab.logController.logEvent(Lab.EVENT.OPENED_INFO);
     }
   },
 
@@ -75,6 +76,7 @@ Lab.infoController = SC.ObjectController.create(
         this.get('iframe').parentView.removeChild(this.get('iframe'));
       }
       this.get('pane').remove();
+      Lab.logController.logEvent(Lab.EVENT.CLOSED_INFO);
     }
     if (onClose = this.get("onClose")) {
       onClose();

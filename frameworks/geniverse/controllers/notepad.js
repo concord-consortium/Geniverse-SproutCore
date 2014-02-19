@@ -47,6 +47,8 @@ Geniverse.notepadController = SC.ObjectController.create(
         _pane.append();
         this.updateView(this.get('content'));
         this.set('isEnabledButton', NO);
+
+        Lab.logController.logEvent(Lab.EVENT.OPENED_NOTEPAD);
       }
 
       // this should be refactored into a Geniverse statechart at some point
@@ -102,6 +104,7 @@ Geniverse.notepadController = SC.ObjectController.create(
     this.set('isEnabledButton', YES);
 
     Lab.statechart.sendAction('dontWarnUserBeforeLeaving');
+    Lab.logController.logEvent(Lab.EVENT.CLOSED_NOTEPAD);
   },
 
   commitAndRemoveView: function (){
@@ -126,6 +129,7 @@ Geniverse.notepadController = SC.ObjectController.create(
     this.set('isEnabledButton', YES);
 
     Lab.statechart.sendAction('dontWarnUserBeforeLeaving');
+    Lab.logController.logEvent(Lab.EVENT.SAVED_NOTEPAD);
   },
 
   updateView: function (newValue) {
