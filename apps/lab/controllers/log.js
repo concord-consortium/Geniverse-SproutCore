@@ -122,12 +122,8 @@ Lab.logController = SC.Object.create(
   },
 
   _learnerLogUrlChanged: function() {
-    var url = Geniverse.userController.get('learnerDataUrl');
-    if (url) {
-      this.set('learnerDataUrl', url);
-    }
     this._processEventQueue();
-  }.observes('Geniverse.userController.content', 'Geniverse.userController.learnerDataUrl'),
+  }.observes('learnerDataUrl'),
 
   _startEventQueuePolling: function() {
     var self = this;
