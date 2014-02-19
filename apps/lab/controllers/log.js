@@ -145,7 +145,7 @@ Lab.logController = SC.Object.create(
       this.eventQueue = [];
       while (this.eventQueueInProgress.length > 0) {
         evt = this.eventQueueInProgress.shift();
-        this.persistEvent(evt);
+        this._persistEvent(evt);
       }
     }
   },
