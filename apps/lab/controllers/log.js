@@ -105,6 +105,10 @@ Lab.logController = SC.Object.create(
         data: JSON.stringify(evt),
         success: function() {
           console.log('log event saved');
+          // only unset url when we have successfully logged final event of the session
+          if (evt.event == Lab.EVENT.ENDED_SESSION) {
+            self.set('learnerDataUrl', null);
+          }
         },
         error: function() {
           console.log('log event save failed!');
