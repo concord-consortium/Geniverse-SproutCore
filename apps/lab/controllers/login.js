@@ -131,7 +131,7 @@ Lab.loginController = SC.ObjectController.create(
             if (classes[i].word == classWord) {
               var lid = classes[i].learner;
               if (lid) {
-                Lab.logController.set('learnerDataUrl', '/portal/dataservice/bucket_loggers/learner/' + lid + '/bucket_contents.bundle');
+                Lab.logController.set('learnerDataUrl', '/portal/dataservice/bucket_loggers/learner/' + lid + '/bucket_log_items.bundle');
               }
             }
           }
