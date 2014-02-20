@@ -109,8 +109,6 @@ Geniverse.Dragon = SC.Record.extend(
     if (this.get('gOrganismDefined')) {
       // this.set('name', gOrg.name);  // GWT doesn't create meaningful names, so no sense in overriding an existing name
       this.set('sex', gOrg.sex);
-      this.set('alleles', gOrg.genetics.genotype.getAlleleString());
-      this.set('imageURL', Geniverse.resourceURL(imageUrlStart + gOrg.getImageName()));
 
       characteristicMap = gOrg.phenotype.characteristics;
       characteristicsArray = [];
@@ -122,6 +120,8 @@ Geniverse.Dragon = SC.Record.extend(
 
       this.set('characteristics', characteristicsArray);
       this.set('characteristicMap', characteristicMap);
+      this.set('alleles', gOrg.genetics.genotype.getAlleleString());
+      this.set('imageURL', Geniverse.resourceURL(imageUrlStart + gOrg.getImageName()));
     }
   }.observes('gOrganism'),
 
