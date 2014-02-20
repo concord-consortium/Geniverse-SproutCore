@@ -104,6 +104,7 @@ Lab.logController = SC.Object.create(
         type: 'POST',
         url: url,
         data: JSON.stringify(evt),
+        dataType: 'text',
         success: function() {
           console.log('log event saved');
           // only unset url when we have successfully logged final event of the session
