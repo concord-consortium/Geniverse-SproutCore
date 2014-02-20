@@ -98,9 +98,10 @@ Lab.logController = SC.Object.create(
 
   _persistEvent: function(evt) {
     var self = this,
-        url  = this.get('learnerLogUrl');
+        url  = this.get('learnerDataUrl');
     if (url) {
-      $.post({
+      $.ajax({
+        type: 'POST',
         url: url,
         data: JSON.stringify(evt),
         success: function() {
@@ -121,7 +122,7 @@ Lab.logController = SC.Object.create(
     }
   },
 
-  _learnerLogUrlChanged: function() {
+  _learnerDataUrlChanged: function() {
     this._processEventQueue();
   }.observes('learnerDataUrl'),
 
