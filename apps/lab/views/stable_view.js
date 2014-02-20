@@ -120,6 +120,8 @@ Lab.StableView = SC.View.extend(
             if (count >= stableSize){
               SC.AlertPane.error("Can't move dragon",
                 "Your stable is full. If you want to save more dragons, sell some to the marketplace");
+              Lab.logController.logEvent(Lab.EVENT.KEPT_OFFSPRING_FAILED,
+                {alleles: dragon.get('alleles'), draggedToParentSlot: false});
               return;
             }
             if (count === 0) {
@@ -135,6 +137,8 @@ Lab.StableView = SC.View.extend(
               }
               self.set('dragonNum', dragonNum);
             }
+            Lab.logController.logEvent(Lab.EVENT.KEPT_OFFSPRING,
+              {alleles: dragon.get('alleles'), draggedToParentSlot: false});
 
             dragon.set('isEgg', false);
             dragon.set('stableOrder', dragonNum);
