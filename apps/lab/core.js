@@ -4,9 +4,14 @@
 // ==========================================================================
 /*globals Lab SC */
 
-/** @namespace
 
-  My cool new app.  Describe your application.
+/** Hack to fix https://github.com/sproutcore/sproutcore/issues/1097 */
+
+if (SC.browser && SC.browser.isWindows) {
+  SC.platform.touch = NO;
+}
+
+/** @namespace
 
   @extends SC.Page
 */

@@ -67,7 +67,11 @@ Geniverse.matchController = SC.ArrayController.create(
 
   nextDragon: function() {
     SC.RunLoop.begin();
-    this.set('currentDragonIdx', (this.get('currentDragonIdx') + 1) % this.get('arrangedObjects').length());
+    var nextIdx = (this.get('currentDragonIdx') + 1) % this.get('arrangedObjects').length();
+    if (isNaN(nextIdx)) { // if this.get('arrangedObjects').length() == 0
+      nextIdx = -1;
+    }
+    this.set('currentDragonIdx', nextIdx);
     SC.RunLoop.end();
   },
 

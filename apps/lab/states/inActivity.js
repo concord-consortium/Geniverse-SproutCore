@@ -216,9 +216,140 @@ Lab.inActivity = Ki.State.extend({
     this.gotoState('inEndingHub');
   },
 
+  QTipStyle: {
+    width: {
+      max: 350
+    },
+    padding: '14px',
+    border: {
+      width: 0,
+      radius: 2,
+      color: '#FFFFFF'
+    },
+    color: '#FFFFFF'
+  },
+
+  // Shows a tooltip on a jquery element, with a given text and options.
+  // The options hash can specify a target (topLeft, leftMiddle, etc), a tooltip
+  // (same values but for the tail of the tooltip), a maxWidth and a hideAction.
+  // For convenience, if the $elem has title text then the tooltip will use that,
+  // and if it has the classes 'hint-target-*' or 'hint-tooltip-*' it will pass
+  // the * values as the appropriate options.
+  showTooltip: function($elem, text, options) {
+    if (!Geniverse.activityController.getPath('content.showTooltips')) return;
+
+    if (!$elem.attr("alt")) {
+      $elem.attr("alt", $elem.attr("title"));
+    }
+
+    var backdrop, config, style, classes, elemClass, i,
+        opts      = options || {};
+        target    = opts.target     || "leftMiddle",
+        tooltip   = opts.tooltip    || "rightMiddle",
+        maxWidth  = opts.maxWidth   || 280,
+        text      = text || $elem.attr("alt"),
+        dark      = false;
+
+    if (!text) {
+      return;
+    }
+
+    classes = $elem.attr('class').split(/\s+/);
+    for (i = 0; i < classes.length; i++) {
+      elemClass = classes[i];
+      if (/hint-target-(.*)/.exec(elemClass)) {
+        target = /hint-target-(.*)/.exec(elemClass)[1];
+      } else if (/hint-tooltip-(.*)/.exec(elemClass)) {
+        tooltip = /hint-tooltip-(.*)/.exec(elemClass)[1];
+      } else if (/hint-dark/.exec(elemClass)) {
+        dark = true;
+      }
+    }
+
+    style = SC.clone(this.QTipStyle, true);
+    if (dark) {
+      style.border.color = "#777";
+    }
+    style.tip = tooltip;
+    style.width = {
+      max: maxWidth
+    };
+    config = {
+      content: {
+        title: {
+          text: ''
+        },
+        text: text
+      },
+      position: {
+        corner: {
+          target: target,
+          tooltip: tooltip
+        }
+      },
+      show: {
+        ready: true,
+        solo: false,
+        effect: { type: 'fade', length: 800 }
+      },
+      hide: {
+        effect: { type: 'fade' }
+      },
+      style: style,
+      api: {
+        onRender: function() {
+          this.elements.tooltip.click(this.hide);
+        }
+      }
+    };
+    if (opts.hideAction != null) {
+      config.api.onHide = opts.hideAction;
+    }
+
+    $elem.attr('title', '');  // rm title attribute so we don't see it as well
+
+    return $elem.qtip(config);
+  },
+
+  showAllTooltips: function(elemClass) {
+    // Rm any created tooltips
+    $(".qtip").remove();
+
+    var selection = $("."+elemClass),
+        self = this;
+    selection.each(function(){
+      self.showTooltip($(this));
+    });
+  },
+
+  // show secondary hints, if there are any
+  meiosisAnimationCompleted: function(mode) {
+    if (mode !== "offspring") {
+      Lab.statechart.sendAction('showAllTooltips', 'meiosis-completion-hint');
+    }
+  },
+
+  fertilizationReady: function() {
+    Lab.statechart.sendAction('showAllTooltips', 'fertilization-ready-hint');
+  },
+
+  meiosisOffspringReady: function() {
+    Lab.statechart.sendAction('showAllTooltips', 'meiosis-offspring-ready-hint');
+  },
+
+  breedingPageMatchBreedingCompleted: function() {
+    Lab.statechart.sendAction('showAllTooltips', 'breeding-completed-hint');
+  },
+
+  stabledFirstDrake: function() {
+    Lab.statechart.sendAction('showAllTooltips', 'first-stable-hint');
+  },
 
   exitState: function() {
     // Make sure any observers we might have added during in state are removed.
+
+    // Rm any created tooltips
+    $(".qtip").remove();
 
     // TODO implement methods to remember which observers we have added to which objects, and to remove them later.
     // (called perhaps this.pushObserver, this.cancelObserver, and this.cancelAllObservers)

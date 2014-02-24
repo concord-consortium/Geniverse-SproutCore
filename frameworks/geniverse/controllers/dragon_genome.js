@@ -164,6 +164,12 @@ Geniverse.dragonGenomeController = SC.Object.create({
     }
       this.set(this.dragonIndexMap[index], dragon);
       Lab.statechart.sendAction("chromosomeDragonChanged");
+  },
+
+  reset: function() {
+    this.set('firstDragon', null);
+    this.set('secondDragon', null);
+    this.set('thirdDragon', null);
   }
 
   // generateDragonWhenGWTReady: function() {

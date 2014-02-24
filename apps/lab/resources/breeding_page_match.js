@@ -24,7 +24,7 @@ Lab.breedingPageMatch = SC.Page.design({
 
       layout: { centerX: 0, top: 100, width: 840, height: 600 },
 
-      childViews: 'breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView matchView scoreView'.w(),
+      childViews: 'breedView mothersPoolView fathersPoolView challengeChromosomeToolView breedingPenView stableView marketplaceView matchView scoreView glowHintView stableHintView'.w(),
 
       // challenge pool to hold initial, system-created dragons
       mothersPoolView: Lab.ChallengePoolView.design({
@@ -38,7 +38,9 @@ Lab.breedingPageMatch = SC.Page.design({
       }),
 
       challengeChromosomeToolView: Geniverse.ChromosomeToolView.design({
-        layout: { centerX: -51, top: 130, width: 35, height: 30 }
+        layout: { centerX: -51, top: 130, width: 35, height: 30 },
+        toolTip: "Click a dragon and then scope it with this button.  Does it have the right alleles to match the targets?",
+        classNames: 'hint-available breeding-completed-hint'
       }),
 
       matchView: Geniverse.MatchView.design({
@@ -83,6 +85,7 @@ Lab.breedingPageMatch = SC.Page.design({
           target: 'Geniverse.breedDragonController',
           trackScore: NO,
           action: function() {
+            Lab.statechart.sendAction('breedingPageMatchBreedingCompleted');
             return this.get('trackScore') ? "breedAndIncrementScore" : "breed";
           }.property('trackScore'),
           isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
@@ -149,7 +152,9 @@ Lab.breedingPageMatch = SC.Page.design({
         },
         dragExited: function(drag, evt) {
           this.$().removeClass('drop-target') ;
-        }
+        },
+        toolTip: "If your stable is full, drag drakes here to remove them!",
+        classNames: "first-stable-hint hint-target-topMiddle hint-tooltip-bottomMiddle".w()
       }),
 
       scoreView: Geniverse.ScoreView.design({
@@ -157,7 +162,21 @@ Lab.breedingPageMatch = SC.Page.design({
         showScore: YES,
         isVisibleBinding: SC.Binding.oneWay('Geniverse.activityController.isArgumentationChallenge').not(),
         showTargetScore: YES
+      }),
+
+      // special views for extact-positioning of hints
+      glowHintView: SC.View.design({
+        layout: { top: 200, centerX: 220, width:15, height: 173 },
+        toolTip: "Drag parents to the yellow spots.",
+        classNames: "hint-available hint-target-leftMiddle hint-tooltip-rightTop".w()
+      }),
+
+      stableHintView: SC.View.design({
+        layout: { top: 500, centerX: -260, width:20, height: 100 },
+        toolTip: "To save an offspring drake to use as a parent later, drag it here. If you can’t match the target, change the parents and try again!",
+        classNames: "breeding-completed-hint hint-target-leftMiddle hint-tooltip-rightMiddle".w()
       })
+
     })
   })
 

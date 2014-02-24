@@ -171,10 +171,10 @@
               title: "Challenge 2: Receeding Armor",
               href: "#case13/challenge2"
             }, {
-              title: "Challenge 3: Disarming, Dislegging",
+              title: "Challenge 3: Disarming... and Dislegging",
               href: "#case13/challenge3"
             }, {
-              title: "Challenge 2: Going, Going...",
+              title: "Challenge 4: Going, Going...",
               href: "#case13/challenge4"
             }
           ]
@@ -232,7 +232,8 @@
           challenges: [
             {
               title: "Challenge 1: Bog Breath",
-              href: "#bgbrth/challenge1"
+              href: "#bgbrth/challenge1",
+              useQuill: true
             }
           ]
         }

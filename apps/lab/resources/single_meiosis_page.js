@@ -25,7 +25,7 @@ Lab.singleMeiosisPage = SC.Page.design({
 
       genomePanel: SC.View.design({
         layout: {centerX: -30, top: 100, width: 680, height: 630 },
-        childViews: 'challengePoolView parentTitle drakeParentView meiosisView nextButton'.w(),
+        childViews: 'challengePoolView parentTitle drakeParentView meiosisView nextButton glowHint playHint gametesHint retryHint'.w(),
 
       // using horizontal Challenge Pool at top with 120-px drakes inside
       // this will necessitate moving everything down ~130px
@@ -47,7 +47,7 @@ Lab.singleMeiosisPage = SC.Page.design({
           contentBinding: 'Geniverse.meiosisAnimationController.mother',
           isDropTarget: YES,
           glow: YES
-          }),
+        }),
 
         meiosisView: Geniverse.AnimationView.design({
           layout: {top: 271, centerX: 0, height: 360, width: 325 },
@@ -68,6 +68,31 @@ Lab.singleMeiosisPage = SC.Page.design({
           toolTip: 'Click when ready for the challenge.',
           target: 'Lab.statechart',
           action: 'gotoNextActivity'
+        }),
+
+        // special views for extact-positioning of hints
+        glowHint: SC.View.design({
+          layout: { top: 157, centerX: 0, height: 100, width: 100 },
+          toolTip: "Drag a drake from the parent pool above to this yellow spot.",
+          classNames: "hint-available".w()
+        }),
+
+        playHint: SC.View.design({
+          layout: { top: 593, left: 177, height: 10, width: 10 },
+          toolTip: "Click Play to create four eggs or sperm through the process of meiosis.",
+          classNames: "hint-available hint-target-leftMiddle hint-tooltip-rightBottom".w()
+        }),
+
+        gametesHint: SC.View.design({
+          layout: { top: 325, left: 505, height: 10, width: 10 },
+          toolTip: "Each egg or sperm contains three chromosomes. Hover over chromosome to see the alleles.",
+          classNames: "meiosis-completion-hint hint-tooltip-leftMiddle".w()
+        }),
+
+        retryHint: SC.View.design({
+          layout: { top: 593, left: 177, height: 10, width: 10 },
+          toolTip: "Meiosis assorts the chromosomes randomly. Click Retry to try your luck again!",
+          classNames: "meiosis-completion-hint hint-target-leftMiddle hint-tooltip-rightBottom".w()
         })
       })
     })

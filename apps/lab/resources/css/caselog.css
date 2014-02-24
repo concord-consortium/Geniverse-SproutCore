@@ -126,11 +126,11 @@
       background: static_url('caselog-three-star.png') no-repeat left top;
       }
     #caselog-book .case li.quill-on {
-      background: static_url('quill-on.png') no-repeat left center;
+      background: static_url('quill-on-gold.png') no-repeat left center;
       padding-bottom: 10px;
       }
     #caselog-book .case li.quill-off {
-      background: static_url('quill-off.png') no-repeat left center;
+      background: static_url('quill-on.png') no-repeat left center;
       padding-bottom: 10px;
       }
   #caselog-book .case a {

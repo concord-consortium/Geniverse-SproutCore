@@ -79,6 +79,11 @@ Lab.loggedIn = Ki.State.extend({
           throw new Error(
             "Lab.statechart.loggedIn.atLocation.startPage was set to an unexpected value, '%@'".fmt(this.startPage));
       }
+    },
+
+    exitState: function() {
+      // clear start page
+      this.startPage = null;
     }
 
   }),
@@ -99,6 +104,14 @@ Lab.loggedIn = Ki.State.extend({
   },
 
   exitState: function() {
+    // clear fragment identifier from navigation bar
+    SC.routes.set('location', '');
+    if (history && history.pushState) {
+      history.pushState('', document.title, window.location.pathname);
+    } else {
+      // this notifies app of statechange so is not as good...
+      window.location.hash = '';
+    }
   }
 
 });
