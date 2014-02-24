@@ -54,6 +54,11 @@ Lab.logController = SC.Object.create(
   logEvent: function (evt, params, paramNames) {
     var controller, date, eventData, param, logKey, session, i, ii;
 
+    // in the demo site, just return. Leaving the rest of the method and class here to allow easy mergin
+    // with master in the future.
+
+    return;
+
     if (paramNames) {
       controller = params;
       params = {};
