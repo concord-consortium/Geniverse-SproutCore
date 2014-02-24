@@ -108,8 +108,6 @@ Lab.routes = SC.Object.create({
         page     = pageOwner[pageName],
         pane     = page.get(paneName);
 
-    console.log("BEGIN Lab.routes.gotoRoute(pageOwner, routeParams)");
-
     // If there is a current pane, remove it from the screen.
     if (this._currentPagePane !== null) {
       this._currentPagePane.remove();
@@ -126,16 +124,6 @@ Lab.routes = SC.Object.create({
     this._currentPagePane = pane;
 
     $(".qtip").remove();
-
-    // Don't bother with SC.logger.log(). console.log() logs an inspectable object instead of forcibly converting
-    // all its arguments to strings.
-    // console.log("  pageOwner: %s", pageOwner && pageOwner.toString(), pageOwner);
-    // console.log("  routeParams: %s", routeParams && routeParams.toString(), routeParams);
-    // console.log("  pageName: %s", pageName);
-    // console.log("  paneName: %s", paneName);
-    // console.log("  page: %s", page && page.toString(), page);
-    // console.log("  pane: %s", pane && pane.toString(), pane);
-    console.log("END Lab.routes.gotoRoute()");
   }
 
 });

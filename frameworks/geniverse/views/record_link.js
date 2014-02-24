@@ -47,7 +47,6 @@ Geniverse.RecordLinkView = SC.LabelView.extend(
   getStatisticsPart: function() {
     var link = "";
     if (!!this.get('tabView') && this.getPath('tabView.nowShowing') instanceof Geniverse.StatsView) {
-      console.log("Tabview now showing: ", this.getPath('tabView.nowShowing'));
       trait = this.getPath('tabView.nowShowing.traitPulldown.value');
       link += "?stats[trait]="+encodeURIComponent(trait);
 

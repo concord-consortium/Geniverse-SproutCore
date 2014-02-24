@@ -40,7 +40,6 @@ Lab.backdoorController = SC.Object.create(
   executeBackdoor: function() {
     switch(this.get('code')) {
       case "vroom":
-        console.log("unlocking accelerated mode");
         Geniverse.userController.setAccelerated(true);
         Geniverse.unlockablesController.unlockAllLocked();
         break;

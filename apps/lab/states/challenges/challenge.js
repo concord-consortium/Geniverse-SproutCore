@@ -55,6 +55,8 @@ Lab.challenge = Ki.State.extend({
     Geniverse.store.commitRecords();
 
     this.starsEarned = stars;
+
+    Lab.logController.logEvent(Lab.EVENT.COMPLETED_CHALLENGE, {route: pageId, starsAwarded: stars});
   },
 
   checkAnswerIfDrakesReady: function() {

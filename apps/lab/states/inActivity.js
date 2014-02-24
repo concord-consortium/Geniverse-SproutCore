@@ -198,6 +198,8 @@ Lab.inActivity = Ki.State.extend({
   },
 
   repeatChallenge: function() {
+    Lab.logController.logEvent(Lab.EVENT.REPEAT_CHALLENGE,
+      Geniverse.activityController, "title route case:myCase.order challenge:myCaseOrder".w());
    this.gotoActivity();
   },
 

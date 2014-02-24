@@ -24,6 +24,8 @@ Lab.defaultChallenge = Ki.State.extend({
     Geniverse.userController.setPageStars(pageId, 3);
     Geniverse.store.commitRecords();
 
+    Lab.logController.logEvent(Lab.EVENT.COMPLETED_CHALLENGE, {route: pageId, starsAwarded: 3});
+
     // unlock any unlockables
     Geniverse.unlockablesController.unlockFor(pageId);
 
