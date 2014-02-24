@@ -347,8 +347,17 @@ Geniverse.OrganismView = SC.View.extend(
         }
         Lab.logController.logEvent(Lab.EVENT.SELECTED_PARENT,
           {alleles: dragon.get('alleles'), sex: dragon.get('sex')});
-        this.get('parentView').set(this.get('parent'), dragon);
+        this.get('parentView').set(parentType, dragon);
         this.get('parentView').set('child', null);   //Geniverse.NO_DRAGON);
+
+        setSelection = function() {
+          selection = SC.SelectionSet.create();
+          selection.addObject(dragon);
+          Geniverse.allSelectedDragonsController.set('selection', selection);
+        }
+        this.invokeLast(setSelection)
+        setTimeout(setSelection, 1);      // do this as well, or parent-slot won't select...
+
       SC.RunLoop.end();
     } else {
       SC.RunLoop.begin();
