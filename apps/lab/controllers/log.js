@@ -172,8 +172,15 @@ Lab.logController = SC.Object.create(
       }
 
       if (Geniverse.activityController.get('myCase')) {
+        var cazePath = /[^\/]*$/.exec(Geniverse.activityController.getPath('myCase.id')),
+            caze = cazePath.length ? parseInt(cazePath[0]) : null;
         Lab.logController.logEvent(Lab.EVENT.STARTED_CHALLENGE,
-          Geniverse.activityController, "title route case:myCase.order challenge:myCaseOrder".w());
+            {
+              title: Geniverse.activityController.get('title'),
+              route: Geniverse.activityController.get('route'),
+              "case": caze,
+              challenge: Geniverse.activityController.get('myCaseOrder')
+            });
       }
     });
 

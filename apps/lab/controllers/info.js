@@ -44,12 +44,11 @@ Lab.infoController = SC.ObjectController.create(
    */
   display: function (message, onClose){
     this.displayButtonOnly(message);
-    this.showPane(this.infoButton);
+    this.showPane(this.infoButton, true);
     this.set("onClose", onClose);
   },
 
-  showPane: function(callingView) {
-//console.log("showPane called by:",callingView);
+  showPane: function(callingView, muteLogging) {
     //this.set('infoButton', callingView);
     var infoView = Lab.InfoView;//.create();
     this.set('pane',infoView);
@@ -60,7 +59,9 @@ Lab.infoController = SC.ObjectController.create(
         Geniverse.activityController.get('iframeLayerToAppend').appendChild(this.get('iframe'));
       }
       this.updateView(this.get('content'));
-      Lab.logController.logEvent(Lab.EVENT.OPENED_INFO);
+      if (!muteLogging) {
+        Lab.logController.logEvent(Lab.EVENT.OPENED_INFO);
+      }
     }
   },
 
@@ -76,7 +77,9 @@ Lab.infoController = SC.ObjectController.create(
         this.get('iframe').parentView.removeChild(this.get('iframe'));
       }
       this.get('pane').remove();
-      Lab.logController.logEvent(Lab.EVENT.CLOSED_INFO);
+      if (callingView) {
+        Lab.logController.logEvent(Lab.EVENT.CLOSED_INFO);
+      }
     }
     if (onClose = this.get("onClose")) {
       onClose();

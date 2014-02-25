@@ -25,6 +25,12 @@ Lab.EVENT = {
   , KEPT_OFFSPRING        : "Kept offspring"
   , KEPT_OFFSPRING_FAILED : "Failed to keep offspring"
 
+  // Stats
+  , OPENED_STATS          : "Opened stats tab"
+  , CLOSED_STATS          : "Closed stats tab"
+  , CHANGED_STATS         : "Changed stats trait"
+  , INITIAL_STATS         : "Initial stats trait"
+
   // Meiosis events
   , COMPLETED_MEIOSIS     : "Completed meiosis"
   , SELECTED_GAMETE       : "Selected gamete"
