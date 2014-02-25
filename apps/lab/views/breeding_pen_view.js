@@ -101,6 +101,14 @@ Lab.BreedingPenView = SC.View.extend(
       })
     );
 
+    this.tabView.addObserver('nowShowing', function() {
+      if (this.getPath('nowShowing.statsView')) {
+        Lab.logController.logEvent(Lab.EVENT.OPENED_STATS);
+      } else {
+        Lab.logController.logEvent(Lab.EVENT.CLOSED_STATS);
+      }
+    });
+
     childViews.push(this.recordLink);
 
     this.set('childViews', childViews);
