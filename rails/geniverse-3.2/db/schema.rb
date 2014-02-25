@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130828144400) do
+ActiveRecord::Schema.define(:version => 20140225095700) do
 
   create_table "activities", :force => true do |t|
     t.string   "initial_alleles"
@@ -79,19 +79,20 @@ ActiveRecord::Schema.define(:version => 20130828144400) do
   end
 
   add_index "dragons", ["activity_id"], :name => "index_dragons_on_activity_id"
+  add_index "dragons", ["breeder_id", "breedTime", "id"], :name => "breed_record_index"
+  add_index "dragons", ["father_id"], :name => "father_index"
   add_index "dragons", ["id"], :name => "index_dragons_on_id"
-  add_index "dragons", ["mother_id", "father_id", "breeder_id", "breedTime", "id"], :name => "breed_record_index"
+  add_index "dragons", ["mother_id"], :name => "mother_index"
   add_index "dragons", ["user_id"], :name => "index_dragons_on_user_id"
 
   create_table "help_messages", :force => true do |t|
     t.string   "page_name"
     t.text     "message"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "unlockables", :force => true do |t|
-    t.string   "title"
     t.text     "content"
     t.string   "trigger"
     t.datetime "created_at",                            :null => false
