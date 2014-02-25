@@ -47,7 +47,6 @@ Lab.HelpView = SC.PalettePane.create({
       escapeHTML: NO,
       helpViewValueDidChange: function () {
         var helpViewValue = this.get('value');
-        console.log('helpViewValueDidChange to:',helpViewValue);
 //        console.log("setting helpController content");
 //        Lab.helpController.set('content',helpViewValue);
       }.observes('value')

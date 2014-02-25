@@ -81,8 +81,12 @@ Geniverse.matchController = SC.ArrayController.create(
   },
 
   doesMatch: function(expected, received) {
-    if (expected.get('imageURL') === received.get('imageURL')) {
-      // match!
+    var match = expected.get('imageURL') === received.get('imageURL');
+
+    Lab.logController.logEvent(Lab.EVENT.DRAKE_SUBMITTED,
+      {submittedImage: received.get('imageURL'), correctImage: expected.get('imageURL'), correct: match});
+
+    if (match) {
       return YES;
     }
     return NO;

@@ -49,7 +49,6 @@ Geniverse.activityController = SC.ObjectController.create(
       if (!!myCase) {
         var setIntroImageUrl = function() {
           myCase.removeObserver('status', this, setIntroImageUrl);
-          SC.Logger.info("Setting intro screen url: ", myCase.get('introImageUrl'));
           Geniverse.introScreenController.set('imageUrl', myCase.get('introImageUrl'));
         };
         if (myCase.get('status') & SC.Record.READY) {
@@ -77,18 +76,15 @@ Geniverse.activityController = SC.ObjectController.create(
   getConfigurationForRoom: function (room, isMatchingDragons){
     var configurationArray = this.getConfigurationAsArray(isMatchingDragons);
     if (!configurationArray){
-      SC.Logger.log("No alleles for room "+room);
       return [];
     }
     var length = configurationArray.length;
     if (length === undefined || length < 1) {
-      SC.Logger.log("No alleles for room "+room);
       return [];
     }
     var room_index = room % length;
     var roomConfig = configurationArray[room_index];
     if (roomConfig === undefined || roomConfig === null){
-      SC.Logger.log("No alleles for room "+room);
       return [];
     }
     return roomConfig;

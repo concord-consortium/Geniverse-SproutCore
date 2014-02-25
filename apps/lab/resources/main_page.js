@@ -29,8 +29,6 @@ Lab.mainPage = SC.Page.design({
         tagName: 'a',
         hasHover: YES,
         layout: { top: 614, centerX: 29, width: 258, height: 172 },
-        alt: 'Go to the Case Log',
-        toolTip: 'Go to the Case Log',
         target: 'Lab.routes',
         action: 'openCaselogRoute',
         value: static_url('mainscreen-caselog-highlighted')
@@ -41,8 +39,6 @@ Lab.mainPage = SC.Page.design({
         tagName: 'a',
         hasHover: YES,
         layout: { top: 612, centerX: 217, width: 242, height: 125 },
-        alt: 'Open the 3G Journal',
-        toolTip: 'Open the 3G Journal',
         target: 'Lab.journalController',
         action: 'openWindow',
         value: static_url('mainscreen-journal-highlighted')
@@ -53,8 +49,6 @@ Lab.mainPage = SC.Page.design({
         tagName: 'a',
         hasHover: YES,
         layout: { top: 23, centerX: 403, width: 302, height: 485 },
-        alt: 'Log out',
-        toolTip: 'Log out',
         target: 'Lab.statechart',
         action: 'logOut',
         value: static_url('mainscreen-door-highlighted')

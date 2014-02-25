@@ -175,6 +175,19 @@
   top: 349px;
 }
 
+#caselog-nav ul li#training.caselog-active {
+  background: -5px -13px no-repeat static_url('caselog-training-active.png');
+}
+#caselog-nav ul li#apprentice.caselog-active {
+  background: -5px -14px no-repeat static_url('caselog-apprentice-active.png');
+}
+#caselog-nav ul li#journeyman.caselog-active {
+  background: -5px -14px no-repeat static_url('caselog-journeyman-active.png');
+}
+#caselog-nav ul li#master.caselog-active {
+  background: -5px -14px no-repeat static_url('caselog-master-active.png');
+}
+
 #caselog-nav ul li#training div:hover {
   background: -5px -13px no-repeat static_url('caselog-training-active.png');
 }

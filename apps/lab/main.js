@@ -60,10 +60,13 @@ Lab.main = function main() {
   };
 
   // *** monkey-patch view renderer to support tooltips
-  SC.View.prototype.render = function (context, firstTime) {
-    if (firstTime) this.renderChildViews(context, firstTime) ;
-    context.attr('title', this.get('toolTip'));
+  SC.View.prototype.didCreateLayer = function () {
+    this.$().attr('alt', this.get('toolTip'));
+    this.set('toolTip', null);
   }
+
+
+  Lab.logController.startNewSession();
 } ;
 
 function main() { Lab.main(); }

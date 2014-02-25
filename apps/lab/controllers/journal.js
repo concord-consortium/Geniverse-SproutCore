@@ -32,6 +32,7 @@ Lab.journalController = SC.Controller.create(
     if(!journalBaseURL){
       journalBaseURL = "";
     }
+    Lab.logController.logEvent(Lab.EVENT.GO_TO_JOURNAL);
     //SC.Logger.log("journalBaseURL:",journalBaseURL);
     var journalWindow = window.open(journalBaseURL.toString() + className.toString());
     //SC.Logger.log("journalWindow:",journalWindow);
