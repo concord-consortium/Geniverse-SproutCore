@@ -54,6 +54,8 @@ Lab.logController = SC.Object.create(
   logEvent: function (evt, params, paramNames) {
     var controller, date, eventData, param, logKey, session, i, ii;
 
+    this._alsoSendToGoogleAnalytics(evt);
+
     // in the demo site, just return. Leaving the rest of the method and class here to allow easy mergin
     // with master in the future.
 
@@ -158,6 +160,48 @@ Lab.logController = SC.Object.create(
       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     }
     return S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4();
+  },
+
+  /**
+    Shunt certain simplified events off to Google Analytics as well, along
+    with timing data for certain events.
+  */
+  _alsoSendToGoogleAnalytics: function(evt) {
+    switch (evt) {
+      case Lab.EVENT.MOVED_TO:
+      case Lab.EVENT.GO_TO_JOURNAL:
+      case Lab.EVENT.GO_TO_JOURNAL_POST:
+        Lab.GAHelper.trackEvent(Lab.GAHelper.Category.NAVIGATION,
+          evt, Geniverse.activityController.get('title'));
+        break;
+      case Lab.EVENT.STARTED_CHALLENGE:
+      case Lab.EVENT.REPEAT_CHALLENGE:
+        Lab.GAHelper.trackEvent(Lab.GAHelper.Category.CHALLENGE,
+          evt, Geniverse.activityController.get('title'));
+        Lab.GAHelper.trackTimingStart(Lab.GAHelper.Category.CHALLENGE);
+        break;
+      case Lab.EVENT.COMPLETED_CHALLENGE:
+        Lab.GAHelper.trackEvent(Lab.GAHelper.Category.CHALLENGE,
+          evt, Geniverse.activityController.get('title'), Geniverse.scoringController.get('achievedChallengeStars'));
+        Lab.GAHelper.trackTimingEnd(Lab.GAHelper.Category.CHALLENGE);
+        break;
+      case Lab.EVENT.OPENED_INFO:
+      case Lab.EVENT.OPENED_HELP:
+        Lab.GAHelper.trackEvent(Lab.GAHelper.Category.HELP,
+          evt, Geniverse.activityController.get('title'));
+        break;
+      case Lab.EVENT.OPENED_JOURNAL_POST:
+      case Lab.EVENT.JOURNAL_POST:
+        Lab.GAHelper.trackEvent(Lab.GAHelper.Category.JOURNAL,
+          evt, Geniverse.activityController.get('title'));
+        Lab.GAHelper.trackTimingStart(Lab.GAHelper.Category.JOURNAL);
+        break;
+      case Lab.EVENT.CLOSED_JOURNAL_POST:
+        Lab.GAHelper.trackEvent(Lab.GAHelper.Category.JOURNAL,
+          evt, Geniverse.activityController.get('title'));
+        Lab.GAHelper.trackTimingEnd(Lab.GAHelper.Category.JOURNAL);
+        break;
+    }
   },
 
   /**
