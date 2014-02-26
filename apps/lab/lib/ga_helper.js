@@ -37,8 +37,11 @@ Lab.GAHelper.trackTimingEnd = function(category) {
   var timeSpent = new Date().getTime() - _timeStart[category];
   _timeStart[category] = null;
 
-  var evt = ['_trackTiming', category, "Time spent", timeSpent];
-  _gaq.push(evt);
+  // sanity-check: time spend should be positive, and less than two hours
+  if (timeSpent > 0 && timeSpent < (1000 * 60 * 120)) {
+    var evt = ['_trackTiming', category, "Time spent", timeSpent];
+    _gaq.push(evt);
+  }
 };
 
 })();
