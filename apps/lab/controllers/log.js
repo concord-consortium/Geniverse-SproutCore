@@ -164,6 +164,8 @@ Lab.logController = SC.Object.create(
   _alsoSendToGoogleAnalytics: function(evt) {
     switch (evt) {
       case Lab.EVENT.MOVED_TO:
+      case Lab.EVENT.GO_TO_JOURNAL:
+      case Lab.EVENT.GO_TO_JOURNAL_POST:
         Lab.GAHelper.trackEvent(Lab.GAHelper.Category.NAVIGATION,
           evt, Geniverse.activityController.get('title'));
         break;
