@@ -107,9 +107,11 @@
 
 <% if config.google_analytics_id %>
 <script type="text/javascript">
-  window._gaq = _gaq || [];
+  var _gaq = _gaq || [];
   _gaq.push(['_setAccount', '<%= config.google_analytics_id %>']);
   _gaq.push(['_trackPageview']);
+
+  window._gaq = _gaq;
 
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
