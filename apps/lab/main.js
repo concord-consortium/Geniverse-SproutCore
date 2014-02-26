@@ -11,6 +11,8 @@
 // As you develop your application you will probably want to override this.
 // See comments for some pointers on what to do next.
 //
+sc_require('lib/ga_helper');
+
 Lab.main = function main() {
 
   Lab.statechart.initStatechart();
