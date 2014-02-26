@@ -47,6 +47,7 @@ Lab.EVENT = {
 
   , EXAMINED_GENOTYPE     : "Examined genotype"
 
+  // Toolbar icons
   , OPENED_INFO           : "Opened info"
   , CLOSED_INFO           : "Closed info"
   , OPENED_NOTEPAD        : "Opened notepad"
@@ -54,10 +55,13 @@ Lab.EVENT = {
   , SAVED_NOTEPAD         : "Saved and closed notepad"
   , OPENED_HELP           : "Opened help"
   , CLOSED_HELP           : "Closed help"
-  , GO_TO_JOURNAL         : "Navigated to journal"
+
+  // Journal
   , OPENED_JOURNAL_POST   : "Opened journal post window"
   , CLOSED_JOURNAL_POST   : "Closed journal post window"
   , SAVED_JOURNAL_POST    : "Saved journal draft"
   , JOURNAL_POST          : "Submitted journal entry"
   , JOURNAL_POST_FAILED   : "Failed to submit journal entry"
+  , GO_TO_JOURNAL_POST    : "Navigated to journal post"
+  , GO_TO_JOURNAL         : "Navigated to journal"
 };
