@@ -89,12 +89,6 @@ Lab.logController = SC.Object.create(
       parameters  : params
     };
 
-    // for now
-    SC.Logger.group("Log Event");
-    SC.Logger.info("Event: "+eventData.event);
-    SC.Logger.info(eventData.parameters);
-    SC.Logger.groupEnd();
-
     this._persistEvent(eventData);
   },
 
