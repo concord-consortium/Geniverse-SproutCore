@@ -61,6 +61,7 @@ Lab.helpController = SC.ObjectController.create(
           Lab.helpController.set('content', message);
         };
         this.findHelpMessage(pageName, helpMessageFound);
+        Lab.logController.logEvent(Lab.EVENT.OPENED_HELP);
       } else {
         this.set('content',
           "Sorry, a help message could not be loaded because the name of your page was not available.");
@@ -78,6 +79,7 @@ Lab.helpController = SC.ObjectController.create(
     if (this.get('pane')) {
       if (this.get('pane').get('isVisibleInWindow') && Geniverse.activityController.get('pageContainsApplet')) {
         this.get('iframe').parentView.removeChild(this.get('iframe'));
+        Lab.logController.logEvent(Lab.EVENT.CLOSED_HELP);
       }
       this.get('pane').remove();
     }

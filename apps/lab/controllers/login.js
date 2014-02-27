@@ -42,7 +42,6 @@ Lab.loginController = SC.ObjectController.create(
     if (this.triedPortal) {
       this.set('welcomeMessage','invalid login. try again.');
     }
-    console.log("Showing login");
     this.set('loginShowing', YES);
     this.set('checkShowing', NO);
   },
@@ -111,7 +110,6 @@ Lab.loginController = SC.ObjectController.create(
       var isTeacher = response.get('body').teacher;
       var avatar = response.get('body').avatar;
       var self = this;
-      SC.Logger.log(login);
       var userFound = function(user) {
         user.set('firstName',first);
         user.set('lastName',last);
@@ -123,8 +121,20 @@ Lab.loginController = SC.ObjectController.create(
             classWords[i] = classWords[i].replace(/[^a-zA-Z0-9_\-]+/g, '');
           }
           // if a user has more than one class word, use the last one on the list
-          user.set('className', classWords[classWords.length-1]);
+          var classWord = classWords[classWords.length-1];
+          user.set('className', classWord);
           user.set('allClassNames', classWords);
+
+          // Set learner id. We don't save this to backend as it might change (?)
+          var classes = response.get('body').classes || [];
+          for (var i=0, ii=classes.length; i<ii; i++) {
+            if (classes[i].word == classWord) {
+              var lid = classes[i].learner;
+              if (lid) {
+                Lab.logController.set('learnerDataUrl', '/portal/dataservice/bucket_loggers/learner/' + lid + '/bucket_log_items.bundle');
+              }
+            }
+          }
         } else {
           user.set('className', "no_class");
         }

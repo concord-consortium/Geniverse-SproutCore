@@ -77,7 +77,6 @@ Geniverse.statisticsController = SC.Controller.create(
       this.set('cumulativeCounts',cumulativeCounts);
       this.set('cumulativeSize',cumulativeSize);
       this.set('breedingComplete',!this.get('breedingComplete'));
-      console.log('breeding complete');
     }
   },
 

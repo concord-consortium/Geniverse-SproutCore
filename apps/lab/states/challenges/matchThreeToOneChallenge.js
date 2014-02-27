@@ -126,6 +126,8 @@ Lab.matchThreeToOneChallenge = Lab.challenge.extend({
             );
           }
         }
+        Lab.logController.logEvent(Lab.EVENT.DRAKES_REVEALED,
+          {success: this.successfulMatch});
       },
       interval: 500,
       repeats: NO

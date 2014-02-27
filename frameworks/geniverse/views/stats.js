@@ -57,12 +57,24 @@ Geniverse.StatsView = SC.View.extend(
 
        displayProperties: ['breedingComplete','menu','mother','father','refresh'],
 
+       previousTraitOption: null,
+
       render: function(context, firstTime) {
+        var trait = this.getPath('parentView.traitPulldown.value');
+
+        if (trait !== this.get('previousTraitOption')) {
+          if (this.get('previousTraitOption')) {
+            Lab.logController.logEvent(Lab.EVENT.CHANGED_STATS, {trait: trait});
+          } else {
+            Lab.logController.logEvent(Lab.EVENT.INITIAL_STATS, {trait: trait});
+          }
+          this.set('previousTraitOption', trait)
+        }
+
         if (!this.get('dragons') || this.get('dragons').get('length') < 1){
           context = context.begin('div').end();
           return;
         }
-        var trait = this.getPath('parentView.traitPulldown.value');
         if (!trait){
           return;
         }

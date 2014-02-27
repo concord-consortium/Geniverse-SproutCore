@@ -29,8 +29,11 @@ Lab.invisibleGenotypeChallenge = Lab.challenge.extend({
     this.get('statechart').sendAction('unblockNextNavButton');
 
     var pageId = Geniverse.activityController.get('route');
-    Geniverse.userController.setPageStars(pageId, this.get('starsEarned'));
+    var stars = this.get('starsEarned');
+    Geniverse.userController.setPageStars(pageId, stars);
     Geniverse.store.commitRecords();
+
+    Lab.logController.logEvent(Lab.EVENT.COMPLETED_CHALLENGE, {route: pageId, starsAwarded: stars});
 
     // why can't bindings in SC work as advertised?
     Lab.caselogController.propertyDidChange("userMetadata");

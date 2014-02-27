@@ -118,7 +118,7 @@ Lab.caselogPage = SC.Page.design({
         levelNames  = Lab.caselogController.levelNames;
 
         for (i = 0, max_i = levelNames.length; i < max_i; i++) {
-          extraClassNames = i <= currentLevel ? 'caselog-active' : '';
+          extraClassNames = i == currentLevel ? 'caselog-active' : '';
           context.push('<li id="' + levelNames[i] + '" class="' + extraClassNames + '"><a href="#caselog/' + levelNames[i] + '"><div></div></a></li>');
         }
 

@@ -24,7 +24,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
 
       layout: { centerX: 0, top: 80, width: 1080, height: 880 },
 
-      childViews: 'genomePanel breedingPenView matchView scoreView chromosomeHintView'.w(),
+      childViews: 'genomePanel breedingPenView matchView scoreView chromosome1HintView chromosome2HintView chromosome3HintView chromosome4HintView'.w(),
 
       genomePanel: SC.View.design({
         layout: {top: 35, height: 585, left: 15, width: 1005 },
@@ -76,9 +76,13 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
         breedButton: SC.ButtonView.design({
           layout: { top: 150, centerX: -60, width: 100, height: 24 },
           target: 'Geniverse.breedDragonController',
+          bredOnce: false,
           action: function() {
             Geniverse.breedDragonController.breed();
-            Lab.statechart.sendAction('breedingPageMatchBreedingCompleted');
+            if (!this.get('bredOnce')) {
+              Lab.statechart.sendAction('breedingPageMatchBreedingCompleted');
+              this.set('bredOnce', true);
+            }
           },
           isBreedingBinding: 'Geniverse.breedDragonController.isBreeding',
           hasParentsBinding: 'Geniverse.breedDragonController.hasParents',
@@ -91,7 +95,7 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
           }.property('isBreeding').cacheable(),
 
           toolTip: "Click Breed to create a clutch of 20 offspring drakes. Clicking Breed costs zero moves!",
-          classNames: 'hint-available'.w()
+          classNames: 'hint-available hint-max-width-151'.w()
         })
 
       }),
@@ -99,16 +103,16 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
       // Breeding pen with eggs
       breedingPenView: Lab.BreedingPenView.design({
         layout: { left: 329, top: 240, width: 380, height: 350 },
-        breedingRecordRight: -20,
-        toolTip: "Drag a matching drake from the pen onto the target.",
-        classNames: 'breeding-completed-hint hint-target-topRight hint-tooltip-bottomLeft'.w()
+        breedingRecordRight: -20
       }),
 
       matchView: Geniverse.MatchView.design({
         layout: { centerX: 0, top: -10, height: 190, width: 270 },
         onlyOne: YES,
         labelPosition: "right",
-        dragonSize: 170
+        dragonSize: 170,
+        toolTip: "Drag a matching drake from the pen onto the target.",
+        classNames: 'breeding-completed-hint hint-target-leftMiddle hint-tooltip-rightMiddle'.w()
       }),
 
       scoreView: Geniverse.ScoreView.design({
@@ -118,10 +122,28 @@ Lab.chromosomeBreedingChallengePage = SC.Page.design({
         showTargetScore: YES
       }),
 
-      chromosomeHintView: SC.View.design({
-        layout: {left: 30, top: 342, height: 85, width: 290 },
+      chromosome1HintView: SC.View.design({
+        layout: {left: 29, top: 228, height: 385, width: 20 },
         toolTip: "Set the alleles to increase your chances of breeding the target drake. Each change costs a move.",
-        classNames: 'hint-available hint-target-rightTop hint-tooltip-leftTop'.w()
+        classNames: 'hint-available-no-show hint-target-rightMiddle hint-tooltip-leftBottom'.w()
+      }),
+
+      chromosome2HintView: SC.View.design({
+        layout: {left: 175, top: 228, height: 385, width: 20 },
+        toolTip: "Set the alleles to increase your chances of breeding the target drake. Each change costs a move.",
+        classNames: 'hint-available hint-target-rightMiddle hint-tooltip-leftBottom'.w()
+      }),
+
+      chromosome3HintView: SC.View.design({
+        layout: {left: 725, top: 228, height: 385, width: 20 },
+        toolTip: "Set the alleles to increase your chances of breeding the target drake. Each change costs a move.",
+        classNames: 'hint-available-no-show hint-target-rightMiddle hint-tooltip-leftBottom'.w()
+      }),
+
+      chromosome4HintView: SC.View.design({
+        layout: {left: 870, top: 228, height: 385, width: 20 },
+        toolTip: "Set the alleles to increase your chances of breeding the target drake. Each change costs a move.",
+        classNames: 'hint-available-no-show hint-target-rightMiddle hint-tooltip-leftBottom'.w()
       })
     })
   })

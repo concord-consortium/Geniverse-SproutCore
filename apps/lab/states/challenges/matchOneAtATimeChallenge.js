@@ -83,6 +83,8 @@ Lab.matchOneAtATimeChallenge = Lab.challenge.extend({
             this
           );
         }
+        Lab.logController.logEvent(Lab.EVENT.DRAKES_REVEALED,
+          {success: this.successfulMatch});
       },
       interval: 500,
       repeats: NO

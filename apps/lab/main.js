@@ -11,6 +11,8 @@
 // As you develop your application you will probably want to override this.
 // See comments for some pointers on what to do next.
 //
+sc_require('lib/ga_helper');
+
 Lab.main = function main() {
 
   Lab.statechart.initStatechart();
@@ -60,10 +62,13 @@ Lab.main = function main() {
   };
 
   // *** monkey-patch view renderer to support tooltips
-  SC.View.prototype.render = function (context, firstTime) {
-    if (firstTime) this.renderChildViews(context, firstTime) ;
-    context.attr('title', this.get('toolTip'));
+  SC.View.prototype.didCreateLayer = function () {
+    this.$().attr('alt', this.get('toolTip'));
+    this.set('toolTip', null);
   }
+
+
+  Lab.logController.startNewSession();
 } ;
 
 function main() { Lab.main(); }

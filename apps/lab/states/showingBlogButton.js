@@ -26,6 +26,7 @@ Lab.showingBlogButton =  Ki.State.extend({
 
     enterState: function() {
       Geniverse.blogPostController.showBlogPane();
+      Lab.logController.logEvent(Lab.EVENT.OPENED_JOURNAL_POST);
     },
 
     exitState: function() {
@@ -59,10 +60,12 @@ Lab.showingBlogButton =  Ki.State.extend({
 
     save: function() {
       Geniverse.blogPostController.saveDraftBlogPost();
+      Lab.logController.logEvent(Lab.EVENT.SAVED_JOURNAL_POST);
     },
 
     closePanel: function() {
       this.gotoState('ready');
+      Lab.logController.logEvent(Lab.EVENT.CLOSED_JOURNAL_POST);
     },
 
     saveAndClose: function() {
@@ -146,6 +149,7 @@ Lab.showingBlogButton =  Ki.State.extend({
         "OK",
         this
       );
+      Lab.logController.logEvent(Lab.EVENT.JOURNAL_POST_FAILED);
     },
 
     // delegate for _showFailureMessage alertPane
@@ -171,6 +175,8 @@ Lab.showingBlogButton =  Ki.State.extend({
           Lab.statechart.sendAction('didSendBlogPost');
 
           Lab.feedbackController.didSendBlogPost(this.get('description'), postURL);
+
+          Lab.logController.logEvent(Lab.EVENT.JOURNAL_POST);
         }
       } else {
         this._showFailureMessage();

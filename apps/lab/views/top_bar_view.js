@@ -2,7 +2,7 @@
 // Project:   Lab - TopBarView
 // Copyright: 2010 Concord Consortium
 // ==========================================================================
-/*globals Lab Geniverse */
+/*global Lab Geniverse SC YES NO sc_super*/
 
 /**
  * Top toolbar with labels and logout button.
@@ -32,10 +32,10 @@ Lab.TopBarView = SC.ToolbarView.extend(
     useStaticLayout: YES,
     layerId: 'homeButton',
     hasHover: YES,
-    alt: 'Home',
-    toolTip: "Click to go to the Lab's Home page",
+    toolTip: "Home",
     target: 'Lab.routes',
-    action: 'openHomePageRoute'
+    action: 'openHomePageRoute',
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-75'.w()
   }),
 
   caselogButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -43,10 +43,10 @@ Lab.TopBarView = SC.ToolbarView.extend(
     useStaticLayout: YES,
     layerId: 'caselogButton',
     hasHover: YES,
-    alt: 'Case Log',
-    toolTip: "Click to go to the Lab's Case Log page",
+    toolTip: "Case Log",
     target: 'Lab.routes',
-    action: 'openCaselogRoute'
+    action: 'openCaselogRoute',
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-90'.w()
   }),
 
   introButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -54,10 +54,10 @@ Lab.TopBarView = SC.ToolbarView.extend(
     useStaticLayout: YES,
     layerId: 'introButton',
     hasHover: YES,
-    alt: 'Introduction',
-    toolTip: "Click to see introduction",
+    toolTip: "Narrative introduction",
     target: 'Lab.routes',
-    action: 'openAvatarPageRoute'
+    action: 'openAvatarPageRoute',
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-175'.w()
   }),
 
   geniverseLabelView: SC.View.design({
@@ -102,7 +102,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
       Lab.loginController.showGroupPanel();
     },
     isVisibleBinding: 'Lab.loginController.loggedIn',
-    toolTip: 'Change your Member number or Group number.'
+    toolTip: 'Change your Member number or Group number.',
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
   }),
 
   unlockablesButton: SC.PopupButtonView.design({
@@ -127,10 +128,9 @@ Lab.TopBarView = SC.ToolbarView.extend(
       selectedItemBinding: 'Geniverse.unlockablesController.selectedUnlockable'
     }),
     layerId: 'unlockablesButton',
-    classNames: ['none'],
     // hasHover: YES,
     alt: 'Unlockables',
-    toolTip: "Click to see items you've unlocked",
+    toolTip: "Access your unlocked items",
     notViewedUnlockablesBinding: 'Geniverse.unlockablesController.*notViewed.length',
     notViewed: function() {
       var style = 'none';
@@ -140,7 +140,8 @@ Lab.TopBarView = SC.ToolbarView.extend(
 
       this.set('classNames', ['sc-view', 'sc-image-view', 'sc-regular-size', style]);
       this.set('layerNeedsUpdate', YES);
-    }.observes('notViewedUnlockables')
+    }.observes('notViewedUnlockables'),
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-200'.w()
   }),
 
   infoButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -148,19 +149,28 @@ Lab.TopBarView = SC.ToolbarView.extend(
     useStaticLayout: YES,
     layerId: 'infoButton',
     hasHover: YES,
-    alt: 'Info',
-    toolTip: "Click to see instructions",
+    toolTip: "Instructions",
     target: 'Lab.infoController',
     action: 'showPane',
-    init: function() {
+    render: function() {
       sc_super();
+
+      classes = 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
       if (Geniverse.activityController.get('pageType') === "chromosomeBreedingPage") {
         this.set("toolTip", "When in doubt, read the Instructions.");
+        classes.push('hint-available');
+        classes.push('hint-max-width-300');
+      } else if (Geniverse.activityController.get('pageType') === null) {
+        classes.push('disabled');
+        classes.push('hint-max-width-110');
+        this.set('action', null);
+      } else {
+        classes.push('hint-max-width-110');
       }
+      this.set('classNames', classes);
       Lab.infoController.set('infoButton', this); // So pop-up pointer works
     },
-    toolTip: "",
-    classNames: 'hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-110'.w()
   }),
 
   blogButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -168,11 +178,11 @@ Lab.TopBarView = SC.ToolbarView.extend(
     useStaticLayout: YES,
     layerId: 'blogButton',
     hasHover: YES,
-    alt: 'Post claim to the Journal',
     title:  "Post claim to the Journal",
-    toolTip: "Post claim to the Journal",
+    toolTip: "Post your claim to the class journal",
     target: 'Lab.statechart',
-    action: 'showBlogPostPanel'
+    action: 'showBlogPostPanel',
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-240'.w()
   }),
 
 
@@ -180,12 +190,12 @@ Lab.TopBarView = SC.ToolbarView.extend(
     layout: { top: 0, left: 0, width: 51, height: 57 },
     useStaticLayout: YES,
     hasHover: YES,
-    alt: 'Your journal',
     layerId: 'journalButton',
     title:  "Journal",
-    toolTip: "Click to open the class journal",
+    toolTip: "Open class journal",
     target: 'Lab.journalController',
-    action: 'openWindow'
+    action: 'openWindow',
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-160'.w()
   }),
 
   notepadButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -194,11 +204,11 @@ Lab.TopBarView = SC.ToolbarView.extend(
     hasHover: YES,
     alt: 'Your notebook',
     layerId: 'notepadButton',
-    title:  "Note Pad",
-    toolTip: "Click to open your notepad",
+    toolTip: "Your notepad",
     target: 'Geniverse.notepadController',
     isEnabledBinding: 'Geniverse.notepadController.isEnabledButton',
-    action: 'showPane'
+    action: 'showPane',
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-120'.w()
   }),
 
   helpButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -215,7 +225,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
       Lab.helpController.set('helpButton', this); // So pop-up pointer works
     },
     toolTip: "Click here for help on any page.",
-    classNames: 'office-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle'.w()
+    classNames: 'topbar-hint-available topbar-hint-available-show hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-220'.w()
   }),
 
   logoutButton: SC.ImageView.design(Geniverse.SimpleButton, {
@@ -223,10 +233,10 @@ Lab.TopBarView = SC.ToolbarView.extend(
     useStaticLayout: YES,
     layerId: 'logOutButton',
     hasHover: YES,
-    alt: 'Log out',
     title:  "Log out",
-    toolTip: "Click to log out",
+    toolTip: "Log out",
     target: 'Lab.statechart',
-    action: 'logOut'
+    action: 'logOut',
+    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-85'.w()
   })
 });

@@ -75,7 +75,7 @@ Lab.meiosisPage = SC.Page.design({
             contentBinding: 'Geniverse.meiosisAnimationController.offspring',
             canDrag: YES
           }),
-          toolTip: "Drag the offspring to match a target drakes. If it doesn't match, choose a different sperm and egg.  Make sure you look at the alleles first!",
+          toolTip: "Drag the offspring to match a target drake. If it doesn't match, choose a different sperm and egg.  Make sure you look at the alleles first!",
           classNames: "meiosis-offspring-ready-hint hint-tooltip-leftMiddle hint-target-rightMiddle".w()
         }),
 

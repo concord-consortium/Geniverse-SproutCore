@@ -29,6 +29,8 @@ Lab.argumentationChallenge = Ki.State.extend({
     var pageId = Geniverse.activityController.get('route');
     Geniverse.userController.setPageStars(pageId, 1);
 
+    Lab.logController.logEvent(Lab.EVENT.COMPLETED_CHALLENGE, {route: pageId, starsAwarded: 1});
+
     // unlock any unlockables
     Geniverse.unlockablesController.unlockFor(pageId);
 

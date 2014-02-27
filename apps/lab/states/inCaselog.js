@@ -16,6 +16,7 @@ Lab.inCaselog = Ki.State.extend({
     }
     Geniverse.activityController.set('content', dummy);
     Lab.routes.gotoLabRoute({ pageName: 'caselogPage' });
+    Lab.statechart.sendAction('registerAllTooltips', 'topbar-hint-available');
   },
 
   exitState: function() {

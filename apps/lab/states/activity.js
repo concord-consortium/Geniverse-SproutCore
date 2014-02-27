@@ -27,7 +27,6 @@ Lab.ACTIVITY = SC.Responder.create(
   nextResponder: null,
 
   didBecomeFirstResponder: function() {
-    SC.Logger.log("ACTIVITY");
   },
 
   hasLoadedActivityData: NO,
@@ -44,7 +43,6 @@ Lab.ACTIVITY = SC.Responder.create(
 
   gotoActivity: function() {
     Lab.makeFirstResponder(this);
-    SC.Logger.log("ACTIVITY gotoActivity");
 
     this.set('hasLoadedActivityData', NO);
 
@@ -56,8 +54,6 @@ Lab.ACTIVITY = SC.Responder.create(
   },
 
   initActivity: function() {
-    SC.Logger.log("ACTIVITY initActivity");
-
     this.clearData();
 
     var self = this;
@@ -187,7 +183,6 @@ Lab.ACTIVITY = SC.Responder.create(
   },
 
   loadData: function() {
-    SC.Logger.log("ACTIVITY loadData");
     Geniverse.activityController.startNewSession();
 
     this.set('hasLoadedActivityData', NO);
@@ -202,7 +197,6 @@ Lab.ACTIVITY = SC.Responder.create(
     Geniverse.dragonGenomeController.set('content', []);
 
     /////////////////// Stable
-    SC.Logger.log("LOAD: stable");
     var stableQuery = SC.Query.local(Geniverse.Dragon, {
         conditions: 'bred = true AND isEgg = false AND user = {user} AND isInMarketplace = false AND activity = {activity}',
         user: user,
@@ -234,7 +228,6 @@ Lab.ACTIVITY = SC.Responder.create(
 
     /////////////////// Chats
     if (Lab.ENABLE_CHAT) {
-      SC.Logger.log("LOAD: chats");
       var chatQuery = SC.Query.local(CcChat.ChatMessage, {
           orderBy: 'time'
       });
@@ -243,7 +236,6 @@ Lab.ACTIVITY = SC.Responder.create(
     }
 
     /////////////////// Challenge dragons
-    SC.Logger.log("LOAD: challenge dragons");
     var challengePoolQuery = SC.Query.local('Geniverse.Dragon', {
       conditions: 'bred = false AND isInMarketplace = false AND isMatchDragon = false AND user = {user} AND activity = {activity} AND mother = {mother} AND father = {father} AND session = {session}',
       user: user,
@@ -281,7 +273,6 @@ Lab.ACTIVITY = SC.Responder.create(
     }
 
      /////////////////// Match dragons
-      SC.Logger.log("LOAD: match dragons");
       var matchPoolQuery = SC.Query.local('Geniverse.Dragon', {
         conditions: 'bred = false AND isMatchDragon = true AND user = {user} AND activity = {activity} AND isInMarketplace = false AND mother = {mother} AND father = {father} AND session = {session}',
         user: user,
@@ -367,7 +358,6 @@ Lab.ACTIVITY = SC.Responder.create(
       SC.Logger.dir(dragon.attributes());
       SC.RunLoop.end();
     }
-    SC.Logger.info("Creating defaults");
     var organismConfigurations = this.getOrganismConfigurations(isMatchDragons);
     SC.Logger.info("Found " + organismConfigurations.length + " defaults for "+(isMatchDragons ? "match dragons" : "challenge dragons"));
 
@@ -472,7 +462,6 @@ Lab.ACTIVITY = SC.Responder.create(
       SC.RunLoop.begin();
       stableDragons.setEach('isInMarketplace', true);
       SC.RunLoop.end();
-      SC.Logger.log("done selling stable dragons");
     }
 
     if ((stableDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
@@ -489,7 +478,6 @@ Lab.ACTIVITY = SC.Responder.create(
       SC.RunLoop.begin();
       challengeDragons.setEach('isInMarketplace', true);
       SC.RunLoop.end();
-      SC.Logger.log("done selling stable dragons");
     }
 
     if ((challengeDragons.get('status') & SC.Record.READY) === SC.Record.READY) {
@@ -503,8 +491,6 @@ Lab.ACTIVITY = SC.Responder.create(
   gotoActivityRoute: function() {
     var pageType = Geniverse.activityController.get('pageType');
 
-    SC.Logger.log("ACTIVITY finding page type: "+pageType);
-
     Lab.routes.gotoLabRoute({pageName: pageType});
 
     // If a message has been authored for this Activity, display it now
@@ -512,5 +498,8 @@ Lab.ACTIVITY = SC.Responder.create(
     if (message){
       Lab.infoController.display(message, function(){Lab.get('statechart').sendAction("showAllTooltips", "hint-available")});
     }
+
+    Lab.statechart.sendAction('registerAllTooltips', 'topbar-hint-available');
+    Lab.statechart.sendAction('registerAllTooltips', 'hint-available-no-show');
   }
 }) ;

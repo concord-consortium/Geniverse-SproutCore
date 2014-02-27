@@ -80,7 +80,7 @@ Lab.singleMeiosisPage = SC.Page.design({
         playHint: SC.View.design({
           layout: { top: 593, left: 177, height: 10, width: 10 },
           toolTip: "Click Play to create four eggs or sperm through the process of meiosis.",
-          classNames: "hint-available hint-target-leftMiddle hint-tooltip-rightBottom".w()
+          classNames: "meiosis-ready-hint hint-target-leftMiddle hint-tooltip-rightBottom".w()
         }),
 
         gametesHint: SC.View.design({
