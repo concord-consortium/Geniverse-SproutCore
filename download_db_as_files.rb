@@ -1,15 +1,16 @@
-#!/bin/env ruby
+#!/usr/bin/env ruby
 
 require 'uri'
 require 'net/http'
+require "open-uri"
 
 VERBOSE=true
 STDOUT.sync = true
-DB_BASE = "http://geniverse.concord.org/rails/"
+DB_BASE = "https://learn.concord.org/geniverse/"
 BASE_DIR = File.join(File.dirname(__FILE__), "tmp", "build", "rails")
 
 def download(uri_str, dest)
-  body = Net::HTTP.get_response(URI.parse(uri_str)).body
+  body = @data = URI.parse(uri_str).read
   File.open(dest, "w") do |f|
     f.write(body)
   end

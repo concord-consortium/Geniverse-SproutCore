@@ -56,7 +56,7 @@ function resourcesdownload {
   if [ -e "resources-current.zip" ]; then
     echo "Skipping - already exist!"
   else
-    wget http://geniverse.resources.concord.org/resources-current.zip
+    wget http://geniverse-resources.concord.org/resources-current.zip
   fi
   unzip -q -d tmp/build/ resources-current.zip
   echo "Done."
