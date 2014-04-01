@@ -89,11 +89,10 @@ Lab.logController = SC.Object.create(
       parameters  : params
     };
 
-    // for now
-    SC.Logger.group("Log Event");
-    SC.Logger.info("Event: "+eventData.event);
-    SC.Logger.info(eventData.parameters);
-    SC.Logger.groupEnd();
+    // SC.Logger.group("Log Event");
+    // SC.Logger.info("Event: "+eventData.event);
+    // SC.Logger.info(eventData.parameters);
+    // SC.Logger.groupEnd();
 
     this._persistEvent(eventData);
   },
@@ -128,6 +127,13 @@ Lab.logController = SC.Object.create(
   _learnerDataUrlChanged: function() {
     this._processEventQueue();
   }.observes('learnerDataUrl'),
+
+  _usernameChanged: function() {
+    var username = Geniverse.userController.get('username');
+    if (username) {
+      this.set('learnerDataUrl', '/portal/dataservice/bucket_loggers/name/' + username + '/bucket_log_items.bundle');
+    }
+  }.observes('Geniverse.userController.username'),
 
   _startEventQueuePolling: function() {
     var self = this;
