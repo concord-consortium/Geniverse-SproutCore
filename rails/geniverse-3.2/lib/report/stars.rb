@@ -42,8 +42,8 @@ class Report::Stars
     row_num = 1
     User.all.each do |u|
       next if u.class_name.nil? || u.class_name.empty?
-      next unless @all_classes || @class_names.include?(u.class_name)
-      sheet.row(row_num).concat ["#{u.first_name} #{u.last_name}", u.username, u.class_name, u.group_id, u.member_id]
+      next unless @all_classes || @class_names.include?(u.class_name.strip)
+      sheet.row(row_num).concat ["#{u.first_name} #{u.last_name}", u.username, u.class_name.strip, u.group_id, u.member_id]
       if md = u.metadata
         if stars = md['stars']
           # sort so that rails ids will always come before route ids

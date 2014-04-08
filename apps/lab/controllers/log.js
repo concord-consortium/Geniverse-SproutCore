@@ -123,6 +123,13 @@ Lab.logController = SC.Object.create(
     this._processEventQueue();
   }.observes('learnerDataUrl'),
 
+  _usernameChanged: function() {
+    var username = Geniverse.userController.get('username');
+    if (username) {
+      this.set('learnerDataUrl', '/portal/dataservice/bucket_loggers/name/' + username + '/bucket_log_items.bundle');
+    }
+  }.observes('Geniverse.userController.username'),
+
   _startEventQueuePolling: function() {
     var self = this;
     setInterval(function() {
