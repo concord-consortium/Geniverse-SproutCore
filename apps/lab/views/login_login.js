@@ -35,7 +35,7 @@ Lab.LoginLoginView = SC.View.extend({
      registerView: SC.LabelView.design({
        layout: { bottom: 8, height: 20, left: 0, width: 210 },
        escapeHTML: false,
-       value: "Don't have a login? <a style='text-decoration:none;' href='/portal'>Register now <span style='color:#eb8723;'>&raquo;</span></a>"
+       value: "Don't have a login? <a style='text-decoration:none; color:#2a777b;' href='/portal'>Register now <span style='color:#eb8723;'>&raquo;</span></a>"
      }),
 
 
