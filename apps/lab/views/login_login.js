@@ -13,7 +13,7 @@
 Lab.LoginLoginView = SC.View.extend({
      layout: {left: 0, top: 0, width: 400, height: 100},
 
-     childViews: 'logo loginButtonView welcomeView usernameLabel usernameView passwordLabel passwordView'.w(),
+     childViews: 'logo loginButtonView welcomeView usernameLabel usernameView passwordLabel passwordView registerView'.w(),
 
      logo: SC.ImageView.design({
        layout: {top: 0, left: 11, width: 188, height: 84 },
@@ -21,7 +21,7 @@ Lab.LoginLoginView = SC.View.extend({
      }),
 
      loginButtonView: SC.ButtonView.design({
-       layout: { bottom: 0, height: 40, right: 0, width: 90 },
+       layout: { top: 216, height: 40, right: 0, width: 90 },
        title:  "enter &raquo;",
        isVisibleBinding: 'Lab.loginController.loginShowing',
        action: 'Lab.loginController.loginPortal'
@@ -30,6 +30,12 @@ Lab.LoginLoginView = SC.View.extend({
      welcomeView: SC.LabelView.design({
        layout: { top: 89, height: 20, left: 0, width: 210 },
        valueBinding: 'Lab.loginController.welcomeMessage'
+     }),
+
+     registerView: SC.LabelView.design({
+       layout: { bottom: 0, height: 20, left: 0, width: 210 },
+       escapeHTML: false,
+       value: "Don't have a login? <a style='text-decoration:none;' href='/portal'>Register now <span style='color:#eb8723;'>&raquo;</span></a>"
      }),
 
 
