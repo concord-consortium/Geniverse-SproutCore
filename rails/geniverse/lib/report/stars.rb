@@ -45,7 +45,7 @@ class Report::Stars
       next unless @all_classes || @class_names.include?(u.class_name.strip)
       sheet.row(row_num).concat ["#{u.first_name} #{u.last_name}", u.username, u.class_name.strip, u.group_id, u.member_id]
       if md = u.metadata
-        if stars = md['stars']
+        if (stars = md['stars']) && stars.is_a?(Hash)
           # sort so that rails ids will always come before route ids
           stars.keys.sort.each do |path|
             vals = stars[path]
@@ -66,11 +66,11 @@ class Report::Stars
                   v
                 end
               }
-              if sheet[row_num, col] && !sheet[row_num, col].empty?
-                sheet[row_num, col] += ","
+              if sheet[row_num, col] && sheet[row_num, col] != ""
+                sheet[row_num, col] = sheet[row_num, col].to_s + ","
               end
               sheet[row_num, col] ||= ""
-              sheet[row_num, col] += realVals.join(',')
+              sheet[row_num, col] += realVals.join(',').to_s
             end
           end
         end
