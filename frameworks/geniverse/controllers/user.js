@@ -151,6 +151,28 @@ Geniverse.userController = SC.ObjectController.create(
     return Math.max.apply([], [0].concat(activityStarsList));
   },
 
+  saveBlogPost: function(pageId, title) {
+    var meta = Geniverse.userController.getUserMetadata();
+    if (!meta.posts) {
+      meta.posts = {};
+    }
+
+    var now = new Date();
+    var timeStr = now.format("yyyy-MM-dd ") + now.toTimeString().replace(/ \(.*\)/, '');
+
+    var c1 = Geniverse.blogPostController.get('content1');
+    var c2 = Geniverse.blogPostController.get('content2');
+    var c3 = Geniverse.blogPostController.get('content3');
+    var c4 = Geniverse.blogPostController.get('content4');
+
+    if (!meta.posts[pageId]) {
+      meta.posts[pageId] = [];
+    }
+    meta.posts[pageId].push({time: timeStr, title: title, claim: c1, evidence: c2, url: c3, reasoning: c4});
+
+    Geniverse.userController.setUserMetadata(meta);
+  },
+
   saveBlogDraft: function(pageId) {
     var meta = Geniverse.userController.getUserMetadata();
     if (!meta.drafts) {

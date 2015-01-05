@@ -33,7 +33,7 @@ Lab.feedbackController = SC.Object.create({
   // and why.)
 
 
-  didSendBlogPost: function(description, postURL) {
+  didSendBlogPost: function() {
 
     var state = Lab.statechart.getState('argumentationChallenge'),
 
@@ -48,7 +48,7 @@ Lab.feedbackController = SC.Object.create({
          &&   argumentationChallengeIsNowComplete
          && ! argumentationChallengeWasAlreadyComplete) {
 
-        this._notifyPostedToBlogAndCompletedChallenge(description, postURL, isLastChallenge);
+        this._notifyPostedToBlogAndCompletedChallenge(isLastChallenge);
     }
     else {
 
@@ -56,7 +56,7 @@ Lab.feedbackController = SC.Object.create({
       // || ! argumentationChallengeIsNowComplete
       // ||   argumentationChallengeWasAlreadyComplete
 
-      this._notifyPostedToBlog(description, postURL);
+      this._notifyPostedToBlog();
     }
   },
 
@@ -72,7 +72,7 @@ Lab.feedbackController = SC.Object.create({
   // Private methods (to be called by event handlers, above) that contain the text of the various feedback messages
   // go here. Each method should be named _notify<summary of notification> and should contain minimal logic.
 
-  _notifyPostedToBlogAndCompletedChallenge: function(description, postURL, isLastChallenge) {
+  _notifyPostedToBlogAndCompletedChallenge: function(isLastChallenge) {
     this._notify(
       "Good work!",
 
@@ -86,7 +86,7 @@ Lab.feedbackController = SC.Object.create({
     );
   },
 
-  _notifyPostedToBlog: function(description, postURL) {
+  _notifyPostedToBlog: function() {
     this._notify(
       "Journal post successfully created!",
       "When you are ready, move onto the next challenge."
