@@ -25,7 +25,7 @@ Lab.TopBarView = SC.ToolbarView.extend(
   anchorLocation: SC.ANCHOR_TOP,
 
   // the order the children are defined here determines the order they show up in the top bar!
-  childViews: 'homeButton caselogButton introButton geniverseLabelView welcomeLabelView groupLabelView changeGroupButton infoButton notepadButton blogButton journalButton helpButton unlockablesButton logoutButton'.w(),
+  childViews: 'homeButton caselogButton introButton geniverseLabelView welcomeLabelView groupLabelView changeGroupButton infoButton notepadButton blogButton helpButton unlockablesButton logoutButton'.w(),
 
   homeButton: SC.ImageView.design(Geniverse.SimpleButton, {
     layout: { top: 0, left: 0, width: 66, height: 57 },
@@ -183,19 +183,6 @@ Lab.TopBarView = SC.ToolbarView.extend(
     target: 'Lab.statechart',
     action: 'showBlogPostPanel',
     classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-240'.w()
-  }),
-
-
-  journalButton: SC.ImageView.design(Geniverse.SimpleButton, {
-    layout: { top: 0, left: 0, width: 51, height: 57 },
-    useStaticLayout: YES,
-    hasHover: YES,
-    layerId: 'journalButton',
-    title:  "Journal",
-    toolTip: "Open class journal",
-    target: 'Lab.journalController',
-    action: 'openWindow',
-    classNames: 'topbar-hint-available hint-target-bottomMiddle hint-tooltip-topMiddle hint-max-width-160'.w()
   }),
 
   notepadButton: SC.ImageView.design(Geniverse.SimpleButton, {

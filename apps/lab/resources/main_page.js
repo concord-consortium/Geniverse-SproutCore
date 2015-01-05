@@ -22,7 +22,7 @@ Lab.mainPage = SC.Page.design({
     mainAppView: SC.View.design({
       layout: { top: 57, centerX: 0, width: 1890, height: 890},
       classNames: ['mainscreen'],
-      childViews: 'caselogButtonView journalButtonView doorButtonView backdoorButtonView'.w(),
+      childViews: 'caselogButtonView doorButtonView backdoorButtonView'.w(),
 
       caselogButtonView: SC.View.design(Geniverse.SimpleButton, {
         layerId: 'caselog',
@@ -32,16 +32,6 @@ Lab.mainPage = SC.Page.design({
         target: 'Lab.routes',
         action: 'openCaselogRoute',
         value: static_url('mainscreen-caselog-highlighted')
-      }),
-
-      journalButtonView: SC.View.design(Geniverse.SimpleButton, {
-        layerId: 'journal',
-        tagName: 'a',
-        hasHover: YES,
-        layout: { top: 612, centerX: 217, width: 242, height: 125 },
-        target: 'Lab.journalController',
-        action: 'openWindow',
-        value: static_url('mainscreen-journal-highlighted')
       }),
 
       doorButtonView: SC.View.design(Geniverse.SimpleButton, {
