@@ -5,6 +5,7 @@ class Report::Stars
   def initialize(class_names)
     @class_names = class_names || []
     @all_classes = @class_names.include?("|ALL|") ? true : false
+    @current_row = {:stars => 1, :posts => 1}
   end
 
   def caselogActivities
@@ -28,55 +29,96 @@ class Report::Stars
 
   def run(stream_or_path = 'stars_report.xls')
     wb = Spreadsheet::Workbook.new
-    sheet = wb.create_worksheet :name => 'stars'
+    stars_sheet = wb.create_worksheet :name => 'stars'
+    journal_sheet = wb.create_worksheet :name => 'journal'
 
-    cols = {}
+    @cols = {}
     headers = ['Username', 'Login', 'Class', 'Group #', 'Group member #']
-    #Activity.all.each do |a|
+
+    @current_row = {:stars => 1, :posts => 1}
+
     caselogActivities.each do |a|
-      cols[a.id] = headers.size
+      @cols[a.id] = headers.size
       headers << a.title
     end
 
-    sheet.row(0).concat headers
-    row_num = 1
+    stars_sheet.row(0).concat headers
+    journal_sheet.row(0).concat ['Username', 'Login', 'Class', 'Date/Time', 'Challenge', 'Title', 'Claim', 'Evidence', 'URL', 'Reasoning']
+
     User.all.each do |u|
       next if u.class_name.nil? || u.class_name.empty?
       next unless @all_classes || @class_names.include?(u.class_name.strip)
-      sheet.row(row_num).concat ["#{u.first_name} #{u.last_name}", u.username, u.class_name.strip, u.group_id, u.member_id]
-      if md = u.metadata
-        if (stars = md['stars']) && stars.is_a?(Hash)
-          # sort so that rails ids will always come before route ids
-          stars.keys.sort.each do |path|
-            vals = stars[path]
-            id = -1
-            if path =~ /\/rails\/activities\/(\d+)/
-              id = $1.to_i
-            else
-              # maybe it's a route: case1/challenge1
-              a = Activity.find_by_route(path)
-              id = a.id if a
-            end
-            if col = cols[id]
-              realVals = vals.map{|v|
-                case v
-                when Hash
-                  "#{v['stars']} (#{v['time']})"
-                else
-                  v
-                end
-              }
-              if sheet[row_num, col] && sheet[row_num, col] != ""
-                sheet[row_num, col] = sheet[row_num, col].to_s + ","
+
+      process_stars(stars_sheet, u)
+      process_posts(journal_sheet, u)
+    end
+    wb.write stream_or_path
+  end
+
+  def lookup_id_from_path(path)
+    id = -1
+    if path =~ /\/rails\/activities\/(\d+)/
+      id = $1.to_i
+    else
+      # maybe it's a route: case1/challenge1
+      a = Activity.find_by_route(path)
+      id = a.id if a
+    end
+    return id
+  end
+
+  def process_stars(sheet, u)
+    sheet.row(@current_row[:stars]).concat ["#{u.first_name} #{u.last_name}", u.username, u.class_name.strip, u.group_id, u.member_id]
+    if md = u.metadata
+      if (stars = md['stars']) && stars.is_a?(Hash)
+        # sort so that rails ids will always come before route ids
+        stars.keys.sort.each do |path|
+          vals = stars[path]
+          id = lookup_id_from_path(path)
+          if col = @cols[id]
+            realVals = vals.map{|v|
+              case v
+              when Hash
+                "#{v['stars']} (#{v['time']})"
+              else
+                v
               end
-              sheet[row_num, col] ||= ""
-              sheet[row_num, col] += realVals.join(',').to_s
+            }
+            if sheet[@current_row[:stars], col] && sheet[@current_row[:stars], col] != ""
+              sheet[@current_row[:stars], col] = sheet[@current_row[:stars], col].to_s + ","
+            end
+            sheet[@current_row[:stars], col] ||= ""
+            sheet[@current_row[:stars], col] += realVals.join(',').to_s
+          end
+        end
+      end
+    end
+    @current_row[:stars] += 1
+  end
+
+  # Columns are: ['Username', 'Login', 'Class', 'Date/Time', 'Challenge', 'Title', 'Claim', 'Evidence', 'URL', 'Reasoning']
+  def process_posts(sheet, user)
+    Rails.logger.warn "Processing posts in stars report.\n=======\n#{user.metadata.inspect}\n============="
+    common_row_data = ["#{user.first_name} #{user.last_name}", user.username, user.class_name.strip]
+    if (md = user.metadata) && md.is_a?(Hash) && (posts = md['posts']) && posts.is_a?(Hash)
+      # sort so that rails ids will always come before route ids
+      posts.keys.sort.each do |path|
+        vals = posts[path]
+        id = lookup_id_from_path(path)
+        if id != -1 && vals && vals.is_a?(Array) && !vals.empty?
+          vals.each do |post|
+            if post && post.is_a?(Hash) && (act = caselogActivities.detect{|a| a.id == id })
+              sheet.row(@current_row[:posts]).concat(common_row_data + [post['time'], act.title, post['title'], post['claim'], post['evidence'], post['url'], post['reasoning']])
+
+              @current_row[:posts] += 1
             end
           end
         end
       end
-      row_num += 1
+    else
+      sheet.row(@current_row[:posts]).concat(common_row_data + ['no arguments submitted yet'])
+
+      @current_row[:posts] += 1
     end
-    wb.write stream_or_path
   end
 end
