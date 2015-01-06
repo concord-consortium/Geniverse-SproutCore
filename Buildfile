@@ -10,7 +10,9 @@ config :all,
 mode :production do
   config :lab,
     :google_analytics_id => "UA-6899787-33",
-    :resources_base => "http://resources.geniverse.concord.org"
+    :portal_base => "http://geniverse.concord.org/portal",
+    :rails_backend_base => "http://geniverse.concord.org/rails",
+    :resources_base => "http://resources.geniverse.concord.org",
 end
 
 mode :inabox do
@@ -28,18 +30,24 @@ end
 mode :dev do
   config :lab,
     :google_analytics_id => nil,
+    :portal_base => "http://geniverse.dev.concord.org/portal",
+    :rails_backend_base => "http://geniverse.dev.concord.org/rails",
     :resources_base => "http://resources.geniverse.dev.concord.org"
 end
 
 mode :testing do
   config :lab,
     :google_analytics_id => nil,
+    :portal_base => "http://geniverse.testing.concord.org/portal",
+    :rails_backend_base => "http://geniverse.testing.concord.org/rails",
     :resources_base => "http://resources.geniverse.testing.concord.org"
 end
 
 mode :debug do
   config :lab,
     :google_analytics_id => nil,
+    :portal_base => "http://geniverse.dev.concord.org/portal",
+    :rails_backend_base => "http://geniverse.dev.concord.org/rails",
     :resources_base => "http://resources.geniverse.dev.concord.org"
 end
 

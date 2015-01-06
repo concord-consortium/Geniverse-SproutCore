@@ -17,7 +17,7 @@ Lab.logController = SC.Object.create(
 
   learnerDataUrl: null,
 
-  syncTime: new SyncTime('/portal/time'),
+  syncTime: new SyncTime(Geniverse.portalBase + '/time'),
   eventQueue: [],
   eventQueueInProgress: [],
 
@@ -131,7 +131,7 @@ Lab.logController = SC.Object.create(
   _usernameChanged: function() {
     var username = Geniverse.userController.get('username');
     if (username) {
-      this.set('learnerDataUrl', '/portal/dataservice/bucket_loggers/name/' + username + '/bucket_log_items.bundle');
+      this.set('learnerDataUrl', Geniverse.portalBase + '/dataservice/bucket_loggers/name/' + username + '/bucket_log_items.bundle');
     }
   }.observes('Geniverse.userController.username'),
 

@@ -48,7 +48,7 @@ Lab.backdoorController = SC.Object.create(
           // open the starz report in a new tab
           var encoded = this._encodeClasses();
           try {
-            window.open('/rails/starsReport/' + encoded, "_blank");
+            window.open(Geniverse.railsBackendBase + '/starsReport/' + encoded, "_blank");
           } catch (e) { }
         }
         break;

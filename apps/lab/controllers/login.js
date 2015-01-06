@@ -16,9 +16,9 @@ Lab.loginController = SC.ObjectController.create(
   defaultResponder: 'Lab.statechart',
 
   // TODO: Add your own code here.
-  checkTokenUrl: '/portal/verify_cc_token',
-  loginUrl: '/portal/remote_login',
-  logoutUrl: '/portal/remote_logout',
+  checkTokenUrl: Geniverse.portalBase + '/verify_cc_token',
+  loginUrl: Geniverse.portalBase + '/remote_login',
+  logoutUrl: Geniverse.portalBase + '/remote_logout',
   username: '',
   password: '',
   loggedIn: NO,

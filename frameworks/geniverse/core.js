@@ -23,6 +23,70 @@ SC.Page = SC.Page.extend({
   }
 });
 
+// Monkey-patch xhr requests so they support sending cookies when making a CORS request
+SC.XHRResponse.prototype.invokeTransport = function() {
+
+  var rawRequest, transport, handleReadyStateChange, async, headers;
+
+  // Get an XHR object
+  function tryThese() {
+    for (var i=0; i < arguments.length; i++) {
+      try {
+        var item = arguments[i]() ;
+        return item ;
+      } catch (e) {}
+    }
+    return NO;
+  }
+
+  rawRequest = tryThese(
+    function() { return new XMLHttpRequest(); },
+    function() { return new ActiveXObject('Msxml2.XMLHTTP'); },
+    function() { return new ActiveXObject('Microsoft.XMLHTTP'); }
+  );
+
+  if ("withCredentials" in rawRequest) {
+    rawRequest.withCredentials = true;
+  }
+
+  // save it
+  this.set('rawRequest', rawRequest);
+
+  // configure async callback - differs per browser...
+  async = !!this.getPath('request.isAsynchronous') ;
+  if (async) {
+    if (!SC.browser.msie && !SC.browser.opera ) {
+      SC.Event.add(rawRequest, 'readystatechange', this, 
+                   this.finishRequest, rawRequest) ;
+    } else {
+      transport=this;
+      handleReadyStateChange = function() {
+        if (!transport) return null ;
+        var ret = transport.finishRequest();
+        if (ret) transport = null ; // cleanup memory
+        return ret ;
+      };
+      rawRequest.onreadystatechange = handleReadyStateChange;
+    }
+  }
+
+  // initiate request.
+  rawRequest.open(this.get('type'), this.get('address'), async ) ;
+
+  // headers need to be set *after* the open call.
+  headers = this.getPath('request.headers') ;
+  for (var headerKey in headers) {
+    rawRequest.setRequestHeader(headerKey, headers[headerKey]) ;
+  }
+
+  // now send the actual request body - for sync requests browser will
+  // block here
+  rawRequest.send(this.getPath('request.encodedBody')) ;
+  if (!async) this.finishRequest() ; // not async
+
+  return rawRequest ;
+};
+
 Geniverse = SC.Application.create(
   /** @scope Geniverse.prototype */ {
 
@@ -81,6 +145,22 @@ Geniverse.doWhen = function(context, object, callback, desiredStatus) {
       Geniverse.resourcesBase = window.CC_RESOURCES_BASE;
     } else {
       Geniverse.resourcesBase = "http://resources.geniverse.dev.concord.org";
+    }
+  }
+
+  if (typeof(Geniverse.portalBase) == "undefined") {
+    if (typeof(window.CC_PORTAL_BASE) !== "undefined") {
+      Geniverse.portalBase = window.CC_PORTAL_BASE;
+    } else {
+      Geniverse.portalBase = "/portal";
+    }
+  }
+
+  if (typeof(Geniverse.railsBackendBase) == "undefined") {
+    if (typeof(window.CC_RAILS_BACKEND_BASE) !== "undefined") {
+      Geniverse.railsBackendBase = window.CC_RAILS_BACKEND_BASE;
+    } else {
+      Geniverse.railsBackendBase = "/rails";
     }
   }
 })();
