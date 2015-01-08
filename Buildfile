@@ -12,7 +12,25 @@ mode :production do
     :google_analytics_id => "UA-6899787-33",
     :portal_base => "http://geniverse.concord.org/portal",
     :rails_backend_base => "http://geniverse.concord.org/rails",
-    :resources_base => "http://resources.geniverse.concord.org",
+    :resources_base => "http://resources.geniverse.concord.org"
+end
+
+mode :production_s3 do
+  config :lab,
+    :google_analytics_id => "UA-6899787-33",
+    :portal_base => "https://learn.concord.org",
+    :rails_backend_base => "https://learn.concord.org/geniverse",
+    :resources_base => "//geniverse-resources.concord.org",
+    :use_full_url_for_resources => true
+end
+
+mode :staging_s3 do
+  config :lab,
+    :google_analytics_id => nil,
+    :portal_base => "https://learn.staging.concord.org",
+    :rails_backend_base => "https://learn.staging.concord.org/geniverse",
+    :resources_base => "//geniverse-resources.concord.org",
+    :use_full_url_for_resources => true
 end
 
 mode :inabox do

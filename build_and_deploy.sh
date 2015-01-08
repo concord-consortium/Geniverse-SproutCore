@@ -38,6 +38,16 @@ function boxsync {
   rsync -rqlzP tmp/build/* $REMOTE_USER@$SERVER:$SERVER_PATH/
 }
 
+function s3sync {
+  echo "Sending files to S3 bucket '$BUCKET' ..."
+  s3cmd sync -P -M --no-delete-removed tmp/build/ s3://$BUCKET/
+  s3cmd put -P -M --cf-invalidate tmp/build/static/lab/en/$BUILD_NUM/index.html s3://$BUCKET/static/lab/en/$BUILD_NUM/index.html
+  s3cmd put -P -M --cf-invalidate tmp/build/$LABEL/index.html s3://$BUCKET/$LABEL/
+  if [ -e "tmp/build/index.html" ]; then
+    s3cmd put -P -M --cf-invalidate tmp/build/index.html s3://$BUCKET/
+  fi
+}
+
 function label {
   echo "Lab build hash: $BUILD_NUM"
 
@@ -72,6 +82,12 @@ function copyindex {
   cp tmp/build/static/lab/en/$BUILD_NUM/index.html tmp/build/index.html
 }
 
+function copyindexwithlabel {
+  BUILD_NUM=$($CMD_PREFIX sc-build-number lab)
+  mkdir -p tmp/build/$LABEL/
+  cp tmp/build/static/lab/en/$BUILD_NUM/index.html tmp/build/$LABEL/index.html
+}
+
 case "$1" in
   production)
     export SERVER=geniverse.concord.org
@@ -79,6 +95,25 @@ case "$1" in
     export LABEL_PATH="/web/static"
     export REMOTE_USER="deploy"
     export BUILD_MODE="production"
+    ;;
+  production_s3)
+    export BUCKET=geniverse-lab.concord.org
+    export BUILD_MODE="production_s3"
+    export LABEL="lab"
+    build
+    copyindex
+    copyindexwithlabel
+    s3sync
+    exit 0
+    ;;
+  staging_s3)
+    export BUCKET=geniverse-lab.concord.org
+    export BUILD_MODE="staging_s3"
+    export LABEL="staging"
+    build
+    copyindexwithlabel
+    s3sync
+    exit 0
     ;;
   dev)
     export SERVER=otto.concord.org
