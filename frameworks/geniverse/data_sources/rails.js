@@ -92,7 +92,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
     // guid will be rails url e.g. /rails/questions/1
     var guid = store.idFor(storeKey);
 
-    this._jsonGet(Geniverse.railsBackendBase + '%@.json'.fmt(guid), 'didRetrieveRecord', store, storeKey);
+    this._jsonGet(Geniverse.railsBackendHostOnly + '%@.json'.fmt(guid), 'didRetrieveRecord', store, storeKey);
 
     return YES; // return YES if you handled the storeKey
   },
@@ -177,7 +177,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
 
 
         // SC.Logger.group('Geniverse.RailsDataSource.createRecord()');
-        SC.Request.putUrl(Geniverse.railsBackendBase + url + '.json').header({
+        SC.Request.putUrl(Geniverse.railsBackendHostOnly + url + '.json').header({
                        'Accept': 'application/json'
                    }).json().notify(this, this.didUpdateRecord, store, storeKey).send(modelHash);
         // SC.Logger.groupEnd();

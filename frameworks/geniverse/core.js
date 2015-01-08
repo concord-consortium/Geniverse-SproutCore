@@ -140,6 +140,12 @@ Geniverse.doWhen = function(context, object, callback, desiredStatus) {
 };
 
 (function() {
+  var getLocation = function(href) {
+    var l = document.createElement("a");
+    l.href = href;
+    return l;
+  };
+
   if (typeof(Geniverse.resourcesBase) == "undefined") {
     if (typeof(window.CC_RESOURCES_BASE) !== "undefined") {
       Geniverse.resourcesBase = window.CC_RESOURCES_BASE;
@@ -159,8 +165,21 @@ Geniverse.doWhen = function(context, object, callback, desiredStatus) {
   if (typeof(Geniverse.railsBackendBase) == "undefined") {
     if (typeof(window.CC_RAILS_BACKEND_BASE) !== "undefined") {
       Geniverse.railsBackendBase = window.CC_RAILS_BACKEND_BASE;
+      var l = getLocation(Geniverse.railsBackendBase),
+          hostOnly = "";
+
+      if (l.hostname) {
+        if (l.protocol) {
+          hostOnly += l.protocol;
+        } else {
+          hostOnly += window.location.protocol;
+        }
+        hostOnly += '//' + l.hostname;
+      }
+      Geniverse.railsBackendHostOnly = hostOnly;
     } else {
       Geniverse.railsBackendBase = "/rails";
+      Geniverse.railsBackendHostOnly = "";
     }
   }
 })();
