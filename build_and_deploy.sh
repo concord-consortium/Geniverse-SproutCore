@@ -40,12 +40,14 @@ function boxsync {
 
 function s3sync {
   echo "Sending files to S3 bucket '$BUCKET' ..."
-  s3cmd sync -P -M --no-delete-removed tmp/build/ s3://$BUCKET/
-  s3cmd put -P -M --cf-invalidate tmp/build/static/lab/en/$BUILD_NUM/index.html s3://$BUCKET/static/lab/en/$BUILD_NUM/index.html
-  s3cmd put -P -M --cf-invalidate tmp/build/$LABEL/index.html s3://$BUCKET/$LABEL/
+  s3cmd sync -P -M --no-mime-magic --no-delete-removed tmp/build/ s3://$BUCKET/
+  s3cmd put -P -m "text/html" tmp/build/static/lab/en/$BUILD_NUM/index.html s3://$BUCKET/static/lab/en/$BUILD_NUM/index.html
+  s3cmd put -P -m "text/html" tmp/build/$LABEL/index.html s3://$BUCKET/$LABEL/
   if [ -e "tmp/build/index.html" ]; then
-    s3cmd put -P -M --cf-invalidate tmp/build/index.html s3://$BUCKET/
+    s3cmd put -P -m "text/html" tmp/build/index.html s3://$BUCKET/
   fi
+
+  echo "Done. Don't forget to invalidate the index files in cloudfront!"
 }
 
 function label {
