@@ -1,3 +1,6 @@
+// NOTE: If you update this file, also update the copy of it in the geniverse-portal-integration repo:
+// https://github.com/concord-consortium/geniverse-portal-integration/blob/master/lib/cases.js
+
 (function() {
 
   Lab.caselogData = [
