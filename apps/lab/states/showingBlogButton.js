@@ -37,7 +37,7 @@ Lab.showingBlogButton =  Ki.State.extend({
       // save a draft first
       this.save();
 
-      if (!this._checkURL(content)) {
+      if (!this._checkURL()) {
         return;
       }
 
