@@ -72,10 +72,13 @@ Geniverse.unlockablesController = SC.Object.create({
     var unlocked = [];
     locked.forEach(function(item) {
       item.set('unlocked', YES);
-      Geniverse.userController.setUnlocked("unlockables",item.get('title'));
-      if (!skipNotify) {
-        _this.notifyUnlockable(item);
-      }
+
+      Geniverse.doWhenReady(this, Geniverse.userController.get('content'), function() {
+        Geniverse.userController.setUnlocked("unlockables",item.get('title'));
+        if (!skipNotify) {
+          _this.notifyUnlockable(item);
+        }
+      });
       unlocked.push(item);
     });
     this.get('all').reload();
