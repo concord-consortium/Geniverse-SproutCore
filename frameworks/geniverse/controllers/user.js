@@ -150,7 +150,7 @@ Geniverse.userController = SC.ObjectController.create(
     return Math.max.apply([], [0].concat(activityStarsList));
   },
 
-  saveBlogPost: function(pageId, title) {
+  saveBlogPost: function(pageId) {
     var meta = Geniverse.userController.getUserMetadata();
     if (!meta.posts) {
       meta.posts = {};
@@ -164,7 +164,7 @@ Geniverse.userController = SC.ObjectController.create(
     if (!meta.posts[pageId]) {
       meta.posts[pageId] = [];
     }
-    meta.posts[pageId].push({time: this._getCurrentTimestring(), title: title, claim: c1, evidence: c2, url: c3, reasoning: c4});
+    meta.posts[pageId].push({time: this._getCurrentTimestring(), claim: c1, evidence: c2, url: c3, reasoning: c4});
 
     Geniverse.userController.setUserMetadata(meta);
   },

@@ -80,15 +80,14 @@ Geniverse.blogPostController = SC.Controller.create(
   },
 
   saveBlogPost: function() {
-    var pageId = Geniverse.activityController.get('route'),
-        title = this.get('title');
+    var pageId = Geniverse.activityController.get('route');
     if (pageId === null && Geniverse.activityController.get('title') == "Case Log") {
       pageId = "caselog";
     }
 
     // Commit user record, if not busy
     Geniverse.doWhenReady(this, Geniverse.userController.get('content'), function() {
-      Geniverse.userController.saveBlogPost(pageId, title);
+      Geniverse.userController.saveBlogPost(pageId);
       Geniverse.store.commitRecords();
     });
   },
