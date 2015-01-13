@@ -122,9 +122,8 @@ Geniverse.userController = SC.ObjectController.create(
     if (!meta.stars[pageId]) {
      meta.stars[pageId] = [];
     }
-    var now = new Date();
-    var timeStr = now.format("yyyy-MM-dd ") + now.toTimeString().replace(/ \(.*\)/, '');
-    meta.stars[pageId].push({stars: numStars, time: timeStr});
+
+    meta.stars[pageId].push({stars: numStars, time: this._getCurrentTimestring()});
 
     // TODO Do we bother to convert all the old data to the new format?
     // from; stars[pageId] == [1,3,2,3,2] to stars[pageId] == [{...}, {...}, {...}, {...}]
@@ -157,9 +156,6 @@ Geniverse.userController = SC.ObjectController.create(
       meta.posts = {};
     }
 
-    var now = new Date();
-    var timeStr = now.format("yyyy-MM-dd ") + now.toTimeString().replace(/ \(.*\)/, '');
-
     var c1 = Geniverse.blogPostController.get('content1');
     var c2 = Geniverse.blogPostController.get('content2');
     var c3 = Geniverse.blogPostController.get('content3');
@@ -168,7 +164,7 @@ Geniverse.userController = SC.ObjectController.create(
     if (!meta.posts[pageId]) {
       meta.posts[pageId] = [];
     }
-    meta.posts[pageId].push({time: timeStr, title: title, claim: c1, evidence: c2, url: c3, reasoning: c4});
+    meta.posts[pageId].push({time: this._getCurrentTimestring(), title: title, claim: c1, evidence: c2, url: c3, reasoning: c4});
 
     Geniverse.userController.setUserMetadata(meta);
   },
@@ -179,15 +175,12 @@ Geniverse.userController = SC.ObjectController.create(
       meta.drafts = {};
     }
 
-    var now = new Date();
-    var timeStr = now.format("yyyy-MM-dd ") + now.toTimeString().replace(/ \(.*\)/, '');
-
     var c1 = Geniverse.blogPostController.get('content1');
     var c2 = Geniverse.blogPostController.get('content2');
     var c3 = Geniverse.blogPostController.get('content3');
     var c4 = Geniverse.blogPostController.get('content4');
 
-    meta.drafts[pageId] = {time: timeStr, content1: c1, content2: c2, content3: c3, content4: c4};
+    meta.drafts[pageId] = {time: this._getCurrentTimestring(), content1: c1, content2: c2, content3: c3, content4: c4};
 
     Geniverse.userController.setUserMetadata(meta);
   },
@@ -196,5 +189,10 @@ Geniverse.userController = SC.ObjectController.create(
     var userMetadata = this.getUserMetadata(),
         drafts        = userMetadata.drafts || {};
     return drafts[pageId] || {};
+  },
+
+  _getCurrentTimestring: function() {
+    var now = SC.DateTime.create().toTimezone(300);
+    return now.toFormattedString('%m-%D-%Y %i:%M %p');
   }
 }) ;
