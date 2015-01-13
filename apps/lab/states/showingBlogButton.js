@@ -45,12 +45,10 @@ Lab.showingBlogButton =  Ki.State.extend({
       Geniverse.blogPostController.saveBlogPost();
 
       // Trigger statechart actions (possibly marking the challenge complete), and a notification.
-      Lab.statechart.sendAction('didSendBlogPost');
-      Lab.feedbackController.didSendBlogPost();
+      Lab.statechart.sendEvent('didSendBlogPost');
+      Lab.statechart.sendEvent('showFeedbackAndClose');
 
       Lab.logController.logEvent(Lab.EVENT.JOURNAL_POST);
-
-      this.closePanel();
     },
 
     save: function() {
@@ -65,6 +63,11 @@ Lab.showingBlogButton =  Ki.State.extend({
 
     saveAndClose: function() {
       this.save();
+      this.closePanel();
+    },
+
+    showFeedbackAndClose: function() {
+      Lab.feedbackController.didSendBlogPost();
       this.closePanel();
     },
 
