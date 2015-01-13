@@ -193,6 +193,6 @@ Geniverse.userController = SC.ObjectController.create(
 
   _getCurrentTimestring: function() {
     var now = SC.DateTime.create().toTimezone(300);
-    return now.toFormattedString('%m-%D-%Y %i:%M %p');
+    return now.toFormattedString('%Y-%m-%d %i:%M %p');
   }
 }) ;
