@@ -15,7 +15,9 @@ Lab.argumentationChallenge = Ki.State.extend({
 
   startChallenge: function() {
     this.set('challengeComplete', NO);
-    this.set('challengeWasAlreadyComplete', NO);
+      var pageId = Geniverse.activityController.get('route'),
+      stars = Geniverse.userController.getPageStars(pageId);
+    this.set('challengeWasAlreadyComplete', stars == 1);
 
     this.get('statechart').sendAction('blockNextNavButton');
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', NO);
