@@ -23,7 +23,7 @@ Lab.BreedingPenView = SC.View.extend(
   titleView: null,
   penView: null,
 
-  breedingRecordRight: -180,
+  breedingRecordRight: -20,
 
   /**
    * Necessary configuration xPath elements to set up binding inside the composite view instances
@@ -96,7 +96,7 @@ Lab.BreedingPenView = SC.View.extend(
 
     this.recordLink = this.createChildView(
       Geniverse.RecordLinkView.design({
-        layout: { right: this.get('breedingRecordRight'), bottom: 21, height: 25, width: 160},
+        layout: { right: this.get('breedingRecordRight'), bottom: 0, height: 25, width: 160},
         tabView: this.tabView
       })
     );
