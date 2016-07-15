@@ -23,7 +23,7 @@ Lab.BreedingPenView = SC.View.extend(
   titleView: null,
   penView: null,
 
-  breedingRecordRight: -180,
+  breedingRecordRight: -20,
 
   /**
    * Necessary configuration xPath elements to set up binding inside the composite view instances
@@ -96,7 +96,7 @@ Lab.BreedingPenView = SC.View.extend(
 
     this.recordLink = this.createChildView(
       Geniverse.RecordLinkView.design({
-        layout: { right: this.get('breedingRecordRight'), bottom: 21, height: 25, width: 160},
+        layout: { right: this.get('breedingRecordRight'), bottom: 0, height: 25, width: 160},
         tabView: this.tabView
       })
     );
@@ -110,6 +110,26 @@ Lab.BreedingPenView = SC.View.extend(
     });
 
     childViews.push(this.recordLink);
+
+    this.recordButton = this.createChildView(
+      SC.ButtonView.design({
+        layout: { bottom: 5, right: 10, width: 150, height: 24 },
+        action: function() {
+          window.saveBreedingDragonsToBackend();
+        },
+        // WTF, SproutCore, why can't we just use an `isVisible` property?
+        isVisibleObserver: function() {
+          this.set("isVisible", Geniverse.eggsController.get('length') > 0 &&
+            !this.getPath("parentView.recordLink.isVisible"))
+        }.observes('Geniverse.eggsController.length', '*parentView.recordLink.isVisible'),
+        isEnabled: function() {
+          return true;
+          // return (this.get('hasParents') && !this.get('isBreeding'));
+        }.property('hasParents', 'isBreeding').cacheable(),
+        title: "Get record link"
+      })
+    );
+    childViews.push(this.recordButton);
 
     this.set('childViews', childViews);
   }

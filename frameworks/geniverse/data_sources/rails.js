@@ -118,9 +118,10 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
 
 
   createRecord: function(store, storeKey) {
-    var recordType = store.recordTypeFor(storeKey);
+    var recordType = store.recordTypeFor(storeKey),
+        ret = store.readDataHash(storeKey);
     if (Geniverse.railsBackedTypes.indexOf(recordType.modelName) != -1) {
-      if (recordType.readOnly) {
+      if (recordType.readOnly || (recordType.saveToBackendOptional && ret && !ret.saveToBackend)) {
         // pretend like we saved
         window.setTimeout(function() {
           store.dataSourceDidComplete(storeKey);
@@ -128,7 +129,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
       } else {
         var modelName = recordType.modelName;
         var modelHash = {};
-        modelHash[modelName] = store.readDataHash(storeKey);
+        modelHash[modelName] = ret;
         // SC.Logger.dir(modelHash);
         //delete modelHash[modelName]['guid'];    // remove guid property before sending to rails
 

@@ -20,7 +20,7 @@ Lab.loginPage = SC.Page.design({
 
     loginBg: SC.View.design({
       layerId: 'loginBox',
-      layout: { height: 310, width: 250, top: 100, right: 50 }
+      layout: { height: 360, width: 250, top: 100, right: 50 }
     }),
 
     drakes: SC.View.design({
@@ -29,7 +29,7 @@ Lab.loginPage = SC.Page.design({
     }),
 
     loginPanel: Lab.LoginLoginView.design({
-      layout: {top: 120, width: 210, height: 285, right: 70}
+      layout: {top: 120, width: 210, height: 350, right: 70}
     }),
 
     drakesTimer: null,

@@ -52,6 +52,8 @@ Geniverse.Dragon = SC.Record.extend(
     inverse: 'dragons', isMaster: NO
   }),
 
+  saveToBackend: SC.Record.attr(Boolean,  { defaultValue: NO }),
+
   // attributes that don't want to be persisted
   gOrganism: null,
   characteristics: null,
@@ -169,6 +171,7 @@ Geniverse.Dragon = SC.Record.extend(
 Geniverse.Dragon.modelName = "dragon";
 Geniverse.Dragon.modelsName = "dragons";
 Geniverse.Dragon.readOnly = NO;
+Geniverse.Dragon.saveToBackendOptional = YES;
 Geniverse.railsBackedTypes.push(Geniverse.Dragon.modelName);
 
 Geniverse.Dragon.traitRules = BioLogica.Species.Drake.traitRules;

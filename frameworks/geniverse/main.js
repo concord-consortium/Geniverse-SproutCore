@@ -65,3 +65,60 @@ Geniverse.main = function main() {
 };
 
 function main() { Geniverse.main(); }
+
+
+// polyfills
+
+if (typeof Object.assign != 'function') {
+  Object.assign = function(target) {
+    'use strict';
+    if (target == null) {
+      throw new TypeError('Cannot convert undefined or null to object');
+    }
+
+    target = Object(target);
+    for (var index = 1; index < arguments.length; index++) {
+      var source = arguments[index];
+      if (source != null) {
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+    }
+    return target;
+  };
+}
+
+window.createSavableDragon = function(dragon, mother, father) {
+  var attrsCopy = Object.assign({}, dragon.attributes());
+  attrsCopy.saveToBackend = true;
+  if (mother && father) {
+    attrsCopy.mother = mother.get("id");
+    attrsCopy.father = father.get("id");
+  }
+  return Geniverse.store.createRecord(Geniverse.Dragon, attrsCopy);
+}
+
+window.saveBreedingDragonsToBackend = function() {
+  var eggs = Geniverse.eggsController.get('content'),
+      newEggs = [];
+
+  SC.RunLoop.begin();
+  var mother = Geniverse.breedDragonController.get("mother");
+  newMother = createSavableDragon(mother);
+  var father = Geniverse.breedDragonController.get("father");
+  newFather = createSavableDragon(father);
+  Geniverse.store.commitRecords();
+  SC.RunLoop.end();
+
+  SC.RunLoop.begin();
+  for (var i = 0, ii = eggs.length; i < ii; i++) {
+    newEggs.push(createSavableDragon(eggs[i], newMother, newFather));
+  }
+  Geniverse.eggsController.set('content', newEggs);
+
+  Geniverse.store.commitRecords();
+  SC.RunLoop.end();
+}
