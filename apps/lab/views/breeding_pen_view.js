@@ -111,21 +111,23 @@ Lab.BreedingPenView = SC.View.extend(
 
     childViews.push(this.recordLink);
 
+    __this = this;
+
     this.recordButton = this.createChildView(
       SC.ButtonView.design({
         layout: { bottom: 5, right: 10, width: 150, height: 24 },
         action: function() {
           window.saveBreedingDragonsToBackend();
+          __this.recordButton.set("isEnabled", false);
+          setTimeout(function() {
+            __this.recordButton.set("isEnabled", true);
+          }, 1200);
         },
         // WTF, SproutCore, why can't we just use an `isVisible` property?
         isVisibleObserver: function() {
           this.set("isVisible", Geniverse.eggsController.get('length') > 0 &&
             !this.getPath("parentView.recordLink.isVisible"))
         }.observes('Geniverse.eggsController.length', '*parentView.recordLink.isVisible'),
-        isEnabled: function() {
-          return true;
-          // return (this.get('hasParents') && !this.get('isBreeding'));
-        }.property('hasParents', 'isBreeding').cacheable(),
         title: "Get record link"
       })
     );

@@ -31,6 +31,13 @@ Geniverse.RecordLinkView = SC.LabelView.extend(
     }
   }.observes('*content.[]', '*tabView.nowShowing', '*tabView.nowShowing.traitPulldown.value'),
 
+  superObserver: function() {
+    var _this = this;
+    window.triggerRecordLinkUpdate = function() {
+      _this.dragonsObserver();
+    }
+  }.observes('*content.[]', '*tabView.nowShowing', '*tabView.nowShowing.traitPulldown.value'),
+
   updateLink: function(dragon) {
     if (dragon.get('status') & SC.Record.READY === SC.Record.READY) {
       dragon.removeObserver('status', this.updateLink);

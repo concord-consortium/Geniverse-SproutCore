@@ -98,7 +98,15 @@ window.createSavableDragon = function(dragon, mother, father) {
     attrsCopy.mother = mother.get("id");
     attrsCopy.father = father.get("id");
   }
-  return Geniverse.store.createRecord(Geniverse.Dragon, attrsCopy);
+  var org = Geniverse.store.createRecord(Geniverse.Dragon, attrsCopy);
+
+  var alleles = dragon.get("alleles"),
+      sex = dragon.get("sex");
+  GenGWT.generateDragonWithAlleleStringAndSex(alleles, sex, function(gOrg){
+    org.set('gOrganism', gOrg)
+  });
+
+  return org;
 }
 
 window.saveBreedingDragonsToBackend = function() {
@@ -113,12 +121,17 @@ window.saveBreedingDragonsToBackend = function() {
   Geniverse.store.commitRecords();
   SC.RunLoop.end();
 
-  SC.RunLoop.begin();
-  for (var i = 0, ii = eggs.length; i < ii; i++) {
-    newEggs.push(createSavableDragon(eggs[i], newMother, newFather));
-  }
-  Geniverse.eggsController.set('content', newEggs);
+  setTimeout(function() {
+    SC.RunLoop.begin();
+    for (var i = 0, ii = eggs.length; i < ii; i++) {
+      newEggs.push(createSavableDragon(eggs[i], newMother, newFather));
+    }
+    Geniverse.eggsController.set('content', newEggs);
 
-  Geniverse.store.commitRecords();
-  SC.RunLoop.end();
+    Geniverse.store.commitRecords();
+    SC.RunLoop.end();
+    if (window.triggerRecordLinkUpdate) {
+      window.triggerRecordLinkUpdate();
+    }
+  }, 1000);
 }
