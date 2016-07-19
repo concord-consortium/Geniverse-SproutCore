@@ -3,8 +3,8 @@
 # Copyright: ©2010 The Concord Consortium
 # ===========================================================================
 
-config :all, 
-  :required => [:geniverse, :sproutcore, :cc, :ki], 
+config :all,
+  :required => [:geniverse, :sproutcore, :cc, :ki],
   :load_fixtures => true
 
 mode :production do
@@ -48,8 +48,8 @@ end
 mode :dev do
   config :lab,
     :google_analytics_id => nil,
-    :portal_base => "http://geniverse.dev.concord.org/portal",
-    :rails_backend_base => "http://geniverse.dev.concord.org/rails",
+    :portal_base => "https://learn.staging.concord.org",
+    :rails_backend_base => "https://learn.staging.concord.org/geniverse",
     :resources_base => "http://resources.geniverse.dev.concord.org"
 end
 
@@ -64,15 +64,15 @@ end
 mode :debug do
   config :lab,
     :google_analytics_id => nil,
-    :portal_base => "http://geniverse.dev.concord.org/portal",
-    :rails_backend_base => "http://geniverse.dev.concord.org/rails",
+    :portal_base => "https://learn.staging.concord.org",
+    :rails_backend_base => "https://learn.staging.concord.org/geniverse",
     :resources_base => "http://resources.geniverse.dev.concord.org"
 end
 
 config :geniverse,
   :layout => 'lib/index.rhtml',
   :test_layout => 'lib/index.rhtml'
-  
+
 config :lab,
   :layout => 'lib/index.rhtml',
   :test_layout => 'lib/index.rhtml'
