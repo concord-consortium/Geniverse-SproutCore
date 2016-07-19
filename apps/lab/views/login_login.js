@@ -51,7 +51,7 @@ Lab.LoginLoginView = SC.View.extend({
          if (SC.buildMode == "demo") {
            extra = "This is the Geniverse DEMO site. ";
          }
-         return extra + 'To log in to Geniverse and save data, visit <a href="http://geniverse.concord.org/lab/">geniverse.concord.org/lab</a>.';
+         return extra + 'To log in to Geniverse and save your progress, visit <a href="https://geniverse-lab.concord.org/">geniverse-lab.concord.org</a>.';
        }.property()
      }),
 
