@@ -33,15 +33,15 @@ Lab.LoginLoginView = SC.View.extend({
      }),
 
      registerView: SC.LabelView.design({
-       layout: { bottom: 77, height: 20, left: 0, width: 210 },
+       layout: { bottom: 61, height: 40, left: 0, width: 210 },
        escapeHTML: false,
-       value: "Don't have a login? <a style='text-decoration:none; color:#2a777b;' href='" + Geniverse.portalBase + "'>Register now <span style='color:#eb8723;'>&raquo;</span></a>"
+       value: "Don't have a login? <p><a style='font-size: 1.3em; text-decoration:none; color:#2a777b;' href='" + Geniverse.portalBase + "'>Sign up now <span style='color:#eb8723;'>&raquo;</span></a>"
      }),
 
      demoLinkView: SC.LabelView.design({
        layout: { bottom: 11, height: 45, left: 0, width: 210 },
        escapeHTML: false,
-       value: "Want to try the game without saving data? <a style='text-decoration:none; color:#2a777b;' href='http://demo.geniverse.concord.org'>Go to the Demo Site <span style='color:#eb8723;'>&raquo;</span></a>"
+       value: "or <a style='text-decoration:none; color:#2a777b;' href='http://demo.geniverse.concord.org'>Play as a guest <span style='color:#eb8723;'>&raquo;</span></a>"
      }),
 
 
