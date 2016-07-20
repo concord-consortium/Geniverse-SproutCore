@@ -45,7 +45,7 @@ Geniverse.RecordLinkView = SC.LabelView.extend(
       if (!!dbUrl){
         var recordLink = Geniverse.railsBackendHostOnly  + dbUrl.replace('dragons', 'breedingRecordsShow');
         recordLink += this.getStatisticsPart();
-        this.set('value', "<a href='"+recordLink+"' target='_blank'>Link to breeding record</a>");
+        this.set('value', "Record created! &nbsp;&nbsp; <a href='"+recordLink+"' target='_blank'>View breeding record</a>");
         this.set('isVisible', YES);
       }
     }

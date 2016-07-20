@@ -96,7 +96,7 @@ Lab.BreedingPenView = SC.View.extend(
 
     this.recordLink = this.createChildView(
       Geniverse.RecordLinkView.design({
-        layout: { right: this.get('breedingRecordRight'), bottom: 0, height: 25, width: 160},
+        layout: { right: this.get('breedingRecordRight'), bottom: 0, height: 25, width: 253},
         tabView: this.tabView
       })
     );
@@ -128,7 +128,7 @@ Lab.BreedingPenView = SC.View.extend(
           this.set("isVisible", Geniverse.eggsController.get('length') > 0 &&
             !this.getPath("parentView.recordLink.isVisible"))
         }.observes('Geniverse.eggsController.length', '*parentView.recordLink.isVisible'),
-        title: "Get record link"
+        title: "Save breeding record"
       })
     );
     childViews.push(this.recordButton);
