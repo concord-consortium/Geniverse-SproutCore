@@ -111,6 +111,10 @@ Lab.StableView = SC.View.extend(
             if (!dragon){
               return;
             }
+            // only accept dragons that have been bred by the user.
+            if (!dragon.get("bred")) {
+              return;
+            }
             var dragonNum = self.get('dragonNum');
 
             // check if there are existing dragons
