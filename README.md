@@ -1,5 +1,5 @@
 # Geniverse
-### Copyright: ©2010 Concord Consortium
+### Copyright: ©2016 Concord Consortium
 
 ## Installing
 
@@ -10,59 +10,94 @@
     $ git submodule init
     $ git submodule update
 
+### Installing/Configuring RVM
+
+Although not strictly required, RVM (Ruby Version Manager) makes it possible to install and use multiple Ruby versions and multiple sets of gems for use in different contexts. Since Geniverse was developed using an older version of SproutCore which requires an older version of Ruby, RVM makes it possible to set up a Geniverse development environment without affecting the Ruby instance installed on your system or the standard set of gems.
+
+Instructions on installing RVM are available at https://rvm.io/rvm/install.
+
+Install Ruby (cf. https://rvm.io/rubies/installing):
+    ```rvm install 1.9.3```
+
+Create a Geniverse gemset (cf. https://rvm.io/gemsets/creating):
+    ```rvm gemset create geniverse```
+
+Use the Geniverse gemset (cf. https://rvm.io/gemsets/using):
+    ```rvm gemset use geniverse```
+
 ### Installing SproutCore
 
-This project uses the latest available SproutCore gem 
+This project uses the SproutCore 1.4.5 gem.
 
 To install the sproutcore gem:
-    $ gem install sproutcore
+    ```$ gem install sproutcore --version 1.4.5```
   
-To install the lastest from SproutCore (may not be compatible with current application):
-    $ git clone git://github.com/sproutit/sproutcore-abbot.git abbot
-    $ cd abbot
-    $ rake init
-    $ cd ..
-    $ git clone git://github.com/sproutit/sproutcore-samples.git samples
-    $ cd samples
-    $ mkdir -p frameworks
-    $ cd frameworks
-    $ git clone git://github.com/sproutit/sproutcore.git sproutcore
-    $ cd ../..
-Then put sproutcore-abbot/bin in your PATH 
-
 ### Setting up proxies
 
-Although the proxies can be set up in the application's BuildFile, we have generally used Apache to proxy everything.
+Although the proxies can be set up in the application's `BuildFile`, we have generally used Apache to proxy everything.
 
-The default remote proxies you can use are
+Place the following in your `/etc/apache2/extra/httpd-vhosts.conf` file (replacing `{path-to-dev-workspace}` with the local path to your development workspace):
+```
+<VirtualHost *:80>
+  ServerName sc.local.concord.org
+  DocumentRoot {path-to-dev-workspace}/Geniverse-SproutCore/tmp/cache/static
+  <Directory {path-to-dev-workspace}/Geniverse-SproutCore/tmp/cache/static>
+     AllowOverride all
+     Options -MultiViews
+  </Directory>
 
-    /rails/ http://geniverse.dev.concord.org/rails/
-    /chat/ http://geniverse.dev.concord.org/chat/
-    /geniverse/ http://geniverse.dev.concord.org/geniverse/
-    /biologica/ http://geniverse.dev.concord.org/biologica/
-    /portal/ http://geniverse-portal.dev.concord.org/
-  
-### Running Rails backend locally
+  ProxyPass        /rails/ http://learn.concord.org/geniverse/
+  ProxyPassReverse /rails/ http://learn.concord.org/geniverse/
 
-If you want to run the rails backend locally, the Rails application can be found in Geniverse-SproutCore/rails/geniverse
+  ProxyPass        /chat/ http://geniverse.concord.org/chat/
+  ProxyPassReverse /chat/ http://geniverse.concord.org/chat/
 
-Set up the database, then
-    $ rake db:schema:load
-    $ script/server
+  ProxyPass        /geniverse/ http://geniverse.concord.org/geniverse/
+  ProxyPassReverse /geniverse/ http://geniverse.concord.org/geniverse/
 
-This should start rails on http://0.0.0.0:3000
+  ProxyPass        /portal/verify_cc_token http://127.0.0.1:4020/static/lab/en/current/resources/fake-token
+  ProxyPassReverse /portal/verify_cc_token http://127.0.0.1:4020/static/lab/en/current/resources/fake-token
 
-Now you can repoint your rails proxy:
+  ProxyPass        /portal/ http://learn.concord.org/
+  ProxyPassReverse /portal/ http://learn.concord.org/
 
-    /rails/ http://localhost:3000/rails/
-   
+  ProxyPass        /resources/ http://geniverse.concord.org/resources/ retry=1
+  ProxyPassReverse /resources/ http://geniverse.concord.org/resources/
+
+  ProxyPass        /blog/ http://geniverse.buddypress.staging.concord.org/
+  ProxyPassReverse /blog/ http://geniverse.buddypress.staging.concord.org/
+
+  # Sproutcore
+  ProxyPass        / http://127.0.0.1:4020/ retry=1
+  ProxyPassReverse / http://127.0.0.1:4020/
+</VirtualHost>
+```
+
+Make sure the following lines are enabled (uncommented) in your `/etc/apache2/httpd.conf` (cf. http://stackoverflow.com/a/1997047):
+```
+    LoadModule proxy_module /usr/lib/apache2/modules/mod_proxy.so
+    LoadModule proxy_http_module /usr/lib/apache2/modules/mod_proxy_http.so
+
+    Include /private/etc/apache2/extra/httpd-vhosts.conf
+```
+
+You may also need to add a `ServerName` declaration to `/etc/apache2/httpd.conf` to avoid warnings on Mac OS X:
+    ```ServerName localhost```
+
+Add a line like the following to your /etc/hosts file:
+    ```127.0.0.1 localhost sc.local.concord.org```
+
+Restart apache so that the changes take effect:
+    ```apachectl -k graceful```
+
 ## Running Geniverse
 
 Now run the development Geniverse-SproutCore server:
-
+```
     $ sc-server
+```
   
-And then open http://localhost:4020/lab
+And then open http://sc.local.concord.org/lab in your browser.
 
 ## Using routes
 
