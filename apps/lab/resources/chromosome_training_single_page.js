@@ -28,7 +28,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
         childViews: 'title genomeView switchSexButton nextButton chromoHintView'.w(),
 
         title: SC.LabelView.design({
-          layout: {top: 20, height: 25, left: 125, width: 200 },
+          layout: {top: 20, height: 25, left: 350, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
           classNames: 'title'.w(),
@@ -38,26 +38,11 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           }.property('sex')
         }),
 
-        switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
-          layout: { top: 18, left: 20, width: 100, height: 43 },
-          isEnabled: YES,
-          hasHover: YES,
+        switchSexButton: SC.ImageView.design(Geniverse.SimpleButton,
+                                             Geniverse.ChangeSexButton, {
+          layout: { top: 18, left: 45, width: 200, height: 38 },
           classNames: "switchsex switch-female hint-available hint-target-leftMiddle hint-tooltip-rightMiddle".w(),
-          alt: 'Switch Sex',
-          title: 'Switch Sex',
-          toolTip: 'Click to change between a male and female drake. Notice the drake’s neck!',
-          sexBinding: '*parentView.genomeView.sex',
-          target: 'parentView.genomeView',
-          action: 'switchSex',
-          _setClassNames: function(){
-            classNames = this.get('classNames');
-            classNames.removeObject("switch-female");
-            classNames.removeObject("switch-male");
-
-            classNames.push( this.getPath('parentView.genomeView.sex') === 0 ? "switch-male" : "switch-female");
-            this.set('classNames', classNames);
-            this.displayDidChange();
-          }.observes('sex')
+          toolTip: 'Click to change between a male and female drake. Notice the drake’s neck!'
         }),
 
         nextButton: SC.ImageView.design(Geniverse.SimpleButton, {
