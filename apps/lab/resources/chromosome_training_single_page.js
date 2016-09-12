@@ -24,11 +24,19 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
       childViews: 'drakeGenomePanel'.w(),
 
       drakeGenomePanel: SC.View.design({
-        layout: {top: 110, height: 550, centerX: 0, width: 500 },
-        childViews: 'title genomeView switchSexButton nextButton chromoHintView'.w(),
+        layout: {top: 110, height: 550, centerX: 0, width: 550 },
+        childViews: 'chromoTitle drakeTitle genomeView switchSexButton nextButton chromoHintView'.w(),
 
-        title: SC.LabelView.design({
-          layout: {top: 20, height: 25, left: 350, width: 200 },
+        chromoTitle: SC.LabelView.design({
+          layout: {top: 20, height: 25, left: 75, width: 200 },
+          controlSize: SC.LARGE_CONTROL_SIZE,
+          fontWeight: SC.BOLD_WEIGHT,
+          classNames: 'title'.w(),
+          value: "Chromosome Control"
+        }),
+
+        drakeTitle: SC.LabelView.design({
+          layout: {top: 20, height: 25, left: 380, width: 200 },
           controlSize: SC.LARGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
           classNames: 'title'.w(),
@@ -40,7 +48,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
 
         switchSexButton: SC.ImageView.design(Geniverse.SimpleButton,
                                              Geniverse.ChangeSexButton, {
-          layout: { top: 18, left: 45, width: 200, height: 38 },
+          layout: { top: 350, left: 320, width: 200, height: 38 },
           classNames: "switchsex switch-female hint-available hint-target-leftMiddle hint-tooltip-rightMiddle".w(),
           toolTip: 'Click to change between a male and female drake. Notice the drake’s neck!'
         }),
@@ -61,6 +69,7 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
           layout: {top: 80, left: 15, height: 500, width: 500 },
           generateDragonAtStart: NO,
           displayChallengeDragon: YES,
+          dragonImageLeft: 313,
           sex: 1,
 //        fixedAlleles: "a:A,a:A,a:B,b:B",
           showGenerateNewDragon: NO,
