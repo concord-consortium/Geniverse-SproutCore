@@ -37,7 +37,9 @@ Lab.chromosomeChallengePage = SC.Page.design({
 
         switchSexButton: SC.ImageView.design(Geniverse.SimpleButton,
                                              Geniverse.ChangeSexButton, {
-          layout: { top: 268, left: 35, width: 200, height: 38 }
+          layout: { top: 268, left: 53,
+                    width: Geniverse.ChangeSexButton.WIDTH,
+                    height: Geniverse.ChangeSexButton.HEIGHT }
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({

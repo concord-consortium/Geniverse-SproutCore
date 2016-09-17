@@ -100,7 +100,9 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
 
           switchSexButton: SC.ImageView.design(Geniverse.SimpleButton,
                                                Geniverse.ChangeSexButton, {
-            layout: { top: 163, left: 45, width: 200, height: 38 }
+            layout: { top: 163, left: 63,
+                      width: Geniverse.ChangeSexButton.WIDTH,
+                      height: Geniverse.ChangeSexButton.HEIGHT }
           }),
 
           genomeView: Geniverse.DragonGenomeView.design({
@@ -134,7 +136,9 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
 
           switchSexButton: SC.ImageView.design(Geniverse.SimpleButton,
                                                Geniverse.ChangeSexButton, {
-            layout: { top: 163, left: 95, width: 200, height: 38 }
+            layout: { top: 163, left: 95,
+                      width: Geniverse.ChangeSexButton.WIDTH,
+                      height: Geniverse.ChangeSexButton.HEIGHT }
           }),
 
           genomeView: Geniverse.DragonGenomeView.design({
@@ -167,7 +171,9 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           }),
 
           switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
-            layout: { top: 163, left: 95, width: 200, height: 38 }
+            layout: { top: 163, left: 95,
+                      width: Geniverse.ChangeSexButton.WIDTH,
+                      height: Geniverse.ChangeSexButton.HEIGHT }
           }),
 
           genomeView: Geniverse.DragonGenomeView.design({
