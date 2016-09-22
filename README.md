@@ -33,7 +33,7 @@ rvm gemset use geniverse
 
 ### Installing SproutCore
 
-This project uses the `SproutCore 1.4.5` gem.
+This project uses the `SproutCore 1.4.5` gem. Installing SproutCore is sufficient to support basic development and testing.
 
 To install the sproutcore gem:
 ```
@@ -41,7 +41,35 @@ $ gem install sproutcore --version 1.4.5
 ```
 
 This installs the appropriate SproutCore build tools.
-  
+
+### Installing Development/Testing/Deployment Gems
+
+For automated testing and deployment scripts, a larger set of gems is required. You can skip this step for simple development and testing.
+
+If you followed the instructions above, then you're running `Ruby 1.9.3` in rvm with a custom gemset. In the console, cd to the root of the `Geniverse-SproutCore` directory. If it isn't already installed, install `bundler`:
+```
+gem install bundler
+```
+
+In theory, at this point `bundle install` should install all of the gems that are required. Unfortunately, when trying this recently on Mac OS X I encountered errors due to the fact that `mime-types 3` requires `Ruby >= 2.0`. There's probably a more elegant solution (perhaps an older version of `bundler`?) but I ended up installing `mime-types 2.6.2` manually:
+```
+gem install mime-types --version 2.6.2
+```
+
+and then installing the specific versions of the other dependent gems listed in the `Gemfile` manually, e.g.
+```
+gem install daemon_controller --version 0.2.6
+gem install rspec --version 2.1.0
+gem install lebowski --version 0.3.0
+...
+gem install capybara --version 0.4.0
+```
+
+When all dependencies are installed, `bundle install` returns something like
+```
+Bundle complete! 7 Gemfile dependencies, 36 gems now installed.
+```
+
 ### Setting up proxies
 
 Although the proxies can be set up in the application's `BuildFile`, we have generally used Apache to proxy everything.
@@ -127,29 +155,7 @@ Run `s3cmd --configure` to configure it. You will need your AWS account credenti
 
 ### Installing Gems
 
-If you followed the instructions above, then you're running `Ruby 1.9.3` in rvm with a custom gemset. In the console, cd to the root of the `Geniverse-SproutCore` directory. If it isn't already installed, install `bundler`:
-```
-gem install bundler
-```
-
-In theory, at this point `bundle install` should install all of the gems that are required. Unfortunately, when trying this recently on Mac OS X I encountered errors due to the fact that `mime-types 3` requires `Ruby >= 2.0`. There's probably a more elegant solution (perhaps an older version of `bundler`?) but I ended up installing `mime-types 2.6.2` manually:
-```
-gem install mime-types --version 2.6.2
-```
-
-and then installing the specific versions of the other dependent gems listed in the `Gemfile` manually, e.g.
-```
-gem install daemon_controller --version 0.2.6
-gem install rspec --version 2.1.0
-gem install lebowski --version 0.3.0
-...
-gem install capybara --version 0.4.0
-```
-
-When all dependencies are installed, `bundle install` returns something like
-```
-Bundle complete! 7 Gemfile dependencies, 36 gems now installed.
-```
+If you haven't already, follow the instructions above for installing the gems required to support the deployment script.
 
 ### Deploying Geniverse to Staging
 
@@ -164,7 +170,7 @@ Public URL of the object is: http://geniverse-lab.concord.org.s3.amazonaws.com/s
 Done. Don't forget to invalidate the index files in cloudfront!
 ```
 
-Ultimately, the new deployment can be tested at http://geniverse-lab.concord.org/staging. The warning about invalidating the index files is because deployed changes won't be visible immediately. "CloudFront takes up to 24 hours to clear cache. If you need to hurry it, it can be cleaned manually, though we pay a (trivial) amount when we do that, so I try not to unless we're demoing that day or something." Looking into the costs further, at the time of this writing Concord Consortium is allowed 1000 invalidations per month for free. Each invalidation beyond that is $.005.
+Ultimately, the new deployment can be tested at http://geniverse-lab.concord.org/staging. The warning about invalidating the index files is because deployed changes won't be visible immediately. CloudFront takes some time ("up to 24 hours") to clear cache before the new files become available. The necessary files can be manually invalidated to make them available sooner. Beyond a certain point there is a nominal fee associated with these manual invalidations (at the time of this writing Concord Consortium is allowed 1000 invalidations per month for free; each invalidation beyond that is $.005), but it is unlikely that we're approaching that limit. 
 
 ### Deploying Geniverse to Production
 
@@ -173,7 +179,9 @@ To deploy Geniverse to production, run the build and deploy script specifying th
 ./build_and_deploy.sh production_s3
 ```
 
-Ultimately, the new deployment can be tested at http://geniverse-lab.concord.org. Presumably, the same cache issues that arise when deploying to staging apply when deploying to production as well, but the value of immediate testing of any potential change to production justifies the manual cache clearing step.
+Ultimately, the new deployment can be tested at http://geniverse-lab.concord.org. The same cache issues that arise when deploying to staging apply when deploying to production as well.
+
+Note that when deploying to production, a new build is performed, so care must be taken to make sure that what is deployed is identical to what has most recently been tested on staging. In theory if a build has already been deployed to staging, deploying to production could be done by simply changing a few symbolic links which would avoid the risks associated with conducting a new build.
 
 ### GUI CloudFront Invalidation
 
@@ -187,11 +195,11 @@ Ultimately, the new deployment can be tested at http://geniverse-lab.concord.org
 8. Enter the paths of the files/objects to invalidate in the resulting dialog
    - To invalidate staging, enter
      - `/staging/index.html`
-   - To invalidate production, enter
+   - To invalidate production (and staging), enter
+     - `/staging/index.html`
      - `/lab/index.html`
      - `/index.html`
      - `/`
-   - To invalidate staging and production, enter all of the above paths
 9. Click the `Invalidate` button
 
 As an alternative to steps 7-8 above, one can select an existing invalidation from the list that contains the appropriate paths (use the `Details` button to check), and then use the `Copy` button to create a new invalidation with the same paths as the invalidation that was copied.
@@ -211,9 +219,9 @@ To invalidate staging:
 aws cloudfront create-invalidation --distribution-id E3GYOSZWPRMV40 --paths /staging/index.html
 ```
 
-To invalidate production:
+To invalidate production (and staging):
 ```
-aws cloudfront create-invalidation --distribution-id E3GYOSZWPRMV40 --paths /lab/index.html /index.html /
+aws cloudfront create-invalidation --distribution-id E3GYOSZWPRMV40 --paths /staging/index.html /lab/index.html /index.html /
 ```
 
 ## Using routes
