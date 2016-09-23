@@ -48,7 +48,9 @@ Lab.chromosomeTrainingSinglePage = SC.Page.design({
 
         switchSexButton: SC.ImageView.design(Geniverse.SimpleButton,
                                              Geniverse.ChangeSexButton, {
-          layout: { top: 350, left: 320, width: 200, height: 38 },
+          layout: { top: 350, left: 338,
+                    width: Geniverse.ChangeSexButton.WIDTH,
+                    height: Geniverse.ChangeSexButton.HEIGHT },
           classNames: "switchsex switch-female hint-available hint-target-leftMiddle hint-tooltip-rightMiddle".w(),
           toolTip: 'Click to change between a male and female drake. Notice the drake’s neck!'
         }),
