@@ -204,6 +204,8 @@ Note that when deploying to production, a new build is performed, so care must b
 
 As an alternative to steps 7-8 above, one can select an existing invalidation from the list that contains the appropriate paths (use the `Details` button to check), and then use the `Copy` button to create a new invalidation with the same paths as the invalidation that was copied.
 
+You can monitor the status of the invalidation on the `Invalidations` tab.
+
 ### CLI CloudFront Invalidation
 
 To install and configure the `AWS Command Line Interface`:
@@ -222,6 +224,34 @@ aws cloudfront create-invalidation --distribution-id E3GYOSZWPRMV40 --paths /sta
 To invalidate production (and staging):
 ```
 aws cloudfront create-invalidation --distribution-id E3GYOSZWPRMV40 --paths /staging/index.html /lab/index.html /index.html /
+```
+
+To check the status of the invalidation so you can tell when it's done:
+```
+s3cmd cfinvalinfo cf://E3GYOSZWPRMV40
+```
+
+This will give you a list of all invalidations for Geniverse, both current and historical. The top one will look something like:
+```
+URI:            cf://E3GYOSZWPRMV40/IF6GIGHTMJ517
+Status:         InProgress
+Created:        2016-10-03T21:24:17.257Z
+Nr of paths:    19
+Reference:      cli-1475529855-341133
+```
+
+This indicates that the invalidation is still being processed. To see the status of only the `InProgress` request, replace the partial URI from the previous command with the full URI from the initial response. For the example above it would be:
+```
+s3cmd cfinvalinfo cf://E3GYOSZWPRMV40/IF6GIGHTMJ517
+```
+
+When the request has been fully processed, the response will look like:
+```
+URI:            cf://E3GYOSZWPRMV40/IF6GIGHTMJ517
+Status:         Completed
+Created:        2016-10-03T21:24:17.257Z
+Nr of paths:    19
+Reference:      cli-1475529855-341133
 ```
 
 ## Using routes
