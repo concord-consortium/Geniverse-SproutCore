@@ -183,7 +183,32 @@ Ultimately, the new deployment can be tested at http://geniverse-lab.concord.org
 
 Note that when deploying to production, a new build is performed, so care must be taken to make sure that what is deployed is identical to what has most recently been tested on staging. In theory if a build has already been deployed to staging, deploying to production could be done by simply changing a few symbolic links which would avoid the risks associated with conducting a new build.
 
+### Deploying Geniverse Demo
+
+To deploy the Geniverse demo, switch to the `inabox` branch in your local git workspace:
+```
+git checkout inabox
+```
+
+If there have been any master commits since the last merge, you may need to merge the `master` branch into the `inabox` branch. There are several approaches to doing so, but these steps create a Pull Request for the merge:
+```
+git checkout -b [newBranchForMergeCommit]
+git merge master
+[... resolve any conflicts ...]
+git commit
+git push origin
+```
+
+Then visit https://github.com/concord-consortium/Geniverse-SproutCore to create the Pull Request. When configuring the PR, specify `inabox` as the base branch and `[newBranchForMergeCommit]` as the target branch. Once the Pull Request has been approved/merged (or if no merge was required) run the build and deploy script specifying the `demo` target:
+```
+./build_and_deploy.sh demo
+```
+
+The deployment can be tested at http://demo.geniverse.concord.org. Note that the demo is not currently hosted on CloudFront, so the following sections on CloudFront Invalidation don't apply.
+
 ### GUI CloudFront Invalidation
+
+Staging and Production deployments are hosted on CloudFront, which requires explicit invalidation to make deployed changes "live".
 
 1. Log in to the Concord AWS Console at https://concord.signin.aws.amazon.com/console
 2. Choose `CloudFront` under the `Storage & Content Delivery` section
