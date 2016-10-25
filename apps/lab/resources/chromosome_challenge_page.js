@@ -35,26 +35,11 @@ Lab.chromosomeChallengePage = SC.Page.design({
         layout: {top: 40, height: 530, right: 0, width: 580 },
         childViews: 'genomeView switchSexButton revealButton'.w(),
 
-        switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
-          layout: { top: 268, left: 85, width: 100, height: 43 },
-          isEnabled: YES,
-          hasHover: YES,
-          classNames: "switchsex switch-female".w(),
-          alt: 'Switch Sex',
-          title: 'Switch Sex',
-          sexBinding: '*parentView.genomeView.sex',
-          target: 'parentView.genomeView',
-          action: 'switchSex',
-          _setClassNames: function(){
-            classNames = this.get('classNames');
-            classNames.removeObject("switch-female");
-            classNames.removeObject("switch-male");
-
-            classNames.push( this.getPath('parentView.genomeView.sex') === 0 ? "switch-male" : "switch-female");
-            this.set('classNames', classNames);
-            this.displayDidChange();
-          }.observes('sex')
-
+        switchSexButton: SC.ImageView.design(Geniverse.SimpleButton,
+                                             Geniverse.ChangeSexButton, {
+          layout: { top: 268, left: 53,
+                    width: Geniverse.ChangeSexButton.WIDTH,
+                    height: Geniverse.ChangeSexButton.HEIGHT }
         }),
 
         genomeView: Geniverse.DragonGenomeView.design({

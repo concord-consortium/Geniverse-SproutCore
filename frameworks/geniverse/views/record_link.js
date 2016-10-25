@@ -31,14 +31,21 @@ Geniverse.RecordLinkView = SC.LabelView.extend(
     }
   }.observes('*content.[]', '*tabView.nowShowing', '*tabView.nowShowing.traitPulldown.value'),
 
+  superObserver: function() {
+    var _this = this;
+    window.triggerRecordLinkUpdate = function() {
+      _this.dragonsObserver();
+    }
+  }.observes('*content.[]', '*tabView.nowShowing', '*tabView.nowShowing.traitPulldown.value'),
+
   updateLink: function(dragon) {
     if (dragon.get('status') & SC.Record.READY === SC.Record.READY) {
       dragon.removeObserver('status', this.updateLink);
       var dbUrl = dragon.get('id');       // e.g. /rails/dragons/11455
       if (!!dbUrl){
-        var recordLink = dbUrl.replace('dragons', 'breedingRecordsShow');
+        var recordLink = Geniverse.railsBackendHostOnly  + dbUrl.replace('dragons', 'breedingRecordsShow');
         recordLink += this.getStatisticsPart();
-        this.set('value', "<a href='"+recordLink+"' target='_blank'>Link to breeding record</a>");
+        this.set('value', "Record created! &nbsp;&nbsp; <a href='"+recordLink+"' target='_blank'>View breeding record</a>");
         this.set('isVisible', YES);
       }
     }

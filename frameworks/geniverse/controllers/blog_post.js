@@ -79,9 +79,22 @@ Geniverse.blogPostController = SC.Controller.create(
     }
   },
 
+  saveBlogPost: function() {
+    var pageId = Geniverse.activityController.get('route');
+    if (pageId === null && Geniverse.activityController.get('title') == "Case Log") {
+      pageId = "caselog";
+    }
+
+    // Commit user record, if not busy
+    Geniverse.doWhenReady(this, Geniverse.userController.get('content'), function() {
+      Geniverse.userController.saveBlogPost(pageId);
+      Geniverse.store.commitRecords();
+    });
+  },
+
   saveDraftBlogPost: function() {
     var pageId = Geniverse.activityController.get('route');
-    if (pageId == null && Geniverse.activityController.get('title') == "Case Log") {
+    if (pageId === null && Geniverse.activityController.get('title') == "Case Log") {
       pageId = "caselog";
     }
 
@@ -94,7 +107,7 @@ Geniverse.blogPostController = SC.Controller.create(
 
   restoreDraftBlogPost: function() {
     var pageId = Geniverse.activityController.get('route');
-    if (pageId == null && Geniverse.activityController.get('title') == "Case Log") {
+    if (pageId === null && Geniverse.activityController.get('title') == "Case Log") {
       pageId = "caselog";
     }
     draft = Geniverse.userController.getBlogDraft(pageId);

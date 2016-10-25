@@ -111,6 +111,10 @@ Lab.StableView = SC.View.extend(
             if (!dragon){
               return;
             }
+            // only accept dragons that have been bred by the user.
+            if (!dragon.get("bred")) {
+              return;
+            }
             var dragonNum = self.get('dragonNum');
 
             // check if there are existing dragons
@@ -149,7 +153,12 @@ Lab.StableView = SC.View.extend(
             var oldEggs = Geniverse.eggsController.get('content');
             Geniverse.eggsController.set('content', oldEggs.without(dragon));
 
-
+            if (!dragon.get("saveToBackend")) {
+              // save dragon to backend. This creates a duplicate in our records,
+              // so then we remove the original from the stable.
+              window.createSavableDragon(dragon);
+              dragon.set('isInMarketplace', YES);
+            }
 
             self.dragonNum = self.dragonNum + 1;
             SC.Logger.info("Stable has %d dragons", self.dragonNum);

@@ -30,8 +30,15 @@ Lab.infoController = SC.ObjectController.create(
    * @param message (optional)
    */
   displayButtonOnly: function (message) {
+    // Replace the old change sex button image with the new change sex button image in instructions.
+    // Slip in scaling attributes along with changing the src URL.
+    var oldImagePath = '"https://geniverse-resources.concord.org/resources/icons/change-sex-buttons.png"',
+        imgAttrs = ' width="' + Geniverse.ChangeSexButton.WIDTH_INSTR + '"' +
+                  ' height="' + Geniverse.ChangeSexButton.HEIGHT_INSTR + '"',
+        newImagePath = '"' + static_url('change-sex-button-female.png') + '"' + imgAttrs;
     this.set('isVisible', YES);
     if(message){
+      message = message.replace(oldImagePath, newImagePath);
       this.set('content',message);
     }
   },

@@ -98,27 +98,11 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             glow: YES
           }),
 
-          switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
-            layout: { top: 163, left: 95, width: 100, height: 43 },
-            isEnabled: YES,
-            hasHover: YES,
-            classNames: "switchsex switch-female".w(),
-            alt: 'Switch Sex',
-            title: 'Switch Sex',
-            sexBinding: '*parentView.genomeView.sex',
-            toolTip: 'Click to switch the sex of the drake',
-            target: 'parentView.genomeView',
-            action: 'switchSex',
-            _setClassNames: function(){
-              classNames = this.get('classNames');
-              classNames.removeObject("switch-female");
-              classNames.removeObject("switch-male");
-
-              classNames.push( this.getPath('parentView.genomeView.sex') === 0 ? "switch-male" : "switch-female");
-              this.set('classNames', classNames);
-              this.displayDidChange();
-            }.observes('sex')
-
+          switchSexButton: SC.ImageView.design(Geniverse.SimpleButton,
+                                               Geniverse.ChangeSexButton, {
+            layout: { top: 163, left: 63,
+                      width: Geniverse.ChangeSexButton.WIDTH,
+                      height: Geniverse.ChangeSexButton.HEIGHT }
           }),
 
           genomeView: Geniverse.DragonGenomeView.design({
@@ -150,27 +134,11 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
             glow: YES
           }),
 
-          switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
-            layout: { top: 163, left: 95, width: 100, height: 43 },
-            isEnabled: YES,
-            hasHover: YES,
-            classNames: "switchsex switch-female".w(),
-            alt: 'Switch Sex',
-            title: 'Switch Sex',
-            sexBinding: '*parentView.genomeView.sex',
-            toolTip: 'Click to switch the sex of the drake',
-            target: 'parentView.genomeView',
-            action: 'switchSex',
-            _setClassNames: function(){
-              classNames = this.get('classNames');
-              classNames.removeObject("switch-female");
-              classNames.removeObject("switch-male");
-
-              classNames.push( this.getPath('parentView.genomeView.sex') === 0 ? "switch-male" : "switch-female");
-              this.set('classNames', classNames);
-              this.displayDidChange();
-            }.observes('sex')
-
+          switchSexButton: SC.ImageView.design(Geniverse.SimpleButton,
+                                               Geniverse.ChangeSexButton, {
+            layout: { top: 163, left: 95,
+                      width: Geniverse.ChangeSexButton.WIDTH,
+                      height: Geniverse.ChangeSexButton.HEIGHT }
           }),
 
           genomeView: Geniverse.DragonGenomeView.design({
@@ -203,26 +171,9 @@ Lab.chromosomeTripleChallengePage = SC.Page.design({
           }),
 
           switchSexButton: SC.ImageView.design(Geniverse.SimpleButton, {
-            layout: { top: 163, left: 95, width: 100, height: 43 },
-            isEnabled: YES,
-            hasHover: YES,
-            classNames: "switchsex switch-female".w(),
-            alt: 'Switch Sex',
-            title: 'Switch Sex',
-            sexBinding: '*parentView.genomeView.sex',
-            toolTip: 'Click to switch the sex of the drake',
-            target: 'parentView.genomeView',
-            action: 'switchSex',
-            _setClassNames: function(){
-              classNames = this.get('classNames');
-              classNames.removeObject("switch-female");
-              classNames.removeObject("switch-male");
-
-              classNames.push( this.getPath('parentView.genomeView.sex') === 0 ? "switch-male" : "switch-female");
-              this.set('classNames', classNames);
-              this.displayDidChange();
-            }.observes('sex')
-
+            layout: { top: 163, left: 95,
+                      width: Geniverse.ChangeSexButton.WIDTH,
+                      height: Geniverse.ChangeSexButton.HEIGHT }
           }),
 
           genomeView: Geniverse.DragonGenomeView.design({

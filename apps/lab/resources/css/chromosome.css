@@ -1,15 +1,16 @@
 img.switchsex {
     background-image: static_url('change-sex-buttons.png');
-    background-repeat: none;
-    width: 100px;
-    height: 43px;
+    background-size: 100% 200%;
+    background-repeat: no-repeat;
+    width: 164px;
+    height: 32px;
 }
 
 img.switchsex.switch-female {
-    background-position:0px -43px
+    background-position:0px 0px
 }
 
 img.switchsex.switch-male {
-    background-position:0px 0px
+    background-position:0px -33px
 }
 

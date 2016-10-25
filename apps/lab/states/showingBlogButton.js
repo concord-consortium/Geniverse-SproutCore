@@ -37,25 +37,18 @@ Lab.showingBlogButton =  Ki.State.extend({
       // save a draft first
       this.save();
 
-      var title = Geniverse.blogPostController.get('title');
-      var content = Geniverse.blogPostController.get('content');
-      var tags = this._get_blog_tags();
-      if (!this._checkURL(content)) {
+      if (!this._checkURL()) {
         return;
       }
 
-      this._postToWPBlog(title, content, tags);
+      // then save the post
+      Geniverse.blogPostController.saveBlogPost();
 
-      this._showWaitDialog();
+      // Trigger statechart actions (possibly marking the challenge complete), and a notification.
+      Lab.statechart.sendEvent('didSendBlogPost');
+      Lab.statechart.sendEvent('showFeedbackAndClose');
 
-      this._failureTimer = SC.Timer.schedule({
-        target: this,
-        action: '_showFailureMessage',
-        interval: 10000,
-        repeats: NO
-      });
-
-      this.closePanel();
+      Lab.logController.logEvent(Lab.EVENT.JOURNAL_POST);
     },
 
     save: function() {
@@ -73,9 +66,14 @@ Lab.showingBlogButton =  Ki.State.extend({
       this.closePanel();
     },
 
+    showFeedbackAndClose: function() {
+      Lab.feedbackController.didSendBlogPost();
+      this.closePanel();
+    },
+
     _checkURL: function() {
       var url = Geniverse.blogPostController.get('content3');
-      if (url && !/^http:\/\//.exec(url)) {
+      if (url && !/^http[s]?:\/\//.exec(url)) {
         SC.AlertPane.extend({
           layout: {top: 0, centerX: 0, width: 400, height: 100 }
         }).show(
@@ -87,99 +85,6 @@ Lab.showingBlogButton =  Ki.State.extend({
         return false;
       } else {
         return true;
-      }
-    },
-
-    _postToWPBlog: function(title, content, tags) {
-      var className = Geniverse.userController.get('className');
-
-      var data = {
-        blog_name: className,
-        post_title: title,
-        post_content: content,
-        post_tags: tags
-      };
-
-      SC.Request.postUrl("/portal/blog/post_blog").json().notify(this, 'didSendBlogPost').send(data);
-    },
-
-    _waitDialog: null,
-
-    _get_blog_tags: function() {
-      var tags = "";
-
-      var challengeTitle = Geniverse.activityController.get('title');
-      if (challengeTitle) {
-        tags += challengeTitle;
-      }
-      return tags;
-    },
-
-    _showWaitDialog: function() {
-      this._waitDialog = SC.AlertPane.extend({
-        layout: {top: 0, centerX: 0, width: 300, height: 100 }
-      }).show(
-        "",
-        "Posting to the journal...",
-        "",
-        "Dismiss",
-        "",
-        "",
-        'spinner-icon-48'
-      );
-    },
-
-    _failureTimer: null,
-
-    _failureDialog: null,
-
-    _showFailureMessage: function() {
-      if (this._failureDialog) {
-        return;
-      }
-      this._waitDialog.dismiss();
-      this.get('_failureTimer').invalidate();
-
-      this._failureDialog = SC.AlertPane.extend({
-        layout: {top: 0, centerX: 0, width: 400, height: 100 }
-      }).show(
-        "Error posting to the journal",
-        "Your post doesn't seem to have reached the journal. Please check your internet connection and try again.",
-        "",
-        "OK",
-        this
-      );
-      Lab.logController.logEvent(Lab.EVENT.JOURNAL_POST_FAILED);
-    },
-
-    // delegate for _showFailureMessage alertPane
-    alertPaneDidDismiss: function() {
-      this._failureDialog = null;
-      Lab.statechart.getState('showingBlogButton').gotoState('showingBlogPostPanel');
-    },
-
-    didSendBlogPost: function(response) {
-      var match, postId, className, postURL;
-
-      this._waitDialog.dismiss();
-      this.get('_failureTimer').invalidate();
-
-      if (SC.ok(response)) {
-
-        match = response.rawRequest.responseText.match(/<int>(.*)<\/int>/);
-        if (match.length > 0) {
-          postId    = match[1];
-          className = Geniverse.userController.get('className');
-          postURL   = Lab.journalController.get('journalBaseURL') + className + "/?p=" + postId;
-
-          Lab.statechart.sendAction('didSendBlogPost');
-
-          Lab.feedbackController.didSendBlogPost(this.get('description'), postURL);
-
-          Lab.logController.logEvent(Lab.EVENT.JOURNAL_POST);
-        }
-      } else {
-        this._showFailureMessage();
       }
     }
   })

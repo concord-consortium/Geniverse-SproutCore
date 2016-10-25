@@ -56,6 +56,7 @@
     <link rel="apple-touch-startup-image" media="screen and (orientation:portrait)" href="<%= sc_static(config.startup_image_portrait || 'sproutcore-startup-portrait.png') %>" />
     <link rel="apple-touch-startup-image" media="screen and (orientation:landscape)" href="<%= sc_static(config.startup_image_landscape || 'sproutcore-startup-landscape.png') %>" />
     <link rel="shortcut icon" href="<%= sc_static(config.favicon || 'favicon.ico') %>" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Sofadi+One" />
 
 <% # Set the 'title' in your config to alter this setting %>
     <title>Geniverse</title>
@@ -95,13 +96,22 @@
 
 <div id="sendButtonContainer" style="visibility: hidden;">button</div>
 
-<script type="text/javascript" src="/resources/js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="/resources/js/jquery-ui-1.8.4.custom.min.js"></script>
-<script type="text/javascript" src="/resources/js/raphael-min.js"></script>
-<script type="text/javascript" src="/resources/js/burst-core.js"></script>
+<% if config.use_full_url_for_resources %>
+  <script type="text/javascript" src="<%= config.resources_base %>/resources/js/jquery-1.4.4.min.js"></script>
+  <script type="text/javascript" src="<%= config.resources_base %>/resources/js/jquery-ui-1.8.4.custom.min.js"></script>
+  <script type="text/javascript" src="<%= config.resources_base %>/resources/js/raphael-min.js"></script>
+  <script type="text/javascript" src="<%= config.resources_base %>/resources/js/burst-core.js"></script>
+<% else %>
+  <script type="text/javascript" src="/resources/js/jquery-1.4.4.min.js"></script>
+  <script type="text/javascript" src="/resources/js/jquery-ui-1.8.4.custom.min.js"></script>
+  <script type="text/javascript" src="/resources/js/raphael-min.js"></script>
+  <script type="text/javascript" src="/resources/js/burst-core.js"></script>
+<% end %>
 
 <script type="text/javascript">
   window.CC_RESOURCES_BASE = "<%= config.resources_base %>";
+  window.CC_PORTAL_BASE = "<%= config.portal_base %>";
+  window.CC_RAILS_BACKEND_BASE = "<%= config.rails_backend_base %>";
 </script>
 
 <% if config.google_analytics_id %>

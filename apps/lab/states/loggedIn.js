@@ -141,6 +141,8 @@ Lab.loggedIn = Ki.State.extend({
   // and if it has the classes 'hint-target-*' or 'hint-tooltip-*' it will pass
   // the * values as the appropriate options.
   showTooltip: function($elem, text, options) {
+    if (!Geniverse.activityController.getPath('content.showTooltips') &&
+        Geniverse.activityController.getPath('content.title') !== "Office") return;
 
     if (!$elem.attr("alt")) {
       $elem.attr("alt", $elem.attr("title"));

@@ -1,9 +1,0 @@
-<%= form_for(user) do |f| %>
-  <%= error_messages(user) %>
-  
-  <%= render :partial => 'shared/form', :locals => {:object => user, :f => f } %>
-
-  <p>
-    <%= f.submit 'Submit' %>
-  </p>
-<% end %>
