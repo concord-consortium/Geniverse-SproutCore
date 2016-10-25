@@ -46,15 +46,9 @@ Lab.backdoorController = SC.Object.create(
       case "starz":
         if (Geniverse.userController.get('isTeacher')) {
           // open the starz report in a new tab
-          var all_classes = Geniverse.userController.get('allClassNames');
-          var class_names = all_classes[0];
-          for (var i = 1; i < all_classes.length; i++) {
-            class_names += ',' + all_classes[i];
-          }
-          var encoded = window.btoa(class_names);
-          encoded = encoded.replace(/\//g,'_').replace(/\+/g,'-').replace(/=/g,'%3D')
+          var encoded = this._encodeClasses();
           try {
-            window.open('/rails/starsReport/' + encoded, "_blank");
+            window.open(Geniverse.railsBackendBase + '/starsReport/' + encoded, "_blank");
           } catch (e) { }
         }
         break;
@@ -64,6 +58,20 @@ Lab.backdoorController = SC.Object.create(
         console.log("unrecognized backdoor code: " + this.get('code'));
     }
     this.removePane();
+  },
+
+  _encodeClasses: function(class_names) {
+    var encoded;
+    if (typeof(class_names) === 'undefined' || class_names === null) {
+      var all_classes = Geniverse.userController.get('allClassNames');
+      class_names = all_classes[0];
+      for (var i = 1; i < all_classes.length; i++) {
+        class_names += ',' + all_classes[i];
+      }
+    }
+    encoded = window.btoa(class_names);
+    encoded = encoded.replace(/\//g,'_').replace(/\+/g,'-').replace(/=/g,'%3D');
+    return encoded;
   },
 
   showPane: function() {

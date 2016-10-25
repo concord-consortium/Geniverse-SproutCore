@@ -33,7 +33,7 @@ Lab.feedbackController = SC.Object.create({
   // and why.)
 
 
-  didSendBlogPost: function(description, postURL) {
+  didSendBlogPost: function() {
 
     var state = Lab.statechart.getState('argumentationChallenge'),
 
@@ -48,7 +48,7 @@ Lab.feedbackController = SC.Object.create({
          &&   argumentationChallengeIsNowComplete
          && ! argumentationChallengeWasAlreadyComplete) {
 
-        this._notifyPostedToBlogAndCompletedChallenge(description, postURL, isLastChallenge);
+        this._notifyPostedToBlogAndCompletedChallenge(isLastChallenge);
     }
     else {
 
@@ -56,7 +56,7 @@ Lab.feedbackController = SC.Object.create({
       // || ! argumentationChallengeIsNowComplete
       // ||   argumentationChallengeWasAlreadyComplete
 
-      this._notifyPostedToBlog(description, postURL);
+      this._notifyPostedToBlog();
     }
   },
 
@@ -72,14 +72,13 @@ Lab.feedbackController = SC.Object.create({
   // Private methods (to be called by event handlers, above) that contain the text of the various feedback messages
   // go here. Each method should be named _notify<summary of notification> and should contain minimal logic.
 
-  _notifyPostedToBlogAndCompletedChallenge: function(description, postURL, isLastChallenge) {
+  _notifyPostedToBlogAndCompletedChallenge: function(isLastChallenge) {
     this._notify(
       "Good work!",
 
       "<img src=\"" + static_url('quill-on-45x45.png') + "\" style=\"float: left; margin: 0.4em 1.0em;\"/>\n" +
       "You earned a quill! " +
-      "You completed the challenge by posting to the journal. Find your post <a onclick=\"Lab.feedbackController.openInNewTabAndLog('" + postURL +
-      "')\" href=\"javascript:void(0);\">here</a>.\n" +
+      "You completed the challenge by posting to the journal.\n" +
       "You can continue to work on this challenge if you like, or you can " + (
         isLastChallenge ?
           "go back to the <a href=\"#caselog\">Case Log</a> to go to a new case." :
@@ -87,12 +86,9 @@ Lab.feedbackController = SC.Object.create({
     );
   },
 
-  _notifyPostedToBlog: function(description, postURL) {
+  _notifyPostedToBlog: function() {
     this._notify(
       "Journal post successfully created!",
-
-      "Your post can be found and edited <a onclick=\"Lab.feedbackController.openInNewTabAndLog('" + postURL + "')\" href=\"javascript:void(0);\">here</a>. "+
-      "(Link will open in a new tab.)<br/><br/>"+
       "When you are ready, move onto the next challenge."
     );
   },
@@ -116,11 +112,6 @@ Lab.feedbackController = SC.Object.create({
       // Commented out to override SC.AlertPane's HTML escape: // desc = SC.RenderContext.escapeHTML(desc); // remove HTML
       return '<p class="description">' + desc.split('\n').join('</p><p class="description">') + '</p>';
     }.property('description').cacheable()
-  }),
-
-  openInNewTabAndLog: function (url) {
-    Lab.logController.logEvent(Lab.EVENT.GO_TO_JOURNAL_POST);
-    window.open(url,'_blank');
-  }
+  })
 
 });

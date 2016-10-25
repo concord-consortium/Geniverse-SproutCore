@@ -1,0 +1,3 @@
+The rails app has been moved into a portal engine gem: https://github.com/concord-consortium/geniverse-portal-integration
+
+The backend is now served from the portal directly.

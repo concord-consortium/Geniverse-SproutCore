@@ -34,16 +34,6 @@ Lab.mainPage = SC.Page.design({
         value: static_url('mainscreen-caselog-highlighted')
       }),
 
-      journalButtonView: SC.View.design(Geniverse.SimpleButton, {
-        layerId: 'journal',
-        tagName: 'a',
-        hasHover: YES,
-        layout: { top: 612, centerX: 217, width: 242, height: 125 },
-        target: 'Lab.journalController',
-        action: 'openWindow',
-        value: static_url('mainscreen-journal-highlighted')
-      }),
-
       doorButtonView: SC.View.design(Geniverse.SimpleButton, {
         layerId: 'door',
         tagName: 'a',

@@ -23,7 +23,7 @@ Lab.BreedingPenView = SC.View.extend(
   titleView: null,
   penView: null,
 
-  breedingRecordRight: -180,
+  breedingRecordRight: -20,
 
   /**
    * Necessary configuration xPath elements to set up binding inside the composite view instances
@@ -93,6 +93,45 @@ Lab.BreedingPenView = SC.View.extend(
     );
 
     childViews.push(this.tabView);
+
+    this.recordLink = this.createChildView(
+      Geniverse.RecordLinkView.design({
+        layout: { right: this.get('breedingRecordRight'), bottom: 0, height: 25, width: 253},
+        tabView: this.tabView
+      })
+    );
+
+    this.tabView.addObserver('nowShowing', function() {
+      if (this.getPath('nowShowing.statsView')) {
+        Lab.logController.logEvent(Lab.EVENT.OPENED_STATS);
+      } else {
+        Lab.logController.logEvent(Lab.EVENT.CLOSED_STATS);
+      }
+    });
+
+    childViews.push(this.recordLink);
+
+    __this = this;
+
+    this.recordButton = this.createChildView(
+      SC.ButtonView.design({
+        layout: { bottom: 5, right: 10, width: 150, height: 24 },
+        action: function() {
+          window.saveBreedingDragonsToBackend();
+          __this.recordButton.set("isEnabled", false);
+          setTimeout(function() {
+            __this.recordButton.set("isEnabled", true);
+          }, 1200);
+        },
+        // WTF, SproutCore, why can't we just use an `isVisible` property?
+        isVisibleObserver: function() {
+          this.set("isVisible", Geniverse.eggsController.get('length') > 0 &&
+            !this.getPath("parentView.recordLink.isVisible"))
+        }.observes('Geniverse.eggsController.length', '*parentView.recordLink.isVisible'),
+        title: "Save breeding record"
+      })
+    );
+    childViews.push(this.recordButton);
 
     this.set('childViews', childViews);
   }

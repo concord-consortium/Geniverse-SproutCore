@@ -16,9 +16,9 @@ Lab.loginController = SC.ObjectController.create(
   defaultResponder: 'Lab.statechart',
 
   // TODO: Add your own code here.
-  checkTokenUrl: '/portal/verify_cc_token',
-  loginUrl: '/portal/remote_login',
-  logoutUrl: '/portal/remote_logout',
+  checkTokenUrl: Geniverse.portalBase + '/verify_cc_token',
+  loginUrl: Geniverse.portalBase + '/remote_login',
+  logoutUrl: Geniverse.portalBase + '/remote_logout',
   username: '',
   password: '',
   loggedIn: NO,
@@ -114,6 +114,7 @@ Lab.loginController = SC.ObjectController.create(
         user.set('firstName',first);
         user.set('lastName',last);
         user.set('isTeacher', isTeacher);
+
         var classWords = response.get('body').class_words;
         if (classWords && classWords.length > 0){
           // filter the class names and remove invalid characters
@@ -124,17 +125,6 @@ Lab.loginController = SC.ObjectController.create(
           var classWord = classWords[classWords.length-1];
           user.set('className', classWord);
           user.set('allClassNames', classWords);
-
-          // Set learner id. We don't save this to backend as it might change (?)
-          var classes = response.get('body').classes || [];
-          for (var i=0, ii=classes.length; i<ii; i++) {
-            if (classes[i].word == classWord) {
-              var lid = classes[i].learner;
-              if (lid) {
-                Lab.logController.set('learnerDataUrl', '/portal/dataservice/bucket_loggers/learner/' + lid + '/bucket_log_items.bundle');
-              }
-            }
-          }
         } else {
           user.set('className', "no_class");
         }

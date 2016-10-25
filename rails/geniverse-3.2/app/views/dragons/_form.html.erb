@@ -1,9 +1,0 @@
-<%= form_for(dragon) do |f| %>
-  <%= error_messages(dragon) %>
-  
-  <%= render :partial => 'shared/form', :locals => {:object => dragon, :f => f } %>
-  
-  <p>
-    <%= f.submit 'Submit' %>
-  </p>
-<% end %>

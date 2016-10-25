@@ -15,7 +15,9 @@ Lab.argumentationChallenge = Ki.State.extend({
 
   startChallenge: function() {
     this.set('challengeComplete', NO);
-    this.set('challengeWasAlreadyComplete', NO);
+      var pageId = Geniverse.activityController.get('route'),
+      stars = Geniverse.userController.getPageStars(pageId);
+    this.set('challengeWasAlreadyComplete', stars == 1);
 
     this.get('statechart').sendAction('blockNextNavButton');
     Lab.ACTIVITY.set('LOAD_CHALLENGE_DRAKES', NO);
@@ -25,18 +27,20 @@ Lab.argumentationChallenge = Ki.State.extend({
     this.set('challengeComplete', YES);
     this.get('statechart').sendAction('unblockNextNavButton');
 
-    // Award a "star" for completion
-    var pageId = Geniverse.activityController.get('route');
-    Geniverse.userController.setPageStars(pageId, 1);
+    Geniverse.doWhenReady(this, Geniverse.userController.get('content'), function() {
+      // Award a "star" for completion
+      var pageId = Geniverse.activityController.get('route');
+      Geniverse.userController.setPageStars(pageId, 1);
 
-    Lab.logController.logEvent(Lab.EVENT.COMPLETED_CHALLENGE, {route: pageId, starsAwarded: 1});
+      Lab.logController.logEvent(Lab.EVENT.COMPLETED_CHALLENGE, {route: pageId, starsAwarded: 1});
 
-    // unlock any unlockables
-    Geniverse.unlockablesController.unlockFor(pageId);
+      // unlock any unlockables
+      Geniverse.unlockablesController.unlockFor(pageId);
 
-    Geniverse.store.commitRecords();
-    // why can't bindings in SC work as advertised?
-    Lab.caselogController.propertyDidChange("userMetadata");
+      Geniverse.store.commitRecords();
+      // why can't bindings in SC work as advertised?
+      Lab.caselogController.propertyDidChange("userMetadata");
+    });
   },
 
   didSendBlogPost: function() {
