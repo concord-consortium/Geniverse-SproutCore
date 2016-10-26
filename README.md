@@ -170,7 +170,7 @@ Public URL of the object is: http://geniverse-lab.concord.org.s3.amazonaws.com/s
 Done. Don't forget to invalidate the index files in cloudfront!
 ```
 
-Ultimately, the new deployment can be tested at http://geniverse-lab.concord.org/staging. The warning about invalidating the index files is because deployed changes won't be visible immediately. CloudFront takes some time ("up to 24 hours") to clear cache before the new files become available. The necessary files can be manually invalidated to make them available sooner. Beyond a certain point there is a nominal fee associated with these manual invalidations (at the time of this writing Concord Consortium is allowed 1000 invalidations per month for free; each invalidation beyond that is $.005), but it is unlikely that we're approaching that limit. 
+Ultimately, the new deployment can be tested at http://geniverse-lab.concord.org/staging. The warning about invalidating the index files is because deployed changes won't be visible immediately. See the section on CloudFront Invalidation below for details.
 
 ### Deploying Geniverse to Production
 
@@ -183,9 +183,36 @@ Ultimately, the new deployment can be tested at http://geniverse-lab.concord.org
 
 Note that when deploying to production, a new build is performed, so care must be taken to make sure that what is deployed is identical to what has most recently been tested on staging. In theory if a build has already been deployed to staging, deploying to production could be done by simply changing a few symbolic links which would avoid the risks associated with conducting a new build.
 
-### GUI CloudFront Invalidation
+### Deploying Geniverse Demo
 
-1. Log in to the Concord AWS Console at https://concord.signin.aws.amazon.com/console
+To deploy the Geniverse demo, switch to the `inabox` branch in your local git workspace:
+```
+git checkout inabox
+```
+
+If there have been any master commits since the last merge, you may need to merge the `master` branch into the `inabox` branch. There are several approaches to doing so, but these steps create a Pull Request for the merge:
+```
+git checkout -b [newBranchForMergeCommit]
+git merge master
+[... resolve any conflicts ...]
+git commit
+git push origin
+```
+
+Then visit https://github.com/concord-consortium/Geniverse-SproutCore to create the Pull Request. When configuring the PR, specify `inabox` as the base branch and `[newBranchForMergeCommit]` as the target branch. Once the Pull Request has been approved/merged (or if no merge was required) run the build and deploy script specifying the `demo` target:
+```
+./build_and_deploy.sh demo
+```
+
+The deployment can be tested at http://demo.geniverse.concord.org. Note that the demo is not currently hosted on CloudFront, so the following sections on CloudFront Invalidation don't apply.
+
+### CloudFront Invalidation
+
+Staging and Production deployments are hosted on [CloudFront](https://aws.amazon.com/cloudfront/), which caches files until the cache expires. The default cache expiration period is [24 hours](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Expiration.html). [Invalidation](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html) can be used to clear the cache, thus making deployed changes "live" sooner. The first 1,000 path invalidations per month are free, after which there is a [nominal fee](https://aws.amazon.com/cloudfront/pricing/) (currently $0.005 per path). It is unlikely Concord Consortium is approaching this limit, however.
+
+#### GUI Invalidation
+
+1. Log in to the [Concord AWS Console](https://concord.signin.aws.amazon.com/console)
 2. Choose `CloudFront` under the `Storage & Content Delivery` section
 3. Type `geniverse` into the filter field
 4. Select the distribution whose Origin is `geniverse-lab.concord.org...` (ID is `E3GYOSZWPRMV40`)
@@ -206,7 +233,7 @@ As an alternative to steps 7-8 above, one can select an existing invalidation fr
 
 You can monitor the status of the invalidation on the `Invalidations` tab.
 
-### CLI CloudFront Invalidation
+#### CLI Invalidation
 
 To install and configure the `AWS Command Line Interface`:
 
