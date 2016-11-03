@@ -7,7 +7,7 @@ require "open-uri"
 VERBOSE=true
 STDOUT.sync = true
 DB_BASE = "https://learn.concord.org/geniverse/"
-BASE_DIR = File.join(File.dirname(__FILE__), "tmp", "build", "rails")
+BASE_DIR = File.join(File.dirname(__FILE__), "tmp", "build", "geniverse")
 
 def download(uri_str, dest)
   body = @data = URI.parse(uri_str).read
@@ -28,7 +28,7 @@ File.open(File.join(BASE_DIR, "users.json"), "w") do |f|
 end
 Dir.mkdir(File.join(BASE_DIR, "users")) rescue Errno::EEXIST
 File.open(File.join(BASE_DIR, "users", "1.json"), "w") do |f|
-  f.write(%|{"content":#{user_content},"location":"/rails/users/1"}|)
+  f.write(%|{"content":#{user_content},"location":"/geniverse/users/1"}|)
 end
 puts " done."
 
