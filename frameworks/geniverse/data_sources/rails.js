@@ -46,14 +46,14 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
     var recordType = query.recordType;
     if (Geniverse.railsBackedTypes.indexOf(recordType.modelName) != -1) {
       var paramString = query.restParams ? query.restParams : "";
-      var endpoint = '/rails/%@.json%@'.fmt(recordType.modelsName, paramString);
+      var endpoint = '/geniverse/%@.json%@'.fmt(recordType.modelsName, paramString);
       this._jsonGet(endpoint, 'didFetchRecords', store, query);
       return YES;
     }
 
     // if (query === Geniverse.ACTIVITIES_QUERY) {
     //   SC.Logger.log('query === Geniverse.ACTIVITIES_QUERY', query);
-    //   this._jsonGet('/rails/activities', 'didFetchActivities', store, query);
+    //   this._jsonGet('/geniverse/activities', 'didFetchActivities', store, query);
     //
     //   SC.Logger.groupEnd();
     //   return YES;
@@ -89,7 +89,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
   //
   retrieveRecord: function(store, storeKey) {
     // SC.Logger.log('Geniverse.RailsDataSource.retrieveRecord');
-    // guid will be rails url e.g. /rails/questions/1
+    // guid will be rails url e.g. /geniverse/questions/1
     var guid = store.idFor(storeKey);
 
     this._jsonGet('%@.json'.fmt(guid), 'didRetrieveRecord', store, storeKey);
@@ -133,7 +133,7 @@ Geniverse.RailsDataSource = SC.DataSource.extend(
         //delete modelHash[modelName]['guid'];    // remove guid property before sending to rails
 
         // SC.Logger.group('Geniverse.RailsDataSource.createRecord()');
-        SC.Request.postUrl('/rails/' + recordType.modelsName).header({
+        SC.Request.postUrl('/geniverse/' + recordType.modelsName).header({
                        'Accept': 'application/json'
                    }).json().notify(this, this.didCreateRecord, store, storeKey).send(modelHash);
         // SC.Logger.groupEnd();
