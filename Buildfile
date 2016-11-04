@@ -3,8 +3,8 @@
 # Copyright: ©2010 The Concord Consortium
 # ===========================================================================
 
-config :all, 
-  :required => [:geniverse, :sproutcore, :cc, :ki], 
+config :all,
+  :required => [:geniverse, :sproutcore, :cc, :ki],
   :load_fixtures => true
 
 mode :production do
@@ -22,7 +22,7 @@ end
 mode :demo do
   config :lab,
     :google_analytics_id => "UA-6899787-32",
-    :resources_base => ""
+    :resources_base => "http://resources.geniverse.concord.org"
 end
 
 mode :dev do
@@ -46,7 +46,7 @@ end
 config :geniverse,
   :layout => 'lib/index.rhtml',
   :test_layout => 'lib/index.rhtml'
-  
+
 config :lab,
   :layout => 'lib/index.rhtml',
   :test_layout => 'lib/index.rhtml'
