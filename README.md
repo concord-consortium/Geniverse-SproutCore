@@ -140,7 +140,7 @@ Now run the development Geniverse-SproutCore server:
 ```
 sc-server
 ```
-  
+
 And then open http://sc.local.concord.org/lab in your browser.
 
 If you are unable to log in successfully, try opening a separate browser tab to http://learn-staging.concord.org and logging in manually there.
@@ -183,14 +183,17 @@ Ultimately, the new deployment can be tested at http://geniverse-lab.concord.org
 
 Note that when deploying to production, a new build is performed, so care must be taken to make sure that what is deployed is identical to what has most recently been tested on staging. In theory if a build has already been deployed to staging, deploying to production could be done by simply changing a few symbolic links which would avoid the risks associated with conducting a new build.
 
-### Deploying Geniverse Demo
+### Deploying Geniverse Demo or creating a self-contained package
 
-To deploy the Geniverse demo, switch to the `inabox` branch in your local git workspace:
+The inabox branch contains a version of Geniverse that uses only static files, and requires no connection to any database:
+
 ```
 git checkout inabox
 ```
 
-If there have been any master commits since the last merge, you may need to merge the `master` branch into the `inabox` branch. There are several approaches to doing so, but these steps create a Pull Request for the merge:
+Update `inabox` with any new features from `master`, either by cherry-picking the relevant commits, or with a merge.
+
+To merge and create a Pull Request for the merge:
 ```
 git checkout -b [newBranchForMergeCommit]
 git merge master
@@ -198,13 +201,23 @@ git merge master
 git commit
 git push origin
 ```
+Then visit https://github.com/concord-consortium/Geniverse-SproutCore to create the Pull Request. When configuring the PR, specify `inabox` as the base branch and `[newBranchForMergeCommit]` as the target branch.
 
-Then visit https://github.com/concord-consortium/Geniverse-SproutCore to create the Pull Request. When configuring the PR, specify `inabox` as the base branch and `[newBranchForMergeCommit]` as the target branch. Once the Pull Request has been approved/merged (or if no merge was required) run the build and deploy script specifying the `demo` target:
+Test the `inabox` branch by running locally. To test even more completely, build a self-contained package:
+
+```
+./build_and_deploy.sh box-package
+```
+
+Unzip the generated file, and test it using `live-server` or `python -m SimpleHTTPServer`. If it is working correctly, this self-contained zip contains all the files needed for local hosting at, e.g. a conference.
+
+Finally, re-build it for the demo site (this removes some resources shared at geniverse-resources.concord.org from the build) and deploy to S3:
+
 ```
 ./build_and_deploy.sh demo
 ```
 
-The deployment can be tested at http://demo.geniverse.concord.org. Note that the demo is not currently hosted on CloudFront, so the following sections on CloudFront Invalidation don't apply.
+The deployment can be tested at http://demo.geniverse.concord.org.
 
 ### CloudFront Invalidation
 
@@ -315,7 +328,7 @@ node.js instructions:
 
 * Install node.js from http://github.com/ry/node
   (Note: you'll need python 2.x for python in the path, not 3.x, for the configure script to work)
-* Install node package manager 
+* Install node package manager
   curl http://npmjs.org/install.sh | sudo sh
   or
   download from http://github.com/isaacs/npm and 'sudo make install'
@@ -323,13 +336,13 @@ node.js instructions:
 (If you've installed node to somewhere like /usr/local/lib/node (the default) you may need to add user-write permissions to /usr/local/lib/node/.npm in order for 'npm help' to work:)
   sudo chmod ugo+w /usr/local/lib/node/.npm
 
-* Install node-http-proxy: 
+* Install node-http-proxy:
     sudo npm install http-proxy
 
 * start up the proxy server and sc-server:
   node proxy.js &
   sc-server -v
-  
+
   (in a separate window):
   open http://localhost:9000/geniverse
 
@@ -348,7 +361,7 @@ rm -rf tmp
 # remove old reports
 rm reports/*.xml
 
-# $SC_SERVER_PORT is usually 4020. That environment variable is used so 
+# $SC_SERVER_PORT is usually 4020. That environment variable is used so
 # multiple ci server (such as Husdon) job instances don't use the same port
 sc-server --port=$SC_SERVER_PORT --host=0.0.0.0 &
 sleep 1
