@@ -145,37 +145,8 @@ case "$1" in
     export REMOTE_USER="geniverse"
     export BUILD_MODE="debug"
     ;;
-  demo)
-    export SERVER=seymour.concord.org
-    export SERVER_PATH="/web/production/demo.geniverse"
-    export REMOTE_USER="geniverse"
-    export BUILD_MODE="demo"
-    build
-    dbdownload
-    resourcesdownload
-    copyindex
-    boxsync
-    exit 0
-    ;;
-  box)
-    export SERVER=otto.concord.org
-    export SERVER_PATH="/web/geniverse.inabox"
-    export REMOTE_USER="geniverse"
-    export BUILD_MODE="inabox"
-    build
-    dbdownload
-    resourcesdownload
-    copyindex
-    boxsync
-    exit 0
-    ;;
-  box-package)
-    export BUILD_MODE="inabox"
-    build
-    dbdownload
-    resourcesdownload
-    copyindex
-    package
+  demo | box | box-package)
+    echo "Use the inabox branch"
     exit 0
     ;;
   *)
