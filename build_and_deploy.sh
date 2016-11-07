@@ -39,12 +39,17 @@ function boxsync {
 }
 
 function s3sync {
-  echo "Sending files to S3 bucket '$BUCKET' ..."
-  s3cmd sync -P -M --no-mime-magic --no-delete-removed tmp/build/ s3://$BUCKET/
-  s3cmd put -P -m "text/html" tmp/build/static/lab/en/$BUILD_NUM/index.html s3://$BUCKET/static/lab/en/$BUILD_NUM/index.html
-  s3cmd put -P -m "text/html" tmp/build/$LABEL/index.html s3://$BUCKET/$LABEL/
+  if [ -z "$FOLDER" ]; then
+    S3_DEST="s3://$BUCKET"
+  else
+    S3_DEST="s3://$BUCKET/$FOLDER"
+  fi
+  echo "Sending files to S3 bucket '$S3_DEST' ..."
+  s3cmd sync -P -M --no-mime-magic --no-delete-removed tmp/build/ $S3_DEST/
+  s3cmd put -P -m "text/html" tmp/build/static/lab/en/$BUILD_NUM/index.html $S3_DEST/static/lab/en/$BUILD_NUM/index.html
+  s3cmd put -P -m "text/html" tmp/build/$LABEL/index.html $S3_DEST/$LABEL/
   if [ -e "tmp/build/index.html" ]; then
-    s3cmd put -P -m "text/html" tmp/build/index.html s3://$BUCKET/
+    s3cmd put -P -m "text/html" tmp/build/index.html $S3_DEST/
   fi
 
   echo "Done. Don't forget to invalidate the index files in cloudfront!"
@@ -72,6 +77,15 @@ function resourcesdownload {
   fi
   unzip -q -d tmp/build/ resources-current.zip
   echo "Done."
+}
+
+function deleteUnneededResources {
+  echo "Deleting resources files hosted at common resource site... "
+  rm -rf tmp/build/resources/DNA2Protein
+  rm -rf tmp/build/resources/help
+  rm -rf tmp/build/resources/icons
+  rm -rf tmp/build/resources/narative
+  rm -rf tmp/build/resources/test
 }
 
 function package {
@@ -146,15 +160,16 @@ case "$1" in
     export BUILD_MODE="debug"
     ;;
   demo)
-    export SERVER=seymour.concord.org
-    export SERVER_PATH="/web/production/demo.geniverse"
-    export REMOTE_USER="geniverse"
+    export BUCKET=models-resources
+    export LABEL="lab"
+    export FOLDER="geniverse-demo"
     export BUILD_MODE="demo"
     build
     dbdownload
     resourcesdownload
+    deleteUnneededResources
     copyindex
-    boxsync
+    s3sync
     exit 0
     ;;
   box)
