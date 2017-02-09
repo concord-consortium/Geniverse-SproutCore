@@ -23,7 +23,7 @@
   var Burst = function Burst(){
     this.timelines={};
     this.loaded={};
-    this.fps = 10;
+    // this.fps = 30;   // no longer used
     this.timelineCount = 0;
     this.onframe=undefined;
   };
@@ -53,14 +53,11 @@
 
     // cf. http://creativejs.com/resources/requestanimationframe/
     function draw() {
-      _this.timeoutID = setTimeout(function() {
-        _this.requestID = requestAnimationFrame(draw);
-        // Drawing code goes here
-        _this.frame();
-      }, 1000 / this.fps);
+      _this.requestID = requestAnimationFrame(draw);
+      _this.frame();
     }
     // don't start a timer if we've already got one
-    if (!this.timeoutID)
+    if (!this.requestID)
       draw();
   };
 
@@ -77,10 +74,6 @@
     if (this.requestID) {
       cancelAnimationFrame(this.requestID);
       this.requestID = null;
-    }
-    if (this.timeoutID) {
-      clearTimeout(this.timeoutID);
-      this.timeoutID = null;
     }
   };
 
