@@ -69,7 +69,8 @@ sc_require('lib/burst-core');
     ////////////////////////////////////////////////////////////////////////////
 
     var self = this,
-        drawLoop, // The variable in which the main draw loop Interval is storred
+        timeoutID,
+        requestID,
         membranes = [],
         chromosomes = [],
         mode = defaultOpts.mode,
@@ -84,6 +85,7 @@ sc_require('lib/burst-core');
         timeline,
         swapui,
         frame = 0,
+        fps = 20,
         maxMembraneOpacity = 0.9,
 
         PI         = Math.PI,
@@ -2139,10 +2141,20 @@ sc_require('lib/burst-core');
     });
   }
 
-    // Set Draw-Loop Interval
+    // Setup Draw-Loop
     ////////////////////////////////////////////////////////////////////////////
-    drawLoop = window.setInterval(function(){ draw(); }, 100);
 
+    // cf. http://creativejs.com/resources/requestanimationframe/
+    function drawLoop() {
+      timeoutID = setTimeout(function() {
+        requestID = requestAnimationFrame(drawLoop);
+        // Drawing code goes here
+        draw();
+      }, 1000 / fps);
+    }
+    // don't start a timer if we've already got one
+    if (!timeoutID)
+      drawLoop();
   };
 
 })(this, this.document, this.jQuery, this.Raphael, Burst);

@@ -23,7 +23,7 @@
   var Burst = function Burst(){
     this.timelines={};
     this.loaded={};
-    this.fps = 30;
+    // this.fps = 30;   // no longer used
     this.timelineCount = 0;
     this.onframe=undefined;
   };
@@ -49,12 +49,16 @@
   };
 
   Burst.prototype.play = function(){
-    var deepref = this;
-    // FIXME: Is this correct behavior?
-    window.clearInterval(this.interval);
-    this.interval = window.setInterval(function(){
-      deepref.frame();
-    }, 1000 / this.fps );
+    var _this = this;
+
+    // cf. http://creativejs.com/resources/requestanimationframe/
+    function draw() {
+      _this.requestID = requestAnimationFrame(draw);
+      _this.frame();
+    }
+    // don't start a timer if we've already got one
+    if (!this.requestID)
+      draw();
   };
 
   Burst.prototype.frame = function( frame ){
@@ -67,8 +71,10 @@
   };
 
   Burst.prototype.stop = function(){
-    window.clearInterval( this.interval );
-    // FIXME: Removed useless delete statement
+    if (this.requestID) {
+      cancelAnimationFrame(this.requestID);
+      this.requestID = null;
+    }
   };
 
   // Timeline
