@@ -69,8 +69,6 @@ sc_require('lib/burst-core');
     ////////////////////////////////////////////////////////////////////////////
 
     var self = this,
-        timeoutID,
-        requestID,
         membranes = [],
         chromosomes = [],
         mode = defaultOpts.mode,
@@ -2144,17 +2142,29 @@ sc_require('lib/burst-core');
     // Setup Draw-Loop
     ////////////////////////////////////////////////////////////////////////////
 
+    var $this = $(this);
+
     // cf. http://creativejs.com/resources/requestanimationframe/
     function drawLoop() {
-      timeoutID = setTimeout(function() {
-        requestID = requestAnimationFrame(drawLoop);
+      // use $.data() to store animation IDs with DOM node
+      $this.data('timeoutID', setTimeout(function() {
+        $this.data('requestID', requestAnimationFrame(drawLoop));
         // Drawing code goes here
         draw();
-      }, 1000 / fps);
+      }, 1000 / fps));
     }
-    // don't start a timer if we've already got one
-    if (!timeoutID)
-      drawLoop();
+
+    // cancel any previous animations
+    if ($this.data('requestID')) {
+      cancelAnimationFrame($this.data('requestID'));
+      $this.data('requestID', null);
+    }
+    if ($this.data('timeoutID')) {
+      clearTimeout($this.data('timeoutID'));
+      $this.data('timeoutID', null);
+    }
+
+    drawLoop();
   };
 
 })(this, this.document, this.jQuery, this.Raphael, Burst);
