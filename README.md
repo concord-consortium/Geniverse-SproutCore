@@ -1,5 +1,5 @@
 # Geniverse
-### Copyright: ©2016 Concord Consortium
+### Copyright: ©2017 Concord Consortium
 
 ## Installing
 
@@ -37,7 +37,7 @@ This project uses the `SproutCore 1.4.5` gem. Installing SproutCore is sufficien
 
 To install the sproutcore gem:
 ```
-$ gem install sproutcore --version 1.4.5
+gem install sproutcore --version 1.4.5
 ```
 
 This installs the appropriate SproutCore build tools.
@@ -51,23 +51,23 @@ If you followed the instructions above, then you're running `Ruby 1.9.3` in rvm 
 gem install bundler
 ```
 
-In theory, at this point `bundle install` should install all of the gems that are required. Unfortunately, when trying this recently on Mac OS X I encountered errors due to the fact that `mime-types 3` requires `Ruby >= 2.0`. There's probably a more elegant solution (perhaps an older version of `bundler`?) but I ended up installing `mime-types 2.6.2` manually:
+If you get an error like:
 ```
-gem install mime-types --version 2.6.2
+ERROR:  Could not find a valid gem 'bundler' (>= 0), here is why:
+          Unable to download data from https://rubygems.org/ - SSL_connect returned=1 errno=0 state=error: certificate verify failed (https://api.rubygems.org/specs.4.8.gz)
 ```
+You may need to follow the instructions at [OpenSSL Errors and Rails – Certificate Verify Failed](http://railsapps.github.io/openssl-certificate-verify-failed.html) to update your SSL certificates.
 
-and then installing the specific versions of the other dependent gems listed in the `Gemfile` manually, e.g.
+At this point `bundle install` should install all of the gems that are required:
 ```
-gem install daemon_controller --version 0.2.6
-gem install rspec --version 2.1.0
-gem install lebowski --version 0.3.0
-...
-gem install capybara --version 0.4.0
+bundle install
 ```
 
 When all dependencies are installed, `bundle install` returns something like
 ```
 Bundle complete! 7 Gemfile dependencies, 36 gems now installed.
+Use `bundle show [gemname]` to see where a bundled gem is installed.
+Post-install message from ...
 ```
 
 ### Setting up proxies
@@ -143,7 +143,7 @@ sc-server
 
 And then open http://sc.local.concord.org/lab in your browser.
 
-If you are unable to log in successfully, try opening a separate browser tab to http://learn-staging.concord.org and logging in manually there.
+If you are unable to log in successfully, try opening a separate browser tab to http://learn.staging.concord.org and logging in manually there.
 
 ## Deploying Geniverse
 
@@ -219,9 +219,13 @@ Finally, re-build it for the demo site (this removes some resources shared at ge
 
 The deployment can be tested at http://demo.geniverse.concord.org.
 
+## Deploying the "What is Meiosis?"/"Meiosis Lab" Activity (incomplete)
+
+A meiosis-only subset of Geniverse is linked from the [What is Meiosis?](https://concord.org/stem-resources/what-is-meiosis) activity. This page links to a deployed instance of Geniverse at http://meiosis.geniverse.concord.org/. It appears that this version of Geniverse is based on the `meiosis-demo` branch of the Github repository. As of this writing (2017) no one who was involved with the original deployment of the Meiosis Lab is still with the Concord Consortium and so figuring out how to update this deployment (e.g. to fix bugs such as the recently fixed meiosis animation issue) requires some sleuthing. From the AWS management console it is clear that http://meiosis.geniverse.concord.org/ is an [S3 bucket](https://console.aws.amazon.com/s3/home?region=us-east-1#&bucket=meiosis.geniverse.concord.org&prefix=) distributed as a [CloudFront distribution](https://console.aws.amazon.com/cloudfront/home?region=us-east-1#distribution-settings:EHZLIKE96RKN8). Therefore, it is likely that the `build_and_deploy.sh` script on the `meiosis-demo` branch could be updated -- using the deployment of `staging_s3` and `production_s3` on the `master` branch as guides -- to deploy the `meiosis-demo` branch to http://meiosis.geniverse.concord.org/. Similarly, there is also presumably a variant of the CloudFront invalidation paths that could be determined as well.
+
 ### CloudFront Invalidation
 
-Staging and Production deployments are hosted on [CloudFront](https://aws.amazon.com/cloudfront/), which caches files until the cache expires. The default cache expiration period is [24 hours](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Expiration.html). [Invalidation](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html) can be used to clear the cache, thus making deployed changes "live" sooner. The first 1,000 path invalidations per month are free, after which there is a [nominal fee](https://aws.amazon.com/cloudfront/pricing/) (currently $0.005 per path). It is unlikely Concord Consortium is approaching this limit, however.
+Staging and Production deployments are hosted on [CloudFront](https://aws.amazon.com/cloudfront/), which caches files until the cache expires. The default cache expiration period is [24 hours](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Expiration.html). [Invalidation](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html) can be used to clear the cache, thus making deployed changes "live" sooner. The first 1,000 path invalidations per month are free, after which there is a [nominal fee](https://aws.amazon.com/cloudfront/pricing/) (currently $0.005 per path). It is unlikely Concord Consortium is approaching this limit, however. (Invalidating staging invalidates 19 paths.)
 
 #### GUI Invalidation
 
@@ -266,7 +270,7 @@ To invalidate production (and staging):
 aws cloudfront create-invalidation --distribution-id E3GYOSZWPRMV40 --paths /staging/index.html /lab/index.html /index.html /
 ```
 
-To check the status of the invalidation so you can tell when it's done:
+Invalidation can take 10-15 minutes or more. To check the status of the invalidation so you can tell when it's done:
 ```
 s3cmd cfinvalinfo cf://E3GYOSZWPRMV40
 ```

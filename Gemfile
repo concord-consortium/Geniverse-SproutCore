@@ -13,5 +13,6 @@ group :development do
 
   # for proxy/sc-unit-tests.rb
   gem "trollop", "1.16.2"
+  gem "mime-types", "2.6.2"
   gem "capybara", "0.4.0"
 end
